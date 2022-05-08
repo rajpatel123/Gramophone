@@ -5,8 +5,9 @@ import agstack.gramophone.BuildConfig
 object Constants {
     /**
      * Server base url without end slash.
+     * Moving this to have environment spacific base urls
      */
-    const val SERVER_BASE_URL = "https://gorest.co.in/public"
+    //const val SERVER_BASE_URL = "https://gorest.co.in/public"
 
     /**
      * For MyNotificationOpenedHandler

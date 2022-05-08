@@ -3,7 +3,7 @@ package agstack.gramophone.base
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-class BaseActivity : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
