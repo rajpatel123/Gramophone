@@ -1,7 +1,7 @@
 package agstack.gramophone.utils
 
 import android.util.Log
-import agstack.gramophone.BuildConfig
+import androidx.viewbinding.BuildConfig
 
 /**
  * Created by farhan on 7/03/2022.
