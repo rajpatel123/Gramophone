@@ -8,4 +8,9 @@ interface ApiService {
     @GET("users")
     suspend fun getUsers(): AppConfig
 
+
+    @GET("users")
+    suspend fun getConfig(): AppConfig
+
+
 }
