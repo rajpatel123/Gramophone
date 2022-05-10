@@ -12,13 +12,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
-class SplashActivity : BaseActivity() {
+class AppTourActivity : BaseActivity() {
 
     private lateinit var viewModel: SplashViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+        setContentView(R.layout.activity_apptour)
 
         setupViewModel()
         setupUi()
