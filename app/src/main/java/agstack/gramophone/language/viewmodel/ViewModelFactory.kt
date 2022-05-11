@@ -1,8 +1,7 @@
-package agstack.gramophone.splash.viewmodel
+package agstack.gramophone.language.viewmodel
 
 import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.language.repository.LanguageRepository
-import agstack.gramophone.language.viewmodel.LanguageViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 

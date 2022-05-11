@@ -1,4 +1,4 @@
-package agstack.gramophone.splash.view
+package agstack.gramophone.language.view
 
 import agstack.gramophone.R
 import agstack.gramophone.Status
@@ -11,7 +11,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
-class SplashActivity : BaseActivity() {
+class LanguageActivity : BaseActivity() {
 
     private lateinit var viewModel: LanguageViewModel
 
