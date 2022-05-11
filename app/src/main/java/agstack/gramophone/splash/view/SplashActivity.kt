@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
-class AppTourActivity : BaseActivity() {
+class SplashActivity : BaseActivity() {
 
     private lateinit var viewModel: SplashViewModel
 
