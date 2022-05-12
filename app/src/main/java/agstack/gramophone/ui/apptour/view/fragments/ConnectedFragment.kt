@@ -1,4 +1,4 @@
-package agstack.gramophone.apptour.view.fragments
+package agstack.gramophone.ui.apptour.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
