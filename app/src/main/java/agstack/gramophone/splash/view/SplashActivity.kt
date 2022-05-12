@@ -5,16 +5,15 @@ import agstack.gramophone.Status
 import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
-import agstack.gramophone.splash.viewmodel.SplashViewModel
+import agstack.gramophone.splash.viewmodel.LoginViewModel
 import agstack.gramophone.splash.viewmodel.ViewModelFactory
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
 class SplashActivity : BaseActivity() {
 
-    private lateinit var viewModel: SplashViewModel
+    private lateinit var viewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +53,6 @@ class SplashActivity : BaseActivity() {
         viewModel = ViewModelProvider(
             this, ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
         )
-            .get(SplashViewModel::class.java)
+            .get(LoginViewModel::class.java)
     }
 }
