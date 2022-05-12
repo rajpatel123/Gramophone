@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gramophone">
         <activity
-            android:name=".splash.view.SplashActivity"
+            android:name="agstack.gramophone.ui.splash.view.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".language.view.LanguageActivity" />
+        <activity android:name="agstack.gramophone.ui.language.view.LanguageActivity" />
     </application>
 
 </manifest>

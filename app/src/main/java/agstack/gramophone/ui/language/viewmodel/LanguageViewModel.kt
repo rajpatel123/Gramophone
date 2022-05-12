@@ -1,7 +1,7 @@
-package agstack.gramophone.language.viewmodel
+package agstack.gramophone.ui.language.viewmodel
 
 import agstack.gramophone.Resource
-import agstack.gramophone.language.repository.LanguageRepository
+import agstack.gramophone.ui.language.repository.LanguageRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import kotlinx.coroutines.Dispatchers

@@ -1,4 +1,4 @@
-package agstack.gramophone.language.repository
+package agstack.gramophone.ui.language.repository
 
 import agstack.gramophone.retrofit.ApiHelper
 

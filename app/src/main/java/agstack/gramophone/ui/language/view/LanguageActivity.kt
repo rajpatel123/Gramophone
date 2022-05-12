@@ -1,12 +1,12 @@
-package agstack.gramophone.language.view
+package agstack.gramophone.ui.language.view
 
 import agstack.gramophone.R
 import agstack.gramophone.Status
 import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
-import agstack.gramophone.language.viewmodel.LanguageViewModel
-import agstack.gramophone.language.viewmodel.ViewModelFactory
+import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
+import agstack.gramophone.ui.language.viewmodel.ViewModelFactory
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider

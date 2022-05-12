@@ -1,8 +1,8 @@
-package agstack.gramophone.splash.viewmodel
+package agstack.gramophone.ui.splash.viewmodel
 
 import agstack.gramophone.Resource
-import agstack.gramophone.splash.model.SplashModel
-import agstack.gramophone.splash.repository.SplashRepository
+import agstack.gramophone.ui.splash.model.SplashModel
+import agstack.gramophone.ui.splash.repository.SplashRepository
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData

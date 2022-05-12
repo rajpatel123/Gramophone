@@ -1,4 +1,4 @@
-package agstack.gramophone.splash.repository
+package agstack.gramophone.ui.splash.repository
 
 import agstack.gramophone.retrofit.ApiHelper
 
