@@ -7,7 +7,7 @@ import androidx.lifecycle.liveData
 import kotlinx.coroutines.Dispatchers
 
 
-class SplashViewModel(private val splashRepository: SplashRepository) : ViewModel() {
+class AppTourViewModel(private val splashRepository: SplashRepository) : ViewModel() {
 
     fun getUsers() = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
