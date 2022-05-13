@@ -1,23 +1,23 @@
-package agstack.gramophone.ui.apptour.view
+package agstack.gramophone.ui.language.view
 
 import agstack.gramophone.R
 import agstack.gramophone.Status
 import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
-import agstack.gramophone.ui.apptour.viewmodel.AppTourViewModel
-import agstack.gramophone.ui.apptour.viewmodel.ViewModelFactory
+import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
+import agstack.gramophone.ui.language.viewmodel.ViewModelFactory
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
-class AppTourActivity : BaseActivity() {
+class LanguageActivity : BaseActivity() {
 
-    private lateinit var viewModel: AppTourViewModel
+    private lateinit var viewModel: LanguageViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_apptour)
+        setContentView(R.layout.activity_splash)
 
         setupViewModel()
         setupUi()
@@ -53,6 +53,6 @@ class AppTourActivity : BaseActivity() {
         viewModel = ViewModelProvider(
             this, ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
         )
-            .get(AppTourViewModel::class.java)
+            .get(LanguageViewModel::class.java)
     }
 }
