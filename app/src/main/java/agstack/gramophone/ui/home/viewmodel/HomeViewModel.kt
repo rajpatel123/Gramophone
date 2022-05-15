@@ -1,6 +1,6 @@
 package agstack.gramophone.ui.home.viewmodel
 
-import agstack.gramophone.Resource
+import agstack.gramophone.retrofit.Resource
 import agstack.gramophone.ui.home.repository.HomeRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData

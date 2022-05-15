@@ -1,6 +1,6 @@
 package agstack.gramophone.ui.splash.viewmodel
 
-import agstack.gramophone.Resource
+import agstack.gramophone.retrofit.Resource
 import agstack.gramophone.ui.splash.model.SplashModel
 import agstack.gramophone.ui.splash.repository.SplashRepository
 import androidx.lifecycle.MutableLiveData
@@ -14,8 +14,6 @@ import kotlinx.coroutines.launch
 
 class SplashViewModel(private val splashRepository: SplashRepository) : ViewModel() {
 
-    var liveData: MutableLiveData<SplashModel> = MutableLiveData()
-
     fun initSplashScreen() {
         viewModelScope.launch {
             delay(2000)
@@ -23,9 +21,9 @@ class SplashViewModel(private val splashRepository: SplashRepository) : ViewMode
         }
     }
 
-    private fun updateLiveData() {
+    fun updateLiveData()= liveData(Dispatchers.IO) {
         val splashModel = SplashModel(true)
-        liveData.value = splashModel
+        emit(splashModel)
     }
 
     fun getUsers() = liveData(Dispatchers.IO) {

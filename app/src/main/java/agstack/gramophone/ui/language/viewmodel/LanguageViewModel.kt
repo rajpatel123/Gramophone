@@ -1,6 +1,6 @@
 package agstack.gramophone.ui.language.viewmodel
 
-import agstack.gramophone.Resource
+import agstack.gramophone.retrofit.Resource
 import agstack.gramophone.ui.language.repository.LanguageRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData

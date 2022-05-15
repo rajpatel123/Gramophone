@@ -1,5 +1,6 @@
-package agstack.gramophone
+package agstack.gramophone.retrofit
 
+import agstack.gramophone.Status
 
 
 data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
