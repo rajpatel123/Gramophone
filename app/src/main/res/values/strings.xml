@@ -10,5 +10,6 @@
     <string name="enter_mobile_lebel">Enter Mobile Number</string>
     <string name="policy">Continue you agree to our Terms and Policy</string>
     <string name="submit">Submit</string>
+    <string name="changeno">Change No.</string>
 
 </resources>

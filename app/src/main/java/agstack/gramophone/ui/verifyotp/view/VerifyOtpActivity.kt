@@ -1,34 +1,26 @@
-package agstack.gramophone.ui.login.view
+package agstack.gramophone.ui.verifyotp.view
 
-import agstack.gramophone.R
 import agstack.gramophone.Status
 import agstack.gramophone.base.BaseActivity
-import agstack.gramophone.databinding.ActivityLoginBinding
+import agstack.gramophone.databinding.ActivityVerifyOtpBinding
 import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
-import agstack.gramophone.splash.viewmodel.LoginViewModel
-import agstack.gramophone.ui.login.viewmodel.ViewModelfactory
-import agstack.gramophone.ui.splash.view.SplashActivity
-import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
+import agstack.gramophone.ui.login.view.LoginActivity
+import agstack.gramophone.ui.verifyotp.viewmodel.ViewModelFactory
+import agstack.gramophone.ui.verifyotp.viewmodel.VerifyOtpViewModel
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
-class LoginActivity : BaseActivity() {
+class VerifyOtpActivity : BaseActivity() {
 
-    private lateinit var binding: ActivityLoginBinding
-    private lateinit var viewModel: LoginViewModel
+    private lateinit var binding: ActivityVerifyOtpBinding
+    private lateinit var viewModel: VerifyOtpViewModel
 
     companion object {
-        fun start(activity: SplashActivity) {
-            val intent = Intent(activity, LoginActivity::class.java)
-            activity.startActivity(intent)
-            activity.finish()
-        }
-
-        fun start(activity: VerifyOtpActivity) {
-            val intent = Intent(activity, LoginActivity::class.java)
+        fun start(activity: LoginActivity) {
+            val intent = Intent(activity, VerifyOtpActivity::class.java)
             activity.startActivity(intent)
             activity.finish()
         }
@@ -36,10 +28,11 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
+        binding = ActivityVerifyOtpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupUi()
+
         setupViewModel()
+        setupUi()
         setupObservers()
     }
 
@@ -64,16 +57,19 @@ class LoginActivity : BaseActivity() {
 
 
     private fun setupUi() {
-        binding.submitBtn.setOnClickListener {view ->
-            VerifyOtpActivity.start(this@LoginActivity)
-        }
+        binding.changeNumberTxt.setOnClickListener { onBackPressed() }
     }
 
     private fun setupViewModel() {
         // With ViewModelFactory
         viewModel = ViewModelProvider(
-            this, ViewModelfactory(ApiHelper(RetrofitBuilder.apiService))
+            this, ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
         )
-            .get(LoginViewModel::class.java)
+            .get(VerifyOtpViewModel::class.java)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        LoginActivity.start(this@VerifyOtpActivity)
     }
 }

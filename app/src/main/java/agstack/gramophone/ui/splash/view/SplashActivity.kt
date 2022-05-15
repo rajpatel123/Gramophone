@@ -6,12 +6,12 @@ import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
-import agstack.gramophone.ui.splash.model.SplashModel
+import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
 import agstack.gramophone.ui.splash.viewmodel.ViewModelFactory
 import android.content.Intent
 import android.os.Bundle
-import android.view.WindowManager
+import android.os.Handler
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
@@ -38,6 +38,9 @@ class SplashActivity : BaseActivity() {
 
     private fun setupUi() {
         viewModel.initSplashScreen()
+        Handler().postDelayed(Runnable {
+            LoginActivity.start(this@SplashActivity)
+        },3000)
     }
 
     private fun setupObservers() {
