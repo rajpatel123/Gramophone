@@ -1,6 +1,6 @@
 package agstack.gramophone.ui.apptour.viewmodel
 
-import agstack.gramophone.Resource
+import agstack.gramophone.retrofit.Resource
 import agstack.gramophone.ui.apptour.repository.AppTourRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData

@@ -11,6 +11,7 @@ import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
 import agstack.gramophone.ui.splash.viewmodel.ViewModelFactory
 import android.content.Intent
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
@@ -20,7 +21,7 @@ class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_apptour)
+        setContentView(R.layout.activity_splash)
 
         setupViewModel()
         setupUi()
@@ -44,24 +45,25 @@ class SplashActivity : BaseActivity() {
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
-                   //TODO Handle the response here
+                        //TODO Handle the response here
                     }
                     Status.ERROR -> {
-                   //TODO Handle the error here
+                        //TODO Handle the error here
                     }
 
                     Status.LOADING -> {
-                    // TODO manage progress
+                        // TODO manage progress
                     }
                 }
             }
         })
 
-        val observer = Observer<SplashModel> {
-            val intent = Intent(this, LanguageActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-        viewModel.liveData.observe(this, observer)
+        viewModel.updateLiveData().observe(this, Observer {
+            it?.let {
+                val intent = Intent(this, LanguageActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        })
     }
 }
