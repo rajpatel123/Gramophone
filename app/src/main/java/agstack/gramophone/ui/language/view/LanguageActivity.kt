@@ -1,23 +1,23 @@
-package agstack.gramophone.ui.login.view
+package agstack.gramophone.ui.language.view
 
 import agstack.gramophone.R
 import agstack.gramophone.Status
 import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
-import agstack.gramophone.splash.viewmodel.LoginViewModel
-import agstack.gramophone.ui.login.viewmodel.ViewModelFactory
+import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
+import agstack.gramophone.ui.language.viewmodel.ViewModelFactory
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
-class LoginActivity : BaseActivity() {
+class LanguageActivity : BaseActivity() {
 
-    private lateinit var viewModel: LoginViewModel
+    private lateinit var viewModel: LanguageViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_splash)
 
         setupViewModel()
         setupUi()
@@ -25,7 +25,7 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun setupObservers() {
-        viewModel.loginUser().observe(this, Observer {
+        viewModel.getUsers().observe(this, Observer {
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
@@ -53,6 +53,6 @@ class LoginActivity : BaseActivity() {
         viewModel = ViewModelProvider(
             this, ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
         )
-            .get(LoginViewModel::class.java)
+            .get(LanguageViewModel::class.java)
     }
 }
