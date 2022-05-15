@@ -25,7 +25,7 @@ class AppTourActivity : BaseActivity() {
     }
 
     private fun setupObservers() {
-        viewModel.getUsers().observe(this, Observer {
+        viewModel.loginUser().observe(this, Observer {
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {

@@ -1,18 +1,18 @@
 package agstack.gramophone.splash.viewmodel
 
 import agstack.gramophone.Resource
-import agstack.gramophone.splash.repository.SplashRepository
+import agstack.gramophone.ui.login.repository.LoginRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import kotlinx.coroutines.Dispatchers
 
 
-class LoginViewModel(private val splashRepository: SplashRepository) : ViewModel() {
+class LoginViewModel(private val splashRepository: LoginRepository) : ViewModel() {
 
-    fun getUsers() = liveData(Dispatchers.IO) {
+    fun loginUser() = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {
-            emit(Resource.success(data = splashRepository.getUsers()))
+            emit(Resource.success(data = splashRepository.loginUser()))
         } catch (exception: Exception) {
             emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
         }
