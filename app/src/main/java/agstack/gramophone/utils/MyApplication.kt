@@ -1,6 +1,8 @@
 package agstack.gramophone.utils
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.multidex.MultiDex
 
 class MyApplication : Application() {
 
@@ -10,5 +12,9 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        MultiDex.install(this)
+
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+
     }
 }
