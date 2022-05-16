@@ -14,16 +14,18 @@ import kotlinx.coroutines.launch
 
 class SplashViewModel(private val splashRepository: SplashRepository) : ViewModel() {
 
+    var liveData: MutableLiveData<SplashModel> = MutableLiveData()
+
     fun initSplashScreen() {
         viewModelScope.launch {
-            delay(2000)
+            delay(3000)
             updateLiveData()
         }
     }
 
-    fun updateLiveData()= liveData(Dispatchers.IO) {
+    private fun updateLiveData() {
         val splashModel = SplashModel(true)
-        emit(splashModel)
+        liveData.value = splashModel
     }
 
     fun getUsers() = liveData(Dispatchers.IO) {
