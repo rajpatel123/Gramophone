@@ -16,4 +16,10 @@
 
 
     <color name="blue_opacity_80">#CC6FBEFE</color>
+    <color name="gray_stroke">#E0E4EC</color>
+
+    <color name="bottom_background">#FFFFFF</color>
+    <color name="gray_menu_passive">#AFB0B4</color>
+    <color name="bottom_menu_pressed">#FFFFFF</color>
+    <color name="gray_menu_active">#1B30BE</color>
 </resources>

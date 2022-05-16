@@ -1,3 +1,3 @@
 package agstack.gramophone.ui.language.model
 
-data class AppConfig(val settings:String)
+data class AppConfig(val title:String, val value:String)
