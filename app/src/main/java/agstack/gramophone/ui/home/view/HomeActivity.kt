@@ -3,11 +3,14 @@ package agstack.gramophone.ui.home.view
 import agstack.gramophone.R
 import agstack.gramophone.Status
 import agstack.gramophone.base.BaseActivity
+import agstack.gramophone.menu.BottomNavigationView
+import agstack.gramophone.menu.OnNavigationItemChangeListener
 import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.home.viewmodel.ViewModelFactory
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
@@ -17,7 +20,7 @@ class HomeActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+        setContentView(R.layout.activity_home)
 
         setupViewModel()
         setupUi()
@@ -45,7 +48,17 @@ class HomeActivity : BaseActivity() {
 
 
     private fun setupUi() {
-        //TODO intialise ui components
+        val bottomMenu = findViewById<BottomNavigationView>(R.id.bottom_nav)
+        bottomMenu?.setOnNavigationItemChangedListener(object : OnNavigationItemChangeListener {
+            override fun onNavigationItemChanged(navigationItem: BottomNavigationView.NavigationItem) {
+                Toast.makeText(this@HomeActivity,
+                    "Selected item at index ${navigationItem.position}",
+                    Toast.LENGTH_SHORT).show()
+            }
+        })
+        /* If you want to change active navigation item programmatically
+         * bottomMenu.setActiveNavigationIndex(2)
+         */
     }
 
     private fun setupViewModel() {
