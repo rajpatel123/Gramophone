@@ -10,10 +10,10 @@ import agstack.gramophone.ui.language.adapter.LanguageAdapter
 import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
 import agstack.gramophone.ui.language.viewmodel.ViewModelFactory
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class LanguageActivity : BaseActivity() {
 
@@ -22,7 +22,7 @@ class LanguageActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLanguageBinding.inflate(layoutInflater);
+        setContentView(R.layout.activity_language)
 
         setupViewModel()
         setupUi()
@@ -50,9 +50,12 @@ class LanguageActivity : BaseActivity() {
 
 
     private fun setupUi() {
-        binding?.recyclerLanguage?.layoutManager = GridLayoutManager(this, 2)
+       /* binding?.recyclerLanguage?.layoutManager = GridLayoutManager(this, 2)
         binding?.recyclerLanguage?.setHasFixedSize(true)
-        binding?.recyclerLanguage?.adapter = LanguageAdapter()
+        binding?.recyclerLanguage?.adapter = LanguageAdapter()*/
+        val recyclerLanguage = findViewById<RecyclerView>(R.id.recycler_language)
+       recyclerLanguage?.setHasFixedSize(true)
+        recyclerLanguage?.adapter = LanguageAdapter()
     }
 
     private fun setupViewModel() {
