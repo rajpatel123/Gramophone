@@ -16,7 +16,7 @@ class SplashViewModel(private val splashRepository: SplashRepository) : ViewMode
 
     fun initSplashScreen() {
         viewModelScope.launch {
-            delay(2000)
+            delay(10000)
             updateLiveData()
         }
     }
