@@ -7,6 +7,8 @@ import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
 import agstack.gramophone.ui.login.view.LoginActivity
+import agstack.gramophone.ui.home.view.HomeActivity
+import agstack.gramophone.ui.splash.model.SplashModel
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
 import agstack.gramophone.ui.splash.viewmodel.ViewModelFactory
 import android.content.Intent
@@ -38,9 +40,6 @@ class SplashActivity : BaseActivity() {
 
     private fun setupUi() {
         viewModel.initSplashScreen()
-        Handler().postDelayed(Runnable {
-            LoginActivity.start(this@SplashActivity)
-        },3000)
     }
 
     private fun setupObservers() {
@@ -48,25 +47,24 @@ class SplashActivity : BaseActivity() {
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
-                        //TODO Handle the response here
+                   //TODO Handle the response here
                     }
                     Status.ERROR -> {
-                        //TODO Handle the error here
+                   //TODO Handle the error here
                     }
 
                     Status.LOADING -> {
-                        // TODO manage progress
+                    // TODO manage progress
                     }
                 }
             }
         })
 
-        viewModel.updateLiveData().observe(this, Observer {
-            it?.let {
-                val intent = Intent(this, LanguageActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-        })
+        val observer = Observer<SplashModel> {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        viewModel.liveData.observe(this, observer)
     }
 }
