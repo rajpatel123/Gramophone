@@ -1,3 +1,3 @@
 package agstack.gramophone.ui.language.model
 
-data class LanguageData(val title:String, val value:String)
+data class LanguageData(val title: String, val value: String, val isSelected: Boolean)
