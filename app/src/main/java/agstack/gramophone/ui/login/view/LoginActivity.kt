@@ -7,6 +7,7 @@ import agstack.gramophone.databinding.ActivityLoginBinding
 import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
 import agstack.gramophone.splash.viewmodel.LoginViewModel
+import agstack.gramophone.ui.apptour.view.AppTourActivity
 import agstack.gramophone.ui.login.viewmodel.ViewModelfactory
 import agstack.gramophone.ui.splash.view.SplashActivity
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
@@ -22,6 +23,12 @@ class LoginActivity : BaseActivity() {
 
     companion object {
         fun start(activity: SplashActivity) {
+            val intent = Intent(activity, LoginActivity::class.java)
+            activity.startActivity(intent)
+            activity.finish()
+        }
+
+        fun start(activity: AppTourActivity) {
             val intent = Intent(activity, LoginActivity::class.java)
             activity.startActivity(intent)
             activity.finish()
