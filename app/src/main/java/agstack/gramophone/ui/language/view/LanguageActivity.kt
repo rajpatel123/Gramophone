@@ -7,12 +7,12 @@ import agstack.gramophone.databinding.ActivityLanguageBinding
 import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
 import agstack.gramophone.ui.language.adapter.LanguageAdapter
+import agstack.gramophone.ui.language.model.LanguageData
 import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
 import agstack.gramophone.ui.language.viewmodel.ViewModelFactory
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class LanguageActivity : BaseActivity() {
@@ -50,12 +50,18 @@ class LanguageActivity : BaseActivity() {
 
 
     private fun setupUi() {
-       /* binding?.recyclerLanguage?.layoutManager = GridLayoutManager(this, 2)
-        binding?.recyclerLanguage?.setHasFixedSize(true)
-        binding?.recyclerLanguage?.adapter = LanguageAdapter()*/
+        /* binding?.recyclerLanguage?.layoutManager = GridLayoutManager(this, 2)
+         binding?.recyclerLanguage?.setHasFixedSize(true)
+         binding?.recyclerLanguage?.adapter = LanguageAdapter()*/
+        val languageList = ArrayList<LanguageData>()
+        languageList.add(LanguageData("English", "English"))
+        languageList.add(LanguageData("हिंदी", "Hindi"))
+        languageList.add(LanguageData("मराठी", "Marathi"))
+        languageList.add(LanguageData("ગુજરાતી", "Gujrati"))
+
         val recyclerLanguage = findViewById<RecyclerView>(R.id.recycler_language)
-       recyclerLanguage?.setHasFixedSize(true)
-        recyclerLanguage?.adapter = LanguageAdapter()
+        recyclerLanguage?.setHasFixedSize(true)
+        recyclerLanguage?.adapter = LanguageAdapter(languageList)
     }
 
     private fun setupViewModel() {
