@@ -54,10 +54,10 @@ class LanguageActivity : BaseActivity() {
          binding?.recyclerLanguage?.setHasFixedSize(true)
          binding?.recyclerLanguage?.adapter = LanguageAdapter()*/
         val languageList = ArrayList<LanguageData>()
-        languageList.add(LanguageData("English", "English"))
-        languageList.add(LanguageData("हिंदी", "Hindi"))
-        languageList.add(LanguageData("मराठी", "Marathi"))
-        languageList.add(LanguageData("ગુજરાતી", "Gujrati"))
+        languageList.add(LanguageData("English", "English", true))
+        languageList.add(LanguageData("हिंदी", "Hindi", false))
+        languageList.add(LanguageData("मराठी", "Marathi", false))
+        languageList.add(LanguageData("ગુજરાતી", "Gujrati", false))
 
         val recyclerLanguage = findViewById<RecyclerView>(R.id.recycler_language)
         recyclerLanguage?.setHasFixedSize(true)
