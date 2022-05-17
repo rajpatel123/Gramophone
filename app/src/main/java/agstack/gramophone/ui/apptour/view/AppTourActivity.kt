@@ -3,56 +3,94 @@ package agstack.gramophone.ui.apptour.view
 import agstack.gramophone.R
 import agstack.gramophone.Status
 import agstack.gramophone.base.BaseActivity
+import agstack.gramophone.databinding.ActivityApptourBinding
+import agstack.gramophone.databinding.ActivityLoginBinding
 import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
-import agstack.gramophone.ui.apptour.viewmodel.AppTourViewModel
-import agstack.gramophone.ui.apptour.viewmodel.ViewModelFactory
+import agstack.gramophone.splash.viewmodel.AppTourViewModel
+import agstack.gramophone.ui.apptour.adapter.DotIndicatorPager2Adapter
+import agstack.gramophone.ui.apptour.model.Card
+import agstack.gramophone.ui.login.view.LoginActivity
 import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 class AppTourActivity : BaseActivity() {
-
+    private lateinit var binding: ActivityApptourBinding
     private lateinit var viewModel: AppTourViewModel
-
+    private lateinit var items: ArrayList<Card>
+    private lateinit var viewPager2: ViewPager2
+    var cardIndex:Int =0;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_apptour)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.app_tour_bg)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+        binding = ActivityApptourBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setupViewModel()
+
+        initCards()
+        val dotsIndicator = findViewById<DotsIndicator>(R.id.dots_indicator)
+        dotsIndicator.setOnClickListener {  }
+         viewPager2 = findViewById<ViewPager2>(R.id.view_pager)
+          viewPager2.setUserInputEnabled(false);
+        val adapter = DotIndicatorPager2Adapter(items)
+        viewPager2.adapter = adapter
+
+        val zoomOutPageTransformer = ZoomOutPageTransformer()
+        viewPager2.setPageTransformer { page, position ->
+            zoomOutPageTransformer.transformPage(page, position)
+        }
+
+        dotsIndicator.attachTo(viewPager2)
+
+
         setupUi()
-        setupObservers()
     }
 
-    private fun setupObservers() {
-        viewModel.getUsers().observe(this, Observer {
-            it?.let { resource ->
-                when (resource.status) {
-                    Status.SUCCESS -> {
-                   //TODO Handle the response here
-                    }
-                    Status.ERROR -> {
-                   //TODO Handle the error here
-                    }
+    private fun initCards() {
+         items = ArrayList<Card>()
 
-                    Status.LOADING -> {
-                    // TODO manage progress
-                    }
-                }
-            }
-        })
+        val cardConnected = Card(R.drawable.communication, getString(R.string.connected),getString(R.string.connected_sub_msg))
+        items.add(cardConnected)
+
+        val cardDelivevry = Card(R.drawable.delivery,getString(R.string.delivery), getString(R.string.delivery_sub_msg))
+        items.add(cardDelivevry)
+
+        val cardUpdates = Card(R.drawable.midea,getString(R.string.midea), getString(R.string.midea_sub_msg))
+        items.add(cardUpdates)
     }
 
 
     private fun setupUi() {
-        //TODO intialise ui components
+        binding.next.setOnClickListener {
+            if (cardIndex==items.size-1){
+                LoginActivity.start(this@AppTourActivity)
+            }else{
+                cardIndex++
+                viewPager2.currentItem=cardIndex
+                if (cardIndex==items.size-1){
+                    binding.next.text=getString(R.string.finish)
+                }
+            }
+        }
+
+        binding.skip.setOnClickListener {
+            LoginActivity.start(this@AppTourActivity)
+        }
+
     }
 
-    private fun setupViewModel() {
-        // With ViewModelFactory
-        viewModel = ViewModelProvider(
-            this, ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
-        )
-            .get(AppTourViewModel::class.java)
-    }
+
 }

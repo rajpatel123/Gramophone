@@ -5,4 +5,18 @@
     <string name="skip">Skip</string>
     <string name="next">Next</string>
     <string name="resource_img_icon">resource_img_icon</string>
+    <string name="welcome_msg">Welcome to Gramophone</string>
+    <string name="start_msg">Let’s start with mobile number</string>
+    <string name="enter_mobile_lebel">Enter Mobile Number</string>
+    <string name="policy">Continue you agree to our Terms and Policy</string>
+    <string name="submit">Submit</string>
+    <string name="changeno">Change No.</string>
+    <string name="connected">Stay Connected</string>
+    <string name="connected_sub_msg"><![CDATA[Get best agriculture techniques Connect with Agri Experts & Farmers]]></string>
+    <string name="delivery_sub_msg"><![CDATA[Buy best quality seeds, crop protection, crop nutrition & agri equipments]]></string>
+    <string name="delivery">Deliver on your doorstep</string>
+    <string name="midea">Get Latest Updates</string>
+    <string name="midea_sub_msg"><![CDATA[Get weather updates, mandi prices & other agriculture news at one place]]></string>
+    <string name="finish">FINISH</string>
+
 </resources>

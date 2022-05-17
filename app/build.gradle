@@ -10,10 +10,12 @@ android {
 
     defaultConfig {
         applicationId "agstack.gramophone"
-        minSdk 21
+        minSdk 23
         targetSdk 31
         versionCode 1
         versionName "1.0.0"   // Major.Minor.Patch
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -95,5 +97,7 @@ dependencies {
     // dp/sp
     implementation 'com.intuit.ssp:ssp-android:1.0.6'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
+    implementation 'com.android.support:multidex:2.0.1'
 
 }

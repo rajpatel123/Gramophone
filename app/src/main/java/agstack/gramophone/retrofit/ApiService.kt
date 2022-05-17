@@ -1,18 +1,13 @@
 package agstack.gramophone.retrofit
 
-import agstack.gramophone.ui.language.model.AppConfig
 import retrofit2.http.GET
 
 interface ApiService {
 
     @GET("users")
-    suspend fun getUsers(): AppConfig
+    suspend fun loginUser(): String
 
-    @GET("users")
-    suspend fun getConfig(): AppConfig
 
-    @GET("users")
-    suspend fun loginUser(): AppConfig
 
 
 }

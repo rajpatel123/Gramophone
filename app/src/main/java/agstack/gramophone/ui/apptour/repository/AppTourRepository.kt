@@ -5,5 +5,5 @@ import agstack.gramophone.retrofit.ApiHelper
 
 class AppTourRepository(private val apiHelper: ApiHelper) {
 
-    suspend fun getUsers() = apiHelper.getUsers()
+    suspend fun loginUser() = apiHelper.loginUser()
 }
