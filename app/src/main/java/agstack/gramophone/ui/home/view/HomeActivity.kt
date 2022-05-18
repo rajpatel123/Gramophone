@@ -9,6 +9,9 @@ import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.home.viewmodel.ViewModelFactory
+import agstack.gramophone.ui.login.view.LoginActivity
+import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -17,6 +20,14 @@ import androidx.lifecycle.ViewModelProvider
 class HomeActivity : BaseActivity() {
 
     private lateinit var viewModel: HomeViewModel
+
+    companion object {
+        fun start(activity: VerifyOtpActivity) {
+            val intent = Intent(activity, HomeActivity::class.java)
+            activity.startActivity(intent)
+            activity.finish()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
