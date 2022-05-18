@@ -4,10 +4,7 @@ package agstack.gramophone.ui.language.adapter
 import agstack.gramophone.R
 import agstack.gramophone.databinding.ItemLanguageBinding
 import agstack.gramophone.ui.apptour.view.AppTourActivity
-import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.language.model.LanguageData
-import agstack.gramophone.ui.language.view.LanguageActivity
-import agstack.gramophone.ui.login.view.LoginActivity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View

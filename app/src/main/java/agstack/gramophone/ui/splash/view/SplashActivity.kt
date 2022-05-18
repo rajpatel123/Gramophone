@@ -3,17 +3,14 @@ package agstack.gramophone.ui.splash.view
 import agstack.gramophone.R
 import agstack.gramophone.Status
 import agstack.gramophone.base.BaseActivity
-import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
-import agstack.gramophone.ui.login.view.LoginActivity
-import agstack.gramophone.ui.home.view.HomeActivity
+import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.ui.splash.model.SplashModel
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
 import agstack.gramophone.ui.splash.viewmodel.ViewModelFactory
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
