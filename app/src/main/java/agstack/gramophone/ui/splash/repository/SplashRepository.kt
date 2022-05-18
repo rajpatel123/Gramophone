@@ -5,5 +5,5 @@ import agstack.gramophone.retrofit.ApiHelper
 
 class SplashRepository(private val apiHelper: ApiHelper) {
 
-    suspend fun getUsers() = apiHelper.getUsers()
+    suspend fun getUsers() = apiHelper.loginUser()
 }

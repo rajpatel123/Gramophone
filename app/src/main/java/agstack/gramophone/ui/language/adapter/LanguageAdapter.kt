@@ -3,8 +3,11 @@ package agstack.gramophone.ui.language.adapter
 
 import agstack.gramophone.R
 import agstack.gramophone.databinding.ItemLanguageBinding
+import agstack.gramophone.ui.apptour.view.AppTourActivity
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.language.model.LanguageData
+import agstack.gramophone.ui.language.view.LanguageActivity
+import agstack.gramophone.ui.login.view.LoginActivity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -38,7 +41,7 @@ class LanguageAdapter(private val languageList: ArrayList<LanguageData>) :
         holder.binding.tvLanguageTitle.text = languageList[i].title
         holder.binding.tvLanguage.text = languageList[i].value
         holder.binding.llLanguageSelection.setOnClickListener(View.OnClickListener {
-            val intent = Intent(holder.itemView.context, HomeActivity::class.java)
+            val intent = Intent(holder.itemView.context, AppTourActivity::class.java)
            holder.itemView.context.startActivity(intent)
         })
 

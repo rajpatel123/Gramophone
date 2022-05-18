@@ -41,44 +41,61 @@
             android:layout_marginTop="@dimen/_4sdp"
             android:textColor="@color/grey"/>
 
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/small"
-            android:text="@string/enter_mobile_lebel"
             android:layout_marginTop="@dimen/_22sdp"
-            android:textColor="@color/blakish"/>
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/small"
+                android:text="@string/enter_mobile_lebel"
+                android:textColor="@color/blakish"/>
 
-        <EditText
+            <TextView
+                android:id="@+id/changeNumberTxt"
+                style="@style/small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="@string/changeno"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:textColor="@color/blakish" />
+        </RelativeLayout>
+
+        <com.chaos.view.PinView
+            android:id="@+id/firstPinView"
+            style="@style/PinWidget.PinView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:background="@drawable/rounded_corner"
-            android:backgroundTint="@color/mute_grey"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:letterSpacing=".05"
-            android:textSize="@dimen/_10ssp"
+            android:cursorVisible="true"
+            android:gravity="center"
+            android:hint="Hint."
             android:inputType="number"
-            android:maxLength="10"
-            android:singleLine="true"
-            android:hint="@string/enter_mobile_lebel"
-            android:imeOptions="actionDone"
-            />
+            android:padding="@dimen/common_padding"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:text="434343"
+            android:textStyle="bold"
+            app:cursorColor="@color/brand_color"
+            app:cursorWidth="2dp"
+            app:hideLineWhenFilled="false"
+            app:itemCount="6"
+            app:itemHeight="48dp"
+            app:itemRadius="4dp"
+            app:itemSpacing="5dp"
+            app:itemWidth="48dp"
+            android:state_selected="true"
+            app:lineColor="@color/grey"
+            app:lineWidth="2dp"
+            app:viewType="rectangle" />
     </LinearLayout>
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/mini"
-        android:text="@string/policy"
-        android:gravity="center"
-        android:layout_margin="@dimen/_10sdp"
-        app:layout_constraintBottom_toTopOf="@+id/submitBtn"/>
 
     <Button
-        android:id="@+id/submitBtn"
+        android:id="@+id/verifyOtpBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/submit"
