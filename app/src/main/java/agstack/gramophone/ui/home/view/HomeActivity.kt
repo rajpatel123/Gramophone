@@ -9,8 +9,7 @@ import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.home.viewmodel.ViewModelFactory
-import agstack.gramophone.ui.login.view.LoginActivity
-import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
+import agstack.gramophone.ui.profile.view.ProfileSelectionActivity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -22,7 +21,7 @@ class HomeActivity : BaseActivity() {
     private lateinit var viewModel: HomeViewModel
 
     companion object {
-        fun start(activity: VerifyOtpActivity) {
+        fun start(activity: ProfileSelectionActivity) {
             val intent = Intent(activity, HomeActivity::class.java)
             activity.startActivity(intent)
             activity.finish()

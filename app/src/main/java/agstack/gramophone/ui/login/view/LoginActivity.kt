@@ -1,6 +1,5 @@
 package agstack.gramophone.ui.login.view
 
-import agstack.gramophone.R
 import agstack.gramophone.Status
 import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.databinding.ActivityLoginBinding
@@ -9,7 +8,7 @@ import agstack.gramophone.retrofit.RetrofitBuilder
 import agstack.gramophone.splash.viewmodel.LoginViewModel
 import agstack.gramophone.ui.apptour.view.AppTourActivity
 import agstack.gramophone.ui.login.viewmodel.ViewModelfactory
-import agstack.gramophone.ui.splash.view.SplashActivity
+import agstack.gramophone.ui.profile.view.ProfileSelectionActivity
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import android.content.Intent
 import android.os.Bundle
@@ -22,7 +21,7 @@ class LoginActivity : BaseActivity() {
     private lateinit var viewModel: LoginViewModel
 
     companion object {
-        fun start(activity: SplashActivity) {
+        fun start(activity: ProfileSelectionActivity) {
             val intent = Intent(activity, LoginActivity::class.java)
             activity.startActivity(intent)
             activity.finish()
