@@ -1,26 +1,35 @@
-package agstack.gramophone.ui.splash.view
+package agstack.gramophone.ui.profile.view
 
-import agstack.gramophone.R
 import agstack.gramophone.Status
 import agstack.gramophone.base.BaseActivity
+import agstack.gramophone.databinding.ActivityProfileSelectionBinding
 import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
-import agstack.gramophone.ui.language.view.LanguageActivity
-import agstack.gramophone.ui.splash.model.SplashModel
-import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
-import agstack.gramophone.ui.splash.viewmodel.ViewModelFactory
+import agstack.gramophone.ui.home.view.HomeActivity
+import agstack.gramophone.ui.profile.viewmodel.ProfileSelectionViewModel
+import agstack.gramophone.ui.profile.viewmodel.ViewModelFactory
+import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
-class SplashActivity : BaseActivity() {
+class ProfileSelectionActivity : BaseActivity() {
+    private lateinit var binding: ActivityProfileSelectionBinding
+    private lateinit var viewModel: ProfileSelectionViewModel
 
-    private lateinit var viewModel: SplashViewModel
+    companion object {
+        fun start(activity: VerifyOtpActivity) {
+            val intent = Intent(activity, ProfileSelectionActivity::class.java)
+            activity.startActivity(intent)
+            activity.finish()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+        binding = ActivityProfileSelectionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setupViewModel()
         setupUi()
@@ -32,11 +41,13 @@ class SplashActivity : BaseActivity() {
         viewModel = ViewModelProvider(
             this, ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
         )
-            .get(SplashViewModel::class.java)
+            .get(ProfileSelectionViewModel::class.java)
     }
 
     private fun setupUi() {
-        viewModel.initSplashScreen()
+        binding.continueBtn.setOnClickListener {
+            HomeActivity.start(this@ProfileSelectionActivity)
+        }
     }
 
     private fun setupObservers() {
@@ -56,12 +67,5 @@ class SplashActivity : BaseActivity() {
                 }
             }
         })
-
-        val observer = Observer<SplashModel> {
-            val intent = Intent(this, LanguageActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-        viewModel.liveData.observe(this, observer)
     }
 }
