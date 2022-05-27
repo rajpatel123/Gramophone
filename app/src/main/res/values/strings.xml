@@ -41,5 +41,8 @@
     <string name="enter_referral_code">Enter Referral code (Optional)</string>
     <string name="shop_by_category">Shop by Category</string>
     <string name="feature_product">Feature Product</string>
+    <string name="view_all">View All</string>
+    <string name="mandi_rates">Mandi Rates</string>
+    <string name="shop_by_crops">Shop by Crops</string>
 
 </resources>

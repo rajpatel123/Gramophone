@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginEnd="@dimen/_16sdp"
+    android:gravity="center"
+    android:layout_marginBottom="@dimen/_16sdp"
     xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
         android:background="@drawable/rounded_stroke"
-        android:layout_width="@dimen/_72sdp"
-        android:layout_height="@dimen/_72sdp">
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp">
 
         <ImageView
             android:contentDescription="@string/image"
@@ -28,6 +29,6 @@
         tools:text="Onion"
         android:textSize="@dimen/_12ssp"
         android:layout_marginTop="@dimen/_4sdp"
-        android:textColor="@color/blue"/>
+        android:textColor="@color/gray"/>
 
 </LinearLayout>

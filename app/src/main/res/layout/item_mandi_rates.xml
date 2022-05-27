@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/_10sdp"
+    android:paddingBottom="@dimen/_10sdp"
+    android:paddingStart="@dimen/_10sdp"
+    android:paddingEnd="@dimen/_10sdp"
+    android:layout_marginEnd="@dimen/_16sdp"
+    android:background="@drawable/rounded_corner_16_solid_white_stroke_gray"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="@dimen/_64sdp"
+        android:layout_height="@dimen/_64sdp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/image"
+        android:src="@drawable/dummy_mandi_rates" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:paddingStart="@dimen/_16sdp"
+        android:paddingEnd="@dimen/_16sdp">
+
+        <TextView
+            style="@style/heading_title_bold_large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="Cotton"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/blakish" />
+
+        <TextView
+            style="@style/heading_title_bold_large"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/_14ssp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="₹ 6590/Q"
+            android:textColor="@color/blakish" />
+
+        <TextView
+            style="@style/heading_title_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="Sanwer"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/gray_strike_through" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
