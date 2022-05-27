@@ -39,5 +39,7 @@
     <string name="i_m_a_farmer">I\'m a Farmer</string>
     <string name="image">image</string>
     <string name="enter_referral_code">Enter Referral code (Optional)</string>
+    <string name="shop_by_category">Shop by Category</string>
+    <string name="feature_product">Feature Product</string>
 
 </resources>

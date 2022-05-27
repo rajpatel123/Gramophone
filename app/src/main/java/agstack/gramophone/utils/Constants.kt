@@ -1,6 +1,7 @@
 package agstack.gramophone.utils
 
 import agstack.gramophone.BuildConfig
+import android.content.Context
 
 object Constants {
     /**
@@ -19,4 +20,12 @@ object Constants {
      * For Broadcast
      */
     const val BROADCAST_ACTION_NOTIFICATIONS = BuildConfig.APPLICATION_ID + ".notifications"
+
+    fun Context.dpToPx(dp: Int): Int {
+        return (dp * resources.displayMetrics.density).toInt()
+    }
+
+    fun Context.pxToDp(px: Int): Int {
+        return (px / resources.displayMetrics.density).toInt()
+    }
 }
