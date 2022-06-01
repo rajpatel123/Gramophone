@@ -9,11 +9,24 @@ object Constants {
      */
     //const val SERVER_BASE_URL = "https://gorest.co.in/public"
 
+
+
     /**
      * For MyNotificationOpenedHandler
      */
     const val INTENT_EXTRA_TARGET_KEY = "target"
     const val INTENT_EXTRA_TARGET_VAL_NOTIFICATIONS = "notifications"
+
+    /**
+     * Keys
+     */
+    val PHONE: String="phone"
+    val LANGUAGE: String="language"
+
+
+
+
+
 
     /**
      * For Broadcast

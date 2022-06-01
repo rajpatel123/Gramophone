@@ -11,6 +11,7 @@ import agstack.gramophone.ui.apptour.view.AppTourActivity
 import agstack.gramophone.ui.login.viewmodel.ViewModelfactory
 import agstack.gramophone.ui.splash.view.SplashActivity
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
+import agstack.gramophone.utils.Constants
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
@@ -51,6 +52,12 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun setupObservers() {
+        val hashMap = HashMap<Any,Any>()
+        hashMap[Constants.PHONE]
+        val language = LocaleManagerClass.getLangCodeFromPreferences(this)
+        hashmap[Constants.LANGUAGE] = language
+
+
         viewModel.loginUser().observe(this, Observer {
             it?.let { resource ->
                 when (resource.status) {
