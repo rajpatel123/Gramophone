@@ -1,12 +1,9 @@
 package agstack.gramophone.ui.apptour.view
 
 import agstack.gramophone.R
-import agstack.gramophone.Status
 import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.databinding.ActivityApptourBinding
 import agstack.gramophone.databinding.ActivityLoginBinding
-import agstack.gramophone.retrofit.ApiHelper
-import agstack.gramophone.retrofit.RetrofitBuilder
 import agstack.gramophone.splash.viewmodel.AppTourViewModel
 import agstack.gramophone.ui.apptour.adapter.DotIndicatorPager2Adapter
 import agstack.gramophone.ui.apptour.model.Card

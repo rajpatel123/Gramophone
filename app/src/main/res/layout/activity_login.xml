@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <include
         android:id="@+id/toolbar"
-        app:layout_constraintTop_toBottomOf="parent"
         layout="@layout/toolbar_with_logo_in_center"
         />
 
@@ -15,16 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="2px"
         android:background="#F2F4F7"
+        android:layout_below="@+id/toolbar"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
 
 
 
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_separator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_31sdp"
         android:layout_marginStart="@dimen/_24sdp"
+        android:layout_below="@+id/toolbar_separator"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
@@ -74,6 +73,7 @@
         style="@style/mini"
         android:text="@string/policy"
         android:gravity="center"
+        android:layout_above="@+id/submitBtn"
         android:layout_margin="@dimen/_10sdp"
         app:layout_constraintBottom_toTopOf="@+id/submitBtn"/>
 
@@ -89,6 +89,14 @@
         android:layout_marginStart="@dimen/_24sdp"
         android:layout_marginEnd="@dimen/_24sdp"
         android:background="@drawable/btn_rounded_corner"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/_20sdp"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/progress"
+/>
+
+</RelativeLayout>

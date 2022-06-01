@@ -9,10 +9,10 @@
     <string name="select_language_msg_gujarati">કૃપા કરીને એક ભાષા પસંદ કરો</string>
 
     <!-- Language name -->
-    <string name="english">English</string>
-    <string name="hindi">हिन्दी</string>
-    <string name="marathi">मराठी</string>
-    <string name="gujarati">ગુજરાતી</string>
+    <string name="select_language_eng">English</string>
+    <string name="select_language_hi">हिन्दी</string>
+    <string name="select_language_marathi">मराठी</string>
+    <string name="select_language_gujarati">ગુજરાતી</string>
 
 </resources>
 

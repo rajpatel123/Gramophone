@@ -1,26 +1,29 @@
 package agstack.gramophone.ui.login.view
 
-import agstack.gramophone.R
-import agstack.gramophone.Status
 import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.databinding.ActivityLoginBinding
-import agstack.gramophone.retrofit.ApiHelper
-import agstack.gramophone.retrofit.RetrofitBuilder
-import agstack.gramophone.splash.viewmodel.LoginViewModel
 import agstack.gramophone.ui.apptour.view.AppTourActivity
-import agstack.gramophone.ui.login.viewmodel.ViewModelfactory
+import agstack.gramophone.ui.login.LoginViewModel
 import agstack.gramophone.ui.splash.view.SplashActivity
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.LocaleManagerClass
+import agstack.gramophone.utils.Resource
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-
+import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.log
+@AndroidEntryPoint
 class LoginActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var viewModel: LoginViewModel
+    private val loginViewModel: LoginViewModel by viewModels()
+
 
     companion object {
         fun start(activity: SplashActivity) {
@@ -47,47 +50,42 @@ class LoginActivity : BaseActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupUi()
-        setupViewModel()
         setupObservers()
     }
 
     private fun setupObservers() {
-        val hashMap = HashMap<Any,Any>()
-        hashMap[Constants.PHONE]
-        val language = LocaleManagerClass.getLangCodeFromPreferences(this)
-        hashmap[Constants.LANGUAGE] = language
+        loginViewModel.generateOtpResponseModel.observe(this, Observer{
+            when (it) {
+                is Resource.Success -> {
+                    binding.progress.visibility = View.GONE
+                    val value = it.data!!
 
+                    val data = value
 
-        viewModel.loginUser().observe(this, Observer {
-            it?.let { resource ->
-                when (resource.status) {
-                    Status.SUCCESS -> {
-                        //TODO Handle the response here
+                }
+                is Resource.Error -> {
+                    binding.progress.visibility = View.GONE
+                    it.message?.let { message ->
+                        Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
                     }
-                    Status.ERROR -> {
-                        //TODO Handle the error here
-                    }
-
-                    Status.LOADING -> {
-                        // TODO manage progress
-                    }
+                }
+                is Resource.Loading -> {
+                    binding.progress.visibility = View.VISIBLE
                 }
             }
         })
+
     }
 
 
     private fun setupUi() {
-        binding.submitBtn.setOnClickListener {view ->
-            VerifyOtpActivity.start(this@LoginActivity)
+        binding.submitBtn.setOnClickListener { view ->
+            val hashMap = HashMap<Any, Any>()
+            hashMap[Constants.PHONE] = "8285886155"
+            val language = LocaleManagerClass.getLangCodeFromPreferences(this)
+            hashMap[Constants.LANGUAGE] = language
+            loginViewModel.sendOTP(hashMap)
         }
     }
 
-    private fun setupViewModel() {
-        // With ViewModelFactory
-        viewModel = ViewModelProvider(
-            this, ViewModelfactory(ApiHelper(RetrofitBuilder.apiService))
-        )
-            .get(LoginViewModel::class.java)
-    }
 }
