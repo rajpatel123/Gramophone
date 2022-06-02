@@ -51,5 +51,9 @@
     <string name="products_in_your_cart_3">Products in your cart (3)</string>
     <string name="new_articles">New Articles</string>
     <string name="popular_products_in_indore">Popular Products in Indore</string>
+    <string name="market">Market</string>
+    <string name="trade">Trade</string>
+    <string name="community">Community</string>
+    <string name="me">Me</string>
 
 </resources>
