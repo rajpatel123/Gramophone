@@ -5,6 +5,7 @@ import agstack.gramophone.Status
 import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
+import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.ui.splash.model.SplashModel
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
@@ -58,7 +59,7 @@ class SplashActivity : BaseActivity() {
         })
 
         val observer = Observer<SplashModel> {
-            val intent = Intent(this, LanguageActivity::class.java)
+            val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
             finish()
         }

@@ -14,7 +14,7 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ConnectedFragment.newInstance] factory method to
+ * Use the [MarketFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
 class CommunityFragment : Fragment() {
@@ -50,7 +50,7 @@ class CommunityFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            ConnectedFragment().apply {
+            MarketFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

@@ -19,6 +19,10 @@
     <color name="blue_opacity_80">#CC6FBEFE</color>
     <color name="gray_stroke">#E0E4EC</color>
     <color name="gray">#606774</color>
+    <color name="gray_strike_through">#8F98AB</color>
+    <color name="green">#79BD2E</color>
+    <color name="orange">#F86144</color>
+    <color name="yellow">#FEE389</color>
 
     <color name="bottom_background">#FFFFFF</color>
     <color name="gray_menu_passive">#AFB0B4</color>

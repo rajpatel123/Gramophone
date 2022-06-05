@@ -6,11 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.view.HomeActivity">
 
-    <TextView
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_home"
+        app:layout_constraintTop_toBottomOf="parent" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_container"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:navGraph='@navigation/nav_graph' />
 
     <agstack.gramophone.menu.BottomNavigationView
         android:id="@+id/bottom_nav"
@@ -18,16 +29,14 @@
         android:layout_height="@dimen/_50sdp"
         android:background="@color/bottom_background"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/navigation_items"
         app:active_color="@color/gray_menu_active"
+        app:animation_duration="300"
+        app:item_padding="4dp"
+        app:item_text_size="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/navigation_items"
         app:passive_color="@color/gray_menu_passive"
         app:pressed_color="@color/bottom_menu_pressed"
-        app:item_text_size="10sp"
-        app:item_padding="4dp"
-        app:animation_duration="300"
         app:scale_percent="5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
