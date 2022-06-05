@@ -3,7 +3,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginEnd="@dimen/_16sdp"
+    android:gravity="center_horizontal"
+    android:paddingStart="0dp"
+    android:paddingEnd="@dimen/_16sdp"
     xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
@@ -21,6 +23,7 @@
     </FrameLayout>
 
     <TextView
+        android:id="@+id/tv_cat_name"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

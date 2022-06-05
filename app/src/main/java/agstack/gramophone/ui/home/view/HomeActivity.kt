@@ -27,7 +27,6 @@ class HomeActivity : BaseActivity() {
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-
     companion object {
         fun start(activity: ProfileSelectionActivity) {
             val intent = Intent(activity, HomeActivity::class.java)
@@ -41,30 +40,17 @@ class HomeActivity : BaseActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         setupViewModel()
         setupUi()
         setupObservers()
     }
 
-    private fun setupObservers() {
-        viewModel.getUsers().observe(this, Observer {
-            it?.let { resource ->
-                when (resource.status) {
-                    Status.SUCCESS -> {
-                        //TODO Handle the response here
-                    }
-                    Status.ERROR -> {
-                        //TODO Handle the error here
-                    }
-
-                    Status.LOADING -> {
-                        // TODO manage progress
-                    }
-                }
-            }
-        })
+    private fun setupViewModel() {
+        // With ViewModelFactory
+        viewModel = ViewModelProvider(
+            this, ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
+        )
+            .get(HomeViewModel::class.java)
     }
 
     private fun setupUi() {
@@ -73,9 +59,7 @@ class HomeActivity : BaseActivity() {
         ) as NavHostFragment
         navController = navHostFragment.navController
 
-        val bottomNavigationView  = findViewById<BottomNavigationView>(R.id.bottom_nav)
-
-        bottomNavigationView ?.setOnNavigationItemChangedListener(object : OnNavigationItemChangeListener {
+        binding.bottomNav.setOnNavigationItemChangedListener(object : OnNavigationItemChangeListener {
             override fun onNavigationItemChanged(navigationItem: BottomNavigationView.NavigationItem) {
 
                 when (navigationItem.position) {
@@ -99,11 +83,22 @@ class HomeActivity : BaseActivity() {
          */
     }
 
-    private fun setupViewModel() {
-        // With ViewModelFactory
-        viewModel = ViewModelProvider(
-            this, ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
-        )
-            .get(HomeViewModel::class.java)
+    private fun setupObservers() {
+        viewModel.getUsers().observe(this, Observer {
+            it?.let { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        //TODO Handle the response here
+                    }
+                    Status.ERROR -> {
+                        //TODO Handle the error here
+                    }
+
+                    Status.LOADING -> {
+                        // TODO manage progress
+                    }
+                }
+            }
+        })
     }
 }
