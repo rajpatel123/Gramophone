@@ -1,68 +1,63 @@
 package agstack.gramophone.ui.splash.view
 
 import agstack.gramophone.R
-import agstack.gramophone.Status
 import agstack.gramophone.base.BaseActivity
-import agstack.gramophone.retrofit.ApiHelper
-import agstack.gramophone.retrofit.RetrofitBuilder
-import agstack.gramophone.ui.home.view.HomeActivity
+import agstack.gramophone.databinding.ActivityLoginBinding
+import agstack.gramophone.databinding.ActivitySplashBinding
 import agstack.gramophone.ui.language.view.LanguageActivity
+import agstack.gramophone.ui.login.LoginViewModel
 import agstack.gramophone.ui.splash.model.SplashModel
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
-import agstack.gramophone.ui.splash.viewmodel.ViewModelFactory
+import agstack.gramophone.utils.Resource
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashActivity : BaseActivity() {
+    private lateinit var binding: ActivitySplashBinding
+    private val splashViewModel: SplashViewModel by viewModels()
 
-    private lateinit var viewModel: SplashViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
-
-        setupViewModel()
-        setupUi()
+        binding = ActivitySplashBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupObservers()
+        startApp()
     }
 
-    private fun setupViewModel() {
-        // With ViewModelFactory
-        viewModel = ViewModelProvider(
-            this, ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
-        )
-            .get(SplashViewModel::class.java)
+    private fun startApp() {
+        splashViewModel.getConfig()
     }
 
-    private fun setupUi() {
-        viewModel.initSplashScreen()
-    }
 
     private fun setupObservers() {
-        viewModel.getUsers().observe(this, Observer {
-            it?.let { resource ->
-                when (resource.status) {
-                    Status.SUCCESS -> {
-                   //TODO Handle the response here
-                    }
-                    Status.ERROR -> {
-                   //TODO Handle the error here
-                    }
+        splashViewModel.splashViewModel.observe(this, Observer{
+            when (it) {
+                is Resource.Success -> {
+                    binding.progress.visibility = View.GONE
+                    val intent = Intent(this, LanguageActivity::class.java)
+                    startActivity(intent)
+                    finish()
 
-                    Status.LOADING -> {
-                    // TODO manage progress
+                }
+                is Resource.Error -> {
+                    binding.progress.visibility = View.GONE
+                    it.message?.let { message ->
+                        Toast.makeText(this@SplashActivity, message, Toast.LENGTH_LONG).show()
                     }
+                }
+                is Resource.Loading -> {
+                    binding.progress.visibility = View.VISIBLE
                 }
             }
         })
 
-        val observer = Observer<SplashModel> {
-            val intent = Intent(this, LanguageActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-        viewModel.liveData.observe(this, observer)
+
     }
 }

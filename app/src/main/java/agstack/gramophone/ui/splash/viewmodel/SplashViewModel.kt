@@ -1,39 +1,34 @@
 package agstack.gramophone.ui.splash.viewmodel
 
-import agstack.gramophone.retrofit.Resource
+import agstack.gramophone.ui.login.repository.LoginRepository
 import agstack.gramophone.ui.splash.model.SplashModel
-import agstack.gramophone.ui.splash.repository.SplashRepository
+import agstack.gramophone.utils.Resource
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
+import javax.inject.Inject
 
+@HiltViewModel
+class SplashViewModel @Inject constructor(
+    @ApplicationContext private val context: Context
+) : ViewModel() {
 
-class SplashViewModel(private val splashRepository: SplashRepository) : ViewModel() {
+    var splashViewModel: MutableLiveData<Resource<SplashModel>> = MutableLiveData()
 
-    var liveData: MutableLiveData<SplashModel> = MutableLiveData()
-
-    fun initSplashScreen() {
-        viewModelScope.launch {
-            delay(3000)
-            updateLiveData()
-        }
+    fun getConfig() = viewModelScope.launch {
+        getSystemConfig()
     }
 
-    private fun updateLiveData() {
-        val splashModel = SplashModel(true)
-        liveData.value = splashModel
+    private suspend fun getSystemConfig() {
+        delay(3000)
+        splashViewModel.postValue(null)
     }
 
-    fun getUsers() = liveData(Dispatchers.IO) {
-        emit(Resource.loading(data = null))
-        try {
-            emit(Resource.success(data = splashRepository.getUsers()))
-        } catch (exception: Exception) {
-            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
-        }
-    }
 }

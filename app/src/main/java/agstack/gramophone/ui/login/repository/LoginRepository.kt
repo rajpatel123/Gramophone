@@ -1,9 +1,22 @@
 package agstack.gramophone.ui.login.repository
 
-import agstack.gramophone.retrofit.ApiHelper
+import agstack.gramophone.di.GramoAppService
+import agstack.gramophone.ui.login.model.GenerateOtpResponseModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import retrofit2.Response
+import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
+class LoginRepository @Inject constructor(
+    private val gramoAppService: GramoAppService
+) {
 
-class LoginRepository(private val apiHelper: ApiHelper) {
+    suspend fun sendOTP(loginMap: HashMap<Any, Any>): Response<GenerateOtpResponseModel> = withContext(
+        Dispatchers.IO) {
+        val popular = gramoAppService.sendOTP(loginMap)
+        popular
+    }
 
-    suspend fun loginUser() = apiHelper.loginUser()
 }

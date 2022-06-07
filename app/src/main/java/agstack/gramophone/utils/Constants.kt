@@ -4,17 +4,28 @@ import agstack.gramophone.BuildConfig
 import android.content.Context
 
 object Constants {
-    /**
-     * Server base url without end slash.
-     * Moving this to have environment spacific base urls
-     */
-    //const val SERVER_BASE_URL = "https://gorest.co.in/public"
 
     /**
      * For MyNotificationOpenedHandler
      */
     const val INTENT_EXTRA_TARGET_KEY = "target"
     const val INTENT_EXTRA_TARGET_VAL_NOTIFICATIONS = "notifications"
+
+    /**
+     * Keys
+     */
+    val PHONE: String="phone"
+    val LANGUAGE: String="language"
+    const val HindiISOCode = "hi"
+    const val MarathiISOCode = "mr"
+    const val EnglishISOCode = "en"
+    const val DefaultLangISOCode = "hi"
+    const val Hindi = "Hindi"
+    const val English = "English"
+
+
+
+
 
     /**
      * For Broadcast
