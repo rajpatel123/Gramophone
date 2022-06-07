@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:id="@+id/ll_language_selection"
-        android:layout_width="@dimen/_144sdp"
+        android:layout_width="@dimen/_160sdp"
         android:layout_height="@dimen/_82sdp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
@@ -16,22 +16,24 @@
         android:orientation="vertical">
 
         <TextView
+            android:fontFamily="@font/manrope_bold"
             android:id="@+id/tv_language_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="English"
             android:textColor="@color/white"
-            android:textSize="@dimen/_16ssp"
+            android:textSize="@dimen/_14ssp"
             android:textStyle="normal" />
 
         <TextView
+            android:fontFamily="@font/manrope_regular"
             android:id="@+id/tv_language"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"
             android:text="English"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp" />
+            android:textColor="@color/off_white"
+            android:textSize="@dimen/_12ssp" />
 
     </LinearLayout>
 

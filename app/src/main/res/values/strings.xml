@@ -30,5 +30,30 @@
     <string name="midea">Get Latest Updates</string>
     <string name="midea_sub_msg"><![CDATA[Get weather updates, mandi prices & other agriculture news at one place]]></string>
     <string name="finish">FINISH</string>
+    <string name="_continue">Continue</string>
+    <string name="enter_your_name">Enter your Name</string>
+    <string name="profile_screen_title">Your account is ready</string>
+    <string name="profile_screen_msg">Just fill below details to go</string>
+    <string name="select_profile_type">Please select your profile type</string>
+    <string name="i_m_a_trader">I\'m a Trader</string>
+    <string name="i_m_a_farmer">I\'m a Farmer</string>
+    <string name="image">image</string>
+    <string name="enter_referral_code">Enter Referral code (Optional)</string>
+    <string name="shop_by_category">Shop by Category</string>
+    <string name="feature_product">Feature Product</string>
+    <string name="view_all">View All</string>
+    <string name="mandi_rates">Mandi Rates</string>
+    <string name="shop_by_crops">Shop by Crops</string>
+    <string name="shop_by_stores">Shop by Stores</string>
+    <string name="gramophone_exclusive">Gramophone Exclusive</string>
+    <string name="recently_viewed">Recently Viewed</string>
+    <string name="pickup_where_you_left">Pickup where you left</string>
+    <string name="products_in_your_cart_3">Products in your cart (3)</string>
+    <string name="new_articles">New Articles</string>
+    <string name="popular_products_in_indore">Popular Products in Indore</string>
+    <string name="market">Market</string>
+    <string name="trade">Trade</string>
+    <string name="community">Community</string>
+    <string name="me">Me</string>
 
 </resources>

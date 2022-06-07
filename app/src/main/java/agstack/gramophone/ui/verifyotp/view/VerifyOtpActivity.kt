@@ -7,6 +7,7 @@ import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.login.view.LoginActivity
+import agstack.gramophone.ui.profile.view.ProfileSelectionActivity
 import agstack.gramophone.ui.verifyotp.viewmodel.ViewModelFactory
 import agstack.gramophone.ui.verifyotp.viewmodel.VerifyOtpViewModel
 import android.content.Intent
@@ -60,7 +61,7 @@ class VerifyOtpActivity : BaseActivity() {
     private fun setupUi() {
         binding.changeNumberTxt.setOnClickListener { onBackPressed() }
         binding.verifyOtpBtn.setOnClickListener {
-            HomeActivity.start(this@VerifyOtpActivity)
+            ProfileSelectionActivity.start(this@VerifyOtpActivity)
         }
     }
 

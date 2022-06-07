@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:background="@drawable/rounded_corner_16_solid_white_stroke_gray"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_156sdp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/dummy_shop_by_store" />
+
+        <TextView
+            android:fontFamily="@font/manrope_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:paddingStart="@dimen/_12sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_4sdp"
+            android:textColor="@color/blakish"
+            android:textSize="@dimen/_12ssp"
+            android:text="Pesticides" />
+
+        <TextView
+            android:fontFamily="@font/manrope_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingStart="@dimen/_12sdp"
+            android:paddingEnd="@dimen/_4sdp"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_11ssp"
+            android:text="Farming Accesories" />
+
+        <TextView
+            android:fontFamily="@font/manrope_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:paddingBottom="@dimen/_4sdp"
+            android:maxLines="1"
+            android:paddingStart="@dimen/_12sdp"
+            android:paddingEnd="@dimen/_4sdp"
+            android:textColor="@color/green"
+            android:textSize="@dimen/_11ssp"
+            android:text="Starts from ₹ 99" />
+
+    </LinearLayout>
+</FrameLayout>

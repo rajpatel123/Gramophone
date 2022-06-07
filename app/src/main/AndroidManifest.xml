@@ -28,7 +28,9 @@
         <activity android:name=".ui.verifyotp.view.VerifyOtpActivity" />
         <activity android:name=".ui.apptour.view.AppTourActivity" />
         <activity android:name=".ui.login.view.LoginActivity" />
+        <activity android:name=".ui.profile.view.ProfileSelectionActivity" />
         <activity android:name=".ui.home.view.HomeActivity" />
+        <activity android:name=".ui.home.view.ProfileActivity" />
     </application>
 
 </manifest>
