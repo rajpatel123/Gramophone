@@ -27,10 +27,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/heading_title_medium"
+        android:fontFamily="@font/manrope_medium"
         tools:text="Onion"
-        android:textSize="@dimen/_12ssp"
+        android:textSize="@dimen/_11ssp"
         android:layout_marginTop="@dimen/_4sdp"
-        android:textColor="@color/blue"/>
+        android:textColor="@color/brand_color"/>
 
 </LinearLayout>

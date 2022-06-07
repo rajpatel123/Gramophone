@@ -73,7 +73,7 @@ class HomeActivity : BaseActivity() {
                         navController.navigate(R.id.communityFragment3)
                     }
                     3-> {
-                        navController.navigate(R.id.profileFragment2)
+                        ProfileActivity.start(this@HomeActivity)
                     }
                 }
             }

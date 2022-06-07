@@ -1,27 +1,34 @@
-package agstack.gramophone.ui.splash.view
+package agstack.gramophone.ui.home.view
 
-import agstack.gramophone.R
 import agstack.gramophone.Status
 import agstack.gramophone.base.BaseActivity
+import agstack.gramophone.databinding.ActivityProfileBinding
 import agstack.gramophone.retrofit.ApiHelper
 import agstack.gramophone.retrofit.RetrofitBuilder
-import agstack.gramophone.ui.home.view.HomeActivity
-import agstack.gramophone.ui.language.view.LanguageActivity
-import agstack.gramophone.ui.splash.model.SplashModel
-import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
-import agstack.gramophone.ui.splash.viewmodel.ViewModelFactory
+import agstack.gramophone.ui.home.viewmodel.HomeViewModel
+import agstack.gramophone.ui.home.viewmodel.ViewModelFactory
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
-class SplashActivity : BaseActivity() {
 
-    private lateinit var viewModel: SplashViewModel
+class ProfileActivity : BaseActivity() {
+
+    private lateinit var binding: ActivityProfileBinding
+    private lateinit var viewModel: HomeViewModel
+
+    companion object {
+        fun start(activity: HomeActivity) {
+            val intent = Intent(activity, ProfileActivity::class.java)
+            activity.startActivity(intent)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+        binding = ActivityProfileBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setupViewModel()
         setupUi()
@@ -33,11 +40,11 @@ class SplashActivity : BaseActivity() {
         viewModel = ViewModelProvider(
             this, ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
         )
-            .get(SplashViewModel::class.java)
+            .get(HomeViewModel::class.java)
     }
 
     private fun setupUi() {
-        viewModel.initSplashScreen()
+
     }
 
     private fun setupObservers() {
@@ -45,24 +52,17 @@ class SplashActivity : BaseActivity() {
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
-                   //TODO Handle the response here
+                        //TODO Handle the response here
                     }
                     Status.ERROR -> {
-                   //TODO Handle the error here
+                        //TODO Handle the error here
                     }
 
                     Status.LOADING -> {
-                    // TODO manage progress
+                        // TODO manage progress
                     }
                 }
             }
         })
-
-        val observer = Observer<SplashModel> {
-            val intent = Intent(this, LanguageActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-        viewModel.liveData.observe(this, observer)
     }
 }
