@@ -2,20 +2,32 @@ package agstack.gramophone.ui.home.view
 
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivity
+import agstack.gramophone.databinding.ActivityHomeBinding
 import agstack.gramophone.menu.BottomNavigationView
 import agstack.gramophone.menu.OnNavigationItemChangeListener
-import agstack.gramophone.ui.home.viewmodel.HomeViewModel
-import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
+import agstack.gramophone.ui.home.repository.HomeViewModel
+import agstack.gramophone.ui.login.viewmodel.LoginViewModel
+import agstack.gramophone.ui.profile.view.ProfileSelectionActivity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+
 
 class HomeActivity : BaseActivity() {
 
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var binding: ActivityHomeBinding
+    private val homeViewModel: HomeViewModel by viewModels()
+
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     companion object {
-        fun start(activity: VerifyOtpActivity) {
+        fun start(activity: ProfileSelectionActivity) {
             val intent = Intent(activity, HomeActivity::class.java)
             activity.startActivity(intent)
             activity.finish()
@@ -24,25 +36,37 @@ class HomeActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
-
-        setupViewModel()
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupUi()
         setupObservers()
     }
 
-    private fun setupObservers() {
-
-    }
 
 
     private fun setupUi() {
-        val bottomMenu = findViewById<BottomNavigationView>(R.id.bottom_nav)
-        bottomMenu?.setOnNavigationItemChangedListener(object : OnNavigationItemChangeListener {
+        val navHostFragment = supportFragmentManager.findFragmentById(
+            R.id.nav_host_container
+        ) as NavHostFragment
+        navController = navHostFragment.navController
+
+        binding.bottomNav.setOnNavigationItemChangedListener(object : OnNavigationItemChangeListener {
             override fun onNavigationItemChanged(navigationItem: BottomNavigationView.NavigationItem) {
-                Toast.makeText(this@HomeActivity,
-                    "Selected item at index ${navigationItem.position}",
-                    Toast.LENGTH_SHORT).show()
+
+                when (navigationItem.position) {
+                    0-> {
+                        navController.navigate(R.id.marketFragment)
+                    }
+                    1-> {
+                        navController.navigate(R.id.tradeFragment2)
+                    }
+                    2-> {
+                        navController.navigate(R.id.communityFragment3)
+                    }
+                    3-> {
+                        ProfileActivity.start(this@HomeActivity)
+                    }
+                }
             }
         })
         /* If you want to change active navigation item programmatically
@@ -50,7 +74,7 @@ class HomeActivity : BaseActivity() {
          */
     }
 
-    private fun setupViewModel() {
-        // With ViewModelFactory
+    private fun setupObservers() {
+
     }
 }

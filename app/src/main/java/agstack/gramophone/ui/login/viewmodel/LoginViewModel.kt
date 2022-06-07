@@ -1,4 +1,4 @@
-package agstack.gramophone.ui.login
+package agstack.gramophone.ui.login.viewmodel
 
 
 import agstack.gramophone.ui.login.model.GenerateOtpResponseModel

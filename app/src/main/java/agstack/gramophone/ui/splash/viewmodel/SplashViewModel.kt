@@ -1,6 +1,6 @@
 package agstack.gramophone.ui.splash.viewmodel
 
-import agstack.gramophone.ui.login.repository.LoginRepository
+import agstack.gramophone.ui.login.repository.HomeRepository
 import agstack.gramophone.ui.splash.model.SplashModel
 import agstack.gramophone.utils.Resource
 import android.content.Context

@@ -3,7 +3,7 @@ package agstack.gramophone.ui.login.view
 import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.databinding.ActivityLoginBinding
 import agstack.gramophone.ui.apptour.view.AppTourActivity
-import agstack.gramophone.ui.login.LoginViewModel
+import agstack.gramophone.ui.login.viewmodel.LoginViewModel
 import agstack.gramophone.ui.splash.view.SplashActivity
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.utils.Constants
