@@ -27,31 +27,31 @@
             android:paddingEnd="@dimen/_16sdp">
 
             <TextView
-                style="@style/heading_title_bold_large"
+                android:fontFamily="@font/manrope_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:text="Cotton"
                 android:textColor="@color/blakish"
-                android:textSize="@dimen/_14ssp" />
+                android:textSize="@dimen/_12ssp" />
 
             <TextView
-                style="@style/heading_title_bold_large"
+                android:fontFamily="@font/manrope_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:text="₹ 6590/Q"
                 android:textColor="@color/blakish"
-                android:textSize="@dimen/_14ssp" />
+                android:textSize="@dimen/_12ssp" />
 
             <TextView
-                style="@style/heading_title_medium"
+                android:fontFamily="@font/manrope_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:text="Sanwer"
                 android:textColor="@color/gray_strike_through"
-                android:textSize="@dimen/_12ssp" />
+                android:textSize="@dimen/_11ssp" />
 
         </LinearLayout>
 

@@ -10,19 +10,22 @@
         android:layout_marginEnd="5dp"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/rounded_corner_8_solid_white"
+        android:background="@drawable/rounded_corner_16_solid_white_stroke_gray"
         android:orientation="vertical">
 
         <TextView
-            style="@style/regular"
+            android:fontFamily="@font/manrope_regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/rounded_corner_4_solid_green"
-            android:padding="4dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
             android:textColor="@color/white"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_10ssp"
             android:text="20% Off" />
 
         <ImageView
@@ -32,7 +35,7 @@
             android:src="@drawable/dummy_feature_product" />
 
         <TextView
-            style="@style/heading_title_medium"
+           android:fontFamily="@font/manrope_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"
@@ -43,7 +46,7 @@
             android:paddingEnd="@dimen/_12sdp"
             android:paddingBottom="@dimen/_4sdp"
             android:textColor="@color/blakish"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_11ssp"
             android:text="fungicides Crystal Bavistin 50% WP Fun gicide Carbe ..." />
 
         <RelativeLayout

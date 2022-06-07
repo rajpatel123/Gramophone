@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_16sdp"
-        android:background="@drawable/rounded_corner_8_solid_white"
+        android:background="@drawable/rounded_corner_16_solid_white_stroke_gray"
         android:orientation="vertical">
 
         <ImageView
@@ -17,7 +17,7 @@
             android:background="@drawable/dummy_article" />
 
         <TextView
-            style="@style/heading_title_bold_large"
+            android:fontFamily="@font/manrope_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"
@@ -25,7 +25,7 @@
             android:paddingTop="@dimen/_10sdp"
             android:paddingEnd="@dimen/_12sdp"
             android:textColor="@color/blakish"
-            android:textSize="@dimen/_16sdp"
+            android:textSize="@dimen/_14sdp"
             android:layout_marginBottom="@dimen/_12sdp"
             android:text="See what are the prices of new soybean in the Mandsaur market today?" />
 

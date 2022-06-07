@@ -35,7 +35,9 @@
         </RelativeLayout>
 
         <TextView
-            style="@style/heading_title_bold_large"
+            android:fontFamily="@font/manrope_bold"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
@@ -54,7 +56,9 @@
             tools:listitem="@layout/item_category" />
 
         <TextView
-            style="@style/heading_title_bold_large"
+            android:fontFamily="@font/manrope_bold"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
@@ -76,7 +80,8 @@
             tools:listitem="@layout/item_feature_product" />
 
         <TextView
-            style="@style/heading_title_bold_large"
+            android:fontFamily="@font/manrope_bold"
+            android:textStyle="normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -97,7 +102,9 @@
             android:paddingEnd="0dp">
 
             <TextView
-                style="@style/heading_title_bold_large"
+                android:fontFamily="@font/manrope_bold"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="normal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/mandi_rates"
@@ -115,7 +122,9 @@
         </LinearLayout>
 
         <TextView
-            style="@style/heading_title_bold_large"
+            android:fontFamily="@font/manrope_bold"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
@@ -136,7 +145,8 @@
             tools:listitem="@layout/item_shop_by_crops" />
 
         <TextView
-            style="@style/heading_title_bold_large"
+            android:fontFamily="@font/manrope_bold"
+            android:textStyle="normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -158,7 +168,8 @@
             android:paddingEnd="@dimen/_24sdp">
 
             <TextView
-                style="@style/heading_title_bold_large"
+                android:fontFamily="@font/manrope_bold"
+                android:textStyle="normal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_30sdp"
@@ -178,7 +189,9 @@
                 android:textSize="@dimen/_12ssp" />
 
             <TextView
-                style="@style/heading_title_bold_large"
+                android:fontFamily="@font/manrope_bold"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="normal"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_45sdp"
                 android:layout_marginStart="@dimen/_10sdp"
@@ -189,11 +202,11 @@
                 android:focusable="true"
                 android:gravity="center"
                 android:text="+  Add you Farm"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14ssp" />
+                android:textColor="@color/white" />
 
             <TextView
-                style="@style/heading_title_bold_large"
+                android:fontFamily="@font/manrope_bold"
+                android:textStyle="normal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_18sdp"
@@ -206,7 +219,9 @@
         </LinearLayout>
 
         <TextView
-            style="@style/heading_title_bold_large"
+            android:fontFamily="@font/manrope_bold"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
@@ -227,7 +242,8 @@
             tools:listitem="@layout/item_shop_by_store" />
 
         <TextView
-            style="@style/heading_title_bold_large"
+            android:fontFamily="@font/manrope_bold"
+            android:textStyle="normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -239,7 +255,9 @@
             app:drawableEndCompat="@drawable/ic_arrow_right" />
 
         <TextView
-            style="@style/heading_title_bold_large"
+            android:fontFamily="@font/manrope_bold"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
@@ -293,7 +311,9 @@
             android:paddingBottom="@dimen/_16sdp">
 
             <TextView
-                style="@style/heading_title_bold_large"
+                android:fontFamily="@font/manrope_bold"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="normal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/recently_viewed"
@@ -305,7 +325,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/pickup_where_you_left"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/_13ssp" />
+                android:textSize="@dimen/_11ssp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_recently_viewed"
@@ -326,7 +346,9 @@
             android:contentDescription="@string/image" />
 
         <TextView
-            style="@style/heading_title_bold_large"
+            android:fontFamily="@font/manrope_bold"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_24sdp"
@@ -347,7 +369,9 @@
             tools:listitem="@layout/item_recently_viewed" />
 
         <TextView
-            style="@style/heading_title_bold_large"
+            android:fontFamily="@font/manrope_bold"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="normal"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:layout_marginStart="@dimen/_16sdp"
@@ -358,11 +382,12 @@
             android:focusable="true"
             android:gravity="center"
             android:text="+  Checkout"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp" />
+            android:textColor="@color/white"/>
 
         <TextView
-            style="@style/heading_title_bold_large"
+            android:fontFamily="@font/manrope_bold"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
@@ -385,7 +410,8 @@
 
 
         <TextView
-            style="@style/heading_title_bold_large"
+            android:fontFamily="@font/manrope_bold"
+            android:textStyle="normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -408,7 +434,9 @@
             android:paddingBottom="@dimen/_16sdp">
 
             <TextView
-                style="@style/heading_title_bold_large"
+                android:fontFamily="@font/manrope_bold"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="normal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/popular_products_in_indore"
@@ -420,7 +448,7 @@
                 android:layout_height="wrap_content"
                 android:text="Sub text will be displayed here"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/_13ssp" />
+                android:textSize="@dimen/_11ssp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_popular_products"
@@ -434,7 +462,8 @@
                 tools:listitem="@layout/item_feature_product" />
 
             <TextView
-                style="@style/heading_title_bold_large"
+                android:fontFamily="@font/manrope_bold"
+                android:textStyle="normal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

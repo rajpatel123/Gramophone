@@ -2,33 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:gravity="center"
-    android:layout_marginBottom="@dimen/_16sdp"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="vertical">
 
     <FrameLayout
-        android:background="@drawable/rounded_stroke"
         android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_80sdp">
+        android:layout_height="@dimen/_80sdp"
+        android:background="@drawable/rounded_stroke">
 
         <ImageView
-            android:contentDescription="@string/image"
-            android:layout_gravity="center"
-            android:src="@drawable/dummy_category_item"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="@string/image"
+            android:src="@drawable/dummy_category_item" />
 
     </FrameLayout>
 
     <TextView
-        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/heading_title_medium"
-        android:text="Onion"
-        android:textSize="@dimen/_12ssp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/_4sdp"
-        android:textColor="@color/gray"/>
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:fontFamily="@font/manrope_medium"
+        android:text="Onion"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/_12ssp" />
 
 </LinearLayout>

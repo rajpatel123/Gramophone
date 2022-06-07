@@ -59,7 +59,7 @@ class SplashActivity : BaseActivity() {
         })
 
         val observer = Observer<SplashModel> {
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, LanguageActivity::class.java)
             startActivity(intent)
             finish()
         }
