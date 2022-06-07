@@ -1,6 +1,6 @@
 package agstack.gramophone.data.local
 
-import agstack.gramophone.data.model.Movie
+import agstack.gramophone.data.model.User
 import agstack.gramophone.di.ApplicationScope
 import androidx.room.Database
 import androidx.room.RoomDatabase
@@ -8,13 +8,13 @@ import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 import javax.inject.Provider
 
-@Database(entities = [Movie::class], version = 1)
-abstract class MovieAppDatabase : RoomDatabase() {
+@Database(entities = [User::class], version = 1)
+abstract class GramoAppDatabase : RoomDatabase() {
 
-    abstract fun getMovieAppDao(): MovieAppDao
+    abstract fun getMovieAppDao(): GramoAppDao
 
     class Callback @Inject constructor(
-        private val database: Provider<MovieAppDatabase>,
+        private val database: Provider<GramoAppDatabase>,
         @ApplicationScope private val applicationScope: CoroutineScope
     ) : RoomDatabase.Callback()
 }

@@ -8,10 +8,6 @@ import retrofit2.http.POST
 
 interface GramoAppService {
 
-    companion object {
-        const val ENDPOINT = "http://api.themoviedb.org/3/"
-    }
-
     @POST("onboarding/send-otp")
     suspend fun sendOTP(@Body hashMap:HashMap<Any,Any>): Response<GenerateOtpResponseModel>
 

@@ -1,10 +1,10 @@
 package agstack.gramophone.di
 
+import agstack.gramophone.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import agstack.gramophone.di.GramoAppService.Companion.ENDPOINT
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -36,7 +36,7 @@ object ApiModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-                .baseUrl(ENDPOINT)
+                .baseUrl(BuildConfig.BASE_URL_ONBOARDING)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

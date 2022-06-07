@@ -18,10 +18,11 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.log
-@AndroidEntryPoint
+
 class LoginActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    //initialise ViewModel
     private val loginViewModel: LoginViewModel by viewModels()
 
 
@@ -80,10 +81,12 @@ class LoginActivity : BaseActivity() {
 
     private fun setupUi() {
         binding.submitBtn.setOnClickListener { view ->
+            //Perform validations then call api
             val hashMap = HashMap<Any, Any>()
             hashMap[Constants.PHONE] = "8285886155"
             val language = LocaleManagerClass.getLangCodeFromPreferences(this)
             hashMap[Constants.LANGUAGE] = language
+
             loginViewModel.sendOTP(hashMap)
         }
     }

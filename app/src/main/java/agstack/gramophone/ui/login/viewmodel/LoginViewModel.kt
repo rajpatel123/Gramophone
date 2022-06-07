@@ -25,10 +25,11 @@ class LoginViewModel @Inject constructor(
         MutableLiveData()
 
     fun sendOTP(loginMap: HashMap<Any, Any>) = viewModelScope.launch {
-        safeMovieCall(loginMap)
+        sendOTPCall(loginMap)
     }
 
-    private suspend fun safeMovieCall(loginMap: HashMap<Any, Any>) {
+    private suspend fun sendOTPCall(loginMap: HashMap<Any, Any>) {
+
         generateOtpResponseModel.postValue(Resource.Loading())
         try {
             if (hasInternetConnection(context)) {

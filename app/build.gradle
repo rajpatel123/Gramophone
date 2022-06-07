@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "agstack.gramophone"
-        minSdk 23
+        minSdk 21
         targetSdk 31
         versionCode 1
         versionName "1.0.0"   // Major.Minor.Patch
@@ -127,6 +127,8 @@ dependencies {
     // Coroutine Lifecycle Scopes
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
 
     // Navigation Components
     implementation "androidx.navigation:navigation-fragment-ktx:2.4.2"

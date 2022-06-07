@@ -2,13 +2,12 @@ package agstack.gramophone.data.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "movie")
-class Movie() : Parcelable {
+class User() : Parcelable {
     @SerializedName("poster_path")
     var posterPath: String? = null
 
@@ -85,12 +84,12 @@ class Movie() : Parcelable {
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Movie> {
-        override fun createFromParcel(parcel: Parcel): Movie {
-            return Movie(parcel)
+    companion object CREATOR : Parcelable.Creator<User> {
+        override fun createFromParcel(parcel: Parcel): User {
+            return User(parcel)
         }
 
-        override fun newArray(size: Int): Array<Movie?> {
+        override fun newArray(size: Int): Array<User?> {
             return arrayOfNulls(size)
         }
     }
