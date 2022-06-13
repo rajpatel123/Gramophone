@@ -1,4 +1,4 @@
-package agstack.gramophone.ui.home.viewmodel
+package agstack.gramophone.ui.profileselection.viewmodel
 
 import agstack.gramophone.ui.home.repository.HomeRepository
 import android.content.Context
@@ -8,8 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val homeRepository: HomeRepository,
+class ProfileSelectionViewModel @Inject constructor(
     @ApplicationContext context: Context
 
 ) : ViewModel() {

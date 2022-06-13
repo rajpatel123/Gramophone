@@ -28,13 +28,13 @@
 
         <activity android:name=".ui.verifyotp.view.VerifyOtpActivity" />
         <activity android:name=".ui.apptour.view.AppTourActivity" />
-        <activity android:name=".ui.profile.view.ProfileSelectionActivity" />
+        <activity android:name=".ui.profileselection.view.ProfileSelectionActivity" />
         <activity android:name=".ui.login.view.LoginActivity"
             android:exported="true">
 
         </activity>
         <activity android:name=".ui.home.view.HomeActivity" />
-        <activity android:name=".ui.home.view.ProfileActivity" />
+        <activity android:name=".ui.profile.view.ProfileActivity" />
     </application>
 
 </manifest>
