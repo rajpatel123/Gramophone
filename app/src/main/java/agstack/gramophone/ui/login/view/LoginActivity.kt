@@ -59,10 +59,7 @@ class LoginActivity : BaseActivity() {
             when (it) {
                 is Resource.Success -> {
                     binding.progress.visibility = View.GONE
-                    val value = it.data!!
-
-                    val data = value
-
+                    VerifyOtpActivity.start(this@LoginActivity)
                 }
                 is Resource.Error -> {
                     binding.progress.visibility = View.GONE
