@@ -1,10 +1,15 @@
 package agstack.gramophone.ui.language.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-
-class LanguageViewModel() : ViewModel() {
+@HiltViewModel
+class LanguageViewModel @Inject constructor(
+    @ApplicationContext private val context: Context
+) : ViewModel() {
 
 
 }

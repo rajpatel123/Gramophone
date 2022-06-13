@@ -6,19 +6,29 @@ import agstack.gramophone.databinding.ActivityLanguageBinding
 import agstack.gramophone.ui.language.adapter.LanguageAdapter
 import agstack.gramophone.ui.language.model.LanguageData
 import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
+import agstack.gramophone.ui.splash.view.SplashActivity
+import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.RecyclerView
 
 class LanguageActivity : BaseActivity() {
 
-    private lateinit var viewModel: LanguageViewModel
-    internal var binding: ActivityLanguageBinding? = null
+    private lateinit var binding: ActivityLanguageBinding
+    private val viewModel: LanguageViewModel by viewModels()
+
+    companion object {
+        fun start(activity: SplashActivity) {
+            val intent = Intent(activity, LanguageActivity::class.java)
+            activity.startActivity(intent)
+            activity.finish()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_language)
-
+        binding = ActivityLanguageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupUi()
         setupObservers()
     }

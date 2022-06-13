@@ -1,11 +1,8 @@
 package agstack.gramophone.ui.splash.view
 
-import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivity
-import agstack.gramophone.databinding.ActivityLoginBinding
 import agstack.gramophone.databinding.ActivitySplashBinding
 import agstack.gramophone.ui.language.view.LanguageActivity
-import agstack.gramophone.ui.login.LoginViewModel
 import agstack.gramophone.ui.splash.model.SplashModel
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
 import agstack.gramophone.utils.Resource
@@ -20,8 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SplashActivity : BaseActivity() {
     private lateinit var binding: ActivitySplashBinding
-    private val splashViewModel: SplashViewModel by viewModels()
-
+    private val viewModel: SplashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,18 +28,17 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun startApp() {
-        splashViewModel.getConfig()
+        /*splashViewModel.getConfig()*/
+        viewModel.initSplash()
     }
 
 
     private fun setupObservers() {
-        splashViewModel.splashViewModel.observe(this, Observer{
+        viewModel.splashViewModel.observe(this, Observer {
             when (it) {
                 is Resource.Success -> {
                     binding.progress.visibility = View.GONE
-                    val intent = Intent(this, LanguageActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    LanguageActivity.start(this@SplashActivity)
 
                 }
                 is Resource.Error -> {
@@ -58,6 +53,16 @@ class SplashActivity : BaseActivity() {
             }
         })
 
+        viewModel.splashLiveData.observe(this, Observer {
 
+            LanguageActivity.start(this@SplashActivity)
+
+        })
+
+        val observer = Observer<SplashModel> {
+            val intent = Intent(this, LanguageActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }

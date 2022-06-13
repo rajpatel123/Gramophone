@@ -1,4 +1,4 @@
-package agstack.gramophone.splash.viewmodel
+package agstack.gramophone.ui.apptour.viewmodel
 
 import androidx.lifecycle.ViewModel
 

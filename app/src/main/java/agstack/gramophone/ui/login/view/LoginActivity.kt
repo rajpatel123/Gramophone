@@ -14,10 +14,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.Observer
-import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.log
 
 class LoginActivity : BaseActivity() {
 
