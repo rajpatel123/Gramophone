@@ -6,7 +6,7 @@ import agstack.gramophone.databinding.ActivityHomeBinding
 import agstack.gramophone.menu.BottomNavigationView
 import agstack.gramophone.menu.OnNavigationItemChangeListener
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
-import agstack.gramophone.ui.login.viewmodel.LoginViewModel
+import agstack.gramophone.ui.profile.view.ProfileActivity
 import agstack.gramophone.ui.profileselection.view.ProfileSelectionActivity
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import android.content.Intent
