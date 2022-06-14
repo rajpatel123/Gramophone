@@ -6,6 +6,7 @@ import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.ui.splash.model.SplashModel
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
 import agstack.gramophone.utils.Resource
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 
+@SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
 class SplashActivity : BaseActivity() {
     private lateinit var binding: ActivitySplashBinding

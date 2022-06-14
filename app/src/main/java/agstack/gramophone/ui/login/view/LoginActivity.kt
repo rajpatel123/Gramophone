@@ -5,6 +5,7 @@ import agstack.gramophone.databinding.ActivityLoginBinding
 import agstack.gramophone.ui.apptour.view.AppTourActivity
 import agstack.gramophone.ui.login.viewmodel.LoginViewModel
 import agstack.gramophone.ui.splash.view.SplashActivity
+import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.LocaleManagerClass
@@ -15,7 +16,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLoginBinding
