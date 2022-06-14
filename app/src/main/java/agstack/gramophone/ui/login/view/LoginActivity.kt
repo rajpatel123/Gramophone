@@ -63,6 +63,7 @@ class LoginActivity : BaseActivity() {
                 }
                 is Resource.Error -> {
                     binding.progress.visibility = View.GONE
+                    VerifyOtpActivity.start(this@LoginActivity)
                     it.message?.let { message ->
                         Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
                     }
