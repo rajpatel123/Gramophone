@@ -2,6 +2,7 @@ package agstack.gramophone.ui.profileselection.repository
 
 import agstack.gramophone.di.GramoAppService
 import agstack.gramophone.ui.login.model.GenerateOtpResponseModel
+import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -13,12 +14,11 @@ class ProfileSelectionRepository @Inject constructor(
     private val gramAppService: GramoAppService
 ) {
 
-    suspend fun sendOTP(loginMap: HashMap<Any, Any>): Response<GenerateOtpResponseModel> =
+    suspend fun updateProfileType(profileTypeMap: HashMap<Any, Any>): Response<UpdateProfileTypeRes> =
         withContext(
             Dispatchers.IO
         ) {
-            val popular = gramAppService.sendOTP(loginMap)
-            popular
+            gramAppService.updateProfileType(profileTypeMap)
         }
 
 }

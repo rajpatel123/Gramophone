@@ -22,6 +22,9 @@ object Constants {
     const val DefaultLangISOCode = "hi"
     const val Hindi = "Hindi"
     const val English = "English"
+    const val PROFILE_TYPE = "type"
+    const val FARMER = "farmer"
+    const val TRADER = "trader"
 
 
 

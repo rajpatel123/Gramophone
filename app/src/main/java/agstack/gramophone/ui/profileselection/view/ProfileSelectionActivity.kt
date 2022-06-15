@@ -5,6 +5,8 @@ import agstack.gramophone.databinding.ActivityProfileSelectionBinding
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.profileselection.viewmodel.ProfileSelectionViewModel
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
+import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.LocaleManagerClass
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -31,7 +33,13 @@ class ProfileSelectionActivity : BaseActivity() {
 
     private fun setupUi() {
         binding.continueBtn.setOnClickListener {
-            HomeActivity.start(this@ProfileSelectionActivity)
+            /*HomeActivity.start(this@ProfileSelectionActivity)*/
+
+            //Perform validations then call api
+            val hashMap = HashMap<Any, Any>()
+            hashMap[Constants.PROFILE_TYPE] = Constants.FARMER
+
+            viewModel.updateProfileType(hashMap)
         }
     }
 
