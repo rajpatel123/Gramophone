@@ -40,8 +40,8 @@ class LanguageActivity : BaseActivity() {
             val version = Build.VERSION.SDK_INT
             val versionName = BuildConfig.VERSION_NAME
             val versionCode = BuildConfig.VERSION_CODE
-            val oneSignalToken = "testtoken"
-            val fcmToken = "dfd"+SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.FirebaseTokenKey)
+            val oneSignalToken = "testtoken"  // will be updated later
+            val fcmToken = "dfd"+SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.FirebaseTokenKey)  // will be updated later
 
 
             var registrerDeviceRquestModel = RegistrerDeviceRquestModel(
