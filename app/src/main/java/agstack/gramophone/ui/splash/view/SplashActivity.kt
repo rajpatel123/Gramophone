@@ -57,17 +57,7 @@ class SplashActivity : BaseActivity() {
         })
 
         viewModel.splashLiveData.observe(this, Observer {
-
-        //    LanguageActivity.start(this@SplashActivity)
-            val intent = Intent(this, ProfileSelectionActivity::class.java)
-            startActivity(intent)
-            finish()
+            LanguageActivity.start(this@SplashActivity)
         })
-
-        val observer = Observer<SplashModel> {
-            val intent = Intent(this, LanguageActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
     }
 }
