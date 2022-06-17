@@ -49,7 +49,7 @@ class SplashActivity : BaseActivity() {
                     it.message?.let { message ->
                         Toast.makeText(this@SplashActivity, message, Toast.LENGTH_LONG).show()
                     }
-                }
+                 }
                 is Resource.Loading -> {
                     binding.progress.visibility = View.VISIBLE
                 }
