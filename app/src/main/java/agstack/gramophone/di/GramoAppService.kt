@@ -12,6 +12,9 @@ interface GramoAppService {
     @POST("traders/update-profile-type")
     suspend fun updateProfileType(@Body hashMap:HashMap<Any,Any>): Response<UpdateProfileTypeRes>
 
+    @POST("onboarding/register-device")
+    suspend fun getDeviceToken(@Body hashMap:HashMap<Any,Any>): Response<UpdateProfileTypeRes>
+
     @POST("onboarding/send-otp")
     suspend fun sendOTP(@Body hashMap:HashMap<Any,Any>): Response<GenerateOtpResponseModel>
 
