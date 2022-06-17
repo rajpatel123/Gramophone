@@ -7,10 +7,16 @@ import agstack.gramophone.ui.profileselection.viewmodel.ProfileSelectionViewMode
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.LocaleManagerClass
+import agstack.gramophone.utils.Resource
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileSelectionActivity : BaseActivity() {
     private lateinit var binding: ActivityProfileSelectionBinding
     private val viewModel: ProfileSelectionViewModel by viewModels()
@@ -33,8 +39,6 @@ class ProfileSelectionActivity : BaseActivity() {
 
     private fun setupUi() {
         binding.continueBtn.setOnClickListener {
-            /*HomeActivity.start(this@ProfileSelectionActivity)*/
-
             //Perform validations then call api
             val hashMap = HashMap<Any, Any>()
             hashMap[Constants.PROFILE_TYPE] = Constants.FARMER
@@ -44,6 +48,23 @@ class ProfileSelectionActivity : BaseActivity() {
     }
 
     private fun setupObservers() {
+        viewModel.updateProfileData.observe(this, Observer{
+            when (it) {
+                is Resource.Success -> {
+                    binding.progress.visibility = View.GONE
+                    HomeActivity.start(this@ProfileSelectionActivity)
+                }
+                is Resource.Error -> {
+                    binding.progress.visibility = View.GONE
+                    it.message?.let { message ->
+                        Toast.makeText(this@ProfileSelectionActivity, message, Toast.LENGTH_LONG).show()
+                    }
+                }
+                is Resource.Loading -> {
+                    binding.progress.visibility = View.VISIBLE
+                }
+            }
+        })
 
     }
 }
