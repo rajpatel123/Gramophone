@@ -3,7 +3,7 @@ package agstack.gramophone.ui.apptour.view
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.databinding.ActivityApptourBinding
-import agstack.gramophone.splash.viewmodel.AppTourViewModel
+import agstack.gramophone.ui.apptour.viewmodel.AppTourViewModel
 import agstack.gramophone.ui.apptour.adapter.DotIndicatorPager2Adapter
 import agstack.gramophone.ui.apptour.model.Card
 import agstack.gramophone.ui.login.view.LoginActivity
@@ -19,7 +19,7 @@ class AppTourActivity : BaseActivity() {
     private lateinit var viewModel: AppTourViewModel
     private lateinit var items: ArrayList<Card>
     private lateinit var viewPager2: ViewPager2
-    var cardIndex:Int =0;
+    var cardIndex: Int = 0;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -34,9 +34,9 @@ class AppTourActivity : BaseActivity() {
 
         initCards()
         val dotsIndicator = findViewById<DotsIndicator>(R.id.dots_indicator)
-        dotsIndicator.setOnClickListener {  }
-         viewPager2 = findViewById<ViewPager2>(R.id.view_pager)
-          viewPager2.setUserInputEnabled(false);
+        dotsIndicator.setOnClickListener { }
+        viewPager2 = findViewById<ViewPager2>(R.id.view_pager)
+        viewPager2.setUserInputEnabled(false);
         val adapter = DotIndicatorPager2Adapter(items)
         viewPager2.adapter = adapter
 
@@ -52,28 +52,37 @@ class AppTourActivity : BaseActivity() {
     }
 
     private fun initCards() {
-         items = ArrayList<Card>()
+        items = ArrayList<Card>()
 
-        val cardConnected = Card(R.drawable.communication, getString(R.string.connected),getString(R.string.connected_sub_msg))
+        val cardConnected = Card(
+            R.drawable.communication,
+            getString(R.string.connected),
+            getString(R.string.connected_sub_msg)
+        )
         items.add(cardConnected)
 
-        val cardDelivevry = Card(R.drawable.delivery,getString(R.string.delivery), getString(R.string.delivery_sub_msg))
+        val cardDelivevry = Card(
+            R.drawable.delivery,
+            getString(R.string.delivery),
+            getString(R.string.delivery_sub_msg)
+        )
         items.add(cardDelivevry)
 
-        val cardUpdates = Card(R.drawable.midea,getString(R.string.midea), getString(R.string.midea_sub_msg))
+        val cardUpdates =
+            Card(R.drawable.midea, getString(R.string.midea), getString(R.string.midea_sub_msg))
         items.add(cardUpdates)
     }
 
 
     private fun setupUi() {
         binding.next.setOnClickListener {
-            if (cardIndex==items.size-1){
+            if (cardIndex == items.size - 1) {
                 LoginActivity.start(this@AppTourActivity)
-            }else{
+            } else {
                 cardIndex++
-                viewPager2.currentItem=cardIndex
-                if (cardIndex==items.size-1){
-                    binding.next.text=getString(R.string.finish)
+                viewPager2.currentItem = cardIndex
+                if (cardIndex == items.size - 1) {
+                    binding.next.text = getString(R.string.finish)
                 }
             }
         }

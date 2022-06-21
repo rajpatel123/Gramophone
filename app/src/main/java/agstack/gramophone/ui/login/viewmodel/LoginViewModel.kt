@@ -3,9 +3,9 @@ package agstack.gramophone.ui.login.viewmodel
 
 import agstack.gramophone.ui.login.model.GenerateOtpResponseModel
 import agstack.gramophone.ui.login.repository.LoginRepository
-import agstack.gramophone.utils.Resource
-import agstack.gramophone.utils.hasInternetConnection
+import agstack.gramophone.utils.*
 import android.content.Context
+import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,7 +25,14 @@ class LoginViewModel @Inject constructor(
         MutableLiveData()
 
     fun sendOTP(loginMap: HashMap<Any, Any>) = viewModelScope.launch {
-        sendOTPCall(loginMap)
+        if (!TextUtils.isEmpty(loginMap.get(Constants.PHONE).toString())) {
+            loginMap.put("session_token",SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.session_token).toString())
+            sendOTPCall(loginMap)
+        }else{
+            generateOtpResponseModel.postValue(Resource.Error("Please enter phone number"))
+        }
+
     }
 
     private suspend fun sendOTPCall(loginMap: HashMap<Any, Any>) {
@@ -51,6 +58,6 @@ class LoginViewModel @Inject constructor(
                 return Resource.Success(resultResponse)
             }
         }
-            return Resource.Error(response.message())
-        }
+        return Resource.Error(response.message())
     }
+}

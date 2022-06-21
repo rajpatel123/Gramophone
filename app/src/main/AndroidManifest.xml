@@ -7,11 +7,11 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
-        android:name=".utils.MyApplication"
+        android:name=".utils.GramoAppApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/leaf_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/leaf_logo"
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/SplashTheme">
@@ -24,17 +24,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.language.view.LanguageActivity" />
+        <activity android:name=".ui.language.view.LanguageActivity"
+            android:noHistory="true"/>
 
         <activity android:name=".ui.verifyotp.view.VerifyOtpActivity" />
         <activity android:name=".ui.apptour.view.AppTourActivity" />
-        <activity android:name=".ui.profile.view.ProfileSelectionActivity" />
+        <activity android:name=".ui.profileselection.view.ProfileSelectionActivity" />
         <activity android:name=".ui.login.view.LoginActivity"
-            android:exported="true">
+           >
 
         </activity>
         <activity android:name=".ui.home.view.HomeActivity" />
-        <activity android:name=".ui.home.view.ProfileActivity" />
+        <activity android:name=".ui.profile.view.ProfileActivity" />
+
+
+
+
+        <service android:name=".pushnotification.MyFirebaseMessagingService"/>
     </application>
 
 </manifest>

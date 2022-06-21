@@ -14,7 +14,7 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [MarketFragment.newInstance] factory method to
+ * Use the [TradeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
 class TradeFragment : Fragment() {

@@ -49,6 +49,7 @@
             android:textColor="@color/blakish"/>
 
         <EditText
+            android:id="@+id/mobileEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
