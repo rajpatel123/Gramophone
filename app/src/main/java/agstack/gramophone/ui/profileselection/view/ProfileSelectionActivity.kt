@@ -8,6 +8,7 @@ import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import kotlinx.android.synthetic.main.activity_profile_selection.*
 
 class ProfileSelectionActivity : BaseActivity() {
     private lateinit var binding: ActivityProfileSelectionBinding
@@ -30,7 +31,7 @@ class ProfileSelectionActivity : BaseActivity() {
     }
 
     private fun setupUi() {
-        binding.continueBtn.setOnClickListener {
+        continueBtn.setOnClickListener {
             HomeActivity.start(this@ProfileSelectionActivity)
         }
     }

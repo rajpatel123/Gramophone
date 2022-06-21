@@ -19,4 +19,8 @@ interface GramoAppService {
     @JvmSuppressWildcards
     suspend fun getDeviceToken(@Body registrerDeviceRquestModel: RegistrerDeviceRquestModel): Response<RegisterDeviceModel>
 
+    @POST("onboarding/validate-otp")
+    @JvmSuppressWildcards
+    suspend fun validateOTP(@Body registrerDeviceRquestModel: RegistrerDeviceRquestModel): Response<RegisterDeviceModel>
+
 }
