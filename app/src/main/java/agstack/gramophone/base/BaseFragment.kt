@@ -1,15 +1,21 @@
 package agstack.gramophone.base
 
+import android.app.AppComponentFactory
+import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigator
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseFragment<V : ViewBinding> : Fragment() {
-    protected var binding: V? = null
+abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewModel<N>> : Fragment(),
+    BaseNavigator {
+    protected var binding: B? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,5 +37,23 @@ abstract class BaseFragment<V : ViewBinding> : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): V
+    ): B
+
+    override fun isNetworkAvailable(): Boolean {
+        //  val info = ConnectivityManager?.OnNetworkActiveListener {  }
+        return true
+    }
+
+    override fun <T> openActivity(cls: Class<T>, extras: Bundle?) {
+        Intent(context, cls).apply {
+            if (extras != null)
+                putExtras(extras)
+            startActivity(this)
+        }
+    }
+
+    override fun requestPermission(permission: String, callback: (Boolean) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
 }

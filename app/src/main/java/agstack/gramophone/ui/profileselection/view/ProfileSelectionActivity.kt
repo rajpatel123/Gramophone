@@ -31,7 +31,8 @@ class ProfileSelectionActivity : BaseActivity() {
 
     private fun setupUi() {
         binding.continueBtn.setOnClickListener {
-            HomeActivity.start(this@ProfileSelectionActivity)
+           // HomeActivity.start(this@ProfileSelectionActivity)
+            openActivity(ProfileSelectionActivity::class.java,null)
         }
     }
 
