@@ -1,15 +1,18 @@
-package agstack.gramophone.ui.home.view.fragments
+package agstack.gramophone.ui.home.view.fragments.market
 
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentMarketBinding
 import agstack.gramophone.ui.home.adapter.*
 import agstack.gramophone.ui.home.model.Banner
+import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -21,10 +24,11 @@ private const val ARG_PARAM2 = "param2"
  * Use the [MarketFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MarketFragment : BaseFragment<FragmentMarketBinding>() {
+class MarketFragment : BaseFragment<FragmentMarketBinding,MarketFragmentNavigator,MarketFragmentViewModel>(),MarketFragmentNavigator {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var items: ArrayList<Banner>
+    private val marketFragmentViewModel: MarketFragmentViewModel by viewModels()
 
     companion object {
         /**
