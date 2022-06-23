@@ -1,21 +1,40 @@
 package agstack.gramophone.base
 
-import android.app.AppComponentFactory
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
-import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil.setContentView
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigator
 import androidx.viewbinding.ViewBinding
 
 abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewModel<N>> : Fragment(),
     BaseNavigator {
     protected var binding: B? = null
+
+    protected var mViewModel :V?=null
+    private var mContext :Context?=null
+    private var mActivity :Activity ?=null
+
+
+    abstract fun getLayoutID(): Int
+    abstract fun getBindingVariable(): Int
+    abstract fun getViewModel(): V
+    override fun onAttach(activity: Activity) {
+        super.onAttach(activity)
+        this.mActivity = activity
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        this.mContext = context
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,6 +43,21 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     ): View? {
         val binding = onCreateBinding(inflater, container, savedInstanceState)
         this.binding = binding
+
+
+        val ViewDataBindingObj = DataBindingUtil.inflate<B>(
+            LayoutInflater.from(mContext),
+            getLayoutID(),
+            null,
+            false
+        )
+        this.mViewModel = getViewModel()
+        ViewDataBindingObj.setVariable(getBindingVariable(),mViewModel)
+     setContentView(mActivity!!,getLayoutID(),ViewDataBindingObj.root)
+        mViewModel?.setNavigator(this as N?)
+
+
+
         return binding.root
     }
 

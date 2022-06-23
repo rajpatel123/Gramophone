@@ -1,10 +1,8 @@
 package agstack.gramophone.base
 
-import agstack.gramophone.ui.home.product.ProductDetailsViewModel
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding

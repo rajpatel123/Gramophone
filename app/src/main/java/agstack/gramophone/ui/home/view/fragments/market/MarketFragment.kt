@@ -182,4 +182,16 @@ class MarketFragment :
         bundle.putParcelable("product", it)
         openActivity(ProductDetailsActivity::class.java,bundle)
     }
+
+    override fun getLayoutID(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun getBindingVariable(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun getViewModel(): MarketFragmentViewModel {
+        TODO("Not yet implemented")
+    }
 }
