@@ -52,7 +52,7 @@ class ProfileSelectionActivity : BaseActivity() {
             when (it) {
                 is Resource.Success -> {
                     binding.progress.visibility = View.GONE
-                    HomeActivity.start(this@ProfileSelectionActivity)
+                    openActivity(ProfileSelectionActivity::class.java,null)
                 }
                 is Resource.Error -> {
                     binding.progress.visibility = View.GONE
