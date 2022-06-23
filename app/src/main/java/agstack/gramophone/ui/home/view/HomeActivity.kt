@@ -5,6 +5,7 @@ import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.databinding.ActivityHomeBinding
 import agstack.gramophone.menu.BottomNavigationView
 import agstack.gramophone.menu.OnNavigationItemChangeListener
+import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.profile.view.ProfileActivity
 import agstack.gramophone.ui.profileselection.view.ProfileSelectionActivity
@@ -15,9 +16,10 @@ import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import dagger.hilt.android.AndroidEntryPoint
 
-
-class HomeActivity : BaseActivity() {
+@AndroidEntryPoint
+class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityNavigator,HomeViewModel>(),HomeActivityNavigator {
 
     private lateinit var binding: ActivityHomeBinding
     private val homeViewModel: HomeViewModel by viewModels()
@@ -25,18 +27,7 @@ class HomeActivity : BaseActivity() {
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-    companion object {
-        fun start(activity: ProfileSelectionActivity) {
-            val intent = Intent(activity, HomeActivity::class.java)
-            activity.startActivity(intent)
-            activity.finish()
-        }
-        fun start(activity: VerifyOtpActivity) {
-            val intent = Intent(activity, HomeActivity::class.java)
-            activity.startActivity(intent)
-            activity.finish()
-        }
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

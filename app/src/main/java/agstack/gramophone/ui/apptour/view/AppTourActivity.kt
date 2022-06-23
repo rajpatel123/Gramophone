@@ -10,11 +10,12 @@ import agstack.gramophone.ui.login.view.LoginActivity
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 
-class AppTourActivity : BaseActivity() {
+class AppTourActivity : AppCompatActivity() {
     private lateinit var binding: ActivityApptourBinding
     private lateinit var viewModel: AppTourViewModel
     private lateinit var items: ArrayList<Card>

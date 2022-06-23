@@ -2,7 +2,11 @@ package agstack.gramophone.ui.language.view
 
 import agstack.gramophone.BuildConfig
 import agstack.gramophone.base.BaseActivity
+import agstack.gramophone.databinding.ActivityHomeBinding
 import agstack.gramophone.databinding.ActivityLanguageBinding
+import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
+import agstack.gramophone.ui.home.viewmodel.HomeViewModel
+import agstack.gramophone.ui.language.LanguageActivityNavigator
 import agstack.gramophone.ui.language.adapter.LanguageAdapter
 import agstack.gramophone.ui.language.model.LanguageData
 import agstack.gramophone.ui.language.model.RegistrerDeviceRquestModel
@@ -22,7 +26,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_language.*
 
 @AndroidEntryPoint
-class LanguageActivity : BaseActivity() {
+class LanguageActivity : BaseActivity<ActivityLanguageBinding, LanguageActivityNavigator, LanguageViewModel>(),
+    LanguageActivityNavigator {
 
     private lateinit var binding: ActivityLanguageBinding
     private val languageViewModel: LanguageViewModel by viewModels()
