@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.home.view.fragments.market
 
 import agstack.gramophone.R
+import agstack.gramophone.BR
 import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentMarketBinding
 import agstack.gramophone.ui.home.product.ProductDetailsActivity
@@ -184,14 +185,14 @@ class MarketFragment :
     }
 
     override fun getLayoutID(): Int {
-        TODO("Not yet implemented")
+        return R.layout.fragment_market
     }
 
     override fun getBindingVariable(): Int {
-        TODO("Not yet implemented")
+     return  BR.viewModel
     }
 
     override fun getViewModel(): MarketFragmentViewModel {
-        TODO("Not yet implemented")
+     return marketFragmentViewModel
     }
 }

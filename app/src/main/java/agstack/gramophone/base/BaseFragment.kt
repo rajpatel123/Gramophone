@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.DataBindingUtil.setContentView
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 
@@ -44,16 +43,7 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
         val binding = onCreateBinding(inflater, container, savedInstanceState)
         this.binding = binding
 
-
-        val ViewDataBindingObj = DataBindingUtil.inflate<B>(
-            LayoutInflater.from(mContext),
-            getLayoutID(),
-            null,
-            false
-        )
         this.mViewModel = getViewModel()
-        ViewDataBindingObj.setVariable(getBindingVariable(),mViewModel)
-     setContentView(mActivity!!,getLayoutID(),ViewDataBindingObj.root)
         mViewModel?.setNavigator(this as N?)
 
 

@@ -1,12 +1,16 @@
 package agstack.gramophone.ui.home.view.fragments.profile
 
+import agstack.gramophone.R
 import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentProfileBinding
+import agstack.gramophone.ui.home.product.ProductDetailsViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -20,7 +24,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding,ProfileFragmentNavig
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private val profileFragmentViewModel: ProfileFragmentViewModel by viewModels()
 
 
     /**
@@ -53,5 +57,17 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding,ProfileFragmentNavig
 
     private fun setUpUI() {
 
+    }
+
+    override fun getLayoutID(): Int {
+        return R.layout.fragment_profile
+    }
+
+    override fun getBindingVariable(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun getViewModel(): ProfileFragmentViewModel {
+        return profileFragmentViewModel
     }
 }
