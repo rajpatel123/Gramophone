@@ -34,9 +34,7 @@ class ProfileActivity : AppCompatActivity() {
 
 
     private fun setupUi() {
-        iv_cross.setOnClickListener {
-            finish()
-        }
+
     }
 
     private fun setupObservers() {
