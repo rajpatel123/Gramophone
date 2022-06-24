@@ -1,6 +1,8 @@
 package agstack.gramophone.ui.login.viewmodel
 
 
+import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.model.GenerateOtpResponseModel
 import agstack.gramophone.ui.login.repository.LoginRepository
 import agstack.gramophone.utils.*
@@ -20,7 +22,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val loginRepository: LoginRepository,
     @ApplicationContext private val context: Context
-) : ViewModel() {
+) : BaseViewModel<LoginNavigator>() {
     val generateOtpResponseModel: MutableLiveData<Resource<GenerateOtpResponseModel>> =
         MutableLiveData()
 

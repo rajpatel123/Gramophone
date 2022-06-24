@@ -3,6 +3,7 @@ package agstack.gramophone.ui.login.view
 import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.databinding.ActivityLoginBinding
 import agstack.gramophone.ui.apptour.view.AppTourActivity
+import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.viewmodel.LoginViewModel
 import agstack.gramophone.ui.splash.view.SplashActivity
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
@@ -21,32 +22,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity<ActivityLoginBinding, LoginNavigator, LoginViewModel>(), LoginNavigator {
 
     private lateinit var binding: ActivityLoginBinding
     //initialise ViewModel
     private val loginViewModel: LoginViewModel by viewModels()
-
-
-    companion object {
-        fun start(activity: SplashActivity) {
-            val intent = Intent(activity, LoginActivity::class.java)
-            activity.startActivity(intent)
-            activity.finish()
-        }
-
-        fun start(activity: AppTourActivity) {
-            val intent = Intent(activity, LoginActivity::class.java)
-            activity.startActivity(intent)
-            activity.finish()
-        }
-
-        fun start(activity: VerifyOtpActivity) {
-            val intent = Intent(activity, LoginActivity::class.java)
-            activity.startActivity(intent)
-            activity.finish()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,14 +64,21 @@ class LoginActivity : AppCompatActivity() {
             hashMap[Constants.PHONE] = mobileEdt.text.toString()
             val language = LocaleManagerClass.getLangCodeFromPreferences(this)
             hashMap[Constants.LANGUAGE] = language
-
             loginViewModel.sendOTP(hashMap)
         }
     }
 
 
-    fun xyz(){
+    override fun getLayoutID(): Int {
+        TODO("Not yet implemented")
+    }
 
+    override fun getBindingVariable(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun getViewModel(): LoginViewModel {
+        TODO("Not yet implemented")
     }
 
 }

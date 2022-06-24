@@ -72,4 +72,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityNavigator,Home
     private fun setupObservers() {
 
     }
+
+    override fun getLayoutID(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun getBindingVariable(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun getViewModel(): HomeViewModel {
+        TODO("Not yet implemented")
+    }
 }
