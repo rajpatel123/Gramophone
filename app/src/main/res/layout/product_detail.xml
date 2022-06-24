@@ -24,15 +24,151 @@
             app:layout_constraintTop_toBottomOf="parent" />
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/scroll_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:fillViewport="true"
-            app:layout_constraintBottom_toTopOf="@id/layout_bottom"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/rounded_corner_4_solid_green"
+                    android:fontFamily="@font/manrope_regular"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="20% Off"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10ssp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_180sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/dummy_neem_cake" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:background="@color/yellow"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawablePadding="@dimen/_6sdp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="Use Gram Cash on this product and get discount"
+                        android:textColor="@color/blakish"
+                        android:textSize="@dimen/_11ssp"
+                        app:drawableStartCompat="@drawable/ic_offer" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/manrope_bold"
+                    android:maxLines="3"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_16sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="Bioenzyme Organic Cold Pressed Water Soluble Pure Neem Oil"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    style="@style/heading_title_bold_large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:background="@drawable/strike_through"
+                    android:text="M.R.P.:	₹2,990.00"
+                    android:textColor="#666666"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    style="@style/heading_title_bold_large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:text="Price:	₹799.00"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_16ssp" />
+
+                <TextView
+                    style="@style/heading_title_bold_large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:text="Total Saving ₹2,100.00  (60%)"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    style="@style/heading_title_bold_large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:text="Hurry! Only 5 Products Left"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_12ssp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:background="@color/gray_stroke" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/manrope_bold"
+                    android:maxLines="3"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:paddingTop="@dimen/_16sdp"
+                    android:paddingEnd="@dimen/_16sdp"
+                    android:paddingBottom="@dimen/_16sdp"
+                    android:text="Quick Highlights"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:lineSpacingExtra="@dimen/_4sdp"
+                    android:text="Pesticide, Fertilizer, Manure, Soil
+\nUsed for cold pressed neem oil, insecticide spray, natural pesticide
+\nAvailable as Liquid
+\nPacked in Bottle
+\nPack of 1"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_12ssp" />
+
+            </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
 
