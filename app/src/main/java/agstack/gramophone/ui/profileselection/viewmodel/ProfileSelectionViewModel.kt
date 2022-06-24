@@ -4,6 +4,9 @@ import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import agstack.gramophone.ui.profileselection.repository.ProfileSelectionRepository
 import agstack.gramophone.utils.Resource
 import agstack.gramophone.utils.hasInternetConnection
+import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.ui.home.repository.HomeRepository
+import agstack.gramophone.ui.profileselection.ProfileSelectionNavigator
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,6 +23,7 @@ class ProfileSelectionViewModel @Inject constructor(
     private val repository: ProfileSelectionRepository,
     @ApplicationContext private val context: Context
 
+) : BaseViewModel<ProfileSelectionNavigator>() {
 ) : ViewModel() {
     val updateProfileData: MutableLiveData<Resource<UpdateProfileTypeRes>> =
         MutableLiveData()

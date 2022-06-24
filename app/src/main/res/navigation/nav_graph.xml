@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/marketFragment"
-        android:name="agstack.gramophone.ui.home.view.fragments.MarketFragment"
+        android:name="agstack.gramophone.ui.home.view.fragments.market.MarketFragment"
         android:label="MarketFragment" >
         <action
             android:id="@+id/action_marketFragment_to_tradeFragment22"
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment2"
-        android:name="agstack.gramophone.ui.home.view.fragments.ProfileFragment"
+        android:name="agstack.gramophone.ui.home.view.fragments.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

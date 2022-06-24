@@ -1,20 +1,27 @@
 package agstack.gramophone.ui.home.view.fragments.market
 
 import agstack.gramophone.R
+import agstack.gramophone.BR
 import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentMarketBinding
+import agstack.gramophone.ui.home.product.ProductDetailsActivity
 import agstack.gramophone.ui.home.adapter.*
 import agstack.gramophone.ui.home.model.Banner
-import agstack.gramophone.ui.home.viewmodel.HomeViewModel
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_market.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -24,11 +31,18 @@ private const val ARG_PARAM2 = "param2"
  * Use the [MarketFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MarketFragment : BaseFragment<FragmentMarketBinding,MarketFragmentNavigator,MarketFragmentViewModel>(),MarketFragmentNavigator {
+
+
+@AndroidEntryPoint
+class MarketFragment :
+    BaseFragment<FragmentMarketBinding, MarketFragmentNavigator, MarketFragmentViewModel>(),
+    MarketFragmentNavigator {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var items: ArrayList<Banner>
     private val marketFragmentViewModel: MarketFragmentViewModel by viewModels()
+    private var viewModelJob = Job()
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     companion object {
         /**
@@ -68,6 +82,9 @@ class MarketFragment : BaseFragment<FragmentMarketBinding,MarketFragmentNavigato
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        uiScope.launch {
+            marketFragmentViewModel?.getFeaturedproducts(HashMap<Any, Any>())
+        }
     }
 
     /**
@@ -86,15 +103,15 @@ class MarketFragment : BaseFragment<FragmentMarketBinding,MarketFragmentNavigato
         binding?.viewPager?.adapter = adapter
         binding?.dotsIndicator?.attachTo(binding?.viewPager!!)
 
-        binding?.rvShopByCat?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        binding?.rvShopByCat?.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         binding?.rvShopByCat?.setHasFixedSize(true)
         binding?.rvShopByCat?.adapter = ShopByCategoryAdapter()
 
-        binding?.rvFeatureProduct?.layoutManager = GridLayoutManager(activity, 2)
-        binding?.rvFeatureProduct?.setHasFixedSize(true)
-        binding?.rvFeatureProduct?.adapter = FeatureProductAdapter()
 
-        binding?.rvMandiRates?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
+        binding?.rvMandiRates?.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         binding?.rvMandiRates?.setHasFixedSize(true)
         binding?.rvMandiRates?.adapter = MandiRatesAdapter()
 
@@ -106,15 +123,18 @@ class MarketFragment : BaseFragment<FragmentMarketBinding,MarketFragmentNavigato
         binding?.rvShopByStores?.setHasFixedSize(true)
         binding?.rvShopByStores?.adapter = ShopByStoresAdapter()
 
-        binding?.rvRecentlyViewed?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        binding?.rvRecentlyViewed?.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         binding?.rvRecentlyViewed?.setHasFixedSize(true)
         binding?.rvRecentlyViewed?.adapter = RecentlyViewedAdapter()
 
-        binding?.rvCart?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        binding?.rvCart?.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         binding?.rvCart?.setHasFixedSize(true)
         binding?.rvCart?.adapter = RecentlyViewedAdapter()
 
-        binding?.rvArticles?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        binding?.rvArticles?.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         binding?.rvArticles?.setHasFixedSize(true)
         binding?.rvArticles?.adapter = ArticlesAdapter()
 
@@ -146,5 +166,33 @@ class MarketFragment : BaseFragment<FragmentMarketBinding,MarketFragmentNavigato
             getString(R.string.midea_sub_msg)
         )
         items.add(cardUpdates)
+    }
+
+
+    override fun setFeaturedProductsAdapter(
+        adapter: ProductListAdapter,
+        onProductListItemClick: (ProductData) -> Unit
+    ) {
+        uiScope.launch {
+        adapter.selectedProduct = onProductListItemClick
+        rv_feature_product.adapter = adapter }
+    }
+
+    override fun startProductDetailsActivity(it: ProductData) {
+        val bundle = Bundle()
+        bundle.putParcelable("product", it)
+        openActivity(ProductDetailsActivity::class.java,bundle)
+    }
+
+    override fun getLayoutID(): Int {
+        return R.layout.fragment_market
+    }
+
+    override fun getBindingVariable(): Int {
+     return  BR.viewModel
+    }
+
+    override fun getViewModel(): MarketFragmentViewModel {
+     return marketFragmentViewModel
     }
 }

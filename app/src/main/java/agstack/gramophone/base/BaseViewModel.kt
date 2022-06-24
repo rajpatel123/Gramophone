@@ -3,7 +3,9 @@ package agstack.gramophone.base
 import androidx.lifecycle.ViewModel
 import java.lang.ref.WeakReference
 
-open class BaseViewModel<N:BaseNavigator>():ViewModel() {
+
+
+open class BaseViewModel< N:BaseNavigator>():ViewModel() {
 
     private var mNavigator: WeakReference<N?> = WeakReference(null)
 
