@@ -23,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 
 @AndroidEntryPoint
-class LoginActivity : BaseActivity<ActivityLoginBinding, LoginNavigator, LoginViewModel>(), LoginNavigator {
+class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, LoginViewModel>(), LoginNavigator {
 
     private lateinit var binding: ActivityLoginBinding
     //initialise ViewModel

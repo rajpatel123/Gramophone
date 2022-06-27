@@ -19,7 +19,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityNavigator,HomeViewModel>(),HomeActivityNavigator {
+class HomeActivity : BaseActivityWrapper<ActivityHomeBinding,HomeActivityNavigator,HomeViewModel>(),HomeActivityNavigator {
 
     private lateinit var binding: ActivityHomeBinding
     private val homeViewModel: HomeViewModel by viewModels()
@@ -74,11 +74,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityNavigator,Home
     }
 
     override fun getLayoutID(): Int {
-        TODO("Not yet implemented")
+        R.layout.activity_home
     }
 
     override fun getBindingVariable(): Int {
-        TODO("Not yet implemented")
+        BR.
     }
 
     override fun getViewModel(): HomeViewModel {
