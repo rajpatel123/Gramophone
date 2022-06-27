@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-
+import dagger.hilt.android.AndroidEntryPoint
 
 abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : BaseViewModel<N>> :
     AppCompatActivity(), BaseNavigator {
@@ -44,6 +44,18 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
             }
         }
     }
+
+    override fun <T> openAndFinishActivity(cls :Class<T>,extras:Bundle?){
+        Intent(this,cls).apply {
+
+            if(extras!=null)
+                putExtras(extras)
+            startActivity(this)
+            finish()
+
+        }
+    }
+
 
     override fun isNetworkAvailable(): Boolean {
         TODO("Not yet implemented")

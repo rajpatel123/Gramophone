@@ -25,7 +25,6 @@ import javax.inject.Inject
 class LanguageViewModel @Inject constructor(
    private val languageRepository: LanguageRepository,
    @ApplicationContext private val context: Context
-
 ) : BaseViewModel<LanguageActivityNavigator>() {
 
    val registerDeviceModel: MutableLiveData<Resource<RegisterDeviceModel>> =

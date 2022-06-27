@@ -114,6 +114,16 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding, LanguageActivityN
         recycler_language?.setHasFixedSize(true)
         recycler_language?.adapter = LanguageAdapter(languageList)
     }
+    override fun getLayoutID(): Int {
+        TODO("Not yet implemented")
+    }
 
+    override fun getBindingVariable(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun getViewModel(): LanguageViewModel {
+        TODO("Not yet implemented")
+    }
 
 }

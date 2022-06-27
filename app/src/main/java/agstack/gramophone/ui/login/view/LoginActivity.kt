@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.login.view
 
 import agstack.gramophone.base.BaseActivity
+import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityLoginBinding
 import agstack.gramophone.ui.apptour.view.AppTourActivity
 import agstack.gramophone.ui.login.LoginNavigator

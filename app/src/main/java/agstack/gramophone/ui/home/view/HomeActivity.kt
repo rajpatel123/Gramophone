@@ -82,6 +82,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityNavigator,Home
     }
 
     override fun getViewModel(): HomeViewModel {
-        TODO("Not yet implemented")
+        return homeViewModel
     }
 }

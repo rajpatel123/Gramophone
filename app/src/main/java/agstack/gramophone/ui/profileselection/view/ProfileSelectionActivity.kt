@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.profileselection.view
 
 import agstack.gramophone.base.BaseActivity
+import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityProfileSelectionBinding
 import agstack.gramophone.ui.profileselection.ProfileSelectionNavigator
 import agstack.gramophone.ui.profileselection.viewmodel.ProfileSelectionViewModel
@@ -10,9 +11,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 
-class ProfileSelectionActivity : BaseActivity<ActivityProfileSelectionBinding,ProfileSelectionNavigator,ProfileSelectionViewModel>(),ProfileSelectionNavigator {
+class ProfileSelectionActivity : BaseActivityWrapper<ActivityProfileSelectionBinding,ProfileSelectionNavigator,ProfileSelectionViewModel>(),ProfileSelectionNavigator {
     private lateinit var binding: ActivityProfileSelectionBinding
-    private val viewModel: ProfileSelectionViewModel by viewModels()
+    private val profileSelectionViewModel: ProfileSelectionViewModel by viewModels()
 
     companion object {
         fun start(activity: VerifyOtpActivity) {
@@ -51,6 +52,8 @@ class ProfileSelectionActivity : BaseActivity<ActivityProfileSelectionBinding,Pr
     }
 
     override fun getViewModel(): ProfileSelectionViewModel {
-        TODO("Not yet implemented")
+    return    profileSelectionViewModel
     }
+
+
 }
