@@ -1,182 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.home.view.fragments.profile.ProfileFragment">
+<layout>
+    <data>
 
-    <RelativeLayout
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.home.view.fragments.profile.viewmodel.ProfileFragmentViewModel" />
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/profile_header_bg"
-        android:paddingStart="@dimen/_16sdp"
-        android:paddingEnd="@dimen/_16sdp">
-
-        <ImageView
-            android:id="@+id/iv_cross"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:contentDescription="@string/image"
-            app:srcCompat="@drawable/ic_cross" />
-
-        <TextView
-            android:id="@+id/tv_name"
-            style="@style/heading_title_bold_large"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_cross"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:ellipsize="end"
-            android:text="Thakur Baldev Singh"
-            android:textColor="@color/blakish"
-            android:textSize="@dimen/_14sdp" />
-
-        <TextView
-            android:id="@+id/tv_contact"
-            style="@style/heading_title_medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_name"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:text="+91 9926004941"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/_14sdp" />
-
-        <RelativeLayout
-            android:id="@+id/rl_profile"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_cross"
-            android:layout_alignParentEnd="true">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/iv_profile"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:src="@drawable/dummy_profile" />
-
-            <FrameLayout
-                android:id="@+id/frame_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="70dp"
-                android:background="@drawable/ic_circle_solid_black_stroke_gray"
-                android:padding="10dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_edit" />
-
-            </FrameLayout>
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tv_followers_count"
-            style="@style/heading_title_bold_large"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_contact"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:ellipsize="end"
-            android:text="100"
-            android:textColor="@color/blakish"
-            android:textSize="@dimen/_14sdp" />
-
-        <TextView
-            android:id="@+id/tv_follower"
-            style="@style/heading_title_medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_followers_count"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:text="Followers"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/_14sdp" />
-
-
-        <TextView
-            android:id="@+id/tv_following_count"
-            style="@style/heading_title_bold_large"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_contact"
-            android:layout_marginStart="@dimen/_150sdp"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:ellipsize="end"
-            android:text="200"
-            android:textColor="@color/blakish"
-            android:textSize="@dimen/_14sdp" />
-
-        <TextView
-            android:id="@+id/tv_following"
-            style="@style/heading_title_medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_following_count"
-            android:layout_marginStart="@dimen/_150sdp"
-            android:text="Following"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/_14sdp" />
-
-    </RelativeLayout>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_marginTop="-35dp"
-        android:layout_height="@dimen/_70sdp"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        app:cardCornerRadius="@dimen/_16sdp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.home.view.fragments.profile.ProfileFragment">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical">
+            android:layout_height="wrap_content"
+            android:background="@drawable/profile_header_bg"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp">
 
             <ImageView
-                android:layout_marginStart="@dimen/_8sdp"
-                android:contentDescription="@string/image"
-                android:id="@+id/iv_cash"
+                android:id="@+id/iv_cross"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_cash" />
+                android:layout_marginTop="@dimen/_20sdp"
+                android:contentDescription="@string/image"
+                app:srcCompat="@drawable/ic_cross" />
 
             <TextView
-                android:id="@+id/tv_cash"
+                android:id="@+id/tv_name"
+                style="@style/heading_title_bold_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_cross"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:ellipsize="end"
+                android:text="Thakur Baldev Singh"
+                android:textColor="@color/blakish"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:id="@+id/tv_contact"
                 style="@style/heading_title_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_name"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:layout_toEndOf="@+id/iv_cash"
+                android:text="+91 9926004941"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_14sdp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_profile"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_cross"
+                android:layout_alignParentEnd="true">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_profile"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:src="@drawable/dummy_profile" />
+
+                <FrameLayout
+                    android:id="@+id/frame_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="70dp"
+                    android:background="@drawable/ic_circle_solid_black_stroke_gray"
+                    android:padding="10dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_edit" />
+
+                </FrameLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_followers_count"
+                style="@style/heading_title_bold_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_contact"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:ellipsize="end"
+                android:text="100"
+                android:textColor="@color/blakish"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:id="@+id/tv_follower"
+                style="@style/heading_title_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_followers_count"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:text="Followers"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_14sdp" />
 
+
             <TextView
-                android:id="@+id/tv_cash_amount"
+                android:id="@+id/tv_following_count"
                 style="@style/heading_title_bold_large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_cash"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_toEndOf="@+id/iv_cash"
-                android:text="₹ 100"
+                android:layout_below="@+id/tv_contact"
+                android:layout_marginStart="@dimen/_150sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:ellipsize="end"
+                android:text="200"
                 android:textColor="@color/blakish"
                 android:textSize="@dimen/_14sdp" />
 
+            <TextView
+                android:id="@+id/tv_following"
+                style="@style/heading_title_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_following_count"
+                android:layout_marginStart="@dimen/_150sdp"
+                android:text="Following"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_14sdp" />
 
         </RelativeLayout>
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_marginTop="-35dp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_16sdp">
 
-    </androidx.cardview.widget.CardView>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical">
 
-</LinearLayout>
+                <ImageView
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:contentDescription="@string/image"
+                    android:id="@+id/iv_cash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_cash" />
+
+                <TextView
+                    android:id="@+id/tv_cash"
+                    style="@style/heading_title_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_toEndOf="@+id/iv_cash"
+                    android:text="Followers"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:id="@+id/tv_cash_amount"
+                    style="@style/heading_title_bold_large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_cash"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_toEndOf="@+id/iv_cash"
+                    android:text="₹ 100"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_14sdp" />
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</layout>

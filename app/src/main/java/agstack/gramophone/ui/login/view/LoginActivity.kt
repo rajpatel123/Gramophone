@@ -1,24 +1,22 @@
 package agstack.gramophone.ui.login.view
 
-import agstack.gramophone.base.BaseActivity
+import agstack.gramophone.BR
+import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityLoginBinding
-import agstack.gramophone.ui.apptour.view.AppTourActivity
 import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.viewmodel.LoginViewModel
-import agstack.gramophone.ui.splash.view.SplashActivity
-import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.LocaleManagerClass
 import agstack.gramophone.utils.Resource
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+
+
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -71,15 +69,15 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
 
     override fun getLayoutID(): Int {
-        TODO("Not yet implemented")
+      return R.layout.activity_login
     }
 
     override fun getBindingVariable(): Int {
-        TODO("Not yet implemented")
+        return  BR.viewModel
     }
 
     override fun getViewModel(): LoginViewModel {
-        TODO("Not yet implemented")
+        return loginViewModel
     }
 
 }

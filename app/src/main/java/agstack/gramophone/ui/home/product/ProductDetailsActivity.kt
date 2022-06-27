@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class ProductDetailsActivity: BaseActivity<ProductDetailBinding, ProductDetailsNavigator, ProductDetailsViewModel>(),
+class ProductDetailsActivity: BaseActivityWrapper<ProductDetailBinding, ProductDetailsNavigator, ProductDetailsViewModel>(),
     ProductDetailsNavigator{
     private lateinit var binding: ProductDetailBinding
     private val productDetailsViewModel: ProductDetailsViewModel by viewModels()

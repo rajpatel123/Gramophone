@@ -2,6 +2,7 @@ package agstack.gramophone.ui.verifyotp.view
 
 import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.databinding.ActivityVerifyOtpBinding
+import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
 import agstack.gramophone.ui.verifyotp.viewmodel.VerifyOtpViewModel
@@ -38,7 +39,7 @@ class VerifyOtpActivity : BaseActivity<ActivityVerifyOtpBinding, VerifyOTPNaviga
     private fun setupUi() {
         binding.changeNumberTxt.setOnClickListener { onBackPressed() }
         binding.verifyOtpBtn.setOnClickListener {
-
+         openActivity(HomeActivity::class.java,null)
         }
     }
 
