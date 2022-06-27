@@ -1,5 +1,8 @@
 package agstack.gramophone.ui.language.viewmodel
 
+import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
+import agstack.gramophone.ui.language.LanguageActivityNavigator
 import agstack.gramophone.ui.language.model.RegisterDeviceModel
 import agstack.gramophone.ui.language.model.RegistrerDeviceRquestModel
 import agstack.gramophone.ui.language.repository.LanguageRepository
@@ -22,8 +25,7 @@ import javax.inject.Inject
 class LanguageViewModel @Inject constructor(
    private val languageRepository: LanguageRepository,
    @ApplicationContext private val context: Context
-
-) : ViewModel() {
+) : BaseViewModel<LanguageActivityNavigator>() {
 
    val registerDeviceModel: MutableLiveData<Resource<RegisterDeviceModel>> =
       MutableLiveData()

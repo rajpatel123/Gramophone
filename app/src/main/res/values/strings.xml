@@ -58,5 +58,7 @@
     <string name="trade">Trade</string>
     <string name="community">Community</string>
     <string name="me">Me</string>
+    <string name="expert_advice">Expert Advice</string>
+    <string name="add_to_cart">Add To Cart</string>
 
 </resources>
