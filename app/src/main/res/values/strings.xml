@@ -58,6 +58,11 @@
     <string name="trade">Trade</string>
     <string name="community">Community</string>
     <string name="me">Me</string>
+    <string name="back">Back</string>
+    <string name="cart">Cart</string>
+    <string name="help">Help</string>
+    <string name="cart_empty_msg">Looks like you haven\'t added\nanything to your cart yet</string>
+    <string name="cart_empty_title">Cart is Empty</string>
     <string name="expert_advice">Expert Advice</string>
     <string name="add_to_cart">Add To Cart</string>
 
