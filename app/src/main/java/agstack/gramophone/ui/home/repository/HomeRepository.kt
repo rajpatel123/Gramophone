@@ -19,11 +19,4 @@ class HomeRepository @Inject constructor(
         popular
     }
 
-
-    suspend fun getProducts(loginMap: HashMap<Any, Any>): Response<GenerateOtpResponseModel> = withContext(
-        Dispatchers.IO) {
-        val popular = gramoAppService.sendOTP(loginMap)
-        popular
-    }
-
 }

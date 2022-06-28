@@ -7,10 +7,10 @@ import agstack.gramophone.ui.profile.viewmodel.ProfileViewModel
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import kotlinx.android.synthetic.main.activity_profile.*
+import androidx.appcompat.app.AppCompatActivity
 
 
-class ProfileActivity : BaseActivity() {
+class ProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProfileBinding
     private val profileViewModel: ProfileViewModel by viewModels()
@@ -34,9 +34,7 @@ class ProfileActivity : BaseActivity() {
 
 
     private fun setupUi() {
-        iv_cross.setOnClickListener {
-            finish()
-        }
+
     }
 
     private fun setupObservers() {
