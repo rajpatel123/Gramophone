@@ -3,6 +3,7 @@ package agstack.gramophone.ui.splash.view
 import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.databinding.ActivitySplashBinding
 import agstack.gramophone.ui.language.view.LanguageActivity
+import agstack.gramophone.ui.profileselection.view.ProfileSelectionActivity
 import agstack.gramophone.ui.splash.model.SplashModel
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
 import agstack.gramophone.utils.Resource
@@ -49,7 +50,7 @@ class SplashActivity : AppCompatActivity() {
                     it.message?.let { message ->
                         Toast.makeText(this@SplashActivity, message, Toast.LENGTH_LONG).show()
                     }
-                }
+                 }
                 is Resource.Loading -> {
                     binding.progress.visibility = View.VISIBLE
                 }
@@ -57,15 +58,7 @@ class SplashActivity : AppCompatActivity() {
         })
 
         viewModel.splashLiveData.observe(this, Observer {
-
             LanguageActivity.start(this@SplashActivity)
-
         })
-
-        val observer = Observer<SplashModel> {
-            val intent = Intent(this, LanguageActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
     }
 }

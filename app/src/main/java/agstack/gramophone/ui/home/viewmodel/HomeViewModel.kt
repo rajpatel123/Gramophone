@@ -11,6 +11,4 @@ class HomeViewModel @Inject constructor(
     private val homeRepository: HomeRepository
     ) : BaseViewModel<HomeActivityNavigator>() {
 
-
-
 }

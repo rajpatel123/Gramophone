@@ -19,7 +19,7 @@ class ProfileActivity : AppCompatActivity() {
         fun start(activity: HomeActivity) {
             val intent = Intent(activity, ProfileActivity::class.java)
             activity.startActivity(intent)
-            activity.finish()
+
         }
     }
 

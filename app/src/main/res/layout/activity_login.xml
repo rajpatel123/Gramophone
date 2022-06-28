@@ -1,102 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar_with_logo_in_center"
-        />
+<layout>
+    <data>
 
-    <View
-        android:id="@+id/toolbar_separator"
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.login.viewmodel.LoginViewModel" />
+    </data>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="#F2F4F7"
-        android:layout_below="@+id/toolbar"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_31sdp"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:layout_below="@+id/toolbar_separator"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/heading_title_bold_large"
-            android:text="@string/welcome_msg"
-            android:textColor="@color/brand_color"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/small"
-            android:text="@string/start_msg"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:textColor="@color/grey"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/small"
-            android:text="@string/enter_mobile_lebel"
-            android:layout_marginTop="@dimen/_22sdp"
-            android:textColor="@color/blakish"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:background="@drawable/rounded_corner"
-            android:backgroundTint="@color/mute_grey"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:letterSpacing=".05"
-            android:textSize="@dimen/_10ssp"
-            android:inputType="number"
-            android:maxLength="10"
-            android:singleLine="true"
-            android:hint="@string/enter_mobile_lebel"
-            android:imeOptions="actionDone"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_with_logo_in_center"
             />
-    </LinearLayout>
+
+        <View
+            android:id="@+id/toolbar_separator"
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#F2F4F7"
+            android:layout_below="@+id/toolbar"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/mini"
-        android:text="@string/policy"
-        android:gravity="center"
-        android:layout_above="@+id/submitBtn"
-        android:layout_margin="@dimen/_10sdp"
-        app:layout_constraintBottom_toTopOf="@+id/submitBtn"/>
 
-    <Button
-        android:id="@+id/submitBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/submit"
-        android:gravity="center"
-        android:textSize="@dimen/_14ssp"
-        android:textColor="@color/white"
-        android:clickable="true"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:layout_marginEnd="@dimen/_24sdp"
-        android:background="@drawable/btn_rounded_corner"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/_20sdp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_31sdp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_below="@+id/toolbar_separator"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/heading_title_bold_large"
+                android:text="@string/welcome_msg"
+                android:textColor="@color/brand_color"/>
 
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_centerInParent="true" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/small"
+                android:text="@string/start_msg"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:textColor="@color/grey"/>
 
-</RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/small"
+                android:text="@string/enter_mobile_lebel"
+                android:layout_marginTop="@dimen/_22sdp"
+                android:textColor="@color/blakish"/>
+
+            <EditText
+                android:id="@+id/mobileEdt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:background="@drawable/rounded_corner"
+                android:backgroundTint="@color/mute_grey"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:letterSpacing=".05"
+                android:textSize="@dimen/_10ssp"
+                android:inputType="number"
+                android:maxLength="10"
+                android:singleLine="true"
+                android:hint="@string/enter_mobile_lebel"
+                android:imeOptions="actionDone"
+                />
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/mini"
+            android:text="@string/policy"
+            android:gravity="center"
+            android:layout_above="@+id/submitBtn"
+            android:layout_margin="@dimen/_10sdp"
+            app:layout_constraintBottom_toTopOf="@+id/submitBtn"/>
+
+        <Button
+            android:id="@+id/submitBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"
+            android:gravity="center"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/white"
+            android:clickable="true"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:background="@drawable/btn_rounded_corner"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/_20sdp"/>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+</layout>

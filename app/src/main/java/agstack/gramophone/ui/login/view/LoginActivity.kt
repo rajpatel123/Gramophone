@@ -1,51 +1,31 @@
 package agstack.gramophone.ui.login.view
 
-import agstack.gramophone.base.BaseActivity
+import agstack.gramophone.BR
+import agstack.gramophone.R
+import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityLoginBinding
-import agstack.gramophone.ui.apptour.view.AppTourActivity
+import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.viewmodel.LoginViewModel
-import agstack.gramophone.ui.splash.view.SplashActivity
-import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.LocaleManagerClass
 import agstack.gramophone.utils.Resource
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+
+
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_login.*
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, LoginViewModel>(), LoginNavigator {
 
     private lateinit var binding: ActivityLoginBinding
     //initialise ViewModel
     private val loginViewModel: LoginViewModel by viewModels()
-
-
-    companion object {
-        fun start(activity: SplashActivity) {
-            val intent = Intent(activity, LoginActivity::class.java)
-            activity.startActivity(intent)
-            activity.finish()
-        }
-
-        fun start(activity: AppTourActivity) {
-            val intent = Intent(activity, LoginActivity::class.java)
-            activity.startActivity(intent)
-            activity.finish()
-        }
-
-        fun start(activity: VerifyOtpActivity) {
-            val intent = Intent(activity, LoginActivity::class.java)
-            activity.startActivity(intent)
-            activity.finish()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,13 +44,12 @@ class LoginActivity : AppCompatActivity() {
                 }
                 is Resource.Error -> {
                     binding.progress.visibility = View.GONE
-                    VerifyOtpActivity.start(this@LoginActivity)
                     it.message?.let { message ->
                         Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
                     }
                 }
                 is Resource.Loading -> {
-                    binding.progress.visibility = View.VISIBLE
+                    progress.visibility = View.VISIBLE
                 }
             }
         })
@@ -79,15 +58,26 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun setupUi() {
-        binding.submitBtn.setOnClickListener { view ->
-            //Perform validations then call api
+        submitBtn.setOnClickListener { view ->
             val hashMap = HashMap<Any, Any>()
-            hashMap[Constants.PHONE] = "8285886155"
+            hashMap[Constants.PHONE] = mobileEdt.text.toString()
             val language = LocaleManagerClass.getLangCodeFromPreferences(this)
             hashMap[Constants.LANGUAGE] = language
-
             loginViewModel.sendOTP(hashMap)
         }
+    }
+
+
+    override fun getLayoutID(): Int {
+      return R.layout.activity_login
+    }
+
+    override fun getBindingVariable(): Int {
+        return  BR.viewModel
+    }
+
+    override fun getViewModel(): LoginViewModel {
+        return loginViewModel
     }
 
 }

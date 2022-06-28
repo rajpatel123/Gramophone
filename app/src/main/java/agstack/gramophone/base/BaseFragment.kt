@@ -76,6 +76,16 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
         }
     }
 
+    override fun <T> openAndFinishActivity(cls :Class<T>,extras:Bundle?){
+        Intent(context,cls).apply {
+
+            if(extras!=null)
+                putExtras(extras)
+            startActivity(this)
+
+        }
+    }
+
     override fun requestPermission(permission: String, callback: (Boolean) -> Unit) {
         TODO("Not yet implemented")
     }

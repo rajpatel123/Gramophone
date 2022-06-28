@@ -2,6 +2,7 @@ package agstack.gramophone.ui.home.product
 
 import agstack.gramophone.R
 import agstack.gramophone.BR
+import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ProductDetailBinding
 import android.os.Bundle

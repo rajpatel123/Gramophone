@@ -3,9 +3,11 @@ package agstack.gramophone.ui.apptour.view
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.databinding.ActivityApptourBinding
+import agstack.gramophone.ui.apptour.AppTourNavigator
 import agstack.gramophone.ui.apptour.viewmodel.AppTourViewModel
 import agstack.gramophone.ui.apptour.adapter.DotIndicatorPager2Adapter
 import agstack.gramophone.ui.apptour.model.Card
+import agstack.gramophone.ui.home.product.ProductDetailsActivity
 import agstack.gramophone.ui.login.view.LoginActivity
 import android.os.Bundle
 import android.view.Window
@@ -15,12 +17,13 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 
-class AppTourActivity : AppCompatActivity() {
+class AppTourActivity : BaseActivity<ActivityApptourBinding,AppTourNavigator,AppTourViewModel>(), AppTourNavigator {
     private lateinit var binding: ActivityApptourBinding
     private lateinit var viewModel: AppTourViewModel
     private lateinit var items: ArrayList<Card>
     private lateinit var viewPager2: ViewPager2
     var cardIndex: Int = 0;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -78,7 +81,7 @@ class AppTourActivity : AppCompatActivity() {
     private fun setupUi() {
         binding.next.setOnClickListener {
             if (cardIndex == items.size - 1) {
-                LoginActivity.start(this@AppTourActivity)
+                openAndFinishActivity(LoginActivity::class.java,null)
             } else {
                 cardIndex++
                 viewPager2.currentItem = cardIndex
@@ -89,9 +92,21 @@ class AppTourActivity : AppCompatActivity() {
         }
 
         binding.skip.setOnClickListener {
-            LoginActivity.start(this@AppTourActivity)
+
         }
 
+    }
+
+    override fun getLayoutID(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun getBindingVariable(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun getViewModel(): AppTourViewModel {
+        TODO("Not yet implemented")
     }
 
 

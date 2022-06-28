@@ -1,8 +1,8 @@
 package agstack.gramophone.ui.profileselection.view
 
 import agstack.gramophone.base.BaseActivity
+import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityProfileSelectionBinding
-import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.profileselection.ProfileSelectionNavigator
 import agstack.gramophone.ui.profileselection.viewmodel.ProfileSelectionViewModel
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
@@ -11,9 +11,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 
-class ProfileSelectionActivity : BaseActivity<ActivityProfileSelectionBinding,ProfileSelectionNavigator,ProfileSelectionViewModel>(),ProfileSelectionNavigator {
+class ProfileSelectionActivity : BaseActivityWrapper<ActivityProfileSelectionBinding,ProfileSelectionNavigator,ProfileSelectionViewModel>(),ProfileSelectionNavigator {
     private lateinit var binding: ActivityProfileSelectionBinding
-    private val viewModel: ProfileSelectionViewModel by viewModels()
+    private val profileSelectionViewModel: ProfileSelectionViewModel by viewModels()
 
     companion object {
         fun start(activity: VerifyOtpActivity) {
@@ -33,7 +33,7 @@ class ProfileSelectionActivity : BaseActivity<ActivityProfileSelectionBinding,Pr
 
     private fun setupUi() {
         binding.continueBtn.setOnClickListener {
-           // HomeActivity.start(this@ProfileSelectionActivity)
+            // HomeActivity.start(this@ProfileSelectionActivity)
             openActivity(ProfileSelectionActivity::class.java,null)
 
         }
@@ -42,4 +42,18 @@ class ProfileSelectionActivity : BaseActivity<ActivityProfileSelectionBinding,Pr
     private fun setupObservers() {
 
     }
+
+    override fun getLayoutID(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun getBindingVariable(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun getViewModel(): ProfileSelectionViewModel {
+    return    profileSelectionViewModel
+    }
+
+
 }
