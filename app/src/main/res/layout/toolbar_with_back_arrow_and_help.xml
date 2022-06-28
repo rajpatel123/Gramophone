@@ -24,21 +24,21 @@
         android:layout_toEndOf="@+id/iv_arrow_left"
         android:fontFamily="@font/manrope_bold"
         android:text="@string/cart"
-        android:textSize="@dimen/_12ssp"
         android:textColor="@color/blakish"
+        android:textSize="16sp"
         tools:ignore="RelativeOverlap" />
 
-
     <RelativeLayout
-        android:paddingStart="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_10sdp"
+        android:paddingStart="@dimen/_8sdp"
+        android:paddingEnd="@dimen/_8sdp"
         android:paddingTop="@dimen/_6sdp"
         android:paddingBottom="@dimen/_6sdp"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner_8_solid_white_stroke_gray">
+        android:background="@drawable/rounded_corner_8_solid_white_stroke_gray"
+        tools:ignore="RelativeOverlap">
 
         <ImageView
             android:id="@+id/iv_call"
@@ -56,7 +56,7 @@
             android:layout_toEndOf="@+id/iv_call"
             android:fontFamily="@font/manrope_bold"
             android:text="@string/help"
-            android:textSize="@dimen/_10ssp"
+            android:textSize="13sp"
             android:textColor="@color/gray"
             tools:ignore="RelativeOverlap" />
 

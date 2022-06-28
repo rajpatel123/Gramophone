@@ -2,6 +2,7 @@ package agstack.gramophone.ui.splash.view
 
 import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.databinding.ActivitySplashBinding
+import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.ui.profileselection.view.ProfileSelectionActivity
 import agstack.gramophone.ui.splash.model.SplashModel
@@ -58,7 +59,8 @@ class SplashActivity : AppCompatActivity() {
         })
 
         viewModel.splashLiveData.observe(this, Observer {
-            LanguageActivity.start(this@SplashActivity)
+            /*LanguageActivity.start(this@SplashActivity)*/
+            startActivity(Intent(this@SplashActivity, CartActivity::class.java))
         })
     }
 }
