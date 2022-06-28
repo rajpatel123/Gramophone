@@ -1,11 +1,16 @@
 package agstack.gramophone.base
 
+import agstack.gramophone.R
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.appcompat.widget.Toolbar
+import kotlinx.android.synthetic.main.layout_toolbar.*
 
 
 abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : BaseViewModel<N>> :
@@ -51,6 +56,24 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
     override fun requestPermission(permission: String, callback: (Boolean) -> Unit) {
         TODO("Not yet implemented")
+    }
+
+    fun setUpToolBar(enableBackButton: Boolean, title: String, @DrawableRes drawable: Int? = null) {
+        val toolbar = findViewById<Toolbar>(R.id.myToolbar)
+        if (toolbar != null) {
+            setSupportActionBar(toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(enableBackButton)
+            supportActionBar?.setTitle(title)
+            drawable?.let {
+                toolbar.setNavigationIcon(drawable)
+            }
+
+            toolbar.setNavigationOnClickListener(object : View.OnClickListener {
+                override fun onClick(v: View?) {
+                    onBackPressed()
+                }
+            })
+        }
     }
 
 

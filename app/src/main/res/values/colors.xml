@@ -24,6 +24,7 @@
     <color name="green">#79BD2E</color>
     <color name="orange">#F86144</color>
     <color name="yellow">#FEE389</color>
+    <color name="star_yellow">#F8D11C</color>
 
     <color name="bottom_background">#FFFFFF</color>
     <color name="gray_menu_passive">#AFB0B4</color>
