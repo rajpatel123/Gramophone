@@ -1,11 +1,13 @@
 package agstack.gramophone.base
 
+import agstack.gramophone.R
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 
 abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : BaseViewModel<N>> :
@@ -65,5 +67,14 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         TODO("Not yet implemented")
     }
 
-
+    open fun replaceFragment(fragment: Fragment, TAG: String?) {
+        try {
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragment_container, fragment, TAG)
+            fragmentTransaction.addToBackStack(TAG)
+            fragmentTransaction.commitAllowingStateLoss()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }
