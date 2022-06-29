@@ -5,6 +5,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
+        android:layout_marginTop="16dp"
         android:id="@+id/iv_product"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_100sdp"
@@ -13,11 +14,11 @@
         android:src="@drawable/dummy_neem_cake" />
 
     <TextView
+        android:layout_marginTop="26dp"
         android:id="@+id/tv_product_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:layout_toEndOf="@+id/iv_product"
         android:ellipsize="end"
@@ -316,6 +317,5 @@
          android:layout_height="1dp"
          android:layout_below="@+id/rl_gift"
          android:layout_marginTop="16dp"
-         android:layout_marginBottom="16dp"
          android:background="@color/gray_stroke" />
 </RelativeLayout>
