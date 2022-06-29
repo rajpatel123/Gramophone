@@ -12,6 +12,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.appcompat.widget.Toolbar
 import kotlinx.android.synthetic.main.layout_toolbar.*
 
+import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 
 abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : BaseViewModel<N>> :
@@ -71,6 +72,16 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         TODO("Not yet implemented")
     }
 
+    open fun replaceFragment(fragment: Fragment, TAG: String?) {
+        try {
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragment_container, fragment, TAG)
+            fragmentTransaction.addToBackStack(TAG)
+            fragmentTransaction.commitAllowingStateLoss()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
     fun setUpToolBar(enableBackButton: Boolean, title: String, @DrawableRes drawable: Int? = null) {
         val toolbar = findViewById<Toolbar>(R.id.myToolbar)
         if (toolbar != null) {
