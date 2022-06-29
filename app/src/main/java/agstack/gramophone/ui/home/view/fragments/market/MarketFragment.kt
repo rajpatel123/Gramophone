@@ -174,7 +174,7 @@ class MarketFragment : BaseFragment<FragmentMarketBinding, MarketFragmentNavigat
     ) {
         uiScope.launch {
         adapter.selectedProduct = onProductListItemClick
-        rv_feature_product.adapter = adapter }
+       binding?.rvFeatureProduct?.adapter = adapter }
     }
 
     override fun startProductDetailsActivity(it: ProductData) {

@@ -5,12 +5,14 @@ import agstack.gramophone.BR
 import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ProductDetailBinding
+import agstack.gramophone.ui.home.product.model.ProductWeightPriceModel
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.item_radio_product_packing.*
 
 
 @AndroidEntryPoint
@@ -64,5 +66,15 @@ class ProductDetailsActivity :
 
     override fun setToolbarTitle(title: String?) {
         setUpToolBar(true, title!!, R.drawable.ic_arrow_left)
+    }
+
+    override fun setProductSKUAdapter(
+        productSKUAdapter: ProductSKUAdapter,
+        onSKUItemClicked: (ProductWeightPriceModel) -> Unit
+    ) {
+
+        productSKUAdapter.selectedProduct = onSKUItemClicked
+        binding.rvProductSku.adapter = productSKUAdapter
+
     }
 }

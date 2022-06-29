@@ -7,6 +7,8 @@ import agstack.gramophone.databinding.ActivityHomeBinding
 import agstack.gramophone.menu.BottomNavigationView
 import agstack.gramophone.menu.OnNavigationItemChangeListener
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
+import agstack.gramophone.ui.home.product.ProductDetailsActivity
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.profile.view.ProfileActivity
 import android.os.Bundle
@@ -36,7 +38,7 @@ class HomeActivity :
             R.id.nav_host_container
         ) as NavHostFragment
         navController = navHostFragment.navController
-
+        navController.navigate(R.id.marketFragment)
         bottom_nav.setOnNavigationItemChangedListener(object :
             OnNavigationItemChangeListener {
             override fun onNavigationItemChanged(navigationItem: BottomNavigationView.NavigationItem) {
@@ -52,7 +54,12 @@ class HomeActivity :
                         navController.navigate(R.id.communityFragment3)
                     }
                     3 -> {
-                        ProfileActivity.start(this@HomeActivity)
+                       // ProfileActivity.start(this@HomeActivity)
+
+                        val productData = ProductData("1", "Rice")
+                        val bundle = Bundle()
+                        bundle.putParcelable("product", productData)
+                        openActivity(ProductDetailsActivity::class.java,bundle)
                     }
                 }
             }
