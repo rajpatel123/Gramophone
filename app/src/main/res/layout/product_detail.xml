@@ -280,6 +280,14 @@
                     tools:itemCount="5"
                     tools:listitem="@layout/item_radio_product_packing" />
 
+                <View
+                    android:id="@+id/v2_separator"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_2sdp"
+                    android:layout_below="@+id/rv_product_sku"
+
+                    android:background="#F2F4F7" />
+
 
             </LinearLayout>
 
