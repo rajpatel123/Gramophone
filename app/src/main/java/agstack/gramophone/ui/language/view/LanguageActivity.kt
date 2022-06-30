@@ -24,6 +24,8 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_language.*
+import agstack.gramophone.BR
+import agstack.gramophone.R
 
 @AndroidEntryPoint
 class LanguageActivity : BaseActivity<ActivityLanguageBinding, LanguageActivityNavigator, LanguageViewModel>(),
@@ -115,15 +117,15 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding, LanguageActivityN
         recycler_language?.adapter = LanguageAdapter(languageList)
     }
     override fun getLayoutID(): Int {
-        TODO("Not yet implemented")
+        return R.layout.activity_language
     }
 
     override fun getBindingVariable(): Int {
-        TODO("Not yet implemented")
+        return BR.viewModel
     }
 
     override fun getViewModel(): LanguageViewModel {
-        TODO("Not yet implemented")
+        return languageViewModel
     }
 
 }
