@@ -328,9 +328,10 @@
                     android:textSize="16sp" />
 
                 <RelativeLayout
-                    android:layout_below="@+id/tv_gram_cash_title"
+                    android:id="@+id/rl_delivery"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_gram_cash_title">
 
                     <TextView
                         android:id="@+id/tv_delivery_title"
@@ -347,21 +348,21 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:layout_centerVertical="true"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="4dp"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        android:layout_toStartOf="@+id/tv_delivery_charge"
                         android:id="@+id/tv_free"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/tv_delivery_charge"
+                        android:background="@drawable/rounded_corner_4_solid_green"
+                        android:backgroundTint="@color/green_medium"
                         android:fontFamily="@font/manrope_bold"
                         android:gravity="center_vertical"
-                        android:background="@drawable/rounded_corner_4_solid_green"
                         android:lineSpacingExtra="1sp"
+                        android:paddingStart="12dp"
+                        android:paddingTop="4dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="4dp"
                         android:text="FREE"
-                        android:backgroundTint="@color/green_medium"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
 
@@ -382,7 +383,168 @@
 
                 </RelativeLayout>
 
+                <View
+                    android:id="@+id/pay_break_up_separator"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@+id/rl_delivery"
+                    android:layout_marginTop="24dp"
+                    android:background="#F2F4F7"
+                    android:visibility="visible" />
 
+                <RelativeLayout
+                    android:id="@+id/rl_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="78dp"
+                    android:layout_below="@+id/pay_break_up_separator"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:lineSpacingExtra="1sp"
+                            android:text="Total Amount"
+                            android:textColor="@color/blakish"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:lineSpacingExtra="1sp"
+                            android:text="Includes GST and other taxes"
+                            android:textColor="@color/gray_strike_through"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_total_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/manrope_bold"
+                        android:lineSpacingExtra="1sp"
+                        android:text="₹ 6480"
+                        android:textColor="@color/blakish"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/amount_separator"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_below="@+id/rl_amount"
+                    android:background="#F2F4F7"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/ll_address_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_below="@+id/amount_separator"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:background="@drawable/rounded_corner_4_solid_transparent_green_stroke_gray"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/_12sdp"
+                    android:paddingEnd="@dimen/_8sdp">
+
+                    <FrameLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/circle_solid_white">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/image"
+                            android:src="@drawable/ic_cash_on_delivery" />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_regular"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="0sp"
+                        android:text="Note: Address will be taken from you after placing the order"
+                        android:textColor="#3F6317"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/address_separator"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_below="@+id/ll_address_note"
+                    android:background="#F2F4F7"
+                    android:visibility="visible" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_place_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:layout_below="@+id/address_separator"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:lineSpacingExtra="1sp"
+                            android:text="₹ 6480"
+                            android:textColor="@color/blakish"
+                            android:textSize="20sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:lineSpacingExtra="1sp"
+                            android:text="View Price Breakup"
+                            android:textColor="@color/brand_color"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="48dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/rounded_corner_12_solid_orange"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="@font/manrope_bold"
+                        android:gravity="center"
+                        android:text="Place Order"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
+
+                </RelativeLayout>
 
             </RelativeLayout>
         </androidx.core.widget.NestedScrollView>
