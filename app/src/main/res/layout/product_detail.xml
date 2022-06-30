@@ -151,10 +151,8 @@
                         android:id="@+id/tv_productname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/manrope_bold"
                         android:text="Bioenzyme Organic Cold Pressed Water Soluble Pure Neem Oil"
-                        android:textColor="@color/blakish"
-                        android:textSize="@dimen/_14ssp" />
+                        style="@style/TextSize16Sp"/>
 
                     <LinearLayout
                         android:id="@+id/ll_price_discount"
@@ -277,18 +275,159 @@
                     android:layout_marginBottom="@dimen/_16sdp"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="3"
-                    tools:itemCount="5"
+                    tools:itemCount="3"
                     tools:listitem="@layout/item_radio_product_packing" />
 
                 <View
                     android:id="@+id/v2_separator"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_2sdp"
+                    android:layout_height="@dimen/_4sdp"
                     android:layout_below="@+id/rv_product_sku"
+                    android:background="#F2F4F7" />
 
+                <RelativeLayout
+                    android:id="@+id/rl_available_offers"
+                    android:layout_margin="@dimen/_16sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_availableoffers"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginRight="@dimen/_14sdp"
+                        app:srcCompat= "@drawable/ic_available_offers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:layout_toRightOf="@+id/iv_availableoffers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/TextSize16Sp"
+                        android:text="@string/available_offers"></TextView>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_availableoffers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/iv_availableoffers"
+                        android:layout_marginTop="@dimen/_19sdp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_available_offers" />
+
+
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/v3_separator"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_4sdp"
+                    android:layout_below="@+id/rl_available_offers"
                     android:background="#F2F4F7" />
 
 
+                <RelativeLayout
+                    android:id="@+id/rl_howtouse"
+                    android:layout_margin="@dimen/_16sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_video"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginRight="@dimen/_14sdp"
+                    app:srcCompat= "@drawable/ic_how_to_use_gardening"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_toRightOf="@+id/iv_video"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextSize16Sp"
+                    android:text="@string/how_to_use"></TextView>
+
+
+                    <fragment
+                        android:id="@+id/youtube_player_fragment"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/iv_video" />
+
+                  <!--  android:name="com.google.android.youtube.player.YouTubePlayerSupportFragmentX"-->
+
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/seperator"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_4sdp"
+                    android:background="#F2F4F7"
+                    />
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_deliverytime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_16sdp">
+
+                    <TextView
+                        android:id="@+id/tv_deliveryLocation"
+                        style="@style/TextSize16Sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Delivery - Sawer, Indore"></TextView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_deliveryLocation"
+                        android:layout_marginTop="@dimen/_19sdp"
+                        android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            app:srcCompat="@drawable/ic_clock_orange" />
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_estimated_title"
+                                style="@style/TextSize16Sp"
+                                android:textColor="@color/gray"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/estimated_delivery" />
+
+                            <TextView
+                                android:id="@+id/tvProductWeight"
+                                style="@style/TextSize16Sp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_bold"
+                                android:text="4-5 Days" />
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

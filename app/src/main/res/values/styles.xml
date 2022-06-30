@@ -23,5 +23,11 @@
         <item name="android:fontFamily">@font/manrope_bold</item>
 
     </style>
+    <style name="TextSize16Sp" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/blakish</item>
+        <item name="android:textSize">@dimen/_14ssp</item>
+        <item name="android:fontFamily">@font/manrope_bold</item>
+
+    </style>
 
 </resources>

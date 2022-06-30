@@ -5,6 +5,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ProductDetailBinding
+import agstack.gramophone.ui.home.product.model.ProductSkuOfferModel
 import agstack.gramophone.ui.home.product.model.ProductWeightPriceModel
 import android.os.Bundle
 import android.util.Log
@@ -76,5 +77,14 @@ class ProductDetailsActivity :
         productSKUAdapter.selectedProduct = onSKUItemClicked
         binding.rvProductSku.adapter = productSKUAdapter
 
+    }
+
+
+    override fun setProductSKUOfferAdapter(
+        productSKUOfferAdapter: ProductSKUOfferAdapter,
+        onOfferItemClicked: (ProductSkuOfferModel) -> Unit
+    ) {
+        productSKUOfferAdapter.selectedProduct = onOfferItemClicked
+        binding.rvAvailableoffers.adapter = productSKUOfferAdapter
     }
 }
