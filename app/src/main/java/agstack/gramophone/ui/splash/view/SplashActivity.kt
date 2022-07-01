@@ -4,6 +4,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivitySplashBinding
+import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.ui.splash.SplashNavigator
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
 import agstack.gramophone.utils.Resource
@@ -42,7 +43,7 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
             when (it) {
                 is Resource.Success -> {
                     progress.visibility = View.GONE
-                    //openActivity(LanguageA)
+                    openActivity(LanguageActivity::class.java,null)
 
                 }
                 is Resource.Error -> {
@@ -58,7 +59,7 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
         })
 
         splashViewModel.splashLiveData.observe(this, Observer {
-           // LanguageActivity.start(this@SplashActivity)
+            openActivity(LanguageActivity::class.java,null)
         })
     }
 
