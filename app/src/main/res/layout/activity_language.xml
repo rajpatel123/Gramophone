@@ -60,6 +60,15 @@
                 tools:listitem="@layout/item_language"/>
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/btnContinue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/_continue"
+            android:padding="@dimen/_13sdp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@color/blue"/>
 
     </LinearLayout>
 </layout>

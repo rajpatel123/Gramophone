@@ -33,7 +33,6 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
     }
 
     private fun startApp() {
-        /*splashViewModel.getConfig()*/
         splashViewModel.initSplash()
     }
 
@@ -43,7 +42,7 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
             when (it) {
                 is Resource.Success -> {
                     progress.visibility = View.GONE
-                    openActivity(LanguageActivity::class.java,null)
+                    openAndFinishActivity(LanguageActivity::class.java,null)
 
                 }
                 is Resource.Error -> {
@@ -58,9 +57,7 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
             }
         })
 
-        splashViewModel.splashLiveData.observe(this, Observer {
-            openActivity(LanguageActivity::class.java,null)
-        })
+
     }
 
     override fun getLayoutID(): Int {

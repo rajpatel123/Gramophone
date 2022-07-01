@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
-
         <import type="android.view.View" />
-
         <variable
             name="viewModel"
             type="agstack.gramophone.ui.splash.viewmodel.SplashViewModel" />
@@ -38,25 +36,7 @@
                 android:layout_centerInParent="true" />
         </FrameLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.3">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:background="@drawable/ic_crop"
-                android:contentDescription="@string/resource_img_icon" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:contentDescription="@string/resource_img_icon"
-                android:src="@drawable/ic_made_with_in_india" />
-        </FrameLayout>
 
 
     </LinearLayout>

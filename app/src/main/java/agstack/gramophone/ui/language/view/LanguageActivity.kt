@@ -26,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_language.*
 import agstack.gramophone.BR
 import agstack.gramophone.R
+import agstack.gramophone.ui.apptour.view.AppTourActivity
 
 @AndroidEntryPoint
 class LanguageActivity : BaseActivity<ActivityLanguageBinding, LanguageActivityNavigator, LanguageViewModel>(),
@@ -100,10 +101,15 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding, LanguageActivityN
               }
           }
       })
+
     }
 
 
     private fun setupUi() {
+
+        btnContinue.setOnClickListener {
+            openAndFinishActivity(AppTourActivity::class.java,null)
+        }
         /* binding?.recyclerLanguage?.layoutManager = GridLayoutManager(this, 2)
          binding?.recyclerLanguage?.setHasFixedSize(true)
          binding?.recyclerLanguage?.adapter = LanguageAdapter()*/
@@ -115,6 +121,7 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding, LanguageActivityN
 
         recycler_language?.setHasFixedSize(true)
         recycler_language?.adapter = LanguageAdapter(languageList)
+
     }
     override fun getLayoutID(): Int {
         return R.layout.activity_language
@@ -126,6 +133,9 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding, LanguageActivityN
 
     override fun getViewModel(): LanguageViewModel {
         return languageViewModel
+    }
+
+    override fun <T> moveToNext(cls: Class<T>) {
     }
 
 }

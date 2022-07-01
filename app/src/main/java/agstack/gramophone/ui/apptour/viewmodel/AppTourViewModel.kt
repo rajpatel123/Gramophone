@@ -6,6 +6,4 @@ import androidx.lifecycle.ViewModel
 
 
 class AppTourViewModel() : BaseViewModel<AppTourNavigator>() {
-
-
 }

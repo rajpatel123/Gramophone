@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:id="@+id/ll_language_selection"
-        android:layout_width="@dimen/_120sdp"
+        android:layout_width="@dimen/_130sdp"
         android:layout_height="@dimen/_60sdp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
@@ -24,26 +24,28 @@
             android:fontFamily="@font/manrope_bold"
             android:text="English"
             android:textColor="@color/green"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_12ssp"
             android:textStyle="normal" />
 
         <TextView
-            android:layout_below="@+id/tv_language_title"
             android:id="@+id/tv_language"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_language_title"
             android:layout_marginTop="@dimen/_4sdp"
             android:fontFamily="@font/manrope_regular"
             android:text="English"
             android:textColor="@color/grey"
-            android:textSize="@dimen/_12ssp" />
+            android:textSize="@dimen/_10ssp" />
 
         <ImageView
-            android:contentDescription="@string/image"
-            android:layout_alignParentEnd="true"
+            android:id="@+id/imgSelected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_green_tick"/>
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/image"
+            android:src="@drawable/ic_green_tick"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

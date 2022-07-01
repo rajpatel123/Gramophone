@@ -20,7 +20,7 @@ class SplashViewModel @Inject constructor(
 ) : BaseViewModel<SplashNavigator>() {
 
     var splashViewModel: MutableLiveData<Resource<SplashModel>> = MutableLiveData()
-    var splashLiveData: MutableLiveData<SplashModel> = MutableLiveData()
+
 
     fun getConfig() = viewModelScope.launch {
         getSystemConfig()
@@ -33,14 +33,14 @@ class SplashViewModel @Inject constructor(
 
     fun initSplash() {
         viewModelScope.launch {
-            delay(3000)
+            delay(500)
             updateLiveData()
         }
     }
 
     private fun updateLiveData() {
         val splashModel = SplashModel(true)
-        splashLiveData.value = splashModel
+        splashViewModel.postValue(Resource.Success(splashModel))
     }
 
 }
