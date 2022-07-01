@@ -4,9 +4,14 @@ import agstack.gramophone.R
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.appcompat.widget.Toolbar
+import kotlinx.android.synthetic.main.layout_toolbar.*
+
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -77,4 +82,23 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
             e.printStackTrace()
         }
     }
+    fun setUpToolBar(enableBackButton: Boolean, title: String, @DrawableRes drawable: Int? = null) {
+        val toolbar = findViewById<Toolbar>(R.id.myToolbar)
+        if (toolbar != null) {
+            setSupportActionBar(toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(enableBackButton)
+            supportActionBar?.setTitle(title)
+            drawable?.let {
+                toolbar.setNavigationIcon(drawable)
+            }
+
+            toolbar.setNavigationOnClickListener(object : View.OnClickListener {
+                override fun onClick(v: View?) {
+                    onBackPressed()
+                }
+            })
+        }
+    }
+
+
 }
