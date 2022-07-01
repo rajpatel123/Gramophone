@@ -22,11 +22,15 @@
     <color name="gray">#606774</color>
     <color name="gray_strike_through">#8F98AB</color>
     <color name="green">#468600</color>
+    <color name="grey_weight">#8010203E</color>
     <color name="orange">#F86144</color>
     <color name="yellow">#FEE389</color>
+    <color name="star_yellow">#F8D11C</color>
 
     <color name="bottom_background">#FFFFFF</color>
     <color name="gray_menu_passive">#AFB0B4</color>
     <color name="bottom_menu_pressed">#FFFFFF</color>
     <color name="gray_menu_active">#1B30BE</color>
+    <color name="oldmrpcolor">#8F98AB</color>
+    <color name="selected_color">#EFF6E8</color>
 </resources>

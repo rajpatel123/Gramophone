@@ -65,5 +65,13 @@
     <string name="cart_empty_title">Cart is Empty</string>
     <string name="expert_advice">Expert Advice</string>
     <string name="add_to_cart">Add To Cart</string>
+    <string name="share">Share</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="inclusiveoftaxes">Inclusive of all taxes</string>
+    <string name="packing">Packing</string>
+    <string name="available_offers">Available Offers</string>
+    <string name="how_to_use">How to use</string>
+    <string name="estimated_delivery">Estimated Delivery</string>
 
 </resources>
