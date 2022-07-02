@@ -52,7 +52,6 @@
         android:textColor="@color/gray_strike_through"
         android:textSize="13sp" />
 
-
     <TextView
         android:id="@+id/tv_total_amount"
         android:layout_width="wrap_content"
