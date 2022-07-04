@@ -1,5 +1,7 @@
 package agstack.gramophone.ui.splash.viewmodel
 
+import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.ui.splash.SplashNavigator
 import agstack.gramophone.ui.splash.model.SplashModel
 import agstack.gramophone.utils.Resource
 import android.content.Context
@@ -15,10 +17,10 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     @ApplicationContext private val context: Context
-) : ViewModel() {
+) : BaseViewModel<SplashNavigator>() {
 
     var splashViewModel: MutableLiveData<Resource<SplashModel>> = MutableLiveData()
-    var splashLiveData: MutableLiveData<SplashModel> = MutableLiveData()
+
 
     fun getConfig() = viewModelScope.launch {
         getSystemConfig()
@@ -31,14 +33,14 @@ class SplashViewModel @Inject constructor(
 
     fun initSplash() {
         viewModelScope.launch {
-            delay(3000)
+            delay(500)
             updateLiveData()
         }
     }
 
     private fun updateLiveData() {
         val splashModel = SplashModel(true)
-        splashLiveData.value = splashModel
+        splashViewModel.postValue(Resource.Success(splashModel))
     }
 
 }

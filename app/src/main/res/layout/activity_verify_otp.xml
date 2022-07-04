@@ -6,8 +6,7 @@
 
     <include
         android:id="@+id/toolbar"
-        app:layout_constraintTop_toBottomOf="parent"
-        layout="@layout/toolbar_with_logo_in_center"
+        layout="@layout/onboarding_toolbar"
         />
 
     <View
@@ -24,7 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_31sdp"
-        android:layout_marginStart="@dimen/_24sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/small"
-            android:text="@string/start_msg"
+            android:text="@string/otp_hint"
             android:layout_marginTop="@dimen/_4sdp"
             android:textColor="@color/grey"/>
 
@@ -46,12 +46,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_22sdp"
             >
+
             <TextView
+                style="@style/small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/small"
-                android:text="@string/enter_mobile_lebel"
-                android:textColor="@color/blakish"/>
+                android:text="@string/enter_otp"
+                android:textColor="@color/blakish" />
 
             <TextView
                 android:id="@+id/changeNumberTxt"
@@ -59,9 +60,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:text="@string/changeno"
                 android:layout_marginEnd="@dimen/_20sdp"
-                android:textColor="@color/blakish" />
+                android:text="@string/changeno"
+                android:textColor="@color/green" />
         </RelativeLayout>
 
         <com.chaos.view.PinView
@@ -73,36 +74,65 @@
             android:gravity="center"
             android:hint="Hint."
             android:inputType="number"
-            android:padding="@dimen/common_padding"
+            android:padding="@dimen/_3sdp"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:text="434343"
             android:textStyle="bold"
+            android:fontFamily="@font/manrope_bold"
             app:cursorColor="@color/brand_color"
             app:cursorWidth="2dp"
             app:hideLineWhenFilled="false"
             app:itemCount="6"
-            app:itemHeight="48dp"
+            app:itemHeight="46dp"
             app:itemRadius="4dp"
             app:itemSpacing="5dp"
-            app:itemWidth="48dp"
+            app:itemWidth="46dp"
             android:state_selected="true"
             app:lineColor="@color/grey"
             app:lineWidth="2dp"
             app:viewType="rectangle" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            >
+
+            <TextView
+                android:id="@+id/txtResend"
+                style="@style/small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/resend_otp"
+                android:textColor="@color/blakish" />
+
+            <TextView
+                android:id="@+id/txtTime"
+                style="@style/small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/txtResend"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:text="00:29 Sec"
+                android:textColor="@color/brand_color" />
+        </RelativeLayout>
+
     </LinearLayout>
 
 
 
-    <Button
+    <TextView
         android:id="@+id/verifyOtpBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/submit"
+        android:text="@string/_continue"
         android:gravity="center"
         android:textSize="@dimen/_14ssp"
         android:textColor="@color/white"
         android:clickable="true"
+        android:padding="@dimen/_13sdp"
         android:layout_marginStart="@dimen/_24sdp"
         android:layout_marginEnd="@dimen/_24sdp"
         android:background="@drawable/btn_rounded_corner"
