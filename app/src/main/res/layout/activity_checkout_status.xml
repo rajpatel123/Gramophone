@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -7,43 +8,132 @@
 
         <variable
             name="viewModel"
-            type="agstack.gramophone.ui.login.viewmodel.LoginViewModel" />
+            type="agstack.gramophone.ui.checkout.CheckoutStatusViewModel" />
     </data>
 
-    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <LinearLayout
-            android:orientation="vertical"
+        <RelativeLayout
+            android:id="@+id/rl_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_bg_thankyou"
-            android:paddingStart="40dp"
-            android:paddingEnd="20dp">
+            android:layout_height="340dp"
+            android:background="@drawable/ic_bg_thankyou">
 
             <TextView
-                android:layout_gravity="center_vertical"
                 android:id="@+id/tv_thank_you"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:fontFamily="@font/manrope_bold"
                 android:lineSpacingExtra="-3sp"
+                android:paddingStart="40dp"
+                android:paddingEnd="20dp"
                 android:text="Thank you!"
                 android:textColor="@color/blakish"
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/tv_product_name"
+                android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_thank_you"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/manrope_bold"
+                android:paddingStart="40dp"
+                android:paddingEnd="20dp"
                 android:text="Your order has been\naccepted successfully!"
                 android:textColor="@color/blakish"
-                android:textSize="24sp" />
-        </LinearLayout>
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_order_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_status"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/manrope_medium"
+                android:paddingStart="40dp"
+                android:paddingEnd="20dp"
+                android:text="Your order no. is #12345678"
+                android:textColor="@color/gray"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_expectation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_header"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/manrope_bold"
+            android:paddingStart="40dp"
+            android:paddingEnd="20dp"
+            android:text="What to expect next"
+            android:textColor="@color/blakish"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_point1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_expectation"
+            android:layout_marginTop="16dp"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/manrope_regular"
+            android:paddingStart="40dp"
+            android:paddingEnd="20dp"
+            android:text="Our team will call to confirm the order"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            app:drawableStartCompat="@drawable/ic_circle_green" />
+
+        <ImageView
+            android:id="@+id/view_vertical_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_point1"
+            android:layout_marginStart="45dp"
+            android:contentDescription="@string/image"
+            android:src="@drawable/line_vertical" />
+
+        <TextView
+            android:id="@+id/tv_point2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view_vertical_1"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/manrope_regular"
+            android:paddingStart="40dp"
+            android:paddingEnd="20dp"
+            android:text="Your goods will be packed and sent"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            app:drawableStartCompat="@drawable/ic_circle_green" />
+
+        <ImageView
+            android:id="@+id/view_vertical_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_point2"
+            android:layout_marginStart="45dp"
+            android:contentDescription="@string/image"
+            android:src="@drawable/line_vertical" />
+
+        <TextView
+            android:id="@+id/tv_point3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view_vertical_2"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/manrope_regular"
+            android:paddingStart="40dp"
+            android:paddingEnd="20dp"
+            android:text="Your goods will be packed and sent"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            app:drawableStartCompat="@drawable/ic_circle_green" />
 
         <TextView
             android:id="@+id/submitBtn"
