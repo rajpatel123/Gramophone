@@ -62,7 +62,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:text="@string/changeno"
-                android:textColor="@color/green" />
+                android:textColor="@color/green_dark" />
         </RelativeLayout>
 
         <com.chaos.view.PinView

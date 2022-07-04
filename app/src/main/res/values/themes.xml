@@ -21,6 +21,12 @@
         <item name="android:textSize">@dimen/_16ssp</item>
     </style>
 
+    <!--  font styles  -->
+    <style name="bold">
+        <item name="android:fontFamily">@font/manrope_bold</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/_14ssp</item>
+    </style>
 
     <!--  font styles  -->
     <style name="heading_title_medium">
@@ -53,5 +59,14 @@
 
     <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:statusBarColor">@color/blue_opacity_80</item>
+    </style>
+
+    <style name="TabIndicatorStyle" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabIndicatorFullWidth">true</item>
+        <item name="tabRippleColor">@null</item>
+        <item name="tabSelectedTextColor">@color/brand_color</item>
+        <item name="tabTextColor">@color/gray_strike_through</item>
+        <item name="tabTextAppearance">@style/bold</item>
     </style>
 </resources>
