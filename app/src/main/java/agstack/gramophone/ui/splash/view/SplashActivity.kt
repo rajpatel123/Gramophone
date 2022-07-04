@@ -1,14 +1,14 @@
 package agstack.gramophone.ui.splash.view
 
-import agstack.gramophone.base.BaseActivity
+import agstack.gramophone.BR
+import agstack.gramophone.R
+import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivitySplashBinding
 import agstack.gramophone.ui.language.view.LanguageActivity
-import agstack.gramophone.ui.profileselection.view.ProfileSelectionActivity
-import agstack.gramophone.ui.splash.model.SplashModel
+import agstack.gramophone.ui.splash.SplashNavigator
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
 import agstack.gramophone.utils.Resource
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -16,12 +16,13 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_splash.*
 
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator,SplashViewModel>(), SplashNavigator {
     private lateinit var binding: ActivitySplashBinding
-    private val viewModel: SplashViewModel by viewModels()
+    private val splashViewModel: SplashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,33 +33,42 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun startApp() {
-        /*splashViewModel.getConfig()*/
-        viewModel.initSplash()
+        splashViewModel.initSplash()
     }
 
 
     private fun setupObservers() {
-        viewModel.splashViewModel.observe(this, Observer {
+        splashViewModel.splashViewModel.observe(this, Observer {
             when (it) {
                 is Resource.Success -> {
-                    binding.progress.visibility = View.GONE
-                    LanguageActivity.start(this@SplashActivity)
+                    progress.visibility = View.GONE
+                    openAndFinishActivity(LanguageActivity::class.java,null)
 
                 }
                 is Resource.Error -> {
-                    binding.progress.visibility = View.GONE
+                    progress.visibility = View.GONE
                     it.message?.let { message ->
                         Toast.makeText(this@SplashActivity, message, Toast.LENGTH_LONG).show()
                     }
                  }
                 is Resource.Loading -> {
-                    binding.progress.visibility = View.VISIBLE
+                    progress.visibility = View.VISIBLE
                 }
             }
         })
 
-        viewModel.splashLiveData.observe(this, Observer {
-            LanguageActivity.start(this@SplashActivity)
-        })
+
+    }
+
+    override fun getLayoutID(): Int {
+        return R.layout.activity_splash
+    }
+
+    override fun getBindingVariable(): Int {
+       return BR.viewModel
+    }
+
+    override fun getViewModel(): SplashViewModel {
+        return splashViewModel
     }
 }

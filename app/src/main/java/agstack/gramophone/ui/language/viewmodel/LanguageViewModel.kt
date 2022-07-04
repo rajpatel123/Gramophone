@@ -1,18 +1,19 @@
 package agstack.gramophone.ui.language.viewmodel
 
 import agstack.gramophone.base.BaseViewModel
-import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
+import agstack.gramophone.ui.apptour.view.AppTourActivity
 import agstack.gramophone.ui.language.LanguageActivityNavigator
+import agstack.gramophone.ui.language.model.LanguageData
 import agstack.gramophone.ui.language.model.RegisterDeviceModel
 import agstack.gramophone.ui.language.model.RegistrerDeviceRquestModel
 import agstack.gramophone.ui.language.repository.LanguageRepository
+import agstack.gramophone.ui.splash.model.SplashModel
 import agstack.gramophone.utils.Resource
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.hasInternetConnection
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -27,18 +28,20 @@ class LanguageViewModel @Inject constructor(
    @ApplicationContext private val context: Context
 ) : BaseViewModel<LanguageActivityNavigator>() {
 
-   val registerDeviceModel: MutableLiveData<Resource<RegisterDeviceModel>> =
-      MutableLiveData()
+    val registerDeviceModel: MutableLiveData<Resource<RegisterDeviceModel>> =
+        MutableLiveData()
+    var updateLanguage: MutableLiveData<LanguageData> = MutableLiveData()
 
-   fun getDeviceToken(loginMap: RegistrerDeviceRquestModel) = viewModelScope.launch {
-      getToken(loginMap)
-   }
 
-   private suspend fun getToken(loginMap: RegistrerDeviceRquestModel) {
+    fun getDeviceToken(loginMap: RegistrerDeviceRquestModel) = viewModelScope.launch {
+        getToken(loginMap)
+    }
 
-      registerDeviceModel.postValue(Resource.Loading())
-      try {
-         if (hasInternetConnection(context)) {
+    private suspend fun getToken(loginMap: RegistrerDeviceRquestModel) {
+
+        registerDeviceModel.postValue(Resource.Loading())
+        try {
+            if (hasInternetConnection(context)) {
             val response = languageRepository.getDeviceToken(loginMap)
             val registerDeviceModel = handleOrderResponse(response).data
             SharedPreferencesHelper.instance?.putString(
@@ -57,14 +60,18 @@ class LanguageViewModel @Inject constructor(
             else -> registerDeviceModel.postValue(Resource.Error("Conversion Error"))
          }
       }
-   }
+    }
 
-   private fun handleOrderResponse(response: Response<RegisterDeviceModel>): Resource<RegisterDeviceModel> {
-      if (response.isSuccessful) {
-         response.body()?.let { resultResponse ->
-            return Resource.Success(resultResponse)
-         }
-      }
-      return Resource.Error(response.message())
-   }
+    private fun handleOrderResponse(response: Response<RegisterDeviceModel>): Resource<RegisterDeviceModel> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                return Resource.Success(resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    fun onLanguageUpdate() {
+       getNavigator()?.moveToNext(AppTourActivity::class.java)
+    }
 }
