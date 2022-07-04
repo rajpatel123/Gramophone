@@ -33,7 +33,7 @@ class SplashViewModel @Inject constructor(
 
     fun initSplash() {
         viewModelScope.launch {
-            delay(500)
+            delay(3000)
             updateLiveData()
         }
     }

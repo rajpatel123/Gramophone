@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/manrope_bold"
             android:text="English"
-            android:textColor="@color/green"
+            android:textColor="@color/green_dark"
             android:textSize="@dimen/_12ssp"
             android:textStyle="normal" />
 
