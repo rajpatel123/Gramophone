@@ -8,10 +8,14 @@ import agstack.gramophone.ui.language.model.LanguageData
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * binding will be replaced later
+ */
 class LanguageAdapter(private val languageList: ArrayList<LanguageData>) :
     RecyclerView.Adapter<LanguageAdapter.DeveloperViewHolder>() {
 
@@ -27,20 +31,18 @@ class LanguageAdapter(private val languageList: ArrayList<LanguageData>) :
 
     override fun onBindViewHolder(holder: DeveloperViewHolder, i: Int) {
         if (languageList[i].isSelected) {
-            holder.binding.llLanguageSelection.setBackgroundResource(R.drawable.rounded_corner_16_solid_blue_stroke_no)
-            holder.binding.tvLanguageTitle.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
-            holder.binding.tvLanguage.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
+            holder.binding.llLanguageSelection.setBackgroundResource(R.drawable.rounded_corner_stroke_green)
+            holder.binding.tvLanguageTitle.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.green))
+            holder.binding.tvLanguage.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.gray))
+            holder.binding.imgSelected.visibility=VISIBLE
         } else{
             holder.binding.llLanguageSelection.setBackgroundResource(R.drawable.rounded_corner_16_solid_white_stroke_gray)
-            holder.binding.tvLanguageTitle.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.black))
-            holder.binding.tvLanguage.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.blue))
+            holder.binding.tvLanguageTitle.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.blakish))
+            holder.binding.tvLanguage.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.blakish))
         }
         holder.binding.tvLanguageTitle.text = languageList[i].title
         holder.binding.tvLanguage.text = languageList[i].value
-        holder.binding.llLanguageSelection.setOnClickListener(View.OnClickListener {
-            val intent = Intent(holder.itemView.context, AppTourActivity::class.java)
-           holder.itemView.context.startActivity(intent)
-        })
+
 
 
     }

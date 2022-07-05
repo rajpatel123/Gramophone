@@ -3,7 +3,6 @@
     <data>
 
         <import type="android.view.View" />
-
         <variable
             name="viewModel"
             type="agstack.gramophone.ui.home.view.fragments.profile.viewmodel.ProfileFragmentViewModel" />

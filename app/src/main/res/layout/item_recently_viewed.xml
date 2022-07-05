@@ -61,9 +61,9 @@
                 android:layout_marginTop="@dimen/_4sdp"
                 android:ellipsize="end"
                 android:maxLines="3"
+                android:text="₹ 900"
                 android:textColor="@color/blakish"
-                android:textSize="@dimen/_12ssp"
-                android:text="₹ 900" />
+                android:textSize="@dimen/_12ssp" />
 
             <TextView
                 style="@style/heading_title_bold_large"

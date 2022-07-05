@@ -29,15 +29,15 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val ViewDataBindingObj = DataBindingUtil.inflate<B>(
+        val viewDataBindingObj = DataBindingUtil.inflate<B>(
             LayoutInflater.from(this@BaseActivityWrapper),
             getLayoutID(),
             null,
             false
         )
         this.mViewModel = getViewModel()
-        ViewDataBindingObj.setVariable(getBindingVariable(),mViewModel)
-        setContentView(ViewDataBindingObj.root)
+        viewDataBindingObj.setVariable(getBindingVariable(),mViewModel)
+        setContentView(viewDataBindingObj.root)
         mViewModel?.setNavigator(this as N?)
     }
 
@@ -45,10 +45,10 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     override fun <T> openActivity(cls: Class<T>, extras: Bundle?) {
         Intent(this, cls).apply {
 
-            if (extras != null) {
+            if (extras != null)
                 putExtras(extras)
                 startActivity(this)
-            }
+
         }
     }
 

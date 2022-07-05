@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-
         <import type="android.view.View" />
-
         <variable
             name="viewModel"
             type="agstack.gramophone.ui.login.viewmodel.LoginViewModel" />
     </data>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:layout_height="match_parent">
         <include
             android:id="@+id/toolbar"
-            layout="@layout/toolbar_with_logo_in_center"
+            layout="@layout/onboarding_toolbar"
             />
 
         <View
@@ -39,15 +37,10 @@
                 android:layout_height="wrap_content"
                 style="@style/heading_title_bold_large"
                 android:text="@string/welcome_msg"
+                android:fontFamily="@font/manrope_bold"
                 android:textColor="@color/brand_color"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/small"
-                android:text="@string/start_msg"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:textColor="@color/grey"/>
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -63,44 +56,110 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
+                style="@style/small"
                 android:background="@drawable/rounded_corner"
                 android:backgroundTint="@color/mute_grey"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:letterSpacing=".05"
-                android:textSize="@dimen/_10ssp"
+                android:textSize="@dimen/_12ssp"
                 android:inputType="number"
                 android:maxLength="10"
                 android:singleLine="true"
                 android:hint="@string/enter_mobile_lebel"
                 android:imeOptions="actionDone"
                 />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/small"
+                android:fontFamily="@font/manrope_semibold"
+                android:text="@string/start_msg"
+                android:textSize="@dimen/_11ssp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:textColor="@color/grey"/>
         </LinearLayout>
 
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/txtPolicy"
             style="@style/mini"
-            android:text="@string/policy"
-            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/submitBtn"
-            android:layout_margin="@dimen/_10sdp"
-            app:layout_constraintBottom_toTopOf="@+id/submitBtn"/>
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:fontFamily="@font/manrope_semibold"
+            android:gravity="start"
+            android:paddingStart="@dimen/_15sdp"
+            android:text="@string/policy_txt"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintBottom_toTopOf="@+id/submitBtn" />
 
-        <Button
+
+        <TextView
+            android:id="@+id/terms"
+            style="@style/mini"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/submitBtn"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/txtPolicy"
+            android:fontFamily="@font/manrope_semibold"
+            android:gravity="start"
+            android:text="@string/terms"
+            android:textColor="@color/brand_color"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintBottom_toTopOf="@+id/submitBtn" />
+
+        <TextView
+            android:id="@+id/and"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/and"
+            android:layout_above="@+id/submitBtn"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/terms"
+            android:fontFamily="@font/manrope_semibold"
+            android:gravity="start"
+            android:textSize="@dimen/_11ssp"
+            />
+
+        <TextView
+            android:id="@+id/policy"
+            style="@style/mini"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/submitBtn"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/and"
+            android:fontFamily="@font/manrope_semibold"
+            android:gravity="start"
+            android:text="@string/policy"
+            android:textColor="@color/brand_color"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintBottom_toTopOf="@+id/submitBtn" />
+
+
+        <TextView
             android:id="@+id/submitBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/submit"
+            android:text="@string/_continue"
             android:gravity="center"
+            android:padding="@dimen/_13sdp"
             android:textSize="@dimen/_14ssp"
             android:textColor="@color/white"
-            android:clickable="true"
-            android:layout_marginStart="@dimen/_24sdp"
-            android:layout_marginEnd="@dimen/_24sdp"
-            android:background="@drawable/btn_rounded_corner"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/_20sdp"/>
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:background="@drawable/btn_rounded_corner"/>
 
         <ProgressBar
             android:id="@+id/progress"
