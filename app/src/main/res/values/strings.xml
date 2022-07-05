@@ -73,5 +73,9 @@
     <string name="available_offers">Available Offers</string>
     <string name="how_to_use">How to use</string>
     <string name="estimated_delivery">Estimated Delivery</string>
+    <string name="product_details">Product Details</string>
+    <string name="view_full_product_detail">View Full Product Detail</string>
+    <string name="related_products">Related Products</string>
+
 
 </resources>

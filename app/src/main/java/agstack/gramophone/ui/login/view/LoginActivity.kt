@@ -46,6 +46,7 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
                     binding.progress.visibility = View.GONE
                     it.message?.let { message ->
                         Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
+                        VerifyOtpActivity.start(this@LoginActivity)
                     }
                 }
                 is Resource.Loading -> {
