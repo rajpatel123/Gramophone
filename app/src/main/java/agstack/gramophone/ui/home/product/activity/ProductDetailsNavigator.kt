@@ -1,4 +1,4 @@
-package agstack.gramophone.ui.home.product
+package agstack.gramophone.ui.home.product.activity
 
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.ui.home.product.model.ProductSkuOfferModel

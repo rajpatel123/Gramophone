@@ -1,17 +1,21 @@
-package agstack.gramophone.ui.home.product
+package agstack.gramophone.ui.home.product.activity
 
 import agstack.gramophone.R
 import agstack.gramophone.BR
-import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ProductDetailBinding
+import agstack.gramophone.ui.home.product.fragment.RelatedProductFragment
+import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
 import agstack.gramophone.ui.home.product.model.ProductSkuOfferModel
 import agstack.gramophone.ui.home.product.model.ProductWeightPriceModel
+import agstack.gramophone.utils.Utility.toBulletedList
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.databinding.ObservableField
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.item_radio_product_packing.*
 
@@ -22,6 +26,7 @@ class ProductDetailsActivity :
     ProductDetailsNavigator {
     private lateinit var binding: ProductDetailBinding
     private val productDetailsViewModel: ProductDetailsViewModel by viewModels()
+    var productDetailsBulletText = ObservableField<String>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +34,28 @@ class ProductDetailsActivity :
         binding = ProductDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         productDetailsViewModel.getBundleData()
+        productDetailsViewModel.onAddToCartClicked()
+        productDetailsBulletText.set(  listOf("One", "Two", "Three").toBulletedList().toString())
+        binding.tvProductDetails.setText(productDetailsBulletText.get())
+        initRelatedProducts()
 
+
+    }
+
+    private fun initRelatedProducts() {
+        binding?.rvRelatedProducts?.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding?.rvRelatedProducts?.setHasFixedSize(true)
+        binding.rvRelatedProducts.adapter= RelatedProductFragmentAdapter()
+
+
+        /*var fragment= RelatedProductFragment()
+        val bundle = Bundle()
+        fragment.arguments = bundle
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragmentRelatedProduct, fragment)
+            .commit()*/
 
     }
 

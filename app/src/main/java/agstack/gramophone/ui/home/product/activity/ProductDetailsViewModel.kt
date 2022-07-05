@@ -1,13 +1,16 @@
-package agstack.gramophone.ui.home.product
+package agstack.gramophone.ui.home.product.activity
 
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.ui.home.product.model.ProductSkuOfferModel
 import agstack.gramophone.ui.home.product.model.ProductWeightPriceModel
 import agstack.gramophone.ui.home.repository.HomeRepository
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.utils.Utility.toBulletedList
 import android.util.Log
+import androidx.databinding.ObservableField
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @HiltViewModel
 class ProductDetailsViewModel @Inject constructor(
@@ -16,9 +19,18 @@ class ProductDetailsViewModel @Inject constructor(
     var mSKUList = ArrayList<ProductWeightPriceModel>()
 
     var mSkuOfferList = ArrayList<ProductSkuOfferModel>()
+    var productDetailsBulletText =ObservableField<String>()
+
 
 
 fun onAddToCartClicked(){
+    productDetailsBulletText.set(  listOf("One", "Two", "Three").toBulletedList().toString())
+    Log.d("ProductDetailedList",productDetailsBulletText.toString())
+
+    //set text on view model field
+
+
+
 
 }
 

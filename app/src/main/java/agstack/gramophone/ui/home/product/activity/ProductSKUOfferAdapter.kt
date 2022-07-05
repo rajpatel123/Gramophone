@@ -1,8 +1,7 @@
-package agstack.gramophone.ui.home.product
+package agstack.gramophone.ui.home.product.activity
 
 import agstack.gramophone.BR
 import agstack.gramophone.databinding.ItemAvailableOffersBinding
-import agstack.gramophone.databinding.ItemRadioProductPackingBinding
 import agstack.gramophone.ui.home.product.model.ProductSkuOfferModel
 import android.content.Context
 import android.view.LayoutInflater

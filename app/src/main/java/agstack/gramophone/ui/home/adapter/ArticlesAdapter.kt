@@ -2,7 +2,6 @@ package agstack.gramophone.ui.home.adapter
 
 
 import agstack.gramophone.databinding.ItemArticlesBinding
-import agstack.gramophone.databinding.ItemFeatureProductBinding
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
