@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="22dp"
+        android:fontFamily="@font/manrope_bold"
+        android:lineSpacingExtra="0sp"
+        android:text="Get Help"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:translationY="-0.24sp"
+        app:drawableEndCompat="@drawable/ic_cross" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="18dp"
+        android:background="@color/gray_stroke" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_14sdp"
+        android:contentDescription="@string/image"
+        android:src="@drawable/ic_call_blue" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/manrope_bold"
+        android:lineSpacingExtra="-1sp"
+        android:text="Get Help via Call"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/manrope_bold"
+        android:lineSpacingExtra="0sp"
+        android:text="Talk to our customer care executive"
+        android:textColor="@color/gray"
+        android:textSize="14sp"
+        android:translationY="-0.24sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="28dp"
+        android:background="@color/brand_color"
+        android:fontFamily="@font/manrope_bold"
+        android:gravity="center"
+        android:lineSpacingExtra="-1sp"
+        android:text="Call Now"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+
+</LinearLayout>

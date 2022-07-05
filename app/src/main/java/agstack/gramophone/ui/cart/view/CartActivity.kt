@@ -8,17 +8,21 @@ import agstack.gramophone.databinding.ActivityCartBinding
 import agstack.gramophone.ui.cart.CartNavigator
 import agstack.gramophone.ui.cart.adapter.CartAdapter
 import agstack.gramophone.ui.cart.viewmodel.CartViewModel
-import agstack.gramophone.ui.home.adapter.ArticlesAdapter
+import agstack.gramophone.ui.dialog.BottomSheetDialog
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_cart.*
 
 @AndroidEntryPoint
-class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, CartViewModel>(), CartNavigator {
+class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, CartViewModel>(),
+    CartNavigator {
 
     private lateinit var binding: ActivityCartBinding
+
     //initialise ViewModel
     private val cartViewModel: CartViewModel by viewModels()
 
@@ -40,15 +44,24 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv_cart?.setHasFixedSize(true)
         rv_cart?.adapter = CartAdapter()
+
+        binding.toolbar.rlHelp.setOnClickListener(View.OnClickListener {
+            val bottomSheet = BottomSheetDialog()
+            //bottomSheet.setAcceptRejectListener(listener)
+            bottomSheet.show(
+                getSupportFragmentManager(),
+                "bottomSheet"
+            )
+        })
     }
 
 
     override fun getLayoutID(): Int {
-      return R.layout.activity_cart
+        return R.layout.activity_cart
     }
 
     override fun getBindingVariable(): Int {
-        return  BR.viewModel
+        return BR.viewModel
     }
 
     override fun getViewModel(): CartViewModel {
