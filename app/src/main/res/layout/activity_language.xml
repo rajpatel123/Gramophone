@@ -67,6 +67,8 @@
             android:text="@string/_continue"
             android:padding="@dimen/_13sdp"
             android:gravity="center"
+            android:onClick="@{ ()-> viewModel.onLanguageUpdate(btnContinue) }"
+
             android:textColor="@color/white"
             android:background="@color/blue"/>
 

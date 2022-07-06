@@ -13,6 +13,7 @@ import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.hasInternetConnection
 import android.content.Context
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -71,7 +72,7 @@ class LanguageViewModel @Inject constructor(
         return Resource.Error(response.message())
     }
 
-    fun onLanguageUpdate() {
-       getNavigator()?.moveToNext(AppTourActivity::class.java)
+    fun onLanguageUpdate(v:View) {
+       getNavigator()?.moveToNext()
     }
 }
