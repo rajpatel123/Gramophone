@@ -1,11 +1,11 @@
 package agstack.gramophone.ui.language.view
 
+import agstack.gramophone.BR
 import agstack.gramophone.BuildConfig
-import agstack.gramophone.base.BaseActivity
-import agstack.gramophone.databinding.ActivityHomeBinding
+import agstack.gramophone.R
+import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityLanguageBinding
-import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
-import agstack.gramophone.ui.home.viewmodel.HomeViewModel
+import agstack.gramophone.ui.apptour.view.AppTourActivity
 import agstack.gramophone.ui.language.LanguageActivityNavigator
 import agstack.gramophone.ui.language.adapter.LanguageAdapter
 import agstack.gramophone.ui.language.model.LanguageData
@@ -24,10 +24,6 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_language.*
-import agstack.gramophone.BR
-import agstack.gramophone.R
-import agstack.gramophone.base.BaseActivityWrapper
-import agstack.gramophone.ui.apptour.view.AppTourActivity
 
 @AndroidEntryPoint
 class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageActivityNavigator, LanguageViewModel>(),
@@ -78,9 +74,6 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLanguageBinding.inflate(layoutInflater)
-        //binding.viewModel = languageViewModel
-        //setContentView(binding.root)
-
         setupUi()
         setupDeviceTokenObserver()
 
