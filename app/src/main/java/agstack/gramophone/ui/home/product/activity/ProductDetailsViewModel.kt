@@ -20,6 +20,7 @@ class ProductDetailsViewModel @Inject constructor(
 
     var mSkuOfferList = ArrayList<ProductSkuOfferModel>()
     var productDetailsBulletText =ObservableField<String>()
+     lateinit var productData : ProductData
 
 
 
@@ -27,7 +28,6 @@ fun onAddToCartClicked(){
     productDetailsBulletText.set(  listOf("One", "Two", "Three").toBulletedList().toString())
     Log.d("ProductDetailedList",productDetailsBulletText.toString())
 
-    //set text on view model field
 
 
 
@@ -38,7 +38,7 @@ fun onAddToCartClicked(){
        val bundle=  getNavigator()?.getBundle()
         if(bundle?.getParcelable<ProductData>("product")!=null){
            Log.d("ProductName",(bundle?.getParcelable<ProductData>("product") as ProductData).product_name.toString())
-            val productData = bundle?.getParcelable<ProductData>("product")
+             productData = bundle?.getParcelable<ProductData>("product") as ProductData
 
             getNavigator()?.setToolbarTitle(productData?.product_name!!)
 

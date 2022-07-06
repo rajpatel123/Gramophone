@@ -20,7 +20,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
 
     protected var mViewModel :V?=null
-    protected var viewDataBinding: B? = null
+    protected lateinit var viewDataBinding: B
 
     abstract fun getLayoutID(): Int
     abstract fun getBindingVariable(): Int
@@ -29,16 +29,16 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewDataBindingObj = DataBindingUtil.inflate<B>(
+        viewDataBinding = DataBindingUtil.inflate<B>(
             LayoutInflater.from(this@BaseActivityWrapper),
             getLayoutID(),
             null,
             false
         )
         this.mViewModel = getViewModel()
-        viewDataBindingObj.setVariable(getBindingVariable(),mViewModel)
-        setContentView(viewDataBindingObj.root)
-        mViewModel?.setNavigator(this as N?)
+        viewDataBinding.setVariable(getBindingVariable(),mViewModel)
+        setContentView(viewDataBinding.root)
+        mViewModel?.setNavigator(this as? N)
     }
 
 
