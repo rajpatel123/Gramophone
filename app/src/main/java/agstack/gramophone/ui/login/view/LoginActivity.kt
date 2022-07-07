@@ -37,13 +37,14 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
             when (it) {
                 is Resource.Success -> {
                     progress.visibility = View.GONE
-                    VerifyOtpActivity.start(this@LoginActivity)
+                    openActivity(VerifyOtpActivity::class.java,null)
                 }
                 is Resource.Error -> {
                     progress.visibility = View.GONE
                     it.message?.let { message ->
                        // Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
-                        VerifyOtpActivity.start(this@LoginActivity)
+                        openActivity(VerifyOtpActivity::class.java,null)
+
                     }
                 }
                 is Resource.Loading -> {

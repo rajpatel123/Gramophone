@@ -11,18 +11,12 @@ import agstack.gramophone.ui.verifyotp.viewmodel.VerifyOtpViewModel
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import kotlinx.android.synthetic.main.activity_verify_otp.*
 
 class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOTPNavigator, VerifyOtpViewModel>(),
     VerifyOTPNavigator {
-    private lateinit var binding: ActivityVerifyOtpBinding
     private  val verifyOtpViewModel: VerifyOtpViewModel by viewModels()
-    companion object {
-        fun start(activity: LoginActivity) {
-            val intent = Intent(activity, VerifyOtpActivity::class.java)
-            activity.startActivity(intent)
-            activity.finish()
-        }
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +30,8 @@ class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOT
 
 
     private fun setupUi() {
-        binding.changeNumberTxt.setOnClickListener { onBackPressed() }
-        binding.verifyOtpBtn.setOnClickListener {
+        changeNumberTxt.setOnClickListener { onBackPressed() }
+        verifyOtpBtn.setOnClickListener {
          openActivity(HomeActivity::class.java,null)
         }
     }
