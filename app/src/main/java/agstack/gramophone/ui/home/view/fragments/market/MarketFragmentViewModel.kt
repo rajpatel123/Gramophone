@@ -22,10 +22,15 @@ class MarketFragmentViewModel
         ) {
 //To get Product Data
             //homeRepository.getProducts(hashMap)
-            productList.add(ProductData("1", "Rice"))
-            productList.add(ProductData("2", "Cotton"))
-            productList.add(ProductData("3", "Maze"))
-            productList.add(ProductData("4", "SunFlower"))
+           var productImagesList =ArrayList<String> ()
+            productImagesList.add("https://s3.ap-south-1.amazonaws.com/gramophone-webapps-dev/product_erp_images/1647503375.jpg")
+            productImagesList.add("https://s3.ap-south-1.amazonaws.com/gramophone-webapps-dev/product_erp_images/1647503375.jpg")
+            productImagesList.add("https://s3.ap-south-1.amazonaws.com/gramophone-webapps-dev/product_erp_images/1647503375.jpg")
+            productImagesList.add("https://s3.ap-south-1.amazonaws.com/gramophone-webapps-dev/product_erp_images/1647503375.jpg")
+            productList.add(ProductData("1", "Rice",productImagesList))
+            productList.add(ProductData("2", "Cotton",productImagesList))
+            productList.add(ProductData("3", "Maze",productImagesList))
+            productList.add(ProductData("4", "SunFlower",productImagesList))
             //set received productList in Adapter
 
             getNavigator()?.setFeaturedProductsAdapter(ProductListAdapter(productList)) {

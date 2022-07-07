@@ -74,6 +74,10 @@
     <string name="available_offers">Available Offers</string>
     <string name="how_to_use">How to use</string>
     <string name="estimated_delivery">Estimated Delivery</string>
+    <string name="product_details">Product Details</string>
+    <string name="view_full_product_detail">View Full Product Detail</string>
+    <string name="related_products">Related Products</string>
+
     <string name="login">Login</string>
     <string name="eng">Eng</string>
     <string name="terms">Terms</string>
@@ -81,5 +85,6 @@
     <string name="otp_hint">"Enter 6 Digit code we have sent on "</string>
     <string name="enter_otp">Enter OTP</string>
     <string name="resend_otp">"Resend in "</string>
+    <string name="ratingandreviews"><![CDATA[Rating & Reviews]]></string>
 
 </resources>

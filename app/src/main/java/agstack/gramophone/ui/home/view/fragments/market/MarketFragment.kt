@@ -4,7 +4,7 @@ import agstack.gramophone.R
 import agstack.gramophone.BR
 import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentMarketBinding
-import agstack.gramophone.ui.home.product.ProductDetailsActivity
+import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.adapter.*
 import agstack.gramophone.ui.home.model.Banner
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
@@ -17,7 +17,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_market.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
