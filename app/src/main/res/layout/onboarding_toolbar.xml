@@ -1,81 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:minHeight="@dimen/_58sdp"
-    android:paddingStart="@dimen/_10sdp"
-    android:paddingEnd="@dimen/_10sdp"
-    app:layout_constraintTop_toTopOf="parent">
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="@dimen/_120sdp"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_centerVertical="true"
-        android:src="@mipmap/logo" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
+<layout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_toStartOf="@+id/languageLL"
-        android:background="@drawable/rounded_corner_with_grey_color"
-        android:paddingStart="@dimen/_8sdp"
-        android:paddingTop="@dimen/_5sdp"
-        android:paddingEnd="@dimen/_8sdp"
-        android:paddingBottom="@dimen/_5sdp">
+        android:background="@color/white"
+        android:minHeight="@dimen/_58sdp"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/logo"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/logo" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_2sdp"
-            android:layout_toStartOf="@+id/tv_help"
-            app:srcCompat="@drawable/ic_phone_call" />
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_toStartOf="@+id/languageLL"
+            android:background="@drawable/rounded_corner_with_grey_color"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_5sdp">
 
-        <TextView
-            android:id="@+id/tv_language"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:layout_toStartOf="@+id/tv_help"
+                app:srcCompat="@drawable/ic_phone_call" />
+
+            <TextView
+                android:id="@+id/tv_language"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/manrope_semibold"
+                android:text="@string/help"
+                android:textColor="@color/blakish"
+                android:textSize="@dimen/_10ssp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/languageLL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:fontFamily="@font/manrope_semibold"
-            android:text="@string/help"
-            android:textColor="@color/blakish"
-            android:textSize="@dimen/_10ssp" />
-    </LinearLayout>
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/rounded_corner_with_grey_color"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_5sdp">
 
-    <LinearLayout
-        android:id="@+id/languageLL"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:background="@drawable/rounded_corner_with_grey_color"
-        android:paddingStart="@dimen/_8sdp"
-        android:paddingTop="@dimen/_5sdp"
-        android:paddingEnd="@dimen/_8sdp"
-        android:paddingBottom="@dimen/_5sdp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:layout_toStartOf="@+id/tv_help"
+                app:srcCompat="@drawable/ic_langague" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_2sdp"
-            android:layout_toStartOf="@+id/tv_help"
-            app:srcCompat="@drawable/ic_langague" />
-
-        <TextView
-            android:id="@+id/tv_help"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:fontFamily="@font/manrope_semibold"
-            android:text="@string/eng"
-            android:textColor="@color/blakish"
-            android:textSize="@dimen/_10ssp" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/manrope_semibold"
+                android:text="@string/eng"
+                android:textColor="@color/blakish"
+                android:textSize="@dimen/_10ssp" />
+        </LinearLayout>
 
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</layout>

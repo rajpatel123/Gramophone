@@ -23,14 +23,11 @@ import kotlinx.android.synthetic.main.activity_login.*
 @AndroidEntryPoint
 class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, LoginViewModel>(), LoginNavigator {
 
-    private lateinit var binding: ActivityLoginBinding
     //initialise ViewModel
     private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         setupUi()
         setupObservers()
     }
@@ -39,11 +36,11 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
         loginViewModel.generateOtpResponseModel.observe(this, Observer{
             when (it) {
                 is Resource.Success -> {
-                    binding.progress.visibility = View.GONE
+                    progress.visibility = View.GONE
                     VerifyOtpActivity.start(this@LoginActivity)
                 }
                 is Resource.Error -> {
-                    binding.progress.visibility = View.GONE
+                    progress.visibility = View.GONE
                     it.message?.let { message ->
                        // Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
                         VerifyOtpActivity.start(this@LoginActivity)

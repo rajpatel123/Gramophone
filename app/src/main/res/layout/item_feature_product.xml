@@ -38,6 +38,7 @@
             android:text="20% Off" />
 
         <ImageView
+            android:id="@+id/iv_productimage"
             android:layout_width="@dimen/_112sdp"
             android:layout_height="@dimen/_112sdp"
             android:layout_gravity="center_horizontal"
