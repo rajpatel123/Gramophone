@@ -26,44 +26,51 @@ class HomeActivity :
     private lateinit var binding: ActivityHomeBinding
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var navController: NavController
+    var currentFragmentPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         setupUi()
     }
 
-    private fun setupUi() {
-        /* val navHostFragment = supportFragmentManager.findFragmentById(
-             R.id.nav_host_container
-         ) as NavHostFragment
-         navController = navHostFragment.navController
+    override fun onResume() {
+        super.onResume()
+        // If you want to change active navigation item programmatically
+        bottom_nav.setActiveNavigationIndex(currentFragmentPosition)
+    }
 
-         bottom_nav.setOnNavigationItemChangedListener(object :
-             OnNavigationItemChangeListener {
-             override fun onNavigationItemChanged(navigationItem: BottomNavigationView.NavigationItem) {
-                 navController.navigateUp()
-                 *//*when (navigationItem.position) {
+    private fun setupUi() {
+        val navHostFragment = supportFragmentManager.findFragmentById(
+            R.id.nav_host
+        ) as NavHostFragment
+        navController = navHostFragment.navController
+
+        bottom_nav.setOnNavigationItemChangedListener(object :
+            OnNavigationItemChangeListener {
+            override fun onNavigationItemChanged(navigationItem: BottomNavigationView.NavigationItem) {
+                navController.navigateUp()
+                when (navigationItem.position) {
                     0 -> {
-                        navController.navigate(R.id.marketFragment2)
+                        currentFragmentPosition = 0
+                        navController.navigate(R.id.marketFragment)
                     }
                     1 -> {
-                        navController.navigate(R.id.tradeFragment)
+                        currentFragmentPosition = 1
+                        navController.navigate(R.id.tradeFragment2)
                     }
                     2 -> {
-                        navController.navigate(R.id.communityFragment)
+                        currentFragmentPosition = 2
+                        navController.navigate(R.id.communityFragment3)
                     }
                     3 -> {
+                        currentFragmentPosition = 0
                         ProfileActivity.start(this@HomeActivity)
                     }
-                }*//*
+                }
             }
         })
-        *//* If you want to change active navigation item programmatically
-             bottomMenu.setActiveNavigationIndex(2)
-        */
-        replaceFragment(MarketFragment(), MarketFragment::class.java.simpleName)
+
+        /*replaceFragment(MarketFragment(), MarketFragment::class.java.simpleName)
         bottom_nav.setOnNavigationItemChangedListener(object :
             OnNavigationItemChangeListener {
             override fun onNavigationItemChanged(navigationItem: BottomNavigationView.NavigationItem) {
@@ -83,7 +90,7 @@ class HomeActivity :
                 }
 
             }
-        })
+        })*/
     }
 
     override fun getLayoutID(): Int {

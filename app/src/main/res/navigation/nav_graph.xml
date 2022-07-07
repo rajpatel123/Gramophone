@@ -9,7 +9,8 @@
     <fragment
         android:id="@+id/marketFragment"
         android:name="agstack.gramophone.ui.home.view.fragments.market.MarketFragment"
-        android:label="MarketFragment" >
+        android:label="MarketFragment"
+        tools:layout="@layout/fragment_market">
         <action
             android:id="@+id/action_marketFragment_to_tradeFragment22"
             app:destination="@id/tradeFragment2" />

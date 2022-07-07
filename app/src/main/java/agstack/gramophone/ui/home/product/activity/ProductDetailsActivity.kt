@@ -41,11 +41,11 @@ class ProductDetailsActivity :
 
         productDetailsViewModel.onAddToCartClicked()
 
-        productDetailsViewModel?.apply {
+        productDetailsViewModel.apply {
 
 
-            viewDataBinding?.productImagesViewPager?.adapter = ProductImagesAdapter(supportFragmentManager, productDetailsViewModel.productData.product_images!!)
-            viewDataBinding?.dotsIndicator?.setViewPager(viewDataBinding!!.productImagesViewPager)
+            viewDataBinding.productImagesViewPager?.adapter = ProductImagesAdapter(supportFragmentManager, productDetailsViewModel.productData.product_images!!)
+            viewDataBinding.dotsIndicator?.setViewPager(viewDataBinding!!.productImagesViewPager)
         }
 
 
@@ -75,7 +75,7 @@ class ProductDetailsActivity :
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflator = menuInflater
         inflator.inflate(R.menu.menu_product_details, menu)
         return true
