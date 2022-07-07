@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+        <!--<variable
+            name="model"
+            type="agstack.gramophone.ui.home.product.model.ProductWeightPriceModel" />-->
+    </data>
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        >
+        <RatingBar
+            android:id="@+id/ratingbar_user"
+            android:layout_marginBottom="@dimen/_10sdp"
+            style="?android:attr/ratingBarStyleIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:max="5"
+            android:numStars="5"
+            android:rating="3.5"
+            android:scaleX=".8"
+            android:scaleY=".8"
+            android:stepSize="0.1"
+            android:theme="@style/RatingBar"
+            android:transformPivotX="0dp"
+            android:transformPivotY="0dp" />
+
+        <TextView
+            android:id="@+id/tv_userComment"
+            android:text="Great product and great shopping experience. loved it!!! HIgly recommended!"
+            style="@style/TextSize16Sp"
+            android:fontFamily="@font/manrope_medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_userName"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Ramnarayan Kobind"
+            style="@style/TextSize16Sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="Sawer, Madhya Pradesh"
+            android:textColor="@color/gray"
+            style="@style/TextSize16Sp"
+            android:fontFamily="@font/manrope_medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="October 25, 2021"
+            android:textColor="@color/gray"
+            style="@style/TextSize14Sp"
+            android:fontFamily="@font/manrope_medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+
+
+
+</layout>
