@@ -1,6 +1,8 @@
 package agstack.gramophone.ui.verifyotp.view
 
-import agstack.gramophone.base.BaseActivity
+import agstack.gramophone.BR
+import agstack.gramophone.R
+import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityVerifyOtpBinding
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.login.view.LoginActivity
@@ -10,7 +12,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 
-class VerifyOtpActivity : BaseActivity<ActivityVerifyOtpBinding, VerifyOTPNavigator, VerifyOtpViewModel>(),
+class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOTPNavigator, VerifyOtpViewModel>(),
     VerifyOTPNavigator {
     private lateinit var binding: ActivityVerifyOtpBinding
     private  val verifyOtpViewModel: VerifyOtpViewModel by viewModels()
@@ -24,9 +26,6 @@ class VerifyOtpActivity : BaseActivity<ActivityVerifyOtpBinding, VerifyOTPNaviga
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityVerifyOtpBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
         setupUi()
         setupObservers()
     }
@@ -49,14 +48,14 @@ class VerifyOtpActivity : BaseActivity<ActivityVerifyOtpBinding, VerifyOTPNaviga
     }
 
     override fun getLayoutID(): Int {
-        TODO("Not yet implemented")
+        return R.layout.activity_verify_otp
     }
 
     override fun getBindingVariable(): Int {
-        TODO("Not yet implemented")
+        return BR.viewModel
     }
 
     override fun getViewModel(): VerifyOtpViewModel {
-        TODO("Not yet implemented")
+      return verifyOtpViewModel
     }
 }

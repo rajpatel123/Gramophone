@@ -73,7 +73,6 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLanguageBinding.inflate(layoutInflater)
         setupUi()
         setupDeviceTokenObserver()
 
