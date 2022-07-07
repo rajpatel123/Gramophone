@@ -5,6 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="?actionBarSize"
     android:background="@color/white"
-    android:elevation="@dimen/_1sdp"
-    app:titleTextColor="@color/black"
+    app:titleTextColor="@color/blakish"
     android:theme="@style/ToolbarTheme" />

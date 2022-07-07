@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="agstack.gramophone.ui.cart.viewmodel.CartViewModel" />
+            type="agstack.gramophone.ui.offer.OfferDetailViewModel" />
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,594 +15,108 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.core.widget.NestedScrollView
+        <include
+            android:id="@+id/myToolbar"
+            layout="@layout/layout_toolbar" />
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myToolbar">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <include
-                    android:id="@+id/toolbar"
-                    layout="@layout/toolbar_with_back_arrow_and_help" />
-
-                <View
-                    android:id="@+id/toolbar_separator"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:layout_below="@+id/toolbar"
-                    android:background="#F2F4F7"
-                    android:visibility="visible"
-                    app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+                    android:layout_height="104dp"
+                    android:background="@color/mute_grey" />
+
+
 
                 <RelativeLayout
-                    android:id="@+id/rel_cod"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_below="@+id/toolbar_separator"
-                    android:background="@color/green_transparent"
-                    android:paddingStart="@dimen/_16sdp"
-                    android:paddingEnd="@dimen/_16sdp">
+                    android:layout_height="104dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="-80dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/rounded_corner_8_solid_white_stroke_green">
 
-                    <FrameLayout
-                        android:id="@+id/frame"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/circle_solid_white">
-
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_gravity="center"
-                            android:contentDescription="@string/image"
-                            android:src="@drawable/ic_cash_on_delivery" />
-
-                    </FrameLayout>
-
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/_16sdp"
-                        android:layout_toEndOf="@+id/frame"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:layout_height="80dp"
+                        android:gravity="center">
 
                         <TextView
-                            android:id="@+id/payment_mod"
+                            android:id="@+id/tv_percent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="10dp"
                             android:fontFamily="@font/manrope_bold"
-                            android:gravity="center_vertical"
-                            android:lineSpacingExtra="0sp"
-                            android:text="Payment Mode"
-                            android:textColor="@color/gray"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/cash_on_del"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/manrope_bold"
-                            android:gravity="center_vertical"
-                            android:lineSpacingExtra="0sp"
-                            android:text="Cash on Delivery"
-                            android:textColor="@color/green_dark"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/tv_cart_item_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/rel_cod"
-                    android:layout_marginTop="17dp"
-                    android:fontFamily="@font/manrope_bold"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="0sp"
-                    android:paddingStart="@dimen/_16sdp"
-                    android:paddingEnd="@dimen/_16sdp"
-                    android:text="Items in your cart (2)"
-                    android:textColor="@color/blakish"
-                    android:textSize="16sp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_cart"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_cart_item_count"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/item_cart" />
-
-                <View
-                    android:id="@+id/item_separator"
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:layout_below="@+id/rv_cart"
-                    android:background="#F2F4F7"
-                    android:visibility="visible" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_gram_cash"
-                    android:layout_width="match_parent"
-                    android:layout_height="72dp"
-                    android:layout_below="@+id/item_separator"
-                    android:background="@drawable/linear_gradient_white_blue"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp">
-
-                    <androidx.appcompat.widget.AppCompatCheckBox
-                        android:id="@+id/checkbox"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginTop="10dp"
-                        android:button="@drawable/custom_checkbox" />
-
-                    <TextView
-                        android:id="@+id/tv_pay_using_gram_cash"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_toEndOf="@+id/checkbox"
-                        android:fontFamily="@font/manrope_bold"
-                        android:lineSpacingExtra="1sp"
-                        android:text="Pay Using Gram Cash"
-                        android:textColor="@color/blakish"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/available_gram_cash"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_pay_using_gram_cash"
-                        android:layout_marginTop="2dp"
-                        android:layout_toEndOf="@+id/checkbox"
-                        android:fontFamily="@font/manrope_medium"
-                        android:lineSpacingExtra="1sp"
-                        android:text="Available Gram Cash Balance:"
-                        android:textColor="@color/blakish"
-                        android:textSize="11sp" />
-
-                    <ImageView
-                        android:id="@+id/iv_gram_cash"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_below="@+id/tv_pay_using_gram_cash"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_toEndOf="@+id/available_gram_cash"
-                        android:contentDescription="@string/image"
-                        android:src="@drawable/ic_gram_cash" />
-
-                    <TextView
-                        android:id="@+id/tv_gram_cash"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_pay_using_gram_cash"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_toEndOf="@+id/iv_gram_cash"
-                        android:fontFamily="@font/manrope_bold"
-                        android:lineSpacingExtra="1sp"
-                        android:text="600"
-                        android:textColor="@color/blakish"
-                        android:textSize="11sp" />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/tv_save_extra"
-                    android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    android:layout_below="@+id/rl_gram_cash"
-                    android:background="@color/yellow_light"
-                    android:fontFamily="@font/manrope_bold"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="-2sp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="Save extra ₹50 using 50 Gram Cash"
-                    android:textColor="@color/green_medium"
-                    android:textSize="13sp" />
-
-                <View
-                    android:id="@+id/gram_cash_separator"
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:layout_below="@+id/tv_save_extra"
-                    android:background="#F2F4F7"
-                    android:visibility="visible" />
-
-                <TextView
-                    android:id="@+id/tv_pricing_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/gram_cash_separator"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/manrope_bold"
-                    android:lineSpacingExtra="1sp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="Pricing Detail"
-                    android:textColor="@color/blakish"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_price_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="42dp"
-                    android:layout_below="@+id/tv_pricing_detail"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/manrope_bold"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="1sp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="Price (2 Items)"
-                    android:textColor="@color/gray"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tv_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="42dp"
-                    android:layout_below="@+id/tv_pricing_detail"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/manrope_bold"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="1sp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="₹ 8160"
-                    android:textColor="@color/blakish"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_discount_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="42dp"
-                    android:layout_below="@+id/tv_price_title"
-                    android:layout_alignParentStart="true"
-                    android:fontFamily="@font/manrope_bold"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="1sp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="Product Discount"
-                    android:textColor="@color/gray"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tv_discount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="42dp"
-                    android:layout_below="@+id/tv_price"
-                    android:layout_alignParentEnd="true"
-                    android:fontFamily="@font/manrope_bold"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="1sp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="-₹ 1680"
-                    android:textColor="@color/green_medium"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_gram_cash_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="42dp"
-                    android:layout_below="@+id/tv_discount_title"
-                    android:layout_alignParentStart="true"
-                    android:fontFamily="@font/manrope_bold"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="1sp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="Gram cash coins"
-                    android:textColor="@color/gray"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tv_gram_cash_coin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="42dp"
-                    android:layout_below="@+id/tv_discount"
-                    android:layout_alignParentEnd="true"
-                    android:fontFamily="@font/manrope_bold"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="1sp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="-₹ 50"
-                    android:textColor="@color/green_medium"
-                    android:textSize="16sp" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_delivery"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_gram_cash_title">
-
-                    <TextView
-                        android:id="@+id/tv_delivery_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="42dp"
-                        android:layout_alignParentStart="true"
-                        android:fontFamily="@font/manrope_bold"
-                        android:gravity="center_vertical"
-                        android:lineSpacingExtra="1sp"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
-                        android:text="Delivery"
-                        android:textColor="@color/gray"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tv_free"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/tv_delivery_charge"
-                        android:background="@drawable/rounded_corner_4_solid_green"
-                        android:backgroundTint="@color/green_medium"
-                        android:fontFamily="@font/manrope_bold"
-                        android:gravity="center_vertical"
-                        android:lineSpacingExtra="1sp"
-                        android:paddingStart="12dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="12dp"
-                        android:paddingBottom="4dp"
-                        android:text="FREE"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tv_delivery_charge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="42dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/strike_through"
-                        android:fontFamily="@font/manrope_bold"
-                        android:gravity="center_vertical"
-                        android:lineSpacingExtra="1sp"
-                        android:text="100"
-                        android:textColor="@color/gray"
-                        android:textSize="16sp" />
-
-                </RelativeLayout>
-
-                <View
-                    android:id="@+id/pay_break_up_separator"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_below="@+id/rl_delivery"
-                    android:layout_marginTop="24dp"
-                    android:background="#F2F4F7"
-                    android:visibility="visible" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_amount"
-                    android:layout_width="match_parent"
-                    android:layout_height="78dp"
-                    android:layout_below="@+id/pay_break_up_separator"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/manrope_bold"
-                            android:lineSpacingExtra="1sp"
-                            android:text="Total Amount"
-                            android:textColor="@color/blakish"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/manrope_bold"
-                            android:lineSpacingExtra="1sp"
-                            android:text="Includes GST and other taxes"
-                            android:textColor="@color/gray_strike_through"
-                            android:textSize="11sp" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tv_total_amount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:fontFamily="@font/manrope_bold"
-                        android:lineSpacingExtra="1sp"
-                        android:text="₹ 6480"
-                        android:textColor="@color/blakish"
-                        android:textSize="20sp" />
-
-                </RelativeLayout>
-
-                <View
-                    android:id="@+id/amount_separator"
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:layout_below="@+id/rl_amount"
-                    android:background="#F2F4F7"
-                    android:visibility="visible" />
-
-                <LinearLayout
-                    android:id="@+id/ll_address_note"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_below="@+id/amount_separator"
-                    android:layout_margin="@dimen/_8sdp"
-                    android:background="@drawable/rounded_corner_4_solid_transparent_green_stroke_gray"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingStart="@dimen/_12sdp"
-                    android:paddingEnd="@dimen/_8sdp">
-
-                    <FrameLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/circle_solid_white">
-
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_gravity="center"
-                            android:contentDescription="@string/image"
-                            android:src="@drawable/ic_cash_on_delivery" />
-
-                    </FrameLayout>
-
-                    <TextView
-                        android:layout_marginStart="@dimen/_14sdp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/manrope_regular"
-                        android:gravity="center_vertical"
-                        android:lineSpacingExtra="0sp"
-                        android:text="Note: Address will be taken from you after placing the order"
-                        android:textColor="#3F6317"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/address_separator"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
-                    android:layout_below="@+id/ll_address_note"
-                    android:background="#F2F4F7"
-                    android:visibility="visible" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_place_order"
-                    android:layout_width="match_parent"
-                    android:layout_height="62dp"
-                    android:layout_below="@+id/address_separator"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/manrope_bold"
-                            android:lineSpacingExtra="1sp"
-                            android:text="₹ 6480"
-                            android:textColor="@color/blakish"
-                            android:textSize="20sp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/manrope_bold"
-                            android:lineSpacingExtra="1sp"
-                            android:text="View Price Breakup"
-                            android:textColor="@color/brand_color"
+                            android:lineSpacingExtra="-2sp"
+                            android:text="Get Flat 5% Off"
+                            android:textColor="@color/black"
                             android:textSize="13sp" />
 
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/tv_valid_on"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_percent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/manrope_bold"
+                            android:lineSpacingExtra="1sp"
+                            android:text="*Offer valid on SKU 500ml"
+                            android:textColor="@color/gray"
+                            android:textSize="11sp" />
 
-                    <TextView
-                        android:layout_width="160dp"
-                        android:layout_height="48dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/rounded_corner_12_solid_orange"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:fontFamily="@font/manrope_bold"
-                        android:gravity="center"
-                        android:text="Place Order"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:textStyle="normal" />
+                        <TextView
+                            android:id="@+id/tv_valid_till"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_valid_on"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="1dp"
+                            android:fontFamily="@font/manrope_bold"
+                            android:lineSpacingExtra="1sp"
+                            android:text="Valid till March 31,2022"
+                            android:textColor="@color/gray"
+                            android:textSize="11sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginEnd="17dp"
+                            android:layout_marginBottom="4dp"
+                            android:contentDescription="@string/image"
+                            android:src="@drawable/ic_special_offer" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="24dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="2dp"
+                        android:background="@drawable/rounded_corner_bottom_8_solid_yellow">
+
+
+                    </RelativeLayout>
 
                 </RelativeLayout>
 
-            </RelativeLayout>
-        </androidx.core.widget.NestedScrollView>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_100sdp"
-                android:contentDescription="@string/image"
-                android:src="@drawable/ic_cart_empty" />
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_24sdp"
-                android:fontFamily="@font/manrope_bold"
-                android:text="@string/cart_empty_title"
-                android:textColor="@color/blakish"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tv_desc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:fontFamily="@font/manrope_regular"
-                android:gravity="center"
-                android:lineSpacingExtra="0sp"
-                android:text="@string/cart_empty_msg"
-                android:textColor="@color/gray"
-                android:textSize="14sp"
-                android:translationY="-0.24sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_24sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:background="@drawable/btn_rounded_corner_16_solid_orange"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="@font/manrope_bold"
-                android:gravity="center"
-                android:text="Start Shopping"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="normal" />
-
-        </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 
         <ProgressBar
             android:id="@+id/progress"

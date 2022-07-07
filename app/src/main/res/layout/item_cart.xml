@@ -199,7 +199,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/rounded_corner_top_4_solid_light_green_stroke_gray"
+        android:background="@drawable/rounded_corner_top_16_solid_light_green_stroke_gray"
         android:drawablePadding="6dp"
         android:fontFamily="@font/manrope_regular"
         android:gravity="center_vertical"
@@ -216,7 +216,7 @@
         android:layout_below="@+id/tv_free_give"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/rounded_corner_bottom_4_solid_white_stroke_gray">
+        android:background="@drawable/rounded_corner_bottom_16_solid_white_stroke_gray">
 
         <FrameLayout
             android:id="@+id/frame_free_give"

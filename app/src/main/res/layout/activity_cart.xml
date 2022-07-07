@@ -454,7 +454,7 @@
                     android:layout_height="64dp"
                     android:layout_below="@+id/amount_separator"
                     android:layout_margin="@dimen/_8sdp"
-                    android:background="@drawable/rounded_corner_4_solid_transparent_green_stroke_gray"
+                    android:background="@drawable/rounded_corner_6_solid_transparent_green_stroke_gray"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/_12sdp"

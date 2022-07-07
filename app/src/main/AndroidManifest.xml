@@ -38,7 +38,7 @@
         <activity android:name=".ui.cart.view.CartActivity" />
         <activity android:name=".ui.order.view.OrderListActivity" />
         <activity android:name=".ui.checkout.CheckoutStatusActivity" />
-
+        <activity android:name=".ui.offer.OfferDetailActivity" />
 
         <service android:name=".pushnotification.MyFirebaseMessagingService" />
     </application>
