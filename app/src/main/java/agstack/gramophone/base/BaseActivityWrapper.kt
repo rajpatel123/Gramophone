@@ -19,7 +19,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     AppCompatActivity(), BaseNavigator {
 
 
-    protected var mViewModel :V?=null
+    protected var mViewModel: V? = null
     protected lateinit var viewDataBinding: B
 
     abstract fun getLayoutID(): Int
@@ -36,7 +36,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
             false
         )
         this.mViewModel = getViewModel()
-        viewDataBinding.setVariable(getBindingVariable(),mViewModel)
+        viewDataBinding.setVariable(getBindingVariable(), mViewModel)
         setContentView(viewDataBinding.root)
         mViewModel?.setNavigator(this as? N)
     }
@@ -47,15 +47,15 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
             if (extras != null)
                 putExtras(extras)
-                startActivity(this)
+            startActivity(this)
 
         }
     }
 
-    override fun <T> openAndFinishActivity(cls :Class<T>,extras:Bundle?){
-        Intent(this,cls).apply {
+    override fun <T> openAndFinishActivity(cls: Class<T>, extras: Bundle?) {
+        Intent(this, cls).apply {
 
-            if(extras!=null)
+            if (extras != null)
                 putExtras(extras)
             startActivity(this)
             finish()
@@ -82,6 +82,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
             e.printStackTrace()
         }
     }
+
     fun setUpToolBar(enableBackButton: Boolean, title: String, @DrawableRes drawable: Int? = null) {
         val toolbar = findViewById<Toolbar>(R.id.myToolbar)
         if (toolbar != null) {

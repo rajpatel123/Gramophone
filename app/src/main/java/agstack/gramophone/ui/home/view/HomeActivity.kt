@@ -6,23 +6,24 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityHomeBinding
 import agstack.gramophone.menu.BottomNavigationView
 import agstack.gramophone.menu.OnNavigationItemChangeListener
+import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
-import agstack.gramophone.ui.home.view.fragments.community.CommunityFragment
-import agstack.gramophone.ui.home.view.fragments.market.MarketFragment
-import agstack.gramophone.ui.home.view.fragments.trading.TradeFragment
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
+import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.profile.view.ProfileActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.toolbar_home.*
 
 @AndroidEntryPoint
 class HomeActivity :
     BaseActivityWrapper<ActivityHomeBinding, HomeActivityNavigator, HomeViewModel>(),
-    HomeActivityNavigator {
+    HomeActivityNavigator, View.OnClickListener {
     private lateinit var binding: ActivityHomeBinding
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var navController: NavController
@@ -40,6 +41,8 @@ class HomeActivity :
     }
 
     private fun setupUi() {
+        iv_cart.setOnClickListener(this)
+        iv_favourite.setOnClickListener(this)
         val navHostFragment = supportFragmentManager.findFragmentById(
             R.id.nav_host
         ) as NavHostFragment
@@ -69,28 +72,17 @@ class HomeActivity :
                 }
             }
         })
+    }
 
-        /*replaceFragment(MarketFragment(), MarketFragment::class.java.simpleName)
-        bottom_nav.setOnNavigationItemChangedListener(object :
-            OnNavigationItemChangeListener {
-            override fun onNavigationItemChanged(navigationItem: BottomNavigationView.NavigationItem) {
-                when (navigationItem.position) {
-                    0 -> {
-                        replaceFragment(MarketFragment(), MarketFragment::class.java.simpleName)
-                    }
-                    1 -> {
-                        replaceFragment(TradeFragment(), TradeFragment::class.java.simpleName)
-                    }
-                    2 -> {
-                        replaceFragment(CommunityFragment(), CommunityFragment::class.java.simpleName)
-                    }
-                    3 -> {
-                        ProfileActivity.start(this@HomeActivity)
-                    }
-                }
-
+    override fun onClick(view: View?) {
+        when (view?.id) {
+            R.id.iv_cart -> {
+                openActivity(CartActivity::class.java, null)
             }
-        })*/
+            R.id.iv_favourite -> {
+                openActivity(OrderListActivity::class.java, null)
+            }
+        }
     }
 
     override fun getLayoutID(): Int {

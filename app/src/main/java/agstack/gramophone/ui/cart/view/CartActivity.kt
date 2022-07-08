@@ -44,7 +44,7 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv_cart?.setHasFixedSize(true)
         rv_cart?.adapter = CartAdapter()
-
+        nestedScroll.scrollTo(0,0)
         binding.toolbar.rlHelp.setOnClickListener(View.OnClickListener {
             val bottomSheet = BottomSheetDialog()
             //bottomSheet.setAcceptRejectListener(listener)

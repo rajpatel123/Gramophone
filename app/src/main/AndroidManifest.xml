@@ -39,6 +39,7 @@
         <activity android:name=".ui.order.view.OrderListActivity" />
         <activity android:name=".ui.checkout.CheckoutStatusActivity" />
         <activity android:name=".ui.offer.OfferDetailActivity" />
+        <activity android:name=".ui.orderdetails.OrderDetailsActivity" />
 
         <service android:name=".pushnotification.MyFirebaseMessagingService" />
     </application>
