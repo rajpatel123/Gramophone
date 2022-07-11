@@ -1,9 +1,9 @@
 package agstack.gramophone.ui.home.product.activity
 
 import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.home.product.model.ProductSkuOfferModel
 import agstack.gramophone.ui.home.product.model.ProductWeightPriceModel
-import agstack.gramophone.data.repository.onboarding.OnboardingRepository
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.utils.Utility.toBulletedList
 import android.util.Log
@@ -17,7 +17,7 @@ import kotlin.collections.ArrayList
 
 @HiltViewModel
 class ProductDetailsViewModel @Inject constructor(
-    private val onboardingRepository: OnboardingRepository
+    private val onboardingRepository: OnBoardingRepository
 ) : BaseViewModel<ProductDetailsNavigator>() {
     var mSKUList = ArrayList<ProductWeightPriceModel>()
 

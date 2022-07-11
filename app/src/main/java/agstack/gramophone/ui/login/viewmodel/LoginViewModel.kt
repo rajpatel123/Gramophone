@@ -1,19 +1,16 @@
 package agstack.gramophone.ui.login.viewmodel
 
-
+import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
-import agstack.gramophone.data.repository.onboarding.OnboardingRepository
 import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.model.GenerateOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
-import agstack.gramophone.utils.*
-import android.content.Context
+import agstack.gramophone.utils.Resource
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
@@ -21,8 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val onboardingRepository: OnBoardingRepository,
-    @ApplicationContext private val context: Context
+    private val onBoardingRepository : OnBoardingRepository
 ) : BaseViewModel<LoginNavigator>() {
     var mobileNo :String?=""
     var referralCode :String?=""
@@ -32,7 +28,7 @@ class LoginViewModel @Inject constructor(
 
     fun sendOTP(v: View) = viewModelScope.launch {
         if (mobileNo.isNullOrEmpty()){
-            generateOtpResponseModel.postValue(Resource.Error()
+            generateOtpResponseModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.enter_mobile_lebel)!!))
         }else{
            val sendOtpRequestModel= SendOtpRequestModel()
 
@@ -51,7 +47,7 @@ class LoginViewModel @Inject constructor(
         generateOtpResponseModel.postValue(Resource.Loading())
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
-                val response = onboardingRepository.sendOTP(sendOtpRequestModel)
+                val response = onBoardingRepository.sendOTP(sendOtpRequestModel)
                 generateOtpResponseModel.postValue(handleOrderResponse(response))
             } else
                 generateOtpResponseModel.postValue(Resource.Error("No Internet Connection"))

@@ -1,6 +1,6 @@
 package agstack.gramophone.ui.language.repository
 
-import agstack.gramophone.di.GramoAppService
+import agstack.gramophone.di.GramAppService
 import agstack.gramophone.ui.language.model.RegisterDeviceModel
 import agstack.gramophone.ui.language.model.RegisterDeviceRequestModel
 import kotlinx.coroutines.Dispatchers
@@ -11,12 +11,12 @@ import javax.inject.Singleton
 
 @Singleton
 class LanguageRepository @Inject constructor(
-    private val gramoAppService: GramoAppService
+    private val gramAppService: GramAppService
 ) {
 
     suspend fun getDeviceToken(loginMap: RegisterDeviceRequestModel): Response<RegisterDeviceModel> = withContext(
         Dispatchers.IO) {
-        val popular = gramoAppService.getDeviceToken(loginMap)
+        val popular = gramAppService.getDeviceToken(loginMap)
         popular
     }
 

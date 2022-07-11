@@ -5,7 +5,7 @@ import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class GramoAppApplication : Application() {
+class GramAppApplication : Application() {
 
     companion object {
     }

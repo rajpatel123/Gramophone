@@ -1,6 +1,7 @@
 package agstack.gramophone.di
 
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
+import agstack.gramophone.data.repository.onboarding.OnBoardingRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,6 +13,6 @@ import dagger.hilt.components.SingletonComponent
 interface RepositoryModule {
 
     @Binds
-    fun bindOnboardingRepository(impl: OnBoardingRepositoryImpl ):OnBoardingRepository
+    fun bindOnBoardingRepository(impl: OnBoardingRepositoryImpl):OnBoardingRepository
 
 }

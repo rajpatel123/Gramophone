@@ -63,7 +63,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
 
     override fun isNetworkAvailable(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
     override fun requestPermission(permission: String, callback: (Boolean) -> Unit) {
@@ -100,6 +100,10 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
     override fun getLanguage(): String {
         return LocaleManagerClass.getLangCodeFromPreferences(this)
+    }
+
+    override fun getMessage(stringResourceId: Int): String {
+       return getString(stringResourceId)
     }
 
 }

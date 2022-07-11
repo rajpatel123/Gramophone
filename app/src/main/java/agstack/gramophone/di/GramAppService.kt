@@ -4,13 +4,14 @@ import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.language.model.RegisterDeviceModel
 import agstack.gramophone.ui.language.model.RegisterDeviceRequestModel
 import agstack.gramophone.ui.login.model.GenerateOtpResponseModel
+import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 
-interface GramoAppService {
+interface GramAppService {
 
     @POST("api/v5/onboarding/app-initiate")
     suspend fun initiateApp(@Body hashMap:HashMap<Any,Any>): Response<UpdateProfileTypeRes>
@@ -24,7 +25,7 @@ interface GramoAppService {
 
     @POST("api/v5/onboarding/send-otp")
     @JvmSuppressWildcards
-    suspend fun sendOTP(@Body hashMap:HashMap<Any,Any>): Response<GenerateOtpResponseModel>
+    suspend fun sendOTP(@Body sendOtpRequestModel: SendOtpRequestModel): Response<GenerateOtpResponseModel>
 
 
     @POST("onboarding/register-device")

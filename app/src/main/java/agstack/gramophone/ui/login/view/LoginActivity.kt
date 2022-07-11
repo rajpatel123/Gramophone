@@ -28,7 +28,6 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupUi()
         setupObservers()
     }
 
@@ -42,7 +41,6 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
                 is Resource.Error -> {
                     progress.visibility = View.GONE
                     it.message?.let { message ->
-                       // Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
                         openActivity(VerifyOtpActivity::class.java,null)
 
                     }
@@ -54,18 +52,6 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
         })
 
     }
-
-
-    private fun setupUi() {
-        submitBtn.setOnClickListener { view ->
-            val hashMap = HashMap<Any, Any>()
-            hashMap[Constants.PHONE] = mobileEdt.text.toString()
-            val language = LocaleManagerClass.getLangCodeFromPreferences(this)
-            hashMap[Constants.LANGUAGE] = language
-            loginViewModel.sendOTP(hashMap)
-        }
-    }
-
 
     override fun getLayoutID(): Int {
       return R.layout.activity_login

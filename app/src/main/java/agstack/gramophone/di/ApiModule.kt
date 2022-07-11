@@ -44,7 +44,7 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideMovieAppService(retrofit: Retrofit): GramoAppService {
-        return retrofit.create(GramoAppService::class.java)
+    fun provideMovieAppService(retrofit: Retrofit): GramAppService {
+        return retrofit.create(GramAppService::class.java)
     }
 }
