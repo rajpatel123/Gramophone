@@ -1,6 +1,5 @@
 package agstack.gramophone.ui.home.view.fragments.market.model
 
-import agstack.gramophone.ui.language.model.Data
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize

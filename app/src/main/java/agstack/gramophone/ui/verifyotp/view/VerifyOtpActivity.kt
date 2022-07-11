@@ -18,10 +18,8 @@ class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOT
     VerifyOTPNavigator {
     private  val verifyOtpViewModel: VerifyOtpViewModel by viewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupUi()
         setupObservers()
     }
 
@@ -29,12 +27,6 @@ class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOT
 
     }
 
-    private fun setupUi() {
-        changeNumberTxt.setOnClickListener { onBackPressed() }
-        verifyOtpBtn.setOnClickListener {
-         openActivity(HomeActivity::class.java,null)
-        }
-    }
 
     override fun onBackPressed() {
         super.onBackPressed()

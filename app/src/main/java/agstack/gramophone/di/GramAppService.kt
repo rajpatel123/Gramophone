@@ -1,11 +1,14 @@
 package agstack.gramophone.di
 
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
-import agstack.gramophone.ui.language.model.RegisterDeviceModel
+import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
+import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.RegisterDeviceRequestModel
-import agstack.gramophone.ui.login.model.GenerateOtpResponseModel
+import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
+import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
+import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -25,16 +28,16 @@ interface GramAppService {
 
     @POST("api/v5/onboarding/send-otp")
     @JvmSuppressWildcards
-    suspend fun sendOTP(@Body sendOtpRequestModel: SendOtpRequestModel): Response<GenerateOtpResponseModel>
+    suspend fun sendOTP(@Body sendOtpRequestModel: SendOtpRequestModel): Response<SendOtpResponseModel>
 
 
-    @POST("onboarding/register-device")
+    @POST("api/v5/onboarding/app-initiate")
     @JvmSuppressWildcards
-    suspend fun getDeviceToken(@Body registrerDeviceRquestModel: RegisterDeviceRequestModel): Response<RegisterDeviceModel>
+    suspend fun getDeviceToken(@Body initiateAppDataRequestModel:  InitiateAppDataRequestModel): Response<InitiateAppDataResponseModel>
 
-    @POST("onboarding/validate-otp")
+    @POST("api/v5/onboarding/validate-otp")
     @JvmSuppressWildcards
-    suspend fun validateOTP(@Body registrerDeviceRquestModel: RegisterDeviceRequestModel): Response<RegisterDeviceModel>
+    suspend fun validateOTP(@Body validateOtpRequestModel: ValidateOtpRequestModel): Response<ValidateOtpResponseModel>
 
 
     @POST("product/get-product-details")

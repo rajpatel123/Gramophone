@@ -1,10 +1,14 @@
 package agstack.gramophone.di
 
 import agstack.gramophone.BuildConfig
+import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -26,7 +30,7 @@ object ApiModule {
     @Singleton
     fun provideOkHttpClient(logging: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
-                .addInterceptor(logging)
+                .addInterceptor(getHeaderInterceptor())
                 .connectTimeout(15, TimeUnit.SECONDS) // connect timeout
                 .readTimeout(15, TimeUnit.SECONDS)
                 .build()
@@ -46,5 +50,15 @@ object ApiModule {
     @Singleton
     fun provideMovieAppService(retrofit: Retrofit): GramAppService {
         return retrofit.create(GramAppService::class.java)
+    }
+
+    private fun getHeaderInterceptor():Interceptor{
+        return Interceptor { chain ->
+            val request =
+                chain.request().newBuilder()
+                    .header(Constants.AUTHORIZATION, "Bearer "+ SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.session_token)!!)
+                    .build()
+            chain.proceed(request)
+        }
     }
 }

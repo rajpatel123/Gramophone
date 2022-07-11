@@ -51,6 +51,7 @@ public abstract class SharedPreferencesKeys {
     public static final String IsAlreadyInstallKey = "isAlreadyInstall";
     public static final String IsAlreadyTokenSavedKey = "isAlreadySaved";
     public static final String session_token = "session_token";
+    public static final String logged_in = "logged_in";
     public static final String language = "language";
     public static final String FirebaseTokenKey = "firebaseToken";
     public static final String IsFirebaseTokenUpdatedKey = "firebaseTokenUpdated";

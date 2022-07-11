@@ -103,7 +103,6 @@
                     android:backgroundTint="@color/mute_grey"
                     android:hint="@string/enter_mobile_lebel"
                     android:imeOptions="actionDone"
-                    android:text="@={viewModel.mobileNo}"
                     android:inputType="number"
                     android:letterSpacing=".05"
                     android:maxLength="10"
@@ -112,6 +111,7 @@
                     android:paddingEnd="@dimen/_2sdp"
                     android:paddingBottom="@dimen/_10sdp"
                     android:singleLine="true"
+                    android:text="@={viewModel.mobileNo}"
                     android:textSize="@dimen/_12ssp" />
             </RelativeLayout>
 

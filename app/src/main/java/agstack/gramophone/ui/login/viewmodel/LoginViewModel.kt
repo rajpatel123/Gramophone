@@ -4,8 +4,9 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.login.LoginNavigator
-import agstack.gramophone.ui.login.model.GenerateOtpResponseModel
+import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
+import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Resource
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -23,7 +24,7 @@ class LoginViewModel @Inject constructor(
     var mobileNo :String?=""
     var referralCode :String?=""
 
-    val generateOtpResponseModel: MutableLiveData<Resource<GenerateOtpResponseModel>> =
+    val generateOtpResponseModel: MutableLiveData<Resource<SendOtpResponseModel>> =
         MutableLiveData()
 
     fun sendOTP(v: View) = viewModelScope.launch {
@@ -48,7 +49,13 @@ class LoginViewModel @Inject constructor(
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
                 val response = onBoardingRepository.sendOTP(sendOtpRequestModel)
-                generateOtpResponseModel.postValue(handleOrderResponse(response))
+
+                val sendOtpResponseModel = handleOrderResponse(response).data
+
+                if (Constants.GP_API_STATUS.equals(sendOtpResponseModel?.gp_api_status)) {
+                    generateOtpResponseModel.postValue(handleOrderResponse(response))
+                }
+
             } else
                 generateOtpResponseModel.postValue(Resource.Error("No Internet Connection"))
         } catch (ex: Exception) {
@@ -59,7 +66,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun handleOrderResponse(response: Response<GenerateOtpResponseModel>): Resource<GenerateOtpResponseModel> {
+    private fun handleOrderResponse(response: Response<SendOtpResponseModel>): Resource<SendOtpResponseModel> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
                 return Resource.Success(resultResponse)
