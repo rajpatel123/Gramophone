@@ -17,10 +17,7 @@ class ProductImagesFragment :Fragment(){
         super.onAttach(context)
         prodImagesFragmentListener = context as ProductImagesFragmentInterface
     }
-   // public var selectedPosition: ((Int) -> Unit)? = null
-    /*
-    * Method called when view is created
-     */
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,7 +35,6 @@ class ProductImagesFragment :Fragment(){
 
 
         imageView.setOnClickListener {
-            //selectedPosition?.invoke(position)
             prodImagesFragmentListener.onItemClick(position)
         }
 

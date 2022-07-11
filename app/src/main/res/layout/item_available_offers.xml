@@ -17,7 +17,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/productDetailsContainer"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/_114sdp"
+        android:layout_height="wrap_content"
         card_view:cardCornerRadius="10dp"
         card_view:cardElevation="5dp"
         card_view:cardUseCompatPadding="true">
@@ -25,7 +25,7 @@
 
         <RelativeLayout
             android:background="@{model.selected ? @drawable/selected_product_background: @drawable/deselected_product_background}"
-            android:layout_width="@dimen/_200sdp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
 
@@ -107,8 +107,6 @@
                 android:background="@drawable/ic_pink_background"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_26sdp"
-                android:layout_alignParentBottom="true"
-
                 android:padding="@dimen/_2sdp"
 
                 android:orientation="horizontal">

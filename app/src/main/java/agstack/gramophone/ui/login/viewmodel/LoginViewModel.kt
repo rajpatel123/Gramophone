@@ -2,6 +2,7 @@ package agstack.gramophone.ui.login.viewmodel
 
 
 import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.data.repository.onboarding.OnboardingRepository
 import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.model.GenerateOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
@@ -20,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginRepository: LoginRepository,
+    private val onboardingRepository: OnboardingRepository,
     @ApplicationContext private val context: Context
 ) : BaseViewModel<LoginNavigator>() {
     var mobileNo :String?=""
@@ -50,6 +51,9 @@ class LoginViewModel @Inject constructor(
 
         generateOtpResponseModel.postValue(Resource.Loading())
         try {
+            if (hasInternetConnection(context)) {
+
+                val response = onboardingRepository.sendOTP(loginMap)
             if (getNavigator()?.isNetworkAvailable() == true) {
                 val response = loginRepository.sendOTP(loginMap)
                 generateOtpResponseModel.postValue(handleOrderResponse(response))

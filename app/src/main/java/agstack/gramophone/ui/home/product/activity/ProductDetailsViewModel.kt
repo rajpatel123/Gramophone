@@ -3,18 +3,21 @@ package agstack.gramophone.ui.home.product.activity
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.ui.home.product.model.ProductSkuOfferModel
 import agstack.gramophone.ui.home.product.model.ProductWeightPriceModel
-import agstack.gramophone.ui.home.repository.HomeRepository
+import agstack.gramophone.data.repository.onboarding.OnboardingRepository
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.utils.Utility.toBulletedList
 import android.util.Log
 import androidx.databinding.ObservableField
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 @HiltViewModel
 class ProductDetailsViewModel @Inject constructor(
-    private val homeRepository: HomeRepository
+    private val onboardingRepository: OnboardingRepository
 ) : BaseViewModel<ProductDetailsNavigator>() {
     var mSKUList = ArrayList<ProductWeightPriceModel>()
 
@@ -27,6 +30,11 @@ class ProductDetailsViewModel @Inject constructor(
 fun onAddToCartClicked(){
     productDetailsBulletText.set(  listOf("One", "Two", "Three").toBulletedList().toString())
     Log.d("ProductDetailedList",productDetailsBulletText.toString())
+viewModelScope.launch {
+
+/*
+    val sendOTP = onboardingRepository.sendOTP(HashMap())*/
+}
 
 
 
