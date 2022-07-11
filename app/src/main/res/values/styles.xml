@@ -37,4 +37,11 @@
 
     </style>
 
+
+<!--    <style name="DialogTheme" parent="">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>-->
+
 </resources>

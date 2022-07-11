@@ -15,6 +15,7 @@ interface GramoAppService {
     @POST("traders/update-profile-type")
     suspend fun updateProfileType(@Body hashMap:HashMap<Any,Any>): Response<UpdateProfileTypeRes>
 
+    // onbg service
     @POST("onboarding/register-device")
     suspend fun getDeviceToken(@Body hashMap:HashMap<Any,Any>): Response<UpdateProfileTypeRes>
 

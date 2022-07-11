@@ -11,7 +11,6 @@ internal class ProductImagesAdapter(
     private val productImages: List<String>
 ) : FragmentPagerAdapter(supportFragmentManager){
 
-    private var callback: ProductImagesAdapterCallback? = null
 
 
     override fun getCount(): Int {
@@ -29,10 +28,4 @@ internal class ProductImagesAdapter(
     }
 
 
-
-
-
-    interface ProductImagesAdapterCallback {
-        fun onListItemClick(position: Int)
-    }
 }
