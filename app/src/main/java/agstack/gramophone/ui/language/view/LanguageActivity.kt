@@ -9,7 +9,7 @@ import agstack.gramophone.ui.apptour.view.AppTourActivity
 import agstack.gramophone.ui.language.LanguageActivityNavigator
 import agstack.gramophone.ui.language.adapter.LanguageAdapter
 import agstack.gramophone.ui.language.model.LanguageData
-import agstack.gramophone.ui.language.model.RegistrerDeviceRquestModel
+import agstack.gramophone.ui.language.model.RegisterDeviceRequestModel
 import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
 import agstack.gramophone.ui.splash.view.SplashActivity
 import agstack.gramophone.utils.Resource
@@ -33,7 +33,7 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     private val languageViewModel: LanguageViewModel by viewModels()
 
 
-    val registrerDeviceRquestModel: RegistrerDeviceRquestModel
+    val registrerDeviceRquestModel: RegisterDeviceRequestModel
         get() {
             val android_id = Settings.Secure.getString(this.contentResolver,
                 Settings.Secure.ANDROID_ID)
@@ -49,7 +49,7 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
             val fcmToken = "dfd"+SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.FirebaseTokenKey)  // will be updated later
 
 
-            var registrerDeviceRquestModel = RegistrerDeviceRquestModel(
+            var registerDeviceRequestModel = RegisterDeviceRequestModel(
                 versionCode,
                 versionName,
                 android_id,
@@ -60,7 +60,7 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
             )
 
 
-            return registrerDeviceRquestModel
+            return registerDeviceRequestModel
 
         }
     companion object {

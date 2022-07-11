@@ -1,13 +1,11 @@
 package agstack.gramophone.ui.language.viewmodel
 
 import agstack.gramophone.base.BaseViewModel
-import agstack.gramophone.ui.apptour.view.AppTourActivity
 import agstack.gramophone.ui.language.LanguageActivityNavigator
 import agstack.gramophone.ui.language.model.LanguageData
 import agstack.gramophone.ui.language.model.RegisterDeviceModel
-import agstack.gramophone.ui.language.model.RegistrerDeviceRquestModel
+import agstack.gramophone.ui.language.model.RegisterDeviceRequestModel
 import agstack.gramophone.ui.language.repository.LanguageRepository
-import agstack.gramophone.ui.splash.model.SplashModel
 import agstack.gramophone.utils.Resource
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
@@ -34,11 +32,11 @@ class LanguageViewModel @Inject constructor(
     var updateLanguage: MutableLiveData<LanguageData> = MutableLiveData()
 
 
-    fun getDeviceToken(loginMap: RegistrerDeviceRquestModel) = viewModelScope.launch {
+    fun getDeviceToken(loginMap: RegisterDeviceRequestModel) = viewModelScope.launch {
         getToken(loginMap)
     }
 
-    private suspend fun getToken(loginMap: RegistrerDeviceRquestModel) {
+    private suspend fun getToken(loginMap: RegisterDeviceRequestModel) {
 
         registerDeviceModel.postValue(Resource.Loading())
         try {

@@ -2,7 +2,7 @@ package agstack.gramophone.ui.language.repository
 
 import agstack.gramophone.di.GramoAppService
 import agstack.gramophone.ui.language.model.RegisterDeviceModel
-import agstack.gramophone.ui.language.model.RegistrerDeviceRquestModel
+import agstack.gramophone.ui.language.model.RegisterDeviceRequestModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -14,7 +14,7 @@ class LanguageRepository @Inject constructor(
     private val gramoAppService: GramoAppService
 ) {
 
-    suspend fun getDeviceToken(loginMap: RegistrerDeviceRquestModel): Response<RegisterDeviceModel> = withContext(
+    suspend fun getDeviceToken(loginMap: RegisterDeviceRequestModel): Response<RegisterDeviceModel> = withContext(
         Dispatchers.IO) {
         val popular = gramoAppService.getDeviceToken(loginMap)
         popular

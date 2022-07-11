@@ -1,19 +1,17 @@
 package agstack.gramophone.base
 
 import agstack.gramophone.R
+import agstack.gramophone.utils.LocaleManagerClass
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.appcompat.widget.Toolbar
-import kotlinx.android.synthetic.main.layout_toolbar.*
-
 import androidx.fragment.app.Fragment
-import dagger.hilt.android.AndroidEntryPoint
 
 abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : BaseViewModel<N>> :
     AppCompatActivity(), BaseNavigator {
@@ -100,5 +98,8 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         }
     }
 
+    override fun getLanguage(): String {
+        return LocaleManagerClass.getLangCodeFromPreferences(this)
+    }
 
 }

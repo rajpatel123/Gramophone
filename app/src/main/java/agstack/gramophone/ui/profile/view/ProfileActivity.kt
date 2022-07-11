@@ -1,6 +1,5 @@
 package agstack.gramophone.ui.profile.view
 
-import agstack.gramophone.base.BaseActivity
 import agstack.gramophone.databinding.ActivityProfileBinding
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.profile.viewmodel.ProfileViewModel

@@ -44,8 +44,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "facebook_app_name", '"fbContentProvider"'
             buildConfigField "String", "BASE_URL_SOCIAL", "\"https://community-api.gramophone.in/api/v1/\""
-            buildConfigField "String", "BASE_URL_ONBOARDING", "\"https://mobility-api.gramophone.in/api/v4/\""
-            buildConfigField "String", "BASE_URL_VYAPAAR", "\"https://mobility-api.gramophone.in/api/v4/gramvyapar/\""
+            buildConfigField "String", "BASE_URL", "\"https://mobility-api-dev.gramophone.in/\""
             buildConfigField "String", "BASE_URL_YOUTUBE", "\"https://www.googleapis.com/youtube/v3/\""
             signingConfig signingConfigs.release
 
@@ -54,8 +53,7 @@ android {
             applicationIdSuffix = ".debug"
             resValue "string", "app_name_different", " G.Debug"
             buildConfigField "String", "BASE_URL_SOCIAL", "\"https://community-api-dev.gramophone.in/api/v1/\""
-            buildConfigField "String", "BASE_URL_ONBOARDING", "\"https://mobility-api-dev.gramophone.in/api/v4/\""
-            buildConfigField "String", "BASE_URL_VYAPAAR", "\"https://mobility-api-dev.gramophone.in/api/v4/gramvyapar/\""
+            buildConfigField "String", "BASE_URL", "\"https://mobility-api-dev.gramophone.in/\""
             buildConfigField "String", "BASE_URL_YOUTUBE", "\"https://www.googleapis.com/youtube/v3/\""
             signingConfig signingConfigs.debug
         }
@@ -64,8 +62,7 @@ android {
             matchingFallbacks = ['debug']
             resValue "string", "app_name_different", " G.Uat"
             buildConfigField "String", "BASE_URL_SOCIAL", "\"https://community-api-qa.gramophone.in/api/v1/\""
-            buildConfigField "String", "BASE_URL_ONBOARDING", "\"https://mobility-api-qa.gramophone.in/api/v4/\""
-            buildConfigField "String", "BASE_URL_VYAPAAR", "\"https://mobility-api-qa.gramophone.in/api/v4/gramvyapar/\""
+            buildConfigField "String", "BASE_URL", "\"https://mobility-api-dev.gramophone.in/\""
             buildConfigField "String", "BASE_URL_YOUTUBE", "\"https://www.googleapis.com/youtube/v3/\""
             signingConfig signingConfigs.debug
         }

@@ -29,7 +29,6 @@ class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOT
 
     }
 
-
     private fun setupUi() {
         changeNumberTxt.setOnClickListener { onBackPressed() }
         verifyOtpBtn.setOnClickListener {

@@ -1,6 +1,6 @@
 package agstack.gramophone.ui.language.model
 
-data class RegistrerDeviceRquestModel(
+data class RegisterDeviceRequestModel(
     val app_version_code: Int,
     val app_version_name: String,
     val device_id: String,
