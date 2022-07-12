@@ -7,6 +7,7 @@ import agstack.gramophone.ui.login.model.GenerateOtpResponseModel
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 
@@ -35,4 +36,7 @@ interface GramoAppService {
 
     @POST("product/get-product-details")
     fun getProductData(@Body hashMap: java.util.HashMap<*, *>?): Response<ProductData>
+
+    @GET("cart/get-cart")
+    fun getCartData(): Response<ProductData>
 }

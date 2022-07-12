@@ -20,4 +20,10 @@ class ProductRepositoryImpl @Inject constructor(
         popular
     }
 
+    override suspend fun getCartData(): Response<ProductData> = withContext(
+        Dispatchers.IO) {
+        val cartData = gramoAppService.getCartData()
+        cartData
+    }
+
 }

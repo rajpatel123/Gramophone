@@ -9,6 +9,7 @@ import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
 import agstack.gramophone.ui.home.product.model.ProductSkuOfferModel
 import agstack.gramophone.ui.home.product.model.ProductWeightPriceModel
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.utils.AppLogger
 import agstack.gramophone.utils.Utility.toBulletedList
 import agstack.gramophone.widget.MultipleImageDetailDialog
 import android.os.Bundle

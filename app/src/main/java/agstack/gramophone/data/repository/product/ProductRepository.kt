@@ -10,4 +10,6 @@ import javax.inject.Singleton
 interface ProductRepository {
 
     suspend fun getProductData(productMap: HashMap<Any, Any>): Response<ProductData>
+
+    suspend fun getCartData(): Response<ProductData>
 }
