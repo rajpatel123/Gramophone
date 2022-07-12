@@ -13,7 +13,7 @@ import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.LanguageData
 import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
 import agstack.gramophone.ui.splash.view.SplashActivity
-import agstack.gramophone.utils.Resource
+import agstack.gramophone.utils.ApiResponse
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -76,13 +76,13 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     private fun setupDeviceTokenObserver() {
       languageViewModel.registerDeviceModel.observe(this, Observer {
           when (it) {
-              is Resource.Success -> { }
-              is Resource.Error -> {
+              is ApiResponse.Success -> { }
+              is ApiResponse.Error -> {
                   it.message?.let { message ->
                       Toast.makeText(this@LanguageActivity, message, Toast.LENGTH_LONG).show()
                   }
               }
-              is Resource.Loading -> {
+              is ApiResponse.Loading -> {
               }
           }
       })

@@ -6,16 +6,14 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivitySplashBinding
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.language.view.LanguageActivity
-import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.splash.SplashNavigator
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
-import agstack.gramophone.utils.Resource
+import agstack.gramophone.utils.ApiResponse
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -39,17 +37,17 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
     private fun setupObservers() {
         splashViewModel.splashViewModel.observe(this, Observer {
             when (it) {
-                is Resource.Success -> {
+                is ApiResponse.Success -> {
                     progress.visibility = View.GONE
 
                 }
-                is Resource.Error -> {
+                is ApiResponse.Error -> {
                     progress.visibility = View.GONE
                     it.message?.let { message ->
                         Toast.makeText(this@SplashActivity, message, Toast.LENGTH_LONG).show()
                     }
                  }
-                is Resource.Loading -> {
+                is ApiResponse.Loading -> {
                     progress.visibility = View.VISIBLE
                 }
             }

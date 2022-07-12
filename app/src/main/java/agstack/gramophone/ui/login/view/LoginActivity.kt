@@ -9,7 +9,7 @@ import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.viewmodel.LoginViewModel
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.Resource
+import agstack.gramophone.utils.ApiResponse
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -32,7 +32,7 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
     private fun setupObservers() {
         loginViewModel.generateOtpResponseModel.observe(this, Observer{
             when (it) {
-                is Resource.Success -> {
+                is ApiResponse.Success -> {
                     progress.visibility = View.GONE
                     Toast.makeText(this@LoginActivity,it.data?.gp_api_message,Toast.LENGTH_LONG).show()
                     val bundle = Bundle()
@@ -40,11 +40,11 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
                     bundle.putString(Constants.MOBILE_NO, loginViewModel.mobileNo)
                     openAndFinishActivity(VerifyOtpActivity::class.java,bundle)
                 }
-                is Resource.Error -> {
+                is ApiResponse.Error -> {
                     progress.visibility = View.GONE
                     Toast.makeText(this@LoginActivity,it.message,Toast.LENGTH_LONG).show()
                 }
-                is Resource.Loading -> {
+                is ApiResponse.Loading -> {
                     progress.visibility = View.VISIBLE
                 }
             }

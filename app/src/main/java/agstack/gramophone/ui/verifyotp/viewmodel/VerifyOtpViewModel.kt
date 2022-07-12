@@ -7,7 +7,7 @@ import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.Resource
+import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.view.View
@@ -27,12 +27,12 @@ class VerifyOtpViewModel @Inject constructor(
     var mobileNo: String = ""
 
 
-    val validateOtpResponseModel: MutableLiveData<Resource<ValidateOtpResponseModel>> =
+    val validateOtpResponseModel: MutableLiveData<ApiResponse<ValidateOtpResponseModel>> =
         MutableLiveData()
 
     fun submitOtp(v: View) = viewModelScope.launch {
         if (otp.isNullOrEmpty()) {
-            validateOtpResponseModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.enter_mobile_lebel)!!))
+            validateOtpResponseModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.enter_mobile_lebel)!!))
         } else {
             val validateOtpRequestModel = ValidateOtpRequestModel(mobileNo, otp)
              validateOtp(validateOtpRequestModel)
@@ -41,7 +41,7 @@ class VerifyOtpViewModel @Inject constructor(
 
         private suspend fun validateOtp(validateOtpRequestModel: ValidateOtpRequestModel) {
 
-            validateOtpResponseModel.postValue(Resource.Loading())
+            validateOtpResponseModel.postValue(ApiResponse.Loading())
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     val response = onBoardingRepository.validateOtp(validateOtpRequestModel)
@@ -57,25 +57,25 @@ class VerifyOtpViewModel @Inject constructor(
                             SharedPreferencesKeys.logged_in,
                             true
                         )
-                        validateOtpResponseModel.postValue(Resource.Success(responseData!!))
+                        validateOtpResponseModel.postValue(ApiResponse.Success(responseData!!))
                     }
                 } else
-                    validateOtpResponseModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.no_internet)!!))
+                    validateOtpResponseModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.no_internet)!!))
             } catch (ex: Exception) {
                 when (ex) {
-                    is IOException -> validateOtpResponseModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.network_failure)!!))
-                    else -> validateOtpResponseModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!))
+                    is IOException -> validateOtpResponseModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.network_failure)!!))
+                    else -> validateOtpResponseModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!))
                 }
             }
         }
 
-        private fun handleOrderResponse(response: Response<ValidateOtpResponseModel>): Resource<ValidateOtpResponseModel> {
+        private fun handleOrderResponse(response: Response<ValidateOtpResponseModel>): ApiResponse<ValidateOtpResponseModel> {
             if (response.isSuccessful) {
                 response.body()?.let { resultResponse ->
-                    return Resource.Success(resultResponse)
+                    return ApiResponse.Success(resultResponse)
                 }
             }
-            return Resource.Error(response.message())
+            return ApiResponse.Error(response.message())
         }
 
 

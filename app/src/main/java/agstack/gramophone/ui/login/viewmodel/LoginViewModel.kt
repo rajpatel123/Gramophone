@@ -7,7 +7,7 @@ import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.Resource
+import agstack.gramophone.utils.ApiResponse
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -24,12 +24,12 @@ class LoginViewModel @Inject constructor(
     var mobileNo :String?=""
     var referralCode :String?=""
 
-    val generateOtpResponseModel: MutableLiveData<Resource<SendOtpResponseModel>> =
+    val generateOtpResponseModel: MutableLiveData<ApiResponse<SendOtpResponseModel>> =
         MutableLiveData()
 
     fun sendOTP(v: View) = viewModelScope.launch {
         if (mobileNo.isNullOrEmpty()){
-            generateOtpResponseModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.enter_mobile_lebel)!!))
+            generateOtpResponseModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.enter_mobile_lebel)!!))
         }else{
            val sendOtpRequestModel= SendOtpRequestModel()
 
@@ -45,7 +45,7 @@ class LoginViewModel @Inject constructor(
 
     private suspend fun sendOTPCall(sendOtpRequestModel: SendOtpRequestModel) {
 
-        generateOtpResponseModel.postValue(Resource.Loading())
+        generateOtpResponseModel.postValue(ApiResponse.Loading())
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
                 val response = onBoardingRepository.sendOTP(sendOtpRequestModel)
@@ -57,21 +57,21 @@ class LoginViewModel @Inject constructor(
                 }
 
             } else
-                generateOtpResponseModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.no_internet)!!))
+                generateOtpResponseModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.no_internet)!!))
         } catch (ex: Exception) {
             when (ex) {
-                is IOException -> generateOtpResponseModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.network_failure)!!))
-                else -> generateOtpResponseModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!))
+                is IOException -> generateOtpResponseModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.network_failure)!!))
+                else -> generateOtpResponseModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!))
             }
         }
     }
 
-    private fun handleOrderResponse(response: Response<SendOtpResponseModel>): Resource<SendOtpResponseModel> {
+    private fun handleOrderResponse(response: Response<SendOtpResponseModel>): ApiResponse<SendOtpResponseModel> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
+                return ApiResponse.Success(resultResponse)
             }
         }
-        return Resource.Error(response.message())
+        return ApiResponse.Error(response.message())
     }
 }
