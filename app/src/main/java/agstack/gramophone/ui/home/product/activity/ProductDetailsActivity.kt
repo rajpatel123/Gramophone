@@ -6,10 +6,9 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ProductDetailBinding
 import agstack.gramophone.ui.home.product.fragment.ProductImagesFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
-import agstack.gramophone.ui.home.product.model.ProductSkuOfferModel
-import agstack.gramophone.ui.home.product.model.ProductWeightPriceModel
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
-import agstack.gramophone.utils.AppLogger
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuOfferItem
 import agstack.gramophone.utils.Utility.toBulletedList
 import agstack.gramophone.widget.MultipleImageDetailDialog
 import android.os.Bundle
@@ -41,12 +40,12 @@ class ProductDetailsActivity :
 
         productDetailsViewModel.onAddToCartClicked()
 
-        productDetailsViewModel.apply {
+       /* productDetailsViewModel?.apply {
 
 
-            viewDataBinding.productImagesViewPager?.adapter = ProductImagesAdapter(supportFragmentManager, productDetailsViewModel.productData.product_images!!)
-            viewDataBinding.dotsIndicator?.setViewPager(viewDataBinding!!.productImagesViewPager)
-        }
+            viewDataBinding?.productImagesViewPager?.adapter = ProductImagesAdapter(supportFragmentManager, productDetailsViewModel.productData.productImages!!)
+            viewDataBinding?.dotsIndicator?.setViewPager(viewDataBinding!!.productImagesViewPager)
+        }*/
 
 
 
@@ -75,7 +74,7 @@ class ProductDetailsActivity :
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflator = menuInflater
         inflator.inflate(R.menu.menu_product_details, menu)
         return true
@@ -113,7 +112,7 @@ class ProductDetailsActivity :
 
     override fun setProductSKUAdapter(
         productSKUAdapter: ProductSKUAdapter,
-        onSKUItemClicked: (ProductWeightPriceModel) -> Unit
+        onSKUItemClicked: (ProductSkuListItem) -> Unit
     ) {
 
         productSKUAdapter.selectedProduct = onSKUItemClicked
@@ -124,7 +123,7 @@ class ProductDetailsActivity :
 
     override fun setProductSKUOfferAdapter(
         productSKUOfferAdapter: ProductSKUOfferAdapter,
-        onOfferItemClicked: (ProductSkuOfferModel) -> Unit
+        onOfferItemClicked: (ProductSkuOfferItem) -> Unit
     ) {
         productSKUOfferAdapter.selectedProduct = onOfferItemClicked
         viewDataBinding?.rvAvailableoffers?.adapter = productSKUOfferAdapter
@@ -132,7 +131,7 @@ class ProductDetailsActivity :
 
     override fun onItemClick(clickedposition: Int) {
         Log.d("Position of item",clickedposition.toString())
-        val allProductImages = mViewModel?.productData?.product_images!! as ArrayList
+        val allProductImages = mViewModel?.productData?.productImages!! as ArrayList
 
         multipleImageDetailDialog = MultipleImageDetailDialog.newInstance(allProductImages)
         multipleImageDetailDialog?.show(supportFragmentManager,TAG)

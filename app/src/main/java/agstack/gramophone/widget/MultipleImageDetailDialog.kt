@@ -29,7 +29,7 @@ import androidx.databinding.DataBindingUtil
 class MultipleImageDetailDialog : androidx.fragment.app.DialogFragment() {
     lateinit var mBinding: DialogMultipleImageDetailBinding
 
-    private var list: ArrayList<String>? = null
+    private var list= java.util.ArrayList<String?> ()
 
     override fun getTheme(): Int {
         return R.style.ThemeOverlay_MaterialComponents
@@ -52,7 +52,7 @@ class MultipleImageDetailDialog : androidx.fragment.app.DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 
-        list = arguments?.getStringArrayList(IMAGES_LIST)
+        list = arguments?.getStringArrayList(IMAGES_LIST)!!
         mBinding.closeButton.setOnClickListener {
             if (dialog != null) {
                 dismiss()
@@ -77,9 +77,10 @@ class MultipleImageDetailDialog : androidx.fragment.app.DialogFragment() {
 
     companion object {
         const val IMAGES_LIST = "IMAGES_LIST"
-        fun newInstance(list: ArrayList<String>): MultipleImageDetailDialog? {
+        fun newInstance(list: java.util.ArrayList<String?>): MultipleImageDetailDialog? {
             val frag = MultipleImageDetailDialog()
             val args = Bundle()
+
             frag.list = list
             args.putStringArrayList(IMAGES_LIST, list)
             frag?.setArguments(args)

@@ -4,6 +4,8 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.ui.splash.SplashNavigator
 import agstack.gramophone.ui.splash.model.SplashModel
 import agstack.gramophone.utils.Resource
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,7 +18,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    @ApplicationContext private val context: Context
 ) : BaseViewModel<SplashNavigator>() {
 
     var splashViewModel: MutableLiveData<Resource<SplashModel>> = MutableLiveData()
@@ -39,8 +40,12 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun updateLiveData() {
-        val splashModel = SplashModel(true)
-        splashViewModel.postValue(Resource.Success(splashModel))
+        if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.logged_in) == true){
+            getNavigator()?.moveTOHome()
+        }else{
+            getNavigator()?.moveToLogIn()
+        }
+
     }
 
 }

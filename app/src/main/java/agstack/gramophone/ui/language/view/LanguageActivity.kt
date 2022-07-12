@@ -8,13 +8,12 @@ import agstack.gramophone.databinding.ActivityLanguageBinding
 import agstack.gramophone.ui.apptour.view.AppTourActivity
 import agstack.gramophone.ui.language.LanguageActivityNavigator
 import agstack.gramophone.ui.language.adapter.LanguageAdapter
+import agstack.gramophone.ui.language.model.DeviceDetails
+import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.LanguageData
-import agstack.gramophone.ui.language.model.RegistrerDeviceRquestModel
 import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
 import agstack.gramophone.ui.splash.view.SplashActivity
 import agstack.gramophone.utils.Resource
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -33,34 +32,25 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     private val languageViewModel: LanguageViewModel by viewModels()
 
 
-    val registrerDeviceRquestModel: RegistrerDeviceRquestModel
+    val initiateAppDataRequestModel: InitiateAppDataRequestModel
         get() {
             val android_id = Settings.Secure.getString(this.contentResolver,
                 Settings.Secure.ANDROID_ID)
 
 
 
-            val manufacturer = Build.MANUFACTURER
-            val model = Build.MODEL
-            val version = Build.VERSION.SDK_INT
-            val versionName = BuildConfig.VERSION_NAME
-            val versionCode = BuildConfig.VERSION_CODE
-            val oneSignalToken = "testtoken"  // will be updated later
-            val fcmToken = "dfd"+SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.FirebaseTokenKey)  // will be updated later
-
-
-            var registrerDeviceRquestModel = RegistrerDeviceRquestModel(
-                versionCode,
-                versionName,
+            var deviceDetails = DeviceDetails(
+                BuildConfig.VERSION_CODE.toString(),
+                BuildConfig.VERSION_NAME,
                 android_id,
-                model,
-                oneSignalToken,
-                version,
-                fcmToken
+                Build.MODEL,
+                Build.VERSION.SDK_INT.toString()
             )
+            var registerDeviceRequestModel = InitiateAppDataRequestModel(deviceDetails,getLanguage(),)
 
 
-            return registrerDeviceRquestModel
+
+            return registerDeviceRequestModel
 
         }
     companion object {
@@ -80,7 +70,7 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     }
 
     private fun getDeviceToken() {
-        languageViewModel.getDeviceToken(registrerDeviceRquestModel)
+        languageViewModel.initiateAppData(initiateAppDataRequestModel)
     }
 
     private fun setupDeviceTokenObserver() {

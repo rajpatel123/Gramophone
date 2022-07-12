@@ -1,5 +1,6 @@
 package agstack.gramophone.ui.login.view
 
+
 import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
@@ -8,15 +9,12 @@ import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.viewmodel.LoginViewModel
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.LocaleManagerClass
 import agstack.gramophone.utils.Resource
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-
-
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -28,7 +26,6 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupUi()
         setupObservers()
     }
 
@@ -37,15 +34,15 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
             when (it) {
                 is Resource.Success -> {
                     progress.visibility = View.GONE
-                    openActivity(VerifyOtpActivity::class.java,null)
+                    Toast.makeText(this@LoginActivity,it.data?.gp_api_message,Toast.LENGTH_LONG).show()
+                    val bundle = Bundle()
+                    //Add your data from getFactualResults method to bundle
+                    bundle.putString(Constants.MOBILE_NO, loginViewModel.mobileNo)
+                    openAndFinishActivity(VerifyOtpActivity::class.java,bundle)
                 }
                 is Resource.Error -> {
                     progress.visibility = View.GONE
-                    it.message?.let { message ->
-                       // Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
-                        openActivity(VerifyOtpActivity::class.java,null)
-
-                    }
+                    Toast.makeText(this@LoginActivity,it.message,Toast.LENGTH_LONG).show()
                 }
                 is Resource.Loading -> {
                     progress.visibility = View.VISIBLE
@@ -54,18 +51,6 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
         })
 
     }
-
-
-    private fun setupUi() {
-        submitBtn.setOnClickListener { view ->
-            val hashMap = HashMap<Any, Any>()
-            hashMap[Constants.PHONE] = mobileEdt.text.toString()
-            val language = LocaleManagerClass.getLangCodeFromPreferences(this)
-            hashMap[Constants.LANGUAGE] = language
-            loginViewModel.sendOTP(hashMap)
-        }
-    }
-
 
     override fun getLayoutID(): Int {
       return R.layout.activity_login

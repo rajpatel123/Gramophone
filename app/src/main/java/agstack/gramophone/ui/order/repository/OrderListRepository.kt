@@ -1,7 +1,6 @@
 package agstack.gramophone.ui.order.repository
 
-import agstack.gramophone.di.GramoAppService
-import agstack.gramophone.ui.login.model.GenerateOtpResponseModel
+import agstack.gramophone.di.GramAppService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -10,13 +9,8 @@ import javax.inject.Singleton
 
 @Singleton
 class OrderListRepository @Inject constructor(
-    private val gramoAppService: GramoAppService
+    private val gramAppService: GramAppService
 ) {
 
-    suspend fun sendOTP(loginMap: HashMap<Any, Any>): Response<GenerateOtpResponseModel> = withContext(
-        Dispatchers.IO) {
-        val popular = gramoAppService.sendOTP(loginMap)
-        popular
-    }
 
 }

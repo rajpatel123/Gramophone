@@ -16,9 +16,9 @@
             />
 
         <View
-            android:id="@+id/toolbar_separator"
+            android:id="@+id/toolbarSeparator"
             android:layout_width="match_parent"
-            android:layout_height="2px"
+            android:layout_height="1dp"
             android:background="#F2F4F7"
             android:layout_below="@+id/toolbar"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_31sdp"
             android:layout_marginStart="@dimen/_24sdp"
-            android:layout_below="@+id/toolbar_separator"
+            android:layout_below="@+id/toolbarSeparator"
             android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
@@ -92,7 +92,7 @@
                 </LinearLayout>
 
                 <EditText
-                    android:id="@+id/mobileEdt"
+                    android:id="@+id/etMobile"
                     style="@style/small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -111,6 +111,7 @@
                     android:paddingEnd="@dimen/_2sdp"
                     android:paddingBottom="@dimen/_10sdp"
                     android:singleLine="true"
+                    android:text="@={viewModel.mobileNo}"
                     android:textSize="@dimen/_12ssp" />
             </RelativeLayout>
 
@@ -127,7 +128,7 @@
 
 
         <TextView
-            android:id="@+id/txtPolicy"
+            android:id="@+id/tvPolicy"
             style="@style/mini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -144,7 +145,7 @@
 
 
         <TextView
-            android:id="@+id/terms"
+            android:id="@+id/tvTerms"
             style="@style/mini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -152,7 +153,7 @@
             android:layout_marginStart="@dimen/_2sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_toEndOf="@+id/txtPolicy"
+            android:layout_toEndOf="@+id/tvPolicy"
             android:fontFamily="@font/manrope_semibold"
             android:gravity="start"
             android:text="@string/terms"
@@ -169,7 +170,7 @@
             android:layout_marginStart="@dimen/_2sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_toEndOf="@+id/terms"
+            android:layout_toEndOf="@+id/tvTerms"
             android:fontFamily="@font/manrope_semibold"
             android:gravity="start"
             android:textSize="@dimen/_11ssp"
@@ -203,6 +204,7 @@
             android:layout_marginBottom="@dimen/_20sdp"
             android:background="@drawable/btn_rounded_corner"
             android:gravity="center"
+            android:onClick="@{ ()-> viewModel.sendOTP(submitBtn) }"
             android:padding="@dimen/_13sdp"
             android:text="@string/_continue"
             android:textColor="@color/white"

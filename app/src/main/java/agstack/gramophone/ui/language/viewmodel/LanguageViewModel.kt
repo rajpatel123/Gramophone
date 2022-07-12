@@ -1,23 +1,19 @@
 package agstack.gramophone.ui.language.viewmodel
 
 import agstack.gramophone.base.BaseViewModel
-import agstack.gramophone.ui.apptour.view.AppTourActivity
+import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.language.LanguageActivityNavigator
+import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
+import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.LanguageData
-import agstack.gramophone.ui.language.model.RegisterDeviceModel
-import agstack.gramophone.ui.language.model.RegistrerDeviceRquestModel
-import agstack.gramophone.ui.language.repository.LanguageRepository
-import agstack.gramophone.ui.splash.model.SplashModel
+import agstack.gramophone.utils.Constants.GP_API_STATUS
 import agstack.gramophone.utils.Resource
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
-import agstack.gramophone.utils.hasInternetConnection
-import android.content.Context
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
@@ -25,35 +21,34 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LanguageViewModel @Inject constructor(
-   private val languageRepository: LanguageRepository,
-   @ApplicationContext private val context: Context
+    private val onBoardingRepository: OnBoardingRepository,
 ) : BaseViewModel<LanguageActivityNavigator>() {
 
-    val registerDeviceModel: MutableLiveData<Resource<RegisterDeviceModel>> =
+    val registerDeviceModel: MutableLiveData<Resource<InitiateAppDataResponseModel>> =
         MutableLiveData()
     var updateLanguage: MutableLiveData<LanguageData> = MutableLiveData()
 
 
-    fun getDeviceToken(loginMap: RegistrerDeviceRquestModel) = viewModelScope.launch {
-        getToken(loginMap)
+    fun initiateAppData(initiateAppDataRequestModel:  InitiateAppDataRequestModel) = viewModelScope.launch {
+        getInitialData(initiateAppDataRequestModel)
     }
 
-    private suspend fun getToken(loginMap: RegistrerDeviceRquestModel) {
+    private suspend fun getInitialData(initiateAppDataRequestModel:  InitiateAppDataRequestModel) {
 
         registerDeviceModel.postValue(Resource.Loading())
         try {
-            if (hasInternetConnection(context)) {
-            val response = languageRepository.getDeviceToken(loginMap)
-            val registerDeviceModel = handleOrderResponse(response).data
-            SharedPreferencesHelper.instance?.putString(
-               SharedPreferencesKeys.session_token,
-               registerDeviceModel?.data?.session_token
-            )
-            SharedPreferencesHelper.instance?.putString(
-               SharedPreferencesKeys.HashedAndroidID,
-               registerDeviceModel?.data?.android_id_hashed
-            )
-         } else
+            if (getNavigator()?.isNetworkAvailable() == true) {
+                val response = onBoardingRepository.getInitialData(initiateAppDataRequestModel)
+                val initiateAppDataResponseModel = handleOrderResponse(response).data
+
+                if (GP_API_STATUS.equals(initiateAppDataResponseModel?.gp_api_status)) {
+                    SharedPreferencesHelper.instance?.putString(
+                        SharedPreferencesKeys.session_token,
+                        initiateAppDataResponseModel?.gp_api_response_data?.temp_token
+                    )
+                    registerDeviceModel.postValue(Resource.Success(initiateAppDataResponseModel!!))
+                }
+            } else
             registerDeviceModel.postValue(Resource.Error("No Internet Connection"))
       } catch (ex: Exception) {
          when (ex) {
@@ -63,7 +58,7 @@ class LanguageViewModel @Inject constructor(
       }
     }
 
-    private fun handleOrderResponse(response: Response<RegisterDeviceModel>): Resource<RegisterDeviceModel> {
+    private fun handleOrderResponse(response: Response<InitiateAppDataResponseModel>): Resource<InitiateAppDataResponseModel> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
                 return Resource.Success(resultResponse)
