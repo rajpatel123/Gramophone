@@ -1,5 +1,6 @@
 package agstack.gramophone.di
 
+import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductDataResponse
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
@@ -12,6 +13,7 @@ import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 
@@ -33,8 +35,9 @@ interface GramAppService {
     @JvmSuppressWildcards
     suspend fun validateOTP(@Body validateOtpRequestModel: ValidateOtpRequestModel): Response<ValidateOtpResponseModel>
 
-
-
     @POST("product/get-product-detail")
     fun getProductData(@Body productData: ProductData): Response<ProductDataResponse>
+
+    @GET("cart/get-cart")
+    fun getCartData(): Response<CartDataResponse>
 }

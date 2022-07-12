@@ -74,10 +74,10 @@ class ProductDetailsActivity :
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflator = menuInflater
         inflator.inflate(R.menu.menu_product_details, menu)
-        return true
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
