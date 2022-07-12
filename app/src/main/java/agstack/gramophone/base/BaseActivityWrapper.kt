@@ -107,4 +107,6 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
        return getString(stringResourceId)
     }
 
+
+
 }

@@ -1,13 +1,13 @@
 package agstack.gramophone.ui.language.viewmodel
 
+import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.language.LanguageActivityNavigator
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
-import agstack.gramophone.ui.language.model.LanguageData
 import agstack.gramophone.utils.Constants.GP_API_STATUS
-import agstack.gramophone.utils.Resource
+import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.view.View
@@ -24,10 +24,8 @@ class LanguageViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository,
 ) : BaseViewModel<LanguageActivityNavigator>() {
 
-    val registerDeviceModel: MutableLiveData<Resource<InitiateAppDataResponseModel>> =
+    val registerDeviceModel: MutableLiveData<ApiResponse<InitiateAppDataResponseModel>> =
         MutableLiveData()
-    var updateLanguage: MutableLiveData<LanguageData> = MutableLiveData()
-
 
     fun initiateAppData(initiateAppDataRequestModel:  InitiateAppDataRequestModel) = viewModelScope.launch {
         getInitialData(initiateAppDataRequestModel)
@@ -35,7 +33,7 @@ class LanguageViewModel @Inject constructor(
 
     private suspend fun getInitialData(initiateAppDataRequestModel:  InitiateAppDataRequestModel) {
 
-        registerDeviceModel.postValue(Resource.Loading())
+        registerDeviceModel.postValue(ApiResponse.Loading())
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
                 val response = onBoardingRepository.getInitialData(initiateAppDataRequestModel)
@@ -46,25 +44,25 @@ class LanguageViewModel @Inject constructor(
                         SharedPreferencesKeys.session_token,
                         initiateAppDataResponseModel?.gp_api_response_data?.temp_token
                     )
-                    registerDeviceModel.postValue(Resource.Success(initiateAppDataResponseModel!!))
+                    registerDeviceModel.postValue(ApiResponse.Success(initiateAppDataResponseModel!!))
                 }
             } else
-            registerDeviceModel.postValue(Resource.Error("No Internet Connection"))
+            registerDeviceModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.no_internet)!!))
       } catch (ex: Exception) {
          when (ex) {
-            is IOException -> registerDeviceModel.postValue(Resource.Error("Network Failure"))
-            else -> registerDeviceModel.postValue(Resource.Error("Conversion Error"))
+            is IOException -> registerDeviceModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.network_failure)!!))
+            else -> registerDeviceModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!))
          }
       }
     }
 
-    private fun handleOrderResponse(response: Response<InitiateAppDataResponseModel>): Resource<InitiateAppDataResponseModel> {
+    private fun handleOrderResponse(response: Response<InitiateAppDataResponseModel>): ApiResponse<InitiateAppDataResponseModel> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
+                return ApiResponse.Success(resultResponse)
             }
         }
-        return Resource.Error(response.message())
+        return ApiResponse.Error(response.message())
     }
 
     fun onLanguageUpdate(v:View) {
