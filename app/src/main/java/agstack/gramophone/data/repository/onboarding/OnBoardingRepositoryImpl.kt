@@ -17,22 +17,23 @@ import javax.inject.Singleton
 class OnBoardingRepositoryImpl @Inject constructor(
     private val gramAppService: GramAppService
 ) : OnBoardingRepository {
+
+    override suspend fun getInitialData(initiateAppDataRequestModel: InitiateAppDataRequestModel): Response<InitiateAppDataResponseModel> = withContext(
+        Dispatchers.IO) {
+        val appData = gramAppService.getInitialData(initiateAppDataRequestModel)
+        appData
+    }
+
     override suspend fun sendOTP(sendOtpRequestModel:SendOtpRequestModel): Response<SendOtpResponseModel> = withContext(
         Dispatchers.IO) {
         val sendOTP = gramAppService.sendOTP(sendOtpRequestModel)
         sendOTP
     }
 
-    override suspend fun getDeviceToken(initiateAppDataRequestModel: InitiateAppDataRequestModel): Response<InitiateAppDataResponseModel> = withContext(
-        Dispatchers.IO) {
-        val popular = gramAppService.getDeviceToken(initiateAppDataRequestModel)
-        popular
-    }
-
     override suspend fun validateOtp(validateOtpRequestModel: ValidateOtpRequestModel): Response<ValidateOtpResponseModel> = withContext(
         Dispatchers.IO) {
-        val popular = gramAppService.validateOTP(validateOtpRequestModel)
-        popular
+        val validateOtp = gramAppService.validateOTP(validateOtpRequestModel)
+        validateOtp
     }
 
 

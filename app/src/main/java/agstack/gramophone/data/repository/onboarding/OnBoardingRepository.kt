@@ -15,7 +15,7 @@ import javax.inject.Singleton
 interface OnBoardingRepository {
     suspend fun sendOTP(loginMap: SendOtpRequestModel): Response<SendOtpResponseModel>
 
-    suspend fun getDeviceToken(initiateAppDataRequestModel: InitiateAppDataRequestModel): Response<InitiateAppDataResponseModel>
+    suspend fun getInitialData(initiateAppDataRequestModel: InitiateAppDataRequestModel): Response<InitiateAppDataResponseModel>
 
     suspend fun validateOtp(validateOtpRequestModel: ValidateOtpRequestModel): Response<ValidateOtpResponseModel>
 }

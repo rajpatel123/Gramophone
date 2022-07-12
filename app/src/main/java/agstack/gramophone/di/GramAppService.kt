@@ -16,24 +16,17 @@ import retrofit2.http.POST
 
 interface GramAppService {
 
-    @POST("api/v5/onboarding/app-initiate")
-    suspend fun initiateApp(@Body hashMap:HashMap<Any,Any>): Response<UpdateProfileTypeRes>
-
     @POST("traders/update-profile-type")
     suspend fun updateProfileType(@Body hashMap:HashMap<Any,Any>): Response<UpdateProfileTypeRes>
 
-    // onbg service
-    @POST("onboarding/register-device")
-    suspend fun getDeviceToken(@Body hashMap:HashMap<Any,Any>): Response<UpdateProfileTypeRes>
+    @POST("api/v5/onboarding/app-initiate")
+    @JvmSuppressWildcards
+    suspend fun getInitialData(@Body initiateAppDataRequestModel:  InitiateAppDataRequestModel): Response<InitiateAppDataResponseModel>
 
     @POST("api/v5/onboarding/send-otp")
     @JvmSuppressWildcards
     suspend fun sendOTP(@Body sendOtpRequestModel: SendOtpRequestModel): Response<SendOtpResponseModel>
 
-
-    @POST("api/v5/onboarding/app-initiate")
-    @JvmSuppressWildcards
-    suspend fun getDeviceToken(@Body initiateAppDataRequestModel:  InitiateAppDataRequestModel): Response<InitiateAppDataResponseModel>
 
     @POST("api/v5/onboarding/validate-otp")
     @JvmSuppressWildcards

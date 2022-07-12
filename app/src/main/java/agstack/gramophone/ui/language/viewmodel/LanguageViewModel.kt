@@ -29,16 +29,16 @@ class LanguageViewModel @Inject constructor(
     var updateLanguage: MutableLiveData<LanguageData> = MutableLiveData()
 
 
-    fun getDeviceToken(initiateAppDataRequestModel:  InitiateAppDataRequestModel) = viewModelScope.launch {
-        getToken(initiateAppDataRequestModel)
+    fun initiateAppData(initiateAppDataRequestModel:  InitiateAppDataRequestModel) = viewModelScope.launch {
+        getInitialData(initiateAppDataRequestModel)
     }
 
-    private suspend fun getToken(initiateAppDataRequestModel:  InitiateAppDataRequestModel) {
+    private suspend fun getInitialData(initiateAppDataRequestModel:  InitiateAppDataRequestModel) {
 
         registerDeviceModel.postValue(Resource.Loading())
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
-                val response = onBoardingRepository.getDeviceToken(initiateAppDataRequestModel)
+                val response = onBoardingRepository.getInitialData(initiateAppDataRequestModel)
                 val initiateAppDataResponseModel = handleOrderResponse(response).data
 
                 if (GP_API_STATUS.equals(initiateAppDataResponseModel?.gp_api_status)) {

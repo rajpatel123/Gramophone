@@ -70,7 +70,7 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     }
 
     private fun getDeviceToken() {
-        languageViewModel.getDeviceToken(initiateAppDataRequestModel)
+        languageViewModel.initiateAppData(initiateAppDataRequestModel)
     }
 
     private fun setupDeviceTokenObserver() {

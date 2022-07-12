@@ -38,14 +38,11 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
                     val bundle = Bundle()
                     //Add your data from getFactualResults method to bundle
                     bundle.putString(Constants.MOBILE_NO, loginViewModel.mobileNo)
-                    openActivity(VerifyOtpActivity::class.java,bundle)
+                    openAndFinishActivity(VerifyOtpActivity::class.java,bundle)
                 }
                 is Resource.Error -> {
                     progress.visibility = View.GONE
-                    it.message?.let { message ->
-                        openActivity(VerifyOtpActivity::class.java,null)
-
-                    }
+                    Toast.makeText(this@LoginActivity,it.message,Toast.LENGTH_LONG).show()
                 }
                 is Resource.Loading -> {
                     progress.visibility = View.VISIBLE
