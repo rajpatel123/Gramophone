@@ -1,7 +1,12 @@
 package agstack.gramophone.data.repository.onboarding
 
-import agstack.gramophone.di.GramoAppService
-import agstack.gramophone.ui.login.model.GenerateOtpResponseModel
+import agstack.gramophone.di.GramAppService
+import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
+import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
+import agstack.gramophone.ui.login.model.SendOtpResponseModel
+import agstack.gramophone.ui.login.model.SendOtpRequestModel
+import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
+import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -9,14 +14,28 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class OnboardingRepositoryImpl @Inject constructor(
-    private val gramoAppService: GramoAppService
-) : OnboardingRepository {
+class OnBoardingRepositoryImpl @Inject constructor(
+    private val gramAppService: GramAppService
+) : OnBoardingRepository {
 
-    override suspend fun sendOTP(loginMap: HashMap<Any, Any>): Response<GenerateOtpResponseModel> = withContext(
+    override suspend fun getInitialData(initiateAppDataRequestModel: InitiateAppDataRequestModel): Response<InitiateAppDataResponseModel> = withContext(
         Dispatchers.IO) {
-        val popular = gramoAppService.sendOTP(loginMap)
-        popular
+        val appData = gramAppService.getInitialData(initiateAppDataRequestModel)
+        appData
     }
+
+    override suspend fun sendOTP(sendOtpRequestModel:SendOtpRequestModel): Response<SendOtpResponseModel> = withContext(
+        Dispatchers.IO) {
+        val sendOTP = gramAppService.sendOTP(sendOtpRequestModel)
+        sendOTP
+    }
+
+    override suspend fun validateOtp(validateOtpRequestModel: ValidateOtpRequestModel): Response<ValidateOtpResponseModel> = withContext(
+        Dispatchers.IO) {
+        val validateOtp = gramAppService.validateOTP(validateOtpRequestModel)
+        validateOtp
+    }
+
+
 
 }

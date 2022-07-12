@@ -1,7 +1,7 @@
 package agstack.gramophone.data.repository.product
 
 
-import agstack.gramophone.di.GramoAppService
+import agstack.gramophone.di.GramAppService
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductDataResponse
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Singleton
 class ProductRepositoryImpl @Inject constructor(
-    private val gramoAppService: GramoAppService
+    private val gramoAppService: GramAppService
 ) : ProductRepository {
 
     override suspend fun getProductData(productMap: ProductData): Response<ProductDataResponse> = withContext(
