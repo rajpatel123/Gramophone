@@ -1,16 +1,16 @@
 package agstack.gramophone.ui.home.product.activity
 
-import agstack.gramophone.R
 import agstack.gramophone.BR
+import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ProductDetailBinding
 import agstack.gramophone.ui.home.product.fragment.ProductImagesFragment
-import agstack.gramophone.ui.home.product.fragment.RelatedProductFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
 import agstack.gramophone.ui.home.product.model.ProductSkuOfferModel
 import agstack.gramophone.ui.home.product.model.ProductWeightPriceModel
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.utils.Utility.toBulletedList
+import agstack.gramophone.widget.MultipleImageDetailDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -19,8 +19,6 @@ import androidx.activity.viewModels
 import androidx.databinding.ObservableField
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.item_radio_product_packing.*
-import kotlinx.android.synthetic.main.product_detail.view.*
 
 
 @AndroidEntryPoint
@@ -31,12 +29,13 @@ class ProductDetailsActivity :
     private lateinit var productDetails : ProductData
     private val productDetailsViewModel: ProductDetailsViewModel by viewModels()
     var productDetailsBulletText = ObservableField<String>()
+    private var multipleImageDetailDialog: MultipleImageDetailDialog? = null
+    private val TAG= ProductDetailsActivity::class.java.getSimpleName()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       /* binding = ProductDetailBinding.inflate(layoutInflater)
-        setContentView(binding.root)*/
+
         productDetailsViewModel.getBundleData()
 
         productDetailsViewModel.onAddToCartClicked()
@@ -130,7 +129,12 @@ class ProductDetailsActivity :
         viewDataBinding?.rvAvailableoffers?.adapter = productSKUOfferAdapter
     }
 
-    override fun onItemClick(position: Int) {
-        Log.d("Position of item",position.toString())
+    override fun onItemClick(clickedposition: Int) {
+        Log.d("Position of item",clickedposition.toString())
+        val allProductImages = mViewModel?.productData?.product_images!! as ArrayList
+
+        multipleImageDetailDialog = MultipleImageDetailDialog.newInstance(allProductImages)
+        multipleImageDetailDialog?.show(supportFragmentManager,TAG)
+
     }
 }

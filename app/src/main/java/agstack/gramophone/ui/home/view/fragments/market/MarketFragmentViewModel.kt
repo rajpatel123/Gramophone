@@ -1,7 +1,7 @@
 package agstack.gramophone.ui.home.view.fragments.market
 
 import agstack.gramophone.base.BaseViewModel
-import agstack.gramophone.ui.home.repository.HomeRepository
+import agstack.gramophone.data.repository.onboarding.OnboardingRepository
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -10,7 +10,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MarketFragmentViewModel
 @Inject constructor(
-    private val homeRepository: HomeRepository
+    private val onboardingRepository: OnboardingRepository
 ) : BaseViewModel<MarketFragmentNavigator>() {
 
     var productList = ArrayList<ProductData>()
