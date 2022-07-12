@@ -1,6 +1,7 @@
 package agstack.gramophone.di
 
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductDataResponse
 import agstack.gramophone.ui.language.model.RegisterDeviceModel
 import agstack.gramophone.ui.language.model.RegistrerDeviceRquestModel
 import agstack.gramophone.ui.login.model.GenerateOtpResponseModel
@@ -33,6 +34,6 @@ interface GramoAppService {
     suspend fun validateOTP(@Body registrerDeviceRquestModel: RegistrerDeviceRquestModel): Response<RegisterDeviceModel>
 
 
-    @POST("product/get-product-details")
-    fun getProductData(@Body hashMap: java.util.HashMap<*, *>?): Response<ProductData>
+    @POST("product/get-product-detail")
+    fun getProductData(@Body productData: ProductData): Response<ProductDataResponse>
 }

@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 
 internal class ProductImagesAdapter(
     supportFragmentManager: FragmentManager,
-    private val productImages: List<String>
+    private val productImages: List<String?>
 ) : FragmentPagerAdapter(supportFragmentManager){
 
 
@@ -21,7 +21,7 @@ internal class ProductImagesAdapter(
         * Passing the selected ProductImage to fragment
          */
     override fun getItem(position: Int): Fragment {
-        return ProductImagesFragment.newInstance(productImages[position], position,){
+        return ProductImagesFragment.newInstance(productImages[position]!!, position,){
 
 
         }

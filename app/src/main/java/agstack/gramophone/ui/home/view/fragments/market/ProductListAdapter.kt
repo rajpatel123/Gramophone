@@ -28,8 +28,8 @@ class ProductListAdapter(list: ArrayList<ProductData>) :
         var productModel: ProductData = productList[i]
         holder.binding.setVariable(BR.model, productModel)
         val mBinding = holder.binding as ItemFeatureProductBinding
-        mBinding.tvProductDescription.text= productModel.product_name
-        mBinding.ivProductimage
+        mBinding.tvProductDescription.text= "RICE"
+
         /* if (productModel.icon != null)
              Glide.with(mContext).asBitmap().load(productModel.icon).into(mBinding.ivProductIcon)
  */
