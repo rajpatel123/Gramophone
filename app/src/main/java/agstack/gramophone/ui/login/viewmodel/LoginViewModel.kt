@@ -57,11 +57,11 @@ class LoginViewModel @Inject constructor(
                 }
 
             } else
-                generateOtpResponseModel.postValue(Resource.Error("No Internet Connection"))
+                generateOtpResponseModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.no_internet)!!))
         } catch (ex: Exception) {
             when (ex) {
-                is IOException -> generateOtpResponseModel.postValue(Resource.Error("Network Failure"))
-                else -> generateOtpResponseModel.postValue(Resource.Error("Conversion Error"))
+                is IOException -> generateOtpResponseModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.network_failure)!!))
+                else -> generateOtpResponseModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!))
             }
         }
     }

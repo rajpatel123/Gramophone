@@ -1,5 +1,6 @@
 package agstack.gramophone.ui.language.viewmodel
 
+import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.language.LanguageActivityNavigator
@@ -26,8 +27,6 @@ class LanguageViewModel @Inject constructor(
 
     val registerDeviceModel: MutableLiveData<Resource<InitiateAppDataResponseModel>> =
         MutableLiveData()
-    var updateLanguage: MutableLiveData<LanguageData> = MutableLiveData()
-
 
     fun initiateAppData(initiateAppDataRequestModel:  InitiateAppDataRequestModel) = viewModelScope.launch {
         getInitialData(initiateAppDataRequestModel)
@@ -49,11 +48,11 @@ class LanguageViewModel @Inject constructor(
                     registerDeviceModel.postValue(Resource.Success(initiateAppDataResponseModel!!))
                 }
             } else
-            registerDeviceModel.postValue(Resource.Error("No Internet Connection"))
+            registerDeviceModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.no_internet)!!))
       } catch (ex: Exception) {
          when (ex) {
-            is IOException -> registerDeviceModel.postValue(Resource.Error("Network Failure"))
-            else -> registerDeviceModel.postValue(Resource.Error("Conversion Error"))
+            is IOException -> registerDeviceModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.network_failure)!!))
+            else -> registerDeviceModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!))
          }
       }
     }

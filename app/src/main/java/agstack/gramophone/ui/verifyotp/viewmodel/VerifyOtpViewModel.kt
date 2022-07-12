@@ -60,11 +60,11 @@ class VerifyOtpViewModel @Inject constructor(
                         validateOtpResponseModel.postValue(Resource.Success(responseData!!))
                     }
                 } else
-                    validateOtpResponseModel.postValue(Resource.Error("No Internet Connection"))
+                    validateOtpResponseModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.no_internet)!!))
             } catch (ex: Exception) {
                 when (ex) {
-                    is IOException -> validateOtpResponseModel.postValue(Resource.Error("Network Failure"))
-                    else -> validateOtpResponseModel.postValue(Resource.Error("Conversion Error"))
+                    is IOException -> validateOtpResponseModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.network_failure)!!))
+                    else -> validateOtpResponseModel.postValue(Resource.Error(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!))
                 }
             }
         }

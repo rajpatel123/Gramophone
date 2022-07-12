@@ -64,4 +64,4 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
         return loginViewModel
     }
 
-}
+   }

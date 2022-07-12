@@ -13,8 +13,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ProfileActivity : BaseActivityWrapper<ActivityProfileBinding, ProfileActivityNavigator, ProfileViewModel>(),ProfileActivityNavigator {
 
     private val profileViewModel: ProfileViewModel by viewModels()

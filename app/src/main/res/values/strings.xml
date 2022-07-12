@@ -86,5 +86,8 @@
     <string name="enter_otp">Enter OTP</string>
     <string name="resend_otp">"Resend in "</string>
     <string name="ratingandreviews"><![CDATA[Rating & Reviews]]></string>
+    <string name="no_internet">"No internet connection "</string>
+    <string name="some_thing_went_wrong">Something went wrong</string>
+    <string name="network_failure">Network failure</string>
 
 </resources>
