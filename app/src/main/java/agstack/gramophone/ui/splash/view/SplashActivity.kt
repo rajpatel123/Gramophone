@@ -4,7 +4,9 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivitySplashBinding
+import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.language.view.LanguageActivity
+import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.splash.SplashNavigator
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
 import agstack.gramophone.utils.Resource
@@ -21,13 +23,10 @@ import kotlinx.android.synthetic.main.activity_splash.*
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
 class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator,SplashViewModel>(), SplashNavigator {
-    private lateinit var binding: ActivitySplashBinding
     private val splashViewModel: SplashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySplashBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         setupObservers()
         startApp()
     }
@@ -42,7 +41,6 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
             when (it) {
                 is Resource.Success -> {
                     progress.visibility = View.GONE
-                    openAndFinishActivity(LanguageActivity::class.java,null)
 
                 }
                 is Resource.Error -> {
@@ -70,5 +68,15 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
 
     override fun getViewModel(): SplashViewModel {
         return splashViewModel
+    }
+
+    override fun moveToLogIn() {
+        openAndFinishActivity(LanguageActivity::class.java,null)
+
+    }
+
+    override fun moveTOHome() {
+        openAndFinishActivity(HomeActivity::class.java,null)
+
     }
 }

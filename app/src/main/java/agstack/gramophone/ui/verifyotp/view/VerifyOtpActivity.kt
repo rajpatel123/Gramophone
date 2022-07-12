@@ -1,47 +1,59 @@
 package agstack.gramophone.ui.verifyotp.view
 
-import agstack.gramophone.base.BaseActivity
+import agstack.gramophone.BR
+import agstack.gramophone.R
+import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityVerifyOtpBinding
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
 import agstack.gramophone.ui.verifyotp.viewmodel.VerifyOtpViewModel
-import android.content.Intent
+import agstack.gramophone.utils.Constants.MOBILE_NO
+import agstack.gramophone.utils.Resource
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_verify_otp.*
 
-class VerifyOtpActivity : BaseActivity<ActivityVerifyOtpBinding, VerifyOTPNavigator, VerifyOtpViewModel>(),
+@AndroidEntryPoint
+class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOTPNavigator, VerifyOtpViewModel>(),
     VerifyOTPNavigator {
-    private lateinit var binding: ActivityVerifyOtpBinding
     private  val verifyOtpViewModel: VerifyOtpViewModel by viewModels()
-    companion object {
-        fun start(activity: LoginActivity) {
-            val intent = Intent(activity, VerifyOtpActivity::class.java)
-            activity.startActivity(intent)
-            activity.finish()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityVerifyOtpBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        setupUi()
         setupObservers()
+
+        val extras = intent.extras
+        verifyOtpViewModel.mobileNo= extras?.getString(MOBILE_NO).toString()
     }
 
     private fun setupObservers() {
+        verifyOtpViewModel.validateOtpResponseModel.observe(this, Observer{
+            when (it) {
+                is Resource.Success -> {
+                    progress.visibility = View.GONE
+                    Toast.makeText(this@VerifyOtpActivity,it.data?.gp_api_message, Toast.LENGTH_LONG).show()
+                    val bundle = Bundle()
+                    //Add your data from getFactualResults method to bundle
+                    bundle.putString(MOBILE_NO, verifyOtpViewModel.mobileNo)
+                    openAndFinishActivity(HomeActivity::class.java,bundle)
+                }
+                is Resource.Error -> {
+                    progress.visibility = View.GONE
+                    Toast.makeText(this@VerifyOtpActivity,it.message, Toast.LENGTH_LONG).show()
 
+                }
+                is Resource.Loading -> {
+                    progress.visibility = View.VISIBLE
+                }
+            }
+        })
     }
 
-
-    private fun setupUi() {
-        binding.changeNumberTxt.setOnClickListener { onBackPressed() }
-        binding.verifyOtpBtn.setOnClickListener {
-         openActivity(HomeActivity::class.java,null)
-        }
-    }
 
     override fun onBackPressed() {
         super.onBackPressed()
@@ -49,14 +61,14 @@ class VerifyOtpActivity : BaseActivity<ActivityVerifyOtpBinding, VerifyOTPNaviga
     }
 
     override fun getLayoutID(): Int {
-        TODO("Not yet implemented")
+        return R.layout.activity_verify_otp
     }
 
     override fun getBindingVariable(): Int {
-        TODO("Not yet implemented")
+        return BR.viewModel
     }
 
     override fun getViewModel(): VerifyOtpViewModel {
-        TODO("Not yet implemented")
+      return verifyOtpViewModel
     }
 }

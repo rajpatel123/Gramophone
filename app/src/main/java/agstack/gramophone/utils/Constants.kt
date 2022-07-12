@@ -82,9 +82,13 @@ object Constants {
     //
     //
     //    public static final String ResultsKey = "results";
-    const val Phone = "phone"
+
+    //OnBoarding const
+    const val MOBILE_NO = "mobileNo"
     const val ReferralCode = "referral_code"
     const val Otp = "otp"
+    const val GP_API_STATUS= "GP_1"
+    const val AUTHORIZATION= "Authorization"
 
     //MyFarm
     const val FarmsStatusActive = "active"

@@ -1,20 +1,19 @@
 package agstack.gramophone.ui.language.view
 
+import agstack.gramophone.BR
 import agstack.gramophone.BuildConfig
-import agstack.gramophone.base.BaseActivity
-import agstack.gramophone.databinding.ActivityHomeBinding
+import agstack.gramophone.R
+import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityLanguageBinding
-import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
-import agstack.gramophone.ui.home.viewmodel.HomeViewModel
+import agstack.gramophone.ui.apptour.view.AppTourActivity
 import agstack.gramophone.ui.language.LanguageActivityNavigator
 import agstack.gramophone.ui.language.adapter.LanguageAdapter
+import agstack.gramophone.ui.language.model.DeviceDetails
+import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.LanguageData
-import agstack.gramophone.ui.language.model.RegistrerDeviceRquestModel
 import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
 import agstack.gramophone.ui.splash.view.SplashActivity
 import agstack.gramophone.utils.Resource
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -24,46 +23,34 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_language.*
-import agstack.gramophone.BR
-import agstack.gramophone.R
-import agstack.gramophone.ui.apptour.view.AppTourActivity
 
 @AndroidEntryPoint
-class LanguageActivity : BaseActivity<ActivityLanguageBinding, LanguageActivityNavigator, LanguageViewModel>(),
+class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageActivityNavigator, LanguageViewModel>(),
     LanguageActivityNavigator {
 
     private lateinit var binding: ActivityLanguageBinding
     private val languageViewModel: LanguageViewModel by viewModels()
 
 
-    val registrerDeviceRquestModel: RegistrerDeviceRquestModel
+    val initiateAppDataRequestModel: InitiateAppDataRequestModel
         get() {
             val android_id = Settings.Secure.getString(this.contentResolver,
                 Settings.Secure.ANDROID_ID)
 
 
 
-            val manufacturer = Build.MANUFACTURER
-            val model = Build.MODEL
-            val version = Build.VERSION.SDK_INT
-            val versionName = BuildConfig.VERSION_NAME
-            val versionCode = BuildConfig.VERSION_CODE
-            val oneSignalToken = "testtoken"  // will be updated later
-            val fcmToken = "dfd"+SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.FirebaseTokenKey)  // will be updated later
-
-
-            var registrerDeviceRquestModel = RegistrerDeviceRquestModel(
-                versionCode,
-                versionName,
+            var deviceDetails = DeviceDetails(
+                BuildConfig.VERSION_CODE.toString(),
+                BuildConfig.VERSION_NAME,
                 android_id,
-                model,
-                oneSignalToken,
-                version,
-                fcmToken
+                Build.MODEL,
+                Build.VERSION.SDK_INT.toString()
             )
+            var registerDeviceRequestModel = InitiateAppDataRequestModel(deviceDetails,getLanguage(),)
 
 
-            return registrerDeviceRquestModel
+
+            return registerDeviceRequestModel
 
         }
     companion object {
@@ -76,8 +63,6 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding, LanguageActivityN
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLanguageBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         setupUi()
         setupDeviceTokenObserver()
 
@@ -85,7 +70,7 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding, LanguageActivityN
     }
 
     private fun getDeviceToken() {
-        languageViewModel.getDeviceToken(registrerDeviceRquestModel)
+        languageViewModel.initiateAppData(initiateAppDataRequestModel)
     }
 
     private fun setupDeviceTokenObserver() {
@@ -106,13 +91,6 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding, LanguageActivityN
 
 
     private fun setupUi() {
-
-        btnContinue.setOnClickListener {
-            openAndFinishActivity(AppTourActivity::class.java,null)
-        }
-        /* binding?.recyclerLanguage?.layoutManager = GridLayoutManager(this, 2)
-         binding?.recyclerLanguage?.setHasFixedSize(true)
-         binding?.recyclerLanguage?.adapter = LanguageAdapter()*/
         val languageList = ArrayList<LanguageData>()
         languageList.add(LanguageData("English", "English", true))
         languageList.add(LanguageData("हिंदी", "Hindi", false))
@@ -135,7 +113,8 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding, LanguageActivityN
         return languageViewModel
     }
 
-    override fun <T> moveToNext(cls: Class<T>) {
+    override fun moveToNext() {
+        openAndFinishActivity(AppTourActivity::class.java,null)
     }
 
 }

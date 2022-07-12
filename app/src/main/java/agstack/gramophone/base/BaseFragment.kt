@@ -1,5 +1,6 @@
 package agstack.gramophone.base
 
+import agstack.gramophone.utils.LocaleManagerClass
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -90,4 +91,11 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
         TODO("Not yet implemented")
     }
 
+    override fun getLanguage(): String {
+        return LocaleManagerClass.getLangCodeFromPreferences(activity)
+    }
+
+    override fun getMessage(stringResourceId: Int): String {
+        return getString(stringResourceId)
+    }
 }

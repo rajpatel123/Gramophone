@@ -16,9 +16,9 @@
             />
 
         <View
-            android:id="@+id/toolbar_separator"
+            android:id="@+id/toolbarSeparator"
             android:layout_width="match_parent"
-            android:layout_height="2px"
+            android:layout_height="1dp"
             android:background="#F2F4F7"
             android:layout_below="@+id/toolbar"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_31sdp"
             android:layout_marginStart="@dimen/_24sdp"
-            android:layout_below="@+id/toolbar_separator"
+            android:layout_below="@+id/toolbarSeparator"
             android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
@@ -41,33 +41,80 @@
                 android:textColor="@color/brand_color"/>
 
 
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/small"
                 android:text="@string/enter_mobile_lebel"
                 android:layout_marginTop="@dimen/_22sdp"
-                android:textColor="@color/blakish"/>
+                android:textColor="@color/blakish" />
 
-            <EditText
-                android:id="@+id/mobileEdt"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                style="@style/small"
-                android:background="@drawable/rounded_corner"
-                android:backgroundTint="@color/mute_grey"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:letterSpacing=".05"
-                android:textSize="@dimen/_12ssp"
-                android:inputType="number"
-                android:maxLength="10"
-                android:singleLine="true"
-                android:hint="@string/enter_mobile_lebel"
-                android:imeOptions="actionDone"
-                />
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/countryCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:background="@drawable/rounded_corner"
+                    android:backgroundTint="@color/mute_grey"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        app:srcCompat="@drawable/flag_india" />
+
+                    <TextView
+                        style="@style/small"
+                        android:fontFamily="@font/manrope_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:text="+91"
+                        android:textColor="@color/blakish" />
+
+                    <ImageView
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_8sdp"
+                        app:srcCompat="@drawable/ic_arrow_right_black"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:rotation="90"
+                        />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/etMobile"
+                    style="@style/small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_toEndOf="@+id/countryCode"
+                    android:background="@drawable/rounded_corner"
+                    android:backgroundTint="@color/mute_grey"
+                    android:hint="@string/enter_mobile_lebel"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:letterSpacing=".05"
+                    android:maxLength="10"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_2sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:singleLine="true"
+                    android:text="@={viewModel.mobileNo}"
+                    android:textSize="@dimen/_12ssp" />
+            </RelativeLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -76,12 +123,12 @@
                 android:text="@string/start_msg"
                 android:textSize="@dimen/_11ssp"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:textColor="@color/grey"/>
+                android:textColor="@color/grey" />
         </LinearLayout>
 
 
         <TextView
-            android:id="@+id/txtPolicy"
+            android:id="@+id/tvPolicy"
             style="@style/mini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,7 +145,7 @@
 
 
         <TextView
-            android:id="@+id/terms"
+            android:id="@+id/tvTerms"
             style="@style/mini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -106,7 +153,7 @@
             android:layout_marginStart="@dimen/_2sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_toEndOf="@+id/txtPolicy"
+            android:layout_toEndOf="@+id/tvPolicy"
             android:fontFamily="@font/manrope_semibold"
             android:gravity="start"
             android:text="@string/terms"
@@ -123,7 +170,7 @@
             android:layout_marginStart="@dimen/_2sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_toEndOf="@+id/terms"
+            android:layout_toEndOf="@+id/tvTerms"
             android:fontFamily="@font/manrope_semibold"
             android:gravity="start"
             android:textSize="@dimen/_11ssp"
@@ -151,15 +198,17 @@
             android:id="@+id/submitBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/_continue"
-            android:gravity="center"
-            android:padding="@dimen/_13sdp"
-            android:textSize="@dimen/_14ssp"
-            android:textColor="@color/white"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_20sdp"
-            android:background="@drawable/btn_rounded_corner"/>
+            android:background="@drawable/btn_rounded_corner"
+            android:gravity="center"
+            android:onClick="@{ ()-> viewModel.sendOTP(submitBtn) }"
+            android:padding="@dimen/_13sdp"
+            android:text="@string/_continue"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp" />
 
         <ProgressBar
             android:id="@+id/progress"

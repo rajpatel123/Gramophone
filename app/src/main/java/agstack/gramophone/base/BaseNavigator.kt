@@ -21,4 +21,8 @@ interface BaseNavigator {
     fun isNetworkAvailable():Boolean
 
     fun requestPermission(permission:String,callback: (Boolean)->Unit)
+
+    fun getLanguage():String
+
+    fun getMessage(stringResourceId:Int):String
 }
