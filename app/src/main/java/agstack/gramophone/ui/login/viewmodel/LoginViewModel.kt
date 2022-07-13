@@ -74,4 +74,13 @@ class LoginViewModel @Inject constructor(
         }
         return ApiResponse.Error(response.message())
     }
+
+    fun onHelpClick(v:View){
+     getNavigator()?.onHelpClick()
+    }
+
+    fun onLanguageClick(v:View){
+        getNavigator()?.onLanguageChangeClick()
+
+    }
 }

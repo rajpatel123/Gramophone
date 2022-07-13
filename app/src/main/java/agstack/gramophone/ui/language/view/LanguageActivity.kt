@@ -28,16 +28,12 @@ import kotlinx.android.synthetic.main.activity_language.*
 class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageActivityNavigator, LanguageViewModel>(),
     LanguageActivityNavigator {
 
-    private lateinit var binding: ActivityLanguageBinding
     private val languageViewModel: LanguageViewModel by viewModels()
-
 
     val initiateAppDataRequestModel: InitiateAppDataRequestModel
         get() {
             val android_id = Settings.Secure.getString(this.contentResolver,
                 Settings.Secure.ANDROID_ID)
-
-
 
             var deviceDetails = DeviceDetails(
                 BuildConfig.VERSION_CODE.toString(),
@@ -53,13 +49,7 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
             return registerDeviceRequestModel
 
         }
-    companion object {
-        fun start(activity: SplashActivity) {
-            val intent = Intent(activity, LanguageActivity::class.java)
-            activity.startActivity(intent)
-            activity.finish()
-        }
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

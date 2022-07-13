@@ -5,6 +5,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityLoginBinding
+import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.viewmodel.LoginViewModel
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
@@ -64,4 +65,15 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
         return loginViewModel
     }
 
-   }
+    override fun onHelpClick() {
+        val bottomSheet = BottomSheetDialog()
+        bottomSheet.show(
+            getSupportFragmentManager(),
+            "bottomSheet"
+        )
+    }
+
+    override fun onLanguageChangeClick() {
+        TODO("Not yet implemented")
+    }
+}
