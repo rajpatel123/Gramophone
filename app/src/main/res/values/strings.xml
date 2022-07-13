@@ -89,5 +89,7 @@
     <string name="no_internet">"No internet connection "</string>
     <string name="some_thing_went_wrong">Something went wrong</string>
     <string name="network_failure">Network failure</string>
+    <string name="space">" "</string>
+    <string name="sku">"SKU: "</string>
 
 </resources>

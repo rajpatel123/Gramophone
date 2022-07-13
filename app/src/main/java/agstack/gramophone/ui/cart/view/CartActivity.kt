@@ -7,6 +7,7 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityCartBinding
 import agstack.gramophone.ui.cart.CartNavigator
 import agstack.gramophone.ui.cart.adapter.CartAdapter
+import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.cart.viewmodel.CartViewModel
 import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.utils.ApiResponse
@@ -19,6 +20,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_cart.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, CartViewModel>(),
@@ -44,8 +46,11 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
                 is ApiResponse.Success -> {
                     progress.visibility = View.GONE
                     Utility.showShortToast(this@CartActivity, it.data?.gp_api_message)
-                    val cartItems = it.data?.gp_api_response_data?.cart_items
-                    AppLogger.d("CartItems ", ""+cartItems?.size)
+                    var cartItems = it.data?.gp_api_response_data?.cart_items
+                    if (cartItems == null) cartItems = ArrayList()
+                    setCartAdapter(CartAdapter(cartItems)) {
+                        Utility.showShortToast(this@CartActivity, "Hellllo")
+                    }
                 }
                 is ApiResponse.Error -> {
                     progress.visibility = View.GONE
@@ -60,11 +65,11 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
 
 
     private fun setupUi() {
-        rv_cart?.layoutManager =
+        /*rv_cart?.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv_cart?.setHasFixedSize(true)
-        rv_cart?.adapter = CartAdapter()
-        nestedScroll.scrollTo(0,0)
+        rv_cart?.adapter = CartAdapter()*/
+
         binding.toolbar.rlHelp.setOnClickListener(View.OnClickListener {
             val bottomSheet = BottomSheetDialog()
             //bottomSheet.setAcceptRejectListener(listener)
@@ -75,6 +80,10 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
         })
     }
 
+     private fun setCartAdapter(cartAdapter: CartAdapter, onCartItemClicked: (CartItem) -> Unit) {
+        cartAdapter.selectedProduct = onCartItemClicked
+        rv_cart?.adapter = cartAdapter
+    }
 
     override fun getLayoutID(): Int {
         return R.layout.activity_cart

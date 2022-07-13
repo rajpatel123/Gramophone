@@ -39,5 +39,6 @@ interface GramAppService {
     fun getProductData(@Body productData: ProductData): Response<ProductDataResponse>
 
     @GET("api/v5/cart/get-cart")
-    fun getCartData(): Response<CartDataResponse>
+    @JvmSuppressWildcards
+    suspend fun getCartData(): Response<CartDataResponse>
 }

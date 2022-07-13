@@ -1,312 +1,329 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:layout_marginTop="16dp"
-        android:id="@+id/iv_product"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_100sdp"
-        android:layout_alignParentTop="true"
-        android:contentDescription="@string/image"
-        android:src="@drawable/dummy_neem_cake" />
-
-    <TextView
-        android:id="@+id/tv_product_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:layout_toEndOf="@+id/iv_product"
-        android:ellipsize="end"
-        android:fontFamily="@font/manrope_bold"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="-2sp"
-        android:maxLines="2"
-        android:text="Fungicides Crystal Bavistin 50% WP Fun gicide Carbe ..."
-        android:textColor="@color/blakish"
-        android:textSize="13sp" />
-
-    <TextView
-        android:id="@+id/sku"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_product_name"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:layout_toEndOf="@+id/iv_product"
-        android:ellipsize="end"
-        android:fontFamily="@font/manrope_bold"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="-2sp"
-        android:maxLines="2"
-        android:text="SKU: "
-        android:textColor="@color/gray_strike_through"
-        android:textSize="13sp" />
-
-    <TextView
-        android:id="@+id/tv_sku_weight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_product_name"
-        android:layout_marginTop="6dp"
-        android:layout_toEndOf="@+id/sku"
-        android:ellipsize="end"
-        android:fontFamily="@font/manrope_bold"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="-2sp"
-        android:maxLines="2"
-        android:text="200 Gms"
-        android:textColor="@color/blakish"
-        android:textSize="13sp" />
-
-    <TextView
-        android:id="@+id/tv_selling_price"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_22sdp"
-        android:layout_below="@+id/sku"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_toEndOf="@+id/iv_product"
-        android:fontFamily="@font/manrope_bold"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="1sp"
-        android:text="₹ 900"
-        android:textColor="@color/blakish"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/tv_actual_price"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_22sdp"
-        android:layout_below="@+id/sku"
-        android:layout_marginStart="@dimen/_5sdp"
-        android:layout_toEndOf="@+id/tv_selling_price"
-        android:background="@drawable/strike_through"
-        android:fontFamily="@font/manrope_bold"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="1sp"
-        android:text="₹ 1290"
-        android:textColor="@color/gray_strike_through"
-        android:textSize="13sp" />
-
-    <TextView
-        android:id="@+id/tv_discount_percent"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_22sdp"
-        android:layout_below="@+id/sku"
-        android:layout_marginStart="@dimen/_5sdp"
-        android:layout_toEndOf="@+id/tv_actual_price"
-        android:background="@drawable/strike_through"
-        android:fontFamily="@font/manrope_bold"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="1sp"
-        android:text="30% off"
-        android:textColor="@color/green_dark"
-        android:textSize="13sp" />
-
-    <TextView
-        android:id="@+id/tv_offers_applied"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_selling_price"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:layout_toEndOf="@+id/iv_product"
-        android:fontFamily="@font/manrope_bold"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="-2sp"
-        android:text="1 Offers applied"
-        android:textColor="@color/green_dark"
-        android:textSize="13sp" />
-
-    <LinearLayout
-        android:id="@+id/linear_qty"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="32dp"
-        android:layout_below="@+id/tv_offers_applied"
-        android:layout_marginTop="8dp"
-        android:layout_toEndOf="@+id/iv_product"
-        android:background="@drawable/rounded_corner_4_solid_stroke_gray"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_corner_4_solid_stroke_gray_front_corner">
-
-            <ImageView
-                android:id="@+id/iv_minus"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center"
-                android:contentDescription="@string/image"
-                android:src="@drawable/ic_minus" />
-
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/tv_help"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/manrope_bold"
-            android:gravity="center"
-            android:maxLength="3"
-            android:text="076761"
-            android:textColor="@color/gray"
-            android:textSize="13sp" />
-
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_corner_4_solid_stroke_gray_end_corner">
-
-            <ImageView
-                android:id="@+id/iv_plus"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center"
-                android:contentDescription="@string/image"
-                android:src="@drawable/ic_plus" />
-
-        </FrameLayout>
-
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_offers_applied"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:contentDescription="@string/image"
-        android:src="@drawable/ic_delete" />
-
-    <TextView
-        android:id="@+id/tv_free_give"
-        android:layout_width="match_parent"
-        android:layout_height="26dp"
-        android:layout_below="@+id/linear_qty"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/rounded_corner_top_16_solid_light_green_stroke_gray"
-        android:drawablePadding="6dp"
-        android:fontFamily="@font/manrope_regular"
-        android:gravity="center_vertical"
-        android:paddingStart="14dp"
-        android:paddingEnd="14dp"
-        android:text="This item is added as a free giveaway."
-        android:textSize="11sp"
-        app:drawableStartCompat="@drawable/ic_offer" />
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.cart.model.CartItem" />
+    </data>
 
     <RelativeLayout
-        android:id="@+id/rl_gift"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_below="@+id/tv_free_give"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/rounded_corner_bottom_16_solid_white_stroke_gray">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <FrameLayout
-            android:id="@+id/frame_free_give"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/rounded_corner_8_solid_white_stroke_gray">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/image"
-                android:padding="4dp"
-                android:src="@drawable/dummy_feature_product" />
-
-        </FrameLayout>
+        <ImageView
+            android:id="@+id/iv_product"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/image"
+            android:src="@drawable/dummy_neem_cake"
+            app:product_image="@{model.product_image}" />
 
         <TextView
-            android:id="@+id/tv_gift_name"
+            android:id="@+id/tv_product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="26dp"
             android:layout_marginEnd="@dimen/_8sdp"
-            android:layout_toEndOf="@+id/frame_free_give"
+            android:layout_toEndOf="@+id/iv_product"
             android:ellipsize="end"
             android:fontFamily="@font/manrope_bold"
-            android:gravity="top"
-            android:lineSpacingExtra="1sp"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="-2sp"
             android:maxLines="2"
-            android:text="Daily Object Backpack"
-            android:textColor="@color/brand_color"
-            android:textSize="16sp"
-            android:translationY="-0.27sp" />
+            android:text="@{model.product_name}"
+            android:textColor="@color/blakish"
+            android:textSize="13sp"
+            tools:text="Fungicides Crystal Bavistin 50% WP Fun gicide Carbe ..." />
 
         <TextView
-            android:id="@+id/tv_gift_price"
+            android:id="@+id/sku"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_product_name"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_toEndOf="@+id/iv_product"
+            android:ellipsize="end"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="-2sp"
+            android:maxLines="2"
+            android:text="@string/sku"
+            android:textColor="@color/gray_strike_through"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_sku_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_product_name"
+            android:layout_marginTop="6dp"
+            android:layout_toEndOf="@+id/sku"
+            android:ellipsize="end"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="-2sp"
+            android:maxLines="1"
+            android:text="@{model.product_sku}"
+            tools:text="200 Gms"
+            android:textColor="@color/blakish"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_selling_price"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_22sdp"
-            android:layout_below="@+id/tv_gift_name"
+            android:layout_below="@+id/sku"
             android:layout_marginStart="@dimen/_8sdp"
-            android:layout_toEndOf="@+id/frame_free_give"
+            android:layout_toEndOf="@+id/iv_product"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
-            android:text="₹ 0"
+            android:text="@{model.currency.concat(@string/space).concat(model.price)}"
             android:textColor="@color/blakish"
-            android:textSize="14sp" />
+            android:textSize="16sp"
+            tools:text="₹ 900" />
 
         <TextView
-            android:id="@+id/tv_gift_actual_price"
+            android:id="@+id/tv_actual_price"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_22sdp"
-            android:layout_below="@+id/tv_gift_name"
+            android:layout_below="@+id/sku"
             android:layout_marginStart="@dimen/_5sdp"
-            android:layout_toEndOf="@+id/tv_gift_price"
+            android:layout_toEndOf="@+id/tv_selling_price"
             android:background="@drawable/strike_through"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
-            android:text="₹ 1290"
+            tools:text="₹ 1290"
+            android:text="@{model.currency.concat(@string/space).concat(model.price)}"
             android:textColor="@color/gray_strike_through"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
         <TextView
-            android:id="@+id/tv_gift_status"
+            android:id="@+id/tv_discount_percent"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_below="@+id/tv_gift_name"
+            android:layout_height="@dimen/_22sdp"
+            android:layout_below="@+id/sku"
             android:layout_marginStart="@dimen/_5sdp"
-            android:layout_toEndOf="@+id/tv_gift_actual_price"
-            android:background="@drawable/btn_rounded_corner_16_solid_orange"
+            android:layout_toEndOf="@+id/tv_actual_price"
+            android:background="@drawable/strike_through"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="1sp"
+            android:text="30% off"
+            android:textColor="@color/green_dark"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_offers_applied"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_selling_price"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_toEndOf="@+id/iv_product"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="-2sp"
-            android:paddingStart="12dp"
-            android:paddingTop="2dp"
-            android:paddingEnd="12dp"
-            android:paddingBottom="2dp"
-            android:text="FREE"
-            android:textColor="@color/white"
+            android:text="1 Offers applied"
+            android:textColor="@color/green_dark"
             android:textSize="13sp" />
 
-    </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/linear_qty"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="32dp"
+            android:layout_below="@+id/tv_offers_applied"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/iv_product"
+            android:background="@drawable/rounded_corner_4_solid_stroke_gray"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-     <View
-         android:layout_width="match_parent"
-         android:layout_height="1dp"
-         android:layout_below="@+id/rl_gift"
-         android:layout_marginTop="16dp"
-         android:background="@color/gray_stroke" />
-</RelativeLayout>
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner_4_solid_stroke_gray_front_corner">
+
+                <ImageView
+                    android:id="@+id/iv_minus"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/ic_minus" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_quantity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="center"
+                android:maxLength="3"
+                tools:text="01"
+                android:text="@{model.quantity}"
+                android:textColor="@color/gray"
+                android:textSize="13sp" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner_4_solid_stroke_gray_end_corner">
+
+                <ImageView
+                    android:id="@+id/iv_plus"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/ic_plus" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_offers_applied"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:contentDescription="@string/image"
+            android:src="@drawable/ic_delete" />
+
+        <TextView
+            android:id="@+id/tv_free_give"
+            android:layout_width="match_parent"
+            android:layout_height="26dp"
+            android:layout_below="@+id/linear_qty"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_corner_top_16_solid_light_green_stroke_gray"
+            android:drawablePadding="6dp"
+            android:fontFamily="@font/manrope_regular"
+            android:gravity="center_vertical"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:text="This item is added as a free giveaway."
+            android:textSize="11sp"
+            app:drawableStartCompat="@drawable/ic_offer" />
+
+        <RelativeLayout
+            android:id="@+id/rl_gift"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_below="@+id/tv_free_give"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_corner_bottom_16_solid_white_stroke_gray">
+
+            <FrameLayout
+                android:id="@+id/frame_free_give"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/rounded_corner_8_solid_white_stroke_gray">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/image"
+                    android:padding="4dp"
+                    android:src="@drawable/dummy_feature_product" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_gift_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_toEndOf="@+id/frame_free_give"
+                android:ellipsize="end"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="top"
+                android:lineSpacingExtra="1sp"
+                android:maxLines="2"
+                android:text="Daily Object Backpack"
+                android:textColor="@color/brand_color"
+                android:textSize="16sp"
+                android:translationY="-0.27sp" />
+
+            <TextView
+                android:id="@+id/tv_gift_price"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_below="@+id/tv_gift_name"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_toEndOf="@+id/frame_free_give"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="1sp"
+                android:text="₹ 0"
+                android:textColor="@color/blakish"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_gift_actual_price"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_below="@+id/tv_gift_name"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/tv_gift_price"
+                android:background="@drawable/strike_through"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="1sp"
+                android:text="₹ 1290"
+                android:textColor="@color/gray_strike_through"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_gift_status"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_below="@+id/tv_gift_name"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/tv_gift_actual_price"
+                android:background="@drawable/btn_rounded_corner_16_solid_orange"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="-2sp"
+                android:paddingStart="12dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="2dp"
+                android:text="FREE"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/rl_gift"
+            android:layout_marginTop="16dp"
+            android:background="@color/gray_stroke" />
+    </RelativeLayout>
+</layout>

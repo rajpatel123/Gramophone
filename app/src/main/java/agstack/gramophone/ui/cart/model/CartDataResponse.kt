@@ -1,12 +1,16 @@
 package agstack.gramophone.ui.cart.model
 
 data class CartDataResponse(
-    val gp_api_error_data: List<Any>,
-    val gp_api_exception: List<Any>,
+    val gp_api_error_data: GpApiErrorData,
+    val gp_api_exception: GpApiException,
     val gp_api_message: String,
     val gp_api_response_data: GpApiResponseData,
     val gp_api_status: String
 )
+
+class GpApiErrorData
+
+class GpApiException
 
 data class GpApiResponseData(
     val cart_items: List<CartItem>,
