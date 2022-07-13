@@ -9,11 +9,14 @@ import agstack.gramophone.ui.cart.CartNavigator
 import agstack.gramophone.ui.cart.adapter.CartAdapter
 import agstack.gramophone.ui.cart.viewmodel.CartViewModel
 import agstack.gramophone.ui.dialog.BottomSheetDialog
+import agstack.gramophone.utils.ApiResponse
+import agstack.gramophone.utils.AppLogger
+import agstack.gramophone.utils.Utility
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_cart.*
 
@@ -32,10 +35,27 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
         setContentView(binding.root)
         setupUi()
         setupObservers()
+        cartViewModel.getCartData()
     }
 
     private fun setupObservers() {
-
+        cartViewModel.getCartDataResponse.observe(this, Observer{
+            when (it) {
+                is ApiResponse.Success -> {
+                    progress.visibility = View.GONE
+                    Utility.showShortToast(this@CartActivity, it.data?.gp_api_message)
+                    val cartItems = it.data?.gp_api_response_data?.cart_items
+                    AppLogger.d("CartItems ", ""+cartItems?.size)
+                }
+                is ApiResponse.Error -> {
+                    progress.visibility = View.GONE
+                    Utility.showShortToast(this@CartActivity, it.message)
+                }
+                is ApiResponse.Loading -> {
+                    progress.visibility = View.VISIBLE
+                }
+            }
+        })
     }
 
 

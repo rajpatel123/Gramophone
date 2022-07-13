@@ -1,10 +1,11 @@
 package agstack.gramophone.utils
 
+import android.content.Context
 import android.text.SpannableString
 import android.text.style.BulletSpan
+import android.widget.Toast
 
 object Utility {
-
 
     fun List<String>.toBulletedList(): CharSequence {
         return SpannableString(this.joinToString("\n")).apply {
@@ -14,5 +15,13 @@ object Utility {
                 end
             }
         }
+    }
+
+    fun showShortToast(context: Context?, message: String?) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    fun showLongToast(context: Context?, message: String?) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 }

@@ -38,6 +38,6 @@ interface GramAppService {
     @POST("product/get-product-detail")
     fun getProductData(@Body productData: ProductData): Response<ProductDataResponse>
 
-    @GET("cart/get-cart")
+    @GET("api/v5/cart/get-cart")
     fun getCartData(): Response<CartDataResponse>
 }
