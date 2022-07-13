@@ -49,7 +49,7 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
                     var cartItems = it.data?.gp_api_response_data?.cart_items
                     if (cartItems == null) cartItems = ArrayList()
                     setCartAdapter(CartAdapter(cartItems)) {
-                        Utility.showShortToast(this@CartActivity, "Hellllo")
+                        Utility.showShortToast(this@CartActivity, getString(R.string.add_to_cart))
                     }
                 }
                 is ApiResponse.Error -> {
