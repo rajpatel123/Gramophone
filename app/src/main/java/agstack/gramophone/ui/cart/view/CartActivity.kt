@@ -11,16 +11,13 @@ import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.cart.viewmodel.CartViewModel
 import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.utils.ApiResponse
-import agstack.gramophone.utils.AppLogger
 import agstack.gramophone.utils.Utility
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_cart.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, CartViewModel>(),

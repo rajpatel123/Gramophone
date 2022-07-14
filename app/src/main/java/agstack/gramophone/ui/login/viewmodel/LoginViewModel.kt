@@ -5,10 +5,10 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.login.LoginNavigator
-import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
-import agstack.gramophone.utils.Constants
+import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.utils.ApiResponse
+import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
@@ -86,10 +86,7 @@ class LoginViewModel @Inject constructor(
                 SharedPreferencesKeys.app_data
             ), InitiateAppDataResponseModel::class.java
         )
-        val bundle = Bundle()
-        bundle.putString(Constants.HELP_PHONE_NUMBER, initiateAppDataResponseModel.gp_api_response_data.help_data_list.customer_support_no)
-
-        getNavigator()?.onHelpClick(bundle)
+        getNavigator()?.onHelpClick(initiateAppDataResponseModel.gp_api_response_data.help_data_list.customer_support_no)
     }
 
     fun onLanguageClick(v:View){

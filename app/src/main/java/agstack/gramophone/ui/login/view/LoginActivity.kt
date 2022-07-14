@@ -66,9 +66,9 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
         return loginViewModel
     }
 
-    override fun onHelpClick(bundle: Bundle) {
+    override fun onHelpClick(number: String) {
         val bottomSheet = BottomSheetDialog()
-        bottomSheet.arguments = bundle
+        bottomSheet.customerSupportNumber= number
         bottomSheet.show(
             getSupportFragmentManager(),
             "bottomSheet"

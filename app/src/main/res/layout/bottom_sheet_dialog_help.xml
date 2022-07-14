@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="viewModel"
-            type="agstack.gramophone.ui.dialog.DialogViewModel" />
-    </data>
-
-    <LinearLayout
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -43,7 +33,6 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:contentDescription="@string/image"
                 android:clickable="true"
-                android:onClick="@{ ()-> viewModel.onCloseClicked() }"
                 android:padding="@dimen/_2sdp"
                 android:src="@drawable/ic_cross" />
         </RelativeLayout>
@@ -95,7 +84,6 @@
             android:fontFamily="@font/manrope_bold"
             android:gravity="center"
             android:lineSpacingExtra="-1sp"
-            android:onClick="@{ ()-> viewModel.onCallClicked(callMeNow) }"
             android:text="@string/call_now"
             android:textColor="@color/white"
             android:textSize="14sp" />
