@@ -1,57 +1,53 @@
 package agstack.gramophone.ui.dialog
 
-import agstack.gramophone.BR
-import agstack.gramophone.R
 import agstack.gramophone.databinding.BottomSheetDialogHelpBinding
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import dagger.hilt.android.AndroidEntryPoint
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-@AndroidEntryPoint
-class BottomSheetDialog : BaseBottomSheetDialog<BottomSheetDialogHelpBinding,DialogNavigator,DialogViewModel>(),DialogNavigator {
 
-    private val dialogViewModel: DialogViewModel by viewModels()
+class BottomSheetDialog : BottomSheetDialogFragment() {
+    public lateinit var customerSupportNumber: String
+    var binding: BottomSheetDialogHelpBinding? = null
+    var listener: AcceptRejectListener? = null
 
-    /**
-     * Create Binding
-     */
-    override fun onCreateBinding(
+    override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): BottomSheetDialogHelpBinding = BottomSheetDialogHelpBinding.inflate(inflater, container, false)
+    ): View {
+        binding = BottomSheetDialogHelpBinding.inflate(inflater)
 
+        setupUi()
+        return binding!!.root
+    }
+
+    private fun setupUi() {
+        binding?.ivCloseDialog?.setOnClickListener {
+            dismiss()
+        }
+
+        binding?.callMeNow?.setOnClickListener {
+            val intent = Intent(Intent.ACTION_CALL);
+            intent.data = Uri.parse("tel:$customerSupportNumber")
+            startActivity(intent)
+            dismiss()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
 
-
-    override fun getLayoutID(): Int {
-        return R.layout.bottom_sheet_dialog_help
+    fun setAcceptRejectListener(listener: AcceptRejectListener?) {
+        this.listener = listener
     }
 
-    override fun getBindingVariable(): Int {
-       return BR.viewModel
-    }
-
-    override fun getViewModel(): DialogViewModel {
-        return dialogViewModel
-    }
-
-    override fun getBundle(): Bundle? {
-        return arguments
-    }
-
-    override fun callNow(intent: Intent) {
-        startActivity(intent,null)
-    }
-
-    override fun closeDialog() {
-        dismiss()
+    interface AcceptRejectListener {
+        fun onAcceptRejectClick(friendRequestId: Int, status: Boolean)
     }
 }
