@@ -19,18 +19,11 @@ class OnBoardingRepositoryImpl @Inject constructor(
     private val gramAppService: GramAppService
 ) : OnBoardingRepository {
 
-    override suspend fun getLanguage(): Response<LanguageListResponse> = withContext(
-        Dispatchers.IO) {
-        val languageList = gramAppService.getLanguage()
-        languageList
-    }
     override suspend fun getInitialData(initiateAppDataRequestModel: InitiateAppDataRequestModel): Response<InitiateAppDataResponseModel> = withContext(
         Dispatchers.IO) {
         val appData = gramAppService.getInitialData(initiateAppDataRequestModel)
         appData
     }
-
-
 
     override suspend fun sendOTP(sendOtpRequestModel:SendOtpRequestModel): Response<SendOtpResponseModel> = withContext(
         Dispatchers.IO) {
@@ -42,6 +35,12 @@ class OnBoardingRepositoryImpl @Inject constructor(
         Dispatchers.IO) {
         val validateOtp = gramAppService.validateOTP(validateOtpRequestModel)
         validateOtp
+    }
+
+    override suspend fun getLanguage(): Response<LanguageListResponse> = withContext(
+        Dispatchers.IO) {
+        val languageList = gramAppService.getLanguage()
+        languageList
     }
 
 
