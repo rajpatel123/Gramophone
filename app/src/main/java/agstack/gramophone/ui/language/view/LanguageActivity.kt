@@ -10,12 +10,9 @@ import agstack.gramophone.ui.language.LanguageActivityNavigator
 import agstack.gramophone.ui.language.adapter.LanguageAdapter
 import agstack.gramophone.ui.language.model.DeviceDetails
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
-import agstack.gramophone.ui.language.model.LanguageData
 import agstack.gramophone.ui.language.model.languagelist.Language
 import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
-import agstack.gramophone.ui.splash.view.SplashActivity
 import agstack.gramophone.utils.ApiResponse
-import android.content.Intent
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
@@ -113,8 +110,7 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun <T> onSuccess(cls: Class<T>) {
-        TODO("Not yet implemented")
+    override fun onSuccess(message: String?) {
     }
 
     override fun onLoading() {

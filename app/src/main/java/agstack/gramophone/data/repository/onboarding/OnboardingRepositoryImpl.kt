@@ -37,6 +37,13 @@ class OnBoardingRepositoryImpl @Inject constructor(
         validateOtp
     }
 
+    override suspend fun resendOTP(sendOtpRequestModel: SendOtpRequestModel):Response<SendOtpResponseModel> = withContext(
+        Dispatchers.IO) {
+        val resendOtp = gramAppService.resendOTP(sendOtpRequestModel)
+        resendOtp
+    }
+
+
     override suspend fun getLanguage(): Response<LanguageListResponse> = withContext(
         Dispatchers.IO) {
         val languageList = gramAppService.getLanguage()

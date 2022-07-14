@@ -109,7 +109,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     override fun onError(message: String?) {
     }
 
-    override fun <T> onSuccess(cls: Class<T>) {
+    override fun  onSuccess(message: String?) {
     }
 
     override fun onLoading() {

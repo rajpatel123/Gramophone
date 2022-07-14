@@ -12,4 +12,7 @@ class SendOtpRequestModel {
 
     @SerializedName("referral_code  ")
     var referral_code  : String? = null
+
+    @SerializedName("retry_type  ")
+    var retryType  : String? = null
 }

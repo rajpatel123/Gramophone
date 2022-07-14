@@ -19,4 +19,7 @@ interface OnBoardingRepository {
     suspend fun getInitialData(initiateAppDataRequestModel: InitiateAppDataRequestModel): Response<InitiateAppDataResponseModel>
 
     suspend fun validateOtp(validateOtpRequestModel: ValidateOtpRequestModel): Response<ValidateOtpResponseModel>
+
+
+    suspend fun resendOTP(sendOtpRequestModel: SendOtpRequestModel): Response<SendOtpResponseModel>
 }
