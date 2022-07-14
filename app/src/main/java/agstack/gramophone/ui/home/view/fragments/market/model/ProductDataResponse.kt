@@ -6,9 +6,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class ProductDataResponse(
-
+/*
 	@field:SerializedName("gp_api_error_data")
-	val gpApiErrorData:  GpApiErrorData? = null,
+	val gpApiErrorData: GpApiErrorData? = null,*/
 
 	@field:SerializedName("gp_api_response_data")
 	val gpApiResponseData: GpApiResponseData? = null,
@@ -20,5 +20,5 @@ data class ProductDataResponse(
 	val gpApiMessage: String? = null,
 
 	@field:SerializedName("gp_api_exception")
-	val gpApiException: List<String?>? = null
+	val gpApiException: GpApiException? = null
 ) : Parcelable

@@ -4,29 +4,37 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ProductDetailBinding
+import agstack.gramophone.ui.home.product.ProductDetailsAdapter
 import agstack.gramophone.ui.home.product.fragment.ProductImagesFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
+import agstack.gramophone.ui.home.view.fragments.market.model.OffersItem
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuOfferItem
+import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
+import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
+import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.Utility.toBulletedList
 import agstack.gramophone.widget.MultipleImageDetailDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.ObservableField
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.youtube.player.YouTubeInitializationResult
+import com.google.android.youtube.player.YouTubePlayer
+import com.google.android.youtube.player.YouTubePlayerFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class ProductDetailsActivity :
     BaseActivityWrapper<ProductDetailBinding, ProductDetailsNavigator, ProductDetailsViewModel>(),
-    ProductDetailsNavigator , ProductImagesFragment.ProductImagesFragmentInterface {
+    ProductDetailsNavigator , ProductImagesFragment.ProductImagesFragmentInterface,YouTubePlayer.OnInitializedListener {
 
-    private lateinit var productDetails : ProductData
     private val productDetailsViewModel: ProductDetailsViewModel by viewModels()
     var productDetailsBulletText = ObservableField<String>()
     private var multipleImageDetailDialog: MultipleImageDetailDialog? = null
@@ -39,40 +47,54 @@ class ProductDetailsActivity :
         productDetailsViewModel.getBundleData()
 
         productDetailsViewModel.onAddToCartClicked()
-
-       /* productDetailsViewModel?.apply {
-
-
-            viewDataBinding?.productImagesViewPager?.adapter = ProductImagesAdapter(supportFragmentManager, productDetailsViewModel.productData.productImages!!)
-            viewDataBinding?.dotsIndicator?.setViewPager(viewDataBinding!!.productImagesViewPager)
-        }*/
+        initYoutubePlayer()
 
 
-
-        productDetailsBulletText.set(listOf("One", "Two", "Three").toBulletedList().toString())
-        viewDataBinding?.tvProductDetails?.setText(productDetailsBulletText.get())
-        initRelatedProducts()
 
 
     }
 
+    private fun initYoutubePlayer() {
+       var youTubePlayerFragment = supportFragmentManager
+            .findFragmentById(R.id.youtube_player_fragment) as YouTubePlayerFragment?
 
-    private fun initRelatedProducts() {
-        viewDataBinding?.rvRelatedProducts?.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        viewDataBinding?.rvRelatedProducts?.setHasFixedSize(true)
-        viewDataBinding?.rvRelatedProducts?.adapter = RelatedProductFragmentAdapter()
+        val googleApiKey = instance!!.getString(SharedPreferencesKeys.GOOGLE_API_KEY)
 
 
-        /*var fragment= RelatedProductFragment()
-        val bundle = Bundle()
-        fragment.arguments = bundle
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragmentRelatedProduct, fragment)
-            .commit()*/
-
+        youTubePlayerFragment?.initialize(googleApiKey,this)
     }
+
+    override fun onInitializationSuccess(
+        provider: YouTubePlayer.Provider?,
+        player: YouTubePlayer?,
+        wasRestored: Boolean
+    ) {
+        if (!wasRestored) {
+            player?.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT)
+            try {
+                player?.loadVideo("5Eqb_-j3FDA")
+                player?.play()
+               /* if (videoId != null && !videoId.equals("")) {
+
+                }*/
+            } catch (e: IllegalStateException) {
+            }
+        }
+    }
+
+    override fun onInitializationFailure(
+        p0: YouTubePlayer.Provider?,
+        p1: YouTubeInitializationResult?
+    ) {
+        Toast.makeText(
+            this,
+            resources.getString(R.string.ensureyoutubeversioninstalled),
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflator = menuInflater
@@ -123,10 +145,21 @@ class ProductDetailsActivity :
 
     override fun setProductSKUOfferAdapter(
         productSKUOfferAdapter: ProductSKUOfferAdapter,
-        onOfferItemClicked: (ProductSkuOfferItem) -> Unit
+        onOfferItemClicked: (OffersItem) -> Unit
     ) {
         productSKUOfferAdapter.selectedProduct = onOfferItemClicked
         viewDataBinding?.rvAvailableoffers?.adapter = productSKUOfferAdapter
+    }
+
+
+    override fun setRelatedProductsAdapter(
+        relatedProductFragmentAdapter: RelatedProductFragmentAdapter,
+        onRelatedProductItemClicked: (RelatedProductItem) -> Unit
+    ) {
+
+        viewDataBinding?.rvRelatedProducts?.adapter = relatedProductFragmentAdapter
+        relatedProductFragmentAdapter.selectedProduct = onRelatedProductItemClicked
+
     }
 
     override fun onItemClick(clickedposition: Int) {
@@ -137,4 +170,19 @@ class ProductDetailsActivity :
         multipleImageDetailDialog?.show(supportFragmentManager,TAG)
 
     }
+
+    override fun getFragmentManagerPager(): FragmentManager {
+        return supportFragmentManager
+    }
+
+    override fun setProductImagesViewPagerAdapter(productImagesAdapter: ProductImagesAdapter) {
+        viewDataBinding?.productImagesViewPager?.adapter = productImagesAdapter
+        viewDataBinding?.dotsIndicator?.setViewPager(viewDataBinding!!.productImagesViewPager)
+    }
+
+    override fun setProductDetailsAdapter(productDetailsAdapter: ProductDetailsAdapter) {
+        viewDataBinding?.rvProductDetails?.adapter = productDetailsAdapter
+    }
+
+
 }

@@ -5,13 +5,16 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ProductSkuOfferItem(
+data class OffersItem(
 
 	@field:SerializedName("applicable_on_sku")
 	val applicableOnSku: String? = null,
 
 	@field:SerializedName("image")
 	val image: String? = null,
+
+	@field:SerializedName("amount_saved")
+	val amountSaved: String? = null,
 
 	@field:SerializedName("product_id")
 	val productId: String? = null,
@@ -24,6 +27,6 @@ data class ProductSkuOfferItem(
 
 	@field:SerializedName("title")
 	val title: String? = null,
-	@SerializedName("selected")
-	var selected: Boolean = false
+	@field:SerializedName("selected")
+	var selected :Boolean?=false
 ) : Parcelable

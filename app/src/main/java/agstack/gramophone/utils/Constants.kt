@@ -1,9 +1,14 @@
 package agstack.gramophone.utils
 
-import agstack.gramophone.BuildConfig
+
 import android.content.Context
 
+
 object Constants {
+
+
+    val NORMAL:Int = 0
+    val ALL:Int =1
 
     /**
      * For MyNotificationOpenedHandler
@@ -185,7 +190,7 @@ object Constants {
     /**
      * For Broadcast
      */
-    const val BROADCAST_ACTION_NOTIFICATIONS = BuildConfig.APPLICATION_ID + ".notifications"
+ //const val BROADCAST_ACTION_NOTIFICATIONS = BuildConfig.APPLICATION_ID + ".notifications"
 
     fun Context.dpToPx(dp: Int): Int {
         return (dp * resources.displayMetrics.density).toInt()
@@ -193,5 +198,11 @@ object Constants {
 
     fun Context.pxToDp(px: Int): Int {
         return (px / resources.displayMetrics.density).toInt()
+    }
+
+    interface RemoteConfigKeys {
+        companion object {
+            const val GOOGLE_API_KEY = "google_api_key"
+        }
     }
 }

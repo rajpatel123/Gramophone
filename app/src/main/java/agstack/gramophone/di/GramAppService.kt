@@ -4,7 +4,6 @@ import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductDataResponse
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
-import agstack.gramophone.ui.language.model.RegisterDeviceRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
@@ -35,6 +34,6 @@ interface GramAppService {
 
 
 
-    @POST("product/get-product-detail")
-    fun getProductData(@Body productData: ProductData): Response<ProductDataResponse>
+    @POST("api/v5/product/get-product-detail")
+    suspend fun getProductData(@Body productData: ProductData): Response<ProductDataResponse>
 }

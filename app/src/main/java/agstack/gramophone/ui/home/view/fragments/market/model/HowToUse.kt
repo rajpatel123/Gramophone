@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class GpApiErrorData(
+data class HowToUse(
 
-	@field:SerializedName("product_id")
-	val productId: String? = null
+	@field:SerializedName("youtube_video_id")
+	val youtubeVideoId: String? = null
 ) : Parcelable
