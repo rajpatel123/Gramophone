@@ -140,7 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:background="@drawable/rounded_corner"
                     android:backgroundTint="@color/mute_grey"
                     android:orientation="horizontal"
