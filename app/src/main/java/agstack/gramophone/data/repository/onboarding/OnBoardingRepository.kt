@@ -14,7 +14,7 @@ import javax.inject.Singleton
 interface OnBoardingRepository {
     suspend fun getLanguage(): Response<LanguageListResponse>
 
-    suspend fun sendOTP(loginMap: SendOtpRequestModel): Response<SendOtpResponseModel>
+    suspend fun sendOTP(sendOtpRequestModel: SendOtpRequestModel): Response<SendOtpResponseModel>
 
     suspend fun getInitialData(initiateAppDataRequestModel: InitiateAppDataRequestModel): Response<InitiateAppDataResponseModel>
 
