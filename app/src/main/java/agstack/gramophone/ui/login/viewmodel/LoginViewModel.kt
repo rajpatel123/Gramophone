@@ -3,14 +3,19 @@ package agstack.gramophone.ui.login.viewmodel
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
+import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.ApiResponse
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
+import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -76,11 +81,48 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onHelpClick(v:View){
-     getNavigator()?.onHelpClick()
+        var initiateAppDataResponseModel = Gson().fromJson(
+            SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.app_data
+            ), InitiateAppDataResponseModel::class.java
+        )
+        val bundle = Bundle()
+        bundle.putString(Constants.HELP_PHONE_NUMBER, initiateAppDataResponseModel.gp_api_response_data.help_data_list.customer_support_no)
+
+        getNavigator()?.onHelpClick(bundle)
     }
 
     fun onLanguageClick(v:View){
         getNavigator()?.onLanguageChangeClick()
 
     }
+
+    fun onPrivacyClicked(v:View){
+        var initiateAppDataResponseModel = Gson().fromJson(
+            SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.app_data
+            ), InitiateAppDataResponseModel::class.java
+        )
+
+        val bundle = Bundle()
+        bundle.putString(Constants.PAGE_URL, initiateAppDataResponseModel.gp_api_response_data.external_link_list.privacy_policy_url)
+        bundle.putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.privacy))
+        getNavigator()?.openWebView(bundle)
+    }
+
+    fun onTermsClicked(v:View){
+        var initiateAppDataResponseModel = Gson().fromJson(
+            SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.app_data
+            ), InitiateAppDataResponseModel::class.java
+        )
+
+        val bundle = Bundle()
+        bundle.putString(Constants.PAGE_URL, initiateAppDataResponseModel.gp_api_response_data.external_link_list.terms_of_service_url)
+        bundle.putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.terms_n_conditions))
+        getNavigator()?.openWebView(bundle)
+
+    }
+
+
 }

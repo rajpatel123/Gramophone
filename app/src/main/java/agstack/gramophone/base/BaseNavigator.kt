@@ -25,4 +25,10 @@ interface BaseNavigator {
     fun getLanguage():String
 
     fun getMessage(stringResourceId:Int):String
+
+    fun onError(message: String?)
+
+    fun <T> onSuccess(cls:Class<T>)
+
+    fun onLoading()
 }

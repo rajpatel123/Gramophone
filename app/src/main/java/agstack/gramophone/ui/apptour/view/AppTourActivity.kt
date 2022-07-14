@@ -107,5 +107,17 @@ class AppTourActivity : BaseActivityWrapper<ActivityApptourBinding,AppTourNaviga
         return appTourViewModel
     }
 
+    override fun onError(message: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun <T> onSuccess(cls: Class<T>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLoading() {
+        TODO("Not yet implemented")
+    }
+
 
 }

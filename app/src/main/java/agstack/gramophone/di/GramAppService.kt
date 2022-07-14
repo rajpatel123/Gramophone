@@ -6,6 +6,7 @@ import agstack.gramophone.ui.home.view.fragments.market.model.ProductDataRespons
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.RegisterDeviceRequestModel
+import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
@@ -21,6 +22,10 @@ interface GramAppService {
 
     @POST("traders/update-profile-type")
     suspend fun updateProfileType(@Body hashMap:HashMap<Any,Any>): Response<UpdateProfileTypeRes>
+
+    @GET("api/v5/onboarding/get-language")
+    @JvmSuppressWildcards
+    suspend fun getLanguage(): Response<LanguageListResponse>
 
     @POST("api/v5/onboarding/app-initiate")
     @JvmSuppressWildcards

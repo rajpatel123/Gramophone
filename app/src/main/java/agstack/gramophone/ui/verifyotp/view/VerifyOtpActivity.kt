@@ -27,8 +27,6 @@ class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOT
         super.onCreate(savedInstanceState)
         setupObservers()
 
-        val extras = intent.extras
-        verifyOtpViewModel.mobileNo= extras?.getString(MOBILE_NO).toString()
     }
 
     private fun setupObservers() {
@@ -70,5 +68,21 @@ class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOT
 
     override fun getViewModel(): VerifyOtpViewModel {
       return verifyOtpViewModel
+    }
+
+    override fun getBundle(): Bundle? {
+        return intent.extras
+    }
+
+    override fun onError(message: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun <T> onSuccess(cls: Class<T>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLoading() {
+        TODO("Not yet implemented")
     }
 }

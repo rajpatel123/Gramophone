@@ -5,6 +5,11 @@ import android.content.Context
 
 object Constants {
 
+    const val HELP_PHONE_NUMBER: String="customer_support_no"
+    const val LANG: String="lang"
+    const val PAGE_URL: String="url"
+    const val PAGE_TITLE: String="title"
+
     /**
      * For MyNotificationOpenedHandler
      */

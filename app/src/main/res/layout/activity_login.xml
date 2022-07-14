@@ -11,18 +11,99 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/onboarding_toolbar"
-            />
+        <RelativeLayout
+            android:id="@+id/rlToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:minHeight="@dimen/_58sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/logo" />
+
+            <LinearLayout
+                android:id="@+id/llHelpLinearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_toStartOf="@+id/llLanguageLinearLayout"
+                android:background="@drawable/rounded_corner_with_grey_color"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:onClick="@{ ()-> viewModel.onHelpClick(llHelpLinearLayout) }"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_toStartOf="@+id/tv_help"
+                    app:srcCompat="@drawable/ic_phone_call" />
+
+                <TextView
+                    android:id="@+id/tv_language"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:text="@string/help"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_10ssp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llLanguageLinearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/rounded_corner_with_grey_color"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:onClick="@{ ()-> viewModel.onLanguageClick(llLanguageLinearLayout) }"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_toStartOf="@+id/tv_help"
+                    app:srcCompat="@drawable/ic_langague" />
+
+                <TextView
+                    android:id="@+id/tv_help"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:text="@string/eng"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_10ssp" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
 
         <View
             android:id="@+id/toolbarSeparator"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#F2F4F7"
-            android:layout_below="@+id/toolbar"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+            android:layout_below="@+id/rlToolbar"
+            app:layout_constraintTop_toBottomOf="@+id/rlToolbar"/>
 
 
 
@@ -129,7 +210,7 @@
 
 
         <TextView
-            android:id="@+id/tvPolicy"
+            android:id="@+id/tvPolicyStr"
             style="@style/mini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -154,10 +235,11 @@
             android:layout_marginStart="@dimen/_2sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_toEndOf="@+id/tvPolicy"
+            android:layout_toEndOf="@+id/tvPolicyStr"
             android:fontFamily="@font/manrope_semibold"
             android:gravity="start"
             android:text="@string/terms"
+            android:onClick="@{ ()-> viewModel.onTermsClicked(tvTerms) }"
             android:textColor="@color/brand_color"
             android:textSize="@dimen/_11ssp"
             app:layout_constraintBottom_toTopOf="@+id/submitBtn" />
@@ -178,7 +260,7 @@
             />
 
         <TextView
-            android:id="@+id/policy"
+            android:id="@+id/tvPolicy"
             style="@style/mini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -190,6 +272,7 @@
             android:fontFamily="@font/manrope_semibold"
             android:gravity="start"
             android:text="@string/policy"
+            android:onClick="@{ ()-> viewModel.onPrivacyClicked(tvPolicy) }"
             android:textColor="@color/brand_color"
             android:textSize="@dimen/_11ssp"
             app:layout_constraintBottom_toTopOf="@+id/submitBtn" />

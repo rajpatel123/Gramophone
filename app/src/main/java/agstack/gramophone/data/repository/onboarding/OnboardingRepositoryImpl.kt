@@ -3,6 +3,7 @@ package agstack.gramophone.data.repository.onboarding
 import agstack.gramophone.di.GramAppService
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
+import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
@@ -18,11 +19,18 @@ class OnBoardingRepositoryImpl @Inject constructor(
     private val gramAppService: GramAppService
 ) : OnBoardingRepository {
 
+    override suspend fun getLanguage(): Response<LanguageListResponse> = withContext(
+        Dispatchers.IO) {
+        val languageList = gramAppService.getLanguage()
+        languageList
+    }
     override suspend fun getInitialData(initiateAppDataRequestModel: InitiateAppDataRequestModel): Response<InitiateAppDataResponseModel> = withContext(
         Dispatchers.IO) {
         val appData = gramAppService.getInitialData(initiateAppDataRequestModel)
         appData
     }
+
+
 
     override suspend fun sendOTP(sendOtpRequestModel:SendOtpRequestModel): Response<SendOtpResponseModel> = withContext(
         Dispatchers.IO) {

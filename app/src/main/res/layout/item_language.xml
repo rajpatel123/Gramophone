@@ -1,52 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center">
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.language.model.languagelist.Language" />
+    </data>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
-    <RelativeLayout
-        android:id="@+id/ll_language_selection"
-        android:layout_width="@dimen/_140sdp"
-        android:layout_height="@dimen/_60sdp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:paddingStart="@dimen/_16sdp"
-        android:paddingEnd="@dimen/_16sdp"
-        android:layout_marginBottom="@dimen/_16sdp"
-        android:background="@drawable/rounded_corner_stroke_green"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/llLanguageLinearLayout"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:background="@{model.selected ? @drawable/rounded_corner_stroke_green: @drawable/rounded_corner_16_solid_white_stroke_gray}"
 
-        <TextView
-            android:id="@+id/tv_language_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/manrope_bold"
-            android:text="English"
-            android:textColor="@color/green_dark"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="normal" />
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_language"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_language_title"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:fontFamily="@font/manrope_regular"
-            android:text="English"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/_10ssp" />
+            <TextView
+                android:id="@+id/tvLanguageTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_bold"
+                android:text="@{model.language}"
+                android:textColor="@{model.selected?@color/green:@color/blakish}"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="normal" />
 
-        <ImageView
-            android:id="@+id/imgSelected"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:contentDescription="@string/image"
-            android:src="@drawable/ic_green_tick"
-            android:visibility="gone" />
+            <TextView
+                android:id="@+id/tvLanguage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvLanguageTitle"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:fontFamily="@font/manrope_regular"
+                android:text="@{model.language_display}"
+                android:textColor="@{model.selected?@color/blakish:@color/grey}"
+                android:textSize="@dimen/_10ssp" />
+
+            <ImageView
+                android:id="@+id/imgSelected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/image"
+                android:visibility="@{model.selected? View.VISIBLE:View.GONE}"
+                android:src="@drawable/ic_green_tick"
+                 />
+
+        </RelativeLayout>
 
     </RelativeLayout>
-
-</RelativeLayout>
+</layout>

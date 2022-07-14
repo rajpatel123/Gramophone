@@ -9,8 +9,9 @@ import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.viewmodel.LoginViewModel
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
-import agstack.gramophone.utils.Constants
+import agstack.gramophone.ui.webview.view.WebViewActivity
 import agstack.gramophone.utils.ApiResponse
+import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -65,8 +66,9 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
         return loginViewModel
     }
 
-    override fun onHelpClick() {
+    override fun onHelpClick(bundle: Bundle) {
         val bottomSheet = BottomSheetDialog()
+        bottomSheet.arguments = bundle
         bottomSheet.show(
             getSupportFragmentManager(),
             "bottomSheet"
@@ -74,6 +76,12 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
     }
 
     override fun onLanguageChangeClick() {
-        TODO("Not yet implemented")
+
     }
+
+    override fun openWebView(bundle: Bundle) {
+        openActivity(WebViewActivity::class.java, bundle)
+    }
+
+
 }

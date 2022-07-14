@@ -1,37 +1,57 @@
 package agstack.gramophone.ui.dialog
 
+import agstack.gramophone.BR
+import agstack.gramophone.R
 import agstack.gramophone.databinding.BottomSheetDialogHelpBinding
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
+class BottomSheetDialog : BaseBottomSheetDialog<BottomSheetDialogHelpBinding,DialogNavigator,DialogViewModel>(),DialogNavigator {
 
-class BottomSheetDialog : BottomSheetDialogFragment() {
-    var binding: BottomSheetDialogHelpBinding? = null
-    var listener: AcceptRejectListener? = null
+    private val dialogViewModel: DialogViewModel by viewModels()
 
-    override fun onCreateView(
+    /**
+     * Create Binding
+     */
+    override fun onCreateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = BottomSheetDialogHelpBinding.inflate(inflater)
-        return binding!!.root
-    }
+    ): BottomSheetDialogHelpBinding = BottomSheetDialogHelpBinding.inflate(inflater, container, false)
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpUI()
     }
 
-    private fun setUpUI() {}
-    fun setAcceptRejectListener(listener: AcceptRejectListener?) {
-        this.listener = listener
+
+    override fun getLayoutID(): Int {
+        return R.layout.bottom_sheet_dialog_help
     }
 
-    interface AcceptRejectListener {
-        fun onAcceptRejectClick(friendRequestId: Int, status: Boolean)
+    override fun getBindingVariable(): Int {
+       return BR.viewModel
+    }
+
+    override fun getViewModel(): DialogViewModel {
+        return dialogViewModel
+    }
+
+    override fun getBundle(): Bundle? {
+        return arguments
+    }
+
+    override fun callNow(intent: Intent) {
+        startActivity(intent,null)
+    }
+
+    override fun closeDialog() {
+        dismiss()
     }
 }

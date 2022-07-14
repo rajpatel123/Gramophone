@@ -34,7 +34,7 @@ class VerifyOtpViewModel @Inject constructor(
         if (otp.isNullOrEmpty()) {
             validateOtpResponseModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.enter_mobile_lebel)!!))
         } else {
-            val validateOtpRequestModel = ValidateOtpRequestModel(mobileNo, otp)
+            val validateOtpRequestModel = ValidateOtpRequestModel(getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).toString(), otp)
              validateOtp(validateOtpRequestModel)
         }
     }

@@ -1,10 +1,14 @@
 package agstack.gramophone.ui.language.adapter
 
 
+import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.databinding.ItemLanguageBinding
+import agstack.gramophone.databinding.ItemRadioProductPackingBinding
 import agstack.gramophone.ui.apptour.view.AppTourActivity
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.language.model.LanguageData
+import agstack.gramophone.ui.language.model.languagelist.Language
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -16,12 +20,11 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * binding will be replaced later
  */
-class LanguageAdapter(private val languageList: ArrayList<LanguageData>) :
+class LanguageAdapter(private val languageList: List<Language>) :
     RecyclerView.Adapter<LanguageAdapter.DeveloperViewHolder>() {
-
-    interface ItemClickListener {
-        fun onLanguageClick()
-    }
+    var selectedLanguage: ((Language) -> Unit)? = null
+    var lastSelectPosition: Int = 0
+    var mLanguageList = languageList
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): DeveloperViewHolder {
         return DeveloperViewHolder(
@@ -29,26 +32,22 @@ class LanguageAdapter(private val languageList: ArrayList<LanguageData>) :
         )
     }
 
-    override fun onBindViewHolder(holder: DeveloperViewHolder, i: Int) {
-        if (languageList[i].isSelected) {
-            holder.binding.llLanguageSelection.setBackgroundResource(R.drawable.rounded_corner_stroke_green)
-            holder.binding.tvLanguageTitle.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.green))
-            holder.binding.tvLanguage.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.gray))
-            holder.binding.imgSelected.visibility=VISIBLE
-        } else{
-            holder.binding.llLanguageSelection.setBackgroundResource(R.drawable.rounded_corner_16_solid_white_stroke_gray)
-            holder.binding.tvLanguageTitle.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.blakish))
-            holder.binding.tvLanguage.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.blakish))
+    override fun onBindViewHolder(holder: DeveloperViewHolder, position: Int) {
+        var language: Language = mLanguageList[position]!!
+        holder.binding.setVariable(BR.model, language)
+        val mBinding = holder.binding as ItemLanguageBinding
+        mBinding.llLanguageLinearLayout.setOnClickListener {
+            mLanguageList[lastSelectPosition]?.selected = false
+            lastSelectPosition = position
+            language.selected = true
+            notifyDataSetChanged()
+            selectedLanguage?.invoke(language)
         }
-        holder.binding.tvLanguageTitle.text = languageList[i].title
-        holder.binding.tvLanguage.text = languageList[i].value
-
-
 
     }
 
     override fun getItemCount(): Int {
-        return languageList.size ?: 0
+        return mLanguageList.size ?: 0
     }
 
     inner class DeveloperViewHolder(var binding: ItemLanguageBinding) :
