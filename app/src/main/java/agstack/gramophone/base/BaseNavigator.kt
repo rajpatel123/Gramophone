@@ -20,7 +20,7 @@ interface BaseNavigator {
 
     fun isNetworkAvailable():Boolean
 
-    fun requestPermission(permission:String,callback: (Boolean)->Unit)
+    fun requestPermission(permission:String): Boolean
 
     fun getLanguage():String
 

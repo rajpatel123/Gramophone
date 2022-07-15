@@ -15,6 +15,7 @@ import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import android.Manifest
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -151,7 +152,8 @@ class VerifyOtpViewModel @Inject constructor(
                 SharedPreferencesKeys.app_data
             ), InitiateAppDataResponseModel::class.java
         )
-        getNavigator()?.onHelpClick(initiateAppDataResponseModel.gp_api_response_data.help_data_list.customer_support_no)
+        if (getNavigator()?.requestPermission(Manifest.permission.CALL_PHONE) == true)
+            getNavigator()?.onHelpClick(initiateAppDataResponseModel.gp_api_response_data.help_data_list.customer_support_no)
     }
 
     fun onLanguageClick(v:View){

@@ -13,9 +13,11 @@ import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.ui.webview.view.WebViewActivity
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.Constants.RESOLVE_HINT
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.IntentSender
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -29,13 +31,18 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.credentials.Credential
+import com.google.android.gms.auth.api.credentials.HintRequest
+import com.google.android.gms.common.api.GoogleApiClient
 import com.google.zxing.integration.android.IntentIntegrator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, LoginViewModel>(), LoginNavigator ,
-    LanguageBottomSheetFragment.LanguageUpdateListener {
+    LanguageBottomSheetFragment.LanguageUpdateListener, GoogleApiClient.ConnectionCallbacks
+     {
 
     //initialise ViewModel
     private val loginViewModel: LoginViewModel by viewModels()
@@ -43,6 +50,7 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestMobileNoHint()
         setupObservers()
     }
 
@@ -164,8 +172,59 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
     }
 
+    private fun requestMobileNoHint() {
+
+        val googleApiClient = GoogleApiClient.Builder(this)
+            .addApi(Auth.CREDENTIALS_API)
+            .addConnectionCallbacks(this)
+            .build()
+        googleApiClient.connect()
+
+        val hintRequest = HintRequest.Builder()
+            .setPhoneNumberIdentifierSupported(true)
+            .build()
+
+        val intent = Auth.CredentialsApi.getHintPickerIntent(
+            googleApiClient, hintRequest
+        )
+        try {
+            //Deprecation need to get alternative
+            startIntentSenderForResult(
+                intent.intentSender,
+                Constants.RESOLVE_HINT, null, 0, 0, 0
+            )
+        } catch (e: IntentSender.SendIntentException) {
+            e.printStackTrace()
+        }
+
+    }
+
+         override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+             super.onActivityResult(requestCode, resultCode, data)
+             if (requestCode == RESOLVE_HINT) {
+                 if (resultCode == RESULT_OK) {
+                     val credential = data?.getParcelableExtra<Credential>(Credential.EXTRA_KEY)
+                     // credential.getId(); <-- E.164 format phone number on 10.2.+ devices
+                     val mobileNo = credential?.id
+                     if (mobileNo != null && mobileNo.length >= 10) {
+                         val finalMobileNo = mobileNo.substring(mobileNo.length - 10)
+                         etMobile.setText(finalMobileNo)
+                     }
+                 }
+             }
+         }
+
+
     override fun onLanguageUpdate() {
         loginViewModel.updateLanguage()
     }
 
-}
+         override fun onConnected(p0: Bundle?) {
+
+         }
+
+         override fun onConnectionSuspended(p0: Int) {
+
+         }
+
+     }

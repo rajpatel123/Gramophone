@@ -30,6 +30,7 @@ object Constants {
     const val PROFILE_TYPE = "type"
     const val FARMER = "farmer"
     const val TRADER = "trader"
+    const val RESOLVE_HINT = 11
 
 
     const val Category_Id_key = "category_id"

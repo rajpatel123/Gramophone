@@ -85,7 +85,7 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
         }
     }
 
-    override fun requestPermission(permission: String, callback: (Boolean) -> Unit) {
+    override fun requestPermission(permission: String) :Boolean{
         TODO("Not yet implemented")
     }
 

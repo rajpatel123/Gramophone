@@ -7,13 +7,12 @@ import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.apptour.AppTourNavigator
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
-import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import android.Manifest
 import android.view.View
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,7 +32,8 @@ class AppTourViewModel@Inject constructor(
                 SharedPreferencesKeys.app_data
             ), InitiateAppDataResponseModel::class.java
         )
-        getNavigator()?.onHelpClick(initiateAppDataResponseModel.gp_api_response_data.help_data_list.customer_support_no)
+        if (getNavigator()?.requestPermission(Manifest.permission.CALL_PHONE) == true)
+            getNavigator()?.onHelpClick(initiateAppDataResponseModel.gp_api_response_data.help_data_list.customer_support_no)
     }
 
     fun onLanguageClick(v: View){

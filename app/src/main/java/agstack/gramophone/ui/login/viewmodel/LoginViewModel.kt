@@ -13,6 +13,7 @@ import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import android.Manifest
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -82,13 +83,15 @@ class LoginViewModel @Inject constructor(
         return ApiResponse.Error(response.message())
     }
 
-    fun onHelpClick(v:View){
+    fun onHelpClick(v:View) {
         var initiateAppDataResponseModel = Gson().fromJson(
             SharedPreferencesHelper.instance?.getString(
                 SharedPreferencesKeys.app_data
             ), InitiateAppDataResponseModel::class.java
         )
-        getNavigator()?.onHelpClick(initiateAppDataResponseModel.gp_api_response_data.help_data_list.customer_support_no)
+
+        if (getNavigator()?.requestPermission(Manifest.permission.CALL_PHONE) == true)
+            getNavigator()?.onHelpClick(initiateAppDataResponseModel.gp_api_response_data.help_data_list.customer_support_no)
     }
 
     fun onLanguageClick(v:View){

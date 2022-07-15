@@ -1,7 +1,7 @@
 package agstack.gramophone.ui.apptour.view
 
-import agstack.gramophone.R
 import agstack.gramophone.BR
+import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityApptourBinding
 import agstack.gramophone.ui.apptour.AppTourNavigator
@@ -11,22 +11,14 @@ import agstack.gramophone.ui.apptour.viewmodel.AppTourViewModel
 import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
 import agstack.gramophone.ui.login.view.LoginActivity
-import android.app.AlertDialog
+import android.Manifest
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.TextUtils
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_apptour.*
-import kotlinx.android.synthetic.main.activity_login.*
-import java.util.*
 
 @AndroidEntryPoint
 class AppTourActivity : BaseActivityWrapper<ActivityApptourBinding,AppTourNavigator,AppTourViewModel>(), AppTourNavigator,
@@ -36,6 +28,7 @@ class AppTourActivity : BaseActivityWrapper<ActivityApptourBinding,AppTourNaviga
     private  val appTourViewModel: AppTourViewModel by viewModels()
     private lateinit var items: ArrayList<Card>
     var currentPage = 0
+    lateinit var isGranted: ((Boolean) -> Unit)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,12 +123,14 @@ class AppTourActivity : BaseActivityWrapper<ActivityApptourBinding,AppTourNaviga
     }
 
     override fun onHelpClick(number: String) {
-        val bottomSheet = BottomSheetDialog()
-        bottomSheet.customerSupportNumber= number
-        bottomSheet.show(
-            getSupportFragmentManager(),
-            "bottomSheet"
-        )
+
+            val bottomSheet = BottomSheetDialog()
+            bottomSheet.customerSupportNumber = number
+            bottomSheet.show(
+                getSupportFragmentManager(),
+                "bottomSheet"
+            )
+
     }
 
     override fun onLanguageChangeClick() {
