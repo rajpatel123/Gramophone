@@ -41,4 +41,6 @@
     <color name="grey_border">#E0E4EC</color>
     <color name="transparent_dark">#90000000</color>
     <color name="colorTransparent">#00000000</color>
+    <color name="referral_text_bg">#FCF3CC</color>
+    <color name="have_referral">#97651A</color>
 </resources>

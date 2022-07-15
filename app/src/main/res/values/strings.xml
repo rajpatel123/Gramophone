@@ -43,6 +43,7 @@
     <string name="i_m_a_farmer">I\'m a Farmer</string>
     <string name="image">image</string>
     <string name="enter_referral_code">Enter Referral code (Optional)</string>
+    <string name="enter_referral_code_hint">Enter referral code</string>
     <string name="shop_by_category">Shop by Category</string>
     <string name="feature_product">Feature Product</string>
     <string name="view_all">View All</string>
@@ -97,6 +98,10 @@
     <string name="talk_to_customer_care">Talk to our customer care executive</string>
     <string name="call_now">Call Now</string>
     <string name="get_help_call">Get Help via Call</string>
+    <string name="apply_referral">Apply Referral Code</string>
+    <string name="apply">Apply</string>
+    <string name="terms_of_use">Terms of use</string>
+    <string name="have_referral">Do you have referral code?</string>
 
 
 </resources>

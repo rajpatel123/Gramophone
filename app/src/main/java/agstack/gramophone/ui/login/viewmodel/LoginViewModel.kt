@@ -27,7 +27,7 @@ class LoginViewModel @Inject constructor(
     private val onBoardingRepository : OnBoardingRepository
 ) : BaseViewModel<LoginNavigator>() {
     var mobileNo :String?=""
-    var referralCode :String?=""
+    var referralCode :String?=null
 
     val generateOtpResponseModel: MutableLiveData<ApiResponse<SendOtpResponseModel>> =
         MutableLiveData()
@@ -115,9 +115,44 @@ class LoginViewModel @Inject constructor(
         )
 
         val bundle = Bundle()
-        bundle.putString(Constants.PAGE_URL, initiateAppDataResponseModel.gp_api_response_data.external_link_list.terms_of_service_url)
-        bundle.putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.terms_n_conditions))
+        bundle.putString(
+            Constants.PAGE_URL,
+            initiateAppDataResponseModel.gp_api_response_data.external_link_list.terms_of_service_url
+        )
+        bundle.putString(
+            Constants.PAGE_TITLE,
+            getNavigator()?.getMessage(R.string.terms_n_conditions)
+        )
         getNavigator()?.openWebView(bundle)
+
+    }
+
+    fun onTermsOfUseClicked() {
+        var initiateAppDataResponseModel = Gson().fromJson(
+            SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.app_data
+            ), InitiateAppDataResponseModel::class.java
+        )
+
+        val bundle = Bundle()
+        bundle.putString(
+            Constants.PAGE_URL,
+            initiateAppDataResponseModel.gp_api_response_data.external_link_list.referral_terms_conditions
+        )
+        bundle.putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.terms_of_use))
+        getNavigator()?.openWebView(bundle)
+
+    }
+
+    fun onReferralCodeClicked() {
+      getNavigator()?.openReferralDialog()
+    }
+
+
+    fun onRemoveReferralClicked() {
+        referralCode =null
+        getNavigator()?.referralCodeRemoved()
+
 
     }
 

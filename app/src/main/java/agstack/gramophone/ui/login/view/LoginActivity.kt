@@ -12,8 +12,16 @@ import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.ui.webview.view.WebViewActivity
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
+import android.app.AlertDialog
 import android.os.Bundle
+import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -81,6 +89,54 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
     override fun openWebView(bundle: Bundle) {
         openActivity(WebViewActivity::class.java, bundle)
+    }
+
+    override fun openReferralDialog() {
+        //Inflate the dialog with custom view
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.activity_referral_dialog, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialogView)
+        //show dialog
+        val mAlertDialog = mBuilder.show()
+        val tvApplyCode = mDialogView.findViewById(R.id.tvApplyCode) as TextView
+        val etReferralCode = mDialogView.findViewById(R.id.etReferralCode) as EditText
+        val tvTermsOfUse = mDialogView.findViewById(R.id.tvTermsOfUse) as TextView
+        val llCrossLinearLayout = mDialogView.findViewById(R.id.llCrossLinearLayout) as LinearLayout
+        tvApplyCode.setOnClickListener {
+            if (!TextUtils.isEmpty(etReferralCode.text)) {
+                tvCodeApplied.text="Referral Code "+etReferralCode.text.toString()+" Applied"
+                loginViewModel.referralCode=etReferralCode.text.toString()
+                mAlertDialog.dismiss()
+                rlHaveReferralCode.visibility = GONE
+                rlAppliedCode.visibility = VISIBLE
+            } else {
+                Toast.makeText(
+                    this@LoginActivity,
+                    getMessage(R.string.enter_referral_code),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
+
+        llCrossLinearLayout.setOnClickListener {
+            mAlertDialog.dismiss()
+        }
+
+        tvTermsOfUse.setOnClickListener {
+            loginViewModel.onTermsOfUseClicked()
+
+        }
+        //val etReferralCode =mDialogView.findViewById(R.id.etReferralCode) as EditText
+        //login button click of custom layout
+        mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background);
+
+    }
+
+    override fun referralCodeRemoved() {
+        rlHaveReferralCode.visibility = VISIBLE
+        rlAppliedCode.visibility = GONE
     }
 
 

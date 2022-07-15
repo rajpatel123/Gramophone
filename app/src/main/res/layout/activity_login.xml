@@ -208,6 +208,88 @@
                 android:textColor="@color/grey" />
         </LinearLayout>
 
+        <RelativeLayout
+            android:id="@+id/rlHaveReferralCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tvPolicyStr"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/referral_background"
+            android:onClick="@{ ()-> viewModel.onReferralCodeClicked() }"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_5sdp"
+          >
+
+            <ImageView
+                android:id="@+id/ivReferral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_referral" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/ivReferral"
+                android:fontFamily="@font/manrope_semibold"
+                android:text="@string/have_referral"
+                android:textColor="@color/have_referral"
+                android:textSize="@dimen/_10ssp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlAppliedCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tvPolicyStr"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:visibility="gone"
+            android:background="@drawable/referral_applied_background"
+            android:padding="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/ivCodeApplied"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_green_tick" />
+
+            <TextView
+                android:id="@+id/tvCodeApplied"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/ivCodeApplied"
+                android:fontFamily="@font/manrope_semibold"
+                android:textColor="@color/green_dark"
+                android:text="@={viewModel.referralCode}"
+                android:textSize="@dimen/_10ssp" />
+
+            <ImageView
+                android:id="@+id/ivRemoveCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/tvCodeApplied"
+                android:onClick="@{ ()-> viewModel.onRemoveReferralClicked() }"
+
+                app:srcCompat="@drawable/ic_cross" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tvPolicyStr"
@@ -215,7 +297,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/submitBtn"
-            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:fontFamily="@font/manrope_semibold"

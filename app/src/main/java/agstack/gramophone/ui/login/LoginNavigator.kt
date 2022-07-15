@@ -7,4 +7,6 @@ interface LoginNavigator : BaseNavigator{
     fun onHelpClick(bundle: String)
     fun onLanguageChangeClick()
     fun openWebView(bundle: Bundle)
+    fun openReferralDialog()
+    fun referralCodeRemoved()
 }
