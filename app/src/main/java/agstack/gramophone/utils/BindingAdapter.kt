@@ -1,9 +1,11 @@
 package agstack.gramophone.utils
 
+import agstack.gramophone.R
 import android.net.Uri
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.product_detail.view.*
@@ -20,9 +22,9 @@ class BindingAdapter {
         }
 
 
-        @BindingAdapter("stringToFloatRating")
+        @BindingAdapter("doubleToFloatRating")
         @JvmStatic
-        fun priceWithSymbol(ratingBar: RatingBar, ratingVal: String) {
+        fun doubleToFloatRating(ratingBar: RatingBar, ratingVal: Double) {
             ratingBar.rating= ratingVal.toFloat()
 
         }
@@ -32,6 +34,16 @@ class BindingAdapter {
         fun priceWithSymbol(view: TextView, price: String) {
             view.setText("\u20B9" + price);
 
+        }
+
+        @BindingAdapter("isUserFavorite")
+        @JvmStatic
+        fun isUserFavorite(imageView: AppCompatImageView,isUserfav:Boolean){
+            if(isUserfav){
+                Glide.with(imageView).load(R.drawable.ic_call).into(imageView)
+            }else{
+          Glide.with(imageView).load(R.drawable.ic_heart_blank).into(imageView)
+            }
         }
 
     }

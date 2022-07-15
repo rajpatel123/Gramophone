@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.text.TextUtils" />
         <import type="android.view.View" />
 
         <variable
@@ -54,19 +54,21 @@
                         <RatingBar
                             android:id="@+id/rating"
                             style="?android:attr/ratingBarStyleIndicator"
+                            doubleToFloatRating="@{viewModel.productData.rating.totalRating}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:isIndicator="true"
                             android:numStars="5"
-                            android:rating="4"
                             android:stepSize="0.1"
                             android:theme="@style/RatingBar" />
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvTotalReviews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/manrope_bold"
-                            android:text="15 Farmers"
+                            android:hint="15 Farmers"
+                            android:text="@{viewModel.productData.rating.totalReview.toString()+` `+ @string/farmers}"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_13ssp" />
 
@@ -109,6 +111,7 @@
                         </LinearLayout>
 
                         <androidx.appcompat.widget.AppCompatImageView
+                            isUserFavorite="@{viewModel.productData.isUserFavourite()}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -381,7 +384,9 @@
                         style="@style/TextSize16Sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Delivery - Sawer, Indore"></TextView>
+                        android:hint="Delivery-"
+                        android:text="@{@string/delivery_+`  `+viewModel.productData.shippingDetails.address}" />
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -417,7 +422,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/manrope_bold"
-                                android:text="4-5 Days" />
+                                android:text="@{viewModel.productData.shippingDetails.estimatedDelivery}" />
 
 
                         </LinearLayout>
@@ -479,25 +484,37 @@
                             android:layout_weight="1"
                             android:nestedScrollingEnabled="false"
                             android:orientation="vertical"
-                            tools:listitem="@layout/product_details_row_item"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/product_details_row_item" />
                     </LinearLayout>
 
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_view_full_product_detail"
-                        style="@style/TextSize14Sp"
-                        android:layout_width="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/ll_KeyPointsContainer"
-                        android:layout_marginTop="@dimen/_24sdp"
-                        android:layout_marginBottom="@dimen/_19sdp"
-                        android:drawableEnd="@drawable/ic_arrow_orange_right"
-                        android:drawableRight="@drawable/ic_arrow_orange_right"
-                        android:drawablePadding="@dimen/_10sdp"
-                        android:text="@string/view_full_product_detail"
-                        android:textAllCaps="true"
-                        android:textColor="@color/orange" />
+                        android:layout_below="@+id/ll_KeyPointsContainer">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_showAllDetails"
+                            style="@style/TextSize14Sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_24sdp"
+                            android:layout_marginBottom="@dimen/_19sdp"
+                            android:background="@drawable/rounded_corner_with_pink_color"
+                            android:drawableEnd="@drawable/ic_arrow_down_orange"
+                            android:drawableRight="@drawable/ic_arrow_down_orange"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:padding="@dimen/_6sdp"
+                            android:text="@string/showmore"
+                            android:textAllCaps="true"
+                            android:textColor="@color/orange"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 </RelativeLayout>
@@ -589,7 +606,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/tv_rating_title"
-                    bind:pdvm="@{viewModel}" />
+                    bind:rvm="@{viewModel}" />
 
 
                 <RelativeLayout
@@ -641,7 +658,6 @@
                 android:backgroundTint="@color/mute_grey"
                 android:drawableStart="@drawable/ic_expert_grey"
                 android:drawablePadding="@dimen/_minus16sdp"
-                android:onClick="@{()->viewModel.onAddToCartClicked()}"
                 android:paddingStart="@dimen/_3sdp"
                 android:text="@string/expert_advice"
                 android:textAllCaps="true"
@@ -661,7 +677,6 @@
                 android:backgroundTint="@color/orange"
                 android:drawableStart="@drawable/ic_cart_white"
                 android:drawablePadding="@dimen/_minus16sdp"
-                android:onClick="@{()->viewModel.onAddToCartClicked()}"
                 android:paddingStart="@dimen/_3sdp"
                 android:text="@string/add_to_cart"
                 android:textAllCaps="true"

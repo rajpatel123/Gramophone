@@ -10,7 +10,7 @@
         <import type="android.view.View" />
 
         <variable
-            name="pdvm"
+            name="rvm"
             type="agstack.gramophone.ui.home.product.activity.ProductDetailsViewModel">
 
 
@@ -232,7 +232,8 @@
                     android:layout_below="@+id/rating_stars_all"
                     android:fontFamily="@font/manrope_bold"
                     android:padding="@dimen/_2sdp"
-                    android:text="Based on 38 reviews"
+                    android:hint="Based on 38 reviews"
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_12sdp" />
 
@@ -243,7 +244,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_related_products"
+            android:id="@+id/rv_reviews_product"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
@@ -252,7 +253,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:scrollbars="vertical"
-            tools:itemCount="3"
+            tools:itemCount="2"
             tools:listitem="@layout/rating_review_item"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"

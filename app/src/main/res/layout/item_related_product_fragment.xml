@@ -71,7 +71,7 @@
                     android:isIndicator="true"
                     android:max="5"
                     android:numStars="5"
-                    stringToFloatRating="@{model.totalRating}"
+                    doubleToFloatRating="@{model.totalRating}"
                     android:scaleX=".8"
                     android:scaleY=".8"
                     android:stepSize="0.1"

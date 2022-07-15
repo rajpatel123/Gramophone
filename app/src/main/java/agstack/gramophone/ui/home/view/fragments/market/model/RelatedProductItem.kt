@@ -20,7 +20,7 @@ data class RelatedProductItem(
 	val salesPrice: String? = null,
 
 	@field:SerializedName("total_rating")
-	val totalRating: String? = null,
+	val totalRating: Double? = null,
 
 	@field:SerializedName("mrp_price")
 	val mrpPrice: String? = null

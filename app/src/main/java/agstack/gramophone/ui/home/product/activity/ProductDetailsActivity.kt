@@ -8,22 +8,21 @@ import agstack.gramophone.ui.home.product.ProductDetailsAdapter
 import agstack.gramophone.ui.home.product.fragment.ProductImagesFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.OffersItem
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
-import agstack.gramophone.utils.Utility.toBulletedList
 import agstack.gramophone.widget.MultipleImageDetailDialog
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.ObservableField
 import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerFragment
@@ -33,35 +32,68 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ProductDetailsActivity :
     BaseActivityWrapper<ProductDetailBinding, ProductDetailsNavigator, ProductDetailsViewModel>(),
-    ProductDetailsNavigator , ProductImagesFragment.ProductImagesFragmentInterface,YouTubePlayer.OnInitializedListener {
+    ProductDetailsNavigator, ProductImagesFragment.ProductImagesFragmentInterface,
+    YouTubePlayer.OnInitializedListener {
 
     private val productDetailsViewModel: ProductDetailsViewModel by viewModels()
-    var productDetailsBulletText = ObservableField<String>()
     private var multipleImageDetailDialog: MultipleImageDetailDialog? = null
-    private val TAG= ProductDetailsActivity::class.java.getSimpleName()
+    private val TAG = ProductDetailsActivity::class.java.getSimpleName()
+    private var isShowMoreClicked: Boolean = false
+    private lateinit var showMoreOrLessText: String
+    private lateinit var drawableEndArrow: Drawable
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         productDetailsViewModel.getBundleData()
-
-        productDetailsViewModel.onAddToCartClicked()
         initYoutubePlayer()
-
-
+        initProductDetailView()
 
 
     }
 
+
+    private fun initProductDetailView() {
+        viewDataBinding?.tvShowAllDetails?.setOnClickListener {
+            isShowMoreClicked = !isShowMoreClicked
+
+            if (isShowMoreClicked) {
+                showMoreOrLessText = resources.getString(R.string.showless)
+                drawableEndArrow = getDrawable(R.drawable.ic_arrow_up_orange)!!
+            } else {
+                showMoreOrLessText = resources.getString(R.string.showmore)
+                drawableEndArrow = getDrawable(R.drawable.ic_arrow_down_orange)!!
+            }
+            viewDataBinding?.tvShowAllDetails?.setText(showMoreOrLessText)
+            (viewDataBinding?.tvShowAllDetails as AppCompatTextView).setCompoundDrawablesWithIntrinsicBounds(
+                null,
+                null,
+                drawableEndArrow,
+                null
+            )
+
+
+            (viewDataBinding?.rvProductDetails?.adapter as ProductDetailsAdapter)
+                .isShowMoreSelected = isShowMoreClicked
+
+            (viewDataBinding?.rvProductDetails?.adapter as ProductDetailsAdapter).notifyDataSetChanged()
+
+
+
+
+
+        }
+
+    }
+
     private fun initYoutubePlayer() {
-       var youTubePlayerFragment = supportFragmentManager
+        var youTubePlayerFragment = supportFragmentManager
             .findFragmentById(R.id.youtube_player_fragment) as YouTubePlayerFragment?
 
         val googleApiKey = instance!!.getString(SharedPreferencesKeys.GOOGLE_API_KEY)
 
 
-        youTubePlayerFragment?.initialize(googleApiKey,this)
+        youTubePlayerFragment?.initialize(googleApiKey, this)
     }
 
     override fun onInitializationSuccess(
@@ -74,9 +106,9 @@ class ProductDetailsActivity :
             try {
                 player?.loadVideo("5Eqb_-j3FDA")
                 player?.play()
-               /* if (videoId != null && !videoId.equals("")) {
+                /* if (videoId != null && !videoId.equals("")) {
 
-                }*/
+                 }*/
             } catch (e: IllegalStateException) {
             }
         }
@@ -92,8 +124,6 @@ class ProductDetailsActivity :
             Toast.LENGTH_LONG
         ).show()
     }
-
-
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -163,11 +193,11 @@ class ProductDetailsActivity :
     }
 
     override fun onItemClick(clickedposition: Int) {
-        Log.d("Position of item",clickedposition.toString())
-        val allProductImages = mViewModel?.productData?.productImages!! as ArrayList
+        Log.d("Position of item", clickedposition.toString())
+        val allProductImages = mViewModel?.productData?.get()?.productImages!! as ArrayList
 
         multipleImageDetailDialog = MultipleImageDetailDialog.newInstance(allProductImages)
-        multipleImageDetailDialog?.show(supportFragmentManager,TAG)
+        multipleImageDetailDialog?.show(supportFragmentManager, TAG)
 
     }
 

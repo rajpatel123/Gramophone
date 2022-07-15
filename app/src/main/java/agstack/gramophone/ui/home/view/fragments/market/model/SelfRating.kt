@@ -17,7 +17,7 @@ data class SelfRating(
 	val productId: String? = null,
 
 	@field:SerializedName("rating")
-	val rating: String? = null,
+	val rating: Double? = null,
 
 	@field:SerializedName("comment")
 	val comment: String? = null,

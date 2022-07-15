@@ -23,18 +23,12 @@ class ProductDetailsViewModel @Inject constructor(
     var mSKUList = ArrayList<ProductSkuListItem?>()
 
     var mSkuOfferList = ArrayList<OffersItem?>()
-    var productDetailsBulletText = ObservableField<String>()
-    var productData: GpApiResponseData? = null
+
+    var productData=ObservableField<GpApiResponseData?>()
     var productId: Int = 0
      lateinit var mProductDetailsKeyValues: MutableList<KeyPointsItem?>
 
 
-    fun onAddToCartClicked() {
-        productDetailsBulletText.set(listOf("One", "Two", "Three").toBulletedList().toString())
-        Log.d("ProductDetailedList", productDetailsBulletText.toString())
-
-
-    }
 
     fun getBundleData() {
         val bundle = getNavigator()?.getBundle()
@@ -54,11 +48,11 @@ class ProductDetailsViewModel @Inject constructor(
                 try {
                     val productDataResponse: Response<ProductDataResponse> =
                         productRepository.getProductData(productDetailstoBeFetched)
-                    productData = productDataResponse.body()?.gpApiResponseData!!
+                    productData.set(productDataResponse.body()?.gpApiResponseData!!)
                     productData.let {
-                        getNavigator()?.setToolbarTitle(productData?.productBaseName!!)
+                        getNavigator()?.setToolbarTitle(productData?.get()?.productBaseName!!)
 
-                        mProductDetailsKeyValues= (productData?.productDetails?.keyPoints!!).toMutableList()
+                        mProductDetailsKeyValues= (productData?.get()?.productDetails?.keyPoints!!).toMutableList()
                         /*for(i in 0..mProductDetailsKeyValues.size){
                             mProductDetailsKeyValues[i]?.viewType = Constants.NORMAL
 
@@ -72,7 +66,7 @@ class ProductDetailsViewModel @Inject constructor(
 
 
                         //set skuList
-                        mSKUList = ArrayList(productData?.productSkuList)
+                        mSKUList = ArrayList(productData?.get()?.productSkuList)
                         mSKUList.let {
                             getNavigator()?.setProductSKUAdapter(ProductSKUAdapter(mSKUList)) {
 
@@ -81,8 +75,8 @@ class ProductDetailsViewModel @Inject constructor(
                         }
 
                         //setOffer List
-                        productData?.offers.let {
-                            val prodOfferList = ArrayList(productData?.offers)
+                        productData?.get()?.offers.let {
+                            val prodOfferList = ArrayList(productData?.get()?.offers)
                             prodOfferList.let {
                                 mSkuOfferList = ArrayList(prodOfferList)
                                 getNavigator()?.setProductSKUOfferAdapter(
@@ -95,12 +89,12 @@ class ProductDetailsViewModel @Inject constructor(
                                 }
                             }
                         }
-                        productData?.productImages?.let {
-                       getNavigator()?.setProductImagesViewPagerAdapter(ProductImagesAdapter(getNavigator()?.getFragmentManagerPager()!!,productData?.productImages!!))
+                        productData?.get()?.productImages?.let {
+                       getNavigator()?.setProductImagesViewPagerAdapter(ProductImagesAdapter(getNavigator()?.getFragmentManagerPager()!!,productData?.get()?.productImages!!))
                         }
 
 
-                        productData?.relatedProduct?.let {
+                        productData?.get()?.relatedProduct?.let {
                             getNavigator()?.setRelatedProductsAdapter(RelatedProductFragmentAdapter(ArrayList(it))){
 
                             }

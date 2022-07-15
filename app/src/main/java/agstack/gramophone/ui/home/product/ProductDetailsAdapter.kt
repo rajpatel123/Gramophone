@@ -9,10 +9,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ProductDetailsAdapter(productDetailsKeyValueList: ArrayList<KeyPointsItem?>) :RecyclerView.Adapter<ProductDetailsAdapter.CustomViewHolder>(){
+class ProductDetailsAdapter(productDetailsKeyValueList: ArrayList<KeyPointsItem?>) :
+    RecyclerView.Adapter<ProductDetailsAdapter.CustomViewHolder>() {
 
     val mProductDetailsKeyValueList = productDetailsKeyValueList
     lateinit var mContext: Context
+    public var isShowMoreSelected: Boolean = false
+
 
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
@@ -28,15 +31,20 @@ class ProductDetailsAdapter(productDetailsKeyValueList: ArrayList<KeyPointsItem?
         var model: KeyPointsItem = mProductDetailsKeyValueList[position]!!
         holder.binding.setVariable(BR.model, model)
         val mBinding = holder.binding as ProductDetailsRowItemBinding
-        if(position%2==0){
+        if (position % 2 == 0) {
             mBinding.mainContainer.setBackgroundResource(R.drawable.greensolid_with_grey_borders)
         }
     }
 
     override fun getItemCount(): Int {
-       return mProductDetailsKeyValueList.size
+        if (isShowMoreSelected) {
+            return mProductDetailsKeyValueList.size
+        } else {
+            return 2
+        }
     }
 
-    inner class CustomViewHolder( var binding : ProductDetailsRowItemBinding): RecyclerView.ViewHolder(binding.root)
+    inner class CustomViewHolder(var binding: ProductDetailsRowItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
 }

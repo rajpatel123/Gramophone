@@ -41,4 +41,5 @@
     <color name="grey_border">#E0E4EC</color>
     <color name="transparent_dark">#90000000</color>
     <color name="colorTransparent">#00000000</color>
+    <color name="pink">#FEE7E3</color>
 </resources>
