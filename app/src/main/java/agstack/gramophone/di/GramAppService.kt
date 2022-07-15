@@ -5,10 +5,9 @@ import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductDataResponse
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
-import agstack.gramophone.ui.language.model.RegisterDeviceRequestModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
-import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
+import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
@@ -16,6 +15,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 
 interface GramAppService {
@@ -29,11 +29,16 @@ interface GramAppService {
 
     @POST("api/v5/onboarding/app-initiate")
     @JvmSuppressWildcards
-    suspend fun getInitialData(@Body initiateAppDataRequestModel:  InitiateAppDataRequestModel): Response<InitiateAppDataResponseModel>
+    suspend fun getInitialData(@Body initiateAppDataRequestModel: InitiateAppDataRequestModel): Response<InitiateAppDataResponseModel>
 
     @POST("api/v5/onboarding/send-otp")
     @JvmSuppressWildcards
     suspend fun sendOTP(@Body sendOtpRequestModel: SendOtpRequestModel): Response<SendOtpResponseModel>
+
+
+    @PUT("api/v5/onboarding/resend-otp")
+    @JvmSuppressWildcards
+    suspend fun resendOTP(@Body sendOtpRequestModel: SendOtpRequestModel): Response<SendOtpResponseModel>
 
 
     @POST("api/v5/onboarding/validate-otp")

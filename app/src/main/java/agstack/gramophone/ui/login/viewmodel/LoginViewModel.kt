@@ -61,12 +61,12 @@ class LoginViewModel @Inject constructor(
                     generateOtpResponseModel.postValue(handleOrderResponse(response))
                 }
 
-            } else
-                generateOtpResponseModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.no_internet)!!))
+            }  else
+                getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
         } catch (ex: Exception) {
             when (ex) {
-                is IOException -> generateOtpResponseModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.network_failure)!!))
-                else -> generateOtpResponseModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!))
+                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
             }
         }
     }

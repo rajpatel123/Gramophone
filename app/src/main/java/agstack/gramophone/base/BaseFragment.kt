@@ -9,8 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 
@@ -102,7 +100,7 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     override fun onError(message: String?) {
     }
 
-    override fun <T> onSuccess(cls: Class<T>) {
+    override fun onSuccess(message: String?) {
     }
 
     override fun onLoading() {

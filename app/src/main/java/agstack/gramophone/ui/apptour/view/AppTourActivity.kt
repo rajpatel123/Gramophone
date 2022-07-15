@@ -8,17 +8,17 @@ import agstack.gramophone.ui.apptour.AppTourNavigator
 import agstack.gramophone.ui.apptour.adapter.DotIndicatorPager2Adapter
 import agstack.gramophone.ui.apptour.model.Card
 import agstack.gramophone.ui.apptour.viewmodel.AppTourViewModel
+import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.ui.login.view.LoginActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.Window
-import android.view.WindowManager
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_apptour.*
 import java.util.*
 
+@AndroidEntryPoint
 class AppTourActivity : BaseActivityWrapper<ActivityApptourBinding,AppTourNavigator,AppTourViewModel>(), AppTourNavigator {
     private lateinit var scrollImageRunable: Runnable
     private lateinit var mainHandler: Handler
@@ -111,12 +111,23 @@ class AppTourActivity : BaseActivityWrapper<ActivityApptourBinding,AppTourNaviga
         TODO("Not yet implemented")
     }
 
-    override fun <T> onSuccess(cls: Class<T>) {
-        TODO("Not yet implemented")
+    override fun onSuccess(message: String?) {
     }
 
     override fun onLoading() {
-        TODO("Not yet implemented")
+    }
+
+    override fun onHelpClick(number: String) {
+        val bottomSheet = BottomSheetDialog()
+        bottomSheet.customerSupportNumber= number
+        bottomSheet.show(
+            getSupportFragmentManager(),
+            "bottomSheet"
+        )
+    }
+
+    override fun onLanguageChangeClick() {
+
     }
 
 
