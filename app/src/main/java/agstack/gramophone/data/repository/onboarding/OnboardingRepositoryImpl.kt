@@ -1,5 +1,7 @@
 package agstack.gramophone.data.repository.onboarding
 
+import agstack.gramophone.data.model.UpdateLanguageRequestModel
+import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.di.GramAppService
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
@@ -50,6 +52,12 @@ class OnBoardingRepositoryImpl @Inject constructor(
         languageList
     }
 
+
+    override suspend fun updateLanguage(updateLanguageRequestModel: UpdateLanguageRequestModel):Response<UpdateLanguageResponseModel> = withContext(
+        Dispatchers.IO) {
+        val resendOtp = gramAppService.updateLanguage(updateLanguageRequestModel)
+        resendOtp
+    }
 
 
 }
