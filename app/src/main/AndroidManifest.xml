@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".utils.GramAppApplication"
@@ -16,10 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/SplashTheme"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".ui.login.view.ReferralDialogActivity"
-            android:exported="false"
-            />
+
         <activity
             android:name=".ui.splash.view.SplashActivity"
             android:exported="true"

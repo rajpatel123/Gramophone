@@ -1,5 +1,7 @@
 package agstack.gramophone.di
 
+import agstack.gramophone.data.model.UpdateLanguageRequestModel
+import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductDataResponse
@@ -26,6 +28,11 @@ interface GramAppService {
     @GET("api/v5/onboarding/get-language")
     @JvmSuppressWildcards
     suspend fun getLanguage(): Response<LanguageListResponse>
+
+
+    @PUT("api/v5/general/language-update")
+    @JvmSuppressWildcards
+    suspend fun updateLanguage(@Body updateLanguageRequestModel: UpdateLanguageRequestModel): Response<UpdateLanguageResponseModel>
 
     @POST("api/v5/onboarding/app-initiate")
     @JvmSuppressWildcards

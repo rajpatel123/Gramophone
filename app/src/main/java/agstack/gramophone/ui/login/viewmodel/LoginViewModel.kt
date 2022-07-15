@@ -2,6 +2,8 @@ package agstack.gramophone.ui.login.viewmodel
 
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.data.model.UpdateLanguageRequestModel
+import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.login.LoginNavigator
@@ -150,11 +152,49 @@ class LoginViewModel @Inject constructor(
 
 
     fun onRemoveReferralClicked() {
-        referralCode =null
+        referralCode = null
         getNavigator()?.referralCodeRemoved()
 
 
     }
 
+    fun updateLanguage() = viewModelScope.launch {
 
+        val updateLanguageRequestModel = UpdateLanguageRequestModel(getNavigator()?.getLanguage()!!)
+        updateLanguage(updateLanguageRequestModel)
+    }
+
+
+    suspend fun updateLanguage(sendOtpRequestModel: UpdateLanguageRequestModel) {
+
+        try {
+            if (getNavigator()?.isNetworkAvailable() == true) {
+                val response = onBoardingRepository.updateLanguage(sendOtpRequestModel)
+
+                val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
+
+                if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
+                    getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
+                }
+
+            } else
+                getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+        } catch (ex: Exception) {
+            when (ex) {
+                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+            }
+        }
+    }
+
+    private fun handleLanguageUpdateResponse(response: Response<UpdateLanguageResponseModel>): ApiResponse<UpdateLanguageResponseModel> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                return ApiResponse.Success(resultResponse)
+            }
+        }
+        return ApiResponse.Error(response.message())
+    }
 }
+
+

@@ -17,6 +17,49 @@
     <string name="select_language_gujarati">ગુજરાતી</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="profile_screen_title">Your account is ready</string>
+    <string name="profile_screen_msg">Just fill below details to go</string>
+    <string name="select_profile_type">Please select your profile type</string>
+    <string name="i_m_a_trader">I\'m a Trader</string>
+    <string name="i_m_a_farmer">I\'m a Farmer</string>
+    <string name="image">image</string>
+    <string name="shop_by_category">Shop by Category</string>
+    <string name="feature_product">Feature Product</string>
+    <string name="view_all">View All</string>
+    <string name="mandi_rates">Mandi Rates</string>
+    <string name="shop_by_crops">Shop by Crops</string>
+    <string name="shop_by_stores">Shop by Stores</string>
+    <string name="gramophone_exclusive">Gramophone Exclusive</string>
+    <string name="recently_viewed">Recently Viewed</string>
+    <string name="pickup_where_you_left">Pickup where you left</string>
+    <string name="products_in_your_cart_3">Products in your cart (3)</string>
+    <string name="new_articles">New Articles</string>
+    <string name="popular_products_in_indore">Popular Products in Indore</string>
+    <string name="market">Market</string>
+    <string name="trade">Trade</string>
+    <string name="community">Community</string>
+    <string name="me">Me</string>
+    <string name="back">Back</string>
+    <string name="cart">Cart</string>
+    <string name="cart_empty_msg">Looks like you haven\'t added\nanything to your cart yet</string>
+    <string name="cart_empty_title">Cart is Empty</string>
+    <string name="expert_advice">Expert Advice</string>
+    <string name="add_to_cart">Add To Cart</string>
+    <string name="share">Share</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="inclusiveoftaxes">Inclusive of all taxes</string>
+    <string name="packing">Packing</string>
+    <string name="available_offers">Available Offers</string>
+    <string name="how_to_use">How to use</string>
+    <string name="estimated_delivery">Estimated Delivery</string>
+    <string name="product_details">Product Details</string>
+    <string name="view_full_product_detail">View Full Product Detail</string>
+    <string name="related_products">Related Products</string>
+
+
+    <!--    OnBoarding strings-->
     <string name="skip">Skip</string>
     <string name="next">Next</string>
     <string name="resource_img_icon">resource_img_icon</string>
@@ -36,50 +79,6 @@
     <string name="finish">FINISH</string>
     <string name="_continue">Continue</string>
     <string name="enter_your_name">Enter your Name</string>
-    <string name="profile_screen_title">Your account is ready</string>
-    <string name="profile_screen_msg">Just fill below details to go</string>
-    <string name="select_profile_type">Please select your profile type</string>
-    <string name="i_m_a_trader">I\'m a Trader</string>
-    <string name="i_m_a_farmer">I\'m a Farmer</string>
-    <string name="image">image</string>
-    <string name="enter_referral_code">Enter Referral code (Optional)</string>
-    <string name="enter_referral_code_hint">Enter referral code</string>
-    <string name="shop_by_category">Shop by Category</string>
-    <string name="feature_product">Feature Product</string>
-    <string name="view_all">View All</string>
-    <string name="mandi_rates">Mandi Rates</string>
-    <string name="shop_by_crops">Shop by Crops</string>
-    <string name="shop_by_stores">Shop by Stores</string>
-    <string name="gramophone_exclusive">Gramophone Exclusive</string>
-    <string name="recently_viewed">Recently Viewed</string>
-    <string name="pickup_where_you_left">Pickup where you left</string>
-    <string name="products_in_your_cart_3">Products in your cart (3)</string>
-    <string name="new_articles">New Articles</string>
-    <string name="popular_products_in_indore">Popular Products in Indore</string>
-    <string name="market">Market</string>
-    <string name="trade">Trade</string>
-    <string name="community">Community</string>
-    <string name="me">Me</string>
-    <string name="back">Back</string>
-    <string name="cart">Cart</string>
-    <string name="help">Help</string>
-    <string name="get_help">Get Help</string>
-    <string name="cart_empty_msg">Looks like you haven\'t added\nanything to your cart yet</string>
-    <string name="cart_empty_title">Cart is Empty</string>
-    <string name="expert_advice">Expert Advice</string>
-    <string name="add_to_cart">Add To Cart</string>
-    <string name="share">Share</string>
-    <string name="plus">+</string>
-    <string name="minus">-</string>
-    <string name="inclusiveoftaxes">Inclusive of all taxes</string>
-    <string name="packing">Packing</string>
-    <string name="available_offers">Available Offers</string>
-    <string name="how_to_use">How to use</string>
-    <string name="estimated_delivery">Estimated Delivery</string>
-    <string name="product_details">Product Details</string>
-    <string name="view_full_product_detail">View Full Product Detail</string>
-    <string name="related_products">Related Products</string>
-
     <string name="login">Login</string>
     <string name="eng">Eng</string>
     <string name="terms">Terms</string>
@@ -89,21 +88,29 @@
     <string name="please_enter_otp">Please enter OTP</string>
     <string name="resend_otp">"Resend in "</string>
     <string name="resend">"Resend OTP "</string>
-    <string name="ratingandreviews"><![CDATA[Rating & Reviews]]></string>
     <string name="no_internet">"No internet connection "</string>
+    <string name="privacy">Privacy Policy</string>
+    <string name="talk_to_customer_care">Talk to our customer care executive</string>
+    <string name="call_now">Call Now</string>
+    <string name="apply_referral">Apply Referral Code</string>
+    <string name="terms_n_conditions"><![CDATA[Terms & Conditions]]></string>
+    <string name="get_help_call">Get Help via Call</string>
+    <string name="apply">Apply</string>
+    <string name="terms_of_use">Terms of use</string>
+    <string name="have_referral">Do you have referral code?</string>
+    <string name="select_language">Select your Language</string>
+    <string name="enter_referral_code">Enter Referral code (Optional)</string>
+    <string name="enter_referral_code_hint">Enter referral code</string>
+    <string name="help">Help</string>
+    <string name="get_help">Get Help</string>
+    <!--    OnBoarding strings-->
+
+    <string name="ratingandreviews"><![CDATA[Rating & Reviews]]></string>
     <string name="some_thing_went_wrong">Something went wrong</string>
     <string name="network_failure">Network failure</string>
     <string name="space">" "</string>
     <string name="sku">"SKU: "</string>
-    <string name="privacy">Privacy Policy</string>
-    <string name="terms_n_conditions"><![CDATA[Terms & Conditions]]></string>
-    <string name="talk_to_customer_care">Talk to our customer care executive</string>
-    <string name="call_now">Call Now</string>
-    <string name="get_help_call">Get Help via Call</string>
-    <string name="apply_referral">Apply Referral Code</string>
-    <string name="apply">Apply</string>
-    <string name="terms_of_use">Terms of use</string>
-    <string name="have_referral">Do you have referral code?</string>
+
 
 
 </resources>

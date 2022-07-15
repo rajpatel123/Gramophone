@@ -9,17 +9,28 @@ import agstack.gramophone.ui.apptour.adapter.DotIndicatorPager2Adapter
 import agstack.gramophone.ui.apptour.model.Card
 import agstack.gramophone.ui.apptour.viewmodel.AppTourViewModel
 import agstack.gramophone.ui.dialog.BottomSheetDialog
+import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
 import agstack.gramophone.ui.login.view.LoginActivity
+import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.TextUtils
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_apptour.*
+import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
 
 @AndroidEntryPoint
-class AppTourActivity : BaseActivityWrapper<ActivityApptourBinding,AppTourNavigator,AppTourViewModel>(), AppTourNavigator {
+class AppTourActivity : BaseActivityWrapper<ActivityApptourBinding,AppTourNavigator,AppTourViewModel>(), AppTourNavigator,
+    LanguageBottomSheetFragment.LanguageUpdateListener {
     private lateinit var scrollImageRunable: Runnable
     private lateinit var mainHandler: Handler
     private  val appTourViewModel: AppTourViewModel by viewModels()
@@ -112,6 +123,7 @@ class AppTourActivity : BaseActivityWrapper<ActivityApptourBinding,AppTourNaviga
     }
 
     override fun onSuccess(message: String?) {
+        Toast.makeText(this@AppTourActivity,message,Toast.LENGTH_LONG).show()
     }
 
     override fun onLoading() {
@@ -127,7 +139,17 @@ class AppTourActivity : BaseActivityWrapper<ActivityApptourBinding,AppTourNaviga
     }
 
     override fun onLanguageChangeClick() {
+        val bottomSheet = LanguageBottomSheetFragment()
+        bottomSheet.setLanguageListener(this)
+        bottomSheet.show(
+            getSupportFragmentManager(),
+            "bottomSheet"
+        )
+    }
 
+
+    override fun onLanguageUpdate() {
+        appTourViewModel.updateLanguage()
     }
 
 

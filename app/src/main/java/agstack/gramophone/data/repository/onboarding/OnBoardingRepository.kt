@@ -1,5 +1,7 @@
 package agstack.gramophone.data.repository.onboarding
 
+import agstack.gramophone.data.model.UpdateLanguageRequestModel
+import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
@@ -13,6 +15,9 @@ import javax.inject.Singleton
 @Singleton
 interface OnBoardingRepository {
     suspend fun getLanguage(): Response<LanguageListResponse>
+
+
+    suspend fun updateLanguage(updateLanguageRequestModel: UpdateLanguageRequestModel): Response<UpdateLanguageResponseModel>
 
     suspend fun sendOTP(sendOtpRequestModel: SendOtpRequestModel): Response<SendOtpResponseModel>
 

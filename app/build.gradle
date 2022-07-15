@@ -21,6 +21,10 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    packagingOptions {
+        exclude 'META-INF/retrofit.kotlin_module'
+    }
     hilt {
         enableTransformForLocalTests = true
     }
@@ -166,5 +170,6 @@ dependencies {
     implementation project(':YouTubeAndroidPlayerApi')*/
 
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.13.+"
+    implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
 
 }

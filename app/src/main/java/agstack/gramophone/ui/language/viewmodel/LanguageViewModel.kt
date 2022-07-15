@@ -38,30 +38,6 @@ class LanguageViewModel @Inject constructor(
     val registerDeviceModel: MutableLiveData<ApiResponse<InitiateAppDataResponseModel>> =
         MutableLiveData()
 
-
-    val initiateAppDataRequestModel: InitiateAppDataRequestModel
-        get() {
-            val android_id = Settings.Secure.getString(getNavigator()?.getContentResolver(),
-                Settings.Secure.ANDROID_ID)
-
-            var deviceDetails = DeviceDetails(
-                BuildConfig.VERSION_CODE.toString(),
-                BuildConfig.VERSION_NAME,
-                android_id,
-                Build.MODEL,
-                Build.VERSION.SDK_INT.toString()
-            )
-            var registerDeviceRequestModel =
-                getNavigator()?.let {
-                    InitiateAppDataRequestModel(deviceDetails,
-                        it.getLanguage(),)
-                }
-
-
-
-            return registerDeviceRequestModel!!
-
-        }
     fun getLanguageList() = viewModelScope.launch {
         getLanguage()
     }

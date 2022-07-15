@@ -5,6 +5,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityVerifyOtpBinding
 import agstack.gramophone.ui.dialog.BottomSheetDialog
+import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
@@ -24,7 +25,7 @@ import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOTPNavigator, VerifyOtpViewModel>(),
-    VerifyOTPNavigator {
+    VerifyOTPNavigator, LanguageBottomSheetFragment.LanguageUpdateListener {
     private  val verifyOtpViewModel: VerifyOtpViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,7 +89,7 @@ class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOT
         tvTime.visibility=VISIBLE
         tvResend.visibility=VISIBLE
         tvResendOtp.visibility= GONE
-        object : CountDownTimer(5000, 1000) {
+        object : CountDownTimer(30000, 1000) {
             override fun onTick(millis: Long) {
                 val ms = java.lang.String.format(
                     "%02d:%02d",
@@ -137,6 +138,15 @@ class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOT
     }
 
     override fun onLanguageChangeClick() {
+        val bottomSheet = LanguageBottomSheetFragment()
+        bottomSheet.setLanguageListener(this)
+        bottomSheet.show(
+            getSupportFragmentManager(),
+            "bottomSheet"
+        )
+    }
 
+    override fun onLanguageUpdate() {
+        verifyOtpViewModel.updateLanguage()
     }
 }

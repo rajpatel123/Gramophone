@@ -6,13 +6,16 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityLoginBinding
 import agstack.gramophone.ui.dialog.BottomSheetDialog
+import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
 import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.viewmodel.LoginViewModel
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.ui.webview.view.WebViewActivity
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -23,16 +26,20 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.google.zxing.integration.android.IntentIntegrator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 
 @AndroidEntryPoint
-class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, LoginViewModel>(), LoginNavigator {
+class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, LoginViewModel>(), LoginNavigator ,
+    LanguageBottomSheetFragment.LanguageUpdateListener {
 
     //initialise ViewModel
     private val loginViewModel: LoginViewModel by viewModels()
+    private var qrScan: IntentIntegrator? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,11 +91,26 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
     }
 
     override fun onLanguageChangeClick() {
-
+        val bottomSheet = LanguageBottomSheetFragment()
+        bottomSheet.setLanguageListener(this)
+        bottomSheet.show(
+            getSupportFragmentManager(),
+            "bottomSheet"
+        )
     }
 
     override fun openWebView(bundle: Bundle) {
         openActivity(WebViewActivity::class.java, bundle)
+    }
+
+
+    override fun referralCodeRemoved() {
+        rlHaveReferralCode.visibility = VISIBLE
+        rlAppliedCode.visibility = GONE
+    }
+
+    override fun onSuccess(message: String?) {
+        Toast.makeText(this@LoginActivity,message,Toast.LENGTH_LONG).show()
     }
 
     override fun openReferralDialog() {
@@ -102,6 +124,7 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
         val tvApplyCode = mDialogView.findViewById(R.id.tvApplyCode) as TextView
         val etReferralCode = mDialogView.findViewById(R.id.etReferralCode) as EditText
         val tvTermsOfUse = mDialogView.findViewById(R.id.tvTermsOfUse) as TextView
+        val llQRLinearLayout = mDialogView.findViewById(R.id.llQRLinearLayout) as LinearLayout
         val llCrossLinearLayout = mDialogView.findViewById(R.id.llCrossLinearLayout) as LinearLayout
         tvApplyCode.setOnClickListener {
             if (!TextUtils.isEmpty(etReferralCode.text)) {
@@ -124,6 +147,13 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
             mAlertDialog.dismiss()
         }
 
+        //having some crash while scanning will do it later as it is not mentioned in task description as well
+        llQRLinearLayout.setOnClickListener {
+//            qrScan = IntentIntegrator(this@LoginActivity)
+//            qrScan?.setOrientationLocked(false)
+//            qrScan?.initiateScan()
+        }
+
         tvTermsOfUse.setOnClickListener {
             loginViewModel.onTermsOfUseClicked()
 
@@ -134,10 +164,8 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
     }
 
-    override fun referralCodeRemoved() {
-        rlHaveReferralCode.visibility = VISIBLE
-        rlAppliedCode.visibility = GONE
+    override fun onLanguageUpdate() {
+        loginViewModel.updateLanguage()
     }
-
 
 }

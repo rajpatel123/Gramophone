@@ -2,19 +2,10 @@ package agstack.gramophone.ui.language.adapter
 
 
 import agstack.gramophone.BR
-import agstack.gramophone.R
 import agstack.gramophone.databinding.ItemLanguageBinding
-import agstack.gramophone.databinding.ItemRadioProductPackingBinding
-import agstack.gramophone.ui.apptour.view.AppTourActivity
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
-import agstack.gramophone.ui.language.model.LanguageData
 import agstack.gramophone.ui.language.model.languagelist.Language
-import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
-import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -25,6 +16,15 @@ class LanguageAdapter(private val languageList: List<Language>) :
     var selectedLanguage: ((Language) -> Unit)? = null
     var lastSelectPosition: Int = 0
     var mLanguageList = languageList
+     var onLanguageSelection: OnLanguageSelection? = null
+
+    interface OnLanguageSelection {
+        fun onLanguageSelect(language: Language)
+    }
+
+    fun setLanguageSelectedListener(onLanguageSelection: OnLanguageSelection) {
+        this.onLanguageSelection=onLanguageSelection
+    }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): DeveloperViewHolder {
         return DeveloperViewHolder(
@@ -42,6 +42,8 @@ class LanguageAdapter(private val languageList: List<Language>) :
             language.selected = true
             notifyDataSetChanged()
             selectedLanguage?.invoke(language)
+
+            onLanguageSelection?.onLanguageSelect(language)
         }
 
     }
