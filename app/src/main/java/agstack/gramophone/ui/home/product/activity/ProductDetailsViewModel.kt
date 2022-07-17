@@ -1,5 +1,6 @@
 package agstack.gramophone.ui.home.product.activity
 
+import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
@@ -11,6 +12,8 @@ import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.lang.Exception
@@ -24,10 +27,10 @@ class ProductDetailsViewModel @Inject constructor(
 
     var mSkuOfferList = ArrayList<OffersItem?>()
 
-    var productData=ObservableField<GpApiResponseData?>()
+    var productData = ObservableField<GpApiResponseDataProduct?>()
+    var productReviewsData = ObservableField<GpApiResponseData?>()
     var productId: Int = 0
-     lateinit var mProductDetailsKeyValues: MutableList<KeyPointsItem?>
-
+    lateinit var mProductDetailsKeyValues: MutableList<KeyPointsItem?>
 
 
     fun getBundleData() {
@@ -46,67 +49,113 @@ class ProductDetailsViewModel @Inject constructor(
             viewModelScope.launch {
 
                 try {
-                    val productDataResponse: Response<ProductDataResponse> =
-                        productRepository.getProductData(productDetailstoBeFetched)
-                    productData.set(productDataResponse.body()?.gpApiResponseData!!)
-                    productData.let {
-                        getNavigator()?.setToolbarTitle(productData?.get()?.productBaseName!!)
+                    if (getNavigator()?.isNetworkAvailable() == true) {
 
-                        mProductDetailsKeyValues= (productData?.get()?.productDetails?.keyPoints!!).toMutableList()
-                        /*for(i in 0..mProductDetailsKeyValues.size){
-                            mProductDetailsKeyValues[i]?.viewType = Constants.NORMAL
-
-                        }
-
-                        mProductDetailsKeyValues.add(mProductDetailsKeyValues.size+1,
-                            KeyPointsItem(null,null,Constants.FOOTER)
-                        )*/
-                        //set ProductDetails Adapter
-                        getNavigator()?.setProductDetailsAdapter(ProductDetailsAdapter(ArrayList(mProductDetailsKeyValues)))
-
-
-                        //set skuList
-                        mSKUList = ArrayList(productData?.get()?.productSkuList)
-                        mSKUList.let {
-                            getNavigator()?.setProductSKUAdapter(ProductSKUAdapter(mSKUList)) {
-
-
+                        coroutineScope {
+                            val productDataResponseDeferred = async {
+                                productRepository.getProductData(productDetailstoBeFetched)
                             }
-                        }
 
-                        //setOffer List
-                        productData?.get()?.offers.let {
-                            val prodOfferList = ArrayList(productData?.get()?.offers)
-                            prodOfferList.let {
-                                mSkuOfferList = ArrayList(prodOfferList)
-                                getNavigator()?.setProductSKUOfferAdapter(
-                                    ProductSKUOfferAdapter(
-                                        mSkuOfferList
+                            val productReviewsResponseDeferred = async{productRepository.getProductReviewsData(productDetailstoBeFetched)}
+
+
+                            val productDataResponse = productDataResponseDeferred.await()
+                            val productReviewResponse = productReviewsResponseDeferred.await()
+
+                            /* val productDataResponse: Response<ProductDataResponse> =
+                                 productRepository.getProductData(productDetailstoBeFetched)*/
+                            if (productDataResponse != null && productDataResponse?.body()?.gpApiStatus.equals(
+                                    Constants.GP_API_STATUS
+                                )
+                            ) {
+
+                                productData.set(productDataResponse.body()?.gpApiResponseData!!)
+                            }
+                            productData.let {
+                                getNavigator()?.setToolbarTitle(productData?.get()?.productBaseName!!)
+                                productData?.get()?.productImages?.let {
+                                    getNavigator()?.setProductImagesViewPagerAdapter(
+                                        ProductImagesAdapter(
+                                            getNavigator()?.getFragmentManagerPager()!!,
+                                            productData?.get()?.productImages!!
+                                        )
                                     )
-                                ) {
+                                }
 
 
+                                mProductDetailsKeyValues =
+                                    (productData?.get()?.productDetails?.keyPoints!!).toMutableList()
+
+                                //set ProductDetails Adapter
+                                getNavigator()?.setProductDetailsAdapter(
+                                    ProductDetailsAdapter(
+                                        ArrayList(
+                                            mProductDetailsKeyValues
+                                        )
+                                    )
+                                )
+
+
+                                //set skuList
+                                mSKUList = ArrayList(productData?.get()?.productSkuList)
+                                mSKUList.let {
+                                    getNavigator()?.setProductSKUAdapter(ProductSKUAdapter(mSKUList)) {
+
+
+                                    }
                                 }
                             }
-                        }
-                        productData?.get()?.productImages?.let {
-                       getNavigator()?.setProductImagesViewPagerAdapter(ProductImagesAdapter(getNavigator()?.getFragmentManagerPager()!!,productData?.get()?.productImages!!))
+
+                            if(productReviewResponse!=null && productReviewResponse?.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)){
+                                productReviewsData.set(productReviewResponse.body()?.gpApiResponseData)
+                            }
+
+
                         }
 
 
-                        productData?.get()?.relatedProduct?.let {
-                            getNavigator()?.setRelatedProductsAdapter(RelatedProductFragmentAdapter(ArrayList(it))){
+                    } else {
+                        getNavigator()?.showToast(R.string.nointernet)
+                    }
+
+
+                    //setOffer List
+                    productData?.get()?.offers.let {
+                        val prodOfferList = ArrayList(productData?.get()?.offers)
+                        prodOfferList.let {
+                            mSkuOfferList = ArrayList(prodOfferList)
+                            getNavigator()?.setProductSKUOfferAdapter(
+                                ProductSKUOfferAdapter(
+                                    mSkuOfferList
+                                )
+                            ) {
+
 
                             }
+                        }
+                    }
+
+
+                    productData?.get()?.relatedProduct?.let {
+                        getNavigator()?.setRelatedProductsAdapter(
+                            RelatedProductFragmentAdapter(
+                                ArrayList(it)
+                            )
+                        ) {
+
                         }
                     }
                 } catch (e: Exception) {
                     Log.d("Exception", e.toString())
                 }
             }
-
-
-
         }
     }
 }
+
+
+
+
+
+
+

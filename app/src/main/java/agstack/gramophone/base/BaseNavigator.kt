@@ -25,4 +25,6 @@ interface BaseNavigator {
     fun getLanguage():String
 
     fun getMessage(stringResourceId:Int):String
+
+    fun showToast(stringResourceId: Int)
 }

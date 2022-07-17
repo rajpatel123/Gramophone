@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class SelfRating(
+data class DataItem(
 
 	@field:SerializedName("date")
 	val date: String? = null,

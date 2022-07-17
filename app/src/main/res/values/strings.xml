@@ -92,5 +92,6 @@
     <string name="showless">Show less</string>
     <string name="farmers">Farmers</string>
     <string name="delivery_">Delivery-</string>
+    <string name="nointernet">No Internet Available</string>
 
 </resources>
