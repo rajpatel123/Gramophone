@@ -93,5 +93,11 @@
     <string name="farmers">Farmers</string>
     <string name="delivery_">Delivery-</string>
     <string name="nointernet">No Internet Available</string>
+    <string name="ratethisproduct">Rate this product</string>
+    <string name="yourratingmatters">Your rating matters here will help other farmers to make better buying choices</string>
+    <string name="nothappy">Not Happy</string>
+    <string name="veryhappy">Very Happy</string>
+    <string name="basedon">Based on</string>
+    <string name="reviews">reviews</string>
 
 </resources>

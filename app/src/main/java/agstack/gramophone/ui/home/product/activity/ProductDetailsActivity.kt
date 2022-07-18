@@ -7,8 +7,8 @@ import agstack.gramophone.databinding.ProductDetailBinding
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
 import agstack.gramophone.ui.home.product.fragment.ProductImagesFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
-import agstack.gramophone.ui.home.view.fragments.market.model.OffersItem
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
+import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
@@ -18,10 +18,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.RatingBar.OnRatingBarChangeListener
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.databinding.ObservableField
 import androidx.fragment.app.FragmentManager
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
@@ -48,6 +48,18 @@ class ProductDetailsActivity :
         productDetailsViewModel.getBundleData()
         initYoutubePlayer()
         initProductDetailView()
+        setSelfRatingBarChangeListener()
+
+
+    }
+
+    private fun setSelfRatingBarChangeListener() {
+        viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.setOnRatingBarChangeListener{ ratingBar, rating, fromUser ->
+            mViewModel?.productReviewsData?.get()?.selfRating?.rating = rating.toDouble()
+            //Open a SelfRatingDialogFragment
+
+        }
+
 
 
     }
@@ -175,7 +187,7 @@ class ProductDetailsActivity :
 
     override fun setProductSKUOfferAdapter(
         productSKUOfferAdapter: ProductSKUOfferAdapter,
-        onOfferItemClicked: (OffersItem) -> Unit
+        onOfferItemClicked: (PromotionListItem) -> Unit
     ) {
         productSKUOfferAdapter.selectedProduct = onOfferItemClicked
         viewDataBinding?.rvAvailableoffers?.adapter = productSKUOfferAdapter
@@ -212,6 +224,10 @@ class ProductDetailsActivity :
 
     override fun setProductDetailsAdapter(productDetailsAdapter: ProductDetailsAdapter) {
         viewDataBinding?.rvProductDetails?.adapter = productDetailsAdapter
+    }
+
+    override fun setRatingAndReviewsAdapter(ratingAndReviewsAdapter: RatingAndReviewsAdapter) {
+        viewDataBinding?.ratingbarReviews?.rvReviewsProduct?.adapter = ratingAndReviewsAdapter
     }
 
 

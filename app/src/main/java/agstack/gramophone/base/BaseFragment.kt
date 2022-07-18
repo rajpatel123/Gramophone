@@ -98,4 +98,8 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     override fun getMessage(stringResourceId: Int): String {
         return getString(stringResourceId)
     }
+
+    override fun showToast(stringResourceId: Int) {
+        TODO("Not yet implemented")
+    }
 }

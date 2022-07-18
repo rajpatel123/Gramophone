@@ -6,7 +6,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.text.TextUtils" />
+
         <import type="android.view.View" />
 
         <variable
@@ -54,7 +56,7 @@
                         <RatingBar
                             android:id="@+id/rating"
                             style="?android:attr/ratingBarStyleIndicator"
-                            doubleToFloatRating="@{viewModel.productData.rating.totalRating}"
+                            doubleToFloatRating="@{viewModel.productReviewsData.rating.totalRating}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:isIndicator="true"
@@ -68,7 +70,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/manrope_bold"
                             android:hint="15 Farmers"
-                            android:text="@{viewModel.productData.rating.totalReview.toString()+` `+ @string/farmers}"
+                            android:text="@{viewModel.productReviewsData.rating.totalReview.toString()+` `+ @string/farmers}"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_13ssp" />
 
@@ -591,7 +593,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_16sdp"
-                        android:layout_marginBottom="@dimen/_16sdp"
                         android:fontFamily="@font/manrope_bold"
                         android:text="@string/ratingandreviews"
                         android:textColor="@color/blakish"

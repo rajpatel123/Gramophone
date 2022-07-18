@@ -2,9 +2,7 @@ package agstack.gramophone.data.repository.product
 
 
 import agstack.gramophone.di.GramAppService
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductDataResponse
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductReviewDataResponse
+import agstack.gramophone.ui.home.view.fragments.market.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -27,6 +25,19 @@ class ProductRepositoryImpl @Inject constructor(
         Dispatchers.IO) {
         val reviews = gramoAppService.getReviewData(productMap)
         reviews
+    }
+
+
+    override suspend fun getRelatedProductsData(productMap: ProductData): Response<RelatedProductResponseData> = withContext(
+    Dispatchers.IO) {
+        val relatedProd = gramoAppService.getRelatedProductsData(productMap)
+        relatedProd
+    }
+
+    override suspend fun getOffersOnProductData(productMap: ProductData): Response<OffersProductResponseData> = withContext(
+        Dispatchers.IO) {
+        val relatedProd = gramoAppService.getOffersOnProductData(productMap)
+        relatedProd
     }
 
 }

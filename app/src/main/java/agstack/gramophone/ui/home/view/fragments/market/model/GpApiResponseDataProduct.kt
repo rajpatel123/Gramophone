@@ -7,8 +7,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class GpApiResponseDataProduct (
-    @field:SerializedName("offers")
-    val offers: List<OffersItem?>? = null,
 
     @field:SerializedName("related_product")
     val relatedProduct: List<RelatedProductItem?>? = null,

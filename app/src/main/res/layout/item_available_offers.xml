@@ -10,7 +10,7 @@
 
         <variable
             name="model"
-            type="agstack.gramophone.ui.home.view.fragments.market.model.OffersItem" />
+            type="agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem" />
     </data>
 
     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">

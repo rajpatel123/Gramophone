@@ -14,7 +14,7 @@ data class ReviewListItem(
 	val customerAddress: String? = null,
 
 	@field:SerializedName("product_id")
-	val productId: String? = null,
+	val productId: Int? = null,
 
 	@field:SerializedName("rating")
 	val rating: Double? = null,
@@ -26,5 +26,5 @@ data class ReviewListItem(
 	val customerName: String? = null,
 
 	@field:SerializedName("customer_id")
-	val customerId: String? = null
+	val customerId: Int? = null
 ) : Parcelable

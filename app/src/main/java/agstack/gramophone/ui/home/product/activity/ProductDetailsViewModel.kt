@@ -25,13 +25,18 @@ class ProductDetailsViewModel @Inject constructor(
 ) : BaseViewModel<ProductDetailsNavigator>() {
     var mSKUList = ArrayList<ProductSkuListItem?>()
 
-    var mSkuOfferList = ArrayList<OffersItem?>()
+    var mSkuOfferList = ArrayList<PromotionListItem?>()
 
     var productData = ObservableField<GpApiResponseDataProduct?>()
     var productReviewsData = ObservableField<GpApiResponseData?>()
+    var relatedProductData = ObservableField<GpApiResponseDataRelatedProduct?>()
     var productId: Int = 0
     lateinit var mProductDetailsKeyValues: MutableList<KeyPointsItem?>
 
+
+    fun onSelfRatingClick(){
+        Log.d("Open Dialog", "On Ratingclick")
+    }
 
     fun getBundleData() {
         val bundle = getNavigator()?.getBundle()
@@ -58,56 +63,94 @@ class ProductDetailsViewModel @Inject constructor(
 
                             val productReviewsResponseDeferred = async{productRepository.getProductReviewsData(productDetailstoBeFetched)}
 
+                            val relatedProductResponseDeferred = async{productRepository.getRelatedProductsData(productDetailstoBeFetched)}
+
+                            val offerOnProductResponseDeferred = async {  productRepository.getOffersOnProductData(productDetailstoBeFetched)}
+
 
                             val productDataResponse = productDataResponseDeferred.await()
                             val productReviewResponse = productReviewsResponseDeferred.await()
+                            val relatedProductResponse = relatedProductResponseDeferred.await()
+                            val offersOnProductResponse = offerOnProductResponseDeferred.await()
 
-                            /* val productDataResponse: Response<ProductDataResponse> =
-                                 productRepository.getProductData(productDetailstoBeFetched)*/
-                            if (productDataResponse != null && productDataResponse?.body()?.gpApiStatus.equals(
-                                    Constants.GP_API_STATUS
-                                )
+
+                            if (productDataResponse != null && productDataResponse?.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)
                             ) {
 
                                 productData.set(productDataResponse.body()?.gpApiResponseData!!)
-                            }
-                            productData.let {
-                                getNavigator()?.setToolbarTitle(productData?.get()?.productBaseName!!)
-                                productData?.get()?.productImages?.let {
-                                    getNavigator()?.setProductImagesViewPagerAdapter(
-                                        ProductImagesAdapter(
-                                            getNavigator()?.getFragmentManagerPager()!!,
-                                            productData?.get()?.productImages!!
+                                productData.let {
+                                    getNavigator()?.setToolbarTitle(productData?.get()?.productBaseName!!)
+                                    productData?.get()?.productImages?.let {
+                                        getNavigator()?.setProductImagesViewPagerAdapter(
+                                            ProductImagesAdapter(
+                                                getNavigator()?.getFragmentManagerPager()!!,
+                                                productData?.get()?.productImages!!
+                                            )
+                                        )
+                                    }
+
+
+                                    mProductDetailsKeyValues =
+                                        (productData?.get()?.productDetails?.keyPoints!!).toMutableList()
+
+                                    //set ProductDetails Adapter
+                                    getNavigator()?.setProductDetailsAdapter(
+                                        ProductDetailsAdapter(
+                                            ArrayList(
+                                                mProductDetailsKeyValues
+                                            )
                                         )
                                     )
-                                }
 
 
-                                mProductDetailsKeyValues =
-                                    (productData?.get()?.productDetails?.keyPoints!!).toMutableList()
-
-                                //set ProductDetails Adapter
-                                getNavigator()?.setProductDetailsAdapter(
-                                    ProductDetailsAdapter(
-                                        ArrayList(
-                                            mProductDetailsKeyValues
-                                        )
-                                    )
-                                )
+                                    //set skuList
+                                    mSKUList = ArrayList(productData?.get()?.productSkuList)
+                                    mSKUList.let {
+                                        getNavigator()?.setProductSKUAdapter(ProductSKUAdapter(mSKUList)) {
 
 
-                                //set skuList
-                                mSKUList = ArrayList(productData?.get()?.productSkuList)
-                                mSKUList.let {
-                                    getNavigator()?.setProductSKUAdapter(ProductSKUAdapter(mSKUList)) {
-
-
+                                        }
                                     }
                                 }
                             }
 
+
                             if(productReviewResponse!=null && productReviewResponse?.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)){
                                 productReviewsData.set(productReviewResponse.body()?.gpApiResponseData)
+                                getNavigator()?.setRatingAndReviewsAdapter(RatingAndReviewsAdapter(productReviewsData.get()?.reviewList))
+
+                            }
+
+                            if(relatedProductResponse!=null && relatedProductResponse?.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)){
+                                relatedProductData.set(relatedProductResponse.body()?.gpApiResponseData)
+                                relatedProductData?.get()?.relatedProductList.let {
+                                    getNavigator()?.setRelatedProductsAdapter(
+                                        RelatedProductFragmentAdapter(
+                                            ArrayList(it)
+                                        )
+                                    ) {
+
+                                    }
+
+                                }
+                            }
+
+                            if(offersOnProductResponse!=null && offersOnProductResponse?.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
+                                //setOffer List
+                                offersOnProductResponse?.body()?.gpApiResponseData?.offersProductList.let {
+                                    val prodOfferList = ArrayList(offersOnProductResponse?.body()?.gpApiResponseData?.offersProductList)
+                                    prodOfferList.let {
+                                        mSkuOfferList = ArrayList(prodOfferList)
+                                        getNavigator()?.setProductSKUOfferAdapter(
+                                            ProductSKUOfferAdapter(
+                                                mSkuOfferList
+                                            )
+                                        ) {
+
+
+                                        }
+                                    }
+                                }
                             }
 
 
@@ -119,32 +162,10 @@ class ProductDetailsViewModel @Inject constructor(
                     }
 
 
-                    //setOffer List
-                    productData?.get()?.offers.let {
-                        val prodOfferList = ArrayList(productData?.get()?.offers)
-                        prodOfferList.let {
-                            mSkuOfferList = ArrayList(prodOfferList)
-                            getNavigator()?.setProductSKUOfferAdapter(
-                                ProductSKUOfferAdapter(
-                                    mSkuOfferList
-                                )
-                            ) {
 
 
-                            }
-                        }
-                    }
 
 
-                    productData?.get()?.relatedProduct?.let {
-                        getNavigator()?.setRelatedProductsAdapter(
-                            RelatedProductFragmentAdapter(
-                                ArrayList(it)
-                            )
-                        ) {
-
-                        }
-                    }
                 } catch (e: Exception) {
                     Log.d("Exception", e.toString())
                 }

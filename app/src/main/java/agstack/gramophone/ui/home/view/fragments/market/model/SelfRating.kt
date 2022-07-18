@@ -8,23 +8,23 @@ import kotlinx.android.parcel.Parcelize
 data class SelfRating(
 
 	@field:SerializedName("date")
-	val date: String? = null,
+	var date: String? = null,
 
 	@field:SerializedName("customer_address")
-	val customerAddress: String? = null,
+	var customerAddress: String? = null,
 
 	@field:SerializedName("product_id")
-	val productId: Int? = null,
+	var productId: Int? = null,
 
 	@field:SerializedName("rating")
-	val rating: Double? = null,
+	var rating: Double? = null,
 
 	@field:SerializedName("comment")
-	val comment: String? = null,
+	var comment: String? = null,
 
 	@field:SerializedName("customer_name")
-	val customerName: String? = null,
+	var customerName: String? = null,
 
 	@field:SerializedName("customer_id")
-	val customerId: Int? = null
+	var customerId: Int? = null
 ) : Parcelable

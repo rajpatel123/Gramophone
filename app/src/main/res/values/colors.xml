@@ -42,4 +42,6 @@
     <color name="transparent_dark">#90000000</color>
     <color name="colorTransparent">#00000000</color>
     <color name="pink">#FEE7E3</color>
+    <color name="blue_20">#D6E3FF</color>
+    <color name="blue_happy">#1F5385</color>
 </resources>

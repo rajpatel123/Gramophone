@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class ReviewList(
 
 	@field:SerializedName("data")
-	val data: List<DataItem?>? = null,
+	val data: List<ReviewListItem?>? = null,
 
 	@field:SerializedName("meta")
 	val meta: Meta? = null,
