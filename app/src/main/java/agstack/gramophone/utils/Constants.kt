@@ -186,6 +186,10 @@ object Constants {
     const val Query = "query"
     const val need_help = "Need help while adding Address"
 
+    //Product
+    const val PRODUCTREVIEWDATA= "PRODUCTREVIEWDATA"
+    const val PRODUCTID= "PRODUCTID"
+
 
     /**
      * For Broadcast

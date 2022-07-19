@@ -38,6 +38,8 @@ class ProductDetailsViewModel @Inject constructor(
         Log.d("Open Dialog", "On Ratingclick")
     }
 
+
+
     fun getBundleData() {
         val bundle = getNavigator()?.getBundle()
         if (bundle?.getParcelable<ProductData>("product") != null) {
@@ -171,6 +173,11 @@ class ProductDetailsViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+
+    fun viewAllReviewsOnClick(){
+        getNavigator()?.openViewAllReviewRatingsActivity(productId,productReviewsData.get())
     }
 }
 
