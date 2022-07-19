@@ -80,7 +80,7 @@ class VerifyOtpViewModel @Inject constructor(
                         if (responseData?.gp_api_response_data?.is_address == true){
                             getNavigator()?.moveToNext(HomeActivity::class.java)
                         }else{
-                            getNavigator()?.moveToNext(StateListActivity::class.java)
+                            getNavigator()?.moveToNext(HomeActivity::class.java)
                         }
                         getNavigator()?.onSuccess(responseData?.gp_api_message)
                     }
