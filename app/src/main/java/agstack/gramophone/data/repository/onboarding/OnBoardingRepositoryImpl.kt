@@ -1,8 +1,15 @@
 package agstack.gramophone.data.repository.onboarding
 
+import agstack.gramophone.data.model.UpdateLanguageRequestModel
+import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.di.GramAppService
+import agstack.gramophone.ui.address.model.AddressRequestModel
+import agstack.gramophone.ui.address.model.AddressResponseModel
+import agstack.gramophone.ui.address.model.StateResponseModel
+import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
+import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
@@ -36,6 +43,42 @@ class OnBoardingRepositoryImpl @Inject constructor(
         validateOtp
     }
 
+    override suspend fun resendOTP(sendOtpRequestModel: SendOtpRequestModel):Response<SendOtpResponseModel> = withContext(
+        Dispatchers.IO) {
+        val resendOtp = gramAppService.resendOTP(sendOtpRequestModel)
+        resendOtp
+    }
 
+    override suspend fun getLanguage(): Response<LanguageListResponse> = withContext(
+        Dispatchers.IO) {
+        val languageList = gramAppService.getLanguage()
+        languageList
+    }
+
+
+    override suspend fun updateLanguage(updateLanguageRequestModel: UpdateLanguageRequestModel):Response<UpdateLanguageResponseModel> = withContext(
+        Dispatchers.IO) {
+        val resendOtp = gramAppService.updateLanguage(updateLanguageRequestModel)
+        resendOtp
+    }
+
+    override suspend fun getAddressDataByType(type:String, addressRequestModel: AddressRequestModel ):Response<StateResponseModel> = withContext(
+        Dispatchers.IO){
+        val resendOtp = gramAppService.getAddressData(type , addressRequestModel)
+        resendOtp
+    }
+
+    override suspend fun getDistrict(type:String, addressRequestModel: AddressRequestModel ):Response<AddressResponseModel> = withContext(
+        Dispatchers.IO){
+        val resendOtp = gramAppService.getDistrict(type , addressRequestModel)
+        resendOtp
+    }
+
+
+    override suspend fun updateAddress(updateAddressRequestModel: UpdateAddressRequestModel):Response<SendOtpResponseModel> = withContext(
+        Dispatchers.IO){
+        val addressUpdate = gramAppService.updateAddress(updateAddressRequestModel)
+        addressUpdate
+    }
 
 }

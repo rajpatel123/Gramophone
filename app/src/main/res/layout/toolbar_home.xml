@@ -19,7 +19,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_toStartOf="@+id/iv_notification"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
         android:contentDescription="@string/image"
+        android:focusable="true"
         android:src="@drawable/ic_search" />
 
     <ImageView
@@ -28,7 +31,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_toStartOf="@+id/iv_favourite"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
         android:contentDescription="@string/image"
+        android:focusable="true"
         android:src="@drawable/ic_notifications" />
 
     <ImageView
@@ -37,7 +43,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_toStartOf="@+id/iv_cart"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
         android:contentDescription="@string/image"
+        android:focusable="true"
         android:src="@drawable/ic_favorite" />
 
     <ImageView
@@ -45,6 +54,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
         android:contentDescription="@string/image"
+        android:focusable="true"
         android:src="@drawable/ic_cart" />
 </RelativeLayout>

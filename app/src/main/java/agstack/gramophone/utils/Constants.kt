@@ -6,6 +6,11 @@ import android.content.Context
 
 object Constants {
 
+    const val HELP_PHONE_NUMBER: String="customer_support_no"
+    const val LANG: String="lang"
+    const val PAGE_URL: String="url"
+    const val PAGE_TITLE: String="title"
+
 
     val NORMAL:Int = 0
     val ALL:Int =1
@@ -30,6 +35,7 @@ object Constants {
     const val PROFILE_TYPE = "type"
     const val FARMER = "farmer"
     const val TRADER = "trader"
+    const val RESOLVE_HINT = 11
 
 
     const val Category_Id_key = "category_id"
@@ -92,8 +98,10 @@ object Constants {
     const val MOBILE_NO = "mobileNo"
     const val ReferralCode = "referral_code"
     const val Otp = "otp"
-    const val GP_API_STATUS= "GP_1"
-    const val AUTHORIZATION= "Authorization"
+    const val GP_API_STATUS = "GP_1"
+    const val AUTHORIZATION = "Authorization"
+    const val STATE_NAME = "state_name"
+    const val OTP_REFERENCE = "otp_ref"
 
     //MyFarm
     const val FarmsStatusActive = "active"
@@ -109,7 +117,8 @@ object Constants {
     const val Crop_sowing_date = "crop_sowing_date"
     const val Farm_id = "farm_id"
     const val UUID = "uuid"
-    const val State = "state"
+    const val STATE = "state"
+    const val STATE_LIST = "state_list"
     const val FarmLat = "farm_lat"
     const val FarmLng = "farm_lng"
 

@@ -15,7 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_with_back_arrow_and_help" />
+
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScroll"
+            android:layout_below="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -23,18 +29,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <include
-                    android:id="@+id/toolbar"
-                    layout="@layout/toolbar_with_back_arrow_and_help" />
-
                 <View
                     android:id="@+id/toolbar_separator"
                     android:layout_width="match_parent"
                     android:layout_height="8dp"
-                    android:layout_below="@+id/toolbar"
                     android:background="#F2F4F7"
-                    android:visibility="visible"
-                    app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+                    android:visibility="visible" />
 
                 <RelativeLayout
                     android:id="@+id/rel_cod"
@@ -454,7 +454,7 @@
                     android:layout_height="64dp"
                     android:layout_below="@+id/amount_separator"
                     android:layout_margin="@dimen/_8sdp"
-                    android:background="@drawable/rounded_corner_4_solid_transparent_green_stroke_gray"
+                    android:background="@drawable/rounded_corner_6_solid_transparent_green_stroke_gray"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/_12sdp"

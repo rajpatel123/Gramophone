@@ -1,13 +1,19 @@
 package agstack.gramophone.ui.cart.adapter
 
 
+import agstack.gramophone.R
 import agstack.gramophone.databinding.ItemCartBinding
+import agstack.gramophone.ui.cart.model.CartItem
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import javax.inject.Singleton
 
-class CartAdapter :
+@Singleton
+class CartAdapter(cartItemList: List<CartItem>) :
     RecyclerView.Adapter<CartAdapter.CustomViewHolder>() {
+    var cartList = cartItemList
+    var selectedProduct: ((CartItem) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         return CustomViewHolder(
@@ -15,12 +21,29 @@ class CartAdapter :
         )
     }
 
-    override fun onBindViewHolder(holder: CustomViewHolder, i: Int) {
+    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+        holder.binding.model = cartList[position]
+        holder.binding.ivProduct.setOnClickListener {
 
+            selectedProduct?.invoke(cartList[position])
+        }
     }
 
     override fun getItemCount(): Int {
-        return /*languageList.size*/3
+        return cartList.size
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+    fun updateAdapter(cartItems : List<CartItem>) {
+        cartList = cartItems
+        notifyDataSetChanged();
     }
 
     inner class CustomViewHolder(var binding: ItemCartBinding) :

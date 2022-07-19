@@ -14,6 +14,50 @@
     <string name="select_language_marathi">मराठी</string>
     <string name="select_language_gujarati">ગુજરાતી</string>
 
+
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="resource_img_icon">resource_img_icon</string>
+    <string name="welcome_msg">ग्रामोफोन में आपका स्वागत है</string>
+    <string name="start_msg">युक्ति: अधिसूचना के लिए अपने व्हाट्सएप नंबर का प्रयोग करें</string>
+    <string name="enter_mobile_lebel">मोबाइल नंबर दर्ज करें</string>
+    <string name="policy_txt">आप हमारी सहमति से सहमत हैं जारी रखें</string>
+    <string name="policy">नीति</string>
+    <string name="submit">प्रस्तुत करना</string>
+    <string name="changeno">फ़ोन नंबर बदलें</string>
+    <string name="connected">जुड़े रहें</string>
+    <string name="connected_sub_msg"><![CDATA[सर्वोत्तम कृषि तकनीक प्राप्त करें कृषि विशेषज्ञों और किसानों से जुड़ें]]></string>
+    <string name="delivery_sub_msg"><![CDATA[सर्वोत्तम गुणवत्ता वाले बीज, फसल सुरक्षा, फसल पोषण और कृषि उपकरण खरीदें]]></string>
+    <string name="delivery">आपके दरवाजे पर डिलीवरी</string>
+    <string name="midea">नवीनतम अपडेट प्राप्त करें</string>
+    <string name="midea_sub_msg"><![CDATA[एक ही स्थान पर मौसम की अपडेट, मंडी की कीमतें और अन्य कृषि समाचार प्राप्त करें]]></string>
+    <string name="finish">समाप्त</string>
+    <string name="_continue">इसे जारी रखें</string>
+    <string name="enter_your_name">अपना नाम दर्ज करें</string>
+    <string name="login">लॉग इन करें</string>
+    <string name="eng">अंग्रेज़ी</string>
+    <string name="terms">शर्तें</string>
+    <string name="and"><![CDATA[और]]></string>
+    <string name="otp_hint">"6 अंकों का कोड दर्ज करें जिसे हमने भेजा है"</string>
+    <string name="enter_otp">ओटीपी दर्ज करें</string>
+    <string name="please_enter_otp">कृपया ओटीपी दर्ज करें</string>
+    <string name="resend_otp">"फिर से भेजें "</string>
+    <string name="resend">"ओटीपी पुनः भेजें "</string>
+    <string name="no_internet">"कोई इंटरनेट कनेक्शन नहीं है "</string>
+    <string name="privacy">गोपनीयता नीति</string>
+    <string name="talk_to_customer_care">हमारे कस्टमर केयर एक्जीक्यूटिव से बात करें</string>
+    <string name="call_now">अभी कॉल करें</string>
+    <string name="apply_referral">रेफरल कोड लागू करें</string>
+    <string name="terms_n_conditions"><![CDATA[नियम एवं शर्तें]]></string>
+    <string name="get_help_call">कॉल के माध्यम से सहायता प्राप्त करें</string>
+    <string name="apply">इसे लागू करें</string>
+    <string name="terms_of_use">उपयोग की शर्तें</string>
+    <string name="have_referral">क्या आपके पास रेफरल कोड है?</string>
+    <string name="select_language">अपनी भाषा का चयन करें</string>
+    <string name="enter_referral_code">रेफ़रल कोड दर्ज करें (वैकल्पिक)</string>
+    <string name="enter_referral_code_hint">रेफरल कोड दर्ज करें</string>
+    <string name="help">सहायता</string>
+    <string name="get_help">सहायता लें</string>
 </resources>
 
 

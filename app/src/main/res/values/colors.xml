@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="off_white">#EBF1FF</color>
     <color name="grey">#CAC8C8</color>
+    <color name="btn_disabled">#BAC2D2</color>
     <color name="dark_disabled">#4F5E5E</color>
     <color name="blue">#1B30BE</color>
     <color name="brand_color">#0638A0</color>
@@ -41,6 +42,9 @@
     <color name="grey_border">#E0E4EC</color>
     <color name="transparent_dark">#90000000</color>
     <color name="colorTransparent">#00000000</color>
+    <color name="referral_text_bg">#FCF3CC</color>
+    <color name="have_referral">#97651A</color>
+    <color name="state_bg">#EBF5FF</color>
     <color name="pink">#FEE7E3</color>
     <color name="blue_20">#D6E3FF</color>
     <color name="blue_happy">#1F5385</color>
