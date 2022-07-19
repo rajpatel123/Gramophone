@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="model"
             type="agstack.gramophone.ui.cart.model.CartItem" />
@@ -15,7 +17,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/iv_product"
+            android:id="@+id/ivProduct"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_100sdp"
             android:layout_alignParentTop="true"
@@ -25,13 +27,13 @@
             app:product_image="@{model.product_image}" />
 
         <TextView
-            android:id="@+id/tv_product_name"
+            android:id="@+id/tvProductName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="26dp"
             android:layout_marginEnd="@dimen/_8sdp"
-            android:layout_toEndOf="@+id/iv_product"
+            android:layout_toEndOf="@+id/ivProduct"
             android:ellipsize="end"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
@@ -46,11 +48,11 @@
             android:id="@+id/sku"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_product_name"
+            android:layout_below="@+id/tvProductName"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="6dp"
             android:layout_marginEnd="@dimen/_8sdp"
-            android:layout_toEndOf="@+id/iv_product"
+            android:layout_toEndOf="@+id/ivProduct"
             android:ellipsize="end"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
@@ -61,10 +63,10 @@
             android:textSize="13sp" />
 
         <TextView
-            android:id="@+id/tv_sku_weight"
+            android:id="@+id/tvSkuWeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_product_name"
+            android:layout_below="@+id/tvProductName"
             android:layout_marginTop="6dp"
             android:layout_toEndOf="@+id/sku"
             android:ellipsize="end"
@@ -72,18 +74,19 @@
             android:gravity="center_vertical"
             android:lineSpacingExtra="-2sp"
             android:maxLines="1"
+
             android:text="@{model.product_sku}"
-            tools:text="200 Gms"
             android:textColor="@color/blakish"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            tools:text="200 Gms" />
 
         <TextView
-            android:id="@+id/tv_selling_price"
+            android:id="@+id/tvSellingPrice"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_22sdp"
             android:layout_below="@+id/sku"
             android:layout_marginStart="@dimen/_8sdp"
-            android:layout_toEndOf="@+id/iv_product"
+            android:layout_toEndOf="@+id/ivProduct"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
@@ -93,28 +96,28 @@
             tools:text="₹ 900" />
 
         <TextView
-            android:id="@+id/tv_actual_price"
+            android:id="@+id/tvActualPrice"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_22sdp"
             android:layout_below="@+id/sku"
             android:layout_marginStart="@dimen/_5sdp"
-            android:layout_toEndOf="@+id/tv_selling_price"
+            android:layout_toEndOf="@+id/tvSellingPrice"
             android:background="@drawable/strike_through"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
-            tools:text="₹ 1290"
             android:text="@{model.currency.concat(@string/space).concat(model.price)}"
             android:textColor="@color/gray_strike_through"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            tools:text="₹ 1290" />
 
         <TextView
-            android:id="@+id/tv_discount_percent"
+            android:id="@+id/tvDiscountPercent"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_22sdp"
             android:layout_below="@+id/sku"
             android:layout_marginStart="@dimen/_5sdp"
-            android:layout_toEndOf="@+id/tv_actual_price"
+            android:layout_toEndOf="@+id/tvActualPrice"
             android:background="@drawable/strike_through"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
@@ -124,72 +127,79 @@
             android:textSize="13sp" />
 
         <TextView
-            android:id="@+id/tv_offers_applied"
+            android:id="@+id/tvOffersApplied"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_selling_price"
+            android:layout_below="@+id/tvSellingPrice"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_2sdp"
-            android:layout_toEndOf="@+id/iv_product"
+            android:layout_toEndOf="@+id/ivProduct"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="-2sp"
-            android:text="1 Offers applied"
+            android:text="@{String.valueOf(model.offer_applied.size()).concat(@string/offers_applied)}"
             android:textColor="@color/green_dark"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            tools:text="1 Offers applied" />
 
         <LinearLayout
-            android:id="@+id/linear_qty"
+            android:id="@+id/llQty"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="32dp"
-            android:layout_below="@+id/tv_offers_applied"
+            android:layout_below="@+id/tvOffersApplied"
             android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/iv_product"
+            android:layout_toEndOf="@+id/ivProduct"
             android:background="@drawable/rounded_corner_4_solid_stroke_gray"
             android:gravity="center"
             android:orientation="horizontal">
 
             <FrameLayout
+                android:id="@+id/frSubtract"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corner_4_solid_stroke_gray_front_corner">
 
                 <ImageView
-                    android:id="@+id/iv_minus"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
                     android:contentDescription="@string/image"
+                    android:focusable="true"
                     android:src="@drawable/ic_minus" />
 
             </FrameLayout>
 
             <TextView
-                android:id="@+id/tv_quantity"
+                android:id="@+id/tvQuantity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="center"
                 android:maxLength="3"
-                tools:text="01"
                 android:text="@{model.quantity}"
                 android:textColor="@color/gray"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tools:text="01" />
 
             <FrameLayout
+                android:id="@+id/frAdd"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corner_4_solid_stroke_gray_end_corner">
 
                 <ImageView
-                    android:id="@+id/iv_plus"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
                     android:contentDescription="@string/image"
+                    android:focusable="true"
                     android:src="@drawable/ic_plus" />
 
             </FrameLayout>
@@ -197,21 +207,25 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/ivDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_offers_applied"
+            android:layout_below="@+id/tvOffersApplied"
             android:layout_alignParentEnd="true"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
             android:contentDescription="@string/image"
+            android:focusable="true"
             android:src="@drawable/ic_delete" />
 
         <TextView
-            android:id="@+id/tv_free_give"
+            android:id="@+id/tvFreeGive"
             android:layout_width="match_parent"
             android:layout_height="26dp"
-            android:layout_below="@+id/linear_qty"
+            android:layout_below="@+id/llQty"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
@@ -223,19 +237,23 @@
             android:paddingEnd="14dp"
             android:text="This item is added as a free giveaway."
             android:textSize="11sp"
-            app:drawableStartCompat="@drawable/ic_offer" />
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/ic_offer"
+            tools:visibility="visible" />
 
         <RelativeLayout
-            android:id="@+id/rl_gift"
+            android:id="@+id/rlGift"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_below="@+id/tv_free_give"
+            android:layout_below="@+id/tvFreeGive"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/rounded_corner_bottom_16_solid_white_stroke_gray">
+            android:background="@drawable/rounded_corner_bottom_16_solid_white_stroke_gray"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <FrameLayout
-                android:id="@+id/frame_free_give"
+                android:id="@+id/frFreeGive"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_centerVertical="true"
@@ -252,13 +270,13 @@
             </FrameLayout>
 
             <TextView
-                android:id="@+id/tv_gift_name"
+                android:id="@+id/tvGiftName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_12sdp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:layout_toEndOf="@+id/frame_free_give"
+                android:layout_toEndOf="@+id/frFreeGive"
                 android:ellipsize="end"
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="top"
@@ -270,12 +288,12 @@
                 android:translationY="-0.27sp" />
 
             <TextView
-                android:id="@+id/tv_gift_price"
+                android:id="@+id/tvGiftPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_22sdp"
-                android:layout_below="@+id/tv_gift_name"
+                android:layout_below="@+id/tvGiftName"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:layout_toEndOf="@+id/frame_free_give"
+                android:layout_toEndOf="@+id/frFreeGive"
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="1sp"
@@ -284,12 +302,12 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/tv_gift_actual_price"
+                android:id="@+id/tvGiftActualPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_22sdp"
-                android:layout_below="@+id/tv_gift_name"
+                android:layout_below="@+id/tvGiftName"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:layout_toEndOf="@+id/tv_gift_price"
+                android:layout_toEndOf="@+id/tvGiftPrice"
                 android:background="@drawable/strike_through"
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="center_vertical"
@@ -299,12 +317,12 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/tv_gift_status"
+                android:id="@+id/tvGiftStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_20sdp"
-                android:layout_below="@+id/tv_gift_name"
+                android:layout_below="@+id/tvGiftName"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:layout_toEndOf="@+id/tv_gift_actual_price"
+                android:layout_toEndOf="@+id/tvGiftActualPrice"
                 android:background="@drawable/btn_rounded_corner_16_solid_orange"
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="center_vertical"
@@ -322,7 +340,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/rl_gift"
+            android:layout_below="@+id/rlGift"
             android:layout_marginTop="16dp"
             android:background="@color/gray_stroke" />
     </RelativeLayout>

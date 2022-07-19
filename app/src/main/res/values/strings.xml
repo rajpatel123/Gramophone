@@ -90,6 +90,7 @@
     <string name="some_thing_went_wrong">Something went wrong</string>
     <string name="network_failure">Network failure</string>
     <string name="space">" "</string>
-    <string name="sku">"SKU: "</string>
+    <string name="sku">SKU:&#160;</string>
+    <string name="offers_applied">&#160;Offers applied</string>
 
 </resources>

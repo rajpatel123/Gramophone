@@ -41,9 +41,17 @@ class CartAdapter(cartItemList: List<CartItem>) :
         return position
     }
 
-    fun updateAdapter(cartItems : List<CartItem>) {
+    fun updateAdapter(cartItems: List<CartItem>) {
         cartList = cartItems
         notifyDataSetChanged();
+    }
+
+    class OnClickListener(
+        val productListener: (cartItem: CartItem) -> Unit,
+//        val removeListener: (productId: String) -> Unit
+    ) {
+        fun onProductClick(cartItem: CartItem) = productListener(cartItem)
+        fun onRemoveClick(cartItem: CartItem) = productListener(cartItem)
     }
 
     inner class CustomViewHolder(var binding: ItemCartBinding) :

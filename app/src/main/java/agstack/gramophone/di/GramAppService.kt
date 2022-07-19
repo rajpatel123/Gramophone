@@ -1,6 +1,7 @@
 package agstack.gramophone.di
 
 import agstack.gramophone.ui.cart.model.CartDataResponse
+import agstack.gramophone.ui.cart.model.RemoveCartItemResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductDataResponse
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
@@ -13,6 +14,7 @@ import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 
@@ -41,4 +43,8 @@ interface GramAppService {
     @GET("api/v5/cart/get-cart")
     @JvmSuppressWildcards
     suspend fun getCartData(): Response<CartDataResponse>
+
+    @DELETE("api/v5/cart/remove-from-cart")
+    @JvmSuppressWildcards
+    suspend fun removeCartItem(): Response<RemoveCartItemResponse>
 }

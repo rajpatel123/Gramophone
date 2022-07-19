@@ -6,6 +6,7 @@ import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.cart.CartNavigator
 import agstack.gramophone.ui.cart.adapter.CartAdapter
 import agstack.gramophone.ui.cart.model.CartDataResponse
+import agstack.gramophone.ui.cart.model.RemoveCartItemResponse
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import androidx.lifecycle.MutableLiveData
@@ -20,8 +21,8 @@ class CartViewModel @Inject constructor(
     private val productRepository: ProductRepository,
 ) : BaseViewModel<CartNavigator>() {
 
-    val getCartDataResponse: MutableLiveData<ApiResponse<CartDataResponse>> =
-        MutableLiveData()
+    val getCartDataResponse: MutableLiveData<ApiResponse<CartDataResponse>> = MutableLiveData()
+    val removeCartItemResponse: MutableLiveData<ApiResponse<RemoveCartItemResponse>> = MutableLiveData()
 
     fun getCartData() {
         viewModelScope.launch {
@@ -58,4 +59,38 @@ class CartViewModel @Inject constructor(
         }
     }
 
+    fun removeCartItem() {
+        viewModelScope.launch {
+
+            removeCartItemResponse.postValue(ApiResponse.Loading())
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    val response = productRepository.removeCartItem()
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
+                        removeCartItemResponse.postValue(ApiResponse.Success(response.body()!!))
+                    } else {
+                        removeCartItemResponse.postValue(ApiResponse.Error(response.message()))
+                    }
+                } else
+                    removeCartItemResponse.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.no_internet)!!))
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> removeCartItemResponse.postValue(
+                        ApiResponse.Error(
+                            getNavigator()?.getMessage(
+                                R.string.network_failure
+                            )!!
+                        )
+                    )
+                    else -> removeCartItemResponse.postValue(
+                        ApiResponse.Error(
+                            getNavigator()?.getMessage(
+                                R.string.some_thing_went_wrong
+                            )!!
+                        )
+                    )
+                }
+            }
+        }
+    }
 }
