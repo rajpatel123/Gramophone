@@ -10,8 +10,8 @@ import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
 import agstack.gramophone.ui.verifyotp.viewmodel.VerifyOtpViewModel
-import agstack.gramophone.utils.Constants.MOBILE_NO
 import agstack.gramophone.utils.ApiResponse
+import agstack.gramophone.utils.Constants.MOBILE_NO
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View.GONE
@@ -46,7 +46,7 @@ class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOT
                     Toast.makeText(this@VerifyOtpActivity,it.data?.gp_api_message, Toast.LENGTH_LONG).show()
                     val bundle = Bundle()
                     //Add your data from getFactualResults method to bundle
-                    bundle.putString(MOBILE_NO, verifyOtpViewModel.mobileNo)
+
                     openAndFinishActivity(HomeActivity::class.java,bundle)
                 }
                 is ApiResponse.Error -> {
@@ -117,15 +117,16 @@ class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOT
     }
 
     override fun onError(message: String?) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onSuccess(message: String?) {
         Toast.makeText(this@VerifyOtpActivity,message,Toast.LENGTH_LONG).show()
+
     }
 
     override fun onLoading() {
-        TODO("Not yet implemented")
+
     }
 
     override fun onHelpClick(number: String) {
@@ -144,6 +145,10 @@ class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOT
             getSupportFragmentManager(),
             "bottomSheet"
         )
+    }
+
+    override fun <T> moveToNext(clazz: Class<T>) {
+        openAndFinishActivity(clazz, null)
     }
 
     override fun onLanguageUpdate() {

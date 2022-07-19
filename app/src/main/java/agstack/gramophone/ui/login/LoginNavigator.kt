@@ -9,4 +9,5 @@ interface LoginNavigator : BaseNavigator{
     fun openWebView(bundle: Bundle)
     fun openReferralDialog()
     fun referralCodeRemoved()
+    fun moveToNext(bundle: Bundle)
 }

@@ -53,15 +53,24 @@ class LoginViewModel @Inject constructor(
 
     private suspend fun sendOTPCall(sendOtpRequestModel: SendOtpRequestModel) {
 
-        generateOtpResponseModel.postValue(ApiResponse.Loading())
+        getNavigator()?.onLoading()
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
                 val response = onBoardingRepository.sendOTP(sendOtpRequestModel)
 
-                val sendOtpResponseModel = handleOrderResponse(response).data
+                val sendOtpResponseModel = handleLoginResponse(response).data
 
                 if (Constants.GP_API_STATUS.equals(sendOtpResponseModel?.gp_api_status)) {
-                    generateOtpResponseModel.postValue(handleOrderResponse(response))
+
+                    var loginData = handleLoginResponse(response)
+                    val bundle = Bundle()
+                    //Add your data from getFactualResults method to bundle
+                    bundle.putString(Constants.MOBILE_NO,mobileNo)
+                    bundle.putInt(Constants.OTP_REFERENCE,
+                        loginData.data?.gp_api_response_data?.otp_reference_id!!
+                    )
+
+                    getNavigator()?.moveToNext(bundle)
                 }
 
             }  else
@@ -74,7 +83,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun handleOrderResponse(response: Response<SendOtpResponseModel>): ApiResponse<SendOtpResponseModel> {
+    private fun handleLoginResponse(response: Response<SendOtpResponseModel>): ApiResponse<SendOtpResponseModel> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
                 return ApiResponse.Success(resultResponse)

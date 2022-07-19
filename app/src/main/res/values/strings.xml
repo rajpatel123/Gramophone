@@ -110,7 +110,24 @@
     <string name="network_failure">Network failure</string>
     <string name="space">" "</string>
     <string name="sku">"SKU: "</string>
-
+    <string name="select_state">Select your state</string>
+    <string name="other">Other</string>
+    <string name="select_state_error">Please select state</string>
+    <string name="_state">Select State</string>
+    <string name="complete_address">Share your complete address</string>
+    <string name="get_apporopriate_solution">To get more accurate solution</string>
+    <string name="change">Change</string>
+    <string name="_district">District</string>
+    <string name="_tahsil">Tehsil</string>
+    <string name="_village">Village</string>
+    <string name="address">Address</string>
+    <string name="pincode">Pincode</string>
+    <string name="go_to_app">Go to the app</string>
+    <string name="state_required">Please select state</string>
+    <string name="district_required">Please select district</string>
+    <string name="tehsil_required">Please select tehsil</string>
+    <string name="village_required">Please enter village</string>
+    <string name="address_required">Please enter address</string>
 
 
 </resources>

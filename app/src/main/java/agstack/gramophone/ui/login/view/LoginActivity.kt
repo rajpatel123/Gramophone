@@ -11,10 +11,8 @@ import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.viewmodel.LoginViewModel
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.ui.webview.view.WebViewActivity
-import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Constants.RESOLVE_HINT
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.IntentSender
@@ -28,9 +26,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.credentials.Credential
 import com.google.android.gms.auth.api.credentials.HintRequest
@@ -51,81 +47,70 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestMobileNoHint()
-        setupObservers()
-    }
-
-    private fun setupObservers() {
-        loginViewModel.generateOtpResponseModel.observe(this, Observer{
-            when (it) {
-                is ApiResponse.Success -> {
-                    progress.visibility = View.GONE
-                    Toast.makeText(this@LoginActivity,it.data?.gp_api_message,Toast.LENGTH_LONG).show()
-                    val bundle = Bundle()
-                    //Add your data from getFactualResults method to bundle
-                    bundle.putString(Constants.MOBILE_NO, loginViewModel.mobileNo)
-                    openAndFinishActivity(VerifyOtpActivity::class.java,bundle)
-                }
-                is ApiResponse.Error -> {
-                    progress.visibility = View.GONE
-                    Toast.makeText(this@LoginActivity,it.message,Toast.LENGTH_LONG).show()
-                }
-                is ApiResponse.Loading -> {
-                    progress.visibility = View.VISIBLE
-                }
-            }
-        })
 
     }
 
-    override fun getLayoutID(): Int {
-      return R.layout.activity_login
-    }
 
-    override fun getBindingVariable(): Int {
-        return  BR.viewModel
-    }
+         override fun getLayoutID(): Int {
+             return R.layout.activity_login
+         }
 
-    override fun getViewModel(): LoginViewModel {
-        return loginViewModel
-    }
+         override fun getBindingVariable(): Int {
+             return BR.viewModel
+         }
 
-    override fun onHelpClick(number: String) {
-        val bottomSheet = BottomSheetDialog()
-        bottomSheet.customerSupportNumber= number
-        bottomSheet.show(
-            getSupportFragmentManager(),
-            "bottomSheet"
-        )
-    }
-
-    override fun onLanguageChangeClick() {
-        val bottomSheet = LanguageBottomSheetFragment()
-        bottomSheet.setLanguageListener(this)
-        bottomSheet.show(
-            getSupportFragmentManager(),
-            "bottomSheet"
-        )
-    }
-
-    override fun openWebView(bundle: Bundle) {
-        openActivity(WebViewActivity::class.java, bundle)
-    }
+         override fun getViewModel(): LoginViewModel {
+             return loginViewModel
+         }
 
 
-    override fun referralCodeRemoved() {
-        rlHaveReferralCode.visibility = VISIBLE
-        rlAppliedCode.visibility = GONE
-    }
+         override fun onLoading() {
+             progress.visibility = View.VISIBLE
+         }
 
-    override fun onSuccess(message: String?) {
-        Toast.makeText(this@LoginActivity,message,Toast.LENGTH_LONG).show()
-    }
+         override fun onHelpClick(number: String) {
+             val bottomSheet = BottomSheetDialog()
+             bottomSheet.customerSupportNumber = number
+             bottomSheet.show(
+                 getSupportFragmentManager(),
+                 "bottomSheet"
+             )
+         }
 
-    override fun openReferralDialog() {
-        //Inflate the dialog with custom view
-        val mDialogView = LayoutInflater.from(this).inflate(R.layout.activity_referral_dialog, null)
-        //AlertDialogBuilder
-        val mBuilder = AlertDialog.Builder(this)
+         override fun onLanguageChangeClick() {
+             val bottomSheet = LanguageBottomSheetFragment()
+             bottomSheet.setLanguageListener(this)
+             bottomSheet.show(
+                 getSupportFragmentManager(),
+                 "bottomSheet"
+             )
+         }
+
+         override fun openWebView(bundle: Bundle) {
+             openActivity(WebViewActivity::class.java, bundle)
+         }
+
+
+         override fun referralCodeRemoved() {
+             rlHaveReferralCode.visibility = VISIBLE
+             rlAppliedCode.visibility = GONE
+         }
+
+         override fun moveToNext(bundle: Bundle) {
+             progress.visibility = View.GONE
+             openAndFinishActivity(VerifyOtpActivity::class.java, bundle)
+         }
+
+         override fun onSuccess(message: String?) {
+             Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
+         }
+
+         override fun openReferralDialog() {
+             //Inflate the dialog with custom view
+             val mDialogView =
+                 LayoutInflater.from(this).inflate(R.layout.activity_referral_dialog, null)
+             //AlertDialogBuilder
+             val mBuilder = AlertDialog.Builder(this)
             .setView(mDialogView)
         //show dialog
         val mAlertDialog = mBuilder.show()

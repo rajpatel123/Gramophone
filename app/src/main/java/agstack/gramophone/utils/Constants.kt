@@ -95,6 +95,8 @@ object Constants {
     const val Otp = "otp"
     const val GP_API_STATUS = "GP_1"
     const val AUTHORIZATION = "Authorization"
+    const val STATE_NAME = "state_name"
+    const val OTP_REFERENCE = "otp_ref"
 
     //MyFarm
     const val FarmsStatusActive = "active"
@@ -110,7 +112,8 @@ object Constants {
     const val Crop_sowing_date = "crop_sowing_date"
     const val Farm_id = "farm_id"
     const val UUID = "uuid"
-    const val State = "state"
+    const val STATE = "state"
+    const val STATE_LIST = "state_list"
     const val FarmLat = "farm_lat"
     const val FarmLng = "farm_lng"
 

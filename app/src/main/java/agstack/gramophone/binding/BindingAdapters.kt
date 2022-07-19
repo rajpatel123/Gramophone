@@ -22,6 +22,18 @@ fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
     }
 }
 
+
+@BindingAdapter("state_image")
+fun bindStateImage(view: ImageView, imageUrl: String?) {
+    if (!imageUrl.isNullOrEmpty()) {
+        Glide.with(view.context)
+            .load(imageUrl)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(view)
+    }
+}
+
+
 @BindingAdapter(value = ["product_image", "error"], requireAll = false)
 fun loadImage(view: ImageView, profileImage: String, error: Int) {
     Glide.with(view.context)

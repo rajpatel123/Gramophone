@@ -166,9 +166,13 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.9'
 
+    //CircularImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    implementation 'com.github.arcadefire:nice-spinner:1.4.4'
     /*//youtube
     implementation project(':YouTubeAndroidPlayerApi')*/
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
 
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.13.+"
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'

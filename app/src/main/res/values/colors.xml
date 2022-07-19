@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="off_white">#EBF1FF</color>
     <color name="grey">#CAC8C8</color>
+    <color name="btn_disabled">#BAC2D2</color>
     <color name="dark_disabled">#4F5E5E</color>
     <color name="blue">#1B30BE</color>
     <color name="brand_color">#0638A0</color>
@@ -43,4 +44,5 @@
     <color name="colorTransparent">#00000000</color>
     <color name="referral_text_bg">#FCF3CC</color>
     <color name="have_referral">#97651A</color>
+    <color name="state_bg">#EBF5FF</color>
 </resources>

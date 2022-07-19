@@ -5,6 +5,8 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.model.UpdateLanguageRequestModel
 import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
+import agstack.gramophone.ui.address.view.StateListActivity
+import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
@@ -45,7 +47,9 @@ class VerifyOtpViewModel @Inject constructor(
         if (otp.isNullOrEmpty()) {
             validateOtpResponseModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.please_enter_otp)!!))
         } else {
-            val validateOtpRequestModel = ValidateOtpRequestModel(getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).toString(), otp)
+            val validateOtpRequestModel = ValidateOtpRequestModel(getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).toString(), otp,
+                getNavigator()?.getBundle()?.getInt(Constants.OTP_REFERENCE)!!
+            )
              validateOtp(validateOtpRequestModel)
         }
     }
@@ -64,11 +68,21 @@ class VerifyOtpViewModel @Inject constructor(
                             responseData?.gp_api_response_data?.token
                         )
 
+                        SharedPreferencesHelper.instance?.putString(
+                            SharedPreferencesKeys.UUIdKey,
+                            responseData?.gp_api_response_data?.uuid
+                        )
                         SharedPreferencesHelper.instance?.putBoolean(
                             SharedPreferencesKeys.logged_in,
                             true
                         )
-                        validateOtpResponseModel.postValue(ApiResponse.Success(responseData!!))
+
+                        if (responseData?.gp_api_response_data?.is_address == true){
+                            getNavigator()?.moveToNext(HomeActivity::class.java)
+                        }else{
+                            getNavigator()?.moveToNext(StateListActivity::class.java)
+                        }
+                        getNavigator()?.onSuccess(responseData?.gp_api_message)
                     }
                 }  else
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
