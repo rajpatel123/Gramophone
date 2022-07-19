@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 
-internal class ProductImagesAdapter(
+public  class ProductImagesAdapter(
     supportFragmentManager: FragmentManager,
     private val productImages: List<String?>
 ) : FragmentPagerAdapter(supportFragmentManager){

@@ -2,17 +2,17 @@ package agstack.gramophone.ui.home.product.activity
 
 import agstack.gramophone.BR
 import agstack.gramophone.databinding.ItemAvailableOffersBinding
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuOfferItem
+import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ProductSKUOfferAdapter(SKUOfferList: ArrayList<ProductSkuOfferItem?>) :
+class ProductSKUOfferAdapter(SKUOfferList: ArrayList<PromotionListItem?>) :
     RecyclerView.Adapter<ProductSKUOfferAdapter.CustomViewHolder>() {
     var mSKUOfferList = SKUOfferList
     lateinit var mContext: Context
-    var selectedProduct: ((ProductSkuOfferItem) -> Unit)? = null
+    var selectedProduct: ((PromotionListItem) -> Unit)? = null
     var lastSelectPosition: Int = 0
 
 
@@ -25,7 +25,7 @@ class ProductSKUOfferAdapter(SKUOfferList: ArrayList<ProductSkuOfferItem?>) :
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
 
-        var model: ProductSkuOfferItem = mSKUOfferList[position]!!
+        var model: PromotionListItem = mSKUOfferList[position]!!
         holder.binding.setVariable(BR.model, model)
         val mBinding = holder.binding as ItemAvailableOffersBinding
         mBinding.radioBtn.setOnClickListener {

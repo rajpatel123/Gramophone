@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
@@ -124,6 +125,10 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
     override fun getMessage(stringResourceId: Int): String {
        return getString(stringResourceId)
+    }
+
+    override fun showToast(stringResourceId: Int) {
+        Toast.makeText(this,getString(stringResourceId),Toast.LENGTH_LONG).show()
     }
 
     override fun onError(message: String?) {

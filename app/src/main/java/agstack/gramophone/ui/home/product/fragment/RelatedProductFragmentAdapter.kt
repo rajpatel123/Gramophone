@@ -1,29 +1,44 @@
 package agstack.gramophone.ui.home.product.fragment
 
 
-import agstack.gramophone.databinding.FragmentRelatedProductBinding
+import agstack.gramophone.BR
 import agstack.gramophone.databinding.ItemRelatedProductFragmentBinding
+import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class RelatedProductFragmentAdapter :
+class RelatedProductFragmentAdapter(relatedProductItemList: ArrayList<RelatedProductItem?>) :
     RecyclerView.Adapter<RelatedProductFragmentAdapter.CustomViewHolder>() {
+    var mRelatedProductItemList = relatedProductItemList
+    lateinit var mContext: Context
+    var selectedProduct: ((RelatedProductItem) -> Unit)? = null
+
+
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
+        mContext = viewGroup.context
         return CustomViewHolder(
-         ItemRelatedProductFragmentBinding.inflate(LayoutInflater.from(viewGroup.context))
+            ItemRelatedProductFragmentBinding.inflate(LayoutInflater.from(viewGroup.context))
         )
     }
 
-    override fun onBindViewHolder(holder: CustomViewHolder, i: Int) {
+    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+
+        var model: RelatedProductItem = mRelatedProductItemList[position]!!
+        holder.binding.setVariable(BR.model, model)
+        val mBinding = holder.binding as ItemRelatedProductFragmentBinding
+        mBinding.relatedProdDetailsContainer.setOnClickListener{
+            selectedProduct?.invoke(model)
+        }
 
     }
 
     override fun getItemCount(): Int {
-        return 3
+        return mRelatedProductItemList.size
     }
 
     inner class CustomViewHolder(var binding: ItemRelatedProductFragmentBinding) :
         RecyclerView.ViewHolder(binding.root)
 }
-

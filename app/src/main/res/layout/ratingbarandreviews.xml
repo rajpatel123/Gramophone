@@ -10,7 +10,7 @@
         <import type="android.view.View" />
 
         <variable
-            name="pdvm"
+            name="rvm"
             type="agstack.gramophone.ui.home.product.activity.ProductDetailsViewModel">
 
 
@@ -18,19 +18,21 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/ll_personal_details"
+            android:id="@+id/ll_total_ratings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/white_silver_gradient"
             android:orientation="horizontal"
-            android:padding="@dimen/_24sdp"
-            android:weightSum="10">
+            android:padding="@dimen/_20sdp"
+            android:weightSum="10"
+            app:layout_constraintBottom_toTopOf="@+id/llRateThisProduct"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -194,7 +196,8 @@
                         style="@style/TextSize20Sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="3.5" />
+                        android:hint="2.5"
+                        android:text="@{rvm.productReviewsData.rating.totalRating.toString()}" />
 
                     <TextView
                         android:id="@+id/tv_outoftotal"
@@ -220,19 +223,22 @@
                     android:rating="5"
                     android:scaleX=".8"
                     android:scaleY=".8"
-
+                    doubleToFloatRating = "@{rvm.productReviewsData.rating.totalRating}"
                     android:stepSize="0.1"
                     android:theme="@style/RatingBar"
                     android:transformPivotX="0dp"
-                    android:transformPivotY="0dp" />
+                    android:transformPivotY="0dp"
+
+                    />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rating_stars_all"
                     android:fontFamily="@font/manrope_bold"
+                    android:hint="Based on 38 reviews"
                     android:padding="@dimen/_2sdp"
-                    android:text="Based on 38 reviews"
+                    android:text="@{@string/basedon+` `+rvm.productReviewsData.rating.totalReview+` `+@string/reviews}" />
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_12sdp" />
 
@@ -242,25 +248,148 @@
         </LinearLayout>
 
 
+        <LinearLayout
+            android:id="@+id/llRateThisProduct"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150sdp"
+            android:background="@color/blue_20"
+            android:padding="@dimen/_20sdp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/ll_total_ratings">
+
+
+            <TextView
+                style="@style/TextSize18Sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+                android:text="@string/ratethisproduct"
+                android:textColor="@color/brand_color" />
+
+            <TextView
+                style="@style/TextSize14Sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:layout_marginBottom="@dimen/_23sdp"
+                android:gravity="center"
+                android:text="@string/yourratingmatters"
+                android:textColor="@color/gray" />
+
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.45" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_selfRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_35sdp"
+            android:layout_marginRight="@dimen/_35sdp"
+            android:background="@drawable/rounded_corner_with_grey_color"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{ ()-> rvm.onSelfRatingClick() }"
+            app:layout_constraintTop_toTopOf="@id/guideline">
+
+
+            <RatingBar
+
+                android:id="@+id/ratingbar_self_rating_stars"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llrating_all"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:isIndicator="true"
+                android:max="5"
+                android:numStars="5"
+                android:rating="0"
+                android:scaleX="1"
+                android:scaleY="1"
+                android:stepSize="1"
+                android:theme="@style/RatingBar"
+                android:transformPivotX="0dp"
+                android:transformPivotY="0dp" />
+
+
+            <View
+                android:id="@+id/v1_separator"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_below="@+id/tv_inclusive"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="#F2F4F7" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/TextSize14Sp"
+                    android:textColor="@color/blue_happy"
+                    android:id="@+id/tv_nothappy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:padding="@dimen/_8sdp"
+                    android:text="@string/nothappy"></TextView>
+
+                <TextView
+                    style="@style/TextSize14Sp"
+                    android:textColor="@color/blue_happy"
+                    android:id="@+id/tv_veryhappy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:padding="@dimen/_8sdp"
+                    android:text="@string/veryhappy"></TextView>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/v2_separator"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            app:layout_constraintTop_toBottomOf="@+id/ll_selfRating"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:background="#F2F4F7" />
+
+
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_related_products"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:id="@+id/rv_reviews_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_25sdp"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:scrollbars="vertical"
-            tools:itemCount="3"
-            tools:listitem="@layout/rating_review_item"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/v2_separator"
+            tools:itemCount="2"
+            tools:listitem="@layout/rating_review_item">
 
 
         </androidx.recyclerview.widget.RecyclerView>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

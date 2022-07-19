@@ -45,4 +45,7 @@
     <color name="referral_text_bg">#FCF3CC</color>
     <color name="have_referral">#97651A</color>
     <color name="state_bg">#EBF5FF</color>
+    <color name="pink">#FEE7E3</color>
+    <color name="blue_20">#D6E3FF</color>
+    <color name="blue_happy">#1F5385</color>
 </resources>

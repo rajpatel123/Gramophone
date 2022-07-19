@@ -26,6 +26,8 @@ interface BaseNavigator {
 
     fun getMessage(stringResourceId:Int):String
 
+    fun showToast(stringResourceId: Int)
+
     fun onError(message: String?)
 
     fun  onSuccess(message: String?)
