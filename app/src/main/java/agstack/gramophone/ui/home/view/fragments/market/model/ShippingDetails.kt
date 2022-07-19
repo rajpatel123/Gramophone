@@ -7,12 +7,15 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class ShippingDetails(
 
+	@field:SerializedName("address")
+	val address: String? = null,
+
 	@field:SerializedName("free_shipping")
 	val freeShipping: Boolean? = null,
 
 	@field:SerializedName("shipping_cost")
 	val shippingCost: String? = null,
 
-	@field:SerializedName("cash_on_delivery")
-	val cashOnDelivery: Boolean? = null
+	@field:SerializedName("estimated_delivery")
+	val estimatedDelivery: String? = null
 ) : Parcelable

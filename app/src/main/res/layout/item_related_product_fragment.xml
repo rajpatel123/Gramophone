@@ -7,23 +7,25 @@
     <data>
 
         <import type="android.view.View" />
-        <!--<variable
+       <variable
             name="model"
-            type="agstack.gramophone.ui.home.product.model.ProductWeightPriceModel" />-->
+            type="agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem" />
     </data>
 
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <androidx.cardview.widget.CardView
-        android:id="@+id/productDetailsContainer"
+        android:id="@+id/relatedProdDetailsContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/deselected_product_background"
         card_view:cardCornerRadius="10dp"
         card_view:cardElevation="5dp"
         card_view:cardUseCompatPadding="true">
 
         <LinearLayout
-            android:layout_width="@dimen/_156sdp"
+            android:background="@drawable/deselected_product_background"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
 
@@ -37,86 +39,89 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/_20sdp"
-                    app:srcCompat="@drawable/dummy_feature_product" />
+                    android:padding="@dimen/_15sdp"
+                    loadUri="@{model.productImage}" />
 
             </LinearLayout>
 
             <LinearLayout
-
+                android:padding="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_12sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/mute_grey"
+                android:background="@color/mute_grey"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvProductDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_9sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_marginRight="@dimen/_9sdp"
                     android:fontFamily="@font/manrope_medium"
-                    android:text="Fungicides Crystal Baviston 50% WP"
+                    android:hint="@string/product_details"
+                    android:text="@{model.productBaseName}"
                     android:textColor="@color/blakish"
                     android:textSize="@dimen/_13ssp" />
 
 
-                <TextView
-                    style="@style/heading_title_bold_large"
+                <RatingBar
+                    android:id="@+id/ratingbar_user"
+                    style="?android:attr/ratingBarStyleIndicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_9sdp"
-                    android:layout_marginRight="@dimen/_9sdp"
-                    android:textSize="@dimen/_12ssp" />
+                    android:isIndicator="true"
+                    android:max="5"
+                    android:numStars="5"
+                    doubleToFloatRating="@{model.totalRating}"
+                    android:scaleX=".8"
+                    android:scaleY=".8"
+                    android:stepSize="0.1"
+                    android:theme="@style/RatingBar"
+                    android:transformPivotX="0dp"
+                    android:transformPivotY="0dp" />
+                <LinearLayout
+                    android:background="@color/mute_grey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvSalesPrice"
+                        style="@style/heading_title_bold_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        priceWithSymbol="@{model.salesPrice}"
+                        android:textColor="@color/blakish"
+                        android:hint="200"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvMrpPrice"
+                        style="@style/heading_title_bold_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/_4sdp"
+                        android:background="@drawable/strike_through"
+                        android:gravity="center"
+                        android:hint="400"
+                        priceWithSymbol="@{model.mrpPrice}"
+                        android:textColor="@color/oldmrpcolor"
+                        android:textSize="@dimen/_11ssp" />
 
 
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:layout_marginRight="@dimen/_9sdp"
-                android:layout_marginBottom="@dimen/_15sdp"
-                android:orientation="horizontal">
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_sp"
-                    style="@style/heading_title_bold_large"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="₹799.00"
-                    android:textColor="@color/blakish"
-                    android:textSize="@dimen/_14ssp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/heading_title_bold_large"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/_4sdp"
-                    android:background="@drawable/strike_through"
-                    android:gravity="center"
-                    android:text="₹1,290"
-                    android:textColor="@color/oldmrpcolor"
-                    android:textSize="@dimen/_11ssp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/heading_title_bold_large"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/_7sdp"
-                    android:gravity="center"
-                    android:text="60% off"
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/_14ssp" />
+                </LinearLayout>
 
             </LinearLayout>
+
+
+
+
 
 
         </LinearLayout>
 
 
     </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
 </layout>

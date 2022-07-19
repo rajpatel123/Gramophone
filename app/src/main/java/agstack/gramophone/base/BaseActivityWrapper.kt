@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -108,5 +109,9 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     }
 
 
+
+    override fun showToast(stringResourceId: Int) {
+        Toast.makeText(this,getString(stringResourceId),Toast.LENGTH_LONG).show()
+    }
 
 }

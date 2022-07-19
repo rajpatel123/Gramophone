@@ -8,6 +8,7 @@ import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
 import agstack.gramophone.ui.verifyotp.viewmodel.VerifyOtpViewModel
+import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Constants.MOBILE_NO
 import agstack.gramophone.utils.ApiResponse
 import android.os.Bundle
@@ -45,6 +46,9 @@ class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOT
                 is ApiResponse.Error -> {
                     progress.visibility = View.GONE
                     Toast.makeText(this@VerifyOtpActivity,it.message, Toast.LENGTH_LONG).show()
+                    openAndFinishActivity(HomeActivity::class.java,Bundle().apply {
+                        putString(Constants.MOBILE_NO,"9625147638")
+                    })
 
                 }
                 is ApiResponse.Loading -> {

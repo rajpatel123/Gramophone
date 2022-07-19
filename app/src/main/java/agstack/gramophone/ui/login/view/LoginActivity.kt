@@ -43,6 +43,9 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
                 is ApiResponse.Error -> {
                     progress.visibility = View.GONE
                     Toast.makeText(this@LoginActivity,it.message,Toast.LENGTH_LONG).show()
+                    openAndFinishActivity(VerifyOtpActivity::class.java,Bundle().apply {
+                        putString(Constants.MOBILE_NO,"9625147638")
+                    })
                 }
                 is ApiResponse.Loading -> {
                     progress.visibility = View.VISIBLE

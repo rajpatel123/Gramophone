@@ -2,7 +2,6 @@ package agstack.gramophone.ui.home.product.activity
 
 import agstack.gramophone.BR
 import agstack.gramophone.databinding.ItemRadioProductPackingBinding
-import agstack.gramophone.ui.home.product.model.ProductWeightPriceModel
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import android.content.Context
 import android.view.LayoutInflater

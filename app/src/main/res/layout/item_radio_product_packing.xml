@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="250"
-                android:text="@{model.sku}"
+                android:text="@{model.productSku}"
                 android:textColor="@color/grey_weight" />
 
 
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:hint="₹ 900"
-                android:text="@{`₹`+ model.sku_price.toString() }"
+                android:text="@{`₹`+ model.mrpPrice.toString() }"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 

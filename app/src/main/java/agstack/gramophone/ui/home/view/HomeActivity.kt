@@ -11,11 +11,17 @@ import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.profile.view.ProfileActivity
+import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
 import android.view.View
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
+import com.google.firebase.FirebaseApp
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.toolbar_home.*
@@ -27,12 +33,42 @@ class HomeActivity :
     private lateinit var binding: ActivityHomeBinding
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var navController: NavController
+    private lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
     var currentFragmentPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
+        setUpFirebaseConfig()
+
+
     }
+
+    private fun setUpFirebaseConfig() {
+        FirebaseApp.initializeApp(this)
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+        var configSettings = FirebaseRemoteConfigSettings.Builder()
+            .setMinimumFetchIntervalInSeconds(1000)
+            .build()
+        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings)
+        mFirebaseRemoteConfig.fetchAndActivate()
+            .addOnCompleteListener {
+            if (it.isSuccessful) {
+                mFirebaseRemoteConfig.fetchAndActivate()
+                val google_api_key =
+                    mFirebaseRemoteConfig.getString(Constants.RemoteConfigKeys.GOOGLE_API_KEY)
+                instance!!.putString(SharedPreferencesKeys.GOOGLE_API_KEY, google_api_key)
+            }else {
+                Log.d("Remote Config Failed","Failure of Remote Config")
+                }
+            }
+
+            .addOnFailureListener { exception ->Log.d("remoteConfig","remoteConfig exception: $exception") }
+            .addOnCanceledListener {Log.d("remoteConfig","remoteConfig initAssetList: cancelled ") }
+
+        }
+
+
 
     override fun onResume() {
         super.onResume()
