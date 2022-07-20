@@ -35,7 +35,7 @@ class LanguageAdapter(private val languageList: List<Language>) :
     override fun onBindViewHolder(holder: DeveloperViewHolder, position: Int) {
         var language: Language = mLanguageList[position]!!
         holder.binding.setVariable(BR.model, language)
-        val mBinding = holder.binding as ItemLanguageBinding
+        val mBinding = holder.binding
         mBinding.llLanguageLinearLayout.setOnClickListener {
             mLanguageList[lastSelectPosition]?.selected = false
             lastSelectPosition = position

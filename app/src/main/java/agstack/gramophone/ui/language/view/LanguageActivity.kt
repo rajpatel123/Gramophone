@@ -53,31 +53,12 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
-        setupDeviceTokenObserver()
         getLanguageList()
     }
 
     private fun getLanguageList() {
         languageViewModel.getLanguageList()
     }
-
-
-    private fun setupDeviceTokenObserver() {
-      languageViewModel.registerDeviceModel.observe(this, Observer {
-          when (it) {
-              is ApiResponse.Success -> { }
-              is ApiResponse.Error -> {
-                  it.message?.let { message ->
-                      Toast.makeText(this@LanguageActivity, message, Toast.LENGTH_LONG).show()
-                  }
-              }
-              is ApiResponse.Loading -> {
-              }
-          }
-      })
-
-    }
-
 
     private fun setupUi() {
         rvLanguage?.setHasFixedSize(true)
@@ -114,7 +95,7 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     }
 
     override fun onLoading() {
-        TODO("Not yet implemented")
+
     }
 
     override fun updateLanguageList(languageAdapter: LanguageAdapter,onLanguageClicked: (Language) -> Unit) {

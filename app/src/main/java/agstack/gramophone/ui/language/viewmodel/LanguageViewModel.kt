@@ -35,7 +35,7 @@ class LanguageViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository,
 ) : BaseViewModel<LanguageActivityNavigator>() {
     var language: Language? = null
-    val registerDeviceModel: MutableLiveData<ApiResponse<InitiateAppDataResponseModel>> =
+    val initiateAppDataResponseModel: MutableLiveData<ApiResponse<InitiateAppDataResponseModel>> =
         MutableLiveData()
 
     fun getLanguageList() = viewModelScope.launch {
@@ -43,7 +43,7 @@ class LanguageViewModel @Inject constructor(
     }
 
     private suspend fun getLanguage() {
-        registerDeviceModel.postValue(ApiResponse.Loading())
+        getNavigator()?.onLoading()
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
                 val response = onBoardingRepository.getLanguage()
@@ -77,7 +77,7 @@ class LanguageViewModel @Inject constructor(
 
     private suspend fun getInitialData(initiateAppDataRequestModel:  InitiateAppDataRequestModel) {
 
-        registerDeviceModel.postValue(ApiResponse.Loading())
+        getNavigator()?.onLoading()
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
                 val response = onBoardingRepository.getInitialData(initiateAppDataRequestModel)

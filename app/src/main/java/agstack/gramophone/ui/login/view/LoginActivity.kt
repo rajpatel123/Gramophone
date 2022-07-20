@@ -36,9 +36,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 
 @AndroidEntryPoint
-class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, LoginViewModel>(), LoginNavigator ,
-    LanguageBottomSheetFragment.LanguageUpdateListener, GoogleApiClient.ConnectionCallbacks
-     {
+class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, LoginViewModel>(),
+    LoginNavigator,
+    LanguageBottomSheetFragment.LanguageUpdateListener, GoogleApiClient.ConnectionCallbacks {
 
     //initialise ViewModel
     private val loginViewModel: LoginViewModel by viewModels()
@@ -51,66 +51,66 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
     }
 
 
-         override fun getLayoutID(): Int {
-             return R.layout.activity_login
-         }
+    override fun getLayoutID(): Int {
+        return R.layout.activity_login
+    }
 
-         override fun getBindingVariable(): Int {
-             return BR.viewModel
-         }
+    override fun getBindingVariable(): Int {
+        return BR.viewModel
+    }
 
-         override fun getViewModel(): LoginViewModel {
-             return loginViewModel
-         }
-
-
-         override fun onLoading() {
-             progress.visibility = View.VISIBLE
-         }
-
-         override fun onHelpClick(number: String) {
-             val bottomSheet = BottomSheetDialog()
-             bottomSheet.customerSupportNumber = number
-             bottomSheet.show(
-                 getSupportFragmentManager(),
-                 "bottomSheet"
-             )
-         }
-
-         override fun onLanguageChangeClick() {
-             val bottomSheet = LanguageBottomSheetFragment()
-             bottomSheet.setLanguageListener(this)
-             bottomSheet.show(
-                 getSupportFragmentManager(),
-                 "bottomSheet"
-             )
-         }
-
-         override fun openWebView(bundle: Bundle) {
-             openActivity(WebViewActivity::class.java, bundle)
-         }
+    override fun getViewModel(): LoginViewModel {
+        return loginViewModel
+    }
 
 
-         override fun referralCodeRemoved() {
-             rlHaveReferralCode.visibility = VISIBLE
-             rlAppliedCode.visibility = GONE
-         }
+    override fun onLoading() {
+        progress.visibility = View.VISIBLE
+    }
 
-         override fun moveToNext(bundle: Bundle) {
-             progress.visibility = View.GONE
-             openAndFinishActivity(VerifyOtpActivity::class.java, bundle)
-         }
+    override fun onHelpClick(number: String) {
+        val bottomSheet = BottomSheetDialog()
+        bottomSheet.customerSupportNumber = number
+        bottomSheet.show(
+            getSupportFragmentManager(),
+            "bottomSheet"
+        )
+    }
 
-         override fun onSuccess(message: String?) {
-             Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
-         }
+    override fun onLanguageChangeClick() {
+        val bottomSheet = LanguageBottomSheetFragment()
+        bottomSheet.setLanguageListener(this)
+        bottomSheet.show(
+            getSupportFragmentManager(),
+            "bottomSheet"
+        )
+    }
 
-         override fun openReferralDialog() {
-             //Inflate the dialog with custom view
-             val mDialogView =
-                 LayoutInflater.from(this).inflate(R.layout.activity_referral_dialog, null)
-             //AlertDialogBuilder
-             val mBuilder = AlertDialog.Builder(this)
+    override fun openWebView(bundle: Bundle) {
+        openActivity(WebViewActivity::class.java, bundle)
+    }
+
+
+    override fun referralCodeRemoved() {
+        rlHaveReferralCode.visibility = VISIBLE
+        rlAppliedCode.visibility = GONE
+    }
+
+    override fun moveToNext(bundle: Bundle) {
+        progress.visibility = View.GONE
+        openAndFinishActivity(VerifyOtpActivity::class.java, bundle)
+    }
+
+    override fun onSuccess(message: String?) {
+        Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun openReferralDialog() {
+        //Inflate the dialog with custom view
+        val mDialogView =
+            LayoutInflater.from(this).inflate(R.layout.activity_referral_dialog, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this)
             .setView(mDialogView)
         //show dialog
         val mAlertDialog = mBuilder.show()
@@ -121,8 +121,8 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
         val llCrossLinearLayout = mDialogView.findViewById(R.id.llCrossLinearLayout) as LinearLayout
         tvApplyCode.setOnClickListener {
             if (!TextUtils.isEmpty(etReferralCode.text)) {
-                tvCodeApplied.text="Referral Code "+etReferralCode.text.toString()+" Applied"
-                loginViewModel.referralCode=etReferralCode.text.toString()
+                tvCodeApplied.text = "Referral Code " + etReferralCode.text.toString() + " Applied"
+                loginViewModel.referralCode = etReferralCode.text.toString()
                 mAlertDialog.dismiss()
                 rlHaveReferralCode.visibility = GONE
                 rlAppliedCode.visibility = VISIBLE
@@ -184,32 +184,32 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
     }
 
-         override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-             super.onActivityResult(requestCode, resultCode, data)
-             if (requestCode == RESOLVE_HINT) {
-                 if (resultCode == RESULT_OK) {
-                     val credential = data?.getParcelableExtra<Credential>(Credential.EXTRA_KEY)
-                     // credential.getId(); <-- E.164 format phone number on 10.2.+ devices
-                     val mobileNo = credential?.id
-                     if (mobileNo != null && mobileNo.length >= 10) {
-                         val finalMobileNo = mobileNo.substring(mobileNo.length - 10)
-                         etMobile.setText(finalMobileNo)
-                     }
-                 }
-             }
-         }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RESOLVE_HINT) {
+            if (resultCode == RESULT_OK) {
+                val credential = data?.getParcelableExtra<Credential>(Credential.EXTRA_KEY)
+                // credential.getId(); <-- E.164 format phone number on 10.2.+ devices
+                val mobileNo = credential?.id
+                if (mobileNo != null && mobileNo.length >= 10) {
+                    val finalMobileNo = mobileNo.substring(mobileNo.length - 10)
+                    etMobile.setText(finalMobileNo)
+                }
+            }
+        }
+    }
 
 
     override fun onLanguageUpdate() {
         loginViewModel.updateLanguage()
     }
 
-         override fun onConnected(p0: Bundle?) {
+    override fun onConnected(p0: Bundle?) {
 
-         }
+    }
 
-         override fun onConnectionSuspended(p0: Int) {
+    override fun onConnectionSuspended(p0: Int) {
 
-         }
+    }
 
-     }
+}
