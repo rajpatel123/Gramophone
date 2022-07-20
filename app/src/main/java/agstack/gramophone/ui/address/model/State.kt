@@ -9,6 +9,9 @@ data class State(
     @SerializedName("name")
     val name: String?,
 
+    @SerializedName("pincode")
+    val pincode: String?,
+
     var selected: Boolean,
     @SerializedName("image")
     val image: String?,
@@ -17,6 +20,7 @@ data class State(
 
     constructor(parcel: Parcel) : this(
         parcel.readString(),
+        parcel.readString(),
         parcel.readByte() != 0.toByte(),
         parcel.readString()
     ) {
@@ -24,6 +28,7 @@ data class State(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
+        parcel.writeString(pincode)
         parcel.writeByte(if (selected) 1 else 0)
         parcel.writeString(image)
     }

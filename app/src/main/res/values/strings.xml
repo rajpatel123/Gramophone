@@ -103,13 +103,6 @@
     <string name="enter_referral_code_hint">Enter referral code</string>
     <string name="help">Help</string>
     <string name="get_help">Get Help</string>
-    <!--    OnBoarding strings-->
-
-    <string name="ratingandreviews"><![CDATA[Rating & Reviews]]></string>
-    <string name="some_thing_went_wrong">Something went wrong</string>
-    <string name="network_failure">Network failure</string>
-    <string name="space">" "</string>
-    <string name="sku">"SKU: "</string>
     <string name="select_state">Select your state</string>
     <string name="other">Other</string>
     <string name="select_state_error">Please select state</string>
@@ -128,6 +121,14 @@
     <string name="tehsil_required">Please select tehsil</string>
     <string name="village_required">Please enter village</string>
     <string name="address_required">Please enter address</string>
+
+    <!--    OnBoarding strings-->
+
+    <string name="ratingandreviews"><![CDATA[Rating & Reviews]]></string>
+    <string name="some_thing_went_wrong">Something went wrong</string>
+    <string name="network_failure">Network failure</string>
+    <string name="space">" "</string>
+    <string name="sku">"SKU: "</string>
 
     <string name="ensureyoutubeversioninstalled">Kindly make sure that your device has running version of YouTube installed</string>
     <string name="key_points">Key Points</string>
