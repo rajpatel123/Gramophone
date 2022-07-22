@@ -3,6 +3,7 @@ package agstack.gramophone.utils
 import agstack.gramophone.R
 import android.net.Uri
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
@@ -44,6 +45,15 @@ class BindingAdapter {
             }else{
           Glide.with(imageView).load(R.drawable.ic_heart_blank).into(imageView)
             }
+        }
+
+
+        @BindingAdapter("progressAdapter")
+        @JvmStatic
+        fun progressAdapter(progressBar: ProgressBar ,progress:Int){
+
+            progressBar.progress = progress*2*10
+
         }
 
     }

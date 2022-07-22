@@ -188,9 +188,11 @@ class ProductDetailsActivity :
 
     override fun setProductSKUOfferAdapter(
         productSKUOfferAdapter: ProductSKUOfferAdapter,
-        onOfferItemClicked: (PromotionListItem) -> Unit
+        onOfferItemClicked: (PromotionListItem) -> Unit,
+        onViewDetailsClicked:(PromotionListItem)->Unit
     ) {
         productSKUOfferAdapter.selectedProduct = onOfferItemClicked
+        productSKUOfferAdapter.onViewAllClicked = onViewDetailsClicked
         viewDataBinding?.rvAvailableoffers?.adapter = productSKUOfferAdapter
     }
 

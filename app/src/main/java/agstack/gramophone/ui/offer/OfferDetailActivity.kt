@@ -6,7 +6,9 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityCheckoutStatusBinding
 import agstack.gramophone.databinding.ActivityOfferDetailsBinding
+import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.order.adapter.OrderListAdapter
+import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,35 +16,42 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_order_list.*
 
 @AndroidEntryPoint
-class OfferDetailActivity : BaseActivityWrapper<ActivityOfferDetailsBinding, OfferDetailNavigator, OfferDetailViewModel>(), OfferDetailNavigator {
+class OfferDetailActivity :
+    BaseActivityWrapper<ActivityOfferDetailsBinding, OfferDetailNavigator, OfferDetailViewModel>(),
+    OfferDetailNavigator {
 
     private lateinit var binding: ActivityOfferDetailsBinding
-    //initialise ViewModel
-    private val offerDetailViewModel : OfferDetailViewModel by viewModels()
+
+    private val offerDetailViewModel: OfferDetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityOfferDetailsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         setupUi()
-        setupObservers()
+        val bundle = getBundle()
+        bundle?.let {
+            if (bundle.getParcelable<PromotionListItem>(Constants.OFFERSDATA) != null) {
+                mViewModel?.mOffersItem?.set(bundle.getParcelable<PromotionListItem>(Constants.OFFERSDATA))
+
+            }
+        }
+
+
     }
 
-    private fun setupObservers() {
-
+    fun getBundle(): Bundle? {
+        return intent.extras
     }
-
 
     private fun setupUi() {
-        setUpToolBar(true, "Offer Detail", R.drawable.ic_cross)
+        setUpToolBar(true, resources.getString(R.string.offer_detail), R.drawable.ic_cross)
     }
 
     override fun getLayoutID(): Int {
-      return R.layout.activity_offer_details
+        return R.layout.activity_offer_details
     }
 
     override fun getBindingVariable(): Int {
-        return  BR.viewModel
+        return BR.viewModel
     }
 
     override fun getViewModel(): OfferDetailViewModel {

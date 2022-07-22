@@ -14,7 +14,7 @@ interface ProductDetailsNavigator: BaseNavigator {
     fun getBundle(): Bundle?
     fun setToolbarTitle(title:String?)
     fun setProductSKUAdapter(productSKUAdapter: ProductSKUAdapter, onSKUItemClicked: (ProductSkuListItem) -> Unit)
-    fun setProductSKUOfferAdapter(productSKUOfferAdapter: ProductSKUOfferAdapter, onOfferItemClicked: (PromotionListItem) -> Unit)
+    fun setProductSKUOfferAdapter(productSKUOfferAdapter: ProductSKUOfferAdapter, onOfferItemClicked: (PromotionListItem) -> Unit,onViewAllClicked:(PromotionListItem)->Unit)
     fun getFragmentManagerPager(): FragmentManager
     fun setProductImagesViewPagerAdapter(productImagesAdapter: ProductImagesAdapter)
      fun setRelatedProductsAdapter(relatedProductFragmentAdapter: RelatedProductFragmentAdapter, function: (RelatedProductItem) -> Unit)

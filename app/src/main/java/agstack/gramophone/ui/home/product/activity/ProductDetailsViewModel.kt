@@ -6,8 +6,10 @@ import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
+import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Utility.toBulletedList
+import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -34,10 +36,9 @@ class ProductDetailsViewModel @Inject constructor(
     lateinit var mProductDetailsKeyValues: MutableList<KeyPointsItem?>
 
 
-    fun onSelfRatingClick(){
+    fun onSelfRatingClick() {
         Log.d("Open Dialog", "On Ratingclick")
     }
-
 
 
     fun getBundleData() {
@@ -63,11 +64,21 @@ class ProductDetailsViewModel @Inject constructor(
                                 productRepository.getProductData(productDetailstoBeFetched)
                             }
 
-                            val productReviewsResponseDeferred = async{productRepository.getProductReviewsData(productDetailstoBeFetched)}
+                            val productReviewsResponseDeferred = async {
+                                productRepository.getProductReviewsData(
+                                    Constants.TOP,
+                                    null,
+                                    productDetailstoBeFetched
+                                )
+                            }
 
-                            val relatedProductResponseDeferred = async{productRepository.getRelatedProductsData(productDetailstoBeFetched)}
+                            val relatedProductResponseDeferred = async {
+                                productRepository.getRelatedProductsData(productDetailstoBeFetched)
+                            }
 
-                            val offerOnProductResponseDeferred = async {  productRepository.getOffersOnProductData(productDetailstoBeFetched)}
+                            val offerOnProductResponseDeferred = async {
+                                productRepository.getOffersOnProductData(productDetailstoBeFetched)
+                            }
 
 
                             val productDataResponse = productDataResponseDeferred.await()
@@ -76,7 +87,9 @@ class ProductDetailsViewModel @Inject constructor(
                             val offersOnProductResponse = offerOnProductResponseDeferred.await()
 
 
-                            if (productDataResponse != null && productDataResponse?.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)
+                            if (productDataResponse != null && productDataResponse?.body()?.gpApiStatus.equals(
+                                    Constants.GP_API_STATUS
+                                )
                             ) {
 
                                 productData.set(productDataResponse.body()?.gpApiResponseData!!)
@@ -108,7 +121,11 @@ class ProductDetailsViewModel @Inject constructor(
                                     //set skuList
                                     mSKUList = ArrayList(productData?.get()?.productSkuList)
                                     mSKUList.let {
-                                        getNavigator()?.setProductSKUAdapter(ProductSKUAdapter(mSKUList)) {
+                                        getNavigator()?.setProductSKUAdapter(
+                                            ProductSKUAdapter(
+                                                mSKUList
+                                            )
+                                        ) {
 
 
                                         }
@@ -117,13 +134,24 @@ class ProductDetailsViewModel @Inject constructor(
                             }
 
 
-                            if(productReviewResponse!=null && productReviewResponse?.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)){
+                            if (productReviewResponse != null && productReviewResponse?.body()?.gpApiStatus.equals(
+                                    Constants.GP_API_STATUS
+                                )
+                            ) {
                                 productReviewsData.set(productReviewResponse.body()?.gpApiResponseData)
-                                getNavigator()?.setRatingAndReviewsAdapter(RatingAndReviewsAdapter(productReviewsData.get()?.reviewList))
+                                getNavigator()?.setRatingAndReviewsAdapter(
+                                    RatingAndReviewsAdapter(
+                                        productReviewsData.get()?.reviewList,
+                                        2
+                                    )
+                                )
 
                             }
 
-                            if(relatedProductResponse!=null && relatedProductResponse?.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)){
+                            if (relatedProductResponse != null && relatedProductResponse?.body()?.gpApiStatus.equals(
+                                    Constants.GP_API_STATUS
+                                )
+                            ) {
                                 relatedProductData.set(relatedProductResponse.body()?.gpApiResponseData)
                                 relatedProductData?.get()?.relatedProductList.let {
                                     getNavigator()?.setRelatedProductsAdapter(
@@ -137,20 +165,31 @@ class ProductDetailsViewModel @Inject constructor(
                                 }
                             }
 
-                            if(offersOnProductResponse!=null && offersOnProductResponse?.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
+                            if (offersOnProductResponse != null && offersOnProductResponse?.body()?.gpApiStatus.equals(
+                                    Constants.GP_API_STATUS
+                                )
+                            ) {
                                 //setOffer List
                                 offersOnProductResponse?.body()?.gpApiResponseData?.offersProductList.let {
-                                    val prodOfferList = ArrayList(offersOnProductResponse?.body()?.gpApiResponseData?.offersProductList)
+                                    val prodOfferList =
+                                        ArrayList(offersOnProductResponse?.body()?.gpApiResponseData?.offersProductList)
                                     prodOfferList.let {
                                         mSkuOfferList = ArrayList(prodOfferList)
                                         getNavigator()?.setProductSKUOfferAdapter(
-                                            ProductSKUOfferAdapter(
-                                                mSkuOfferList
-                                            )
-                                        ) {
+                                            ProductSKUOfferAdapter(mSkuOfferList),
+                                            {
+                                                //When RadioButton is clicked
 
+                                            },
+                                            {
+                                                //when view all is clicked
+                                                getNavigator()?.openActivity(
+                                                    OfferDetailActivity::class.java,
+                                                    Bundle().apply {
+                                                        putParcelable(Constants.OFFERSDATA, it)
 
-                                        }
+                                                    })
+                                            })
                                     }
                                 }
                             }
@@ -164,10 +203,6 @@ class ProductDetailsViewModel @Inject constructor(
                     }
 
 
-
-
-
-
                 } catch (e: Exception) {
                     Log.d("Exception", e.toString())
                 }
@@ -176,8 +211,8 @@ class ProductDetailsViewModel @Inject constructor(
     }
 
 
-    fun viewAllReviewsOnClick(){
-        getNavigator()?.openViewAllReviewRatingsActivity(productId,productReviewsData.get())
+    fun viewAllReviewsOnClick() {
+        getNavigator()?.openViewAllReviewRatingsActivity(productId, productReviewsData.get())
     }
 }
 

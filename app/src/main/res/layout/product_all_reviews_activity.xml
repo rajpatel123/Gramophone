@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -16,16 +14,328 @@
             type="agstack.gramophone.ui.home.product.activity.ProductReviewsViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".ui.home.product.activity.ProductAllReviewsActivity">
+        android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/myToolbar"
-            layout="@layout/layout_toolbar" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".ui.home.product.activity.ProductAllReviewsActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <include
+                android:id="@+id/myToolbar"
+                layout="@layout/layout_toolbar" />
+
+            <View
+                android:id="@+id/v1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/viewcolor"
+                app:layout_constraintBottom_toTopOf="@+id/ll_total_ratings"
+                app:layout_constraintTop_toBottomOf="@id/myToolbar"></View>
+
+            <LinearLayout
+                android:id="@+id/ll_total_ratings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_silver_gradient"
+                android:orientation="horizontal"
+                android:padding="@dimen/_20sdp"
+                android:weightSum="10"
+                app:layout_constraintBottom_toTopOf="@+id/v2"
+                app:layout_constraintTop_toBottomOf="@id/v1">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/ll5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="5" />
+
+                        <ProgressBar
+                            android:id="@+id/progressbar_5rating"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            progressAdapter="@{viewModel.mProductReviewDataBundle.rating.ratingCount.jsonMember5}"
+                            android:layout_width="fill_parent"
+                            android:layout_height="42dp"
+                            android:layout_marginLeft="@dimen/_8sdp"
+                            android:indeterminate="false"
+                            android:max="100"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:progressTint="@color/green_dark"
+                            app:trackCornerRadius="2dp"
+                            app:trackThickness="@dimen/_5sdp" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/ll4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="4" />
+
+                        <ProgressBar
+                            android:id="@+id/progressbar_4rating"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            progressAdapter="@{viewModel.mProductReviewDataBundle.rating.ratingCount.jsonMember4}"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_8sdp"
+                            android:indeterminate="false"
+                            android:max="100"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:progressTint="@color/green" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="3" />
+
+                        <ProgressBar
+                            android:id="@+id/progressbar_3rating"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            progressAdapter="@{viewModel.mProductReviewDataBundle.rating.ratingCount.jsonMember3}"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_8sdp"
+                            android:indeterminate="false"
+                            android:max="100"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:progressTint="@color/star_yellow" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="2" />
+
+                        <ProgressBar
+                            android:id="@+id/progressbar_2rating"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            progressAdapter="@{viewModel.mProductReviewDataBundle.rating.ratingCount.jsonMember2}"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_8sdp"
+                            android:indeterminate="false"
+                            android:max="100"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:progressTint="#FF9376" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="1" />
+
+                        <ProgressBar
+                            android:id="@+id/progressbar_1rating"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            progressAdapter="@{viewModel.mProductReviewDataBundle.rating.ratingCount.jsonMember1}"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_8sdp"
+                            android:indeterminate="false"
+                            android:max="100"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:progressTint="#F8111B" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_weight="5">
+
+                    <LinearLayout
+                        android:id="@+id/llrating_all"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_10sdp">
+
+                        <TextView
+                            android:id="@+id/tv_rating_all"
+                            style="@style/TextSize20Sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="2.5"
+                            android:text="@{viewModel.mProductReviewDataBundle.rating.totalRating.toString()}" />
+
+                        <TextView
+                            android:id="@+id/tv_outoftotal"
+                            style="@style/TextSize14Sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="@string/outoffive"
+                            android:textColor="@color/gray" />
+
+                    </LinearLayout>
+
+
+                    <RatingBar
+                        android:id="@+id/rating_stars_all"
+                        style="?android:attr/ratingBarStyleIndicator"
+                        doubleToFloatRating="@{viewModel.mProductReviewDataBundle.rating.totalRating}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/llrating_all"
+                        android:isIndicator="true"
+                        android:max="5"
+                        android:numStars="5"
+                        android:rating="5"
+                        android:scaleX=".8"
+                        android:scaleY=".8"
+                        android:stepSize="0.1"
+                        android:theme="@style/RatingBar"
+                        android:transformPivotX="0dp"
+                        android:transformPivotY="0dp"
+
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rating_stars_all"
+                        android:fontFamily="@font/manrope_bold"
+                        android:hint="Based on 38 reviews"
+                        android:padding="@dimen/_2sdp"
+                        android:text="@{@string/basedon+` `+viewModel.mProductReviewDataBundle.rating.totalReview+` `+@string/reviews}" />
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_12sdp" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/v2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/viewcolor"
+                app:layout_constraintTop_toBottomOf="@id/ll_total_ratings"></View>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_layout_sort"
+                android:layout_marginTop="@dimen/_10sdp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/v2">
+
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/autocomplete_sortBy"
+                style="@style/TextSize14Sp"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:editable="false"
+                android:focusable="false"
+                android:padding="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:drawableEnd="@drawable/ic_arrow_down"
+                android:drawableRight="@drawable/ic_arrow_down"
+                android:drawablePadding="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_80sdp"
+                android:layout_marginRight="@dimen/_80sdp"
+                android:text="@string/top_reviews"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/v2" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <View
+                android:id="@+id/v3"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/viewcolor"
+                app:layout_constraintTop_toBottomOf="@id/text_input_layout_sort"></View>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_reviews_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:orientation="vertical"
+                android:scrollbars="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/v3"
+                tools:listitem="@layout/rating_review_item">
+
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </layout>

@@ -11,7 +11,7 @@ interface ProductRepository {
 
     suspend fun getProductData(productMap: ProductData): Response<ProductDataResponse>
 
-    suspend fun getProductReviewsData(productMap: ProductData):Response<ProductReviewDataResponse>
+    suspend fun getProductReviewsData(sortBy:String?,page:String?,productMap: ProductData):Response<ProductReviewDataResponse>
 
     suspend fun getRelatedProductsData(productMap: ProductData):Response<RelatedProductResponseData>
 

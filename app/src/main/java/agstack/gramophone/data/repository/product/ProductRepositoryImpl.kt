@@ -21,9 +21,9 @@ class ProductRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun getProductReviewsData(productMap: ProductData): Response<ProductReviewDataResponse> = withContext(
+    override suspend fun getProductReviewsData(sortBy:String?,page:String?,productMap: ProductData): Response<ProductReviewDataResponse> = withContext(
         Dispatchers.IO) {
-        val reviews = gramoAppService.getReviewData(productMap)
+        val reviews = gramoAppService.getReviewData(sortBy,page,productMap)
         reviews
     }
 

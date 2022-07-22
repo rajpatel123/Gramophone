@@ -142,5 +142,15 @@
     <string name="veryhappy">Very Happy</string>
     <string name="basedon">Based on</string>
     <string name="reviews">reviews</string>
+    <string name="outoffive">Out of 5</string>
+    <string name="top_reviews">Top reviews</string>
+    <string name="offer_detail">Offer Detail</string>
+    <string name="view_detail">View Detail</string>
 
+
+    <string-array name="SortReviewsByOptions">
+        <item>Top Reviews</item>
+        <item>Recent Reviews</item>
+
+    </string-array>
 </resources>

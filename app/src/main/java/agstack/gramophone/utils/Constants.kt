@@ -5,15 +5,19 @@ import android.content.Context
 
 
 object Constants {
+    val OFFERSDATA="OFFERSDATA"
 
-    const val HELP_PHONE_NUMBER: String="customer_support_no"
-    const val LANG: String="lang"
-    const val PAGE_URL: String="url"
-    const val PAGE_TITLE: String="title"
+    //sortBy options
+    val TOP = "top"
+    val RECENT = "recent"
+    const val HELP_PHONE_NUMBER: String = "customer_support_no"
+    const val LANG: String = "lang"
+    const val PAGE_URL: String = "url"
+    const val PAGE_TITLE: String = "title"
 
 
-    val NORMAL:Int = 0
-    val ALL:Int =1
+    val NORMAL: Int = 0
+    val ALL: Int = 1
 
     /**
      * For MyNotificationOpenedHandler
@@ -24,8 +28,8 @@ object Constants {
     /**
      * Keys
      */
-    val PHONE: String="phone"
-    val LANGUAGE: String="language"
+    val PHONE: String = "phone"
+    val LANGUAGE: String = "language"
     const val HindiISOCode = "hi"
     const val MarathiISOCode = "mr"
     const val EnglishISOCode = "en"
@@ -196,14 +200,14 @@ object Constants {
     const val need_help = "Need help while adding Address"
 
     //Product
-    const val PRODUCTREVIEWDATA= "PRODUCTREVIEWDATA"
-    const val PRODUCTID= "PRODUCTID"
+    const val PRODUCTREVIEWDATA = "PRODUCTREVIEWDATA"
+    const val PRODUCTID = "PRODUCTID"
 
 
     /**
      * For Broadcast
      */
- //const val BROADCAST_ACTION_NOTIFICATIONS = BuildConfig.APPLICATION_ID + ".notifications"
+    //const val BROADCAST_ACTION_NOTIFICATIONS = BuildConfig.APPLICATION_ID + ".notifications"
 
     fun Context.dpToPx(dp: Int): Int {
         return (dp * resources.displayMetrics.density).toInt()

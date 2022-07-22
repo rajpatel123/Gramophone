@@ -7,8 +7,10 @@ import agstack.gramophone.databinding.ActivityHomeBinding
 import agstack.gramophone.menu.BottomNavigationView
 import agstack.gramophone.menu.OnNavigationItemChangeListener
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
+import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.view.fragments.community.CommunityFragment
 import agstack.gramophone.ui.home.view.fragments.market.MarketFragment
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.trading.TradeFragment
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.profile.view.ProfileActivity
@@ -36,8 +38,6 @@ class HomeActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         setupUi()
         setUpFirebaseConfig()
 
@@ -81,7 +81,10 @@ class HomeActivity :
             override fun onNavigationItemChanged(navigationItem: BottomNavigationView.NavigationItem) {
                 when (navigationItem.position) {
                     0 -> {
-                        replaceFragment(MarketFragment(), MarketFragment::class.java.simpleName)
+                       replaceFragment(MarketFragment(), MarketFragment::class.java.simpleName)
+                       /* openActivity(ProductDetailsActivity::class.java,Bundle().apply {
+                            putParcelable("product", ProductData(700322))
+                        })*/
                     }
                     1 -> {
                         replaceFragment(TradeFragment(), TradeFragment::class.java.simpleName)

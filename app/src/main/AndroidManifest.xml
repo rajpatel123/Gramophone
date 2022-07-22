@@ -64,6 +64,7 @@
         <activity android:name=".ui.checkout.CheckoutStatusActivity" />
         <activity android:name=".ui.offer.OfferDetailActivity" />
         <activity android:name=".ui.orderdetails.OrderDetailsActivity" />
+        <activity android:name=".ui.home.product.activity.ProductAllReviewsActivity" />
         <activity
             android:name=".ui.webview.view.WebViewActivity"
             android:screenOrientation="portrait" />
