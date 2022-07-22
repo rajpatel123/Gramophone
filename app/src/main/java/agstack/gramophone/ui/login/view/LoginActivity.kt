@@ -144,7 +144,7 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
         llQRLinearLayout.setOnClickListener {
 //            qrScan = IntentIntegrator(this@LoginActivity)
 //            qrScan?.setOrientationLocked(false)
-//            qrScan?.initiateScan()
+            //qrScan?.initiateScan()
         }
 
         tvTermsOfUse.setOnClickListener {

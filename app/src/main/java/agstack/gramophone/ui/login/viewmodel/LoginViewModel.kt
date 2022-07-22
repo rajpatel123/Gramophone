@@ -133,11 +133,13 @@ class LoginViewModel @Inject constructor(
             Constants.PAGE_URL,
             initiateAppDataResponseModel.gp_api_response_data.external_link_list.terms_of_service_url
         )
-        bundle.putString(
-            Constants.PAGE_TITLE,
-            getNavigator()?.getMessage(R.string.terms_n_conditions)
-        )
-        getNavigator()?.openWebView(bundle)
+
+        getNavigator()?.openWebView(Bundle().apply {
+            putString(
+                Constants.PAGE_TITLE,
+                getNavigator()?.getMessage(R.string.terms_n_conditions)
+            )
+        })
 
     }
 

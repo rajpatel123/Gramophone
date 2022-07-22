@@ -4,16 +4,14 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.address.AddressNavigator
-import agstack.gramophone.ui.address.model.AddressRequestModel
-import agstack.gramophone.ui.address.model.State
-import agstack.gramophone.ui.address.model.StateResponseModel
-import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
+import agstack.gramophone.ui.address.model.*
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -153,16 +151,20 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                 val stateListData = handleGetStateListResponse(response).data
 
                 if (Constants.GP_API_STATUS.equals(stateListData?.gp_api_status)) {
+                    val dataList1 = ArrayList<AddressDataModel>()
                     val dataList = ArrayList<String>()
 
                     when (type) {
                         "district" -> {
-                            dataList.add("Select")
+                            val addressDataModel= AddressDataModel(getNavigator()?.getMessage(R.string.select)!!)
+
                             stateListData?.gp_api_response_data?.district_list?.forEach {
                                 dataList.add(it.name.toString())
                             }
-                            getNavigator()?.updateDistrict(dataList) {
+                            getNavigator()?.updateDistrict(getNavigator()?.getAdapter(dataList)!!){
+                               districtName=it
                             }
+
                         }
 
                         "tehsil" -> {

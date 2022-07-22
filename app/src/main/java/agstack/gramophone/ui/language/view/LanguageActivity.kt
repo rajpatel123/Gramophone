@@ -101,7 +101,6 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     override fun updateLanguageList(languageAdapter: LanguageAdapter,onLanguageClicked: (Language) -> Unit) {
         languageAdapter.selectedLanguage = onLanguageClicked
         rvLanguage.adapter=languageAdapter
-
     }
 
 }

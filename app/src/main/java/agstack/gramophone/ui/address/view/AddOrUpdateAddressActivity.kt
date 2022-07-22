@@ -8,6 +8,7 @@ import agstack.gramophone.di.GetAddressIntentService
 import agstack.gramophone.ui.address.AddressNavigator
 import agstack.gramophone.ui.address.viewmodel.AddOrUpdateAddressViewModel
 import agstack.gramophone.ui.home.view.HomeActivity
+import agstack.gramophone.ui.language.model.languagelist.Language
 import agstack.gramophone.utils.Constants
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -18,6 +19,7 @@ import android.os.Handler
 import android.os.ResultReceiver
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.ObservableField
@@ -100,17 +102,9 @@ class AddOrUpdateAddressActivity :
 
     }
 
-    override fun updateDistrict(district: ArrayList<String>, function: () -> Unit) {
-        val niceSpinner = findViewById<View>(R.id.etDistrictname) as NiceSpinner
-        niceSpinner.attachDataSource(district)
 
-        niceSpinner.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener { parent, view, position, id ->
-            districtName = district[position]
-            addOrUpdateAddressViewModel.getTehsil(
-                "tehsil", etStateName.text.toString(),
-                districtName!!, ""
-            )
-        })
+    override fun updateDistrict(adapter: ArrayAdapter<String>, onSelect: (String) -> Unit) {
+        districtSpinner.setAdapter(adapter)
     }
 
     override fun updateTehsil(tehsil: ArrayList<String>, function: () -> Unit) {
@@ -168,6 +162,10 @@ class AddOrUpdateAddressActivity :
 
     override fun changeState() {
         openAndFinishActivity(StateListActivity::class.java,null)
+    }
+
+    override fun getAdapter(dataList: ArrayList<String>): ArrayAdapter<String> {
+        return ArrayAdapter(this,R.layout.item_address_data_name,dataList)
     }
 
     private fun getAddress() {

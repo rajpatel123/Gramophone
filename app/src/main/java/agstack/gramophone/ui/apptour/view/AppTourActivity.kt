@@ -52,6 +52,7 @@ class AppTourActivity : BaseActivityWrapper<ActivityApptourBinding,AppTourNaviga
         scrollImages()
     }
 
+    //use delay()
     private fun scrollImages() {
         mainHandler = Handler(Looper.getMainLooper())
         scrollImageRunable = Runnable {
@@ -65,6 +66,7 @@ class AppTourActivity : BaseActivityWrapper<ActivityApptourBinding,AppTourNaviga
 
     }
 
+    //Move to ViewModel and data to be used based api
     private fun initCards() {
         items = ArrayList<Card>()
 

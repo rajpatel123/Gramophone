@@ -35,8 +35,6 @@ class LanguageViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository,
 ) : BaseViewModel<LanguageActivityNavigator>() {
     var language: Language? = null
-    val initiateAppDataResponseModel: MutableLiveData<ApiResponse<InitiateAppDataResponseModel>> =
-        MutableLiveData()
 
     fun getLanguageList() = viewModelScope.launch {
         getLanguage()
@@ -54,6 +52,7 @@ class LanguageViewModel @Inject constructor(
                         SharedPreferencesKeys.languageList,
                         Gson().toJson(languageData?.gp_api_response_data)
                     )
+
                     getNavigator()?.updateLanguageList(LanguageAdapter(languageData?.gp_api_response_data?.language_list!!)){
                         language=it
                     }
