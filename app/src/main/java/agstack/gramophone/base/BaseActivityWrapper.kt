@@ -86,8 +86,8 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     /**
      * Changing signature for now will have to update it later
      */
-    override fun requestPermission(permission: String) :Boolean{
-         return checkPermission(permission)
+    override fun requestPermission(permission: String): Boolean {
+        return checkPermission(permission)
     }
 
     open fun replaceFragment(fragment: Fragment, TAG: String?) {
@@ -124,11 +124,15 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     }
 
     override fun getMessage(stringResourceId: Int): String {
-       return getString(stringResourceId)
+        return getString(stringResourceId)
     }
 
     override fun showToast(stringResourceId: Int) {
-        Toast.makeText(this,getString(stringResourceId),Toast.LENGTH_LONG).show()
+        Toast.makeText(this, getString(stringResourceId), Toast.LENGTH_LONG).show()
+    }
+
+    override fun showToast(message: String?) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
     override fun onError(message: String?) {
@@ -138,6 +142,10 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     }
 
     override fun onLoading() {
+    }
+
+
+    override fun hideProgressBar() {
     }
 
     fun checkPermission(permission: String): Boolean {

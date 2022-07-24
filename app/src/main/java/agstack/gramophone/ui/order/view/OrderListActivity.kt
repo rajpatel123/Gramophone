@@ -5,7 +5,6 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityOrderListBinding
-import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.order.OrderListNavigator
 import agstack.gramophone.ui.order.adapter.OrderListAdapter
 import agstack.gramophone.ui.order.viewmodel.OrderListViewModel

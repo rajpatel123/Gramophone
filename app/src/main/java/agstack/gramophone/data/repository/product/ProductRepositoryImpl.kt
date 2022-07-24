@@ -2,6 +2,7 @@ package agstack.gramophone.data.repository.product
 
 
 import agstack.gramophone.di.GramAppService
+import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -40,4 +41,9 @@ class ProductRepositoryImpl @Inject constructor(
         relatedProd
     }
 
+    override suspend fun getCartData(): Response<CartDataResponse> = withContext(
+            Dispatchers.IO) {
+            val cartData = gramoAppService.getCartData()
+            cartData
+        }
 }

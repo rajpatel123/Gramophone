@@ -1,7 +1,6 @@
 package agstack.gramophone.ui.cart.adapter
 
 
-import agstack.gramophone.R
 import agstack.gramophone.databinding.ItemCartBinding
 import agstack.gramophone.ui.cart.model.CartItem
 import android.view.LayoutInflater
@@ -13,7 +12,9 @@ import javax.inject.Singleton
 class CartAdapter(cartItemList: List<CartItem>) :
     RecyclerView.Adapter<CartAdapter.CustomViewHolder>() {
     var cartList = cartItemList
-    var selectedProduct: ((CartItem) -> Unit)? = null
+    var onItemDetailClicked: ((CartItem) -> Unit)? = null
+    var onItemDeleteClicked: ((String) -> Unit)? = null
+    var onOfferClicked: ((String) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         return CustomViewHolder(
@@ -24,8 +25,13 @@ class CartAdapter(cartItemList: List<CartItem>) :
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.binding.model = cartList[position]
         holder.binding.ivProduct.setOnClickListener {
-
-            selectedProduct?.invoke(cartList[position])
+            onItemDetailClicked?.invoke(cartList[position])
+        }
+        holder.binding.ivDelete.setOnClickListener {
+            onItemDeleteClicked?.invoke(cartList[position].product_id)
+        }
+        holder.binding.tvOffersApplied.setOnClickListener {
+            onOfferClicked?.invoke(cartList[position].product_id)
         }
     }
 
@@ -44,14 +50,6 @@ class CartAdapter(cartItemList: List<CartItem>) :
     fun updateAdapter(cartItems: List<CartItem>) {
         cartList = cartItems
         notifyDataSetChanged();
-    }
-
-    class OnClickListener(
-        val productListener: (cartItem: CartItem) -> Unit,
-//        val removeListener: (productId: String) -> Unit
-    ) {
-        fun onProductClick(cartItem: CartItem) = productListener(cartItem)
-        fun onRemoveClick(cartItem: CartItem) = productListener(cartItem)
     }
 
     inner class CustomViewHolder(var binding: ItemCartBinding) :

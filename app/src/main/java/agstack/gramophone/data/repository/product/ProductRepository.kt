@@ -1,6 +1,7 @@
 package agstack.gramophone.data.repository.product
 
 
+import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import retrofit2.Response
 import javax.inject.Singleton
@@ -17,5 +18,5 @@ interface ProductRepository {
 
     suspend fun getOffersOnProductData(productMap: ProductData):Response<OffersProductResponseData>
 
-
+    suspend fun getCartData(): Response<CartDataResponse>
 }
