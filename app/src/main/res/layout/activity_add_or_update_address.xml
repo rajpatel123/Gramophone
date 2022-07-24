@@ -143,7 +143,7 @@
                     >
 
                     <!--add all properties in stle and apply here -->
-                    <AutoCompleteTextView
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                         android:id="@+id/districtSpinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

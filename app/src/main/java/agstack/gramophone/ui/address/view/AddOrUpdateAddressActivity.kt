@@ -6,9 +6,13 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityAddOrUpdateAddressBinding
 import agstack.gramophone.di.GetAddressIntentService
 import agstack.gramophone.ui.address.AddressNavigator
+import agstack.gramophone.ui.address.adapter.AddressDataAdapter
+import agstack.gramophone.ui.address.model.AddressDataModel
 import agstack.gramophone.ui.address.viewmodel.AddOrUpdateAddressViewModel
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.language.model.languagelist.Language
+import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
+import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -26,6 +30,7 @@ import androidx.databinding.ObservableField
 import com.google.android.gms.location.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_or_update_address.*
+import kotlinx.android.synthetic.main.activity_login.*
 import org.angmarch.views.NiceSpinner
 import org.angmarch.views.OnSpinnerItemSelectedListener
 import java.util.*
@@ -76,7 +81,29 @@ class AddOrUpdateAddressActivity :
 
         }
 
+         setupObserver()
+    }
 
+    private fun setupObserver() {
+
+        addOrUpdateAddressViewModel.addressDataModel.observe(this, androidx.lifecycle.Observer {
+            when (it) {
+                is ApiResponse.Success -> {
+                    districtSpinner.setAdapter(AddressDataAdapter(this, it.data!!))
+                }
+                is ApiResponse.Error -> {
+                    progress.visibility = View.GONE
+                    it.message?.let { message ->
+                        // Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
+                        openActivity(VerifyOtpActivity::class.java,null)
+
+                    }
+                }
+                is ApiResponse.Loading -> {
+                    progress.visibility = View.VISIBLE
+                }
+            }
+        })
     }
 
     @SuppressLint("MissingPermission")
@@ -103,7 +130,8 @@ class AddOrUpdateAddressActivity :
     }
 
 
-    override fun updateDistrict(adapter: ArrayAdapter<String>, onSelect: (String) -> Unit) {
+    override fun updateDistrict(adapter: AddressDataAdapter, onSelect: (AddressDataModel) -> Unit) {
+       adapter.selectedItem=onSelect
         districtSpinner.setAdapter(adapter)
     }
 
@@ -164,8 +192,8 @@ class AddOrUpdateAddressActivity :
         openAndFinishActivity(StateListActivity::class.java,null)
     }
 
-    override fun getAdapter(dataList: ArrayList<String>): ArrayAdapter<String> {
-        return ArrayAdapter(this,R.layout.item_address_data_name,dataList)
+    override fun getAdapter(dataList: ArrayList<AddressDataModel>): AddressDataAdapter {
+        return AddressDataAdapter(this,dataList)
     }
 
     private fun getAddress() {

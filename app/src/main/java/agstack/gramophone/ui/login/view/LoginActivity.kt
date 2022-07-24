@@ -11,13 +11,12 @@ import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.viewmodel.LoginViewModel
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.ui.webview.view.WebViewActivity
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.Constants.RESOLVE_HINT
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import android.content.IntentSender
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -26,10 +25,11 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.credentials.Credential
-import com.google.android.gms.auth.api.credentials.HintRequest
+import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
+import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.zxing.integration.android.IntentIntegrator
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,6 +39,38 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, LoginViewModel>(),
     LoginNavigator,
     LanguageBottomSheetFragment.LanguageUpdateListener, GoogleApiClient.ConnectionCallbacks {
+    val REQUEST_CODE = 0x0000c0de
+    var qrLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                val result =
+                    IntentIntegrator.parseActivityResult(REQUEST_CODE, result.resultCode, data)
+                tvCodeApplied.text =
+                    getMessage(R.string.referral_code) + result.contents + getMessage(R.string.applied)
+                loginViewModel.referralCode = result.contents
+                rlHaveReferralCode.visibility = GONE
+                rlAppliedCode.visibility = VISIBLE
+            }
+        }
+
+    private val request: GetPhoneNumberHintIntentRequest =
+        GetPhoneNumberHintIntentRequest.builder().build()
+
+    private val phoneNumberLauncher =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+            try {
+                val phoneNumber =
+                    Identity.getSignInClient(this).getPhoneNumberFromIntent(result.data)
+                if (phoneNumber != null && phoneNumber.length >= 10) {
+                    val finalMobileNo = phoneNumber.substring(phoneNumber.length - 10)
+                    etMobile.setText(finalMobileNo)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
 
     //initialise ViewModel
     private val loginViewModel: LoginViewModel by viewModels()
@@ -105,6 +137,10 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
         Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
     }
 
+    override fun onError(message: String?) {
+        Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
+    }
+
     override fun openReferralDialog() {
         //Inflate the dialog with custom view
         val mDialogView =
@@ -142,9 +178,10 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
         //having some crash while scanning will do it later as it is not mentioned in task description as well
         llQRLinearLayout.setOnClickListener {
-//            qrScan = IntentIntegrator(this@LoginActivity)
-//            qrScan?.setOrientationLocked(false)
-            //qrScan?.initiateScan()
+            qrScan = IntentIntegrator(this@LoginActivity)
+            qrScan?.setOrientationLocked(false)
+            qrLauncher.launch(qrScan?.createScanIntent())
+            mAlertDialog.dismiss()
         }
 
         tvTermsOfUse.setOnClickListener {
@@ -158,47 +195,20 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
     }
 
     private fun requestMobileNoHint() {
-
-        val googleApiClient = GoogleApiClient.Builder(this)
-            .addApi(Auth.CREDENTIALS_API)
-            .addConnectionCallbacks(this)
-            .build()
-        googleApiClient.connect()
-
-        val hintRequest = HintRequest.Builder()
-            .setPhoneNumberIdentifierSupported(true)
-            .build()
-
-        val intent = Auth.CredentialsApi.getHintPickerIntent(
-            googleApiClient, hintRequest
-        )
-        try {
-            //Deprecation need to get alternative
-            startIntentSenderForResult(
-                intent.intentSender,
-                Constants.RESOLVE_HINT, null, 0, 0, 0
-            )
-        } catch (e: IntentSender.SendIntentException) {
-            e.printStackTrace()
-        }
-
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RESOLVE_HINT) {
-            if (resultCode == RESULT_OK) {
-                val credential = data?.getParcelableExtra<Credential>(Credential.EXTRA_KEY)
-                // credential.getId(); <-- E.164 format phone number on 10.2.+ devices
-                val mobileNo = credential?.id
-                if (mobileNo != null && mobileNo.length >= 10) {
-                    val finalMobileNo = mobileNo.substring(mobileNo.length - 10)
-                    etMobile.setText(finalMobileNo)
+        Identity.getSignInClient(this)
+            .getPhoneNumberHintIntent(request)
+            .addOnSuccessListener { result ->
+                try {
+                    phoneNumberLauncher.launch(IntentSenderRequest.Builder(result).build())
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
-        }
-    }
+            .addOnFailureListener {
+                Log.d("LoginActivity", getMessage(R.string.unable_to_get_number))
+            }
 
+    }
 
     override fun onLanguageUpdate() {
         loginViewModel.updateLanguage()

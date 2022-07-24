@@ -171,6 +171,8 @@
                 android:text="@string/login"
                 android:gravity="center"
                 android:padding="@dimen/_13sdp"
+                android:onClick="@{ ()-> viewModel.moveToLogin() }"
+
                 android:textSize="@dimen/_14ssp"
                 android:textColor="@color/white"
                 android:layout_marginStart="@dimen/_10sdp"

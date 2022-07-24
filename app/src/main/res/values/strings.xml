@@ -144,5 +144,8 @@
     <string name="basedon">Based on</string>
     <string name="reviews">reviews</string>
     <string name="select">Select</string>
+    <string name="unable_to_get_number">Unable to get phone number</string>
+    <string name="referral_code">"Referral Code "</string>
+    <string name="applied">" Applied"</string>
 
 </resources>

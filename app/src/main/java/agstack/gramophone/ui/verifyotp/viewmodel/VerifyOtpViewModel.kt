@@ -83,6 +83,9 @@ class VerifyOtpViewModel @Inject constructor(
                             getNavigator()?.moveToNext(StateListActivity::class.java)
                         }
                         getNavigator()?.onSuccess(responseData?.gp_api_message)
+                    }else{
+                        getNavigator()?.onError(responseData?.gp_api_message)
+
                     }
                 }  else
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
@@ -138,6 +141,8 @@ class VerifyOtpViewModel @Inject constructor(
                 if (Constants.GP_API_STATUS.equals(sendOtpResponseModel?.gp_api_status)) {
                     getNavigator()?.showTimer()
                     getNavigator()?.onSuccess(sendOtpResponseModel?.gp_api_message)
+                }else{
+                    getNavigator()?.onError(sendOtpResponseModel?.gp_api_message)
                 }
 
             } else
@@ -161,13 +166,13 @@ class VerifyOtpViewModel @Inject constructor(
 
 
     fun onHelpClick(v:View){
-        var initiateAppDataResponseModel = Gson().fromJson(
-            SharedPreferencesHelper.instance?.getString(
+        var initiateAppDataResponseModel =
+            SharedPreferencesHelper.instance?.getParcelable(
                 SharedPreferencesKeys.app_data
-            ), InitiateAppDataResponseModel::class.java
-        )
+                , InitiateAppDataResponseModel::class.java
+            )
         if (getNavigator()?.requestPermission(Manifest.permission.CALL_PHONE) == true)
-            getNavigator()?.onHelpClick(initiateAppDataResponseModel.gp_api_response_data.help_data_list.customer_support_no)
+            getNavigator()?.onHelpClick(initiateAppDataResponseModel?.gp_api_response_data?.help_data_list?.customer_support_no!!)
     }
 
     fun onLanguageClick(v:View){
@@ -192,6 +197,9 @@ class VerifyOtpViewModel @Inject constructor(
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
                     getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
+                }else{
+                    getNavigator()?.onError(updateLanguageResponseModel?.gp_api_message)
+
                 }
 
             } else

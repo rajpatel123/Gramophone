@@ -11,8 +11,8 @@ import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import android.widget.ArrayAdapter
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -25,7 +25,8 @@ import javax.inject.Inject
 class AddOrUpdateAddressViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository
 ) : BaseViewModel<AddressNavigator>() {
-
+    val addressDataModel: MutableLiveData<ApiResponse<List<AddressDataModel>>> =
+        MutableLiveData()
     var state: State? = null
     var stateNameStr = ObservableField<String>()
     var districtName: String? = ""
@@ -97,6 +98,9 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                 if (Constants.GP_API_STATUS.equals(updateAddress?.gp_api_status)) {
                     getNavigator()?.onSuccess(updateAddress?.gp_api_message!!)
                     getNavigator()?.goToApp()
+                }else{
+                    getNavigator()?.onError(updateAddress?.gp_api_message)
+
                 }
 
             } else
@@ -156,14 +160,18 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
                     when (type) {
                         "district" -> {
-                            val addressDataModel= AddressDataModel(getNavigator()?.getMessage(R.string.select)!!)
 
                             stateListData?.gp_api_response_data?.district_list?.forEach {
-                                dataList.add(it.name.toString())
+                                val addressDataModel= AddressDataModel(it.name.toString())
+                                dataList1.add(addressDataModel)
                             }
-                            getNavigator()?.updateDistrict(getNavigator()?.getAdapter(dataList)!!){
-                               districtName=it
-                            }
+//                            val adapter = getNavigator()?.getAdapter(dataList1)!!
+//                            getNavigator()?.updateDistrict(adapter){
+//                               districtName=it.name
+//                            }
+                            addressDataModel.postValue(ApiResponse.Success(dataList1))
+//                            adapter.setNotifyOnChange(true);
+//                            adapter.notifyList(dataList1)
 
                         }
 
@@ -193,6 +201,9 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                             }
                         }
                     }
+
+                }else{
+                    getNavigator()?.onError(stateListData?.gp_api_message)
 
                 }
 

@@ -35,9 +35,9 @@ class StateSelectionViewModel @Inject constructor(
 
     fun onStateUpdate(v: View) {
         if (state != null) {
-            val bundle = Bundle()
-            bundle.putString(Constants.STATE, state?.name)
-            getNavigator()?.moveToNext(bundle)
+            getNavigator()?.moveToNext(Bundle().apply {
+                putString(Constants.STATE, state?.name)
+            })
         } else {
             getNavigator()?.onError(getNavigator()?.getMessage(R.string.select_state_error))
         }
@@ -62,6 +62,9 @@ class StateSelectionViewModel @Inject constructor(
                         state = it
                         getNavigator()?.onStateSelected(state?.name)
                     }
+                }else{
+                    getNavigator()?.onError(stateListData?.gp_api_message)
+
                 }
 
             } else
@@ -105,6 +108,7 @@ class StateSelectionViewModel @Inject constructor(
         stateListAdapter.mStateList.forEach {
             it.selected=false
         }
+        state=null
         stateListAdapter.notifyDataSetChanged()
     }
 
