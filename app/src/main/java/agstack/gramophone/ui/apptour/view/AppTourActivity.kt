@@ -1,30 +1,34 @@
 package agstack.gramophone.ui.apptour.view
 
-import agstack.gramophone.R
 import agstack.gramophone.BR
+import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityApptourBinding
 import agstack.gramophone.ui.apptour.AppTourNavigator
 import agstack.gramophone.ui.apptour.adapter.DotIndicatorPager2Adapter
 import agstack.gramophone.ui.apptour.model.Card
 import agstack.gramophone.ui.apptour.viewmodel.AppTourViewModel
+import agstack.gramophone.ui.dialog.BottomSheetDialog
+import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
 import agstack.gramophone.ui.login.view.LoginActivity
+import android.Manifest
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.Window
-import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_apptour.*
-import java.util.*
 
-class AppTourActivity : BaseActivityWrapper<ActivityApptourBinding,AppTourNavigator,AppTourViewModel>(), AppTourNavigator {
+@AndroidEntryPoint
+class AppTourActivity : BaseActivityWrapper<ActivityApptourBinding,AppTourNavigator,AppTourViewModel>(), AppTourNavigator,
+    LanguageBottomSheetFragment.LanguageUpdateListener {
     private lateinit var scrollImageRunable: Runnable
     private lateinit var mainHandler: Handler
     private  val appTourViewModel: AppTourViewModel by viewModels()
     private lateinit var items: ArrayList<Card>
     var currentPage = 0
+    lateinit var isGranted: ((Boolean) -> Unit)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,6 +109,42 @@ class AppTourActivity : BaseActivityWrapper<ActivityApptourBinding,AppTourNaviga
 
     override fun getViewModel(): AppTourViewModel {
         return appTourViewModel
+    }
+
+    override fun onError(message: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSuccess(message: String?) {
+        Toast.makeText(this@AppTourActivity,message,Toast.LENGTH_LONG).show()
+    }
+
+    override fun onLoading() {
+    }
+
+    override fun onHelpClick(number: String) {
+
+            val bottomSheet = BottomSheetDialog()
+            bottomSheet.customerSupportNumber = number
+            bottomSheet.show(
+                getSupportFragmentManager(),
+                "bottomSheet"
+            )
+
+    }
+
+    override fun onLanguageChangeClick() {
+        val bottomSheet = LanguageBottomSheetFragment()
+        bottomSheet.setLanguageListener(this)
+        bottomSheet.show(
+            getSupportFragmentManager(),
+            "bottomSheet"
+        )
+    }
+
+
+    override fun onLanguageUpdate() {
+        appTourViewModel.updateLanguage()
     }
 
 

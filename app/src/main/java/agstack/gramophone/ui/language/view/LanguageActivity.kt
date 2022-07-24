@@ -10,11 +10,10 @@ import agstack.gramophone.ui.language.LanguageActivityNavigator
 import agstack.gramophone.ui.language.adapter.LanguageAdapter
 import agstack.gramophone.ui.language.model.DeviceDetails
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
-import agstack.gramophone.ui.language.model.LanguageData
+import agstack.gramophone.ui.language.model.languagelist.Language
 import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
-import agstack.gramophone.ui.splash.view.SplashActivity
 import agstack.gramophone.utils.ApiResponse
-import android.content.Intent
+import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -28,16 +27,12 @@ import kotlinx.android.synthetic.main.activity_language.*
 class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageActivityNavigator, LanguageViewModel>(),
     LanguageActivityNavigator {
 
-    private lateinit var binding: ActivityLanguageBinding
     private val languageViewModel: LanguageViewModel by viewModels()
-
 
     val initiateAppDataRequestModel: InitiateAppDataRequestModel
         get() {
             val android_id = Settings.Secure.getString(this.contentResolver,
                 Settings.Secure.ANDROID_ID)
-
-
 
             var deviceDetails = DeviceDetails(
                 BuildConfig.VERSION_CODE.toString(),
@@ -53,25 +48,19 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
             return registerDeviceRequestModel
 
         }
-    companion object {
-        fun start(activity: SplashActivity) {
-            val intent = Intent(activity, LanguageActivity::class.java)
-            activity.startActivity(intent)
-            activity.finish()
-        }
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
         setupDeviceTokenObserver()
-
-        getDeviceToken()
+        getLanguageList()
     }
 
-    private fun getDeviceToken() {
-        languageViewModel.initiateAppData(initiateAppDataRequestModel)
+    private fun getLanguageList() {
+        languageViewModel.getLanguageList()
     }
+
 
     private fun setupDeviceTokenObserver() {
       languageViewModel.registerDeviceModel.observe(this, Observer {
@@ -91,15 +80,7 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
 
 
     private fun setupUi() {
-        val languageList = ArrayList<LanguageData>()
-        languageList.add(LanguageData("English", "English", true))
-        languageList.add(LanguageData("हिंदी", "Hindi", false))
-        languageList.add(LanguageData("मराठी", "Marathi", false))
-        languageList.add(LanguageData("ગુજરાતી", "Gujrati", false))
-
-        recycler_language?.setHasFixedSize(true)
-        recycler_language?.adapter = LanguageAdapter(languageList)
-
+        rvLanguage?.setHasFixedSize(true)
     }
     override fun getLayoutID(): Int {
         return R.layout.activity_language
@@ -115,6 +96,31 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
 
     override fun moveToNext() {
         openAndFinishActivity(AppTourActivity::class.java,null)
+    }
+
+    override fun getResource(): Resources {
+        return resources
+    }
+
+    override fun initiateApp() {
+        languageViewModel.initiateAppData(initiateAppDataRequestModel)
+    }
+
+    override fun onError(message: String?) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onSuccess(message: String?) {
+    }
+
+    override fun onLoading() {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateLanguageList(languageAdapter: LanguageAdapter,onLanguageClicked: (Language) -> Unit) {
+        languageAdapter.selectedLanguage = onLanguageClicked
+        rvLanguage.adapter=languageAdapter
+
     }
 
 }

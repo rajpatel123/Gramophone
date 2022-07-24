@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.login.viewmodel.LoginViewModel" />
+    </data>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -18,16 +24,19 @@
             android:src="@mipmap/logo" />
 
         <LinearLayout
+            android:id="@+id/llHelpLinearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:layout_toStartOf="@+id/languageLL"
+            android:layout_toStartOf="@+id/llLanguageLinearLayout"
             android:background="@drawable/rounded_corner_with_grey_color"
             android:paddingStart="@dimen/_8sdp"
             android:paddingTop="@dimen/_5sdp"
             android:paddingEnd="@dimen/_8sdp"
-            android:paddingBottom="@dimen/_5sdp">
+            android:paddingBottom="@dimen/_5sdp"
+            android:onClick="@{ ()-> viewModel.onHelpClick(llHelpLinearLayout) }"
+            >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -48,7 +57,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/languageLL"
+            android:id="@+id/llLanguageLinearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -58,7 +67,9 @@
             android:paddingStart="@dimen/_8sdp"
             android:paddingTop="@dimen/_5sdp"
             android:paddingEnd="@dimen/_8sdp"
-            android:paddingBottom="@dimen/_5sdp">
+            android:paddingBottom="@dimen/_5sdp"
+            android:onClick="@{ ()-> viewModel.onLanguageClick(llLanguageLinearLayout) }"
+            >
 
             <ImageView
                 android:layout_width="wrap_content"

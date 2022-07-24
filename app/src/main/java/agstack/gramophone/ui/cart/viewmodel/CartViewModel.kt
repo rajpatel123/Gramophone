@@ -25,38 +25,38 @@ class CartViewModel @Inject constructor(
     val removeCartItemResponse: MutableLiveData<ApiResponse<RemoveCartItemResponse>> = MutableLiveData()
 
     fun getCartData() {
-        viewModelScope.launch {
-
-            getCartDataResponse.postValue(ApiResponse.Loading())
-            try {
-                if (getNavigator()?.isNetworkAvailable() == true) {
-                    val response = productRepository.getCartData()
-                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
-                        getCartDataResponse.postValue(ApiResponse.Success(response.body()!!))
-                    } else {
-                        getCartDataResponse.postValue(ApiResponse.Error(response.message()))
-                    }
-                } else
-                    getCartDataResponse.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.no_internet)!!))
-            } catch (ex: Exception) {
-                when (ex) {
-                    is IOException -> getCartDataResponse.postValue(
-                        ApiResponse.Error(
-                            getNavigator()?.getMessage(
-                                R.string.network_failure
-                            )!!
-                        )
-                    )
-                    else -> getCartDataResponse.postValue(
-                        ApiResponse.Error(
-                            getNavigator()?.getMessage(
-                                R.string.some_thing_went_wrong
-                            )!!
-                        )
-                    )
-                }
-            }
-        }
+//        viewModelScope.launch {
+//
+//            getCartDataResponse.postValue(ApiResponse.Loading())
+//            try {
+//                if (getNavigator()?.isNetworkAvailable() == true) {
+//                    val response = productRepository.getCartData()
+//                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
+//                        getCartDataResponse.postValue(ApiResponse.Success(response.body()!!))
+//                    } else {
+//                        getCartDataResponse.postValue(ApiResponse.Error(response.message()))
+//                    }
+//                } else
+//                    getCartDataResponse.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.no_internet)!!))
+//            } catch (ex: Exception) {
+//                when (ex) {
+//                    is IOException -> getCartDataResponse.postValue(
+//                        ApiResponse.Error(
+//                            getNavigator()?.getMessage(
+//                                R.string.network_failure
+//                            )!!
+//                        )
+//                    )
+//                    else -> getCartDataResponse.postValue(
+//                        ApiResponse.Error(
+//                            getNavigator()?.getMessage(
+//                                R.string.some_thing_went_wrong
+//                            )!!
+//                        )
+//                    )
+//                }
+//            }
+//        }
     }
 
     fun removeCartItem() {

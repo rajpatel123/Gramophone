@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.address.viewmodel.StateSelectionViewModel" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/state_bg"
+        tools:context=".ui.address.view.StateListActivity">
+
+        <TextView
+            android:id="@+id/tvSelectState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center"
+            android:text="@string/select_state"
+            android:textColor="@color/brand_color"
+            android:textSize="@dimen/_14ssp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvStates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tvOthers"
+            android:layout_below="@+id/tvSelectState"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+
+            tools:listitem="@layout/item_language" />
+
+        <RelativeLayout
+            android:id="@+id/rlStateSelected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tvContinue"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_50sdp"
+            android:visibility="gone"
+            android:background="@drawable/state_selected_background"
+            android:padding="@dimen/_5sdp">
+
+
+            <TextView
+                android:id="@+id/tvSelectedState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:text="@{viewModel.stateName}"
+                android:fontFamily="@font/manrope_semibold"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_10ssp"
+                tools:text="fdshhfdfhs" />
+
+            <ImageView
+                android:id="@+id/ivRemoveCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/tvSelectedState"
+                android:onClick="@{ ()-> viewModel.onRemoveStateSelectionClicked() }"
+
+                app:srcCompat="@drawable/ic_cross" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tvOthers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tvContinue"
+            android:fontFamily="@font/manrope_semibold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_50sdp"
+            android:background="@drawable/rounded_corner_grey"
+            android:gravity="center"
+            android:minHeight="@dimen/_30sdp"
+            android:onClick="@{ ()-> viewModel.onOthersClicked() }"
+            android:paddingStart="@dimen/_20sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_20sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="@string/other"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvContinue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/brand_color"
+            android:gravity="center"
+            android:onClick="@{ ()-> viewModel.onStateUpdate(tvContinue) }"
+            android:padding="@dimen/_13sdp"
+            android:text="@string/_continue"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+</layout>

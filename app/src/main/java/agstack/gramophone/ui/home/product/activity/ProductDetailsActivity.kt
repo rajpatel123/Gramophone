@@ -7,9 +7,11 @@ import agstack.gramophone.databinding.ProductDetailBinding
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
 import agstack.gramophone.ui.home.product.fragment.ProductImagesFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
+import agstack.gramophone.ui.home.view.fragments.market.model.GpApiResponseData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
+import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.widget.MultipleImageDetailDialog
@@ -18,7 +20,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.RatingBar.OnRatingBarChangeListener
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatTextView
@@ -138,7 +139,7 @@ class ProductDetailsActivity :
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflator = menuInflater
         inflator.inflate(R.menu.menu_product_details, menu)
         return true
@@ -187,9 +188,11 @@ class ProductDetailsActivity :
 
     override fun setProductSKUOfferAdapter(
         productSKUOfferAdapter: ProductSKUOfferAdapter,
-        onOfferItemClicked: (PromotionListItem) -> Unit
+        onOfferItemClicked: (PromotionListItem) -> Unit,
+        onViewDetailsClicked:(PromotionListItem)->Unit
     ) {
         productSKUOfferAdapter.selectedProduct = onOfferItemClicked
+        productSKUOfferAdapter.onViewAllClicked = onViewDetailsClicked
         viewDataBinding?.rvAvailableoffers?.adapter = productSKUOfferAdapter
     }
 
@@ -230,5 +233,13 @@ class ProductDetailsActivity :
         viewDataBinding?.ratingbarReviews?.rvReviewsProduct?.adapter = ratingAndReviewsAdapter
     }
 
-
+    override fun openViewAllReviewRatingsActivity(
+        productId: Int,
+        productReviewsData: GpApiResponseData?
+    ) {
+        openActivity(ProductAllReviewsActivity::class.java,Bundle().apply {
+            putParcelable(Constants.PRODUCTREVIEWDATA,productReviewsData)
+            putInt(Constants.PRODUCTID,productId)
+        })
+    }
 }

@@ -9,11 +9,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class RatingAndReviewsAdapter(reviewList: ReviewList?) :
+class RatingAndReviewsAdapter(reviewList: ReviewList?,limit:Int?=null) :
     RecyclerView.Adapter<RatingAndReviewsAdapter.CustomViewHolder>() {
 
     var mReviewList = reviewList
     lateinit var mContext: Context
+    val listSizeLimit = limit
 
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
@@ -34,7 +35,10 @@ class RatingAndReviewsAdapter(reviewList: ReviewList?) :
     }
 
     override fun getItemCount(): Int {
-        return 2
+        if(listSizeLimit!=null){
+            return listSizeLimit
+        }else{
+        return mReviewList?.data?.size!!}
     }
 
     inner class CustomViewHolder(var binding: RatingReviewItemBinding) :

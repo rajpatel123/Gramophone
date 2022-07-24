@@ -1,5 +1,7 @@
 package agstack.gramophone.utils;
 
+import org.jetbrains.annotations.Nullable;
+
 public abstract class SharedPreferencesKeys {
     public static final String Latitude = "latitude";
     public static final String Longitude = "longitude";
@@ -87,4 +89,8 @@ public abstract class SharedPreferencesKeys {
 
     public static final String GOOGLE_API_KEY = "google_api_key";
 
+    @Nullable
+    public static final String languageList="language_list";
+    @Nullable
+    public static final String app_data="app_data";
 }

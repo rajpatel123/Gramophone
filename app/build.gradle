@@ -31,6 +31,10 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    packagingOptions {
+        exclude 'META-INF/retrofit.kotlin_module'
+    }
     hilt {
         enableTransformForLocalTests = true
     }
@@ -98,10 +102,10 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.firebase:firebase-messaging:23.0.5'
+    implementation 'com.google.firebase:firebase-messaging:23.0.6'
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
     implementation 'com.google.firebase:firebase-auth:21.0.3'
     implementation 'com.google.firebase:firebase-config:21.0.2'
-    implementation 'com.google.firebase:firebase-messaging:23.0.6'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
@@ -174,9 +178,17 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.9'
 
+    //CircularImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    implementation 'com.github.arcadefire:nice-spinner:1.4.4'
+    /*//youtube
+    implementation project(':YouTubeAndroidPlayerApi')*/
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
 
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.13.+"
+    implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
 
 
 }
