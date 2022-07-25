@@ -1,8 +1,8 @@
 package agstack.gramophone.ui.address.adapter
 
+import agstack.gramophone.R
 import agstack.gramophone.databinding.ItemAddressDataNameBinding
 import agstack.gramophone.ui.address.model.AddressDataModel
-import agstack.gramophone.ui.language.model.languagelist.Language
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter
 
 
 class AddressDataAdapter(context: Context, var items: List<AddressDataModel> = arrayListOf()) :
-    ArrayAdapter<AddressDataModel>(context, 0, items) {
+    ArrayAdapter<AddressDataModel>(context, R.layout.item_address_data_name, items) {
     var selectedItem: ((AddressDataModel) -> Unit)? = null
 
     @SuppressLint("ViewHolder")
@@ -24,9 +24,18 @@ class AddressDataAdapter(context: Context, var items: List<AddressDataModel> = a
             false
         )
 
-        binding.model = items[position]
+        val model= items[position]
+        binding.model = model
+        binding.itemTitle.setOnClickListener {
+            selectedItem?.invoke(model)
+        }
+
 
         return binding.root
+    }
+
+    override fun getItem(position: Int): AddressDataModel? {
+        return items[position]
     }
 
     override fun getCount(): Int {

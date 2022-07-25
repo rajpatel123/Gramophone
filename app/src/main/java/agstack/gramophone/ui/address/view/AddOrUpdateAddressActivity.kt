@@ -131,8 +131,10 @@ class AddOrUpdateAddressActivity :
 
 
     override fun updateDistrict(adapter: AddressDataAdapter, onSelect: (AddressDataModel) -> Unit) {
-       adapter.selectedItem=onSelect
+        adapter.selectedItem=onSelect
         districtSpinner.setAdapter(adapter)
+//        districtSpinner.threshold=1
+        districtSpinner.setOnClickListener { districtSpinner.showDropDown() }
     }
 
     override fun updateTehsil(tehsil: ArrayList<String>, function: () -> Unit) {

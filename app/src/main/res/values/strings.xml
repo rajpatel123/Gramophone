@@ -147,5 +147,12 @@
     <string name="unable_to_get_number">Unable to get phone number</string>
     <string name="referral_code">"Referral Code "</string>
     <string name="applied">" Applied"</string>
+    <string name="refer_n_earn">Refer and Earn</string>
+    <string name="invite_and_earn">Invite your friends and earn ...</string>
+    <string name="order_desc">all orders will be managed here</string>
+    <string name="tv">Gramophone TV</string>
+    <string name="settings">Settings</string>
+    <string name="manage_settings">Manage your app settings here</string>
+    <string name="tools">TOOLS</string>
 
 </resources>

@@ -165,11 +165,11 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                                 val addressDataModel= AddressDataModel(it.name.toString())
                                 dataList1.add(addressDataModel)
                             }
-//                            val adapter = getNavigator()?.getAdapter(dataList1)!!
-//                            getNavigator()?.updateDistrict(adapter){
-//                               districtName=it.name
-//                            }
-                            addressDataModel.postValue(ApiResponse.Success(dataList1))
+                            val adapter = getNavigator()?.getAdapter(dataList1)!!
+                            getNavigator()?.updateDistrict(adapter){
+                               districtName=it.name
+                            }
+                           // addressDataModel.postValue(ApiResponse.Success(dataList1))
 //                            adapter.setNotifyOnChange(true);
 //                            adapter.notifyList(dataList1)
 

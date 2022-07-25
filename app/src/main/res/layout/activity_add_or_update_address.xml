@@ -143,7 +143,7 @@
                     >
 
                     <!--add all properties in stle and apply here -->
-                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    <AutoCompleteTextView
                         android:id="@+id/districtSpinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -152,8 +152,7 @@
                         android:paddingLeft="10dp"
                         android:singleLine="true"
                         android:text="@={viewModel.districtName}"
-                        android:maxLength="20"
-                        android:completionThreshold="2"
+                        android:completionThreshold="1"
 
                         />
 
