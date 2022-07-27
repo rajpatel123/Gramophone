@@ -1,6 +1,7 @@
 package agstack.gramophone.utils
 
 import agstack.gramophone.R
+import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
 import android.net.Uri
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -54,6 +55,12 @@ class BindingAdapter {
 
             progressBar.progress = progress*2*10
 
+        }
+
+        @BindingAdapter("percentageOff")
+        @JvmStatic
+        fun percentageOff(textView: TextView,model: RelatedProductItem){
+            textView.setText(((model.salesPrice)!!.toFloat()-(model.mrpPrice)!!.toFloat()).toString()+" % Off")
         }
 
     }

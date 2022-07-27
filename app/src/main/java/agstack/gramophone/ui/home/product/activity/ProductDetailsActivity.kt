@@ -17,6 +17,7 @@ import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.widget.MultipleImageDetailDialog
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -47,7 +48,9 @@ class ProductDetailsActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         productDetailsViewModel.getBundleData()
-        initYoutubePlayer()
+        Handler().postDelayed({
+            initYoutubePlayer()
+        }, 500)
         initProductDetailView()
         setSelfRatingBarChangeListener()
 
@@ -100,11 +103,10 @@ class ProductDetailsActivity :
     }
 
     private fun initYoutubePlayer() {
-        var youTubePlayerFragment = supportFragmentManager
-            .findFragmentById(R.id.youtube_player_fragment) as YouTubePlayerFragment?
+        val youTubePlayerFragment = supportFragmentManager
+            .findFragmentById(R.id.youtube_player_fragment) as? YouTubePlayerFragment?
 
         val googleApiKey = instance!!.getString(SharedPreferencesKeys.GOOGLE_API_KEY)
-
 
         youTubePlayerFragment?.initialize(googleApiKey, this)
     }
@@ -123,6 +125,7 @@ class ProductDetailsActivity :
 
                  }*/
             } catch (e: IllegalStateException) {
+                e.printStackTrace()
             }
         }
     }
@@ -193,7 +196,7 @@ class ProductDetailsActivity :
     ) {
         productSKUOfferAdapter.selectedProduct = onOfferItemClicked
         productSKUOfferAdapter.onViewAllClicked = onViewDetailsClicked
-        viewDataBinding?.rvAvailableoffers?.adapter = productSKUOfferAdapter
+        viewDataBinding.rvAvailableoffers.adapter = productSKUOfferAdapter
     }
 
 
@@ -202,7 +205,7 @@ class ProductDetailsActivity :
         onRelatedProductItemClicked: (RelatedProductItem) -> Unit
     ) {
 
-        viewDataBinding?.rvRelatedProducts?.adapter = relatedProductFragmentAdapter
+        viewDataBinding.rvRelatedProducts.adapter = relatedProductFragmentAdapter
         relatedProductFragmentAdapter.selectedProduct = onRelatedProductItemClicked
 
     }
@@ -221,16 +224,16 @@ class ProductDetailsActivity :
     }
 
     override fun setProductImagesViewPagerAdapter(productImagesAdapter: ProductImagesAdapter) {
-        viewDataBinding?.productImagesViewPager?.adapter = productImagesAdapter
-        viewDataBinding?.dotsIndicator?.setViewPager(viewDataBinding!!.productImagesViewPager)
+        viewDataBinding.productImagesViewPager?.adapter = productImagesAdapter
+        viewDataBinding.dotsIndicator.setViewPager(viewDataBinding.productImagesViewPager)
     }
 
     override fun setProductDetailsAdapter(productDetailsAdapter: ProductDetailsAdapter) {
-        viewDataBinding?.rvProductDetails?.adapter = productDetailsAdapter
+        viewDataBinding.rvProductDetails?.adapter = productDetailsAdapter
     }
 
     override fun setRatingAndReviewsAdapter(ratingAndReviewsAdapter: RatingAndReviewsAdapter) {
-        viewDataBinding?.ratingbarReviews?.rvReviewsProduct?.adapter = ratingAndReviewsAdapter
+        viewDataBinding.ratingbarReviews?.rvReviewsProduct?.adapter = ratingAndReviewsAdapter
     }
 
     override fun openViewAllReviewRatingsActivity(
@@ -242,4 +245,6 @@ class ProductDetailsActivity :
             putInt(Constants.PRODUCTID,productId)
         })
     }
+
+
 }

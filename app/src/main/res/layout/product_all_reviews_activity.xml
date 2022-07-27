@@ -283,7 +283,7 @@
             <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                 android:id="@+id/autocomplete_sortBy"
                 style="@style/TextSize14Sp"
-                android:clickable="false"
+                android:clickable="true"
                 android:cursorVisible="false"
                 android:editable="false"
                 android:focusable="false"

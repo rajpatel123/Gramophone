@@ -5,12 +5,16 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ProductAllReviewsActivityBinding
 import agstack.gramophone.ui.home.product.adapter.SimpleListViewAdapter
+import agstack.gramophone.utils.EndlessRecyclerScrollListener
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.product_all_reviews_activity.*
 
@@ -22,37 +26,45 @@ class ProductAllReviewsActivity :
 
 
     private val productReviewsViewModel: ProductReviewsViewModel by viewModels()
-
+   // private lateinit var listener: EndlessRecyclerScrollListener
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         productReviewsViewModel.getBundleData()
-
         setAutoCompleteSortByAdapterList()
+
+    }
+
+    private fun setScrollListenerOnReviewsList() {
+
+        //Set Scrolling to recyclerView
+     /* listener = EndlessRecyclerScrollListener(
+            viewDataBinding.rvReviewsProduct.layoutManager as LinearLayoutManager,
+            mViewModel?.loadMore!!
+        )
+       viewDataBinding.rvReviewsProduct.addOnScrollListener(listener)*/
+
+       viewDataBinding.rvReviewsProduct.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                Log.d("Scrolled","Scrolled")
+                mViewModel?.loadMore!!
+
+
+            }
+
+
+        })
     }
 
 
-
     private fun setAutoCompleteSortByAdapterList() {
-        var sortByListOptions: Array<String> = resources.getStringArray(R.array.SortReviewsByOptions)
+        var sortByListOptions: Array<String> =
+            resources.getStringArray(R.array.SortReviewsByOptions)
         mViewModel?.sortByList = sortByListOptions.toCollection(ArrayList())
         mViewModel?.setSortingListOptions(sortByListOptions.toCollection(ArrayList()))
-        /*var sortByAdapter= ArrayAdapter<String>(this, android.R.layout.select_dialog_item , sortByListOptions)
-        viewDataBinding?.autocompleteSortBy?.setAdapter(sortByAdapter)
-        sortByAdapter.notifyDataSetChanged()
-      autocomplete_sortBy.setOnTouchListener(object:View.OnTouchListener{
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                autocomplete_sortBy.showDropDown()
-                return true
-            } })
-
-
-
-        viewDataBinding?.autocompleteSortBy?.setOnItemClickListener { parent, view, position, id ->
-
-            Log.d("ItemSelectedValue", sortByListOptions[position])
-        }*/
 
     }
 
@@ -82,12 +94,19 @@ class ProductAllReviewsActivity :
         onItemClick: (String) -> Unit
     ) {
         simpleListViewAdapter.OnItemSelectedListener(onItemClick)
-        autocomplete_sortBy.setAdapter(simpleListViewAdapter)
+        viewDataBinding.autocompleteSortBy.setAdapter(simpleListViewAdapter)
         simpleListViewAdapter.notifyDataSetChanged()
+        viewDataBinding.autocompleteSortBy.setOnClickListener { autocomplete_sortBy.showDropDown() }
+
+    }
+
+    override fun hideDropDown() {
+        viewDataBinding.autocompleteSortBy.dismissDropDown()
     }
 
     override fun setProductReviewsAdapter(ratingAndReviewsAdapter: RatingAndReviewsAdapter) {
-        viewDataBinding?.rvReviewsProduct?.adapter= ratingAndReviewsAdapter
+        viewDataBinding?.rvReviewsProduct?.adapter = ratingAndReviewsAdapter
+        setScrollListenerOnReviewsList()
     }
 
 }
