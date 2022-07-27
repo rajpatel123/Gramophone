@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,8 +12,7 @@
             type="agstack.gramophone.ui.offer.OfferDetailViewModel" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -25,69 +26,117 @@
             android:layout_below="@+id/myToolbar">
 
             <LinearLayout
-                android:background="@drawable/ic_stripe_bg"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_marginLeft="@dimen/_13sdp"
-                    android:layout_marginRight="@dimen/_13sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginBottom="@dimen/_15sdp"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_100sdp"
-                    android:background="@drawable/ic_offer_cards"
-                    >
-                    <TextView
-                        android:id="@+id/tv_title"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginLeft="@dimen/_48sdp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/manrope_bold"
-                        android:hint="50% Off on Pesticide"
-                        android:text="@{viewModel.MOffersItem.title}"
-                        style="@style/TextSize16Sp" />
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_stripe_bg">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_marginLeft="@dimen/_13sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginRight="@dimen/_13sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:background="@drawable/ic_offer_cards">
+
+                        <LinearLayout
+                            android:id="@+id/ll_details"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_48sdp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/tv_title"
+                                style="@style/TextSize16Sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_bold"
+                                android:hint="50% Off on Pesticide"
+                                android:text="@{viewModel.MOffersItem.title}" />
+
+                            <TextView
+                                android:id="@+id/tv_valid_till"
+                                style="@style/TextSize14Sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_bold"
+                                android:hint="50% Off on Pesticide"
+                                android:text="@{viewModel.MOffersItem.title}"
+                                android:textColor="@color/gray_strike_through" />
+
+
+                            <TextView
+                                android:id="@+id/tv_condition"
+                                style="@style/TextSize14Sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_bold"
+                                android:hint="50% Off on Pesticide"
+                                android:text="@{viewModel.MOffersItem.title}"
+                                android:textColor="@color/gray_strike_through"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_valid_till" />
+                        </LinearLayout>
+
+
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            loadUri="@{viewModel.MOffersItem.image}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toRightOf="@id/ll_details"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"></ImageView>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_16sdp"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_valid_till"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_title"
-                        android:layout_marginLeft="@dimen/_48sdp"
+                        android:id="@+id/tv_offer_tnc"
+                        style="@style/TextSize18Sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/manrope_bold"
-                        android:hint="50% Off on Pesticide"
-                        android:text="@{viewModel.MOffersItem.title}"
-                        android:textColor="@color/gray_strike_through"
-                        style="@style/TextSize14Sp" />
+                        android:text="@string/offers_tnc" />
 
 
                     <TextView
-                        android:id="@+id/tv_condition"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_valid_till"
-                        android:layout_marginLeft="@dimen/_48sdp"
+                        android:id="@+id/tv_redemptionsteps_label"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        style="@style/TextSize16Sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/manrope_bold"
-                        android:hint="50% Off on Pesticide"
-                        android:text="@{viewModel.MOffersItem.title}"
-                        android:textColor="@color/gray_strike_through"
-                        style="@style/TextSize14Sp" />
+                        android:text="@string/redemption_steps" />
 
-
-
-                    <ImageView
-                        android:src="@drawable/ic_special_offer"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toRightOf="@id/tv_title"
-                        app:layout_constraintRight_toRightOf="parent"
+                    <TextView
+                        android:id="@+id/tv_tnc_label"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        style="@style/TextSize16Sp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"></ImageView>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:layout_height="wrap_content"
+                        android:text="@{@string/terms_n_conditions+` : `}" />
+
+
+
+
+
+                </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
 

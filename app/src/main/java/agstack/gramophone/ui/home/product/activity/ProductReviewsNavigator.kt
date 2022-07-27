@@ -10,5 +10,6 @@ interface ProductReviewsNavigator :BaseNavigator {
      fun setToolbarTitle(title: String)
     fun setProductReviewsAdapter(ratingAndReviewsAdapter: RatingAndReviewsAdapter)
     fun setSortBySpinnerAdapter(simpleListViewAdapter: SimpleListViewAdapter, onItemClick: (String) -> Unit)
+    fun hideDropDown()
 
 }

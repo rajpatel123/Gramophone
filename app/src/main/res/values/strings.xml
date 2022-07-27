@@ -147,6 +147,8 @@
     <string name="top_reviews">Top reviews</string>
     <string name="offer_detail">Offer Detail</string>
     <string name="view_detail">View Detail</string>
+    <string name="offers_tnc"><![CDATA[Offer Terms & Conditions]]></string>
+    <string name="redemption_steps">Redemption steps:</string>
 
     <string name="no_internet">"No internet connection "</string>
     <string name="sku">SKU:&#160;</string>
