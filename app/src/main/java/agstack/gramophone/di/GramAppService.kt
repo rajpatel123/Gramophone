@@ -16,6 +16,7 @@ import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
+import agstack.gramophone.ui.order.model.OrderListResponse
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
@@ -98,5 +99,8 @@ interface GramAppService {
 
     @DELETE("api/v5/cart/remove-from-cart")
     suspend fun removeCartItem(@Body productData: ProductData): Response<RemoveCartItemResponse>
+
+    @GET("api/v5/order/get-order/{type}")
+    suspend fun getOrderData(@Path("type") type: String): Response<OrderListResponse>
 
 }

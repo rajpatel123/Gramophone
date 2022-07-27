@@ -1,37 +1,78 @@
 package agstack.gramophone.ui.order.viewmodel
 
+import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
-import agstack.gramophone.ui.home.view.fragments.market.ProductListAdapter
+import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.ui.cart.adapter.CartAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.order.OrderListNavigator
 import agstack.gramophone.ui.order.adapter.OrderListAdapter
-import agstack.gramophone.ui.order.repository.OrderListRepository
-import android.content.Context
+import agstack.gramophone.utils.Constants
+import android.os.Bundle
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
 class OrderListViewModel @Inject constructor(
-    private val orderListRepository: OrderListRepository,
+    private val productRepository: ProductRepository,
 ) : BaseViewModel<OrderListNavigator>() {
 
-    suspend fun getOrderList(hashMap: HashMap<Any, Any>) {
-        withContext(
-            Dispatchers.IO
-        ) {
+    fun getOrderList() {
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    getNavigator()?.onLoading()
 
-            //set received orders list in Adapter
-            getNavigator()?.setOrderListAdapter(OrderListAdapter()) {
+                    coroutineScope {
+                        val recentOrderData = async {
+                            productRepository.getOrderData(Constants.RECENT)
+                        }
 
+                        val pastOrderData = async {
+                            productRepository.getOrderData(Constants.PAST)
+                        }
 
-                getNavigator()?.startOrderDetailsActivity()
+                        val recentOrderDataResponse = recentOrderData.await()
+                        val pastOrderDataResponse = pastOrderData.await()
 
+                        if (recentOrderDataResponse.isSuccessful && recentOrderDataResponse.body()?.gp_api_status == Constants.GP_API_STATUS
+                            && recentOrderDataResponse.body()?.gp_api_response_data?.order_list != null && recentOrderDataResponse.body()?.gp_api_response_data?.order_list?.data?.size!! > 0
+                        ) {
+                            getNavigator()?.setOrderAdapter(
+                                OrderListAdapter(recentOrderDataResponse.body()?.gp_api_response_data?.order_list?.data!!)
+                            ) {
+                                val bundle = Bundle()
+                                bundle.putString(Constants.ORDER_ID, it)
+                                getNavigator()?.openOrderDetailsActivity(bundle)
+                            }
+                        } else {
+
+                        }
+
+                        if (pastOrderDataResponse.isSuccessful && pastOrderDataResponse.body()?.gp_api_status == Constants.GP_API_STATUS
+                            && pastOrderDataResponse.body()?.gp_api_response_data?.order_list != null && pastOrderDataResponse.body()?.gp_api_response_data?.order_list?.data?.size!! > 0
+                        ) {
+
+                        } else {
+
+                        }
+                    }
+                } else {
+                    getNavigator()?.hideProgressBar()
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
+                getNavigator()?.hideProgressBar()
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
             }
-
-
         }
     }
 

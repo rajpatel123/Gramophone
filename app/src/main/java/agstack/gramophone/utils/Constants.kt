@@ -9,7 +9,8 @@ object Constants {
 
     //sortBy options
     val TOP = "top"
-    val RECENT = "recent"
+    const val RECENT = "recent"
+    const val PAST = "past"
     const val HELP_PHONE_NUMBER: String = "customer_support_no"
     const val LANG: String = "lang"
     const val PAGE_URL: String = "url"
@@ -203,7 +204,8 @@ object Constants {
     const val PRODUCTREVIEWDATA = "PRODUCTREVIEWDATA"
     const val PRODUCTID = "PRODUCTID"
 
-
+    //Product
+    const val ORDER_ID = "order_id"
     /**
      * For Broadcast
      */

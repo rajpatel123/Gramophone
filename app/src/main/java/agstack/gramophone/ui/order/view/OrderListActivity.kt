@@ -5,10 +5,13 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityOrderListBinding
+import agstack.gramophone.ui.home.product.activity.ProductAllReviewsActivity
+import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.order.OrderListNavigator
 import agstack.gramophone.ui.order.adapter.OrderListAdapter
 import agstack.gramophone.ui.order.viewmodel.OrderListViewModel
 import agstack.gramophone.ui.orderdetails.OrderDetailsActivity
+import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,15 +39,7 @@ class OrderListActivity :
         binding = ActivityOrderListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupUi()
-        setupObservers()
-
-        uiScope.launch {
-            orderListViewModel.getOrderList(HashMap<Any, Any>())
-        }
-    }
-
-    private fun setupObservers() {
-
+        orderListViewModel.getOrderList()
     }
 
     private fun setupUi() {
@@ -53,15 +48,14 @@ class OrderListActivity :
         rv_order?.setHasFixedSize(true)
     }
 
-    override fun setOrderListAdapter(adapter: OrderListAdapter, onOrderItemClick: () -> Unit) {
-        uiScope.launch {
-            adapter.selectedProduct = onOrderItemClick
-            rv_order?.adapter = adapter
-        }
+    override fun setOrderAdapter(adapter: OrderListAdapter, onOrderItemClick: (String) -> Unit) {
+        adapter.onOrderDetailClicked = onOrderItemClick
+        rv_order?.adapter = adapter
+
     }
 
-    override fun startOrderDetailsActivity() {
-        openActivity(OrderDetailsActivity::class.java, null)
+    override fun openOrderDetailsActivity(bundle: Bundle) {
+        openActivity(OrderDetailsActivity::class.java,bundle)
     }
 
     override fun getLayoutID(): Int {

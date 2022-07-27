@@ -155,6 +155,12 @@
     <string name="gram_cash">&#160;Gram Cash</string>
     <string name="items_in_your_cart">Items in your cart (</string>
     <string name="close_parenthesis">)</string>
+    <string name="details">Details</string>
+    <string name="hash_sign">#</string>
+    <string name="slash_sign">&#160;/&#160;</string>
+    <string name="items">&#160;Items</string>
+    <string name="order_status">Order Status</string>
+    <string name="order">Order&#160;</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

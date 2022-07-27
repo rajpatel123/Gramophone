@@ -1,148 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/item_order"
-    android:paddingStart="@dimen/_12sdp"
-    android:paddingTop="@dimen/_24sdp"
-    android:paddingEnd="@dimen/_12sdp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
-        android:id="@+id/frame_product"
-        android:layout_width="@dimen/_44sdp"
-        android:layout_height="@dimen/_44sdp"
-        android:background="@drawable/rounded_corner_8_solid_white_stroke_gray">
+    <data>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:contentDescription="@string/image"
-            android:padding="@dimen/_4sdp"
-            android:src="@drawable/dummy_category_item" />
+        <import type="android.view.View" />
 
-    </FrameLayout>
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.order.model.Data" />
+    </data>
 
-    <TextView
-        android:id="@+id/tv_order_number"
+    <RelativeLayout
+        android:id="@+id/item_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_3sdp"
-        android:layout_toEndOf="@+id/frame_product"
-        android:fontFamily="@font/manrope_bold"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="1sp"
-        android:text="#234554677"
-        android:textColor="@color/blakish"
-        android:textSize="16sp" />
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingTop="@dimen/_24sdp"
+        android:paddingEnd="@dimen/_12sdp">
 
-    <TextView
-        android:id="@+id/date_time"
-        android:layout_width="205dp"
-        android:layout_height="16dp"
-        android:layout_below="@+id/tv_order_number"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:layout_toEndOf="@+id/frame_product"
-        android:fontFamily="@font/manrope_regular"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="-2sp"
-        android:text="05-Jul-2022 / 3 Items"
-        android:textColor="@color/gray_strike_through"
-        android:textSize="13sp" />
+        <FrameLayout
+            android:id="@+id/frame_product"
+            android:layout_width="@dimen/_44sdp"
+            android:layout_height="@dimen/_44sdp"
+            android:background="@drawable/rounded_corner_8_solid_white_stroke_gray">
 
-    <TextView
-        android:id="@+id/tv_total_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/_3sdp"
-        android:fontFamily="@font/manrope_bold"
-        android:lineSpacingExtra="-1sp"
-        android:text="₹4320"
-        android:textColor="@color/blakish"
-        android:textSize="18sp" />
-
-    <View
-        android:id="@+id/order_date_separator"
-        android:layout_width="match_parent"
-        android:layout_height="1.4dp"
-        android:layout_below="@+id/frame_product"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:background="@drawable/line_dotted" />
-
-    <LinearLayout
-        android:id="@+id/ll_status"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_38sdp"
-        android:layout_below="@+id/order_date_separator"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/tv_status_title"
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/manrope_medium"
-                android:lineSpacingExtra="1sp"
-                android:text="Order Status"
-                android:textColor="@color/gray_strike_through"
-                android:textSize="11sp" />
+                android:layout_gravity="center"
+                android:contentDescription="@string/image"
+                android:padding="@dimen/_4sdp"
+                android:src="@drawable/dummy_category_item" />
 
-            <TextView
-                android:id="@+id/tv_order_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_status_title"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:drawablePadding="@dimen/_6sdp"
-                android:fontFamily="@font/manrope_medium"
-                android:lineSpacingExtra="0sp"
-                android:text="Order Placed"
-                android:textColor="@color/yellow_dark"
-                android:textSize="14sp"
-                app:drawableStartCompat="@drawable/ic_order_placed" />
-
-        </RelativeLayout>
+        </FrameLayout>
 
         <TextView
+            android:id="@+id/tv_order_number"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_32sdp"
-            android:background="@drawable/rounded_corner_12_solid_orange"
-            android:backgroundTint="@color/green_transparent"
-            android:clickable="true"
-            android:drawablePadding="@dimen/_6sdp"
-            android:focusable="true"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_toEndOf="@+id/frame_product"
             android:fontFamily="@font/manrope_bold"
-            android:gravity="center"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="1sp"
+            android:text="@{@string/hash_sign.concat(model.order_id)}"
+            android:textColor="@color/blakish"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/date_time"
+            android:layout_width="205dp"
+            android:layout_height="16dp"
+            android:layout_below="@+id/tv_order_number"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_toEndOf="@+id/frame_product"
+            android:fontFamily="@font/manrope_regular"
+            android:gravity="center_vertical"
             android:lineSpacingExtra="-2sp"
-            android:paddingStart="@dimen/_12sdp"
-            android:paddingEnd="@dimen/_12sdp"
-            android:text="Place Order"
-            android:textColor="@color/green_dark"
-            android:textSize="13sp"
-            android:textStyle="normal"
-            app:drawableEndCompat="@drawable/ic_arrow_right_green" />
+            android:text="@{model.order_date.concat(@string/slash_sign).concat(model.quantity).concat(@string/items)}"
+            tools:text="05-Jul-2022 / 3 Items"
+            android:textColor="@color/gray_strike_through"
+            android:textSize="13sp" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/tv_total_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:lineSpacingExtra="-1sp"
+            android:text="@{@string/rupee_symbol.concat(model.price)}"
+            tools:text="₹4320"
+            android:textColor="@color/blakish"
+            android:textSize="18sp" />
 
-    <View
-        android:id="@+id/tab_separator"
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_below="@+id/ll_status"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:alpha="0.8"
-        android:background="@color/gray_strike_through"
-        android:visibility="visible" />
+        <View
+            android:id="@+id/order_date_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1.4dp"
+            android:layout_below="@+id/frame_product"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/line_dotted" />
+
+        <LinearLayout
+            android:id="@+id/ll_status"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_38sdp"
+            android:layout_below="@+id/order_date_separator"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_status_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_medium"
+                    android:lineSpacingExtra="1sp"
+                    android:text="@string/order_status"
+                    android:textColor="@color/gray_strike_through"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tv_order_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_status_title"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:drawablePadding="@dimen/_6sdp"
+                    android:fontFamily="@font/manrope_medium"
+                    android:lineSpacingExtra="0sp"
+                    tools:text="Order Placed"
+                    android:text="@{@string/order.concat(model.order_status)}"
+                    android:textColor="@color/yellow_dark"
+                    android:textSize="14sp"
+                    app:drawableStartCompat="@drawable/ic_order_placed" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_32sdp"
+                android:background="@drawable/rounded_corner_12_solid_orange"
+                android:backgroundTint="@color/green_transparent"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="center"
+                android:lineSpacingExtra="-2sp"
+                android:paddingStart="@dimen/_12sdp"
+                android:paddingEnd="@dimen/_12sdp"
+                android:text="@string/details"
+                android:textColor="@color/green_dark"
+                android:textSize="13sp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/tab_separator"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_below="@+id/ll_status"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:alpha="0.8"
+            android:background="@color/gray_strike_through"
+            android:visibility="visible" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
+</layout>
