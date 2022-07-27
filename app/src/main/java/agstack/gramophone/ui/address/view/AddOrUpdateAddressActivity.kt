@@ -17,17 +17,28 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.ResultReceiver
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.databinding.ObservableField
 import com.google.android.gms.location.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_or_update_address.*
+import org.angmarch.views.NiceSpinner
+import org.angmarch.views.OnSpinnerItemSelectedListener
+import java.util.*
 
 @AndroidEntryPoint
 class AddOrUpdateAddressActivity :
     BaseActivityWrapper<ActivityAddOrUpdateAddressBinding, AddressNavigator, AddOrUpdateAddressViewModel>(),
     AddressNavigator {
 
+    var stateNameStr = ObservableField<String>()
+    var districtName: String? = ""
+    var tehsilName: String? = ""
+    var villageName: String? = ""
+    var pinCode: String? = ""
+    var address: String? = ""
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val locationPermissionCode = 2
     private lateinit var addressResultReceiver: LocationAddressResultReceiver
@@ -37,8 +48,17 @@ class AddOrUpdateAddressActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (intent?.extras?.containsKey(Constants.STATE_NAME) == true) {
-            addOrUpdateAddressViewModel.setStatesName(intent?.extras?.get(Constants.STATE_NAME) as String)
+        if (intent?.extras?.containsKey(Constants.STATE) == true) {
+            addOrUpdateAddressViewModel.setStatesName(intent?.extras?.get(Constants.STATE) as String)
+            etStateName.setText(intent?.extras?.get(Constants.STATE) as String)
+            addOrUpdateAddressViewModel.stateNameStr.set(etStateName.text.toString())
+
+            addOrUpdateAddressViewModel.getDistrict(
+                "district",
+                intent?.extras?.get(Constants.STATE) as String,
+                "",
+                ""
+            )
         } else {
             addOrUpdateAddressViewModel.getAddressViaLocation()
             addressResultReceiver = LocationAddressResultReceiver(Handler())
@@ -81,21 +101,73 @@ class AddOrUpdateAddressActivity :
     }
 
     override fun updateDistrict(district: ArrayList<String>, function: () -> Unit) {
-        //val niceSpinner = findViewById<View>(R.id.spDistrict) as NiceSpinner
-        //val dataset: List<String> = LinkedList(Arrays.asList(district))
-        //niceSpinner.attachDataSource(dataset)
+        val niceSpinner = findViewById<View>(R.id.etDistrictname) as NiceSpinner
+        niceSpinner.attachDataSource(district)
+
+        niceSpinner.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener { parent, view, position, id ->
+            districtName = district[position]
+            addOrUpdateAddressViewModel.getTehsil(
+                "tehsil", etStateName.text.toString(),
+                districtName!!, ""
+            )
+        })
+    }
+
+    override fun updateTehsil(tehsil: ArrayList<String>, function: () -> Unit) {
+        val niceSpinner = findViewById<View>(R.id.etTahseelName) as NiceSpinner
+        niceSpinner.attachDataSource(tehsil)
+
+        niceSpinner.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener { parent, view, position, id ->
+            tehsilName = tehsil[position]
+            addOrUpdateAddressViewModel.getVillage(
+                "village", etStateName.text.toString(),
+                districtName!!, tehsilName!!,""
+            )
+
+        })
+    }
+
+    override fun updateVillage(villages: ArrayList<String>, function: () -> Unit) {
+        val niceSpinner = findViewById<View>(R.id.etVillageName) as NiceSpinner
+        niceSpinner.attachDataSource(villages)
+
+        niceSpinner.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener { parent, view, position, id ->
+            villageName = villages[position]
+            addOrUpdateAddressViewModel.getPinCode(
+                "pincode", etStateName.text.toString(),
+                districtName!!, tehsilName!!,villageName!!
+            )
+        })
+    }
+
+    override fun updatePinCode(villages: ArrayList<String>, function: () -> Unit) {
+        val niceSpinner = findViewById<View>(R.id.etPinCode) as NiceSpinner
+        niceSpinner.attachDataSource(villages)
+
+        niceSpinner.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener { parent, view, position, id ->
+            pinCode = villages[position]
+        })
     }
 
     override fun updateUI(resultData: Bundle) {
         etStateName.setText(resultData.getString("State"))
         etDistrictname.setText(resultData?.getString("District"))
         etTahseelName.setText(resultData?.getString("Tehsil"))
+        etVillageName.setText(resultData?.getString("Tehsil"))
         etAddress.setText(resultData?.getString("Address"))
         etPinCode.setText(resultData?.getString("Postal"))
     }
 
     override fun goToApp() {
-        openAndFinishActivity(HomeActivity::class.java,null)
+        openAndFinishActivity(HomeActivity::class.java, null)
+    }
+
+    override fun getState(): String? {
+        return etStateName.text.toString()
+    }
+
+    override fun changeState() {
+        openAndFinishActivity(StateListActivity::class.java,null)
     }
 
     private fun getAddress() {
@@ -141,11 +213,13 @@ class AddOrUpdateAddressActivity :
 
     override fun onResume() {
         super.onResume()
-        startLocationUpdates()
+        if (this::fusedLocationClient.isInitialized)
+            startLocationUpdates()
     }
 
     override fun onPause() {
         super.onPause()
-        fusedLocationClient.removeLocationUpdates(locationCallback)
+        if (this::fusedLocationClient.isInitialized)
+            fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 }

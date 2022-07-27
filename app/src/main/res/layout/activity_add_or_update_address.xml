@@ -77,20 +77,22 @@
                         android:id="@+id/ivStateImage"
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="@dimen/_50sdp"
-                        android:layout_margin="@dimen/_14sdp"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:layout_marginEnd="@dimen/_14sdp"
+                        android:layout_marginBottom="@dimen/_14sdp"
                         android:src="@drawable/state_img"
                         app:civ_border_color="@color/white"
                         app:civ_border_width="2dp" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/etStateName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_16ssp"
                         android:layout_toEndOf="@+id/ivStateImage"
-                        android:background="@null"
                         android:fontFamily="@font/manrope_bold"
-                        android:text="@{viewModel.districtName}"
+                        android:text="@{viewModel.stateNameStr}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_16ssp" />
 
@@ -102,6 +104,8 @@
                         android:layout_toEndOf="@+id/ivStateImage"
                         android:fontFamily="@font/manrope_bold"
                         android:text="@string/change"
+                        android:onClick="@{ ()-> viewModel.changeState() }"
+
                         android:textColor="@color/green"
                         android:textSize="@dimen/_12ssp" />
 
@@ -128,7 +132,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
 
-                <EditText
+                <org.angmarch.views.NiceSpinner
                     android:id="@+id/etDistrictname"
                     style="@style/small"
                     android:layout_width="match_parent"
@@ -162,7 +166,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
 
-                <EditText
+                <org.angmarch.views.NiceSpinner
                     android:id="@+id/etTahseelName"
                     style="@style/small"
                     android:layout_width="match_parent"
@@ -195,7 +199,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
 
-                <EditText
+                <org.angmarch.views.NiceSpinner
                     android:id="@+id/etVillageName"
                     style="@style/small"
                     android:layout_width="match_parent"
@@ -214,7 +218,7 @@
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_10sdp"
                     android:singleLine="true"
-                    android:text="@={viewModel.districtName}"
+                    android:text="@={viewModel.villageName}"
                     android:textSize="@dimen/_12ssp" />
 
                 <TextView
@@ -260,7 +264,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
 
-                <EditText
+                <org.angmarch.views.NiceSpinner
                     android:id="@+id/etPinCode"
                     style="@style/small"
                     android:layout_width="match_parent"

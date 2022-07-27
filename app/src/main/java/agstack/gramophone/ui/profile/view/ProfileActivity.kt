@@ -5,6 +5,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityProfileBinding
 import agstack.gramophone.ui.home.view.HomeActivity
+import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.profile.ProfileActivityNavigator
 import agstack.gramophone.ui.profile.viewmodel.ProfileViewModel
@@ -58,6 +59,6 @@ class ProfileActivity : BaseActivityWrapper<ActivityProfileBinding, ProfileActiv
 
     override fun logout() {
         ActivityCompat.finishAffinity(this);
-        openAndFinishActivity(LoginActivity::class.java,null)
+        openAndFinishActivity(LanguageActivity::class.java,null)
     }
 }
