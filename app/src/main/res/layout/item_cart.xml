@@ -154,13 +154,13 @@
             android:orientation="horizontal">
 
             <FrameLayout
-                android:id="@+id/frSubtract"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corner_4_solid_stroke_gray_front_corner">
 
                 <ImageView
+                    android:id="@+id/ivSubtract"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
@@ -186,13 +186,13 @@
                 tools:text="01" />
 
             <FrameLayout
-                android:id="@+id/frAdd"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corner_4_solid_stroke_gray_end_corner">
 
                 <ImageView
+                    android:id="@+id/ivAdd"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"

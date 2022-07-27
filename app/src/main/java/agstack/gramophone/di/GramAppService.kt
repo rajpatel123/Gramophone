@@ -7,6 +7,7 @@ import agstack.gramophone.ui.address.model.AddressResponseModel
 import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.cart.model.CartDataResponse
+import agstack.gramophone.ui.cart.model.RemoveCartItemResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductDataResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
@@ -93,7 +94,9 @@ interface GramAppService {
     suspend fun getOffersOnProductData(@Body productData: ProductData): Response<OffersProductResponseData>
 
     @GET("api/v5/cart/get-cart")
-    @JvmSuppressWildcards
     suspend fun getCartData(): Response<CartDataResponse>
+
+    @DELETE("api/v5/cart/remove-from-cart")
+    suspend fun removeCartItem(@Body productData: ProductData): Response<RemoveCartItemResponse>
 
 }

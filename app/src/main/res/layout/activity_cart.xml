@@ -21,9 +21,9 @@
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScroll"
-            android:layout_below="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -106,7 +106,8 @@
                     android:lineSpacingExtra="0sp"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="@dimen/_16sdp"
-                    android:text="Items in your cart (2)"
+                    android:text="@{@string/items_in_your_cart.concat(String.valueOf(viewModel.cartCountLiveData)).concat(@string/close_parenthesis)}"
+                    tools:text="Items in your cart (0)"
                     android:textColor="@color/blakish"
                     android:textSize="16sp" />
 
@@ -118,7 +119,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    tools:itemCount="3"
+                    tools:itemCount="1"
                     tools:listitem="@layout/item_cart" />
 
                 <View
@@ -136,7 +137,8 @@
                     android:layout_below="@+id/viewItemSeparator"
                     android:background="@drawable/linear_gradient_white_blue"
                     android:paddingStart="16dp"
-                    android:paddingEnd="16dp">
+                    android:paddingEnd="16dp"
+                    android:visibility="@{viewModel.gramCashLiveData>0 ? View.VISIBLE : View.GONE}">
 
                     <androidx.appcompat.widget.AppCompatCheckBox
                         android:id="@+id/chkPayUsingGramCash"
@@ -192,9 +194,10 @@
                         android:layout_toEndOf="@+id/ivGramCash"
                         android:fontFamily="@font/manrope_bold"
                         android:lineSpacingExtra="1sp"
-                        android:text="600"
+                        android:text="@{String.valueOf(viewModel.gramCashLiveData)}"
                         android:textColor="@color/blakish"
-                        android:textSize="11sp" />
+                        android:textSize="11sp"
+                        tools:text="50" />
 
                 </RelativeLayout>
 
@@ -209,9 +212,11 @@
                     android:lineSpacingExtra="-2sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Save extra ₹50 using 50 Gram Cash"
+                    android:text="@{@string/save_extra_rupees.concat(String.valueOf(viewModel.gramCashLiveData)).concat(@string/using).concat(String.valueOf(viewModel.gramCashLiveData)).concat(@string/gram_cash)}"
                     android:textColor="@color/green_medium"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    android:visibility="@{viewModel.gramCashLiveData>0 ? View.VISIBLE : View.GONE}"
+                    tools:text="Save extra ₹50 using 50 Gram Cash" />
 
                 <View
                     android:id="@+id/viewGramCashSeparator"
@@ -263,9 +268,10 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="₹ 8160"
+                    android:text="@{@string/rupee_symbol.concat(String.valueOf(viewModel.amountLiveData))}"
                     android:textColor="@color/blakish"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="@string/rupee_symbol" />
 
                 <TextView
                     android:id="@+id/tvDiscountTitle"
@@ -293,9 +299,10 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="-₹ 1680"
+                    android:text="@{@string/minus_rupee_symbol.concat(String.valueOf(viewModel.discountLiveData))}"
                     android:textColor="@color/green_medium"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="-₹ 0" />
 
                 <TextView
                     android:id="@+id/tvGramCashTitle"
@@ -323,9 +330,10 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="-₹ 50"
+                    android:text="@{@string/minus_rupee_symbol.concat(String.valueOf(viewModel.gramCashLiveData))}"
                     android:textColor="@color/green_medium"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="-₹ 50" />
 
                 <RelativeLayout
                     android:id="@+id/rlDelivery"
@@ -434,9 +442,10 @@
                         android:layout_centerVertical="true"
                         android:fontFamily="@font/manrope_bold"
                         android:lineSpacingExtra="1sp"
-                        android:text="₹ 6480"
+                        android:text="@{@string/rupee_symbol.concat(String.valueOf(viewModel.totalAmountLiveData))}"
                         android:textColor="@color/blakish"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        tools:text="₹ 100" />
 
                 </RelativeLayout>
 
@@ -475,9 +484,9 @@
                     </FrameLayout>
 
                     <TextView
-                        android:layout_marginStart="@dimen/_14sdp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_14sdp"
                         android:fontFamily="@font/manrope_regular"
                         android:gravity="center_vertical"
                         android:lineSpacingExtra="0sp"
@@ -514,9 +523,10 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/manrope_bold"
                             android:lineSpacingExtra="1sp"
-                            android:text="₹ 6480"
+                            android:text="@{@string/rupee_symbol.concat(String.valueOf(viewModel.totalAmountLiveData))}"
                             android:textColor="@color/blakish"
-                            android:textSize="20sp"/>
+                            android:textSize="20sp"
+                            tools:text="₹ 100" />
 
                         <TextView
                             android:layout_width="wrap_content"

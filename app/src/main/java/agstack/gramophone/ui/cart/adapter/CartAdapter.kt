@@ -14,7 +14,7 @@ class CartAdapter(cartItemList: List<CartItem>) :
     var cartList = cartItemList
     var onItemDetailClicked: ((CartItem) -> Unit)? = null
     var onItemDeleteClicked: ((String) -> Unit)? = null
-    var onOfferClicked: ((String) -> Unit)? = null
+    var onOfferClicked: ((cartItemList: List<CartItem>) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         return CustomViewHolder(
@@ -24,6 +24,7 @@ class CartAdapter(cartItemList: List<CartItem>) :
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.binding.model = cartList[position]
+        var quantity = cartList[position].quantity.toInt()
         holder.binding.ivProduct.setOnClickListener {
             onItemDetailClicked?.invoke(cartList[position])
         }
@@ -31,7 +32,21 @@ class CartAdapter(cartItemList: List<CartItem>) :
             onItemDeleteClicked?.invoke(cartList[position].product_id)
         }
         holder.binding.tvOffersApplied.setOnClickListener {
-            onOfferClicked?.invoke(cartList[position].product_id)
+            onOfferClicked?.invoke(cartList)
+        }
+        holder.binding.ivSubtract.setOnClickListener {
+            if (quantity > 1) {
+                quantity -= 1
+                cartList[position].quantity = quantity.toString()
+                onOfferClicked?.invoke(cartList)
+                notifyDataSetChanged()
+            }
+        }
+        holder.binding.ivAdd.setOnClickListener {
+            quantity += 1
+            cartList[position].quantity = quantity.toString()
+            onOfferClicked?.invoke(cartList)
+            notifyDataSetChanged()
         }
     }
 

@@ -38,7 +38,10 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
     }
 
     private fun setupUi() {
-        toolbar.rl_help.setOnClickListener(View.OnClickListener {
+        toolbar.flBack.setOnClickListener(View.OnClickListener {
+            finish()
+        })
+        toolbar.rlHelp.setOnClickListener(View.OnClickListener {
             val bottomSheet = BottomSheetDialog()
             //bottomSheet.setAcceptRejectListener(listener)
             bottomSheet.show(
@@ -52,7 +55,7 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
         cartAdapter: CartAdapter,
         onCartItemClicked: (CartItem) -> Unit,
         onCartItemDeleteClicked: (String) -> Unit,
-        onOfferClicked: (String) -> Unit,
+        onOfferClicked: (cartItemList: List<CartItem>) -> Unit,
     ) {
         cartAdapter.onItemDetailClicked = onCartItemClicked
         cartAdapter.onItemDeleteClicked = onCartItemDeleteClicked
@@ -64,12 +67,12 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
         openActivity(ProductDetailsActivity::class.java)
     }
 
-    override fun openAppliedOfferDetailActivity() {
-
+    override fun openAppliedOfferDetailActivity(cartItemList: List<CartItem>) {
+        cartViewModel.calculateAmount(cartItemList)
     }
 
     override fun deleteCartItem(productId: String) {
-        showToast("delete in progress")
+
     }
 
     override fun onLoading() {

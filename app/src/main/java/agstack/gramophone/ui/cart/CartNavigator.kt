@@ -12,12 +12,12 @@ interface CartNavigator : BaseNavigator {
         cartAdapter: CartAdapter,
         onCartItemClicked: (CartItem) -> Unit,
         onCartItemDeleteClicked: (String) -> Unit,
-        onOfferClicked: (String) -> Unit
+        onOfferClicked: (cartItemList: List<CartItem>) -> Unit
     )
 
     fun openProductDetailsActivity()
 
     fun deleteCartItem(productId: String)
 
-    fun openAppliedOfferDetailActivity()
+    fun openAppliedOfferDetailActivity(cartItemList: List<CartItem>)
 }

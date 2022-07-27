@@ -148,6 +148,13 @@
     <string name="space">" "</string>
     <string name="sku">SKU:&#160;</string>
     <string name="offers_applied">&#160;Offers applied</string>
+    <string name="rupee_symbol">₹&#160;</string>
+    <string name="minus_rupee_symbol">-₹&#160;</string>
+    <string name="save_extra_rupees">Save extra ₹</string>
+    <string name="using">&#160;using&#160;</string>
+    <string name="gram_cash">&#160;Gram Cash</string>
+    <string name="items_in_your_cart">Items in your cart (</string>
+    <string name="close_parenthesis">)</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

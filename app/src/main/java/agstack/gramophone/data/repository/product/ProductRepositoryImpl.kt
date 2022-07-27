@@ -3,6 +3,7 @@ package agstack.gramophone.data.repository.product
 
 import agstack.gramophone.di.GramAppService
 import agstack.gramophone.ui.cart.model.CartDataResponse
+import agstack.gramophone.ui.cart.model.RemoveCartItemResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -46,4 +47,10 @@ class ProductRepositoryImpl @Inject constructor(
             val cartData = gramoAppService.getCartData()
             cartData
         }
+
+    override suspend fun removeCartItem(productData: ProductData): Response<RemoveCartItemResponse>  = withContext(
+        Dispatchers.IO) {
+        val removedResponse = gramoAppService.removeCartItem(productData)
+        removedResponse
+    }
 }
