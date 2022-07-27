@@ -53,7 +53,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         this.mViewModel = getViewModel()
         viewDataBinding.setVariable(getBindingVariable(), mViewModel)
         setContentView(viewDataBinding.root)
-        viewDataBinding.lifecycleOwner = this;
+        viewDataBinding.lifecycleOwner = this
         mViewModel?.setNavigator(this as? N)
     }
 

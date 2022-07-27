@@ -126,11 +126,9 @@
 
     <!--    OnBoarding strings-->
 
-    <string name="ratingandreviews"><![CDATA[Rating & Reviews]]></string>
     <string name="some_thing_went_wrong">Something went wrong</string>
     <string name="network_failure">Network failure</string>
     <string name="space">" "</string>
-    <string name="sku">"SKU: "</string>
 
     <string name="ensureyoutubeversioninstalled">Kindly make sure that your device has running version of YouTube installed</string>
     <string name="key_points">Key Points</string>
@@ -151,9 +149,6 @@
     <string name="view_detail">View Detail</string>
 
     <string name="no_internet">"No internet connection "</string>
-    <string name="some_thing_went_wrong">Something went wrong</string>
-    <string name="network_failure">Network failure</string>
-    <string name="space">" "</string>
     <string name="sku">SKU:&#160;</string>
     <string name="offers_applied">&#160;Offers applied</string>
     <string name="rupee_symbol">₹&#160;</string>
