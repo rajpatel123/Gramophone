@@ -23,7 +23,7 @@
             android:name=".ui.address.view.SelectOtherStateActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.address.view.StateListActivity"
+            android:name=".ui.splash.view.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -38,7 +38,7 @@
 
         </activity>
         <activity
-            android:name=".ui.splash.view.SplashActivity"
+            android:name=".ui.address.view.StateListActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
