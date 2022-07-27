@@ -157,28 +157,6 @@
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
-                <org.angmarch.views.NiceSpinner
-                    android:id="@+id/etDistrictname"
-                    style="@style/small"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_20sdp"
-                    android:layout_toEndOf="@+id/countryCode"
-                    android:background="@drawable/rounded_corner"
-                    android:backgroundTint="@color/mute_grey"
-                    android:drawableEnd="@drawable/ic_arrow_down"
-
-                    android:imeOptions="actionDone"
-                    android:letterSpacing=".05"
-                    android:paddingStart="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"
-                    android:singleLine="true"
-                    android:text="@={viewModel.districtName}"
-                    android:textSize="@dimen/_12ssp" />
 
                 <TextView
                     android:layout_width="match_parent"

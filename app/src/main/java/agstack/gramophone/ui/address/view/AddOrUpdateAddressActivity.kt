@@ -7,10 +7,10 @@ import agstack.gramophone.databinding.ActivityAddOrUpdateAddressBinding
 import agstack.gramophone.di.GetAddressIntentService
 import agstack.gramophone.ui.address.AddressNavigator
 import agstack.gramophone.ui.address.adapter.AddressDataAdapter
+import agstack.gramophone.ui.address.adapter.CustomListAdapter
 import agstack.gramophone.ui.address.model.AddressDataModel
 import agstack.gramophone.ui.address.viewmodel.AddOrUpdateAddressViewModel
 import agstack.gramophone.ui.home.view.HomeActivity
-import agstack.gramophone.ui.language.model.languagelist.Language
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
@@ -23,7 +23,6 @@ import android.os.Handler
 import android.os.ResultReceiver
 import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.ObservableField
@@ -33,7 +32,6 @@ import kotlinx.android.synthetic.main.activity_add_or_update_address.*
 import kotlinx.android.synthetic.main.activity_login.*
 import org.angmarch.views.NiceSpinner
 import org.angmarch.views.OnSpinnerItemSelectedListener
-import java.util.*
 
 @AndroidEntryPoint
 class AddOrUpdateAddressActivity :
@@ -130,11 +128,12 @@ class AddOrUpdateAddressActivity :
     }
 
 
-    override fun updateDistrict(adapter: AddressDataAdapter, onSelect: (AddressDataModel) -> Unit) {
-        adapter.selectedItem=onSelect
+    override fun updateDistrict(adapter: CustomListAdapter, onSelect: (AddressDataModel) -> Unit) {
+        adapter.selectedItem = onSelect
         districtSpinner.setAdapter(adapter)
-//        districtSpinner.threshold=1
-        districtSpinner.setOnClickListener { districtSpinner.showDropDown() }
+        districtSpinner.setOnClickListener {
+            districtSpinner.threshold = 1
+        }
     }
 
     override fun updateTehsil(tehsil: ArrayList<String>, function: () -> Unit) {
@@ -175,11 +174,11 @@ class AddOrUpdateAddressActivity :
 
     override fun updateUI(resultData: Bundle) {
         etStateName.setText(resultData.getString("State"))
-        etDistrictname.setText(resultData?.getString("District"))
-        etTahseelName.setText(resultData?.getString("Tehsil"))
-        etVillageName.setText(resultData?.getString("Tehsil"))
-        etAddress.setText(resultData?.getString("Address"))
-        etPinCode.setText(resultData?.getString("Postal"))
+        districtSpinner.setText(resultData.getString("District"))
+        etTahseelName.setText(resultData.getString("Tehsil"))
+        etVillageName.setText(resultData.getString("Tehsil"))
+        etAddress.setText(resultData.getString("Address"))
+        etPinCode.setText(resultData.getString("Postal"))
     }
 
     override fun goToApp() {
@@ -191,11 +190,17 @@ class AddOrUpdateAddressActivity :
     }
 
     override fun changeState() {
-        openAndFinishActivity(StateListActivity::class.java,null)
+        openAndFinishActivity(StateListActivity::class.java, null)
     }
 
-    override fun getAdapter(dataList: ArrayList<AddressDataModel>): AddressDataAdapter {
-        return AddressDataAdapter(this,dataList)
+    override fun getAdapter(dataList: ArrayList<AddressDataModel>): CustomListAdapter {
+//        return AddressDataAdapter(this,dataList)
+        return CustomListAdapter(this, R.layout.item_address_data_name, dataList)
+    }
+
+    override fun closeDropDown() {
+        districtSpinner.threshold = 1000
+        districtSpinner.dismissDropDown()
     }
 
     private fun getAddress() {

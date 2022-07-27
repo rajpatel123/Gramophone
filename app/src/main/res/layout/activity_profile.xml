@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/iv_profile"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:ellipsize="end"
                     android:text="Thakur Baldev Singh"
                     android:textColor="@color/blakish"
@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_56sdp"
                 android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="-25dp"
+                android:layout_marginTop="-20dp"
                 android:elevation="@dimen/_2sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 app:cardCornerRadius="@dimen/_10sdp">

@@ -29,7 +29,9 @@ class AddOrUpdateAddressViewModel @Inject constructor(
         MutableLiveData()
     var state: State? = null
     var stateNameStr = ObservableField<String>()
-    var districtName: String? = ""
+    var districtName = ObservableField<String>()
+
+    //var districtName: String? = ""
     var tehsilName: String? = ""
     var villageName: String? = ""
     var pinCode: String? = ""
@@ -53,7 +55,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
     }
     fun submitAddress() {
 
-        if (TextUtils.isEmpty(districtName)) {
+        if (TextUtils.isEmpty(districtName.get())) {
             getNavigator()?.onError(getNavigator()?.getMessage(R.string.district_required))
             return
         }
@@ -75,7 +77,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
         val updateAddressRequestModel = UpdateAddressRequestModel(
             address,
-            districtName,
+            districtName.get(),
             pinCode,
             getNavigator()?.getState(),
             tehsilName,
@@ -167,12 +169,9 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                             }
                             val adapter = getNavigator()?.getAdapter(dataList1)!!
                             getNavigator()?.updateDistrict(adapter){
-                               districtName=it.name
+                                districtName.set(it.name)
+                                getNavigator()?.closeDropDown()
                             }
-                           // addressDataModel.postValue(ApiResponse.Success(dataList1))
-//                            adapter.setNotifyOnChange(true);
-//                            adapter.notifyList(dataList1)
-
                         }
 
                         "tehsil" -> {
