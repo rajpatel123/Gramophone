@@ -12,14 +12,17 @@ import java.util.ArrayList
 
 interface AddressNavigator : BaseNavigator{
     fun updateDistrict(adapter: CustomListAdapter, onSelect: (AddressDataModel) -> Unit)
-    fun updateTehsil(function1: ArrayList<String>, function: () -> Unit)
-    fun updateVillage(function1: ArrayList<String>, function: () -> Unit)
-    fun updatePinCode(function1: ArrayList<String>, function: () -> Unit)
+    fun updateTehsil(adapter: CustomListAdapter, onSelect: (AddressDataModel) -> Unit)
+    fun updateVillage(adapter: CustomListAdapter, onSelect: (AddressDataModel) -> Unit)
+    fun updatePinCode(adapter: CustomListAdapter, onSelect: (AddressDataModel) -> Unit)
     fun updateUI(resultData: Bundle)
     fun goToApp()
     fun getState(): String?
     fun changeState()
     fun getAdapter(dataList: ArrayList<AddressDataModel>): CustomListAdapter
-    fun closeDropDown()
+    fun closeDistrictDropDown()
+    fun closeTehsilDropDown()
+    fun closeVillageDropDown()
+    fun closePincodeDropDown()
 
 }

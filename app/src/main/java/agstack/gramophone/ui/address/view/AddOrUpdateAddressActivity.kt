@@ -30,8 +30,6 @@ import com.google.android.gms.location.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_or_update_address.*
 import kotlinx.android.synthetic.main.activity_login.*
-import org.angmarch.views.NiceSpinner
-import org.angmarch.views.OnSpinnerItemSelectedListener
 
 @AndroidEntryPoint
 class AddOrUpdateAddressActivity :
@@ -136,49 +134,37 @@ class AddOrUpdateAddressActivity :
         }
     }
 
-    override fun updateTehsil(tehsil: ArrayList<String>, function: () -> Unit) {
-        val niceSpinner = findViewById<View>(R.id.etTahseelName) as NiceSpinner
-        niceSpinner.attachDataSource(tehsil)
-
-        niceSpinner.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener { parent, view, position, id ->
-            tehsilName = tehsil[position]
-            addOrUpdateAddressViewModel.getVillage(
-                "village", etStateName.text.toString(),
-                districtName!!, tehsilName!!,""
-            )
-
-        })
+    override fun updateTehsil(adapter: CustomListAdapter, onSelect: (AddressDataModel) -> Unit) {
+        adapter.selectedItem = onSelect
+        tehsilSpinner.setAdapter(adapter)
+        tehsilSpinner.setOnClickListener {
+            tehsilSpinner.threshold = 1
+        }
     }
 
-    override fun updateVillage(villages: ArrayList<String>, function: () -> Unit) {
-        val niceSpinner = findViewById<View>(R.id.etVillageName) as NiceSpinner
-        niceSpinner.attachDataSource(villages)
-
-        niceSpinner.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener { parent, view, position, id ->
-            villageName = villages[position]
-            addOrUpdateAddressViewModel.getPinCode(
-                "pincode", etStateName.text.toString(),
-                districtName!!, tehsilName!!,villageName!!
-            )
-        })
+    override fun updateVillage(adapter: CustomListAdapter, onSelect: (AddressDataModel) -> Unit) {
+        adapter.selectedItem = onSelect
+        villageNameSpinner.setAdapter(adapter)
+        villageNameSpinner.setOnClickListener {
+            villageNameSpinner.threshold = 1
+        }
     }
 
-    override fun updatePinCode(villages: ArrayList<String>, function: () -> Unit) {
-        val niceSpinner = findViewById<View>(R.id.etPinCode) as NiceSpinner
-        niceSpinner.attachDataSource(villages)
-
-        niceSpinner.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener { parent, view, position, id ->
-            pinCode = villages[position]
-        })
+    override fun updatePinCode(adapter: CustomListAdapter, onSelect: (AddressDataModel) -> Unit) {
+        adapter.selectedItem = onSelect
+        pincodeSpinner.setAdapter(adapter)
+        pincodeSpinner.setOnClickListener {
+            pincodeSpinner.threshold = 1
+        }
     }
 
     override fun updateUI(resultData: Bundle) {
         etStateName.setText(resultData.getString("State"))
         districtSpinner.setText(resultData.getString("District"))
-        etTahseelName.setText(resultData.getString("Tehsil"))
-        etVillageName.setText(resultData.getString("Tehsil"))
+        tehsilSpinner.setText(resultData.getString("Tehsil"))
+        villageNameSpinner.setText(resultData.getString("Tehsil"))
         etAddress.setText(resultData.getString("Address"))
-        etPinCode.setText(resultData.getString("Postal"))
+        pincodeSpinner.setText(resultData.getString("Postal"))
     }
 
     override fun goToApp() {
@@ -198,9 +184,28 @@ class AddOrUpdateAddressActivity :
         return CustomListAdapter(this, R.layout.item_address_data_name, dataList)
     }
 
-    override fun closeDropDown() {
+    override fun closeDistrictDropDown() {
         districtSpinner.threshold = 1000
         districtSpinner.dismissDropDown()
+        districtSpinner.nextFocusDownId=R.id.tehsilSpinner
+    }
+
+    override fun closeTehsilDropDown() {
+        tehsilSpinner.threshold = 1000
+        tehsilSpinner.dismissDropDown()
+        tehsilSpinner.nextFocusDownId=R.id.villageNameSpinner
+    }
+
+    override fun closeVillageDropDown() {
+        villageNameSpinner.threshold = 1000
+        villageNameSpinner.dismissDropDown()
+        villageNameSpinner.nextFocusDownId=R.id.pincodeSpinner
+    }
+
+    override fun closePincodeDropDown() {
+        pincodeSpinner.threshold = 1000
+        pincodeSpinner.dismissDropDown()
+        pincodeSpinner.nextFocusDownId=R.id.submitBtn
     }
 
     private fun getAddress() {
@@ -254,5 +259,16 @@ class AddOrUpdateAddressActivity :
         super.onPause()
         if (this::fusedLocationClient.isInitialized)
             fusedLocationClient.removeLocationUpdates(locationCallback)
+    }
+
+    fun test(){
+        val str = "AMAR"
+        val arr = str.split("").toTypedArray()
+        val reverse: ArrayList<String> = ArrayList()
+        for (i in arr.size downTo 0) {
+            reverse.add(arr[i])
+        }
+
+        System.out.println("Reverse String is " + reverse)
     }
 }

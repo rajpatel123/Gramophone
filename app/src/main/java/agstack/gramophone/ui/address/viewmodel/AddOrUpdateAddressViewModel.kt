@@ -30,13 +30,11 @@ class AddOrUpdateAddressViewModel @Inject constructor(
     var state: State? = null
     var stateNameStr = ObservableField<String>()
     var districtName = ObservableField<String>()
+    var tehsilName = ObservableField<String>()
+    var villageName = ObservableField<String>()
+    var pinCode = ObservableField<String>()
+    var address = ObservableField<String>()
 
-    //var districtName: String? = ""
-    var tehsilName: String? = ""
-    var villageName: String? = ""
-    var pinCode: String? = ""
-    var address: String? = ""
-    var isStateSelected: Boolean? = false
 
     fun onStateUpdate(v: View) {
         if (state != null) {
@@ -60,28 +58,28 @@ class AddOrUpdateAddressViewModel @Inject constructor(
             return
         }
 
-        if (TextUtils.isEmpty(tehsilName)) {
+        if (TextUtils.isEmpty(tehsilName.get())) {
             getNavigator()?.onError(getNavigator()?.getMessage(R.string.tehsil_required))
             return
         }
 
-        if (TextUtils.isEmpty(villageName)) {
+        if (TextUtils.isEmpty(villageName.get())) {
             getNavigator()?.onError(getNavigator()?.getMessage(R.string.village_required))
             return
         }
 
-        if (TextUtils.isEmpty(address)) {
+        if (TextUtils.isEmpty(address.get())) {
             getNavigator()?.onError(getNavigator()?.getMessage(R.string.address_required))
             return
         }
 
         val updateAddressRequestModel = UpdateAddressRequestModel(
-            address,
+            address.get(),
             districtName.get(),
-            pinCode,
+            pinCode.get(),
             getNavigator()?.getState(),
-            tehsilName,
-            villageName
+            tehsilName.get(),
+            villageName.get()
         )
         viewModelScope.launch {
             updateCompleteAddress(updateAddressRequestModel)
@@ -170,33 +168,45 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                             val adapter = getNavigator()?.getAdapter(dataList1)!!
                             getNavigator()?.updateDistrict(adapter){
                                 districtName.set(it.name)
-                                getNavigator()?.closeDropDown()
+                                getNavigator()?.closeDistrictDropDown()
+                                getTehsil("tehsil",stateNameStr.get().toString(),districtName.get().toString(),"")
                             }
                         }
 
                         "tehsil" -> {
-                            dataList.add("Select")
                             stateListData?.gp_api_response_data?.tehsil_list?.forEach {
-                                dataList.add(it.name.toString())
+                                val addressDataModel= AddressDataModel(it.name.toString())
+                                dataList1.add(addressDataModel)
                             }
-                            getNavigator()?.updateTehsil(dataList) {
+                            val adapter = getNavigator()?.getAdapter(dataList1)!!
+                            getNavigator()?.updateTehsil(adapter){
+                                tehsilName.set(it.name)
+                                getNavigator()?.closeTehsilDropDown()
+                                getVillage("village",stateNameStr.get().toString(),districtName.get().toString(),tehsilName.get().toString(),"")
                             }
                         }
                         "village" -> {
-                            dataList.add("Select")
                             stateListData?.gp_api_response_data?.village_list?.forEach {
-                                dataList.add(it.name.toString())
+                                val addressDataModel= AddressDataModel(it.name.toString())
+                                dataList1.add(addressDataModel)
                             }
-                            getNavigator()?.updateVillage(dataList) {
+                            val adapter = getNavigator()?.getAdapter(dataList1)!!
+                            getNavigator()?.updateVillage(adapter){
+                                villageName.set(it.name)
+                                getNavigator()?.closeVillageDropDown()
+                                getVillage("pincode",stateNameStr.get().toString(),districtName.get().toString(),tehsilName.get().toString(),villageName.get().toString())
                             }
                         }
 
                         "pincode" -> {
-                            dataList.add("Select")
                             stateListData?.gp_api_response_data?.pincode_list?.forEach {
-                                dataList.add(it.pincode.toString())
+                                val addressDataModel= AddressDataModel(it.pincode.toString())
+                                dataList1.add(addressDataModel)
                             }
-                            getNavigator()?.updatePinCode(dataList) {
+                            val adapter = getNavigator()?.getAdapter(dataList1)!!
+                            getNavigator()?.updatePinCode(adapter){
+                                pinCode.set(it.name)
+                                getNavigator()?.closePincodeDropDown()
                             }
                         }
                     }
