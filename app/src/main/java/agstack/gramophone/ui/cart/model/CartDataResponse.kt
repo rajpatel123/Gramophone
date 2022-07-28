@@ -34,7 +34,7 @@ data class CartItem(
     val product_image: String,
     val product_name: String,
     val product_sku: String,
-    val quantity: String,
+    var quantity: String,
     val total_price: String
 )
 

@@ -11,8 +11,7 @@ data class ReviewList(
 	val data: List<ReviewListItem?>? = null,
 
 	@field:SerializedName("meta")
-	val meta: Meta? = null,
+	val meta: Meta? = null
 
-	@field:SerializedName("links")
-	val links: Links? = null
+
 ) : Parcelable

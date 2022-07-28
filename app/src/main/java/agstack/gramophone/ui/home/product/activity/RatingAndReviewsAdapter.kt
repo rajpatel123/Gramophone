@@ -9,11 +9,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class RatingAndReviewsAdapter(reviewList: ReviewList?) :
+class RatingAndReviewsAdapter(reviewList: List<ReviewListItem?>?,limit:Int?=null) :
     RecyclerView.Adapter<RatingAndReviewsAdapter.CustomViewHolder>() {
 
     var mReviewList = reviewList
     lateinit var mContext: Context
+    val listSizeLimit = limit
 
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
@@ -25,7 +26,7 @@ class RatingAndReviewsAdapter(reviewList: ReviewList?) :
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
 
-        var model: ReviewListItem = mReviewList?.data?.get(position)!!
+        var model: ReviewListItem = mReviewList?.get(position)!!
         holder.binding.setVariable(BR.model, model)
         val mBinding = holder.binding as RatingReviewItemBinding
 
@@ -34,7 +35,10 @@ class RatingAndReviewsAdapter(reviewList: ReviewList?) :
     }
 
     override fun getItemCount(): Int {
-        return 2
+        if(listSizeLimit!=null){
+            return listSizeLimit
+        }else{
+        return mReviewList?.size!!}
     }
 
     inner class CustomViewHolder(var binding: RatingReviewItemBinding) :

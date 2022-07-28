@@ -15,6 +15,6 @@ data class ProductReviewDataResponse(
 	val gpApiStatus: String? = null,
 
 	@field:SerializedName("gp_api_message")
-	val gpApiMessage: String? = null,
+	val gpApiMessage: String? = null
 
 ) : Parcelable

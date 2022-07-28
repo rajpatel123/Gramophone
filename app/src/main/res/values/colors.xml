@@ -16,6 +16,7 @@
     <color name="blakish">#10203E</color>
     <color name="mute_grey">#F2F4F7</color>
     <color name="app_tour_bg">#C1E3FF</color>
+    <color name="green_alert">#3F6317</color>
 
 
     <color name="blue_opacity_80">#CC6FBEFE</color>
@@ -48,4 +49,5 @@
     <color name="pink">#FEE7E3</color>
     <color name="blue_20">#D6E3FF</color>
     <color name="blue_happy">#1F5385</color>
+    <color name="viewcolor">#F2F4F7</color>
 </resources>

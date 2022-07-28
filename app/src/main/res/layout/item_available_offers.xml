@@ -13,32 +13,37 @@
             type="agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem" />
     </data>
 
-    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
     <androidx.cardview.widget.CardView
         android:id="@+id/productDetailsContainer"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
         card_view:cardCornerRadius="10dp"
         card_view:cardElevation="5dp"
         card_view:cardUseCompatPadding="true">
 
 
-        <RelativeLayout
-            android:background="@{model.selected ? @drawable/selected_product_background: @drawable/deselected_product_background}"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:background="@{model.selected ? @drawable/selected_product_background: @drawable/deselected_product_background}">
 
 
             <LinearLayout
                 android:id="@+id/ll_top"
-                android:layout_alignParentTop="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:orientation="horizontal"
-                android:padding="@dimen/_10sdp"
-                android:weightSum="4">
+                android:padding="@dimen/_5sdp"
+                android:weightSum="5"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
+                    android:gravity="left"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -48,6 +53,7 @@
                     >
 
                     <ImageView
+                        android:layout_gravity="left"
                         android:layout_width="@dimen/_24sdp"
                         android:layout_height="@dimen/_24sdp"
                         android:visibility="@{model.selected? View.VISIBLE:View.GONE}"
@@ -55,6 +61,7 @@
 
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:layout_gravity="left"
                         android:id="@+id/radioBtn"
                         android:layout_width="@dimen/_24sdp"
                         android:layout_height="@dimen/_24sdp"
@@ -66,7 +73,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="3"
+                    android:layout_weight="4"
                     android:orientation="vertical">
 
                     <TextView
@@ -74,15 +81,20 @@
                         style="@style/TextSize16Sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Get Flat 5% Off" />
+                        android:hint="Get Flat 5% Off"
+                        android:text="@{model.title}" />
 
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
+                        android:ellipsize="end"
                         android:fontFamily="@font/manrope_medium"
-                        android:text="Offer valid on SKU 500"
+                        android:hint="Offer valid on SKU 500"
+                        android:maxLength="20"
+                        android:maxLines="1"
+                        android:text="@{model.applicable_on_sku}"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/_11ssp" />
 
@@ -91,9 +103,23 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:fontFamily="@font/manrope_medium"
+                        android:hint="Valid till March 2023"
                         android:text="Valid till March 2023"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/_11ssp" />
+
+                    <TextView
+                        android:id="@+id/tv_viewdetail"
+                        android:fontFamily="@font/manrope_bold"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:textStyle="normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:text="@string/view_detail"
+                        android:textColor="@color/orange"
+                        android:textSize="@dimen/_12ssp"
+                        app:drawableEndCompat="@drawable/ic_arrow_right" />
                 </LinearLayout>
 
 
@@ -102,64 +128,66 @@
 
             <LinearLayout
                 android:id="@+id/llbottom"
-                android:layout_below="@+id/ll_top"
-                android:background="@drawable/ic_pink_background"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_26sdp"
-                android:padding="@dimen/_2sdp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_pink_background"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/_5sdp"
+                android:padding="@dimen/_7sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
 
-                android:orientation="horizontal">
+                app:layout_constraintTop_toBottomOf="@+id/ll_top">
 
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:layout_marginBottom="@dimen/_2sdp"
-                    android:textColor="@color/green"
-                    android:textSize="@dimen/_11ssp"
                     android:fontFamily="@font/manrope_bold"
                     android:gravity="center"
                     android:text="Save Rs 100"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_11ssp" />
 
                 <View
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:layout_marginBottom="@dimen/_2sdp"
-                    android:layout_marginLeft="@dimen/_9sdp"
-                    android:layout_marginRight="@dimen/_9sdp"
                     android:layout_width="@dimen/_1sdp"
                     android:layout_height="match_parent"
-                    android:background="@color/mute_grey"/>
+                    android:layout_marginLeft="@dimen/_9sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginRight="@dimen/_9sdp"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:background="@color/mute_grey" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:layout_marginBottom="@dimen/_2sdp"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/_11ssp"
                     android:fontFamily="@font/manrope_bold"
                     android:gravity="center"
                     android:text="Pay only ₹ 100"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_11ssp" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:layout_marginBottom="@dimen/_2sdp"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/_11ssp"
+                    android:background="@drawable/strike_through"
                     android:fontFamily="@font/manrope_medium"
                     android:gravity="center"
-                    android:background="@drawable/strike_through"
                     android:text=" ₹200"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
-
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_11ssp" />
 
 
             </LinearLayout>
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.cardview.widget.CardView>
-    </RelativeLayout>
+
 </layout>

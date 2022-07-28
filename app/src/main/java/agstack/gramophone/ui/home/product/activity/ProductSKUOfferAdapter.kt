@@ -13,6 +13,7 @@ class ProductSKUOfferAdapter(SKUOfferList: ArrayList<PromotionListItem?>) :
     var mSKUOfferList = SKUOfferList
     lateinit var mContext: Context
     var selectedProduct: ((PromotionListItem) -> Unit)? = null
+    var onViewAllClicked:((PromotionListItem)->Unit)?=null
     var lastSelectPosition: Int = 0
 
 
@@ -34,6 +35,9 @@ class ProductSKUOfferAdapter(SKUOfferList: ArrayList<PromotionListItem?>) :
             model.selected = true
             notifyDataSetChanged()
             selectedProduct?.invoke(model)
+        }
+        mBinding.tvViewdetail.setOnClickListener{
+            onViewAllClicked?.invoke(model)
         }
 
 

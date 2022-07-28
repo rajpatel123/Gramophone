@@ -88,7 +88,6 @@
     <string name="please_enter_otp">Please enter OTP</string>
     <string name="resend_otp">"Resend in "</string>
     <string name="resend">"Resend OTP "</string>
-    <string name="no_internet">"No internet connection "</string>
     <string name="privacy">Privacy Policy</string>
     <string name="talk_to_customer_care">Talk to our customer care executive</string>
     <string name="call_now">Call Now</string>
@@ -103,6 +102,9 @@
     <string name="enter_referral_code_hint">Enter referral code</string>
     <string name="help">Help</string>
     <string name="get_help">Get Help</string>
+    <!--    OnBoarding strings-->
+
+    <string name="ratingandreviews"><![CDATA[Rating & Reviews]]></string>
     <string name="select_state">Select your state</string>
     <string name="other">Other</string>
     <string name="select_state_error">Please select state</string>
@@ -124,11 +126,9 @@
 
     <!--    OnBoarding strings-->
 
-    <string name="ratingandreviews"><![CDATA[Rating & Reviews]]></string>
     <string name="some_thing_went_wrong">Something went wrong</string>
     <string name="network_failure">Network failure</string>
     <string name="space">" "</string>
-    <string name="sku">"SKU: "</string>
 
     <string name="ensureyoutubeversioninstalled">Kindly make sure that your device has running version of YouTube installed</string>
     <string name="key_points">Key Points</string>
@@ -143,6 +143,29 @@
     <string name="veryhappy">Very Happy</string>
     <string name="basedon">Based on</string>
     <string name="reviews">reviews</string>
+    <string name="outoffive">Out of 5</string>
+    <string name="top_reviews">Top reviews</string>
+    <string name="offer_detail">Offer Detail</string>
+    <string name="view_detail">View Detail</string>
+    <string name="offers_tnc"><![CDATA[Offer Terms & Conditions]]></string>
+    <string name="redemption_steps">Redemption steps:</string>
+
+    <string name="no_internet">"No internet connection "</string>
+    <string name="sku">SKU:&#160;</string>
+    <string name="offers_applied">&#160;Offers applied</string>
+    <string name="rupee_symbol">₹&#160;</string>
+    <string name="minus_rupee_symbol">-₹&#160;</string>
+    <string name="save_extra_rupees">Save extra ₹</string>
+    <string name="using">&#160;using&#160;</string>
+    <string name="gram_cash">&#160;Gram Cash</string>
+    <string name="items_in_your_cart">Items in your cart (</string>
+    <string name="close_parenthesis">)</string>
+    <string name="details">Details</string>
+    <string name="hash_sign">#</string>
+    <string name="slash_sign">&#160;/&#160;</string>
+    <string name="items">&#160;Items</string>
+    <string name="order_status">Order Status</string>
+    <string name="order">Order&#160;</string>
     <string name="select">Select</string>
     <string name="unable_to_get_number">Unable to get phone number</string>
     <string name="referral_code">"Referral Code "</string>
@@ -155,4 +178,9 @@
     <string name="manage_settings">Manage your app settings here</string>
     <string name="tools">TOOLS</string>
 
+    <string-array name="SortReviewsByOptions">
+        <item>Top Reviews</item>
+        <item>Recent Reviews</item>
+
+    </string-array>
 </resources>

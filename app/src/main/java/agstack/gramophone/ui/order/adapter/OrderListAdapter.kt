@@ -1,16 +1,16 @@
 package agstack.gramophone.ui.order.adapter
 
 
-import agstack.gramophone.databinding.ItemCartBinding
 import agstack.gramophone.databinding.ItemOrderBinding
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.order.model.Data
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class OrderListAdapter :
+class OrderListAdapter(orderDataList: List<Data>) :
     RecyclerView.Adapter<OrderListAdapter.CustomViewHolder>() {
-    var selectedProduct: (() -> Unit)? = null
+    var orderList = orderDataList
+    var onOrderDetailClicked: ((String) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         return CustomViewHolder(
@@ -18,15 +18,15 @@ class OrderListAdapter :
         )
     }
 
-    override fun onBindViewHolder(holder: CustomViewHolder, i: Int) {
-        holder.binding.itemOrder.setOnClickListener {
-
-            selectedProduct?.invoke()
+    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+        holder.binding.model = orderList[position]
+        holder.binding.tvDetail.setOnClickListener {
+            onOrderDetailClicked?.invoke(orderList[position].order_id)
         }
     }
 
     override fun getItemCount(): Int {
-        return /*languageList.size*/6
+        return orderList.size
     }
 
     inner class CustomViewHolder(var binding: ItemOrderBinding) :

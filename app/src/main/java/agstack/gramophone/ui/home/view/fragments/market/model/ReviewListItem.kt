@@ -27,4 +27,6 @@ data class ReviewListItem(
 
 	@field:SerializedName("customer_id")
 	val customerId: Int? = null
+
+
 ) : Parcelable
