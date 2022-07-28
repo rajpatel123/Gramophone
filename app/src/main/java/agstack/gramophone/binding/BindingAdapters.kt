@@ -30,8 +30,14 @@ fun bindStateImage(view: ImageView, imageUrl: String?) {
     if (!imageUrl.isNullOrEmpty()) {
         Glide.with(view.context)
             .load(imageUrl)
+            .apply(
+                RequestOptions()
+                    .error(R.drawable.state_img)
+                    .centerCrop()
+            )
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(view)
+
     }
 }
 
@@ -47,10 +53,7 @@ fun bindLoginBannerImage(view: ImageView, imageUrl: String?) {
             )
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(view)
-//        Glide.with(view.context)
-//            .load(imageUrl)
-//            .transition(DrawableTransitionOptions.withCrossFade())
-//            .into(view)
+
     }
 }
 

@@ -6,13 +6,10 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityAddOrUpdateAddressBinding
 import agstack.gramophone.di.GetAddressIntentService
 import agstack.gramophone.ui.address.AddressNavigator
-import agstack.gramophone.ui.address.adapter.AddressDataAdapter
-import agstack.gramophone.ui.address.adapter.CustomListAdapter
+import agstack.gramophone.ui.address.adapter.AddressDataListAdapter
 import agstack.gramophone.ui.address.model.AddressDataModel
 import agstack.gramophone.ui.address.viewmodel.AddOrUpdateAddressViewModel
 import agstack.gramophone.ui.home.view.HomeActivity
-import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
-import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -22,40 +19,29 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.ResultReceiver
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.ObservableField
 import com.google.android.gms.location.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_or_update_address.*
-import kotlinx.android.synthetic.main.activity_login.*
 
 @AndroidEntryPoint
 class AddOrUpdateAddressActivity :
     BaseActivityWrapper<ActivityAddOrUpdateAddressBinding, AddressNavigator, AddOrUpdateAddressViewModel>(),
     AddressNavigator {
 
-    var stateNameStr = ObservableField<String>()
-    var districtName: String? = ""
-    var tehsilName: String? = ""
-    var villageName: String? = ""
-    var pinCode: String? = ""
-    var address: String? = ""
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private val locationPermissionCode = 2
     private lateinit var addressResultReceiver: LocationAddressResultReceiver
     private lateinit var currentLocation: Location
     private lateinit var locationCallback: LocationCallback
     private val addOrUpdateAddressViewModel: AddOrUpdateAddressViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         if (intent?.extras?.containsKey(Constants.STATE) == true) {
-            addOrUpdateAddressViewModel.setStatesName(intent?.extras?.get(Constants.STATE) as String)
-            etStateName.setText(intent?.extras?.get(Constants.STATE) as String)
-            addOrUpdateAddressViewModel.stateNameStr.set(etStateName.text.toString())
-
+            addOrUpdateAddressViewModel.setStatesName(intent?.extras?.get(Constants.STATE) as String, intent?.extras?.get(Constants.STATE_IMAGE_URL) as String)
             addOrUpdateAddressViewModel.getDistrict(
                 "district",
                 intent?.extras?.get(Constants.STATE) as String,
@@ -76,37 +62,12 @@ class AddOrUpdateAddressActivity :
             startLocationUpdates()
 
         }
-
-         setupObserver()
     }
 
-    private fun setupObserver() {
-
-        addOrUpdateAddressViewModel.addressDataModel.observe(this, androidx.lifecycle.Observer {
-            when (it) {
-                is ApiResponse.Success -> {
-                    districtSpinner.setAdapter(AddressDataAdapter(this, it.data!!))
-                }
-                is ApiResponse.Error -> {
-                    progress.visibility = View.GONE
-                    it.message?.let { message ->
-                        // Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
-                        openActivity(VerifyOtpActivity::class.java,null)
-
-                    }
-                }
-                is ApiResponse.Loading -> {
-                    progress.visibility = View.VISIBLE
-                }
-            }
-        })
-    }
 
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
         val locationRequest = LocationRequest()
-//            locationRequest.interval = 2000
-//            locationRequest.fastestInterval = 1000
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
 
@@ -126,7 +87,7 @@ class AddOrUpdateAddressActivity :
     }
 
 
-    override fun updateDistrict(adapter: CustomListAdapter, onSelect: (AddressDataModel) -> Unit) {
+    override fun updateDistrict(adapter: AddressDataListAdapter, onSelect: (AddressDataModel) -> Unit) {
         adapter.selectedItem = onSelect
         districtSpinner.setAdapter(adapter)
         districtSpinner.setOnClickListener {
@@ -134,7 +95,7 @@ class AddOrUpdateAddressActivity :
         }
     }
 
-    override fun updateTehsil(adapter: CustomListAdapter, onSelect: (AddressDataModel) -> Unit) {
+    override fun updateTehsil(adapter: AddressDataListAdapter, onSelect: (AddressDataModel) -> Unit) {
         adapter.selectedItem = onSelect
         tehsilSpinner.setAdapter(adapter)
         tehsilSpinner.setOnClickListener {
@@ -142,7 +103,7 @@ class AddOrUpdateAddressActivity :
         }
     }
 
-    override fun updateVillage(adapter: CustomListAdapter, onSelect: (AddressDataModel) -> Unit) {
+    override fun updateVillage(adapter: AddressDataListAdapter, onSelect: (AddressDataModel) -> Unit) {
         adapter.selectedItem = onSelect
         villageNameSpinner.setAdapter(adapter)
         villageNameSpinner.setOnClickListener {
@@ -150,7 +111,7 @@ class AddOrUpdateAddressActivity :
         }
     }
 
-    override fun updatePinCode(adapter: CustomListAdapter, onSelect: (AddressDataModel) -> Unit) {
+    override fun updatePinCode(adapter: AddressDataListAdapter, onSelect: (AddressDataModel) -> Unit) {
         adapter.selectedItem = onSelect
         pincodeSpinner.setAdapter(adapter)
         pincodeSpinner.setOnClickListener {
@@ -179,9 +140,8 @@ class AddOrUpdateAddressActivity :
         openAndFinishActivity(StateListActivity::class.java, null)
     }
 
-    override fun getAdapter(dataList: ArrayList<AddressDataModel>): CustomListAdapter {
-//        return AddressDataAdapter(this,dataList)
-        return CustomListAdapter(this, R.layout.item_address_data_name, dataList)
+    override fun getAdapter(dataList: ArrayList<AddressDataModel>): AddressDataListAdapter {
+        return AddressDataListAdapter(this, R.layout.item_address_data_name, dataList)
     }
 
     override fun closeDistrictDropDown() {

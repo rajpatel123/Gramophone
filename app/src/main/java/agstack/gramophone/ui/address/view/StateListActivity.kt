@@ -85,7 +85,6 @@ class StateListActivity :
 
 
     override fun onLoading() {
-        super.onLoading()
 
     }
 

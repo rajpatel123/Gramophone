@@ -23,7 +23,15 @@
             android:orientation="vertical"
             tools:context=".ui.address.view.AddOrUpdateAddressActivity">
 
-
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/stateProgressBar"
+                android:layout_gravity="center"
+                android:visibility="@{viewModel.loading? View.VISIBLE:View.GONE}"
+                android:backgroundTint="@color/zxing_viewfinder_laser"
+                android:elevation="@dimen/_1sdp"
+                />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,13 +83,13 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/ivStateImage"
+                        state_image="@{viewModel.stateImageUrl}"
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="@dimen/_50sdp"
                         android:layout_marginStart="@dimen/_14sdp"
                         android:layout_marginTop="@dimen/_14sdp"
                         android:layout_marginEnd="@dimen/_14sdp"
                         android:layout_marginBottom="@dimen/_14sdp"
-                        android:src="@drawable/state_img"
                         app:civ_border_color="@color/white"
                         app:civ_border_width="2dp" />
 
