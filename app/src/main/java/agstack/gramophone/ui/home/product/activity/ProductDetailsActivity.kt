@@ -7,10 +7,7 @@ import agstack.gramophone.databinding.ProductDetailBinding
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
 import agstack.gramophone.ui.home.product.fragment.ProductImagesFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
-import agstack.gramophone.ui.home.view.fragments.market.model.GpApiResponseData
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
-import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
-import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
+import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
@@ -246,5 +243,9 @@ class ProductDetailsActivity :
         })
     }
 
-
+    override fun openProductDetailsActivity(productData: ProductData) {
+        openActivity(ProductDetailsActivity::class.java, Bundle().apply {
+           putParcelable("product", productData)
+        })
+    }
 }

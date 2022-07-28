@@ -8,11 +8,7 @@ import agstack.gramophone.ui.home.product.adapter.SimpleListViewAdapter
 import agstack.gramophone.utils.EndlessRecyclerScrollListener
 import android.os.Bundle
 import android.util.Log
-import android.view.MotionEvent
-import android.view.View
-import android.widget.ArrayAdapter
 import androidx.activity.viewModels
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +22,7 @@ class ProductAllReviewsActivity :
 
 
     private val productReviewsViewModel: ProductReviewsViewModel by viewModels()
-   // private lateinit var listener: EndlessRecyclerScrollListener
+    private lateinit var listener: EndlessRecyclerScrollListener
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,27 +32,32 @@ class ProductAllReviewsActivity :
 
     }
 
+    override fun notifyDataSetChanged() {
+        viewDataBinding.rvReviewsProduct.adapter?.notifyDataSetChanged()
+    }
+
+    override fun onListUpdated() {
+        listener.onListFetched()
+        (viewDataBinding.rvReviewsProduct.adapter as RatingAndReviewsAdapter).hideLoadingItem()
+        viewDataBinding.rvReviewsProduct.adapter?.notifyDataSetChanged()
+    }
+
     private fun setScrollListenerOnReviewsList() {
-
-        //Set Scrolling to recyclerView
-     /* listener = EndlessRecyclerScrollListener(
+        listener = object : EndlessRecyclerScrollListener(
             viewDataBinding.rvReviewsProduct.layoutManager as LinearLayoutManager,
-            mViewModel?.loadMore!!
-        )
-       viewDataBinding.rvReviewsProduct.addOnScrollListener(listener)*/
-
-       viewDataBinding.rvReviewsProduct.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                Log.d("Scrolled","Scrolled")
-                mViewModel?.loadMore!!
-
-
+            { mViewModel?.loadMore(it) }) {
+            override fun isLastPage(): Boolean {
+                return mViewModel?.isLastPage ?: false
             }
 
+        }
+        viewDataBinding.rvReviewsProduct.addOnScrollListener(listener)
 
-        })
+    }
+
+    override fun showLoaderFooter() {
+        (viewDataBinding.rvReviewsProduct.adapter as RatingAndReviewsAdapter).showLoadingItem()
+        viewDataBinding.rvReviewsProduct.adapter?.notifyDataSetChanged()
     }
 
 
@@ -101,6 +102,7 @@ class ProductAllReviewsActivity :
     }
 
     override fun hideDropDown() {
+
         viewDataBinding.autocompleteSortBy.dismissDropDown()
     }
 

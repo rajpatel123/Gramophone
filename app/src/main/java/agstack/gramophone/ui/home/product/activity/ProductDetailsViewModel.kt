@@ -145,6 +145,8 @@ class ProductDetailsViewModel @Inject constructor(
                                         it.filterNotNull()
                                     )
                                 ) {
+                                    //Open a new instance of ProductDetailsActivity with selected product ID
+                                    getNavigator()?.openProductDetailsActivity(ProductData(it.productId!!))
 
                                 }
                             }
@@ -188,7 +190,7 @@ class ProductDetailsViewModel @Inject constructor(
                         productReviewsData.set(productReviewResponse.body()?.gpApiResponseData)
                         getNavigator()?.setRatingAndReviewsAdapter(
                             RatingAndReviewsAdapter(
-                                productReviewsData.get()?.reviewList?.data,
+                                productReviewsData.get()?.reviewList?.data as ArrayList<ReviewListItem?>,
                                 2
                             )
                         )
