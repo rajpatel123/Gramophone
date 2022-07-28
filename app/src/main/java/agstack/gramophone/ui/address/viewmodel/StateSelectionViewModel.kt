@@ -29,8 +29,8 @@ class StateSelectionViewModel @Inject constructor(
     private var stateListData: StateResponseModel? = null
     var state: State? = null
     var loadingStates = ObservableField<Boolean>()
+    var stateName = ObservableField<String>()
 
-    var stateName: String? = ""
     fun fetchStateList() = viewModelScope.launch {
         getStateList()
     }
@@ -66,7 +66,8 @@ class StateSelectionViewModel @Inject constructor(
                         StateListAdapter(stateListData?.gp_api_response_data?.state_top_list!!)
                     getNavigator()?.updateStateList(stateListAdapter) {
                         state = it
-                        getNavigator()?.onStateSelected(state?.name)
+                        stateName.set(state?.name)
+                        getNavigator()?.onStateSelected()
                     }
                 } else {
                     getNavigator()?.onError(stateListData?.gp_api_message)
@@ -105,16 +106,28 @@ class StateSelectionViewModel @Inject constructor(
 
     }
 
-    fun setStateSelection(stateName: String?) {
-        this.stateName = stateName
-        getNavigator()?.onStateSelected(stateName)
+    fun setStateSelection(stateStr: String?) {
+        stateName.set(stateStr)
+
+        getNavigator()?.onStateSelected()
+
+        stateListAdapter.mStateList.forEach {
+            if (it.name?.equals(stateStr, true) == true) {
+                it.selected = true
+                state = it
+            } else {
+                it.selected = false
+            }
+
+        }
+        stateListAdapter.notifyDataSetChanged()
     }
 
     fun resetStateSelection() {
         stateListAdapter.mStateList.forEach {
-            it.selected=false
+            it.selected = false
         }
-        state=null
+        state = null
         stateListAdapter.notifyDataSetChanged()
     }
 

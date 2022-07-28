@@ -118,10 +118,9 @@ class StateListActivity :
         stateSelectionViewModel.resetStateSelection()
     }
 
-    override fun onStateSelected(stateName: String?) {
+    override fun onStateSelected() {
         tvOthers.visibility = GONE
         rlStateSelected.visibility = VISIBLE
-        tvSelectedState.text = stateName
 
     }
 
