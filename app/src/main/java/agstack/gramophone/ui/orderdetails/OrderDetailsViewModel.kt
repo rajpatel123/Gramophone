@@ -1,15 +1,48 @@
 package agstack.gramophone.ui.orderdetails
 
+import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.ui.cart.adapter.CartAdapter
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.orderdetails.adapter.OrderedProductsAdapter
+import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.utils.Constants
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
 class OrderDetailsViewModel @Inject constructor(
     private val productRepository: ProductRepository,
 ) : BaseViewModel<OrderDetailsNavigator>() {
+
+    var orderId = MutableLiveData<String>()
+    var orderDate = MutableLiveData<String>()
+    var quantity = MutableLiveData<String>()
+    var price = MutableLiveData<String>()
+    var orderStatus = MutableLiveData<String>()
+    var paymentMethod = MutableLiveData<String>()
+    var productSize = MutableLiveData<String>()
+    var username = MutableLiveData<String>()
+    var address = MutableLiveData<String>()
+    var mobile = MutableLiveData<String>()
+
+    init {
+        orderId.value = ""
+        orderDate.value = ""
+        quantity.value = ""
+        price.value = ""
+        orderStatus.value = ""
+        paymentMethod.value = ""
+        productSize.value = "0"
+        username.value = ""
+        address.value = ""
+        mobile.value = ""
+    }
 
     fun getBundleData() {
         val bundle = getNavigator()?.getBundle()
@@ -19,7 +52,66 @@ class OrderDetailsViewModel @Inject constructor(
     }
 
     private fun getOrderDetails(orderId: String) {
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    getNavigator()?.onLoading()
 
+                    val orderDetailRequest = OrderDetailRequest()
+                    orderDetailRequest.order_id = orderId
+
+                    val response = productRepository.getOrderDetails(orderDetailRequest)
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                        && response.body()?.gp_api_response_data?.products != null && response.body()?.gp_api_response_data?.products?.size!! > 0
+                    ) {
+                        getNavigator()?.hideProgressBar()
+                        this@OrderDetailsViewModel.orderId.value =
+                            response.body()?.gp_api_response_data?.order_id
+                        this@OrderDetailsViewModel.orderDate.value =
+                            response.body()?.gp_api_response_data?.order_date
+                        this@OrderDetailsViewModel.quantity.value =
+                            response.body()?.gp_api_response_data?.quantity
+                        this@OrderDetailsViewModel.price.value =
+                            response.body()?.gp_api_response_data?.price
+                        this@OrderDetailsViewModel.orderStatus.value =
+                            response.body()?.gp_api_response_data?.order_status
+                        this@OrderDetailsViewModel.paymentMethod.value =
+                            if (response.body()?.gp_api_response_data?.payment_method.equals("cod",
+                                    true)
+                            ) getNavigator()?.getMessage(R.string.cash_on_delivery)
+                            else response.body()?.gp_api_response_data?.payment_method
+                        this@OrderDetailsViewModel.productSize.value =
+                            response.body()?.gp_api_response_data?.products?.size?.toString()
+                        this@OrderDetailsViewModel.username.value = response.body()?.gp_api_response_data?.products?.get(0)?.delivery_address?.name
+                        this@OrderDetailsViewModel.address.value = response.body()?.gp_api_response_data?.products?.get(0)?.delivery_address?.address
+                        this@OrderDetailsViewModel.mobile.value = response.body()?.gp_api_response_data?.products?.get(0)?.delivery_address?.mobile
+
+                         getNavigator()?.setOrderListAdapter(
+                             OrderedProductsAdapter(response.body()?.gp_api_response_data?.products!!),
+                             {
+                                 //on cartItem clicked for details page
+                                /* getNavigator()?.openProductDetailsActivity()*/
+                             },
+                             {
+                                 //on offer clicked
+                                /* getNavigator()?.openAppliedOfferDetailActivity(it)*/
+                             })
+                    } else {
+                        getNavigator()?.hideProgressBar()
+                        getNavigator()?.showToast(response.message())
+                    }
+                } else {
+                    getNavigator()?.hideProgressBar()
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
+                getNavigator()?.hideProgressBar()
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
     }
 
 }

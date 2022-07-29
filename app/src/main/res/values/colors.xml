@@ -23,6 +23,7 @@
     <color name="gray_stroke">#E0E4EC</color>
     <color name="gray">#606774</color>
     <color name="gray_strike_through">#8F98AB</color>
+    <color name="gray_view_line">#BAC2D2</color>
     <color name="grey_weight">#8010203E</color>
     <color name="green">#79BD2E</color>
     <color name="green_medium">#62A41C</color>
@@ -50,4 +51,14 @@
     <color name="blue_20">#D6E3FF</color>
     <color name="blue_happy">#1F5385</color>
     <color name="viewcolor">#F2F4F7</color>
+    <color name="order_placed_bg">#FCF3CC</color>
+    <color name="order_placed_text">#97651A</color>
+    <color name="order_approved_bg">#E1FDF3</color>
+    <color name="order_approved_text">#3F6317</color>
+    <color name="order_cancelled_bg">#FEE7E8</color>
+    <color name="order_cancelled_text">#9A1016</color>
+    <color name="order_dispatched_bg">#E5F3FE</color>
+    <color name="order_dispatched_text">#0638A0</color>
+    <color name="order_delivered_bg">#EFF6E8</color>
+    <color name="order_delivered_text">#62A41C</color>
 </resources>

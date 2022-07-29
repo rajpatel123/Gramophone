@@ -17,6 +17,8 @@ import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.order.model.OrderListResponse
+import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
+import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
@@ -102,5 +104,8 @@ interface GramAppService {
 
     @GET("api/v5/order/get-order/{type}")
     suspend fun getOrderData(@Path("type") type: String): Response<OrderListResponse>
+
+    @POST("api/v5/order/get-order-detail")
+    suspend fun getOrderDetails(@Body orderDetailRequest : OrderDetailRequest): Response<OrderDetailResponse>
 
 }

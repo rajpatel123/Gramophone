@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.orderdetails.model.Product" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivProduct"
+            android:layout_width="@dimen/_84sdp"
+            android:layout_height="@dimen/_84sdp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/image"
+            android:src="@drawable/dummy_neem_cake"
+            app:product_image="@{model.product_image}" />
+
+        <TextView
+            android:id="@+id/tvProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_toEndOf="@+id/ivProduct"
+            android:ellipsize="end"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="-2sp"
+            android:maxLines="2"
+            android:text="@{model.product_name}"
+            android:textColor="@color/blakish"
+            android:textSize="13sp"
+            tools:text="Fungicides Crystal Bavistin 50% WP Fun gicide Carbe ..." />
+
+        <TextView
+            android:id="@+id/sku"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvProductName"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_toEndOf="@+id/ivProduct"
+            android:ellipsize="end"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="-2sp"
+            android:maxLines="2"
+            android:text="@string/sku"
+            android:textColor="@color/gray_strike_through"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tvSkuWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvProductName"
+            android:layout_marginTop="6dp"
+            android:layout_toEndOf="@+id/sku"
+            android:ellipsize="end"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="-2sp"
+            android:maxLines="1"
+
+            android:text="@{model.product_sku}"
+            android:textColor="@color/blakish"
+            android:textSize="13sp"
+            tools:text="200 Gms" />
+
+        <TextView
+            android:id="@+id/tvSellingPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_22sdp"
+            android:layout_below="@+id/sku"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_toEndOf="@+id/ivProduct"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="1sp"
+            android:text="@{@string/rupee_symbol.concat(model.price)}"
+            android:textColor="@color/blakish"
+            android:textSize="16sp"
+            tools:text="₹ 900" />
+
+        <TextView
+            android:id="@+id/tvActualPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_22sdp"
+            android:layout_below="@+id/sku"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_toEndOf="@+id/tvSellingPrice"
+            android:background="@drawable/strike_through"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="1sp"
+            android:text="@{@string/rupee_symbol.concat(model.price)}"
+            android:textColor="@color/gray_strike_through"
+            android:textSize="13sp"
+            tools:text="₹ 1290" />
+
+        <TextView
+            android:id="@+id/tvDiscountPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_22sdp"
+            android:layout_below="@+id/sku"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_toEndOf="@+id/tvActualPrice"
+            android:background="@drawable/strike_through"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="1sp"
+            android:text="30% off"
+            android:textColor="@color/green_dark"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tvOffersApplied"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvSellingPrice"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_toEndOf="@+id/ivProduct"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="-2sp"
+            android:text="@{String.valueOf(model.offer_applied.size()).concat(@string/offers_applied)}"
+            android:textColor="@color/green_dark"
+            android:textSize="13sp"
+            tools:text="1 Offers applied" />
+
+        <TextView
+            android:id="@+id/tvFreeGive"
+            android:layout_width="match_parent"
+            android:layout_height="26dp"
+            android:layout_below="@+id/tvOffersApplied"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_corner_top_16_solid_light_green_stroke_gray"
+            android:drawablePadding="6dp"
+            android:fontFamily="@font/manrope_regular"
+            android:gravity="center_vertical"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:text="This item is added as a free giveaway."
+            android:textSize="11sp"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/ic_offer"
+            tools:visibility="visible" />
+
+        <RelativeLayout
+            android:id="@+id/rlGift"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_below="@+id/tvFreeGive"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_corner_bottom_16_solid_white_stroke_gray"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <FrameLayout
+                android:id="@+id/frFreeGive"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/rounded_corner_8_solid_white_stroke_gray">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/image"
+                    android:padding="4dp"
+                    android:src="@drawable/dummy_feature_product" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvGiftName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_toEndOf="@+id/frFreeGive"
+                android:ellipsize="end"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="top"
+                android:lineSpacingExtra="1sp"
+                android:maxLines="2"
+                android:text="Daily Object Backpack"
+                android:textColor="@color/brand_color"
+                android:textSize="16sp"
+                android:translationY="-0.27sp" />
+
+            <TextView
+                android:id="@+id/tvGiftPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_below="@+id/tvGiftName"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_toEndOf="@+id/frFreeGive"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="1sp"
+                android:text="₹ 0"
+                android:textColor="@color/blakish"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvGiftActualPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_below="@+id/tvGiftName"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/tvGiftPrice"
+                android:background="@drawable/strike_through"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="1sp"
+                android:text="₹ 1290"
+                android:textColor="@color/gray_strike_through"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvGiftStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_below="@+id/tvGiftName"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/tvGiftActualPrice"
+                android:background="@drawable/btn_rounded_corner_16_solid_orange"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="-2sp"
+                android:paddingStart="12dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="2dp"
+                android:text="FREE"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/itemSeparator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/rlGift"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="18dp"
+            android:background="@color/gray_stroke" />
+    </RelativeLayout>
+</layout>

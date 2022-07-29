@@ -5,6 +5,8 @@ import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.cart.model.RemoveCartItemResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.order.model.OrderListResponse
+import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
+import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
 import retrofit2.Response
 import javax.inject.Singleton
 
@@ -25,4 +27,6 @@ interface ProductRepository {
     suspend fun removeCartItem(productData: ProductData): Response<RemoveCartItemResponse>
 
     suspend fun getOrderData(type: String): Response<OrderListResponse>
+
+    suspend fun getOrderDetails(orderDetailRequest: OrderDetailRequest): Response<OrderDetailResponse>
 }

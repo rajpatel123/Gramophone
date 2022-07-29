@@ -11,17 +11,18 @@ import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.cart.viewmodel.CartViewModel
 import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
-import agstack.gramophone.utils.ApiResponse
-import agstack.gramophone.utils.Utility
-import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.activity_cart.progress
+import kotlinx.android.synthetic.main.activity_cart.toolbar
+import kotlinx.android.synthetic.main.activity_cart.view.*
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_order_list.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow_and_help.view.*
 
 @AndroidEntryPoint
@@ -38,6 +39,14 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
     }
 
     private fun setupUi() {
+        toolbar.tvTitle.text = getString(R.string.cart)
+        val addressNote = "<b>" + getString(R.string.note) + "</b>" + getString(R.string.address_note)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+           tvAddressNote.text = Html.fromHtml(addressNote, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            tvAddressNote.setText(Html.fromHtml(addressNote))
+        }
+
         toolbar.flBack.setOnClickListener(View.OnClickListener {
             finish()
         })

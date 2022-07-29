@@ -166,6 +166,16 @@
     <string name="items">&#160;Items</string>
     <string name="order_status">Order Status</string>
     <string name="order">Order&#160;</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="product">Product&#160;(</string>
+    <string name="price_open_bracket">Price (</string>
+    <string name="price_close_bracket">) Items</string>
+    <string name="cash_on_delivery">Cash on Delivery</string>
+    <string name="dialing_code">+91&#160;</string>
+    <string name="my_orders">My Orders</string>
+    <string name="my_order">My Order</string>
+    <string name="note">Note:&#160;</string>
+    <string name="address_note">Address will be taken from you after placing the order</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

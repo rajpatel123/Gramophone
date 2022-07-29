@@ -5,6 +5,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityOrderListBinding
+import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.ui.home.product.activity.ProductAllReviewsActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.order.OrderListNavigator
@@ -13,10 +14,12 @@ import agstack.gramophone.ui.order.viewmodel.OrderListViewModel
 import agstack.gramophone.ui.orderdetails.OrderDetailsActivity
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_order_list.*
+import kotlinx.android.synthetic.main.toolbar_with_back_arrow_and_help.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -31,8 +34,6 @@ class OrderListActivity :
 
     //initialise ViewModel
     private val orderListViewModel: OrderListViewModel by viewModels()
-    private var viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +47,19 @@ class OrderListActivity :
         rv_order?.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv_order?.setHasFixedSize(true)
+
+        toolbar.tvTitle.text = getString(R.string.my_orders)
+        toolbar.flBack.setOnClickListener(View.OnClickListener {
+            finish()
+        })
+        toolbar.rlHelp.setOnClickListener(View.OnClickListener {
+            val bottomSheet = BottomSheetDialog()
+            //bottomSheet.setAcceptRejectListener(listener)
+            bottomSheet.show(
+                supportFragmentManager,
+                "bottomSheet"
+            )
+        })
     }
 
     override fun setOrderAdapter(adapter: OrderListAdapter, onOrderItemClick: (String) -> Unit) {
@@ -55,7 +69,7 @@ class OrderListActivity :
     }
 
     override fun openOrderDetailsActivity(bundle: Bundle) {
-        openActivity(OrderDetailsActivity::class.java,bundle)
+        openActivity(OrderDetailsActivity::class.java, bundle)
     }
 
     override fun getLayoutID(): Int {

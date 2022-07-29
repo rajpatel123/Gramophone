@@ -22,33 +22,26 @@ class CartViewModel @Inject constructor(
     private val productRepository: ProductRepository,
 ) : BaseViewModel<CartNavigator>() {
 
-    private var amount: Int = 0
-    private var totalAmount: Int = 0
-
-    var cartCountLiveData = MutableLiveData<Int>()
-    var amountLiveData = MutableLiveData<Int>()
-    var discountLiveData = MutableLiveData<Int>()
-    var gramCashLiveData = MutableLiveData<Int>()
-    var totalAmountLiveData = MutableLiveData<Int>()
+    var itemCount = MutableLiveData<Int>()
+    var amount = MutableLiveData<Int>()
+    var discount = MutableLiveData<Int>()
+    var gramCash = MutableLiveData<Int>()
+    var totalAmount = MutableLiveData<Int>()
 
     init {
-        cartCountLiveData.value = 0
-        amountLiveData.value = 0
-        discountLiveData.value = 0
-        gramCashLiveData.value = 0
-        totalAmountLiveData.value = 0
+        itemCount.value = 0
+        amount.value = 0
+        discount.value = 0
+        gramCash.value = 0
+        totalAmount.value = 0
     }
 
     fun calculateAmount(cartItems: List<CartItem>) {
-        amount = 0
-        totalAmount = 0
+        var subTotal = 0
         for (cartItem in cartItems) {
-            amount += cartItem.price.toFloat().toInt() * cartItem.quantity.toInt()
+            subTotal += cartItem.price.toFloat().toInt() * cartItem.quantity.toInt()
         }
-        totalAmount = amount - discountLiveData.value!! - gramCashLiveData.value!!
-
-        amountLiveData.value = amount
-        totalAmountLiveData.value = totalAmount
+        amount.value = subTotal
     }
 
     fun getCartData() {
@@ -62,9 +55,10 @@ class CartViewModel @Inject constructor(
                     ) {
                         getNavigator()?.hideProgressBar()
 
-                        cartCountLiveData.value = response.body()?.gp_api_response_data?.cart_items?.size
-                        discountLiveData.value = response.body()?.gp_api_response_data?.total_discount
-                        gramCashLiveData.value = response.body()?.gp_api_response_data?.gramcash_coins
+                        itemCount.value = response.body()?.gp_api_response_data?.cart_items?.size
+                        discount.value = response.body()?.gp_api_response_data?.total_discount
+                        gramCash.value = response.body()?.gp_api_response_data?.gramcash_coins
+                        totalAmount.value = response.body()?.gp_api_response_data?.total
                         calculateAmount(response.body()?.gp_api_response_data?.cart_items!!)
 
                         getNavigator()?.setCartAdapter(

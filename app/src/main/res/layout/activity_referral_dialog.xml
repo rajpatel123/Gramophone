@@ -125,7 +125,7 @@
             android:layout_below="@+id/llContentLayout"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/_20sdp"
-            android:background="@drawable/circle_solid_white"
+            android:background="@drawable/circle_solid_gray"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="@dimen/_10ssp"

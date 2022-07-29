@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,8 +12,7 @@
             type="agstack.gramophone.ui.cart.viewmodel.CartViewModel" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -50,7 +51,7 @@
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/circle_solid_white">
+                        android:background="@drawable/circle_solid_gray">
 
                         <ImageView
                             android:layout_width="18dp"
@@ -106,7 +107,7 @@
                     android:lineSpacingExtra="0sp"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="@dimen/_16sdp"
-                    android:text="@{@string/items_in_your_cart.concat(String.valueOf(viewModel.cartCountLiveData)).concat(@string/close_parenthesis)}"
+                    android:text="@{@string/items_in_your_cart.concat(String.valueOf(viewModel.itemCount)).concat(@string/close_parenthesis)}"
                     tools:text="Items in your cart (0)"
                     android:textColor="@color/blakish"
                     android:textSize="16sp" />
@@ -138,7 +139,7 @@
                     android:background="@drawable/linear_gradient_white_blue"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:visibility="@{viewModel.gramCashLiveData>0 ? View.VISIBLE : View.GONE}">
+                    android:visibility="@{viewModel.gramCash>0 ? View.VISIBLE : View.GONE}">
 
                     <androidx.appcompat.widget.AppCompatCheckBox
                         android:id="@+id/chkPayUsingGramCash"
@@ -194,7 +195,7 @@
                         android:layout_toEndOf="@+id/ivGramCash"
                         android:fontFamily="@font/manrope_bold"
                         android:lineSpacingExtra="1sp"
-                        android:text="@{String.valueOf(viewModel.gramCashLiveData)}"
+                        android:text="@{String.valueOf(viewModel.gramCash)}"
                         android:textColor="@color/blakish"
                         android:textSize="11sp"
                         tools:text="50" />
@@ -212,10 +213,10 @@
                     android:lineSpacingExtra="-2sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="@{@string/save_extra_rupees.concat(String.valueOf(viewModel.gramCashLiveData)).concat(@string/using).concat(String.valueOf(viewModel.gramCashLiveData)).concat(@string/gram_cash)}"
+                    android:text="@{@string/save_extra_rupees.concat(String.valueOf(viewModel.gramCash)).concat(@string/using).concat(String.valueOf(viewModel.gramCash)).concat(@string/gram_cash)}"
                     android:textColor="@color/green_medium"
                     android:textSize="13sp"
-                    android:visibility="@{viewModel.gramCashLiveData>0 ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{viewModel.gramCash>0 ? View.VISIBLE : View.GONE}"
                     tools:text="Save extra ₹50 using 50 Gram Cash" />
 
                 <View
@@ -252,9 +253,10 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Price (2 Items)"
+                    android:text="@{@string/price_open_bracket.concat(String.valueOf(viewModel.itemCount)).concat(@string/price_close_bracket)}"
                     android:textColor="@color/gray"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tools:text="Price (2 Items)" />
 
                 <TextView
                     android:id="@+id/tvPrice"
@@ -268,7 +270,7 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="@{@string/rupee_symbol.concat(String.valueOf(viewModel.amountLiveData))}"
+                    android:text="@{@string/rupee_symbol.concat(String.valueOf(viewModel.amount))}"
                     android:textColor="@color/blakish"
                     android:textSize="16sp"
                     tools:text="@string/rupee_symbol" />
@@ -299,7 +301,7 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="@{@string/minus_rupee_symbol.concat(String.valueOf(viewModel.discountLiveData))}"
+                    android:text="@{@string/minus_rupee_symbol.concat(String.valueOf(viewModel.discount))}"
                     android:textColor="@color/green_medium"
                     android:textSize="16sp"
                     tools:text="-₹ 0" />
@@ -330,7 +332,7 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="@{@string/minus_rupee_symbol.concat(String.valueOf(viewModel.gramCashLiveData))}"
+                    android:text="@{@string/minus_rupee_symbol.concat(String.valueOf(viewModel.gramCash))}"
                     android:textColor="@color/green_medium"
                     android:textSize="16sp"
                     tools:text="-₹ 50" />
@@ -442,7 +444,7 @@
                         android:layout_centerVertical="true"
                         android:fontFamily="@font/manrope_bold"
                         android:lineSpacingExtra="1sp"
-                        android:text="@{@string/rupee_symbol.concat(String.valueOf(viewModel.totalAmountLiveData))}"
+                        android:text="@{@string/rupee_symbol.concat(String.valueOf(viewModel.totalAmount))}"
                         android:textColor="@color/blakish"
                         android:textSize="20sp"
                         tools:text="₹ 100" />
@@ -479,18 +481,20 @@
                             android:layout_height="18dp"
                             android:layout_gravity="center"
                             android:contentDescription="@string/image"
-                            android:src="@drawable/ic_cash_on_delivery" />
+                            app:tint="@color/order_approved_text"
+                            android:src="@drawable/ic_location_marker_black" />
 
                     </FrameLayout>
 
                     <TextView
+                        android:id="@+id/tvAddressNote"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_14sdp"
                         android:fontFamily="@font/manrope_regular"
                         android:gravity="center_vertical"
                         android:lineSpacingExtra="0sp"
-                        android:text="Note: Address will be taken from you after placing the order"
+                        tools:text="Note: Address will be taken from you after placing the order"
                         android:textColor="#3F6317"
                         android:textSize="14sp" />
 
@@ -523,7 +527,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/manrope_bold"
                             android:lineSpacingExtra="1sp"
-                            android:text="@{@string/rupee_symbol.concat(String.valueOf(viewModel.totalAmountLiveData))}"
+                            android:text="@{@string/rupee_symbol.concat(String.valueOf(viewModel.totalAmount))}"
                             android:textColor="@color/blakish"
                             android:textSize="20sp"
                             tools:text="₹ 100" />
