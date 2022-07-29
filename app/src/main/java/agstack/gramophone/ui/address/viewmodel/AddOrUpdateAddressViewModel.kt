@@ -8,6 +8,8 @@ import agstack.gramophone.ui.address.model.*
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -85,8 +87,12 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                 val updateAddress = handleUpdateAddressResponse(response).data
                 loading.set(false)
 
-                if (Constants.GP_API_STATUS.equals(updateAddress?.gp_api_status)) {
-                    getNavigator()?.onSuccess(updateAddress?.gp_api_message!!)
+                if (Constants.GP_API_STATUS == updateAddress?.gp_api_status) {
+                    getNavigator()?.onSuccess(updateAddress.gp_api_message)
+                    SharedPreferencesHelper.instance?.putBoolean(
+                        SharedPreferencesKeys.logged_in,
+                        true
+                    )
                     getNavigator()?.goToApp()
                 } else {
                     getNavigator()?.onError(updateAddress?.gp_api_message)
