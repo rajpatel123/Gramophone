@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rounded_corner_top">
+
+        <TextView
+            android:id="@+id/tv_reviewTitle"
+            style="@style/TextSize16Sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_17sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:text="@string/ratings"
+            app:layout_constraintBottom_toTopOf="@+id/etCustomerReview"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ic_cross"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_marginRight="@dimen/_17sdp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_cross" />
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etCustomerReview"
+
+            style="@style/TextSize14Sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_17sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_40sdp"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/manrope_medium"
+            android:hint="@string/share_your_experience"
+            app:layout_constraintTop_toBottomOf="@+id/tv_reviewTitle" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_addtocart"
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_48sdp"
+
+            android:layout_marginTop="@dimen/_22sdp"
+
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:background="@drawable/rounded_corner"
+            android:backgroundTint="@color/orange"
+            android:drawableStart="@drawable/ic_cart_white"
+            android:paddingStart="@dimen/_3sdp"
+            android:text="@string/add_to_cart"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintTop_toBottomOf="@+id/etCustomerReview" />
+
+
+        />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

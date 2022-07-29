@@ -29,7 +29,7 @@
             android:layout_weight="1"
             android:background="@drawable/no_corner_with_grey_color"
             android:gravity="center"
-            android:hint="Insectictice/Fungicide"
+            android:hint="Insectictice/Fungicide/Herrbicide"
             android:padding="@dimen/_4sdp"
             android:text="@{model.key }"
             android:textColor="@color/grey_weight" />
@@ -43,7 +43,7 @@
             android:layout_weight="1"
             android:background="@drawable/no_corner_with_grey_color"
             android:gravity="center"
-            android:hint="Value"
+            android:hint="Herbicide"
             android:padding="@dimen/_4sdp"
             android:text="@{model.value }"
             android:textColor="@color/green"

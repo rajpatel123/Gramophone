@@ -2,6 +2,7 @@ package agstack.gramophone.ui.home.product.activity
 
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
+import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import android.os.Bundle
@@ -19,4 +20,5 @@ interface ProductDetailsNavigator: BaseNavigator {
      fun setRatingAndReviewsAdapter(ratingAndReviewsAdapter: RatingAndReviewsAdapter)
      fun openViewAllReviewRatingsActivity(productId: Int, productReviewsData: GpApiResponseData?)
     fun openProductDetailsActivity(productData: ProductData)
+    //fun openAddEditProductReviewsFragment(newInstance: GenuineCustomerRatingAlertFragment)
 }

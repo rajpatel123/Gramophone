@@ -1,5 +1,6 @@
 package agstack.gramophone.base
 
+import agstack.gramophone.R
 import agstack.gramophone.utils.LocaleManagerClass
 import android.app.Activity
 import android.content.Context
@@ -85,6 +86,18 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
         }
     }
 
+    override fun <T> openActivityWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?) {
+      /*  Intent(context, cls).apply {
+
+            if (extras != null)
+                putExtras(extras)
+            startActivity(this)
+            context.o( R.anim.slide_in_up, R.anim.slide_out_up );
+
+        }*/
+    }
+
+
     override fun requestPermission(permission: String) :Boolean{
         TODO("Not yet implemented")
     }
@@ -109,6 +122,8 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
 
     override fun onLoading() {
     }
+
+
 
 
 }

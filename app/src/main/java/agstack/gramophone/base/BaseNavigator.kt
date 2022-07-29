@@ -17,6 +17,7 @@ interface BaseNavigator {
     fun <T> openActivity(cls:Class<T>,extras: Bundle?=null)
 
     fun <T> openAndFinishActivity(cls:Class<T>,extras: Bundle?=null)
+    fun<T> openActivityWithBottomToTopAnimation(cls:Class<T>,extras: Bundle?=null)
 
     fun isNetworkAvailable():Boolean
 
@@ -33,4 +34,6 @@ interface BaseNavigator {
     fun  onSuccess(message: String?)
 
     fun onLoading()
+
+
 }

@@ -5,6 +5,8 @@ import android.content.Context
 
 
 object Constants {
+    val Product_Base_Name="PRODUCT BASE NAME"
+    val PRODUCT_RATING_DATA_KEY="PRODUCT RATING DATA"
     val OFFERSDATA="OFFERSDATA"
 
     //sortBy options

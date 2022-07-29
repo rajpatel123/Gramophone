@@ -148,6 +148,9 @@
     <string name="view_detail">View Detail</string>
     <string name="offers_tnc"><![CDATA[Offer Terms & Conditions]]></string>
     <string name="redemption_steps">Redemption steps:</string>
+    <string name="writeareview">Write a review</string>
+    <string name="share_your_experience">Share your product experience with everyone</string>
+    <string name="ratings">Ratings</string>
 
 
     <string-array name="SortReviewsByOptions">
