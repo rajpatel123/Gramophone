@@ -12,6 +12,7 @@ import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.View
+import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -27,17 +28,19 @@ class StateSelectionViewModel @Inject constructor(
     private lateinit var stateListAdapter: StateListAdapter
     private var stateListData: StateResponseModel? = null
     var state: State? = null
-    var isStateSelected: Boolean? = false
-    var stateName: String? = ""
+    var loadingStates = ObservableField<Boolean>()
+    var stateName = ObservableField<String>()
+
     fun fetchStateList() = viewModelScope.launch {
         getStateList()
     }
 
     fun onStateUpdate(v: View) {
         if (state != null) {
-            val bundle = Bundle()
-            bundle.putString(Constants.STATE, state?.name)
-            getNavigator()?.moveToNext(bundle)
+            getNavigator()?.moveToNext(Bundle().apply {
+                putString(Constants.STATE, state?.name)
+                putString(Constants.STATE_IMAGE_URL, state?.image)
+            })
         } else {
             getNavigator()?.onError(getNavigator()?.getMessage(R.string.select_state_error))
         }
@@ -46,7 +49,7 @@ class StateSelectionViewModel @Inject constructor(
     }
 
     private suspend fun getStateList() {
-        getNavigator()?.onLoading()
+        loadingStates.set(true)
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
                 val response = onBoardingRepository.getAddressDataByType(
@@ -56,12 +59,19 @@ class StateSelectionViewModel @Inject constructor(
 
                 stateListData = handleGetStateListResponse(response).data!!
 
+                loadingStates.set(false)
+
                 if (Constants.GP_API_STATUS.equals(stateListData?.gp_api_status)) {
-                    stateListAdapter = StateListAdapter(stateListData?.gp_api_response_data?.state_top_list!!)
+                    stateListAdapter =
+                        StateListAdapter(stateListData?.gp_api_response_data?.state_top_list!!)
                     getNavigator()?.updateStateList(stateListAdapter) {
                         state = it
-                        getNavigator()?.onStateSelected(state?.name)
+                        stateName.set(state?.name)
+                        getNavigator()?.onStateSelected()
                     }
+                } else {
+                    getNavigator()?.onError(stateListData?.gp_api_message)
+
                 }
 
             } else
@@ -96,15 +106,28 @@ class StateSelectionViewModel @Inject constructor(
 
     }
 
-    fun setStateSelection(stateName: String?) {
-        this.stateName = stateName
-        getNavigator()?.onStateSelected(stateName)
+    fun setStateSelection(stateStr: String?) {
+        stateName.set(stateStr)
+
+        getNavigator()?.onStateSelected()
+
+        stateListAdapter.mStateList.forEach {
+            if (it.name?.equals(stateStr, true) == true) {
+                it.selected = true
+                state = it
+            } else {
+                it.selected = false
+            }
+
+        }
+        stateListAdapter.notifyDataSetChanged()
     }
 
     fun resetStateSelection() {
         stateListAdapter.mStateList.forEach {
-            it.selected=false
+            it.selected = false
         }
+        state = null
         stateListAdapter.notifyDataSetChanged()
     }
 

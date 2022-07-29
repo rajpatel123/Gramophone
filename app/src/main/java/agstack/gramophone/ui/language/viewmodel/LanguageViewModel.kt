@@ -1,6 +1,5 @@
 package agstack.gramophone.ui.language.viewmodel
 
-import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
@@ -11,19 +10,13 @@ import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.Language
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
-import agstack.gramophone.ui.webview.view.WebViewActivity
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants.GP_API_STATUS
 import agstack.gramophone.utils.LocaleManagerClass
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
-import android.content.Intent
-import android.os.Build
-import android.provider.Settings
 import android.view.View
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -35,30 +28,29 @@ class LanguageViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository,
 ) : BaseViewModel<LanguageActivityNavigator>() {
     var language: Language? = null
-    val registerDeviceModel: MutableLiveData<ApiResponse<InitiateAppDataResponseModel>> =
-        MutableLiveData()
 
     fun getLanguageList() = viewModelScope.launch {
         getLanguage()
     }
 
     private suspend fun getLanguage() {
-        registerDeviceModel.postValue(ApiResponse.Loading())
+        getNavigator()?.onLoading()
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
                 val response = onBoardingRepository.getLanguage()
                 val languageData = handleLanguageResponse(response).data
 
                 if (GP_API_STATUS.equals(languageData?.gp_api_status)) {
-                    SharedPreferencesHelper.instance?.putString(
+                    SharedPreferencesHelper.instance?.putParcelable(
                         SharedPreferencesKeys.languageList,
-                        Gson().toJson(languageData?.gp_api_response_data)
+                        languageData?.gp_api_response_data!!
                     )
+
                     getNavigator()?.updateLanguageList(LanguageAdapter(languageData?.gp_api_response_data?.language_list!!)){
                         language=it
                     }
                 }else{
-                    //TODO handle error case
+                    getNavigator()?.onError(languageData?.gp_api_message)
                 }
             } else
                 getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
@@ -77,7 +69,7 @@ class LanguageViewModel @Inject constructor(
 
     private suspend fun getInitialData(initiateAppDataRequestModel:  InitiateAppDataRequestModel) {
 
-        registerDeviceModel.postValue(ApiResponse.Loading())
+        getNavigator()?.onLoading()
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
                 val response = onBoardingRepository.getInitialData(initiateAppDataRequestModel)
@@ -89,11 +81,14 @@ class LanguageViewModel @Inject constructor(
                         initiateAppDataResponseModel?.gp_api_response_data?.temp_token
                     )
 
-                    SharedPreferencesHelper.instance?.putString(
+                    SharedPreferencesHelper.instance?.putParcelable(
                         SharedPreferencesKeys.app_data,
-                        Gson().toJson(initiateAppDataResponseModel)
+                        initiateAppDataResponseModel!!
                     )
                     getNavigator()?.moveToNext()
+                }else{
+                    getNavigator()?.onError(initiateAppDataResponseModel?.gp_api_message)
+
                 }
             } else
                 getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)

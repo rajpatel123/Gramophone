@@ -19,16 +19,6 @@ class SplashViewModel @Inject constructor(
 
     var splashViewModel: MutableLiveData<ApiResponse<SplashModel>> = MutableLiveData()
 
-
-    fun getConfig() = viewModelScope.launch {
-        getSystemConfig()
-    }
-
-    private suspend fun getSystemConfig() {
-        delay(3000)
-        splashViewModel.postValue(null)
-    }
-
     fun initSplash() {
         viewModelScope.launch {
             delay(3000)

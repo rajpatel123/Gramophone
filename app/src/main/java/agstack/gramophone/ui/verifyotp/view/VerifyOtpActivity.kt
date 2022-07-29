@@ -30,7 +30,6 @@ class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupObservers()
         updateUI()
 
     }
@@ -39,25 +38,6 @@ class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOT
        verifyOtpViewModel.updateMessage()
     }
 
-    private fun setupObservers() {
-        verifyOtpViewModel.validateOtpResponseModel.observe(this, Observer{
-            when (it) {
-                is ApiResponse.Success -> {
-                    Toast.makeText(this@VerifyOtpActivity,it.data?.gp_api_message, Toast.LENGTH_LONG).show()
-                    val bundle = Bundle()
-                    //Add your data from getFactualResults method to bundle
-
-                    openAndFinishActivity(HomeActivity::class.java,bundle)
-                }
-                is ApiResponse.Error -> {
-                    Toast.makeText(this@VerifyOtpActivity,it.message, Toast.LENGTH_LONG).show()
-
-                }
-                is ApiResponse.Loading -> {
-                }
-            }
-        })
-    }
 
 
     override fun onBackPressed() {
