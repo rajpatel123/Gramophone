@@ -39,12 +39,13 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
     }
 
     private fun setupUi() {
+        // Toolbar need to be changed as per standard
         toolbar.tvTitle.text = getString(R.string.cart)
         val addressNote = "<b>" + getString(R.string.note) + "</b>" + getString(R.string.address_note)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
            tvAddressNote.text = Html.fromHtml(addressNote, Html.FROM_HTML_MODE_LEGACY)
         } else {
-            tvAddressNote.setText(Html.fromHtml(addressNote))
+            tvAddressNote.text = Html.fromHtml(addressNote)
         }
 
         toolbar.flBack.setOnClickListener(View.OnClickListener {
@@ -69,7 +70,7 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
         cartAdapter.onItemDetailClicked = onCartItemClicked
         cartAdapter.onItemDeleteClicked = onCartItemDeleteClicked
         cartAdapter.onOfferClicked = onOfferClicked
-        rvCart?.adapter = cartAdapter
+        viewDataBinding.rvCart.adapter = cartAdapter
     }
 
     override fun openProductDetailsActivity() {

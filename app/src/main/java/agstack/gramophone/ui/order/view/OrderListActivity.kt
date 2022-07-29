@@ -30,25 +30,23 @@ class OrderListActivity :
     BaseActivityWrapper<ActivityOrderListBinding, OrderListNavigator, OrderListViewModel>(),
     OrderListNavigator {
 
-    private lateinit var binding: ActivityOrderListBinding
-
     //initialise ViewModel
     private val orderListViewModel: OrderListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityOrderListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         setupUi()
         orderListViewModel.getOrderList()
     }
 
+
+    // Ned to change
     private fun setupUi() {
         rv_order?.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv_order?.setHasFixedSize(true)
 
-        toolbar.tvTitle.text = getString(R.string.my_orders)
+        viewDataBinding.toolbar.tvTitle.text = getString(R.string.my_orders)
         toolbar.flBack.setOnClickListener(View.OnClickListener {
             finish()
         })

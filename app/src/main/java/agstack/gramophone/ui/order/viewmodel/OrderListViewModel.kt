@@ -46,9 +46,8 @@ class OrderListViewModel @Inject constructor(
                             getNavigator()?.setOrderAdapter(
                                 OrderListAdapter(recentOrderDataResponse.body()?.gp_api_response_data?.order_list?.data!!)
                             ) {
-                                val bundle = Bundle()
-                                bundle.putString(Constants.ORDER_ID, it)
-                                getNavigator()?.openOrderDetailsActivity(bundle)
+
+                                getNavigator()?.openOrderDetailsActivity(Bundle().apply { putString(Constants.ORDER_ID, it) })
                             }
                         } else {
 
