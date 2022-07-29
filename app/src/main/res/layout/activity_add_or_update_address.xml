@@ -23,7 +23,15 @@
             android:orientation="vertical"
             tools:context=".ui.address.view.AddOrUpdateAddressActivity">
 
-
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/stateProgressBar"
+                android:layout_gravity="center"
+                android:visibility="@{viewModel.loading? View.VISIBLE:View.GONE}"
+                android:backgroundTint="@color/zxing_viewfinder_laser"
+                android:elevation="@dimen/_1sdp"
+                />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,13 +83,13 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/ivStateImage"
+                        state_image="@{viewModel.stateImageUrl}"
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="@dimen/_50sdp"
                         android:layout_marginStart="@dimen/_14sdp"
                         android:layout_marginTop="@dimen/_14sdp"
                         android:layout_marginEnd="@dimen/_14sdp"
                         android:layout_marginBottom="@dimen/_14sdp"
-                        android:src="@drawable/state_img"
                         app:civ_border_color="@color/white"
                         app:civ_border_width="2dp" />
 
@@ -132,28 +140,30 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
 
-                <org.angmarch.views.NiceSpinner
-                    android:id="@+id/etDistrictname"
-                    style="@style/small"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/EditTextInputLayoutStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_20sdp"
-                    android:layout_toEndOf="@+id/countryCode"
-                    android:background="@drawable/rounded_corner"
-                    android:backgroundTint="@color/mute_grey"
-                    android:drawableEnd="@drawable/ic_arrow_down"
+                    app:boxStrokeWidth="0dp"
+                    app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
+                    app:endIconMode="none"
+                    >
 
-                    android:imeOptions="actionDone"
-                    android:letterSpacing=".05"
-                    android:paddingStart="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"
-                    android:singleLine="true"
-                    android:text="@={viewModel.districtName}"
-                    android:textSize="@dimen/_12ssp" />
+                    <!--add all properties in stle and apply here -->
+                    <AutoCompleteTextView
+                        style="@style/AutoCompleteTextViewLayoutStyle"
+                        android:id="@+id/districtSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={viewModel.districtName}"
+                        android:paddingBottom="@dimen/_15sdp"
+                        android:completionThreshold="1"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -166,27 +176,29 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
 
-                <org.angmarch.views.NiceSpinner
-                    android:id="@+id/etTahseelName"
-                    style="@style/small"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/EditTextInputLayoutStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_20sdp"
-                    android:layout_toEndOf="@+id/countryCode"
-                    android:background="@drawable/rounded_corner"
-                    android:backgroundTint="@color/mute_grey"
-                    android:drawableEnd="@drawable/ic_arrow_down"
-                    android:imeOptions="actionDone"
-                    android:letterSpacing=".05"
-                    android:paddingStart="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"
-                    android:singleLine="true"
-                    android:text="@={viewModel.tehsilName}"
-                    android:textSize="@dimen/_12ssp" />
+                    app:boxStrokeWidth="0dp"
+                    app:endIconMode="none"
+                    >
+
+                    <!--add all properties in stle and apply here -->
+                    <AutoCompleteTextView
+                        style="@style/AutoCompleteTextViewLayoutStyle"
+                        android:id="@+id/tehsilSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={viewModel.tehsilName}"
+                        android:paddingBottom="@dimen/_15sdp"
+                        android:completionThreshold="1"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -199,27 +211,30 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
 
-                <org.angmarch.views.NiceSpinner
-                    android:id="@+id/etVillageName"
-                    style="@style/small"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/EditTextInputLayoutStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_20sdp"
-                    android:layout_toEndOf="@+id/countryCode"
-                    android:background="@drawable/rounded_corner"
-                    android:backgroundTint="@color/mute_grey"
-                    android:drawableEnd="@drawable/ic_arrow_down"
-                    android:imeOptions="actionDone"
-                    android:letterSpacing=".05"
-                    android:paddingStart="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"
-                    android:singleLine="true"
-                    android:text="@={viewModel.villageName}"
-                    android:textSize="@dimen/_12ssp" />
+                    app:boxStrokeWidth="0dp"
+                    app:endIconMode="none"
+                    >
+
+                    <!--add all properties in stle and apply here -->
+                    <AutoCompleteTextView
+                        style="@style/AutoCompleteTextViewLayoutStyle"
+                        android:id="@+id/villageNameSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={viewModel.villageName}"
+                        android:paddingBottom="@dimen/_15sdp"
+                        android:completionThreshold="1"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
 
                 <TextView
                     android:layout_width="match_parent"
@@ -245,6 +260,7 @@
                     android:backgroundTint="@color/mute_grey"
                     android:imeOptions="actionDone"
                     android:letterSpacing=".05"
+                    android:minHeight="@dimen/_50sdp"
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
@@ -264,27 +280,30 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
 
-                <org.angmarch.views.NiceSpinner
-                    android:id="@+id/etPinCode"
-                    style="@style/small"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/EditTextInputLayoutStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_20sdp"
-                    android:layout_toEndOf="@+id/countryCode"
-                    android:background="@drawable/rounded_corner"
-                    android:backgroundTint="@color/mute_grey"
-                    android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:letterSpacing=".05"
-                    android:paddingStart="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"
-                    android:singleLine="true"
-                    android:text="@={viewModel.pinCode}"
-                    android:textSize="@dimen/_12ssp" />
+                    app:boxStrokeWidth="0dp"
+                    app:endIconMode="none"
+                    >
+
+                    <!--add all properties in stle and apply here -->
+                    <AutoCompleteTextView
+                        style="@style/AutoCompleteTextViewLayoutStyle"
+                        android:id="@+id/pincodeSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={viewModel.pinCode}"
+                        android:paddingBottom="@dimen/_15sdp"
+                        android:completionThreshold="1"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
 
 
             </LinearLayout>

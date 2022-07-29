@@ -123,6 +123,7 @@ object Constants {
     const val Farm_id = "farm_id"
     const val UUID = "uuid"
     const val STATE = "state"
+    const val STATE_IMAGE_URL = "image"
     const val STATE_LIST = "state_list"
     const val FarmLat = "farm_lat"
     const val FarmLng = "farm_lng"

@@ -14,7 +14,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,11 +34,12 @@ class LanguageBottomSheetFragment : BottomSheetDialogFragment(),
     }
 
     private fun setupUi() {
-        var gpApiResponseData = Gson().fromJson(
-            SharedPreferencesHelper.instance?.getString(
+
+        var gpApiResponseData =
+            SharedPreferencesHelper.instance?.getParcelable(
                 SharedPreferencesKeys.languageList
-            ), GpApiResponseData::class.java
-        )
+            , GpApiResponseData::class.java)
+
         val languageAdapter = LanguageAdapter(gpApiResponseData?.language_list!!)
         languageAdapter.setLanguageSelectedListener(this)
         binding?.rvLanguage?.setHasFixedSize(true)

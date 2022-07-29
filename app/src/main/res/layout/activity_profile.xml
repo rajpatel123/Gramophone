@@ -19,25 +19,25 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/profile_header_bg"
+                android:background="@drawable/ic_profile_header_bg"
                 android:paddingStart="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_16sdp">
+                android:paddingEnd="@dimen/_16sdp"
+                >
 
-                <ImageView
-                    android:id="@+id/iv_cross"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/image"
-                    app:srcCompat="@drawable/ic_cross" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_profile"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:src="@drawable/dummy_profile" />
 
                 <TextView
                     android:id="@+id/tv_name"
                     style="@style/heading_title_bold_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_cross"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_below="@+id/iv_profile"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:ellipsize="end"
                     android:text="Thakur Baldev Singh"
                     android:textColor="@color/blakish"
@@ -49,89 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_name"
-                    android:layout_marginStart="@dimen/_8sdp"
                     android:text="+91 9926004941"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/_12sdp" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_profile"
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_cross"
-                    android:layout_alignParentEnd="true">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_profile"
-                        android:layout_width="98dp"
-                        android:layout_height="98dp"
-                        android:src="@drawable/dummy_profile" />
-
-                    <FrameLayout
-                        android:id="@+id/frame_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginTop="70dp"
-                        android:background="@drawable/ic_circle_solid_black_stroke_gray"
-                        android:padding="10dp">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_edit" />
-
-                    </FrameLayout>
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/tv_followers_count"
-                    style="@style/heading_title_bold_large"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_contact"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_30sdp"
-                    android:ellipsize="end"
-                    android:text="100"
-                    android:textColor="@color/blakish"
-                    android:textSize="@dimen/_12sdp" />
-
-                <TextView
-                    android:id="@+id/tv_follower"
-                    style="@style/heading_title_medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_followers_count"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:text="Followers"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/_12sdp" />
-
-
-                <TextView
-                    android:id="@+id/tv_following_count"
-                    style="@style/heading_title_bold_large"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_contact"
-                    android:layout_marginStart="@dimen/_150sdp"
-                    android:layout_marginTop="@dimen/_30sdp"
-                    android:ellipsize="end"
-                    android:text="200"
-                    android:textColor="@color/blakish"
-                    android:textSize="@dimen/_12sdp" />
-
-                <TextView
-                    android:id="@+id/tv_following"
-                    style="@style/heading_title_medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_following_count"
-                    android:layout_marginStart="@dimen/_150sdp"
-                    android:text="Following"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_12sdp" />
 
@@ -139,11 +57,12 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_70sdp"
+                android:layout_height="@dimen/_56sdp"
                 android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="-35dp"
+                android:layout_marginTop="-20dp"
+                android:elevation="@dimen/_2sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
-                app:cardCornerRadius="@dimen/_16sdp">
+                app:cardCornerRadius="@dimen/_10sdp">
 
                 <RelativeLayout
                     android:paddingStart="@dimen/_10sdp"
@@ -200,66 +119,16 @@
 
             </androidx.cardview.widget.CardView>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_70sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:paddingStart="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_26sdp">
-
-                <ImageView
-                    android:id="@+id/iv_my_account"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_my_account" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_toEndOf="@+id/iv_my_account"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_my_account_title"
-                        style="@style/regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="My Account"
-                        android:textColor="@color/blakish"
-                        android:textSize="@dimen/_12sdp" />
-
-                    <TextView
-                        android:id="@+id/tv_my_account_desc"
-                        style="@style/regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sub text will be displayed here"
-                        android:textColor="@color/gray_strike_through"
-                        android:textSize="@dimen/_10sdp" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_arrow_right_black" />
-
-            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_70sdp"
+                android:layout_height="wrap_content"
                 android:paddingStart="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_26sdp">
+                android:paddingEnd="@dimen/_26sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                >
 
                 <ImageView
                     android:id="@+id/iv_my_post"
@@ -268,7 +137,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:contentDescription="@string/image"
-                    android:src="@drawable/ic_my_post" />
+                    android:src="@drawable/ic_freinds" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -283,7 +152,7 @@
                         style="@style/regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="My Posts"
+                        android:text="@string/refer_n_earn"
                         android:textColor="@color/blakish"
                         android:textSize="@dimen/_12sdp" />
 
@@ -291,27 +160,21 @@
                         style="@style/regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Posts you created"
+                        android:text="@string/invite_and_earn"
                         android:textColor="@color/gray_strike_through"
                         android:textSize="@dimen/_10sdp" />
 
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_arrow_right_black" />
-
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_70sdp"
+                android:layout_height="wrap_content"
                 android:paddingStart="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_26sdp">
+                android:paddingEnd="@dimen/_26sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_15sdp">
 
                 <ImageView
                     android:id="@+id/iv_my_orders"
@@ -343,344 +206,15 @@
                         style="@style/regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="All your orders will be displayed here"
+                        android:text="@string/order_desc"
                         android:textColor="@color/gray_strike_through"
                         android:textSize="@dimen/_10sdp" />
 
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_arrow_right_black" />
+
 
             </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_70sdp"
-                android:paddingStart="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_26sdp">
-
-                <ImageView
-                    android:id="@+id/iv_my_farm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_my_farm" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_toEndOf="@+id/iv_my_farm"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="My Farm"
-                        android:textColor="@color/blakish"
-                        android:textSize="@dimen/_12sdp" />
-
-                    <TextView
-                        style="@style/regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sub text will be displayed here"
-                        android:textColor="@color/gray_strike_through"
-                        android:textSize="@dimen/_10sdp" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_arrow_right_black" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_70sdp"
-                android:paddingStart="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_26sdp">
-
-                <ImageView
-                    android:id="@+id/iv_my_wishlist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_my_wishlist" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_toEndOf="@+id/iv_my_wishlist"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="My Wishlist"
-                        android:textColor="@color/blakish"
-                        android:textSize="@dimen/_12sdp" />
-
-                    <TextView
-                        style="@style/regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sub text will be displayed here"
-                        android:textColor="@color/gray_strike_through"
-                        android:textSize="@dimen/_10sdp" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_arrow_right_black" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_70sdp"
-                android:paddingStart="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_26sdp">
-
-                <ImageView
-                    android:id="@+id/iv_my_refer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_refer_earn" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_toEndOf="@+id/iv_my_refer"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Refer and Earn"
-                        android:textColor="@color/blakish"
-                        android:textSize="@dimen/_12sdp" />
-
-                    <TextView
-                        style="@style/regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Invite your friends and earn ..."
-                        android:textColor="@color/gray_strike_through"
-                        android:textSize="@dimen/_10sdp" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_arrow_right_black" />
-
-            </RelativeLayout>
-
-            <TextView
-                style="@style/heading_title_bold_large"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:text="TOOLS"
-                android:textColor="@color/gray_strike_through"
-                android:textSize="@dimen/_12sdp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_70sdp"
-                android:paddingStart="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_26sdp">
-
-                <ImageView
-                    android:id="@+id/iv_weather"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_weather" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_toEndOf="@+id/iv_weather"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Weather"
-                        android:textColor="@color/blakish"
-                        android:textSize="@dimen/_12sdp" />
-
-                    <TextView
-                        style="@style/regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sub text will be displayed here"
-                        android:textColor="@color/gray_strike_through"
-                        android:textSize="@dimen/_10sdp" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_arrow_right_black" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_70sdp"
-                android:paddingStart="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_26sdp">
-
-                <ImageView
-                    android:id="@+id/iv_mandi_bhav"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_mandi_bhav" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_toEndOf="@+id/iv_mandi_bhav"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Mandi Bhav"
-                        android:textColor="@color/blakish"
-                        android:textSize="@dimen/_12sdp" />
-
-                    <TextView
-                        style="@style/regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sub text will be displayed here"
-                        android:textColor="@color/gray_strike_through"
-                        android:textSize="@dimen/_10sdp" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_arrow_right_black" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_70sdp"
-                android:paddingStart="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_26sdp">
-
-                <ImageView
-                    android:id="@+id/iv_unit_converter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_unit_converter" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_toEndOf="@+id/iv_unit_converter"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Unit Converter"
-                        android:textColor="@color/blakish"
-                        android:textSize="@dimen/_12sdp" />
-
-                    <TextView
-                        style="@style/regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sub text will be displayed here"
-                        android:textColor="@color/gray_strike_through"
-                        android:textSize="@dimen/_10sdp" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_arrow_right_black" />
-
-            </RelativeLayout>
-
             <TextView
                 style="@style/heading_title_bold_large"
                 android:layout_width="wrap_content"
@@ -693,9 +227,57 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_70sdp"
+                android:layout_height="wrap_content"
                 android:paddingStart="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_26sdp">
+                android:paddingEnd="@dimen/_26sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_15sdp">
+
+                <ImageView
+                    android:id="@+id/iv_offers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/ic_offers" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_toEndOf="@+id/iv_offers"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Articles"
+                        android:textColor="@color/blakish"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <TextView
+                        style="@style/regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sub text will be displayed here"
+                        android:textColor="@color/gray_strike_through"
+                        android:textSize="@dimen/_10sdp" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_26sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_15sdp">
 
                 <ImageView
                     android:id="@+id/iv_articles"
@@ -733,21 +315,16 @@
 
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_arrow_right_black" />
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_70sdp"
+                android:layout_height="wrap_content"
                 android:paddingStart="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_26sdp">
+                android:paddingEnd="@dimen/_26sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_15sdp">
 
                 <ImageView
                     android:id="@+id/iv_videos"
@@ -756,7 +333,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:contentDescription="@string/image"
-                    android:src="@drawable/ic_videos" />
+                    android:src="@drawable/ic_tv" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -771,7 +348,7 @@
                         style="@style/regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Gramophone Videos"
+                        android:text="@string/tv"
                         android:textColor="@color/blakish"
                         android:textSize="@dimen/_12sdp" />
 
@@ -785,21 +362,15 @@
 
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_arrow_right_black" />
-
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_70sdp"
+                android:layout_height="wrap_content"
                 android:paddingStart="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_26sdp">
+                android:paddingEnd="@dimen/_26sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_15sdp">
 
                 <ImageView
                     android:id="@+id/iv_quiz"
@@ -808,7 +379,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:contentDescription="@string/image"
-                    android:src="@drawable/ic_quiz" />
+                    android:src="@drawable/ic_settings" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -823,7 +394,66 @@
                         style="@style/regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Gram Quiz"
+                        android:text="@string/settings"
+                        android:textColor="@color/blakish"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <TextView
+                        style="@style/regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/manage_settings"
+                        android:textColor="@color/gray_strike_through"
+                        android:textSize="@dimen/_10sdp" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+            <TextView
+                style="@style/heading_title_bold_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="@string/tools"
+                android:fontFamily="@font/manrope_semibold"
+                android:textColor="@color/gray_strike_through"
+                android:textSize="@dimen/_12sdp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_26sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_15sdp">
+
+                <ImageView
+                    android:id="@+id/iv_weather"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/ic_weather" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_toEndOf="@+id/iv_weather"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Weather"
                         android:textColor="@color/blakish"
                         android:textSize="@dimen/_12sdp" />
 
@@ -837,13 +467,54 @@
 
                 </LinearLayout>
 
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_26sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_15sdp">
+
                 <ImageView
+                    android:id="@+id/iv_mandi_bhav"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:contentDescription="@string/image"
-                    android:src="@drawable/ic_arrow_right_black" />
+                    android:src="@drawable/ic_mandi_rate" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_toEndOf="@+id/iv_mandi_bhav"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mandi Bhav"
+                        android:textColor="@color/blakish"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <TextView
+                        style="@style/regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sub text will be displayed here"
+                        android:textColor="@color/gray_strike_through"
+                        android:textSize="@dimen/_10sdp" />
+
+                </LinearLayout>
+
+
 
             </RelativeLayout>
 
@@ -857,24 +528,13 @@
                 android:textColor="@color/gray_strike_through"
                 android:textSize="@dimen/_12sdp" />
 
-            <TextView
-                android:gravity="center_vertical"
-                style="@style/regular"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                app:drawableEndCompat="@drawable/ic_arrow_right_black"
-                android:paddingStart="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_26sdp"
-                android:text="Language"
-                android:textColor="@color/blakish"
-                android:textSize="@dimen/_12sdp" />
+
 
             <TextView
                 android:gravity="center_vertical"
                 style="@style/regular"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                app:drawableEndCompat="@drawable/ic_arrow_right_black"
                 android:paddingStart="@dimen/_16sdp"
                 android:paddingEnd="@dimen/_26sdp"
                 android:text="Feedback"
@@ -886,7 +546,6 @@
                 style="@style/regular"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                app:drawableEndCompat="@drawable/ic_arrow_right_black"
                 android:paddingStart="@dimen/_16sdp"
                 android:paddingEnd="@dimen/_26sdp"
                 android:text="Share App"
@@ -899,7 +558,6 @@
                 style="@style/regular"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                app:drawableEndCompat="@drawable/ic_arrow_right_black"
                 android:paddingStart="@dimen/_16sdp"
                 android:paddingEnd="@dimen/_26sdp"
                 android:onClick="@{ ()-> viewModel.logout(tvLogout) }"

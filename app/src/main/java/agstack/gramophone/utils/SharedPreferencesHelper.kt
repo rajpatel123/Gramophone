@@ -3,6 +3,9 @@ package agstack.gramophone.utils
 import android.content.SharedPreferences
 import agstack.gramophone.utils.SharedPreferencesHelper
 import android.content.Context
+import android.os.Bundle
+import android.os.Parcelable
+import com.google.gson.Gson
 import kotlin.jvm.Synchronized
 
 /**
@@ -26,6 +29,17 @@ class SharedPreferencesHelper(context: Context) {
         editor.putLong(key, value)
         editor.apply()
     }
+
+
+    fun putParcelable(key: String?, value: Parcelable) {
+        editor.putString(key, Gson().toJson(value))
+        editor.apply()
+    }
+
+    fun <T> getParcelable(key: String?,cls:Class<T>): T {
+        return Gson().fromJson(sharedPreferences.getString(key, ""),cls)
+    }
+
 
     fun putFloat(key: String?, value: Float) {
         editor.putFloat(key, value)

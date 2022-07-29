@@ -25,35 +25,11 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupObservers()
         startApp()
     }
 
     private fun startApp() {
         splashViewModel.initSplash()
-    }
-
-
-    private fun setupObservers() {
-        splashViewModel.splashViewModel.observe(this, Observer {
-            when (it) {
-                is ApiResponse.Success -> {
-                    progress.visibility = View.GONE
-
-                }
-                is ApiResponse.Error -> {
-                    progress.visibility = View.GONE
-                    it.message?.let { message ->
-                        Toast.makeText(this@SplashActivity, message, Toast.LENGTH_LONG).show()
-                    }
-                 }
-                is ApiResponse.Loading -> {
-                    progress.visibility = View.VISIBLE
-                }
-            }
-        })
-
-
     }
 
     override fun getLayoutID(): Int {
