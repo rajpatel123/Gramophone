@@ -11,7 +11,6 @@ interface AddressNavigator : BaseNavigator{
     fun updateTehsil(adapter: AddressDataListAdapter, onSelect: (AddressDataModel) -> Unit)
     fun updateVillage(adapter: AddressDataListAdapter, onSelect: (AddressDataModel) -> Unit)
     fun updatePinCode(adapter: AddressDataListAdapter, onSelect: (AddressDataModel) -> Unit)
-    fun updateUI(resultData: Bundle)
     fun goToApp()
     fun getState(): String?
     fun changeState()

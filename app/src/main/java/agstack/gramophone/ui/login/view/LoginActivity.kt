@@ -142,7 +142,7 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
     }
 
     override fun openReferralDialog() {
-        //Inflate the dialog with custom view
+        //Inflate the dialog with custom view   use Binding
         val mDialogView =
             LayoutInflater.from(this).inflate(R.layout.activity_referral_dialog, null)
         //AlertDialogBuilder

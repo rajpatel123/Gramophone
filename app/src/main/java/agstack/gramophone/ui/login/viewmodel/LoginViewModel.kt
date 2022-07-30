@@ -31,8 +31,6 @@ class LoginViewModel @Inject constructor(
     var mobileNo :String?=""
     var referralCode :String?=null
 
-    val generateOtpResponseModel: MutableLiveData<ApiResponse<SendOtpResponseModel>> =
-        MutableLiveData()
 
     fun sendOTP(v: View) = viewModelScope.launch {
         if (mobileNo.isNullOrEmpty()){
@@ -62,14 +60,12 @@ class LoginViewModel @Inject constructor(
                 if (Constants.GP_API_STATUS.equals(sendOtpResponseModel?.gp_api_status)) {
 
                     var loginData = handleLoginResponse(response)
-                    val bundle = Bundle()
-                    //Add your data from getFactualResults method to bundle
-                    bundle.putString(Constants.MOBILE_NO,mobileNo)
-                    bundle.putInt(Constants.OTP_REFERENCE,
-                        loginData.data?.gp_api_response_data?.otp_reference_id!!
-                    )
-
-                    getNavigator()?.moveToNext(bundle)
+                    getNavigator()?.moveToNext(Bundle().apply {
+                        putString(Constants.MOBILE_NO,mobileNo)
+                        putInt(Constants.OTP_REFERENCE,
+                            loginData.data?.gp_api_response_data?.otp_reference_id!!
+                        )
+                    })
                 }else{
                     getNavigator()?.onError(sendOtpResponseModel?.gp_api_message)
 
@@ -115,10 +111,11 @@ class LoginViewModel @Inject constructor(
            , InitiateAppDataResponseModel::class.java
         )
 
-        val bundle = Bundle()
-        bundle.putString(Constants.PAGE_URL, initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.privacy_policy_url)
-        bundle.putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.privacy))
-        getNavigator()?.openWebView(bundle)
+
+        getNavigator()?.openWebView(Bundle().apply {
+            putString(Constants.PAGE_URL, initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.privacy_policy_url)
+            putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.privacy))
+        })
     }
 
     fun onTermsClicked(v:View){
@@ -128,16 +125,15 @@ class LoginViewModel @Inject constructor(
                 , InitiateAppDataResponseModel::class.java
             )
 
-        val bundle = Bundle()
-        bundle.putString(
-            Constants.PAGE_URL,
-            initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.terms_of_service_url
-        )
 
         getNavigator()?.openWebView(Bundle().apply {
             putString(
                 Constants.PAGE_TITLE,
                 getNavigator()?.getMessage(R.string.terms_n_conditions)
+            )
+            putString(
+                Constants.PAGE_URL,
+                initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.terms_of_service_url
             )
         })
 
@@ -150,13 +146,14 @@ class LoginViewModel @Inject constructor(
                 , InitiateAppDataResponseModel::class.java
             )
 
-        val bundle = Bundle()
-        bundle.putString(
-            Constants.PAGE_URL,
-            initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.referral_terms_conditions
-        )
-        bundle.putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.terms_of_use))
-        getNavigator()?.openWebView(bundle)
+        getNavigator()?.openWebView(Bundle().apply {
+            putString(
+                Constants.PAGE_URL,
+                initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.referral_terms_conditions
+            )
+            putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.terms_of_use))
+
+        })
 
     }
 

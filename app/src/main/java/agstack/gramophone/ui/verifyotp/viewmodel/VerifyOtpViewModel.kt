@@ -72,12 +72,12 @@ class VerifyOtpViewModel @Inject constructor(
                             SharedPreferencesKeys.UUIdKey,
                             responseData?.gp_api_response_data?.uuid
                         )
-                        SharedPreferencesHelper.instance?.putBoolean(
-                            SharedPreferencesKeys.logged_in,
-                            true
-                        )
 
                         if (responseData?.gp_api_response_data?.is_address == true){
+                            SharedPreferencesHelper.instance?.putBoolean(
+                                SharedPreferencesKeys.logged_in,
+                                true
+                            )
                             getNavigator()?.moveToNext(HomeActivity::class.java)
                         }else{
                             getNavigator()?.moveToNext(StateListActivity::class.java)

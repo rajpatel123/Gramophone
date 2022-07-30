@@ -8,6 +8,8 @@ import agstack.gramophone.ui.address.model.*
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -15,6 +17,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.android.synthetic.main.activity_add_or_update_address.*
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
@@ -87,6 +90,10 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
                 if (Constants.GP_API_STATUS.equals(updateAddress?.gp_api_status)) {
                     getNavigator()?.onSuccess(updateAddress?.gp_api_message!!)
+                    SharedPreferencesHelper.instance?.putBoolean(
+                        SharedPreferencesKeys.logged_in,
+                        true
+                    )
                     getNavigator()?.goToApp()
                 } else {
                     getNavigator()?.onError(updateAddress?.gp_api_message)
@@ -194,7 +201,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                             getNavigator()?.updateVillage(adapter) {
                                 villageName.set(it.name)
                                 getNavigator()?.closeVillageDropDown()
-                                getVillage(
+                                getPinCode(
                                     "pincode",
                                     stateNameStr.get().toString(),
                                     districtName.get().toString(),
@@ -263,7 +270,12 @@ class AddOrUpdateAddressViewModel @Inject constructor(
     }
 
     fun updateAddress(resultData: Bundle) {
-        getNavigator()?.updateUI(resultData)
+        stateNameStr.set(resultData.getString("State"))
+        districtName.set(resultData.getString("District"))
+        tehsilName.set(resultData.getString("Tehsil"))
+        villageName.set(resultData.getString("Tehsil"))
+        address.set(resultData.getString("Address"))
+        pinCode.set(resultData.getString("Postal"))
     }
 
 
