@@ -9,6 +9,7 @@ import agstack.gramophone.ui.order.OrderListNavigator
 import agstack.gramophone.ui.order.adapter.OrderListAdapter
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -22,11 +23,16 @@ class OrderListViewModel @Inject constructor(
     private val productRepository: ProductRepository,
 ) : BaseViewModel<OrderListNavigator>() {
 
+    var progress = MutableLiveData<Boolean>()
+
+    init {
+        progress.value = false
+    }
     fun getOrderList() {
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
-                    getNavigator()?.onLoading()
+                    progress.value = true
 
                     coroutineScope {
                         val recentOrderData = async {
@@ -60,13 +66,13 @@ class OrderListViewModel @Inject constructor(
                         } else {
 
                         }
+                        progress.value = false
                     }
                 } else {
-                    getNavigator()?.hideProgressBar()
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }
             } catch (ex: Exception) {
-                getNavigator()?.hideProgressBar()
+                progress.value = false
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
                     else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))

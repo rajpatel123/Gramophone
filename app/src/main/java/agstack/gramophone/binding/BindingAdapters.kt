@@ -3,6 +3,9 @@ package agstack.gramophone.binding
 import agstack.gramophone.R
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
+import android.text.Html
+import android.text.Spanned
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -57,7 +60,6 @@ fun bindLoginBannerImage(view: ImageView, imageUrl: String?) {
     }
 }
 
-
 @BindingAdapter(value = ["product_image", "error"], requireAll = false)
 fun loadImage(view: ImageView, profileImage: String, error: Int) {
     Glide.with(view.context)
@@ -67,7 +69,7 @@ fun loadImage(view: ImageView, profileImage: String, error: Int) {
                 e: GlideException?,
                 model: Any?,
                 target: com.bumptech.glide.request.target.Target<Drawable>,
-                isFirstResource: Boolean
+                isFirstResource: Boolean,
             ): Boolean {
                 view.setImageResource(error)
                 return true
@@ -78,7 +80,7 @@ fun loadImage(view: ImageView, profileImage: String, error: Int) {
                 model: Any?,
                 target: com.bumptech.glide.request.target.Target<Drawable>,
                 dataSource: DataSource?,
-                isFirstResource: Boolean
+                isFirstResource: Boolean,
             ): Boolean {
                 view.setImageDrawable(resource)
                 return true
@@ -112,6 +114,17 @@ fun bindRating(view: TextView, rating: Double?) {
     rating?.let {
         view.text = rating.toString()
     }
+}
+
+@BindingAdapter("htmlText")
+fun setHtmlTextValue(textView: TextView, htmlText: String?) {
+    if (htmlText == null) return
+    val result: Spanned = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY)
+    } else {
+        Html.fromHtml(htmlText)
+    }
+    textView.text = result
 }
 
 

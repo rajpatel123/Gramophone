@@ -13,9 +13,13 @@ import agstack.gramophone.ui.order.adapter.OrderListAdapter
 import agstack.gramophone.ui.order.viewmodel.OrderListViewModel
 import agstack.gramophone.ui.orderdetails.OrderDetailsActivity
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_order_list.*
@@ -39,30 +43,30 @@ class OrderListActivity :
         orderListViewModel.getOrderList()
     }
 
-
-    // Ned to change
     private fun setupUi() {
-        rv_order?.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rv_order?.setHasFixedSize(true)
-
         viewDataBinding.toolbar.tvTitle.text = getString(R.string.my_orders)
-        toolbar.flBack.setOnClickListener(View.OnClickListener {
+        viewDataBinding.toolbar.tvHelp.setTextColor(ContextCompat.getColor(this, R.color.orange))
+        viewDataBinding.toolbar.ivCall.setColorFilter(ContextCompat.getColor(this, R.color.orange), PorterDuff.Mode.SRC_IN)
+        viewDataBinding.toolbar.flBack.setOnClickListener(View.OnClickListener {
             finish()
         })
-        toolbar.rlHelp.setOnClickListener(View.OnClickListener {
-            val bottomSheet = BottomSheetDialog()
-            //bottomSheet.setAcceptRejectListener(listener)
-            bottomSheet.show(
-                supportFragmentManager,
-                "bottomSheet"
-            )
+        viewDataBinding.toolbar.rlHelp.setOnClickListener(View.OnClickListener {
+            val supportNo: String? =
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CustomerSupportNo)
+            if (supportNo?.isNotEmpty() == true) {
+                val bottomSheet = BottomSheetDialog()
+                bottomSheet.customerSupportNumber = supportNo
+                bottomSheet.show(
+                    supportFragmentManager,
+                    Constants.BOTTOM_SHEET
+                )
+            }
         })
     }
 
     override fun setOrderAdapter(adapter: OrderListAdapter, onOrderItemClick: (String) -> Unit) {
         adapter.onOrderDetailClicked = onOrderItemClick
-        rv_order?.adapter = adapter
+        viewDataBinding.rvOrder.adapter = adapter
 
     }
 

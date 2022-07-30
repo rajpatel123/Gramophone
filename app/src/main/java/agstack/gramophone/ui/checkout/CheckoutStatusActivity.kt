@@ -33,9 +33,6 @@ class CheckoutStatusActivity : BaseActivityWrapper<ActivityCheckoutStatusBinding
 
 
     private fun setupUi() {
-        rv_order?.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rv_order?.setHasFixedSize(true)
 
     }
 

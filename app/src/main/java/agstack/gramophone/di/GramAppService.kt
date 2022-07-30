@@ -1,21 +1,20 @@
 package agstack.gramophone.di
 
+import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.data.model.UpdateLanguageRequestModel
 import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.ui.address.model.AddressRequestModel
 import agstack.gramophone.ui.address.model.AddressResponseModel
 import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
+import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
-import agstack.gramophone.ui.cart.model.RemoveCartItemResponse
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductDataResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
-import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
+import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.order.model.OrderListResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
@@ -96,11 +95,14 @@ interface GramAppService {
     @POST("api/v5/product/get-promotion")
     suspend fun getOffersOnProductData(@Body productData: ProductData): Response<OffersProductResponseData>
 
+    @POST("api/v5/cart/add-to-cart")
+    suspend fun addToCart(@Body addToCartRequest: AddToCartRequest): Response<SuccessStatusResponse>
+
     @GET("api/v5/cart/get-cart")
     suspend fun getCartData(): Response<CartDataResponse>
 
-    @DELETE("api/v5/cart/remove-from-cart")
-    suspend fun removeCartItem(@Body productData: ProductData): Response<RemoveCartItemResponse>
+    @HTTP(method = "DELETE", path = "api/v5/cart/remove-from-cart", hasBody = true)
+    suspend fun removeCartItem(@Field("product_id") productId : Int): Response<SuccessStatusResponse>
 
     @GET("api/v5/order/get-order/{type}")
     suspend fun getOrderData(@Path("type") type: String): Response<OrderListResponse>

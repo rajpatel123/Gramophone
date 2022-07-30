@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.text.Html"/>
         <import type="android.view.View" />
 
         <variable
@@ -494,6 +494,7 @@
                         android:fontFamily="@font/manrope_regular"
                         android:gravity="center_vertical"
                         android:lineSpacingExtra="0sp"
+                        app:htmlText="@{@string/address_note}"
                         tools:text="Note: Address will be taken from you after placing the order"
                         android:textColor="#3F6317"
                         android:textSize="14sp" />
@@ -623,6 +624,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="gone" />
+            android:visibility="@{viewModel.progress == true ? View.VISIBLE : View.GONE}" />
     </RelativeLayout>
 </layout>

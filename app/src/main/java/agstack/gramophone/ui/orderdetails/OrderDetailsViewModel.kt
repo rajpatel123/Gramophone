@@ -20,6 +20,7 @@ class OrderDetailsViewModel @Inject constructor(
     private val productRepository: ProductRepository,
 ) : BaseViewModel<OrderDetailsNavigator>() {
 
+    var progress = MutableLiveData<Boolean>()
     var orderId = MutableLiveData<String>()
     var orderDate = MutableLiveData<String>()
     var quantity = MutableLiveData<String>()
@@ -32,6 +33,7 @@ class OrderDetailsViewModel @Inject constructor(
     var mobile = MutableLiveData<String>()
 
     init {
+        progress.value = false
         orderId.value = ""
         orderDate.value = ""
         quantity.value = ""
@@ -55,7 +57,7 @@ class OrderDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
-                    getNavigator()?.onLoading()
+                    progress.value = true
 
                     val orderDetailRequest = OrderDetailRequest()
                     orderDetailRequest.order_id = orderId
@@ -64,7 +66,6 @@ class OrderDetailsViewModel @Inject constructor(
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
                         && response.body()?.gp_api_response_data?.products != null && response.body()?.gp_api_response_data?.products?.size!! > 0
                     ) {
-                        getNavigator()?.hideProgressBar()
                         this@OrderDetailsViewModel.orderId.value =
                             response.body()?.gp_api_response_data?.order_id
                         this@OrderDetailsViewModel.orderDate.value =
@@ -97,15 +98,14 @@ class OrderDetailsViewModel @Inject constructor(
                                 /* getNavigator()?.openAppliedOfferDetailActivity(it)*/
                              })
                     } else {
-                        getNavigator()?.hideProgressBar()
                         getNavigator()?.showToast(response.message())
                     }
+                    progress.value = false
                 } else {
-                    getNavigator()?.hideProgressBar()
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }
             } catch (ex: Exception) {
-                getNavigator()?.hideProgressBar()
+                progress.value = false
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
                     else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))

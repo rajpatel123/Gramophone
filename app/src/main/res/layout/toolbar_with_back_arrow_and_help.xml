@@ -42,9 +42,9 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:background="@drawable/rounded_corner_8_solid_white_stroke_gray"
-        android:paddingStart="@dimen/_8sdp"
+        android:paddingStart="@dimen/_6sdp"
         android:paddingTop="@dimen/_6sdp"
-        android:paddingEnd="@dimen/_8sdp"
+        android:paddingEnd="@dimen/_6sdp"
         android:paddingBottom="@dimen/_6sdp"
         tools:ignore="RelativeOverlap">
 
@@ -56,7 +56,7 @@
             android:src="@drawable/ic_call" />
 
         <TextView
-            android:id="@+id/tv_help"
+            android:id="@+id/tvHelp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

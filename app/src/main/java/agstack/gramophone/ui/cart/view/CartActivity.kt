@@ -8,18 +8,19 @@ import agstack.gramophone.databinding.ActivityCartBinding
 import agstack.gramophone.ui.cart.CartNavigator
 import agstack.gramophone.ui.cart.adapter.CartAdapter
 import agstack.gramophone.ui.cart.model.CartItem
+import agstack.gramophone.ui.cart.model.OfferApplied
 import agstack.gramophone.ui.cart.viewmodel.CartViewModel
 import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
-import android.os.Build
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
-import android.text.Html
 import android.view.View
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.activity_cart.progress
-import kotlinx.android.synthetic.main.activity_cart.toolbar
 import kotlinx.android.synthetic.main.activity_cart.view.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_order_list.*
@@ -39,49 +40,43 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
     }
 
     private fun setupUi() {
-        // Toolbar need to be changed as per standard
-        toolbar.tvTitle.text = getString(R.string.cart)
-        val addressNote = "<b>" + getString(R.string.note) + "</b>" + getString(R.string.address_note)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-           tvAddressNote.text = Html.fromHtml(addressNote, Html.FROM_HTML_MODE_LEGACY)
-        } else {
-            tvAddressNote.text = Html.fromHtml(addressNote)
-        }
-
-        toolbar.flBack.setOnClickListener(View.OnClickListener {
+        viewDataBinding.toolbar.tvTitle.text = getString(R.string.cart)
+        viewDataBinding.toolbar.flBack.setOnClickListener(View.OnClickListener {
             finish()
         })
-        toolbar.rlHelp.setOnClickListener(View.OnClickListener {
-            val bottomSheet = BottomSheetDialog()
-            //bottomSheet.setAcceptRejectListener(listener)
-            bottomSheet.show(
-                supportFragmentManager,
-                "bottomSheet"
-            )
+        viewDataBinding.toolbar.rlHelp.setOnClickListener(View.OnClickListener {
+            val supportNo: String? =
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CustomerSupportNo)
+            if (supportNo?.isNotEmpty() == true) {
+                val bottomSheet = BottomSheetDialog()
+                bottomSheet.customerSupportNumber = supportNo
+                bottomSheet.show(
+                    supportFragmentManager,
+                    Constants.BOTTOM_SHEET
+                )
+            }
         })
     }
 
     override fun setCartAdapter(
         cartAdapter: CartAdapter,
-        onCartItemClicked: (CartItem) -> Unit,
-        onCartItemDeleteClicked: (String) -> Unit,
-        onOfferClicked: (cartItemList: List<CartItem>) -> Unit,
+        onItemDetailClicked: (productId: String) -> Unit,
+        onCartItemDeleteClicked: (productId: String) -> Unit,
+        onOfferClicked: (offerAppliedList: List<OfferApplied>) -> Unit,
+        onQuantityClicked: (cartItem: CartItem) -> Unit,
     ) {
-        cartAdapter.onItemDetailClicked = onCartItemClicked
+        cartAdapter.onItemDetailClicked = onItemDetailClicked
         cartAdapter.onItemDeleteClicked = onCartItemDeleteClicked
         cartAdapter.onOfferClicked = onOfferClicked
+        cartAdapter.onQuantityClicked = onQuantityClicked
         viewDataBinding.rvCart.adapter = cartAdapter
     }
 
-    override fun openProductDetailsActivity() {
+    override fun openProductDetailsActivity(productData: ProductData) {
         openActivity(ProductDetailsActivity::class.java)
     }
 
-    override fun openAppliedOfferDetailActivity(cartItemList: List<CartItem>) {
-        cartViewModel.calculateAmount(cartItemList)
-    }
-
-    override fun deleteCartItem(productId: String) {
+    override fun openAppliedOfferDetailActivity(offerAppliedList: List<OfferApplied>) {
 
     }
 

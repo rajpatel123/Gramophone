@@ -185,8 +185,7 @@
     <string name="dialing_code">+91&#160;</string>
     <string name="my_orders">My Orders</string>
     <string name="my_order">My Order</string>
-    <string name="note">Note:&#160;</string>
-    <string name="address_note">Address will be taken from you after placing the order</string>
+    <string name="address_note"><![CDATA[<b>Note: </b>Address will be taken from you after placing the order]]></string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

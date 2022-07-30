@@ -207,6 +207,7 @@ object Constants {
 
     //Product
     const val ORDER_ID = "order_id"
+    const val BOTTOM_SHEET = "bottom_sheet"
     /**
      * For Broadcast
      */

@@ -57,6 +57,7 @@ public abstract class SharedPreferencesKeys {
     public static final String language = "language";
     public static final String FirebaseTokenKey = "firebaseToken";
     public static final String IsFirebaseTokenUpdatedKey = "firebaseTokenUpdated";
+    public static final String CustomerSupportNo = "customer_support_no";
     public static final String ActionTypeKey = "actionType";
     public static final String IsWatchDemoFalseKey = "isWatchDemoFalse";
     public static final String FarmUnitsSaved = "farmUnitsSaved";
