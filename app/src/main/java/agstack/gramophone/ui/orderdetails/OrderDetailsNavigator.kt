@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.orderdetails
 
 import agstack.gramophone.base.BaseNavigator
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.orderdetails.adapter.OrderedProductsAdapter
 import agstack.gramophone.ui.orderdetails.model.OfferApplied
 import android.os.Bundle
@@ -13,4 +14,8 @@ interface OrderDetailsNavigator : BaseNavigator {
         onOrderItemClicked: (Int) -> Unit,
         onOfferClicked: (offerList: List<OfferApplied>) -> Unit
     )
+
+    fun openProductDetailsActivity(productData: ProductData)
+
+    fun openAppliedOfferDetailActivity(offerAppliedList: List<OfferApplied>)
 }

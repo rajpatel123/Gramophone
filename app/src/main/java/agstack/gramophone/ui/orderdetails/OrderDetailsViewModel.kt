@@ -91,11 +91,11 @@ class OrderDetailsViewModel @Inject constructor(
                              OrderedProductsAdapter(response.body()?.gp_api_response_data?.products!!),
                              {
                                  //on cartItem clicked for details page
-                                /* getNavigator()?.openProductDetailsActivity()*/
+                                 getNavigator()?.openProductDetailsActivity(ProductData(it.toInt()))
                              },
                              {
                                  //on offer clicked
-                                /* getNavigator()?.openAppliedOfferDetailActivity(it)*/
+                                 getNavigator()?.openAppliedOfferDetailActivity(it)
                              })
                     } else {
                         getNavigator()?.showToast(response.message())

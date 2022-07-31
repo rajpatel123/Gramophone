@@ -75,7 +75,9 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
     }
 
     override fun openProductDetailsActivity(productData: ProductData) {
-        openActivity(ProductDetailsActivity::class.java)
+        val bundle = Bundle()
+        bundle.putParcelable("product", productData)
+        openActivity(ProductDetailsActivity::class.java,bundle)
     }
 
     override fun openAppliedOfferDetailActivity(offerAppliedList: List<OfferApplied>) {

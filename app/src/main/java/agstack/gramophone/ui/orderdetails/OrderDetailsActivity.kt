@@ -6,6 +6,8 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityOrderDetailsBinding
 import agstack.gramophone.ui.dialog.BottomSheetDialog
+import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.orderdetails.adapter.OrderedProductsAdapter
 import agstack.gramophone.ui.orderdetails.model.OfferApplied
 import agstack.gramophone.utils.Constants
@@ -63,6 +65,16 @@ class OrderDetailsActivity :
         orderedProductsAdapter.onItemDetailClicked = onOrderItemClicked
         orderedProductsAdapter.onOfferClicked = onOfferClicked
         viewDataBinding.rvOrderList.adapter = orderedProductsAdapter
+    }
+
+    override fun openProductDetailsActivity(productData: ProductData) {
+        val bundle = Bundle()
+        bundle.putParcelable("product", productData)
+        openActivity(ProductDetailsActivity::class.java,bundle)
+    }
+
+    override fun openAppliedOfferDetailActivity(offerAppliedList: List<OfferApplied>) {
+
     }
 
     override fun getBundle(): Bundle? {
