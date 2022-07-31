@@ -36,6 +36,10 @@ class ProductAllReviewsActivity :
         viewDataBinding.rvReviewsProduct.adapter?.notifyDataSetChanged()
     }
 
+    override fun resetListPosition() {
+        listener.reset()
+    }
+
     override fun onListUpdated() {
         listener.onListFetched()
         (viewDataBinding.rvReviewsProduct.adapter as RatingAndReviewsAdapter).hideLoadingItem()

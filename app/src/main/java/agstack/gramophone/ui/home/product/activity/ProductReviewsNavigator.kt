@@ -14,6 +14,5 @@ interface ProductReviewsNavigator :BaseNavigator {
     fun onListUpdated()
     fun showLoaderFooter()
     fun notifyDataSetChanged()
-
-
+    fun resetListPosition()
 }

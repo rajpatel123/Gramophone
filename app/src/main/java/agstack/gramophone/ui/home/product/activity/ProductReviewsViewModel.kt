@@ -77,12 +77,13 @@ class ProductReviewsViewModel @Inject constructor(
 
                         //for page 1, clear the list and load from starting
                         mProductReviewsList?.clear()
+                        getNavigator()?.resetListPosition()
                         isLastPage = false
-                        mProductReviewsList?.addAll(ReviewsResponse.body()?.gpApiResponseData?.reviewList?.data!!)
+                        mProductReviewsList.addAll(ReviewsResponse.body()?.gpApiResponseData?.reviewList?.data!!)
                         getNavigator()?.notifyDataSetChanged()
 
                     }catch (e:Exception){
-                        println(e)
+                        e.printStackTrace()
                     }
 
 
@@ -110,9 +111,9 @@ class ProductReviewsViewModel @Inject constructor(
         }
     }
 
-    fun loadMore(currentPage:Int){
+    fun loadMore(currentPage:Int) {
         loadProductOffersDataJob.cancelIfActive()
-       // getNavigator()?.showLoaderFooter()
+        getNavigator()?.showLoaderFooter()
 
         loadProductOffersDataJob = viewModelScope.launch {
 
@@ -122,21 +123,20 @@ class ProductReviewsViewModel @Inject constructor(
                 ProductData(mProductReviewDataBundle.get()?.selfRating?.productId!!)
             )
 
+            if (ReviewsResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
+                mProductReviewsList.addAll(ReviewsResponse.body()?.gpApiResponseData?.reviewList?.data!!)
+                val lastpage = ReviewsResponse.body()?.gpApiResponseData?.reviewList?.meta?.to
+                if (currentPage == lastpage) {
+                    isLastPage = true
 
-            mProductReviewsList?.addAll(ReviewsResponse.body()?.gpApiResponseData?.reviewList?.data!!)
-            getNavigator()?.onListUpdated()
-            val lastpage = ReviewsResponse.body()?.gpApiResponseData?.reviewList?.meta?.to
-            if(currentPage==lastpage){
-                isLastPage = true
-
+                }
+                getNavigator()?.onListUpdated()
+            }else{
+                getNavigator()?.onListUpdated()
             }
 
-
-
         }
-
     }
-
 
 
 }

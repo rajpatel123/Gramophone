@@ -31,6 +31,7 @@ object ApiModule {
     fun provideOkHttpClient(logging: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
                 .addInterceptor(getHeaderInterceptor())
+            .addInterceptor(logging)
                 .connectTimeout(15, TimeUnit.SECONDS) // connect timeout
                 .readTimeout(15, TimeUnit.SECONDS)
                 .build()

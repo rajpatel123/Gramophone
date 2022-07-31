@@ -49,5 +49,14 @@ abstract class EndlessRecyclerScrollListener(
         current_page++
     }
 
+    fun reset() {
+        firstVisibleItem= 0
+        visibleItemCount = 0
+        totalItemCount = 0
+        lastVisible = 0
+        current_page = 1
+        loading = false
+    }
+
 
 }

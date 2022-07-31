@@ -2,6 +2,7 @@ package agstack.gramophone.base
 
 import agstack.gramophone.R
 import agstack.gramophone.utils.LocaleManagerClass
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -66,7 +67,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
         }
     }
-    override fun <T> openActivityWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?) {
+    override fun <T:Activity> openActivityWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?) {
         Intent(this, cls).apply {
 
             if (extras != null)

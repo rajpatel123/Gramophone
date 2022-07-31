@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mainLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner_top">
 
         <TextView
@@ -34,7 +34,6 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etCustomerReview"
-
             style="@style/TextSize14Sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,12 +47,9 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_addtocart"
-
             android:layout_width="match_parent"
             android:layout_height="@dimen/_48sdp"
-
             android:layout_marginTop="@dimen/_22sdp"
-
             android:layout_marginBottom="@dimen/_4sdp"
             android:background="@drawable/rounded_corner"
             android:backgroundTint="@color/orange"

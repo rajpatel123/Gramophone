@@ -86,15 +86,15 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
         }
     }
 
-    override fun <T> openActivityWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?) {
-      /*  Intent(context, cls).apply {
+    override fun <T:Activity> openActivityWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?) {
+        Intent(context, cls).apply {
 
             if (extras != null)
                 putExtras(extras)
             startActivity(this)
-            context.o( R.anim.slide_in_up, R.anim.slide_out_up );
+            requireActivity().overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
 
-        }*/
+        }
     }
 
 

@@ -25,11 +25,11 @@ class RatingAndReviewsAdapter(reviewList: ArrayList<ReviewListItem?>?, limit: In
         mContext = viewGroup.context
         if (viewType == ITEM_VIEW) {
             return CustomViewHolder(
-                RatingReviewItemBinding.inflate(LayoutInflater.from(viewGroup.context))
+                RatingReviewItemBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
             )
         } else {
             return LoadingViewHolder(
-                ItemProgressBinding.inflate(LayoutInflater.from(viewGroup.context))
+                ItemProgressBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
             )
         }
     }
@@ -65,7 +65,7 @@ class RatingAndReviewsAdapter(reviewList: ArrayList<ReviewListItem?>?, limit: In
         val lastItem = itemCount - 1;
         if (mReviewList?.get(lastItem) != null) {
             mReviewList?.add(null)
-            notifyItemInserted(lastItem)
+            notifyItemInserted(lastItem + 1)
         }
 
     }

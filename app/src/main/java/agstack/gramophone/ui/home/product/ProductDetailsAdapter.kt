@@ -23,7 +23,7 @@ class ProductDetailsAdapter(productDetailsKeyValueList: ArrayList<KeyPointsItem?
     ): ProductDetailsAdapter.CustomViewHolder {
         mContext = viewGroup.context
         return CustomViewHolder(
-            ProductDetailsRowItemBinding.inflate(LayoutInflater.from(viewGroup.context))
+            ProductDetailsRowItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
         )
     }
 
