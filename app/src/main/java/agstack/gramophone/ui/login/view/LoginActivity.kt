@@ -38,7 +38,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 @AndroidEntryPoint
 class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, LoginViewModel>(),
     LoginNavigator,
-    LanguageBottomSheetFragment.LanguageUpdateListener, GoogleApiClient.ConnectionCallbacks {
+    LanguageBottomSheetFragment.LanguageUpdateListener {
     val REQUEST_CODE = 0x0000c0de
     var qrLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -188,8 +188,7 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
             loginViewModel.onTermsOfUseClicked()
 
         }
-        //val etReferralCode =mDialogView.findViewById(R.id.etReferralCode) as EditText
-        //login button click of custom layout
+
         mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background);
 
     }
@@ -212,14 +211,6 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
     override fun onLanguageUpdate() {
         loginViewModel.updateLanguage()
-    }
-
-    override fun onConnected(p0: Bundle?) {
-
-    }
-
-    override fun onConnectionSuspended(p0: Int) {
-
     }
 
 }
