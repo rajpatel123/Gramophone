@@ -6,6 +6,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityOrderListBinding
 import agstack.gramophone.ui.dialog.BottomSheetDialog
+import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.order.OrderListNavigator
 import agstack.gramophone.ui.order.adapter.OrderListAdapter
 import agstack.gramophone.ui.order.viewmodel.OrderListViewModel
@@ -93,6 +94,10 @@ class OrderListActivity :
 
     override fun openOrderDetailsActivity(bundle: Bundle) {
         openActivity(OrderDetailsActivity::class.java, bundle)
+    }
+
+    override fun openHomeActivity() {
+        openAndFinishActivityWithFlags(HomeActivity::class.java, null)
     }
 
     override fun getLayoutID(): Int {

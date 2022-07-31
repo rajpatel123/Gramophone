@@ -37,6 +37,10 @@ class OrderListViewModel @Inject constructor(
         emptyText.value = getNavigator()?.getMessage(R.string.no_recent_order)
     }
 
+    fun onClickShopNow() {
+        getNavigator()?.openHomeActivity()
+    }
+
     fun getOrderList() {
         viewModelScope.launch {
             try {

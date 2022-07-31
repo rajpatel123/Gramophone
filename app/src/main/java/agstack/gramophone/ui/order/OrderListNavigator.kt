@@ -10,4 +10,6 @@ interface OrderListNavigator : BaseNavigator {
     fun setPastOrderAdapter(adapter: OrderListAdapter, onOrderItemClick: (String) -> Unit)
 
     fun openOrderDetailsActivity(bundle: Bundle)
+
+    fun openHomeActivity()
 }
