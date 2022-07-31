@@ -13,6 +13,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import java.io.IOException
 import javax.inject.Inject
 
@@ -28,6 +30,7 @@ class CartViewModel @Inject constructor(
     var gramCash = MutableLiveData<Int>()
     var totalAmount = MutableLiveData<Int>()
     var progress = MutableLiveData<Boolean>()
+    var showCartView = MutableLiveData<Boolean>()
 
     init {
         itemCount.value = 0
@@ -36,14 +39,43 @@ class CartViewModel @Inject constructor(
         gramCash.value = 0
         totalAmount.value = 0
         progress.value = false
+        showCartView.value = true
     }
 
-    fun calculateAmount(cartItems: List<CartItem>) {
+    private fun calculateAmount(cartItems: List<CartItem>) {
         var subTotal = 0
         for (cartItem in cartItems) {
             subTotal += cartItem.price.toFloat().toInt() * cartItem.quantity.toInt()
         }
         amount.value = subTotal
+    }
+
+    fun onClickPlaceOrder(){
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.value = true
+                    val response = productRepository.placeOrder()
+                    progress.value = false
+                    getNavigator()?.showToast(response.body()?.gp_api_message)
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
+                        getNavigator()?.openOrderListActivity()
+                    }
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
+                progress.value = false
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
+
+    fun onClickStartShopping() {
+        getNavigator()?.openHomeActivity()
     }
 
     fun getCartData() {
@@ -55,6 +87,7 @@ class CartViewModel @Inject constructor(
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
                         && response.body()?.gp_api_response_data?.cart_items != null && response.body()?.gp_api_response_data?.cart_items?.size!! > 0
                     ) {
+                        showCartView.value = true
                         itemCount.value = response.body()?.gp_api_response_data?.cart_items?.size
                         discount.value = response.body()?.gp_api_response_data?.total_discount
                         gramCash.value = response.body()?.gp_api_response_data?.gramcash_coins
@@ -79,6 +112,7 @@ class CartViewModel @Inject constructor(
                                 addToCart(AddToCartRequest(it.product_id.toInt(), it.quantity.toInt()))
                             })
                     } else {
+                        showCartView.value = false
                         getNavigator()?.showToast(response.message())
                     }
                     progress.value = false
@@ -86,6 +120,7 @@ class CartViewModel @Inject constructor(
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }
             } catch (ex: Exception) {
+                showCartView.value = false
                 progress.value = false
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))

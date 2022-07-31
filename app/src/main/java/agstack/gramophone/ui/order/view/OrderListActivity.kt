@@ -6,8 +6,6 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityOrderListBinding
 import agstack.gramophone.ui.dialog.BottomSheetDialog
-import agstack.gramophone.ui.home.product.activity.ProductAllReviewsActivity
-import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.order.OrderListNavigator
 import agstack.gramophone.ui.order.adapter.OrderListAdapter
 import agstack.gramophone.ui.order.viewmodel.OrderListViewModel
@@ -20,14 +18,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_order_list.*
-import kotlinx.android.synthetic.main.toolbar_with_back_arrow_and_help.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class OrderListActivity :
@@ -46,7 +41,8 @@ class OrderListActivity :
     private fun setupUi() {
         viewDataBinding.toolbar.tvTitle.text = getString(R.string.my_orders)
         viewDataBinding.toolbar.tvHelp.setTextColor(ContextCompat.getColor(this, R.color.orange))
-        viewDataBinding.toolbar.ivCall.setColorFilter(ContextCompat.getColor(this, R.color.orange), PorterDuff.Mode.SRC_IN)
+        viewDataBinding.toolbar.ivCall.setColorFilter(ContextCompat.getColor(this, R.color.orange),
+            PorterDuff.Mode.SRC_IN)
         viewDataBinding.toolbar.flBack.setOnClickListener(View.OnClickListener {
             finish()
         })
@@ -62,12 +58,37 @@ class OrderListActivity :
                 )
             }
         })
+        viewDataBinding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                if (viewDataBinding.tabLayout.selectedTabPosition == 0) {
+                    orderListViewModel.selectedTab.value = 0
+                    orderListViewModel.emptyText.value = getString(R.string.no_recent_order)
+                } else if (viewDataBinding.tabLayout.selectedTabPosition == 1) {
+                    orderListViewModel.selectedTab.value = 1
+                    orderListViewModel.emptyText.value = getString(R.string.no_past_order)
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        } as OnTabSelectedListener)
     }
 
-    override fun setOrderAdapter(adapter: OrderListAdapter, onOrderItemClick: (String) -> Unit) {
+    override fun setRecentOrderAdapter(
+        adapter: OrderListAdapter,
+        onOrderItemClick: (String) -> Unit,
+    ) {
         adapter.onOrderDetailClicked = onOrderItemClick
-        viewDataBinding.rvOrder.adapter = adapter
+        viewDataBinding.rvRecent.adapter = adapter
 
+    }
+
+    override fun setPastOrderAdapter(
+        adapter: OrderListAdapter,
+        onOrderItemClick: (String) -> Unit,
+    ) {
+        adapter.onOrderDetailClicked = onOrderItemClick
+        viewDataBinding.rvPast.adapter = adapter
     }
 
     override fun openOrderDetailsActivity(bundle: Bundle) {

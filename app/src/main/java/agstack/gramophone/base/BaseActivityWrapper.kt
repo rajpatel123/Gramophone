@@ -79,6 +79,16 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         }
     }
 
+    override fun <T> openAndFinishActivityWithFlags(cls: Class<T>, extras: Bundle?) {
+        Intent(this, cls).apply {
+
+            if (extras != null)
+                putExtras(extras)
+            this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(this)
+
+        }
+    }
 
     override fun isNetworkAvailable(): Boolean {
         return true

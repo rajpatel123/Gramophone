@@ -32,4 +32,6 @@ interface ProductRepository {
     suspend fun getOrderData(type: String): Response<OrderListResponse>
 
     suspend fun getOrderDetails(orderDetailRequest: OrderDetailRequest): Response<OrderDetailResponse>
+
+    suspend fun placeOrder(): Response<SuccessStatusResponse>
 }

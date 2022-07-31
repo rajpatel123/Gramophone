@@ -24,6 +24,7 @@
     <color name="gray">#606774</color>
     <color name="gray_strike_through">#8F98AB</color>
     <color name="gray_view_line">#BAC2D2</color>
+    <color name="gray_empty_bg">#F5F5F5</color>
     <color name="grey_weight">#8010203E</color>
     <color name="green">#79BD2E</color>
     <color name="green_medium">#62A41C</color>

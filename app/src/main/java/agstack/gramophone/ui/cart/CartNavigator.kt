@@ -21,4 +21,8 @@ interface CartNavigator : BaseNavigator {
     fun openProductDetailsActivity(productData: ProductData)
 
     fun openAppliedOfferDetailActivity(offerAppliedList: List<OfferApplied>)
+
+    fun openOrderListActivity()
+
+    fun openHomeActivity()
 }

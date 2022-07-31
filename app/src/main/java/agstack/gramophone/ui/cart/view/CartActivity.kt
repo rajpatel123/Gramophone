@@ -12,7 +12,9 @@ import agstack.gramophone.ui.cart.model.OfferApplied
 import agstack.gramophone.ui.cart.viewmodel.CartViewModel
 import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
+import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
@@ -78,6 +80,14 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
 
     override fun openAppliedOfferDetailActivity(offerAppliedList: List<OfferApplied>) {
 
+    }
+
+    override fun openOrderListActivity() {
+        openActivity(OrderListActivity::class.java, null)
+    }
+
+    override fun openHomeActivity() {
+       openAndFinishActivityWithFlags(HomeActivity::class.java, null)
     }
 
     override fun onLoading() {

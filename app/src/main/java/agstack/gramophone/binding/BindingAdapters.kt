@@ -6,9 +6,12 @@ import android.net.Uri
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
+import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -125,6 +128,47 @@ fun setHtmlTextValue(textView: TextView, htmlText: String?) {
         Html.fromHtml(htmlText)
     }
     textView.text = result
+}
+@BindingAdapter(value = ["selectedTab", "recentSize", "pastSize"], requireAll = true)
+fun orderEmptyViewHandling(emptyView: LinearLayout, selectedTab: Int, recentSize: Int, pastSize: Int,
+) {
+    when (selectedTab) {
+        0 -> {
+            if (recentSize > 0) {
+                emptyView.visibility = View.GONE
+            } else {
+                emptyView.visibility = View.VISIBLE
+            }
+        }
+        1 -> {
+            if (pastSize > 0) {
+                emptyView.visibility = View.GONE
+            } else {
+                emptyView.visibility = View.VISIBLE
+            }
+        }
+    }
+}
+
+@BindingAdapter(value = ["selectedTab", "recentSize", "pastSize"], requireAll = true)
+fun orderRecyclerViewHandling(recyclerView: RecyclerView, selectedTab: Int, recentSize: Int, pastSize: Int,
+) {
+    when (selectedTab) {
+        0 -> {
+            if (recentSize > 0) {
+                recyclerView.visibility = View.VISIBLE
+            } else {
+                recyclerView.visibility = View.GONE
+            }
+        }
+        1 -> {
+            if (pastSize > 0) {
+                recyclerView.visibility = View.VISIBLE
+            } else {
+                recyclerView.visibility = View.GONE
+            }
+        }
+    }
 }
 
 

@@ -75,4 +75,10 @@ class ProductRepositoryImpl @Inject constructor(
         val orderDetails = gramoAppService.getOrderDetails(orderDetailRequest)
         orderDetails
     }
+
+    override suspend fun placeOrder(): Response<SuccessStatusResponse>  = withContext(
+        Dispatchers.IO) {
+        val placeOrderResponse = gramoAppService.placeOrder()
+        placeOrderResponse
+    }
 }

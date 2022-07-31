@@ -22,6 +22,7 @@ import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import agstack.gramophone.utils.Constants
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -101,6 +102,7 @@ interface GramAppService {
     @GET("api/v5/cart/get-cart")
     suspend fun getCartData(): Response<CartDataResponse>
 
+    @FormUrlEncoded
     @HTTP(method = "DELETE", path = "api/v5/cart/remove-from-cart", hasBody = true)
     suspend fun removeCartItem(@Field("product_id") productId : Int): Response<SuccessStatusResponse>
 
@@ -109,5 +111,8 @@ interface GramAppService {
 
     @POST("api/v5/order/get-order-detail")
     suspend fun getOrderDetails(@Body orderDetailRequest : OrderDetailRequest): Response<OrderDetailResponse>
+
+    @POST("api/v5/cart/place-order")
+    suspend fun placeOrder(): Response<SuccessStatusResponse>
 
 }

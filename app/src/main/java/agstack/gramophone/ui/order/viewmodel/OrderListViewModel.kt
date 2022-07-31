@@ -23,51 +23,57 @@ class OrderListViewModel @Inject constructor(
     private val productRepository: ProductRepository,
 ) : BaseViewModel<OrderListNavigator>() {
 
+    var selectedTab = MutableLiveData<Int>()
+    var recentOrderSize = MutableLiveData<Int>()
+    var pastOrderSize = MutableLiveData<Int>()
+    var emptyText = MutableLiveData<String>(getNavigator()?.getMessage(R.string.no_recent_order))
     var progress = MutableLiveData<Boolean>()
 
     init {
+        selectedTab.value = 0
+        recentOrderSize.value = 0
+        pastOrderSize.value = 0
         progress.value = false
+        emptyText.value = getNavigator()?.getMessage(R.string.no_recent_order)
     }
+
     fun getOrderList() {
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
 
-                    coroutineScope {
-                        val recentOrderData = async {
-                            productRepository.getOrderData(Constants.RECENT)
-                        }
+                    val recentOrderDataResponse = productRepository.getOrderData(Constants.RECENT)
+                    val pastOrderDataResponse = productRepository.getOrderData(Constants.PAST)
 
-                        val pastOrderData = async {
-                            productRepository.getOrderData(Constants.PAST)
-                        }
-
-                        val recentOrderDataResponse = recentOrderData.await()
-                        val pastOrderDataResponse = pastOrderData.await()
-
-                        if (recentOrderDataResponse.isSuccessful && recentOrderDataResponse.body()?.gp_api_status == Constants.GP_API_STATUS
-                            && recentOrderDataResponse.body()?.gp_api_response_data?.order_list != null && recentOrderDataResponse.body()?.gp_api_response_data?.order_list?.data?.size!! > 0
+                    if (recentOrderDataResponse.isSuccessful && recentOrderDataResponse.body()?.gp_api_status == Constants.GP_API_STATUS
+                        && recentOrderDataResponse.body()?.gp_api_response_data?.order_list != null && recentOrderDataResponse.body()?.gp_api_response_data?.order_list?.data?.size!! > 0
+                    ) {
+                        recentOrderSize.value = recentOrderDataResponse.body()?.gp_api_response_data?.order_list?.data?.size
+                        getNavigator()?.setRecentOrderAdapter(
+                            OrderListAdapter(recentOrderDataResponse.body()?.gp_api_response_data?.order_list?.data!!)
                         ) {
-                            getNavigator()?.setOrderAdapter(
-                                OrderListAdapter(recentOrderDataResponse.body()?.gp_api_response_data?.order_list?.data!!)
-                            ) {
-
-                                getNavigator()?.openOrderDetailsActivity(Bundle().apply { putString(Constants.ORDER_ID, it) })
-                            }
-                        } else {
-
+                            getNavigator()?.openOrderDetailsActivity(Bundle().apply {
+                                putString(Constants.ORDER_ID,
+                                    it)
+                            })
                         }
-
-                        if (pastOrderDataResponse.isSuccessful && pastOrderDataResponse.body()?.gp_api_status == Constants.GP_API_STATUS
-                            && pastOrderDataResponse.body()?.gp_api_response_data?.order_list != null && pastOrderDataResponse.body()?.gp_api_response_data?.order_list?.data?.size!! > 0
-                        ) {
-
-                        } else {
-
-                        }
-                        progress.value = false
                     }
+
+                    if (pastOrderDataResponse.isSuccessful && pastOrderDataResponse.body()?.gp_api_status == Constants.GP_API_STATUS
+                        && pastOrderDataResponse.body()?.gp_api_response_data?.order_list != null && pastOrderDataResponse.body()?.gp_api_response_data?.order_list?.data?.size!! > 0
+                    ) {
+                        pastOrderSize.value = pastOrderDataResponse.body()?.gp_api_response_data?.order_list?.data?.size
+                        getNavigator()?.setPastOrderAdapter(
+                            OrderListAdapter(pastOrderDataResponse.body()?.gp_api_response_data?.order_list?.data!!)
+                        ) {
+                            getNavigator()?.openOrderDetailsActivity(Bundle().apply {
+                                putString(Constants.ORDER_ID,
+                                    it)
+                            })
+                        }
+                    }
+                    progress.value = false
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }

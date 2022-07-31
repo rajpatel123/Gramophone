@@ -19,6 +19,8 @@ interface BaseNavigator {
 
     fun <T> openAndFinishActivity(cls: Class<T>, extras: Bundle? = null)
 
+    fun <T> openAndFinishActivityWithFlags(cls: Class<T>, extras: Bundle? = null)
+
     fun isNetworkAvailable(): Boolean
 
     fun requestPermission(permission: String): Boolean
