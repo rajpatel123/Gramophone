@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.settings.viewmodel.WhatsAppOptINOutViewModel" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.settings.view.WhatsAppOptInOptOutActivity">
+
+        <include
+            android:id="@+id/myToolbar"
+            layout="@layout/layout_toolbar" />
+
+        <FrameLayout
+            android:id="@+id/flBannerFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myToolbar">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/rectangle_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="88dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:alpha="0.3"
+                    android:background="@drawable/rectangle_whatsapp_mask" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="bottom"
+                    android:alpha=".3"
+                    android:elevation="@dimen/_1sdp"
+                    app:srcCompat="@drawable/ic_whatsapp_mask" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_46sdp"
+                android:elevation="@dimen/_1sdp"
+                app:srcCompat="@drawable/ic_whatsapp" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/get_updates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/flBannerFrameLayout"
+            android:layout_marginStart="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_80sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="top"
+            android:lineSpacingExtra="-1sp"
+            android:text="@string/whatsapp_update"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_24ssp" />
+
+        <TextView
+            android:id="@+id/recieve_del"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="top"
+            android:layout_below="@+id/get_updates"
+            android:lineSpacingExtra="0sp"
+            android:text="@string/recieve_del"
+            android:textSize="@dimen/_14ssp"
+            android:translationY="-0.24sp" />
+
+        <TextView
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/orange"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center"
+            android:onClick="@{ ()-> viewModel.onOptInClick() }"
+            android:padding="@dimen/_13sdp"
+            android:text="@string/opt_in_now"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+</layout>

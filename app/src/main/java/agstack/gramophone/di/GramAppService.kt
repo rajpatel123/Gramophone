@@ -8,16 +8,15 @@ import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.cart.model.RemoveCartItemResponse
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductDataResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
-import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
+import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.order.model.OrderListResponse
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
+import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import agstack.gramophone.utils.Constants
@@ -102,5 +101,9 @@ interface GramAppService {
 
     @GET("api/v5/order/get-order/{type}")
     suspend fun getOrderData(@Path("type") type: String): Response<OrderListResponse>
+
+
+    @PUT("api/v5/setting/whatsapp/{opt-in}")
+    suspend fun optInOutForWhatsappUpdates(@Path("opt-in") type: String): Response<WhatsAppOptInResponseModel>
 
 }

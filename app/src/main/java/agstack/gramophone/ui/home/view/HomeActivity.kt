@@ -106,7 +106,7 @@ class HomeActivity :
                         navController.navigate(R.id.communityFragment3)
                     }
                     3 -> {
-                        ProfileActivity.start(this@HomeActivity)
+                        openActivity(ProfileActivity::class.java)
                     }
                 }
 

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
  */
 class LanguageAdapter(private val languageList: List<Language>) :
     RecyclerView.Adapter<LanguageAdapter.DeveloperViewHolder>() {
+    private var langaugeCode: String? = null
     var selectedLanguage: ((Language) -> Unit)? = null
     var lastSelectPosition: Int = 0
     var mLanguageList = languageList
@@ -27,6 +28,7 @@ class LanguageAdapter(private val languageList: List<Language>) :
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): DeveloperViewHolder {
+
         return DeveloperViewHolder(
             ItemLanguageBinding.inflate(LayoutInflater.from(viewGroup.context))
         )
@@ -36,13 +38,16 @@ class LanguageAdapter(private val languageList: List<Language>) :
         var language: Language = mLanguageList[position]!!
         holder.binding.setVariable(BR.model, language)
         val mBinding = holder.binding
+
         mBinding.llLanguageLinearLayout.setOnClickListener {
             mLanguageList[lastSelectPosition]?.selected = false
+            mLanguageList.forEach {
+                it.selected=false
+            }
             lastSelectPosition = position
             language.selected = true
             notifyDataSetChanged()
             selectedLanguage?.invoke(language)
-
             onLanguageSelection?.onLanguageSelect(language)
         }
 

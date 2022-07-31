@@ -140,6 +140,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     }
 
     override fun onSuccess(message: String?) {
+        showToast(message)
     }
 
     override fun onLoading() {

@@ -177,6 +177,23 @@
     <string name="settings">Settings</string>
     <string name="manage_settings">Manage your app settings here</string>
     <string name="tools">TOOLS</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="opt_in">Whatsapp opt-in</string>
+    <string name="app_tour">App Tour</string>
+    <string name="blocked_users">Blocked Users</string>
+    <string name="more">More</string>
+    <string name="app_feature">App Features</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="save_language">Save Language</string>
+    <string name="offers">Offers</string>
+    <string name="share_app">Share App</string>
+    <string name="app_url"><![CDATA[https://play.google.com/store/apps/details?id=agstack.gramophone&hl=en_IN&gl=US]]></string>
+    <string name="share_app_link">Share App link!</string>
+    <string name="whatsapp">Whatsapp opt-in</string>
+    <string name="whatsapp_update">Get updates over Whatsapp</string>
+    <string name="recieve_del">Recieve delivery updates and reminders from Gramophone with WhatsApp, Feel free to contact us too!</string>
+    <string name="opt_in_now">Opt-In Now</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

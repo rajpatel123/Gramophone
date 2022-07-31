@@ -21,29 +21,38 @@
         android:theme="@style/SplashTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.settings.view.BlockedUsersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.settings.view.WhatsAppOptInOptOutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.settings.view.LanguageUpdateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.settings.view.SettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.address.view.SelectOtherStateActivity"
             android:exported="false" />
         <activity
             android:name=".ui.splash.view.SplashActivity"
             android:exported="true"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.address.view.AddOrUpdateAddressActivity"
-            android:exported="true" >
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".ui.address.view.StateListActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.language.view.LanguageActivity"
             android:noHistory="true"
@@ -68,15 +77,16 @@
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
-            tools:replace="android:screenOrientation"
-            android:stateNotNeeded="true"/>
+            android:stateNotNeeded="true"
+            tools:replace="android:screenOrientation" />
         <activity
             android:name=".ui.webview.view.WebViewActivity"
             android:screenOrientation="portrait" />
 
         <service android:name=".pushnotification.MyFirebaseMessagingService" />
-        <service android:name=".di.GetAddressIntentService"
-            android:exported="true"/>
+        <service
+            android:name=".di.GetAddressIntentService"
+            android:exported="true" />
     </application>
 
 </manifest>
