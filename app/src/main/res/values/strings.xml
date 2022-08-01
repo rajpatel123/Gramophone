@@ -151,6 +151,8 @@
     <string name="writeareview">Write a review</string>
     <string name="share_your_experience">Share your product experience with everyone</string>
     <string name="ratings">Ratings</string>
+    <string name="onlyGenuineBuyerCanRate">Only genuine buyer can rate this product</string>
+    <string name="gramophone_allows_disclaimer">Gramophone only allows certified buyers to rate the product for your better shopping experience.</string>
 
 
     <string-array name="SortReviewsByOptions">

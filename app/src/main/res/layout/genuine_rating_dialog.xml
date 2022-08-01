@@ -17,7 +17,7 @@
             android:layout_marginLeft="@dimen/_17sdp"
             android:layout_marginTop="@dimen/_18sdp"
             android:text="@string/ratings"
-            app:layout_constraintBottom_toTopOf="@+id/etCustomerReview"
+            app:layout_constraintBottom_toTopOf="@+id/v1_separator"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,18 +32,56 @@
             app:srcCompat="@drawable/ic_cross" />
 
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etCustomerReview"
-            style="@style/TextSize14Sp"
+        <View
+            android:id="@+id/v1_separator"
             android:layout_width="match_parent"
+            android:layout_height="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:background="@color/viewcolor"
+            app:layout_constraintTop_toBottomOf="@+id/tv_reviewTitle" />
+
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/iv_giffy"
+            android:layout_width="@dimen/_122sdp"
+            android:layout_height="@dimen/_122sdp"
+            android:src="@drawable/ratinggiffy"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v1_separator" />
+
+
+        <TextView
+            android:id="@+id/tv_GenuineHeading"
+            style="@style/TextSize18Sp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_17sdp"
+            android:layout_marginLeft="@dimen/_32sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginRight="@dimen/_40sdp"
+            android:layout_marginRight="@dimen/_32sdp"
             android:background="@android:color/transparent"
             android:fontFamily="@font/manrope_medium"
-            android:hint="@string/share_your_experience"
-            app:layout_constraintTop_toBottomOf="@+id/tv_reviewTitle" />
+            android:gravity="center"
+            android:text="@string/onlyGenuineBuyerCanRate"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_giffy" />
+
+        <TextView
+            android:id="@+id/tv_GenuineSubHeadeing"
+            style="@style/TextSize14Sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_32sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_32sdp"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/manrope_medium"
+            android:gravity="center"
+            android:text="@string/gramophone_allows_disclaimer"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_GenuineHeading" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_addtocart"
@@ -59,7 +97,7 @@
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
-            app:layout_constraintTop_toBottomOf="@+id/etCustomerReview" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_GenuineSubHeadeing" />
 
 
         />

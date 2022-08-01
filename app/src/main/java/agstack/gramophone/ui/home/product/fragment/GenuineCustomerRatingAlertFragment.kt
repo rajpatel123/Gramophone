@@ -1,19 +1,18 @@
 package agstack.gramophone.ui.home.product.fragment
 
 import agstack.gramophone.databinding.GenuineRatingDialogBinding
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.product_review_dialog.view.*
 
 class GenuineCustomerRatingAlertFragment : BottomSheetDialogFragment() {
     var binding: GenuineRatingDialogBinding? = null
+
     companion object {
 
-        const val TAG = "AddEditProductDialog"
+        const val TAG = "GenuineCustomerRatingAlertFragment"
 
         private const val KEY_TITLE = "KEY_TITLE"
         private const val KEY_SUBTITLE = "KEY_SUBTITLE"
@@ -29,9 +28,6 @@ class GenuineCustomerRatingAlertFragment : BottomSheetDialogFragment() {
 
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return super.onCreateDialog(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +36,7 @@ class GenuineCustomerRatingAlertFragment : BottomSheetDialogFragment() {
     ): View? {
         binding = GenuineRatingDialogBinding.inflate(inflater)
 
-       // setupUi()
+        // setupUi()
         return binding!!.root
     }
 
@@ -52,7 +48,9 @@ class GenuineCustomerRatingAlertFragment : BottomSheetDialogFragment() {
 
 
     private fun setupView(view: View) {
-        view.tv_reviewTitle.text = arguments?.getString(KEY_TITLE)
+        binding?.icCross?.setOnClickListener {
+
+        }
 
     }
 }
