@@ -13,7 +13,6 @@ object Constants {
     val TOP = "top"
     const val RECENT = "recent"
     const val PAST = "past"
-    val RECENT = "recent"
     val TOP_REVIEWS ="Top Reviews"
     val RECENT_REVIEWS= "Recent Reviews"
     const val HELP_PHONE_NUMBER: String = "customer_support_no"
