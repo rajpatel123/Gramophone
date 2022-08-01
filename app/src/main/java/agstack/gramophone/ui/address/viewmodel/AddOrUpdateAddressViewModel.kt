@@ -17,6 +17,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.android.synthetic.main.activity_add_or_update_address.*
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
@@ -87,8 +88,8 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                 val updateAddress = handleUpdateAddressResponse(response).data
                 loading.set(false)
 
-                if (Constants.GP_API_STATUS == updateAddress?.gp_api_status) {
-                    getNavigator()?.onSuccess(updateAddress.gp_api_message)
+                if (Constants.GP_API_STATUS.equals(updateAddress?.gp_api_status)) {
+                    getNavigator()?.onSuccess(updateAddress?.gp_api_message!!)
                     SharedPreferencesHelper.instance?.putBoolean(
                         SharedPreferencesKeys.logged_in,
                         true
@@ -200,7 +201,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                             getNavigator()?.updateVillage(adapter) {
                                 villageName.set(it.name)
                                 getNavigator()?.closeVillageDropDown()
-                                getVillage(
+                                getPinCode(
                                     "pincode",
                                     stateNameStr.get().toString(),
                                     districtName.get().toString(),
@@ -269,7 +270,12 @@ class AddOrUpdateAddressViewModel @Inject constructor(
     }
 
     fun updateAddress(resultData: Bundle) {
-        getNavigator()?.updateUI(resultData)
+        stateNameStr.set(resultData.getString("State"))
+        districtName.set(resultData.getString("District"))
+        tehsilName.set(resultData.getString("Tehsil"))
+        villageName.set(resultData.getString("Tehsil"))
+        address.set(resultData.getString("Address"))
+        pinCode.set(resultData.getString("Postal"))
     }
 
 

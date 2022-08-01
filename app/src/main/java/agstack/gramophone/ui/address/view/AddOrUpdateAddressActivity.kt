@@ -87,6 +87,7 @@ class AddOrUpdateAddressActivity :
     }
 
 
+    //Can be improved
     override fun updateDistrict(adapter: AddressDataListAdapter, onSelect: (AddressDataModel) -> Unit) {
         adapter.selectedItem = onSelect
         districtSpinner.setAdapter(adapter)
@@ -119,14 +120,6 @@ class AddOrUpdateAddressActivity :
         }
     }
 
-    override fun updateUI(resultData: Bundle) {
-        etStateName.setText(resultData.getString("State"))
-        districtSpinner.setText(resultData.getString("District"))
-        tehsilSpinner.setText(resultData.getString("Tehsil"))
-        villageNameSpinner.setText(resultData.getString("Tehsil"))
-        etAddress.setText(resultData.getString("Address"))
-        pincodeSpinner.setText(resultData.getString("Postal"))
-    }
 
     override fun goToApp() {
         openAndFinishActivity(HomeActivity::class.java, null)
