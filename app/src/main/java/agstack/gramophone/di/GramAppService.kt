@@ -17,6 +17,7 @@ import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.order.model.OrderListResponse
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
+import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import agstack.gramophone.utils.Constants
@@ -101,6 +102,9 @@ interface GramAppService {
 
     @GET("api/v5/order/get-order/{type}")
     suspend fun getOrderData(@Path("type") type: String): Response<OrderListResponse>
+
+    @GET("api/v5/setting/user-blocked-list")
+    suspend fun getBlockedUsersList(): Response<BlockedUsersListResponseModel>
 
 
     @PUT("api/v5/setting/whatsapp/{opt-in}")

@@ -36,12 +36,11 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_toStartOf="@+id/llLanguageLinearLayout"
                 android:background="@drawable/rounded_corner_with_grey_color"
+                android:onClick="@{ ()-> viewModel.onHelpClick(llHelpLinearLayout) }"
                 android:paddingStart="@dimen/_8sdp"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:onClick="@{ ()-> viewModel.onHelpClick(llHelpLinearLayout) }"
-                >
+                android:paddingBottom="@dimen/_5sdp">
 
                 <ImageView
                     android:layout_width="wrap_content"

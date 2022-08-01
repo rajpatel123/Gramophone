@@ -8,6 +8,7 @@ import agstack.gramophone.data.repository.settings.SettingsRepository
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.GpApiResponseData
 import agstack.gramophone.ui.settings.SettingsNavigator
+import agstack.gramophone.ui.settings.view.BlockedUsersActivity
 import agstack.gramophone.ui.settings.view.LanguageUpdateActivity
 import agstack.gramophone.ui.settings.view.WhatsAppOptInOptOutActivity
 import agstack.gramophone.utils.ApiResponse
@@ -36,6 +37,10 @@ class SettingsViewModel @Inject constructor(
         getNavigator()?.openActivity(WhatsAppOptInOptOutActivity::class.java, null)
     }
 
+
+    fun onBlockedUsersClicked(){
+        getNavigator()?.openActivity(BlockedUsersActivity::class.java, null)
+    }
     fun setLanguageName() {
         val languageCode = getNavigator()?.getLanguageCode()
         var gpApiResponseData =

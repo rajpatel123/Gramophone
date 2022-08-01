@@ -222,6 +222,8 @@
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingTop="@dimen/_15sdp"
                     android:paddingEnd="@dimen/_26sdp"
+                    android:onClick="@{ ()-> viewModel.onBlockedUsersClicked() }"
+
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
