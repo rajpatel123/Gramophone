@@ -9,20 +9,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class GenuineCustomerRatingAlertFragment : BottomSheetDialogFragment() {
     var binding: GenuineRatingDialogBinding? = null
+    var onAddToCartClick: (() -> Unit)? = null
 
     companion object {
 
-        const val TAG = "GenuineCustomerRatingAlertFragment"
 
-        private const val KEY_TITLE = "KEY_TITLE"
-        private const val KEY_SUBTITLE = "KEY_SUBTITLE"
-
-        fun newInstance(title: String, subTitle: String): GenuineCustomerRatingAlertFragment {
-            val args = Bundle()
-            args.putString(KEY_TITLE, title)
-            args.putString(KEY_SUBTITLE, subTitle)
+        fun newInstance(): GenuineCustomerRatingAlertFragment {
             val fragment = GenuineCustomerRatingAlertFragment()
-            fragment.arguments = args
             return fragment
         }
 
@@ -36,7 +29,6 @@ class GenuineCustomerRatingAlertFragment : BottomSheetDialogFragment() {
     ): View? {
         binding = GenuineRatingDialogBinding.inflate(inflater)
 
-        // setupUi()
         return binding!!.root
     }
 
@@ -49,8 +41,17 @@ class GenuineCustomerRatingAlertFragment : BottomSheetDialogFragment() {
 
     private fun setupView(view: View) {
         binding?.icCross?.setOnClickListener {
-
+            dismiss()
+        }
+        binding?.btnAddtocart?.setOnClickListener{
+            onAddToCartClick?.invoke()
         }
 
     }
+
+    fun setOnClickSelectedListener(onAddToCartClick: () -> Unit) {
+        this.onAddToCartClick = onAddToCartClick
+
+    }
+
 }

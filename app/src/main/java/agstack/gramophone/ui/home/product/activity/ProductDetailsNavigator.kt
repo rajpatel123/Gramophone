@@ -20,5 +20,6 @@ interface ProductDetailsNavigator: BaseNavigator {
      fun setRatingAndReviewsAdapter(ratingAndReviewsAdapter: RatingAndReviewsAdapter)
      fun openViewAllReviewRatingsActivity(productId: Int, productReviewsData: GpApiResponseData?)
     fun openProductDetailsActivity(productData: ProductData)
+    fun showGenuineCustomerRatingDialog(genuineCustomerRatingAlertFragment: GenuineCustomerRatingAlertFragment, onAddToCartClick: () -> Unit)
     //fun openAddEditProductReviewsFragment(newInstance: GenuineCustomerRatingAlertFragment)
 }

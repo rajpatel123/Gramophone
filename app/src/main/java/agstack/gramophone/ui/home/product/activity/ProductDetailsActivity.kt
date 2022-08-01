@@ -71,8 +71,7 @@ class ProductDetailsActivity :
                 //if valid Customer , on Click of rating open ADD/Edit ProductReview
                 mViewModel?.openAddEditProductReview()
                 //else open GenuineCustomerRatingAlertFragment
-                GenuineCustomerRatingAlertFragment.newInstance("Write a review","")
-                    .show(supportFragmentManager,"")
+                // GenuineCustomerRatingAlertFragment.newInstance().show(supportFragmentManager,"")
 
             }
 
@@ -83,10 +82,17 @@ class ProductDetailsActivity :
 
     }
 
- /*   override fun openAddEditProductReviewsFragment(newInstance: GenuineCustomerRatingAlertFragment) {
-        newInstance.show(supportFragmentManager,"ProductReviewsDialog")
+    private var genuineCustomerDialog = GenuineCustomerRatingAlertFragment.newInstance()
+    override fun showGenuineCustomerRatingDialog(
+        genuineCustomerRatingAlertFragment: GenuineCustomerRatingAlertFragment,
+        onAddToCartClick: () -> Unit
+    ) {
+        genuineCustomerDialog = genuineCustomerRatingAlertFragment
+        genuineCustomerDialog.setOnClickSelectedListener(onAddToCartClick)
+        genuineCustomerDialog.show(supportFragmentManager, "genuineCustomerDialog")
     }
-*/
+
+
     private fun initProductDetailView() {
         viewDataBinding?.tvShowAllDetails?.setOnClickListener {
             isShowMoreClicked = !isShowMoreClicked
