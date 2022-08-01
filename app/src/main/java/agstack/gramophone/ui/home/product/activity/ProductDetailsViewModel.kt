@@ -4,6 +4,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
+import agstack.gramophone.ui.home.product.activity.productreview.AddEditProductReviewActivity
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.offer.OfferDetailActivity
@@ -145,6 +146,8 @@ class ProductDetailsViewModel @Inject constructor(
                                         it.filterNotNull()
                                     )
                                 ) {
+                                    //Open a new instance of ProductDetailsActivity with selected product ID
+                                    getNavigator()?.openProductDetailsActivity(ProductData(it.productId!!))
 
                                 }
                             }
@@ -188,7 +191,7 @@ class ProductDetailsViewModel @Inject constructor(
                         productReviewsData.set(productReviewResponse.body()?.gpApiResponseData)
                         getNavigator()?.setRatingAndReviewsAdapter(
                             RatingAndReviewsAdapter(
-                                productReviewsData.get()?.reviewList?.data,
+                                productReviewsData.get()?.reviewList?.data as ArrayList<ReviewListItem?>,
                                 2
                             )
                         )
@@ -265,6 +268,24 @@ class ProductDetailsViewModel @Inject constructor(
 
     fun viewAllReviewsOnClick() {
         getNavigator()?.openViewAllReviewRatingsActivity(productId, productReviewsData.get())
+    }
+
+
+
+    /*fun openAddEditProductReview() {
+        getNavigator()?.openAddEditProductReviewsFragment(AddEditProductReviewFragment.newInstance("Write a review",""))
+    }*/
+
+    fun openAddEditProductReview(){
+        getNavigator()?.openActivityWithBottomToTopAnimation(AddEditProductReviewActivity::class.java,Bundle().apply {
+
+            putInt(Constants.Product_Id_Key,productId)
+            putString(Constants.Product_Base_Name,productData.get()?.productBaseName)
+            putParcelable(Constants.PRODUCT_RATING_DATA_KEY,productReviewsData.get()?.selfRating)
+        })
+
+
+        //"productId"
     }
 
 }

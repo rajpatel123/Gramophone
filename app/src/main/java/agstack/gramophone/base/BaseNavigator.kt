@@ -1,5 +1,6 @@
 package agstack.gramophone.base
 
+import android.app.Activity
 import android.os.Bundle
 
 /*
@@ -17,6 +18,8 @@ interface BaseNavigator {
 
     fun <T> openActivity(cls: Class<T>, extras: Bundle? = null)
 
+    fun <T> openAndFinishActivity(cls:Class<T>,extras: Bundle?=null)
+    fun<T: Activity> openActivityWithBottomToTopAnimation(cls:Class<T>,extras: Bundle?=null)
     fun <T> openAndFinishActivity(cls: Class<T>, extras: Bundle? = null)
 
     fun <T> openAndFinishActivityWithFlags(cls: Class<T>, extras: Bundle? = null)
@@ -40,4 +43,6 @@ interface BaseNavigator {
     fun onLoading()
 
     fun hideProgressBar()
+
+
 }
