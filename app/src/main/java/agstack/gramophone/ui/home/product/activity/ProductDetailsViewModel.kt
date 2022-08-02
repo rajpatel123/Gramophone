@@ -307,7 +307,6 @@ class ProductDetailsViewModel @Inject constructor(
             addToCartJob = checkNetworkThenRun {
                 progressLoader.value = true
                var  productDetailstoBeFetched= ProductData()
-
                 val offersOnProductResponse =
                     productRepository.getOffersOnProductData(productDetailstoBeFetched)
 
