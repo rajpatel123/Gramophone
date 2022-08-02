@@ -4,7 +4,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityAddOrUpdateAddressBinding
-import agstack.gramophone.di.GetAddressIntentService
+import agstack.gramophone.di.GPSTracker
 import agstack.gramophone.ui.address.AddressNavigator
 import agstack.gramophone.ui.address.adapter.AddressDataListAdapter
 import agstack.gramophone.ui.address.model.AddressDataModel
@@ -19,17 +19,14 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
-import android.os.Handler
-import android.os.ResultReceiver
 import android.provider.Settings
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.google.android.gms.location.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_or_update_address.*
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 @AndroidEntryPoint
 class AddOrUpdateAddressActivity :
@@ -41,6 +38,27 @@ class AddOrUpdateAddressActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+       val gps = GPSTracker(this@AddOrUpdateAddressActivity)
+
+        // Check if GPS enabled
+
+        // Check if GPS enabled
+        if (gps.canGetLocation()) {
+            val latitude: Double = gps.getLatitude()
+            val longitude: Double = gps.getLongitude()
+
+            // \n is for new line
+            Toast.makeText(
+                applicationContext,
+                "Your Location is - \nLat: $latitude\nLong: $longitude", Toast.LENGTH_LONG
+            ).show()
+        } else {
+            // Can't get location.
+            // GPS or network is not enabled.
+            // Ask user to enable GPS/network in settings.
+            gps.showSettingsAlert()
+        }
     }
 
 

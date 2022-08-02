@@ -1,3 +1,5 @@
 package agstack.gramophone.ui.settings.model
 
-class GpApiResponseData
+class GpApiResponseData(
+    val whatsapp_optin: Boolean
+)

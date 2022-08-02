@@ -26,7 +26,7 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) : BaseViewModel<SettingsNavigator>() {
-
+     var initiateAppDataResponseModel: InitiateAppDataResponseModel? = null
     var languageName = ObservableField<String>()
 
     fun onLanguageClicked() {
@@ -41,6 +41,14 @@ class SettingsViewModel @Inject constructor(
     fun onBlockedUsersClicked(){
         getNavigator()?.openActivity(BlockedUsersActivity::class.java, null)
     }
+
+    fun onAppFeatureClicked(){
+        getNavigator()?.openWebView(Bundle().apply {
+            putString(Constants.PAGE_URL, initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.app_features_url)
+            putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.app_feature))
+        })
+    }
+
     fun setLanguageName() {
         val languageCode = getNavigator()?.getLanguageCode()
         var gpApiResponseData =
@@ -58,13 +66,6 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onTermsClick(){
-        var initiateAppDataResponseModel =
-            SharedPreferencesHelper.instance?.getParcelable(
-                SharedPreferencesKeys.app_data
-                , InitiateAppDataResponseModel::class.java
-            )
-
-
         getNavigator()?.openWebView(Bundle().apply {
             putString(Constants.PAGE_URL, initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.terms_of_service_url)
             putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.terms_of_service))
@@ -72,17 +73,17 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onPrivacyClick(){
-        var initiateAppDataResponseModel =
-            SharedPreferencesHelper.instance?.getParcelable(
-                SharedPreferencesKeys.app_data
-                , InitiateAppDataResponseModel::class.java
-            )
-
-
         getNavigator()?.openWebView(Bundle().apply {
             putString(Constants.PAGE_URL, initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.privacy_policy_url)
             putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.privacy))
         })
+    }
+
+    fun initData() {
+        initiateAppDataResponseModel =
+            SharedPreferencesHelper.instance?.getParcelable(
+                SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java
+            )
     }
 
 }

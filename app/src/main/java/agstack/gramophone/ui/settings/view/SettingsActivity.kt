@@ -21,6 +21,7 @@ class SettingsActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        settingsViewModel.initData()
         setUpToolBar(
             enableBackButton = true,
             getMessage(R.string.settings),

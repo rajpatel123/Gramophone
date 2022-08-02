@@ -15,6 +15,7 @@ import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.order.model.OrderListResponse
+import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
@@ -109,5 +110,8 @@ interface GramAppService {
 
     @PUT("api/v5/setting/whatsapp/{opt-in}")
     suspend fun optInOutForWhatsappUpdates(@Path("opt-in") type: String): Response<WhatsAppOptInResponseModel>
+
+    @PUT("api/v5/general/logout")
+    suspend fun logoutUser(): Response<LogoutResponseModel>
 
 }

@@ -289,7 +289,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:paddingTop="@dimen/_15sdp"
                     android:paddingEnd="@dimen/_26sdp"
-                    android:onClick="@{ ()-> viewModel.onLanguageClicked() }"
+                    android:onClick="@{ ()-> viewModel.onAppFeatureClicked() }"
 
                     android:paddingBottom="@dimen/_15sdp">
 

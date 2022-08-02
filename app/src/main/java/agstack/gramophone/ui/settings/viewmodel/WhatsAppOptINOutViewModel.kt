@@ -46,6 +46,10 @@ class WhatsAppOptINOutViewModel @Inject constructor(
                         val optInResponseData = handleResponse(optInOutResponse).data
 
                         if (Constants.GP_API_STATUS.equals(optInResponseData?.gp_api_status)) {
+                            SharedPreferencesHelper.instance?.putBoolean(
+                                SharedPreferencesKeys.WHATSAPP_OPT_IN,
+                                optInResponseData?.gp_api_response_data?.whatsapp_optin
+                            )
                             getNavigator()?.onSuccess(optInResponseData?.gp_api_message)
                         } else {
                             getNavigator()?.onError(optInResponseData?.gp_api_message)
@@ -77,7 +81,7 @@ class WhatsAppOptINOutViewModel @Inject constructor(
         if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.WHATSAPP_OPT_IN) == true){
             optINOut.set(getNavigator()?.getMessage(R.string.opt_out))
         }else{
-            optINOut.set(getNavigator()?.getMessage(R.string.opt_in))
+            optINOut.set(getNavigator()?.getMessage(R.string.opt_in_now))
         }
     }
 

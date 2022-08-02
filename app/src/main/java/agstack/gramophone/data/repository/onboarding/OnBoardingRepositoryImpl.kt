@@ -12,6 +12,7 @@ import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
+import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import kotlinx.coroutines.Dispatchers
@@ -79,6 +80,12 @@ class OnBoardingRepositoryImpl @Inject constructor(
         Dispatchers.IO){
         val addressUpdate = gramAppService.updateAddress(updateAddressRequestModel)
         addressUpdate
+    }
+
+    override suspend fun logoutUser():Response<LogoutResponseModel> = withContext(
+        Dispatchers.IO){
+        val logout = gramAppService.logoutUser()
+        logout
     }
 
 }
