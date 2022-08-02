@@ -77,7 +77,6 @@ class ProductDetailsViewModel @Inject constructor(
                             )
                         }
 
-
                         mProductDetailsKeyValues =
                             (productData?.get()?.productDetails?.keyPoints!!).toMutableList()
 
