@@ -22,6 +22,8 @@ class WhatsAppOptInOptOutActivity :
             enableBackButton = true, getMessage(R.string.whatsapp),
             R.drawable.ic_arrow_left
         )
+
+        whatsAppOptINOutViewModel.updateAction()
     }
 
     override fun getLayoutID(): Int = R.layout.activity_whats_app_opt_in_opt_out

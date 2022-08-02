@@ -93,4 +93,6 @@ public abstract class SharedPreferencesKeys {
     public static final String languageList="language_list";
     @Nullable
     public static final String app_data="app_data";
+    @Nullable
+    public static final String WHATSAPP_OPT_IN="opt_in";
 }

@@ -7,6 +7,9 @@ import agstack.gramophone.ui.settings.WhatsappNavigator
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
+import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -19,9 +22,14 @@ class WhatsAppOptINOutViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
 
 ) : BaseViewModel<WhatsappNavigator>() {
+    var optINOut = ObservableField<String>()
 
     fun onOptInClick() {
-        optWhatsapp("opt-in")
+        if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.WHATSAPP_OPT_IN) == true){
+            optWhatsapp("opt-out")
+        }else{
+            optWhatsapp("opt-in")
+        }
     }
 
     private fun optWhatsapp(type: String) {
@@ -63,6 +71,14 @@ class WhatsAppOptINOutViewModel @Inject constructor(
             }
         }
         return ApiResponse.Error(response.message())
+    }
+
+    fun updateAction() {
+        if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.WHATSAPP_OPT_IN) == true){
+            optINOut.set(getNavigator()?.getMessage(R.string.opt_out))
+        }else{
+            optINOut.set(getNavigator()?.getMessage(R.string.opt_in))
+        }
     }
 
 }

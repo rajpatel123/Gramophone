@@ -37,7 +37,6 @@ class AddOrUpdateAddressActivity :
     AddressNavigator {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var locationCallback: LocationCallback
     private val addOrUpdateAddressViewModel: AddOrUpdateAddressViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {

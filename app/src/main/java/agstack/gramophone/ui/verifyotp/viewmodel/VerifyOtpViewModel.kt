@@ -73,6 +73,11 @@ class VerifyOtpViewModel @Inject constructor(
                             responseData?.gp_api_response_data?.uuid
                         )
 
+                        SharedPreferencesHelper.instance?.putBoolean(
+                            SharedPreferencesKeys.WHATSAPP_OPT_IN,
+                            responseData?.gp_api_response_data?.whatsapp_optin
+                        )
+
                         if (responseData?.gp_api_response_data?.is_address == true){
                             SharedPreferencesHelper.instance?.putBoolean(
                                 SharedPreferencesKeys.logged_in,
