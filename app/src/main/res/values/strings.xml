@@ -202,6 +202,7 @@
     <string name="your_goods_will_be_packed_and_sent">Your goods will be packed and sent</string>
     <string name="your_order_will_reach_you">Your order will reach you</string>
     <string name="track_your_order">Track your order</string>
+    <string name="turn_on_location">Please turn on location</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

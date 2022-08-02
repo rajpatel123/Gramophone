@@ -23,6 +23,7 @@
         <activity
             android:name=".ui.address.view.SelectOtherStateActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.splash.view.SplashActivity"
             android:exported="true"
