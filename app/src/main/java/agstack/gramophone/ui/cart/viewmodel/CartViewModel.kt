@@ -9,12 +9,11 @@ import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.utils.Constants
+import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.MediaType
-import okhttp3.RequestBody
 import java.io.IOException
 import javax.inject.Inject
 
@@ -50,7 +49,7 @@ class CartViewModel @Inject constructor(
         amount.value = subTotal
     }
 
-    fun onClickPlaceOrder(){
+    fun onClickPlaceOrder() {
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -59,7 +58,10 @@ class CartViewModel @Inject constructor(
                     progress.value = false
                     getNavigator()?.showToast(response.body()?.gp_api_message)
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
-                        getNavigator()?.openOrderListActivity()
+                        getNavigator()?.openCheckoutStatusActivity(Bundle().apply {
+                            putString(Constants.ORDER_ID,
+                                response.body()?.gp_api_response_data?.order_ref_id.toString())
+                        })
                     }
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
@@ -107,9 +109,10 @@ class CartViewModel @Inject constructor(
                             {
                                 //on offer detail clicked
                                 getNavigator()?.openAppliedOfferDetailActivity(it)
-                            },{
+                            }, {
                                 // on quantity increase and decrease clicked
-                                addToCart(AddToCartRequest(it.product_id.toInt(), it.quantity.toInt()))
+                                addToCart(AddToCartRequest(it.product_id.toInt(),
+                                    it.quantity.toInt()))
                             })
                     } else {
                         showCartView.value = false

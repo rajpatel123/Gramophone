@@ -194,6 +194,14 @@
     <string name="no_recent_order">Orders till 6 months will be displayed here, check \"Past Orders\" for past orders.</string>
     <string name="no_past_order">Orders older than 6 months will be displayed here, check \"Recent Orders\" for recent orders.</string>
     <string name="no_orders">No Orders</string>
+    <string name="your_order_id_is">Your order id. is #</string>
+    <string name="thank_you">Thank you!</string>
+    <string name="order_naccepted_successfully">Your order has been\naccepted successfully!</string>
+    <string name="what_to_expect_next">What to expect next</string>
+    <string name="our_team_confirm_the_order">Our team will call to confirm the order</string>
+    <string name="your_goods_will_be_packed_and_sent">Your goods will be packed and sent</string>
+    <string name="your_order_will_reach_you">Your order will reach you</string>
+    <string name="track_your_order">Track your order</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

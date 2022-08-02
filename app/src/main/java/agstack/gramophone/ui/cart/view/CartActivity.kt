@@ -10,11 +10,11 @@ import agstack.gramophone.ui.cart.adapter.CartAdapter
 import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.cart.model.OfferApplied
 import agstack.gramophone.ui.cart.viewmodel.CartViewModel
+import agstack.gramophone.ui.checkout.CheckoutStatusActivity
 import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
-import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
@@ -22,11 +22,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_cart.progress
-import kotlinx.android.synthetic.main.activity_cart.view.*
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_order_list.*
-import kotlinx.android.synthetic.main.toolbar_with_back_arrow_and_help.view.*
+import kotlinx.android.synthetic.main.activity_cart.*
 
 @AndroidEntryPoint
 class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, CartViewModel>(),
@@ -77,19 +73,19 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
     override fun openProductDetailsActivity(productData: ProductData) {
         val bundle = Bundle()
         bundle.putParcelable("product", productData)
-        openActivity(ProductDetailsActivity::class.java,bundle)
+        openActivity(ProductDetailsActivity::class.java, bundle)
     }
 
     override fun openAppliedOfferDetailActivity(offerAppliedList: List<OfferApplied>) {
 
     }
 
-    override fun openOrderListActivity() {
-        openActivity(OrderListActivity::class.java, null)
+    override fun openCheckoutStatusActivity(bundle: Bundle) {
+        openAndFinishActivity(CheckoutStatusActivity::class.java, bundle)
     }
 
     override fun openHomeActivity() {
-       openAndFinishActivityWithFlags(HomeActivity::class.java, null)
+        openAndFinishActivityWithFlags(HomeActivity::class.java, null)
     }
 
     override fun onLoading() {

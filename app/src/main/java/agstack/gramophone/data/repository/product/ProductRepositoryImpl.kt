@@ -7,6 +7,7 @@ import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.order.model.OrderListResponse
+import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
 import kotlinx.coroutines.Dispatchers
@@ -76,7 +77,7 @@ class ProductRepositoryImpl @Inject constructor(
         orderDetails
     }
 
-    override suspend fun placeOrder(): Response<SuccessStatusResponse>  = withContext(
+    override suspend fun placeOrder(): Response<PlaceOrderResponse>  = withContext(
         Dispatchers.IO) {
         val placeOrderResponse = gramoAppService.placeOrder()
         placeOrderResponse
