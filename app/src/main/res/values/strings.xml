@@ -177,6 +177,7 @@
     <string name="settings">Settings</string>
     <string name="manage_settings">Manage your app settings here</string>
     <string name="tools">TOOLS</string>
+    <string name="turn_on_location">Please turn on location</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

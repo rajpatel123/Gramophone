@@ -10,6 +10,7 @@ import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import android.location.Address
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -269,13 +270,13 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
     }
 
-    fun updateAddress(resultData: Bundle) {
-        stateNameStr.set(resultData.getString("State"))
-        districtName.set(resultData.getString("District"))
-        tehsilName.set(resultData.getString("Tehsil"))
-        villageName.set(resultData.getString("Tehsil"))
-        address.set(resultData.getString("Address"))
-        pinCode.set(resultData.getString("Postal"))
+    fun updateAddress(location: Address) {
+        stateNameStr.set(location.adminArea)
+        districtName.set(location.subAdminArea)
+        tehsilName.set(location.subAdminArea)
+        villageName.set(location.featureName)
+        address.set(location.getAddressLine(0))
+        pinCode.set(location.postalCode)
     }
 
 

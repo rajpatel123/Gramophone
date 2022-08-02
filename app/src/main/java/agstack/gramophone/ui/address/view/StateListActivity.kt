@@ -42,13 +42,12 @@ class StateListActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupUI()
-        fetchStateList()
-//        if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)){
-//            //openAndFinishActivity(AddOrUpdateAddressActivity::class.java,null)
-//        }else{
-//            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),1)
-//        }
+
+        if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)){
+            openAndFinishActivity(AddOrUpdateAddressActivity::class.java,null)
+        }else{
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),1)
+        }
     }
 
 
@@ -56,7 +55,7 @@ class StateListActivity :
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //openAndFinishActivity(AddOrUpdateAddressActivity::class.java,null)
+                openAndFinishActivity(AddOrUpdateAddressActivity::class.java,null)
             }else{
                 setupUI()
                 fetchStateList()
