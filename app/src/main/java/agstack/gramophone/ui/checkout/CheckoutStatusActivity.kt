@@ -36,7 +36,7 @@ class CheckoutStatusActivity : BaseActivityWrapper<ActivityCheckoutStatusBinding
         rv_order?.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv_order?.setHasFixedSize(true)
-        rv_order?.adapter = OrderListAdapter()
+
     }
 
 

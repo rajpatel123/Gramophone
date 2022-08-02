@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="agstack.gramophone">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -22,11 +23,15 @@
         <activity
             android:name=".ui.address.view.SelectOtherStateActivity"
             android:exported="false" />
+
         <activity
-            android:name=".ui.address.view.StateListActivity"
+            android:name=".ui.splash.view.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait" >
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.address.view.AddOrUpdateAddressActivity"
@@ -34,15 +39,11 @@
 
         </activity>
         <activity
-            android:name=".ui.splash.view.SplashActivity"
+            android:name=".ui.address.view.StateListActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.language.view.LanguageActivity"
@@ -66,6 +67,11 @@
         <activity android:name=".ui.orderdetails.OrderDetailsActivity" />
         <activity android:name=".ui.home.product.activity.ProductAllReviewsActivity" />
         <activity android:name=".ui.home.product.activity.productreview.AddEditProductReviewActivity"/>
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="portrait"
+            tools:replace="android:screenOrientation"
+            android:stateNotNeeded="true"/>
         <activity
             android:name=".ui.webview.view.WebViewActivity"
             android:screenOrientation="portrait" />

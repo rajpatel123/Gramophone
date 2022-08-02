@@ -14,6 +14,7 @@ object Constants {
     val RECENT = "recent"
     val TOP_REVIEWS ="Top Reviews"
     val RECENT_REVIEWS= "Recent Reviews"
+    const val PAST = "past"
     const val HELP_PHONE_NUMBER: String = "customer_support_no"
     const val LANG: String = "lang"
     const val PAGE_URL: String = "url"
@@ -126,6 +127,7 @@ object Constants {
     const val Farm_id = "farm_id"
     const val UUID = "uuid"
     const val STATE = "state"
+    const val STATE_IMAGE_URL = "image"
     const val STATE_LIST = "state_list"
     const val FarmLat = "farm_lat"
     const val FarmLng = "farm_lng"
@@ -207,7 +209,8 @@ object Constants {
     const val PRODUCTREVIEWDATA = "PRODUCTREVIEWDATA"
     const val PRODUCTID = "PRODUCTID"
 
-
+    //Product
+    const val ORDER_ID = "order_id"
     /**
      * For Broadcast
      */

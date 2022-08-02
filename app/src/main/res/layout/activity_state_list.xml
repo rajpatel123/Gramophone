@@ -18,6 +18,15 @@
         android:background="@color/state_bg"
         tools:context=".ui.address.view.StateListActivity">
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/stateProgressBar"
+            android:layout_centerInParent="true"
+            android:visibility="@{viewModel.loadingStates? View.VISIBLE:View.GONE}"
+            android:backgroundTint="@color/zxing_viewfinder_laser"
+            android:elevation="@dimen/_1sdp"
+            />
         <TextView
             android:id="@+id/tvSelectState"
             android:layout_width="match_parent"

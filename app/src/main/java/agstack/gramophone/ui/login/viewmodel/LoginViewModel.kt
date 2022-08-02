@@ -18,7 +18,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -32,12 +31,10 @@ class LoginViewModel @Inject constructor(
     var mobileNo :String?=""
     var referralCode :String?=null
 
-    val generateOtpResponseModel: MutableLiveData<ApiResponse<SendOtpResponseModel>> =
-        MutableLiveData()
 
     fun sendOTP(v: View) = viewModelScope.launch {
         if (mobileNo.isNullOrEmpty()){
-            generateOtpResponseModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.enter_mobile_lebel)!!))
+            getNavigator()?.onError(getNavigator()?.getMessage(R.string.enter_mobile_lebel)!!)
         }else{
            val sendOtpRequestModel= SendOtpRequestModel()
 
@@ -63,14 +60,15 @@ class LoginViewModel @Inject constructor(
                 if (Constants.GP_API_STATUS.equals(sendOtpResponseModel?.gp_api_status)) {
 
                     var loginData = handleLoginResponse(response)
-                    val bundle = Bundle()
-                    //Add your data from getFactualResults method to bundle
-                    bundle.putString(Constants.MOBILE_NO,mobileNo)
-                    bundle.putInt(Constants.OTP_REFERENCE,
-                        loginData.data?.gp_api_response_data?.otp_reference_id!!
-                    )
+                    getNavigator()?.moveToNext(Bundle().apply {
+                        putString(Constants.MOBILE_NO,mobileNo)
+                        putInt(Constants.OTP_REFERENCE,
+                            loginData.data?.gp_api_response_data?.otp_reference_id!!
+                        )
+                    })
+                }else{
+                    getNavigator()?.onError(sendOtpResponseModel?.gp_api_message)
 
-                    getNavigator()?.moveToNext(bundle)
                 }
 
             }  else
@@ -93,14 +91,12 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onHelpClick(v:View) {
-        var initiateAppDataResponseModel = Gson().fromJson(
-            SharedPreferencesHelper.instance?.getString(
-                SharedPreferencesKeys.app_data
-            ), InitiateAppDataResponseModel::class.java
-        )
+        var initiateAppDataResponseModel =
+            SharedPreferencesHelper.instance?.getParcelable(
+                SharedPreferencesKeys.app_data,InitiateAppDataResponseModel::class.java)
 
         if (getNavigator()?.requestPermission(Manifest.permission.CALL_PHONE) == true)
-            getNavigator()?.onHelpClick(initiateAppDataResponseModel.gp_api_response_data.help_data_list.customer_support_no)
+            getNavigator()?.onHelpClick(initiateAppDataResponseModel?.gp_api_response_data?.help_data_list?.customer_support_no!!)
     }
 
     fun onLanguageClick(v:View){
@@ -109,52 +105,55 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onPrivacyClicked(v:View){
-        var initiateAppDataResponseModel = Gson().fromJson(
-            SharedPreferencesHelper.instance?.getString(
+        var initiateAppDataResponseModel =
+            SharedPreferencesHelper.instance?.getParcelable(
                 SharedPreferencesKeys.app_data
-            ), InitiateAppDataResponseModel::class.java
+           , InitiateAppDataResponseModel::class.java
         )
 
-        val bundle = Bundle()
-        bundle.putString(Constants.PAGE_URL, initiateAppDataResponseModel.gp_api_response_data.external_link_list.privacy_policy_url)
-        bundle.putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.privacy))
-        getNavigator()?.openWebView(bundle)
+
+        getNavigator()?.openWebView(Bundle().apply {
+            putString(Constants.PAGE_URL, initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.privacy_policy_url)
+            putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.privacy))
+        })
     }
 
     fun onTermsClicked(v:View){
-        var initiateAppDataResponseModel = Gson().fromJson(
-            SharedPreferencesHelper.instance?.getString(
+        var initiateAppDataResponseModel =
+            SharedPreferencesHelper.instance?.getParcelable(
                 SharedPreferencesKeys.app_data
-            ), InitiateAppDataResponseModel::class.java
-        )
+                , InitiateAppDataResponseModel::class.java
+            )
 
-        val bundle = Bundle()
-        bundle.putString(
-            Constants.PAGE_URL,
-            initiateAppDataResponseModel.gp_api_response_data.external_link_list.terms_of_service_url
-        )
-        bundle.putString(
-            Constants.PAGE_TITLE,
-            getNavigator()?.getMessage(R.string.terms_n_conditions)
-        )
-        getNavigator()?.openWebView(bundle)
+
+        getNavigator()?.openWebView(Bundle().apply {
+            putString(
+                Constants.PAGE_TITLE,
+                getNavigator()?.getMessage(R.string.terms_n_conditions)
+            )
+            putString(
+                Constants.PAGE_URL,
+                initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.terms_of_service_url
+            )
+        })
 
     }
 
     fun onTermsOfUseClicked() {
-        var initiateAppDataResponseModel = Gson().fromJson(
-            SharedPreferencesHelper.instance?.getString(
+        var initiateAppDataResponseModel =
+            SharedPreferencesHelper.instance?.getParcelable(
                 SharedPreferencesKeys.app_data
-            ), InitiateAppDataResponseModel::class.java
-        )
+                , InitiateAppDataResponseModel::class.java
+            )
 
-        val bundle = Bundle()
-        bundle.putString(
-            Constants.PAGE_URL,
-            initiateAppDataResponseModel.gp_api_response_data.external_link_list.referral_terms_conditions
-        )
-        bundle.putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.terms_of_use))
-        getNavigator()?.openWebView(bundle)
+        getNavigator()?.openWebView(Bundle().apply {
+            putString(
+                Constants.PAGE_URL,
+                initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.referral_terms_conditions
+            )
+            putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.terms_of_use))
+
+        })
 
     }
 

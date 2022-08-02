@@ -24,24 +24,19 @@ class OrderDetailsActivity : BaseActivityWrapper<ActivityOrderDetailsBinding, Or
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityOrderDetailsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+       orderDetailsViewModel.getBundleData()
         setupUi()
-        setupObservers()
     }
-
-    private fun setupObservers() {
-
-    }
-
 
     private fun setupUi() {
         rv_order?.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv_order?.setHasFixedSize(true)
-        rv_order?.adapter = OrderListAdapter()
     }
 
+    override fun getBundle(): Bundle? {
+        return intent?.extras
+    }
 
     override fun getLayoutID(): Int {
       return R.layout.activity_order_details

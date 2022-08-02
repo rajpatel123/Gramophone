@@ -58,6 +58,24 @@
     <string name="enter_referral_code_hint">रेफरल कोड दर्ज करें</string>
     <string name="help">सहायता</string>
     <string name="get_help">सहायता लें</string>
+    <string name="select_state">अपना राज्य चुनें</string>
+    <string name="other">अन्य</string>
+    <string name="select_state_error">कृपया राज्य का चयन करें</string>
+    <string name="_state">राज्य चुनें</string>
+    <string name="complete_address">अपना पूरा पता साझा करें</string>
+    <string name="get_apporopriate_solution">धिक सटीक समाधान प्राप्त करने के लिए</string>
+    <string name="change">परिवर्तन करें</string>
+    <string name="_district">ज़िला</string>
+    <string name="_tahsil">तहसील</string>
+    <string name="_village">गांव</string>
+    <string name="address">पता</string>
+    <string name="pincode">पिन कोड</string>
+    <string name="go_to_app">ऐप पर जाएं</string>
+    <string name="state_required">कृपया राज्य का चयन करें</string>
+    <string name="district_required">कृपया जिले का चयन करें</string>
+    <string name="tehsil_required">कृपया तहसील का चयन करें</string>
+    <string name="village_required">कृपया गांव में प्रवेश करें</string>
+    <string name="address_required">कृपया अपना पता भरें</string>
 </resources>
 
 

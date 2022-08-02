@@ -114,6 +114,10 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
         TODO("Not yet implemented")
     }
 
+    override fun showToast(message: String?) {
+
+    }
+
     override fun onError(message: String?) {
     }
 
@@ -123,7 +127,9 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     override fun onLoading() {
     }
 
+    override fun hideProgressBar() {
 
+    }
 
 
 }

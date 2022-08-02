@@ -14,8 +14,10 @@ import agstack.gramophone.utils.SharedPreferencesKeys
 import android.Manifest
 import android.view.View
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
@@ -25,24 +27,42 @@ import javax.inject.Inject
 class AppTourViewModel@Inject constructor(
     private val onBoardingRepository: OnBoardingRepository
 ) : BaseViewModel<AppTourNavigator>() {
+    private lateinit var initiateAppDataResponseModel: InitiateAppDataResponseModel
+    private var scrollImagesJob: Job? = null
+    var currentPage = 0
 
-    fun onHelpClick(v: View){
-        var initiateAppDataResponseModel = Gson().fromJson(
-            SharedPreferencesHelper.instance?.getString(
-                SharedPreferencesKeys.app_data
-            ), InitiateAppDataResponseModel::class.java
-        )
-        if (getNavigator()?.requestPermission(Manifest.permission.CALL_PHONE) == true)
-            getNavigator()?.onHelpClick(initiateAppDataResponseModel.gp_api_response_data.help_data_list.customer_support_no)
+
+    fun startScroller() {
+        scrollImagesJob = viewModelScope.launch {
+            while (isActive) {
+                delay(3_000)
+                if (currentPage === initiateAppDataResponseModel?.gp_api_response_data?.login_banner_list?.size) {
+                    currentPage = 0
+                }
+                getNavigator()?.updateImages(currentPage)
+
+                currentPage++
+            }
+
+        }
+        scrollImagesJob?.start()
     }
 
-    fun onLanguageClick(v: View){
+    fun onHelpClick(v: View) {
+        var initiateAppDataResponseModel =
+            SharedPreferencesHelper.instance?.getParcelable(
+                SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java
+            )
+        if (getNavigator()?.requestPermission(Manifest.permission.CALL_PHONE) == true)
+            getNavigator()?.onHelpClick(initiateAppDataResponseModel?.gp_api_response_data?.help_data_list?.customer_support_no!!)
+    }
+
+    fun onLanguageClick(v: View) {
         getNavigator()?.onLanguageChangeClick()
 
     }
 
     fun updateLanguage() = viewModelScope.launch {
-
         val updateLanguageRequestModel = UpdateLanguageRequestModel(getNavigator()?.getLanguage()!!)
         updateLanguage(updateLanguageRequestModel)
     }
@@ -58,6 +78,8 @@ class AppTourViewModel@Inject constructor(
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
                     getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
+                }else{
+                    getNavigator()?.onError(updateLanguageResponseModel?.gp_api_message)
                 }
 
             } else
@@ -77,6 +99,20 @@ class AppTourViewModel@Inject constructor(
             }
         }
         return ApiResponse.Error(response.message())
+    }
+
+    fun setupViewPager() {
+        initiateAppDataResponseModel =
+            SharedPreferencesHelper.instance?.getParcelable(
+                SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java
+            )!!
+        getNavigator()?.setupViewPager(initiateAppDataResponseModel?.gp_api_response_data?.login_banner_list)
+    }
+
+
+    fun moveToLogin(){
+        scrollImagesJob?.cancel()
+getNavigator()?.moveToLogin()
     }
 
 }

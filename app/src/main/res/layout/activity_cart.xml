@@ -21,26 +21,26 @@
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScroll"
-            android:layout_below="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <View
-                    android:id="@+id/toolbar_separator"
+                    android:id="@+id/toolbarSeparator"
                     android:layout_width="match_parent"
                     android:layout_height="8dp"
                     android:background="#F2F4F7"
                     android:visibility="visible" />
 
                 <RelativeLayout
-                    android:id="@+id/rel_cod"
+                    android:id="@+id/rlCod"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:layout_below="@+id/toolbar_separator"
+                    android:layout_below="@+id/toolbarSeparator"
                     android:background="@color/green_transparent"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="@dimen/_16sdp">
@@ -70,7 +70,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/payment_mod"
+                            android:id="@+id/tvPaymentMode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/manrope_bold"
@@ -81,7 +81,7 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/cash_on_del"
+                            android:id="@+id/tvCod"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/manrope_bold"
@@ -96,50 +96,52 @@
                 </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/tv_cart_item_count"
+                    android:id="@+id/tvCartItemCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rel_cod"
+                    android:layout_below="@+id/rlCod"
                     android:layout_marginTop="17dp"
                     android:fontFamily="@font/manrope_bold"
                     android:gravity="center_vertical"
                     android:lineSpacingExtra="0sp"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="@dimen/_16sdp"
-                    android:text="Items in your cart (2)"
+                    android:text="@{@string/items_in_your_cart.concat(String.valueOf(viewModel.cartCountLiveData)).concat(@string/close_parenthesis)}"
+                    tools:text="Items in your cart (0)"
                     android:textColor="@color/blakish"
                     android:textSize="16sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_cart"
+                    android:id="@+id/rvCart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_cart_item_count"
+                    android:layout_below="@+id/tvCartItemCount"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    tools:itemCount="3"
+                    tools:itemCount="1"
                     tools:listitem="@layout/item_cart" />
 
                 <View
-                    android:id="@+id/item_separator"
+                    android:id="@+id/viewItemSeparator"
                     android:layout_width="match_parent"
                     android:layout_height="8dp"
-                    android:layout_below="@+id/rv_cart"
+                    android:layout_below="@+id/rvCart"
                     android:background="#F2F4F7"
                     android:visibility="visible" />
 
                 <RelativeLayout
-                    android:id="@+id/rl_gram_cash"
+                    android:id="@+id/rlGramCash"
                     android:layout_width="match_parent"
                     android:layout_height="72dp"
-                    android:layout_below="@+id/item_separator"
+                    android:layout_below="@+id/viewItemSeparator"
                     android:background="@drawable/linear_gradient_white_blue"
                     android:paddingStart="16dp"
-                    android:paddingEnd="16dp">
+                    android:paddingEnd="16dp"
+                    android:visibility="@{viewModel.gramCashLiveData>0 ? View.VISIBLE : View.GONE}">
 
                     <androidx.appcompat.widget.AppCompatCheckBox
-                        android:id="@+id/checkbox"
+                        android:id="@+id/chkPayUsingGramCash"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:layout_alignParentStart="true"
@@ -147,11 +149,11 @@
                         android:button="@drawable/custom_checkbox" />
 
                     <TextView
-                        android:id="@+id/tv_pay_using_gram_cash"
+                        android:id="@+id/tvPayUsingGramCash"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:layout_toEndOf="@+id/checkbox"
+                        android:layout_toEndOf="@+id/chkPayUsingGramCash"
                         android:fontFamily="@font/manrope_bold"
                         android:lineSpacingExtra="1sp"
                         android:text="Pay Using Gram Cash"
@@ -159,12 +161,12 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/available_gram_cash"
+                        android:id="@+id/tvAvailableGramCash"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_pay_using_gram_cash"
+                        android:layout_below="@+id/tvPayUsingGramCash"
                         android:layout_marginTop="2dp"
-                        android:layout_toEndOf="@+id/checkbox"
+                        android:layout_toEndOf="@+id/chkPayUsingGramCash"
                         android:fontFamily="@font/manrope_medium"
                         android:lineSpacingExtra="1sp"
                         android:text="Available Gram Cash Balance:"
@@ -172,60 +174,63 @@
                         android:textSize="11sp" />
 
                     <ImageView
-                        android:id="@+id/iv_gram_cash"
+                        android:id="@+id/ivGramCash"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:layout_below="@+id/tv_pay_using_gram_cash"
+                        android:layout_below="@+id/tvPayUsingGramCash"
                         android:layout_marginStart="4dp"
                         android:layout_marginTop="2dp"
-                        android:layout_toEndOf="@+id/available_gram_cash"
+                        android:layout_toEndOf="@+id/tvAvailableGramCash"
                         android:contentDescription="@string/image"
                         android:src="@drawable/ic_gram_cash" />
 
                     <TextView
-                        android:id="@+id/tv_gram_cash"
+                        android:id="@+id/tvGramCash"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_pay_using_gram_cash"
+                        android:layout_below="@+id/tvPayUsingGramCash"
                         android:layout_marginStart="4dp"
                         android:layout_marginTop="2dp"
-                        android:layout_toEndOf="@+id/iv_gram_cash"
+                        android:layout_toEndOf="@+id/ivGramCash"
                         android:fontFamily="@font/manrope_bold"
                         android:lineSpacingExtra="1sp"
-                        android:text="600"
+                        android:text="@{String.valueOf(viewModel.gramCashLiveData)}"
                         android:textColor="@color/blakish"
-                        android:textSize="11sp" />
+                        android:textSize="11sp"
+                        tools:text="50" />
 
                 </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/tv_save_extra"
+                    android:id="@+id/tvSaveExtra"
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
-                    android:layout_below="@+id/rl_gram_cash"
+                    android:layout_below="@+id/rlGramCash"
                     android:background="@color/yellow_light"
                     android:fontFamily="@font/manrope_bold"
                     android:gravity="center_vertical"
                     android:lineSpacingExtra="-2sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Save extra ₹50 using 50 Gram Cash"
+                    android:text="@{@string/save_extra_rupees.concat(String.valueOf(viewModel.gramCashLiveData)).concat(@string/using).concat(String.valueOf(viewModel.gramCashLiveData)).concat(@string/gram_cash)}"
                     android:textColor="@color/green_medium"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    android:visibility="@{viewModel.gramCashLiveData>0 ? View.VISIBLE : View.GONE}"
+                    tools:text="Save extra ₹50 using 50 Gram Cash" />
 
                 <View
-                    android:id="@+id/gram_cash_separator"
+                    android:id="@+id/viewGramCashSeparator"
                     android:layout_width="match_parent"
                     android:layout_height="8dp"
-                    android:layout_below="@+id/tv_save_extra"
+                    android:layout_below="@+id/tvSaveExtra"
                     android:background="#F2F4F7"
                     android:visibility="visible" />
 
                 <TextView
-                    android:id="@+id/tv_pricing_detail"
+                    android:id="@+id/tvPricingDetail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/gram_cash_separator"
+                    android:layout_below="@+id/viewGramCashSeparator"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/manrope_bold"
                     android:lineSpacingExtra="1sp"
@@ -236,10 +241,10 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/tv_price_title"
+                    android:id="@+id/tvPriceTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="42dp"
-                    android:layout_below="@+id/tv_pricing_detail"
+                    android:layout_below="@+id/tvPricingDetail"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/manrope_bold"
@@ -252,10 +257,10 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_price"
+                    android:id="@+id/tvPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="42dp"
-                    android:layout_below="@+id/tv_pricing_detail"
+                    android:layout_below="@+id/tvPricingDetail"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/manrope_bold"
@@ -263,15 +268,16 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="₹ 8160"
+                    android:text="@{@string/rupee_symbol.concat(String.valueOf(viewModel.amountLiveData))}"
                     android:textColor="@color/blakish"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="@string/rupee_symbol" />
 
                 <TextView
-                    android:id="@+id/tv_discount_title"
+                    android:id="@+id/tvDiscountTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="42dp"
-                    android:layout_below="@+id/tv_price_title"
+                    android:layout_below="@+id/tvPriceTitle"
                     android:layout_alignParentStart="true"
                     android:fontFamily="@font/manrope_bold"
                     android:gravity="center_vertical"
@@ -283,25 +289,26 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_discount"
+                    android:id="@+id/tvDiscount"
                     android:layout_width="wrap_content"
                     android:layout_height="42dp"
-                    android:layout_below="@+id/tv_price"
+                    android:layout_below="@+id/tvPrice"
                     android:layout_alignParentEnd="true"
                     android:fontFamily="@font/manrope_bold"
                     android:gravity="center_vertical"
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="-₹ 1680"
+                    android:text="@{@string/minus_rupee_symbol.concat(String.valueOf(viewModel.discountLiveData))}"
                     android:textColor="@color/green_medium"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="-₹ 0" />
 
                 <TextView
-                    android:id="@+id/tv_gram_cash_title"
+                    android:id="@+id/tvGramCashTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="42dp"
-                    android:layout_below="@+id/tv_discount_title"
+                    android:layout_below="@+id/tvDiscountTitle"
                     android:layout_alignParentStart="true"
                     android:fontFamily="@font/manrope_bold"
                     android:gravity="center_vertical"
@@ -313,28 +320,29 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_gram_cash_coin"
+                    android:id="@+id/tvGramCashCoin"
                     android:layout_width="wrap_content"
                     android:layout_height="42dp"
-                    android:layout_below="@+id/tv_discount"
+                    android:layout_below="@+id/tvDiscount"
                     android:layout_alignParentEnd="true"
                     android:fontFamily="@font/manrope_bold"
                     android:gravity="center_vertical"
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="-₹ 50"
+                    android:text="@{@string/minus_rupee_symbol.concat(String.valueOf(viewModel.gramCashLiveData))}"
                     android:textColor="@color/green_medium"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="-₹ 50" />
 
                 <RelativeLayout
-                    android:id="@+id/rl_delivery"
+                    android:id="@+id/rlDelivery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_gram_cash_title">
+                    android:layout_below="@+id/tvGramCashTitle">
 
                     <TextView
-                        android:id="@+id/tv_delivery_title"
+                        android:id="@+id/tvDeliveryTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="42dp"
                         android:layout_alignParentStart="true"
@@ -348,11 +356,11 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/tv_free"
+                        android:id="@+id/tvFree"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/tv_delivery_charge"
+                        android:layout_toStartOf="@+id/tvDeliveryCharge"
                         android:background="@drawable/rounded_corner_4_solid_green"
                         android:backgroundTint="@color/green_medium"
                         android:fontFamily="@font/manrope_bold"
@@ -367,7 +375,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/tv_delivery_charge"
+                        android:id="@+id/tvDeliveryCharge"
                         android:layout_width="wrap_content"
                         android:layout_height="42dp"
                         android:layout_alignParentEnd="true"
@@ -384,19 +392,19 @@
                 </RelativeLayout>
 
                 <View
-                    android:id="@+id/pay_break_up_separator"
+                    android:id="@+id/viewPayBreakUpSeparator"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:layout_below="@+id/rl_delivery"
+                    android:layout_below="@+id/rlDelivery"
                     android:layout_marginTop="24dp"
                     android:background="#F2F4F7"
                     android:visibility="visible" />
 
                 <RelativeLayout
-                    android:id="@+id/rl_amount"
+                    android:id="@+id/rlAmount"
                     android:layout_width="match_parent"
                     android:layout_height="78dp"
-                    android:layout_below="@+id/pay_break_up_separator"
+                    android:layout_below="@+id/viewPayBreakUpSeparator"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp">
 
@@ -427,32 +435,33 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/tv_total_amount"
+                        android:id="@+id/tvTotalAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:fontFamily="@font/manrope_bold"
                         android:lineSpacingExtra="1sp"
-                        android:text="₹ 6480"
+                        android:text="@{@string/rupee_symbol.concat(String.valueOf(viewModel.totalAmountLiveData))}"
                         android:textColor="@color/blakish"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        tools:text="₹ 100" />
 
                 </RelativeLayout>
 
                 <View
-                    android:id="@+id/amount_separator"
+                    android:id="@+id/viewAmountSeparator"
                     android:layout_width="match_parent"
                     android:layout_height="8dp"
-                    android:layout_below="@+id/rl_amount"
+                    android:layout_below="@+id/rlAmount"
                     android:background="#F2F4F7"
                     android:visibility="visible" />
 
                 <LinearLayout
-                    android:id="@+id/ll_address_note"
+                    android:id="@+id/llAddressNote"
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
-                    android:layout_below="@+id/amount_separator"
+                    android:layout_below="@+id/viewAmountSeparator"
                     android:layout_margin="@dimen/_8sdp"
                     android:background="@drawable/rounded_corner_6_solid_transparent_green_stroke_gray"
                     android:gravity="center_vertical"
@@ -475,9 +484,9 @@
                     </FrameLayout>
 
                     <TextView
-                        android:layout_marginStart="@dimen/_14sdp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_14sdp"
                         android:fontFamily="@font/manrope_regular"
                         android:gravity="center_vertical"
                         android:lineSpacingExtra="0sp"
@@ -488,18 +497,18 @@
                 </LinearLayout>
 
                 <View
-                    android:id="@+id/address_separator"
+                    android:id="@+id/viewAddressSeparator"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_below="@+id/ll_address_note"
+                    android:layout_below="@+id/llAddressNote"
                     android:background="#F2F4F7"
                     android:visibility="visible" />
 
                 <RelativeLayout
-                    android:id="@+id/rl_place_order"
+                    android:id="@+id/rlPlaceOrder"
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
-                    android:layout_below="@+id/address_separator"
+                    android:layout_below="@+id/viewAddressSeparator"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp">
 
@@ -514,9 +523,10 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/manrope_bold"
                             android:lineSpacingExtra="1sp"
-                            android:text="₹ 6480"
+                            android:text="@{@string/rupee_symbol.concat(String.valueOf(viewModel.totalAmountLiveData))}"
                             android:textColor="@color/blakish"
-                            android:textSize="20sp"/>
+                            android:textSize="20sp"
+                            tools:text="₹ 100" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -564,7 +574,7 @@
                 android:src="@drawable/ic_cart_empty" />
 
             <TextView
-                android:id="@+id/tv_title"
+                android:id="@+id/tvCartEmptyTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_24sdp"
@@ -574,7 +584,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/tv_desc"
+                android:id="@+id/tvCartEmptyDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp"

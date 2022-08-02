@@ -7,6 +7,7 @@ import agstack.gramophone.ui.address.model.AddressResponseModel
 import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.cart.model.CartDataResponse
+import agstack.gramophone.ui.cart.model.RemoveCartItemResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductDataResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
@@ -15,6 +16,7 @@ import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
+import agstack.gramophone.ui.order.model.OrderListResponse
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
@@ -93,7 +95,12 @@ interface GramAppService {
     suspend fun getOffersOnProductData(@Body productData: ProductData): Response<OffersProductResponseData>
 
     @GET("api/v5/cart/get-cart")
-    @JvmSuppressWildcards
     suspend fun getCartData(): Response<CartDataResponse>
+
+    @DELETE("api/v5/cart/remove-from-cart")
+    suspend fun removeCartItem(@Body productData: ProductData): Response<RemoveCartItemResponse>
+
+    @GET("api/v5/order/get-order/{type}")
+    suspend fun getOrderData(@Path("type") type: String): Response<OrderListResponse>
 
 }

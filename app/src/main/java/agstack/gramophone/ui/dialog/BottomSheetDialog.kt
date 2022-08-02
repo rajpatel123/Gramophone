@@ -11,7 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
 class BottomSheetDialog : BottomSheetDialogFragment() {
-    public lateinit var customerSupportNumber: String
+    lateinit var customerSupportNumber: String
     var binding: BottomSheetDialogHelpBinding? = null
     var listener: AcceptRejectListener? = null
 

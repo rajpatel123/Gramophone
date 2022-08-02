@@ -2,6 +2,7 @@ package agstack.gramophone.base
 
 import android.app.Activity
 import android.os.Bundle
+
 /*
 
 
@@ -15,7 +16,7 @@ ViewModel ~~~~~~~View~~~~~~~Model
 
 interface BaseNavigator {
 
-    fun <T> openActivity(cls:Class<T>,extras: Bundle?=null)
+    fun <T> openActivity(cls: Class<T>, extras: Bundle? = null)
 
     fun <T> openAndFinishActivity(cls:Class<T>,extras: Bundle?=null)
     fun<T: Activity> openActivityWithBottomToTopAnimation(cls:Class<T>,extras: Bundle?=null)
@@ -30,11 +31,15 @@ interface BaseNavigator {
 
     fun showToast(stringResourceId: Int)
 
+    fun showToast(message: String?)
+
     fun onError(message: String?)
 
-    fun  onSuccess(message: String?)
+    fun onSuccess(message: String?)
 
     fun onLoading()
+
+    fun hideProgressBar()
 
 
 }
