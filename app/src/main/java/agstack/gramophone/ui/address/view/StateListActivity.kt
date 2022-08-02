@@ -42,6 +42,7 @@ class StateListActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)){
             openAndFinishActivity(AddOrUpdateAddressActivity::class.java,null)
         }else{

@@ -195,6 +195,7 @@
     <string name="recieve_del">Recieve delivery updates and reminders from Gramophone with WhatsApp, Feel free to contact us too!</string>
     <string name="opt_in_now">Opt-In Now</string>
     <string name="unblock">Unblock</string>
+    <string name="turn_on_location">Please turn on location</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>
