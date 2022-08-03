@@ -38,7 +38,7 @@ class ProductDetailsViewModel @Inject constructor(
     private var loadProductReviewsDataJob: Job? = null
     private var loadProductOffersDataJob: Job? = null
     private var addToCartJob: Job? = null
-    var progressLoader = MutableLiveData<Boolean>()
+    var progressLoader = ObservableField<Boolean>(false)
 
     //Values selected by User
     var qtySelected = ObservableField<Int>(1)
@@ -71,13 +71,12 @@ class ProductDetailsViewModel @Inject constructor(
 
                 //Start Loader
 
-
+                 progressLoader.set(true)
                 val productDataResponse = productRepository
                     .getProductData(productDetailstoBeFetched)
                 //stop loader
+                progressLoader.set(false)
                 if (productDataResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
-
-
                     productData.set(productDataResponse.body()?.gpApiResponseData!!)
                     productData.let {
                         getNavigator()?.setToolbarTitle(productData?.get()?.productBaseName!!)
@@ -118,7 +117,7 @@ class ProductDetailsViewModel @Inject constructor(
                     }
                     loadRelatedProductData(productDetailstoBeFetched)
                 } else {
-                    //Loader should be cancelled
+
                 }
 
 
@@ -129,48 +128,35 @@ class ProductDetailsViewModel @Inject constructor(
     }
 
     private fun loadRelatedProductData(productDetailstoBeFetched: ProductData) {
-        loadRelatedProductDataJob?.takeIf { it.isActive }?.cancel()
-        loadRelatedProductDataJob = viewModelScope.launch {
-
+        loadRelatedProductDataJob.cancelIfActive()
+        loadRelatedProductDataJob = checkNetworkThenRun {
             try {
-                if (getNavigator()?.isNetworkAvailable() == true) {
+                val relatedProductResponse = productRepository.getRelatedProductsData(productDetailstoBeFetched)
+                if (relatedProductResponse.body()?.gpApiStatus.equals(
+                        Constants.GP_API_STATUS
+                    )
+                ) {
+                    val responseData = relatedProductResponse.body()?.gpApiResponseData
+                    relatedProductData.set(responseData)
+                    responseData?.relatedProductList.let { relatedProductData ->
+                        relatedProductData?.also {
+                            getNavigator()?.setRelatedProductsAdapter(
+                                RelatedProductFragmentAdapter(
+                                    it.filterNotNull()
+                                )
+                            ) {
+                                //Open a new instance of ProductDetailsActivity with selected product ID
+                                getNavigator()?.openProductDetailsActivity(ProductData(it.productId!!))
 
-
-                    val relatedProductResponseDeferred = async {
-                        productRepository.getRelatedProductsData(productDetailstoBeFetched)
-                    }
-
-
-                    val relatedProductResponse = relatedProductResponseDeferred.await()
-
-
-                    if (relatedProductResponse.body()?.gpApiStatus.equals(
-                            Constants.GP_API_STATUS
-                        )
-                    ) {
-                        val responseData = relatedProductResponse.body()?.gpApiResponseData
-                        relatedProductData.set(responseData)
-                        responseData?.relatedProductList.let { relatedProductData ->
-                            relatedProductData?.also {
-                                getNavigator()?.setRelatedProductsAdapter(
-                                    RelatedProductFragmentAdapter(
-                                        it.filterNotNull()
-                                    )
-                                ) {
-                                    //Open a new instance of ProductDetailsActivity with selected product ID
-                                    getNavigator()?.openProductDetailsActivity(ProductData(it.productId!!))
-
-                                }
                             }
-
-
                         }
+
+
                     }
-
-
-                } else {
-                    getNavigator()?.showToast(R.string.nointernet)
+                }else{
+                    getNavigator()?.showToast(relatedProductResponse.body()?.gpApiMessage)
                 }
+
 
 
             } catch (e: Exception) {
@@ -185,10 +171,10 @@ class ProductDetailsViewModel @Inject constructor(
     private fun loadReviewData(productDetailstoBeFetched: ProductData) {
 
         loadProductReviewsDataJob?.takeIf { it.isActive }?.cancel()
-        loadProductReviewsDataJob = viewModelScope.launch {
+        loadProductReviewsDataJob = checkNetworkThenRun {
 
             try {
-                if (getNavigator()?.isNetworkAvailable() == true) {
+
                     val productReviewResponse = productRepository.getProductReviewsData(
                         Constants.TOP,
                         null,
@@ -207,12 +193,11 @@ class ProductDetailsViewModel @Inject constructor(
                             )
                         )
 
+                    }else{
+                        getNavigator()?.showToast(productReviewResponse.body()?.gpApiMessage)
                     }
 
 
-                } else {
-                    getNavigator()?.showToast(R.string.nointernet)
-                }
 
 
             } catch (e: Exception) {
@@ -285,41 +270,47 @@ class ProductDetailsViewModel @Inject constructor(
     fun openAddEditProductReview() {
 
         //If Genuine Customer
-        getNavigator()?.openActivityWithBottomToTopAnimation(
-            AddEditProductReviewActivity::class.java,
-            Bundle().apply {
 
-                putInt(Constants.Product_Id_Key, productId)
-                putString(Constants.Product_Base_Name, productData.get()?.productBaseName)
-                putParcelable(
-                    Constants.PRODUCT_RATING_DATA_KEY,
-                    productReviewsData.get()?.selfRating
-                )
-            })
+        if (productReviewsData.get()?.selfRating?.is_certified_buyer!!) {
+            getNavigator()?.openActivityWithBottomToTopAnimation(
+                AddEditProductReviewActivity::class.java,
+                Bundle().apply {
 
+                    putInt(Constants.Product_Id_Key, productId)
+                    putString(Constants.Product_Base_Name, productData.get()?.productBaseName)
+                    putParcelable(
+                        Constants.PRODUCT_RATING_DATA_KEY,
+                        productReviewsData.get()?.selfRating
+                    )
+                })
+        } else {
 
-        // else if not genuine customer
+            // else if not genuine customer
 
-        getNavigator()?.showGenuineCustomerRatingDialog(GenuineCustomerRatingAlertFragment()) {
-            //callback comes here when on add to cart is clicked
-            Log.d("Click", "Add to cart Clicked")
-            addToCartJob.cancelIfActive()
-            addToCartJob = checkNetworkThenRun {
-                progressLoader.value = true
-               var  productDetailstoBeFetched= ProductData()
-                val offersOnProductResponse =
-                    productRepository.getOffersOnProductData(productDetailstoBeFetched)
+            getNavigator()?.showGenuineCustomerRatingDialog(GenuineCustomerRatingAlertFragment()) {
+                //callback comes here when on add to cart is clicked
+                Log.d("Click", "Add to cart Clicked")
+                addToCartJob.cancelIfActive()
+                addToCartJob = checkNetworkThenRun {
+                    progressLoader.set(true)
+                    var producttoBeAdded = ProductData()
+                    producttoBeAdded.product_id = productId
+                    producttoBeAdded.quantity = 1
+                    val addTocartResponse =
+                        productRepository.addToCart(producttoBeAdded)
 
-                if (offersOnProductResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
-                    progressLoader.value = true
-                }else{
-                    progressLoader.value = true
-                   // getNavigator()?.showToast(offersOnProductResponse.message())
+                    if (addTocartResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+                        progressLoader.set(false)
+                        getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+                    } else {
+                        progressLoader.set(false)
+                        getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+                    }
                 }
+
             }
 
         }
-
     }
 
 }

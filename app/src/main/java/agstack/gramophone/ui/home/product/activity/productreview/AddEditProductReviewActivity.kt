@@ -57,4 +57,10 @@ class AddEditProductReviewActivity :
         finish()
     }
 
+    override fun finishActivityandRefreshProductDetails(){
+        finish()
+        //write setResult functionality here
+
+    }
+
 }

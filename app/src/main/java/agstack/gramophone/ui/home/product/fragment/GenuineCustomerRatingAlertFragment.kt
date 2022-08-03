@@ -45,6 +45,7 @@ class GenuineCustomerRatingAlertFragment : BottomSheetDialogFragment() {
         }
         binding?.btnAddtocart?.setOnClickListener{
             onAddToCartClick?.invoke()
+           // dismiss()
         }
 
     }

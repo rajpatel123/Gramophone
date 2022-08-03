@@ -30,6 +30,16 @@ class ProductRepositoryImpl @Inject constructor(
         reviews
     }
 
+    override suspend fun addProductReviewsData(productData: ProductData): Response<ProductReviewDataResponse> = withContext(
+        Dispatchers.IO) {
+        val response = gramoAppService.addReviewData(productData)
+        response
+    }
+    override suspend fun updateProductReviewsData(productData: ProductData): Response<ProductReviewDataResponse> = withContext(
+    Dispatchers.IO) {
+        val response = gramoAppService.updateReviewData(productData)
+        response
+    }
 
     override suspend fun getRelatedProductsData(productMap: ProductData): Response<RelatedProductResponseData> = withContext(
     Dispatchers.IO) {
@@ -41,6 +51,12 @@ class ProductRepositoryImpl @Inject constructor(
         Dispatchers.IO) {
         val relatedProd = gramoAppService.getOffersOnProductData(productMap)
         relatedProd
+    }
+
+    override suspend fun addToCart(productData: ProductData): Response<CartDataResponse> = withContext(
+    Dispatchers.IO) {
+        val cartData = gramoAppService.addToCart(productData)
+        cartData
     }
 
     override suspend fun getCartData(): Response<CartDataResponse> = withContext(

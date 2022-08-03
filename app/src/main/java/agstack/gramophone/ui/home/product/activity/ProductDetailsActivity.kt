@@ -25,6 +25,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerFragment
@@ -37,6 +38,7 @@ class ProductDetailsActivity :
     ProductDetailsNavigator, ProductImagesFragment.ProductImagesFragmentInterface,
     YouTubePlayer.OnInitializedListener {
 
+
     private val productDetailsViewModel: ProductDetailsViewModel by viewModels()
     private var multipleImageDetailDialog: MultipleImageDetailDialog? = null
     private val TAG = ProductDetailsActivity::class.java.getSimpleName()
@@ -48,9 +50,9 @@ class ProductDetailsActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         productDetailsViewModel.getBundleData()
-        Handler().postDelayed({
-            initYoutubePlayer()
-        }, 500)
+        /*  Handler().postDelayed({
+              initYoutubePlayer()
+          }, 500)*/
         initProductDetailView()
         setSelfRatingBarChangeListener()
 
@@ -120,6 +122,7 @@ class ProductDetailsActivity :
 
 
         }
+
 
     }
 

@@ -632,9 +632,20 @@
 
                 </RelativeLayout>
 
+
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
+
+        <ProgressBar
+            app:layout_constraintBottom_toTopOf="@+id/layout_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/myToolbar"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:visibility="@{viewModel.progressLoader? View.VISIBLE : View.GONE}"/>
 
         <LinearLayout
             android:id="@+id/layout_bottom"

@@ -14,9 +14,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mainLayout"
-        android:background="@drawable/rounded_corner_top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/rounded_corner_top">
 
         <TextView
             android:id="@+id/tv_reviewTitle"
@@ -25,29 +25,28 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_17sdp"
             android:layout_marginTop="@dimen/_18sdp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/detailLayout"
             android:text="@string/writeareview"
-            />
+            app:layout_constraintBottom_toTopOf="@+id/detailLayout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/ic_cross"
-            android:onClick="@{()->viewModel.onCrossClicked()}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_18sdp"
             android:layout_marginRight="@dimen/_17sdp"
+            android:onClick="@{()->viewModel.onCrossClicked()}"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_cross" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_marginTop="@dimen/_18sdp"
             android:id="@+id/detailLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_18sdp"
             android:background="@color/green_transparent"
             app:layout_constraintTop_toBottomOf="@+id/tv_reviewTitle">
 
@@ -90,6 +89,7 @@
             <RatingBar
                 android:id="@+id/ratingbar_user"
                 style="?android:attr/ratingBarStyleIndicator"
+                doubleToFloatRating="@{viewModel.productRating}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_13sdp"
@@ -100,7 +100,6 @@
                 android:scaleX=".8"
                 android:scaleY=".8"
                 android:stepSize="0.1"
-                doubleToFloatRating="@{viewModel.productRating}"
                 android:theme="@style/RatingBar"
                 android:transformPivotX="0dp"
                 android:transformPivotY="0dp"
@@ -113,16 +112,18 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etCustomerReview"
-            android:text="@={viewModel.customerReviewText}"
             style="@style/TextSize14Sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
             android:layout_marginLeft="@dimen/_17sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_40sdp"
+            android:background="@android:color/transparent"
             android:fontFamily="@font/manrope_medium"
             android:hint="@string/share_your_experience"
+            android:afterTextChanged="@{()->viewModel.onReviewTextChanged()}"
+            android:text="@={viewModel.customerReviewText}"
+
             app:layout_constraintTop_toBottomOf="@+id/detailLayout" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -133,15 +134,17 @@
             android:layout_marginRight="@dimen/_24sdp"
             android:layout_marginBottom="@dimen/_20sdp"
             android:background="@drawable/round_corner_rectangle_fill"
+            android:enabled="@{viewModel.isSubmitReviewEnabled()}"
+            android:onClick="@{()->viewModel.onSubmitClick()}"
             android:text="@string/submit"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
-            android:onClick="@{()->viewModel.onSubmitClick()}"
             app:layout_constraintBottom_toBottomOf="parent"
 
             />
 
+        <!-- android:enabled="@{viewModel.customerReviewText.length ==0?true:false}"-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
