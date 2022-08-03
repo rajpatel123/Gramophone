@@ -113,7 +113,8 @@
                         </LinearLayout>
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            isUserFavorite="@{viewModel.productData.isUserFavourite()}"
+                            isUserFavorite="@{viewModel.isHeartSelected}"
+                            android:onClick="@{()->viewModel.onHeartIconClicked()}"
                             android:layout_width="@dimen/_18sdp"
                             android:layout_height="@dimen/_16sdp"
                             android:layout_gravity="center"
@@ -677,6 +678,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_addtocart"
+                android:onClick="@{()->viewModel.onAddToCartClicked()}"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_48sdp"
                 android:layout_marginLeft="@dimen/_6sdp"

@@ -3,6 +3,7 @@ package agstack.gramophone.ui.home.product.activity
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
 import agstack.gramophone.ui.home.product.activity.productreview.AddEditProductReviewActivity
 import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
@@ -14,6 +15,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.RatingBar
+import androidx.databinding.Observable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -46,6 +48,12 @@ class ProductDetailsViewModel @Inject constructor(
     var qtySelected = ObservableField<Int>(1)
 
    var ratingSelected = ObservableField<Double>(0.0)
+    var isHeartSelected = ObservableField<Boolean>(false)
+
+    fun onHeartIconClicked(){
+        isHeartSelected.set(!isHeartSelected.get()!!)
+
+    }
 
     fun onAddQtyClicked() {
         qtySelected.set(qtySelected.get()!! + 1)
@@ -184,11 +192,13 @@ class ProductDetailsViewModel @Inject constructor(
                         productDetailstoBeFetched
                     )
 
-                    if (productReviewResponse != null && productReviewResponse?.body()?.gpApiStatus.equals(
+                    if (productReviewResponse.body()?.gpApiStatus.equals(
                             Constants.GP_API_STATUS
                         )
                     ) {
-                        productReviewsData.set(productReviewResponse.body()?.gpApiResponseData)
+                        val gpApiResponseData = productReviewResponse.body()?.gpApiResponseData
+                        productReviewsData.set(gpApiResponseData)
+                        ratingSelected.set(gpApiResponseData?.selfRating?.rating)
                         getNavigator()?.setRatingAndReviewsAdapter(
                             RatingAndReviewsAdapter(
                                 productReviewsData.get()?.reviewList?.data as ArrayList<ReviewListItem?>,
@@ -270,17 +280,18 @@ class ProductDetailsViewModel @Inject constructor(
     }
 
 
-    fun openAddEditProductReview() {
+    fun openAddEditProductReview(rating:Double) {
 
         //If Genuine Customer
 
-        if (productReviewsData.get()?.selfRating?.is_certified_buyer!!) {
+        if (!productReviewsData.get()?.selfRating?.is_certified_buyer!!) {
             getNavigator()?.openActivityWithBottomToTopAnimation(
                 AddEditProductReviewActivity::class.java,
                 Bundle().apply {
 
                     putInt(Constants.Product_Id_Key, productId)
                     putString(Constants.Product_Base_Name, productData.get()?.productBaseName)
+                    putDouble(Constants.RATING_SELECTED,rating)
                     putParcelable(
                         Constants.PRODUCT_RATING_DATA_KEY,
                         productReviewsData.get()?.selfRating
@@ -314,6 +325,12 @@ class ProductDetailsViewModel @Inject constructor(
             }
 
         }
+    }
+
+    fun onAddToCartClicked(){
+       /* ratingSelected
+        isHeartSelected*/
+        getNavigator()?.openActivity(CartActivity::class.java)
     }
 
 }

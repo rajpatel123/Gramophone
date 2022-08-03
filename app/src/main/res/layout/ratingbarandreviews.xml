@@ -313,6 +313,7 @@
                 android:layout_below="@+id/llrating_all"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_10sdp"
+                doubleToFloatRating="@{rvm.ratingSelected}"
                 android:isIndicator="false"
                 android:max="5"
                 android:numStars="5"

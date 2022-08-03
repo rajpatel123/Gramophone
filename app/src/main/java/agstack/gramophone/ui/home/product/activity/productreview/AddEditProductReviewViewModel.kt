@@ -37,11 +37,14 @@ class AddEditProductReviewViewModel @Inject constructor(
         if (bundle?.getString(Constants.Product_Base_Name) != null) {
             productBaseName.set(bundle?.getString(Constants.Product_Base_Name))
         }
+       if( bundle?.getDouble(Constants.RATING_SELECTED) !=null){
+           productRating.set(bundle?.getDouble(Constants.RATING_SELECTED))
+       }
         if (bundle?.getParcelable<SelfRating>(Constants.PRODUCT_RATING_DATA_KEY) != null) {
             val bundleProductRatingData =
                 bundle?.getParcelable<SelfRating>(Constants.PRODUCT_RATING_DATA_KEY)
             productRatingData.set(bundleProductRatingData as SelfRating)
-            productRating.set(bundleProductRatingData.rating)
+
             customerReviewText.set(bundleProductRatingData.comment)
             if (!(bundleProductRatingData.comment!!.isNullOrEmpty())) {
                 isSubmitReviewEnabled.set(true)

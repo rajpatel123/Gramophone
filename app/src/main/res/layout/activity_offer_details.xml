@@ -102,6 +102,7 @@
 
 
                 <LinearLayout
+                    android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
@@ -115,13 +116,13 @@
                         android:text="@string/offers_tnc" />
 
 
-                    <TextView
+                   <!-- <TextView
                         android:id="@+id/tv_redemptionsteps_label"
                         android:layout_marginTop="@dimen/_20sdp"
                         style="@style/TextSize16Sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/redemption_steps" />
+                        android:text="@string/redemption_steps" />-->
 
                     <TextView
                         android:id="@+id/tv_tnc_label"
@@ -131,7 +132,15 @@
                         android:layout_height="wrap_content"
                         android:text="@{@string/terms_n_conditions+` : `}" />
 
+                    <TextView
+                        android:id="@+id/tv_tnc"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        style="@style/TextSize16Sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.MOffersItem.t_c}" />
 
+                    <!--htmlText="@{viewModel.MOffersItem.t_c}"-->
 
 
 

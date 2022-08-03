@@ -60,35 +60,15 @@ class ProductDetailsActivity :
     }
 
     private fun setSelfRatingBarChangeListener() {
-      viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-          var rating =  rating.toDouble()
-          //var ratingselected =   viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.rating.toString()
-         mViewModel?.ratingSelected?.set(rating)
-          mViewModel?.openAddEditProductReview()
+        viewDataBinding.ratingbarReviews.ratingbarSelfRatingStars.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+            var rating =  rating.toDouble()
+            mViewModel?.ratingSelected?.set(rating)
+            mViewModel?.openAddEditProductReview(rating)
 
 
         }
 
-       /* viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.setOnClickListener {
-            var ratingselected =   viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.rating.toString()
-            println("ratingis"+ratingselected)
 
-        }*/
-
-
-      /*  viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.setOnTouchListener(View.OnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                var ratingselected = viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.rating
-                println("ratingselected"+ratingselected)
-               //uncomment this later
-                //mViewModel?.openAddEditProductReview()
-
-            }
-
-
-            return@OnTouchListener true
-        })
-*/
 
     }
 
