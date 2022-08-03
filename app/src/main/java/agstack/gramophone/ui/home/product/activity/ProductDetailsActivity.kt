@@ -60,27 +60,35 @@ class ProductDetailsActivity :
     }
 
     private fun setSelfRatingBarChangeListener() {
-        viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-            mViewModel?.productReviewsData?.get()?.selfRating?.rating = rating.toDouble()
+      viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+          var rating =  rating.toDouble()
+          //var ratingselected =   viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.rating.toString()
+         mViewModel?.ratingSelected?.set(rating)
+          mViewModel?.openAddEditProductReview()
 
 
         }
 
+       /* viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.setOnClickListener {
+            var ratingselected =   viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.rating.toString()
+            println("ratingis"+ratingselected)
+
+        }*/
 
 
-        viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.setOnTouchListener(View.OnTouchListener { v, event ->
+      /*  viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.setOnTouchListener(View.OnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_UP) {
-                //if valid Customer , on Click of rating open ADD/Edit ProductReview
-                mViewModel?.openAddEditProductReview()
-                //else open GenuineCustomerRatingAlertFragment
-                // GenuineCustomerRatingAlertFragment.newInstance().show(supportFragmentManager,"")
+                var ratingselected = viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.rating
+                println("ratingselected"+ratingselected)
+               //uncomment this later
+                //mViewModel?.openAddEditProductReview()
 
             }
 
 
             return@OnTouchListener true
         })
-
+*/
 
     }
 
@@ -249,7 +257,7 @@ class ProductDetailsActivity :
 
     override fun setProductImagesViewPagerAdapter(productImagesAdapter: ProductImagesAdapter) {
         viewDataBinding.productImagesViewPager?.adapter = productImagesAdapter
-        viewDataBinding.dotsIndicator.setViewPager(viewDataBinding.productImagesViewPager)
+        viewDataBinding.dotsIndicator.attachTo(viewDataBinding.productImagesViewPager)
     }
 
     override fun setProductDetailsAdapter(productDetailsAdapter: ProductDetailsAdapter) {

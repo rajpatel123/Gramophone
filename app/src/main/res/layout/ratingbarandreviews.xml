@@ -306,7 +306,6 @@
 
 
             <RatingBar
-
                 android:id="@+id/ratingbar_self_rating_stars"
                 style="?android:attr/ratingBarStyleIndicator"
                 android:layout_width="wrap_content"

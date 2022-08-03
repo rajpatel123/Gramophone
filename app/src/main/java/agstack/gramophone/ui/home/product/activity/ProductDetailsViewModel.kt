@@ -12,6 +12,8 @@ import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.RatingBar
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -43,6 +45,7 @@ class ProductDetailsViewModel @Inject constructor(
     //Values selected by User
     var qtySelected = ObservableField<Int>(1)
 
+   var ratingSelected = ObservableField<Double>(0.0)
 
     fun onAddQtyClicked() {
         qtySelected.set(qtySelected.get()!! + 1)
