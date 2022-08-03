@@ -12,6 +12,7 @@ import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.content.Intent
 import android.view.View
+import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -23,12 +24,14 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository
 ) : BaseViewModel<ProfileActivityNavigator>() {
+    var progressBar = ObservableField<Boolean>()
 
     fun logout(v: View) {
         logoutUser()
     }
 
     private fun logoutUser() {
+        progressBar.set(true)
         viewModelScope.async {
             if (getNavigator()?.isNetworkAvailable() == true) {
                 try {
@@ -38,8 +41,9 @@ class ProfileViewModel @Inject constructor(
                         }
                         val logoutResponse = optInOutDeferred.await()
 
-
                         val logoutResponseModel = handleResponse(logoutResponse).data
+
+                        progressBar.set(false)
 
                         if (Constants.GP_API_STATUS.equals(logoutResponseModel?.gp_api_status)) {
                             SharedPreferencesHelper.instance?.putBoolean(
@@ -52,6 +56,8 @@ class ProfileViewModel @Inject constructor(
                         } else {
                             getNavigator()?.onError(logoutResponseModel?.gp_api_message)
                         }
+
+
                     } else
                         getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
                 } catch (ex: Exception) {

@@ -25,6 +25,12 @@ class SettingsRepositoryImpl @Inject constructor(
         blockedUsers
     }
 
+    override suspend fun unBlockUser(customerId: Int): Response<BlockedUsersListResponseModel> = withContext(
+    Dispatchers.IO) {
+        val blockedUsers = gramAppService.unBlockUser(customerId)
+        blockedUsers
+    }
+
 
 
 }

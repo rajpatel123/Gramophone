@@ -12,7 +12,9 @@ import agstack.gramophone.utils.SharedPreferencesKeys
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
@@ -23,25 +25,29 @@ class WhatsAppOptINOutViewModel @Inject constructor(
 
 ) : BaseViewModel<WhatsappNavigator>() {
     var optINOut = ObservableField<String>()
+    private var optInOutJob: Job? = null
+    var progressBar = ObservableField<Boolean>()
 
     fun onOptInClick() {
-        if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.WHATSAPP_OPT_IN) == true){
+        if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.WHATSAPP_OPT_IN) == true) {
             optWhatsapp("opt-out")
-        }else{
+        } else {
             optWhatsapp("opt-in")
         }
     }
 
     private fun optWhatsapp(type: String) {
-        viewModelScope.async {
+        optInOutJob?.takeIf { it.isActive }?.cancel()
+        progressBar.set(true)
+        optInOutJob = viewModelScope.launch {
             if (getNavigator()?.isNetworkAvailable() == true) {
                 try {
                     if (getNavigator()?.isNetworkAvailable() == true) {
                         val optInOutDeferred = async {
                             settingsRepository.optInOutForWhatsappUpdates(type)
                         }
-                        val optInOutResponse = optInOutDeferred.await()
 
+                        val optInOutResponse = optInOutDeferred.await()
 
                         val optInResponseData = handleResponse(optInOutResponse).data
 
@@ -50,6 +56,8 @@ class WhatsAppOptINOutViewModel @Inject constructor(
                                 SharedPreferencesKeys.WHATSAPP_OPT_IN,
                                 optInResponseData?.gp_api_response_data?.whatsapp_optin
                             )
+                            progressBar.set(false)
+
                             getNavigator()?.onSuccess(optInResponseData?.gp_api_message)
                         } else {
                             getNavigator()?.onError(optInResponseData?.gp_api_message)

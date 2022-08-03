@@ -7,6 +7,8 @@ import agstack.gramophone.ui.address.model.AddressRequestModel
 import agstack.gramophone.ui.address.model.AddressResponseModel
 import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
+import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
+import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
@@ -87,5 +89,13 @@ class OnBoardingRepositoryImpl @Inject constructor(
         val logout = gramAppService.logoutUser()
         logout
     }
+
+
+    override suspend fun updateAddressByLatLong(addressRequestModel: AddressRequestWithLatLongModel):Response<AddressDataByLatLongResponseModel> = withContext(
+        Dispatchers.IO){
+        val addressData = gramAppService.updateAddressByLatLong(addressRequestModel)
+        addressData
+    }
+
 
 }

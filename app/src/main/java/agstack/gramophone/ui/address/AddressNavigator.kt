@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.address
 
 import agstack.gramophone.base.BaseNavigator
+import agstack.gramophone.di.GPSTracker
 import agstack.gramophone.ui.address.adapter.AddressDataListAdapter
 import agstack.gramophone.ui.address.model.AddressDataModel
 import android.os.Bundle
@@ -19,5 +20,6 @@ interface AddressNavigator : BaseNavigator{
     fun closeTehsilDropDown()
     fun closeVillageDropDown()
     fun closePincodeDropDown()
+    fun getGPSTracker(): GPSTracker
 
 }

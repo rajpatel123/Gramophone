@@ -6,6 +6,8 @@ import agstack.gramophone.ui.address.model.AddressRequestModel
 import agstack.gramophone.ui.address.model.AddressResponseModel
 import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
+import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
+import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.cart.model.RemoveCartItemResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
@@ -114,4 +116,10 @@ interface GramAppService {
     @PUT("api/v5/general/logout")
     suspend fun logoutUser(): Response<LogoutResponseModel>
 
+    @PUT("api/v5/setting/user-block/{customer_id}")
+    suspend fun unBlockUser(@Path("customer_id") customer_id :  Int): Response<BlockedUsersListResponseModel>
+
+
+    @POST("api/v5/general/address-fetch")
+    suspend fun updateAddressByLatLong(@Body addressRequestModel: AddressRequestWithLatLongModel): Response<AddressDataByLatLongResponseModel>
 }

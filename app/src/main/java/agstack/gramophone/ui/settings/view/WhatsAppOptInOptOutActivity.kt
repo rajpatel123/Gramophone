@@ -22,7 +22,6 @@ class WhatsAppOptInOptOutActivity :
             enableBackButton = true, getMessage(R.string.whatsapp),
             R.drawable.ic_arrow_left
         )
-
         whatsAppOptINOutViewModel.updateAction()
     }
 

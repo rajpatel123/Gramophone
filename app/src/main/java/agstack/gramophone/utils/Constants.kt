@@ -107,6 +107,11 @@ object Constants {
     const val AUTHORIZATION = "Authorization"
     const val STATE_NAME = "state_name"
     const val OTP_REFERENCE = "otp_ref"
+    const val DISTRICT = "district"
+    const val TEHSIL = "tehsil"
+    const val VILLAGE = "village"
+    const val PINCODE = "pincode"
+
 
     //MyFarm
     const val FarmsStatusActive = "active"

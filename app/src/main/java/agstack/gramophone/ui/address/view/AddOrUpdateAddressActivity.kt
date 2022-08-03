@@ -27,68 +27,18 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_or_update_address.*
 import java.util.*
 
-
 @AndroidEntryPoint
 class AddOrUpdateAddressActivity :
     BaseActivityWrapper<ActivityAddOrUpdateAddressBinding, AddressNavigator, AddOrUpdateAddressViewModel>(),
     AddressNavigator {
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val addOrUpdateAddressViewModel: AddOrUpdateAddressViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-       val gps = GPSTracker(this@AddOrUpdateAddressActivity)
-
-        // Check if GPS enabled
-
-        // Check if GPS enabled
-        if (gps.canGetLocation()) {
-            val latitude: Double = gps.getLatitude()
-            val longitude: Double = gps.getLongitude()
-
-            // \n is for new line
-            Toast.makeText(
-                applicationContext,
-                "Your Location is - \nLat: $latitude\nLong: $longitude", Toast.LENGTH_LONG
-            ).show()
-        } else {
-            // Can't get location.
-            // GPS or network is not enabled.
-            // Ask user to enable GPS/network in settings.
-            gps.showSettingsAlert()
-        }
     }
 
-
-    @SuppressLint("MissingPermission")
-    private fun startLocationUpdates() {
-        if (isLocationEnabled()) {
-            fusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
-                val location: Location? = task.result
-                if (location != null) {
-                    val geocoder = Geocoder(this, Locale.getDefault())
-                    val list: List<Address> =
-                        geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                    addOrUpdateAddressViewModel.updateAddress(list[0])
-                }
-            }
-        } else {
-            showToast(getMessage(R.string.turn_on_location))
-            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-            startActivity(intent)
-        }
-
-    }
-
-    private fun isLocationEnabled(): Boolean {
-        val locationManager: LocationManager =
-            getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
-            LocationManager.NETWORK_PROVIDER
-        )
-    }
     override fun getLayoutID(): Int {
         return R.layout.activity_add_or_update_address
     }
@@ -177,6 +127,8 @@ class AddOrUpdateAddressActivity :
         pincodeSpinner.nextFocusDownId=R.id.submitBtn
     }
 
+    override fun getGPSTracker(): GPSTracker = GPSTracker(this@AddOrUpdateAddressActivity)
+
     override fun onError(message: String?) {
         Toast.makeText(this@AddOrUpdateAddressActivity, message, Toast.LENGTH_SHORT).show()
 
@@ -197,10 +149,7 @@ class AddOrUpdateAddressActivity :
                 ""
             )
         } else {
-            addOrUpdateAddressViewModel.getAddressViaLocation()
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-            startLocationUpdates()
-
+            addOrUpdateAddressViewModel.getAddressByLocation()
         }
     }
 

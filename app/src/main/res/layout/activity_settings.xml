@@ -12,7 +12,7 @@
             type="agstack.gramophone.ui.settings.viewmodel.SettingsViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -23,9 +23,11 @@
             layout="@layout/layout_toolbar" />
 
 
+
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/myToolbar">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -418,5 +420,5 @@
             </LinearLayout>
 
         </ScrollView>
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

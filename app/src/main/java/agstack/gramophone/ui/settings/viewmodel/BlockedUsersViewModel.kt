@@ -34,9 +34,41 @@ class BlockedUsersViewModel @Inject constructor(
 
                         if (Constants.GP_API_STATUS.equals(optInResponseData?.gp_api_status)) {
                             getNavigator()?.updateUserList(BlockedUsersAdapter(optInResponseData?.gp_api_response_data?.block_list!!)){
+                                unblockUser(it.customer_id)
                             }
                         } else {
                             getNavigator()?.onError(optInResponseData?.gp_api_message)
+                        }
+                    } else
+                        getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+                } catch (ex: Exception) {
+                    when (ex) {
+                        is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                        else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                    }
+                }
+            }
+        }
+
+    }
+
+    private fun unblockUser(customerId: Int) {
+        viewModelScope.async {
+            if (getNavigator()?.isNetworkAvailable() == true) {
+                try {
+                    if (getNavigator()?.isNetworkAvailable() == true) {
+                        val unBlockUserDeferred = async {
+                            settingsRepository.unBlockUser(customerId)
+                        }
+                        val blockedUserResponse = unBlockUserDeferred.await()
+
+                        val blockedUser = handleResponse(blockedUserResponse).data
+
+                        if (Constants.GP_API_STATUS.equals(blockedUser?.gp_api_status)) {
+                            getBlockedUsersList()
+                           getNavigator()?.onSuccess(blockedUser?.gp_api_message)
+                        } else {
+                            getNavigator()?.onError(blockedUser?.gp_api_message)
                         }
                     } else
                         getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
