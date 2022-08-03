@@ -269,15 +269,6 @@ class AddOrUpdateAddressViewModel @Inject constructor(
     }
 
 
-    fun updateAddress(location: Address) {
-        stateNameStr.set(location.adminArea)
-        districtName.set(location.subAdminArea)
-        tehsilName.set(location.subAdminArea)
-        villageName.set(location.featureName)
-        address.set(location.getAddressLine(0))
-        pinCode.set(location.postalCode)
-    }
-
     fun getAddressByLocation() {
 
         val gps = getNavigator()?.getGPSTracker()
