@@ -17,13 +17,13 @@
         android:layout_height="match_parent">
 
         <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar_with_back_arrow_and_help" />
+            android:id="@+id/myToolbar"
+            layout="@layout/layout_toolbar" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar">
+            android:layout_below="@+id/myToolbar">
 
             <RelativeLayout
                 android:layout_width="match_parent"

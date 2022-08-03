@@ -203,6 +203,21 @@
     <string name="your_order_will_reach_you">Your order will reach you</string>
     <string name="track_your_order">Track your order</string>
     <string name="turn_on_location">Please turn on location</string>
+    <string name="payment_mode">Payment Mode</string>
+    <string name="pay_using_gram_cash">Pay Using Gram Cash</string>
+    <string name="available_gram_cash_balance">Available Gram Cash Balance:</string>
+    <string name="pricing_detail">Pricing Detail</string>
+    <string name="product_discount">Product Discount</string>
+    <string name="gram_cash_coins">Gram cash coins</string>
+    <string name="delivery_title">Delivery</string>
+    <string name="free">FREE</string>
+    <string name="_100">100</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="includes_gst_and_other_taxes">Includes GST and other taxes</string>
+    <string name="view_price_breakup">View Price Breakup</string>
+    <string name="place_order">Place Order</string>
+    <string name="start_shopping">Start Shopping</string>
+    <string name="menu_title">menu title</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

@@ -16,15 +16,15 @@
         android:layout_height="match_parent">
 
         <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar_with_back_arrow_and_help" />
+            android:id="@+id/myToolbar"
+            layout="@layout/layout_toolbar" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             style="@style/TabIndicatorStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_44sdp"
-            android:layout_below="@+id/toolbar"
+            android:layout_below="@+id/myToolbar"
             android:layout_gravity="center_horizontal"
             app:tabIndicatorColor="@color/orange">
 

@@ -38,7 +38,7 @@ class CartViewModel @Inject constructor(
         gramCash.value = 0
         totalAmount.value = 0
         progress.value = false
-        showCartView.value = true
+        showCartView.value = false
     }
 
     private fun calculateAmount(cartItems: List<CartItem>) {

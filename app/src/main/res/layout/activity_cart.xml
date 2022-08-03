@@ -19,14 +19,14 @@
         android:layout_height="match_parent">
 
         <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar_with_back_arrow_and_help" />
+            android:id="@+id/myToolbar"
+            layout="@layout/layout_toolbar" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar"
+            android:layout_below="@+id/myToolbar"
             android:visibility="@{viewModel.showCartView == true ? View.VISIBLE : View.GONE}">
 
             <RelativeLayout
@@ -80,7 +80,7 @@
                             android:fontFamily="@font/manrope_bold"
                             android:gravity="center_vertical"
                             android:lineSpacingExtra="0sp"
-                            android:text="Payment Mode"
+                            android:text="@string/payment_mode"
                             android:textColor="@color/gray"
                             android:textSize="14sp" />
 
@@ -91,7 +91,7 @@
                             android:fontFamily="@font/manrope_bold"
                             android:gravity="center_vertical"
                             android:lineSpacingExtra="0sp"
-                            android:text="Cash on Delivery"
+                            android:text="@string/cash_on_delivery"
                             android:textColor="@color/green_dark"
                             android:textSize="16sp" />
 
@@ -160,7 +160,7 @@
                         android:layout_toEndOf="@+id/chkPayUsingGramCash"
                         android:fontFamily="@font/manrope_bold"
                         android:lineSpacingExtra="1sp"
-                        android:text="Pay Using Gram Cash"
+                        android:text="@string/pay_using_gram_cash"
                         android:textColor="@color/blakish"
                         android:textSize="16sp" />
 
@@ -173,7 +173,7 @@
                         android:layout_toEndOf="@+id/chkPayUsingGramCash"
                         android:fontFamily="@font/manrope_medium"
                         android:lineSpacingExtra="1sp"
-                        android:text="Available Gram Cash Balance:"
+                        android:text="@string/available_gram_cash_balance"
                         android:textColor="@color/blakish"
                         android:textSize="11sp" />
 
@@ -240,7 +240,7 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Pricing Detail"
+                    android:text="@string/pricing_detail"
                     android:textColor="@color/blakish"
                     android:textSize="16sp" />
 
@@ -289,7 +289,7 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Product Discount"
+                    android:text="@string/product_discount"
                     android:textColor="@color/gray"
                     android:textSize="14sp" />
 
@@ -320,7 +320,7 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Gram cash coins"
+                    android:text="@string/gram_cash_coins"
                     android:textColor="@color/gray"
                     android:textSize="14sp" />
 
@@ -356,7 +356,7 @@
                         android:lineSpacingExtra="1sp"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:text="Delivery"
+                        android:text="@string/delivery_title"
                         android:textColor="@color/gray"
                         android:textSize="14sp" />
 
@@ -375,7 +375,7 @@
                         android:paddingTop="4dp"
                         android:paddingEnd="12dp"
                         android:paddingBottom="4dp"
-                        android:text="FREE"
+                        android:text="@string/free"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
 
@@ -390,7 +390,7 @@
                         android:fontFamily="@font/manrope_bold"
                         android:gravity="center_vertical"
                         android:lineSpacingExtra="1sp"
-                        android:text="100"
+                        android:text="@string/_100"
                         android:textColor="@color/gray"
                         android:textSize="16sp" />
 
@@ -424,7 +424,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/manrope_bold"
                             android:lineSpacingExtra="1sp"
-                            android:text="Total Amount"
+                            android:text="@string/total_amount"
                             android:textColor="@color/blakish"
                             android:textSize="16sp" />
 
@@ -433,7 +433,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/manrope_bold"
                             android:lineSpacingExtra="1sp"
-                            android:text="Includes GST and other taxes"
+                            android:text="@string/includes_gst_and_other_taxes"
                             android:textColor="@color/gray_strike_through"
                             android:textSize="11sp" />
 
@@ -541,7 +541,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/manrope_bold"
                             android:lineSpacingExtra="1sp"
-                            android:text="View Price Breakup"
+                            android:text="@string/view_price_breakup"
                             android:textColor="@color/brand_color"
                             android:textSize="13sp" />
 
@@ -558,7 +558,7 @@
                         android:fontFamily="@font/manrope_bold"
                         android:gravity="center"
                         android:onClick="@{() -> viewModel.onClickPlaceOrder()}"
-                        android:text="Place Order"
+                        android:text="@string/place_order"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:textStyle="normal" />
@@ -574,7 +574,8 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="@{viewModel.showCartView == false ? View.VISIBLE : View.GONE}">
+            android:visibility="@{viewModel.showCartView == false ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone">
 
             <ImageView
                 android:layout_width="@dimen/_90sdp"
@@ -617,7 +618,7 @@
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="center"
                 android:onClick="@{() -> viewModel.onClickStartShopping()}"
-                android:text="Start Shopping"
+                android:text="@string/start_shopping"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="normal" />

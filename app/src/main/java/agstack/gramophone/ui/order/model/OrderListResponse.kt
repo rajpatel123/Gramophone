@@ -24,6 +24,7 @@ data class OrderList(
 
 data class Data(
     val order_date: String,
+    val product_image: String,
     val order_id: String,
     val order_status: String,
     val payment_method: String,
