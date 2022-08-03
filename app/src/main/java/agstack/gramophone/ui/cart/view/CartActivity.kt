@@ -18,6 +18,7 @@ import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import android.Manifest
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -56,17 +57,19 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
     }
 
     override fun onClick(view: View?) {
-        when(view?.id) {
+        when (view?.id) {
             R.id.itemCart -> {
-                val supportNo: String? =
-                    SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CustomerSupportNo)
-                if (supportNo?.isNotEmpty() == true) {
-                    val bottomSheet = BottomSheetDialog()
-                    bottomSheet.customerSupportNumber = supportNo
-                    bottomSheet.show(
-                        supportFragmentManager,
-                        Constants.BOTTOM_SHEET
-                    )
+                if (requestPermission(Manifest.permission.CALL_PHONE)) {
+                    val supportNo: String? =
+                        SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CustomerSupportNo)
+                    if (supportNo?.isNotEmpty() == true) {
+                        val bottomSheet = BottomSheetDialog()
+                        bottomSheet.customerSupportNumber = supportNo
+                        bottomSheet.show(
+                            supportFragmentManager,
+                            Constants.BOTTOM_SHEET
+                        )
+                    }
                 }
             }
         }
