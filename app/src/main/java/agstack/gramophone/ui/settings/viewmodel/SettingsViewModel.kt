@@ -16,7 +16,10 @@ import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Response
 import java.io.IOException
@@ -28,7 +31,12 @@ class SettingsViewModel @Inject constructor(
 ) : BaseViewModel<SettingsNavigator>() {
      var initiateAppDataResponseModel: InitiateAppDataResponseModel? = null
     var languageName = ObservableField<String>()
+    var swAppTourChecked = ObservableField<Boolean>(false)
 
+    fun onAppTourCheckChanged(switchCompat: SwitchCompat){
+            SharedPreferencesHelper.instance?.putBoolean(
+                SharedPreferencesKeys.APP_TOUR_ENABLED,switchCompat.isChecked)
+    }
     fun onLanguageClicked() {
         getNavigator()?.openActivity(LanguageUpdateActivity::class.java, null)
     }
@@ -84,6 +92,8 @@ class SettingsViewModel @Inject constructor(
             SharedPreferencesHelper.instance?.getParcelable(
                 SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java
             )
+        swAppTourChecked.set(SharedPreferencesHelper.instance?.getBoolean(
+            SharedPreferencesKeys.APP_TOUR_ENABLED))
     }
 
 }
