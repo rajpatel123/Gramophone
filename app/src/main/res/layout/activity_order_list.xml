@@ -31,13 +31,13 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Recent Orders" />
+                android:text="@string/recent_orders" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabPast"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Past Orders" />
+                android:text="@string/past_orders" />
 
         </com.google.android.material.tabs.TabLayout>
 
@@ -49,7 +49,6 @@
             android:background="#F2F4F7"
             android:visibility="visible" />
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvRecent"
             android:layout_width="match_parent"
@@ -58,7 +57,6 @@
             android:orientation="vertical"
             android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:pastSize="@{viewModel.pastOrderSize}"
             app:recentSize="@{viewModel.recentOrderSize}"
             app:selectedTab="@{viewModel.selectedTab}"
             tools:itemCount="2"
@@ -71,26 +69,24 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tab_separator"
             android:orientation="vertical"
-            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:pastSize="@{viewModel.pastOrderSize}"
-            app:recentSize="@{viewModel.recentOrderSize}"
             app:selectedTab="@{viewModel.selectedTab}"
             tools:itemCount="2"
             tools:listitem="@layout/item_order"
             tools:visibility="visible" />
 
         <LinearLayout
-            android:layout_below="@+id/tab_separator"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/gray_empty_bg"
+            android:layout_below="@+id/tab_separator"
             android:layout_centerInParent="true"
+            android:background="@color/gray_empty_bg"
             android:gravity="center"
+            android:orientation="vertical"
             android:paddingStart="40dp"
             android:paddingEnd="40dp"
             android:visibility="gone"
-            android:orientation="vertical"
             app:pastSize="@{viewModel.pastOrderSize}"
             app:recentSize="@{viewModel.recentOrderSize}"
             app:selectedTab="@{viewModel.selectedTab}">
@@ -134,11 +130,11 @@
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:background="@drawable/btn_rounded_corner_16_solid_orange"
                 android:clickable="true"
-                android:onClick="@{() -> viewModel.onClickShopNow()}"
                 android:focusable="true"
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="center"
-                android:text="Shop Now"
+                android:onClick="@{() -> viewModel.onClickShopNow()}"
+                android:text="@string/shop_now"
                 android:textColor="@color/white"
                 android:textSize="13sp"
                 android:textStyle="normal" />

@@ -129,6 +129,7 @@ fun setHtmlTextValue(textView: TextView, htmlText: String?) {
     }
     textView.text = result
 }
+
 @BindingAdapter(value = ["selectedTab", "recentSize", "pastSize"], requireAll = true)
 fun orderEmptyViewHandling(emptyView: LinearLayout, selectedTab: Int, recentSize: Int, pastSize: Int,
 ) {
@@ -150,27 +151,26 @@ fun orderEmptyViewHandling(emptyView: LinearLayout, selectedTab: Int, recentSize
     }
 }
 
-@BindingAdapter(value = ["selectedTab", "recentSize", "pastSize"], requireAll = true)
-fun orderRecyclerViewHandling(recyclerView: RecyclerView, selectedTab: Int, recentSize: Int, pastSize: Int,
-) {
-    when (selectedTab) {
-        0 -> {
-            if (recentSize > 0) {
-                recyclerView.visibility = View.VISIBLE
-            } else {
-                recyclerView.visibility = View.GONE
-            }
-        }
-        1 -> {
-            if (pastSize > 0) {
-                recyclerView.visibility = View.VISIBLE
-            } else {
-                recyclerView.visibility = View.GONE
-            }
-        }
+@BindingAdapter(value = ["selectedTab", "recentSize"], requireAll = true)
+fun recentOrderRecyclerHandling(
+    recyclerView: RecyclerView, selectedTab: Int, recentSize: Int,) {
+    if (selectedTab == 0 && recentSize > 0) {
+        recyclerView.visibility = View.VISIBLE
+    } else {
+        recyclerView.visibility = View.GONE
     }
 }
 
+@BindingAdapter(value = ["selectedTab", "pastSize"], requireAll = true)
+fun pastOrderRecyclerHandling(
+    recyclerView: RecyclerView, selectedTab: Int, pastSize: Int,
+) {
+    if (selectedTab == 1 && pastSize > 0) {
+        recyclerView.visibility = View.VISIBLE
+    } else {
+        recyclerView.visibility = View.GONE
+    }
+}
 
 
 

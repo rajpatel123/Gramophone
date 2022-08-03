@@ -42,13 +42,9 @@ class OrderListActivity :
         viewDataBinding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 if (viewDataBinding.tabLayout.selectedTabPosition == 0) {
-                    viewDataBinding.rvRecent.visibility = View.VISIBLE
-                    viewDataBinding.rvPast.visibility = View.GONE
                     orderListViewModel.selectedTab.value = 0
                     orderListViewModel.emptyText.value = getString(R.string.no_recent_order)
                 } else if (viewDataBinding.tabLayout.selectedTabPosition == 1) {
-                    viewDataBinding.rvRecent.visibility = View.GONE
-                    viewDataBinding.rvPast.visibility = View.VISIBLE
                     orderListViewModel.selectedTab.value = 1
                     orderListViewModel.emptyText.value = getString(R.string.no_past_order)
                 }

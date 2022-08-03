@@ -78,7 +78,8 @@
             android:text="@{@string/rupee_symbol.concat(model.price)}"
             android:textColor="@color/blakish"
             android:textSize="18sp"
-            tools:text="₹4320" />
+            tools:text="₹4320"
+            tools:ignore="RelativeOverlap" />
 
         <View
             android:id="@+id/order_date_separator"
@@ -152,10 +153,10 @@
         <View
             android:id="@+id/tab_separator"
             android:layout_width="match_parent"
-            android:layout_height="4dp"
+            android:layout_height="3dp"
             android:layout_below="@+id/ll_status"
             android:layout_marginTop="@dimen/_20sdp"
-            android:alpha="0.8"
+            android:alpha="0.5"
             android:background="@color/gray_strike_through"
             android:visibility="visible" />
 

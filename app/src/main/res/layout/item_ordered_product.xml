@@ -74,7 +74,6 @@
             android:gravity="center_vertical"
             android:lineSpacingExtra="-2sp"
             android:maxLines="1"
-
             android:text="@{model.product_sku}"
             android:textColor="@color/blakish"
             android:textSize="13sp"
@@ -118,11 +117,10 @@
             android:layout_below="@+id/sku"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_toEndOf="@+id/tvActualPrice"
-            android:background="@drawable/strike_through"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
-            android:text="30% off"
+            android:text="@string/_0_off"
             android:textColor="@color/green_dark"
             android:textSize="13sp" />
 
@@ -156,7 +154,7 @@
             android:gravity="center_vertical"
             android:paddingStart="14dp"
             android:paddingEnd="14dp"
-            android:text="This item is added as a free giveaway."
+            android:text="@string/item_added_as_a_free_giveaway"
             android:textSize="11sp"
             android:visibility="gone"
             app:drawableStartCompat="@drawable/ic_offer"
@@ -203,7 +201,7 @@
                 android:gravity="top"
                 android:lineSpacingExtra="1sp"
                 android:maxLines="2"
-                android:text="Daily Object Backpack"
+                android:text="@string/daily_object_backpack"
                 android:textColor="@color/brand_color"
                 android:textSize="16sp"
                 android:translationY="-0.27sp" />
@@ -218,7 +216,7 @@
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="1sp"
-                android:text="₹ 0"
+                android:text="@string/rupee_0"
                 android:textColor="@color/blakish"
                 android:textSize="14sp" />
 
@@ -233,7 +231,7 @@
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="1sp"
-                android:text="₹ 1290"
+                android:text="@string/dummy_price"
                 android:textColor="@color/gray_strike_through"
                 android:textSize="14sp" />
 
@@ -252,7 +250,7 @@
                 android:paddingTop="2dp"
                 android:paddingEnd="12dp"
                 android:paddingBottom="2dp"
-                android:text="FREE"
+                android:text="@string/free"
                 android:textColor="@color/white"
                 android:textSize="13sp" />
 

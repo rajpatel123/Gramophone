@@ -116,7 +116,7 @@
                         android:layout_marginEnd="20dp"
                         android:fontFamily="@font/manrope_regular"
                         android:lineSpacingExtra="-2sp"
-                        android:text="One of our executive will get in touch with you shortly for your order confirmation!"
+                        android:text="@string/order_placed_msg"
                         android:textColor="@color/gray"
                         android:textSize="13sp" />
 
@@ -223,7 +223,7 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="@dimen/_16sdp"
-                    android:text="Delivery Address"
+                    android:text="@string/delivery_address"
                     android:textColor="@color/blakish"
                     android:textSize="16sp" />
 
@@ -332,7 +332,7 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Pricing Detail"
+                    android:text="@string/pricing_detail"
                     android:textColor="@color/blakish"
                     android:textSize="16sp" />
 
@@ -381,7 +381,7 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Product Discount"
+                    android:text="@string/product_discount"
                     android:textColor="@color/gray"
                     android:textSize="14sp" />
 
@@ -412,7 +412,7 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Gram cash coins"
+                    android:text="@string/gram_cash_coins"
                     android:textColor="@color/gray"
                     android:textSize="14sp" />
 
@@ -448,7 +448,7 @@
                         android:lineSpacingExtra="1sp"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:text="Delivery"
+                        android:text="@string/delivery_title"
                         android:textColor="@color/gray"
                         android:textSize="14sp" />
 
@@ -467,7 +467,7 @@
                         android:paddingTop="4dp"
                         android:paddingEnd="12dp"
                         android:paddingBottom="4dp"
-                        android:text="FREE"
+                        android:text="@string/free"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
 
@@ -482,7 +482,7 @@
                         android:fontFamily="@font/manrope_bold"
                         android:gravity="center_vertical"
                         android:lineSpacingExtra="1sp"
-                        android:text="100"
+                        android:text="@string/_100"
                         android:textColor="@color/gray"
                         android:textSize="16sp" />
 
@@ -517,7 +517,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/manrope_bold"
                             android:lineSpacingExtra="1sp"
-                            android:text="Total Amount"
+                            android:text="@string/total_amount"
                             android:textColor="@color/blakish"
                             android:textSize="16sp" />
 
@@ -526,7 +526,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/manrope_bold"
                             android:lineSpacingExtra="1sp"
-                            android:text="Includes GST and other taxes"
+                            android:text="@string/includes_gst_and_other_taxes"
                             android:textColor="@color/gray_strike_through"
                             android:textSize="11sp" />
 
