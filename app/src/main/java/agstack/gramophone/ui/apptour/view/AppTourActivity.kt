@@ -60,7 +60,7 @@ class AppTourActivity :
         bottomSheet.customerSupportNumber = number
         bottomSheet.show(
             getSupportFragmentManager(),
-            "bottomSheet"
+            getMessage(R.string.bottomsheet_tag)
         )
     }
 
@@ -69,7 +69,7 @@ class AppTourActivity :
         bottomSheet.setLanguageListener(this)
         bottomSheet.show(
             getSupportFragmentManager(),
-            "bottomSheet"
+            getMessage(R.string.bottomsheet_tag)
         )
     }
 

@@ -197,6 +197,8 @@
     <string name="turn_on_location">Please turn on location</string>
     <string name="opt_out">Opt-Out Now</string>
     <string name="opt_in_now">Opt-In Now</string>
+    <string name="seconds">Sec</string>
+    <string name="bottomsheet_tag">bottomSheet</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

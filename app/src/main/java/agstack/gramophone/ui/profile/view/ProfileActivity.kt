@@ -24,8 +24,6 @@ class ProfileActivity : BaseActivityWrapper<ActivityProfileBinding, ProfileActiv
         setupObservers()
     }
 
-
-
     private fun setupUi() {
 
     }

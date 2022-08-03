@@ -35,20 +35,11 @@ class SettingsActivity :
 
     }
 
-    override fun getLayoutID(): Int {
-        val activitySettings = R.layout.activity_settings
-        return activitySettings
-    }
+    override fun getLayoutID(): Int = R.layout.activity_settings
 
-    override fun getBindingVariable(): Int {
-        val viewModel = BR.viewModel
-        return viewModel
-    }
+    override fun getBindingVariable(): Int = BR.viewModel
 
-    override fun getViewModel(): SettingsViewModel {
-        val settingsViewModel1 = settingsViewModel
-        return settingsViewModel1
-    }
+    override fun getViewModel(): SettingsViewModel = settingsViewModel
 
     override fun getLanguageCode(): String? = LocaleManagerClass.getLangCodeAsPerAppLocale(this)
 
