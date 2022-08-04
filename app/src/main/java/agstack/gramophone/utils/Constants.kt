@@ -8,7 +8,6 @@ object Constants {
     val Product_Base_Name="PRODUCT BASE NAME"
     val PRODUCT_RATING_DATA_KEY="PRODUCT RATING DATA"
     val RATING_SELECTED="RATING_SELECTED"
-
     val OFFERSDATA="OFFERSDATA"
 
     //sortBy options
@@ -73,6 +72,7 @@ object Constants {
     //Product
     const val PRODUCTREVIEWDATA = "PRODUCTREVIEWDATA"
     const val PRODUCTID = "PRODUCTID"
+    const val Product_Id_Key = "product_id"
 
     //Product
     const val ORDER_ID = "order_id"
