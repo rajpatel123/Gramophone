@@ -70,7 +70,7 @@ class OrderDetailsActivity :
     override fun setOrderListAdapter(
         orderedProductsAdapter: OrderedProductsAdapter,
         onOrderItemClicked: (Int) -> Unit,
-        onOfferClicked: (offerList: List<OfferApplied>) -> Unit,
+        onOfferClicked: (offerList: OfferApplied) -> Unit,
     ) {
         orderedProductsAdapter.onItemDetailClicked = onOrderItemClicked
         orderedProductsAdapter.onOfferClicked = onOfferClicked
@@ -81,10 +81,6 @@ class OrderDetailsActivity :
         val bundle = Bundle()
         bundle.putParcelable("product", productData)
         openActivity(ProductDetailsActivity::class.java, bundle)
-    }
-
-    override fun openAppliedOfferDetailActivity(offerAppliedList: List<OfferApplied>) {
-
     }
 
     override fun getBundle(): Bundle? {

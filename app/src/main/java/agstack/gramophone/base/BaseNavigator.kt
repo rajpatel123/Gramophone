@@ -22,7 +22,7 @@ interface BaseNavigator {
 
     fun<T: Activity> openActivityWithBottomToTopAnimation(cls:Class<T>,extras: Bundle?=null)
 
-    fun <T> openAndFinishActivityWithFlags(cls: Class<T>, extras: Bundle? = null)
+    fun <T> openAndFinishActivityWithClearTopNewTaskClearTaskFlags(cls: Class<T>, extras: Bundle? = null)
 
     fun isNetworkAvailable(): Boolean
 

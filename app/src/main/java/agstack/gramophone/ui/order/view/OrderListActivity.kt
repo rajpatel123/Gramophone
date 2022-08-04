@@ -109,7 +109,7 @@ class OrderListActivity :
     }
 
     override fun openHomeActivity() {
-        openAndFinishActivityWithFlags(HomeActivity::class.java, null)
+        openAndFinishActivityWithClearTopNewTaskClearTaskFlags(HomeActivity::class.java, null)
     }
 
     override fun getLayoutID(): Int {

@@ -98,7 +98,7 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     }
 
 
-    override fun <T> openAndFinishActivityWithFlags(cls: Class<T>, extras: Bundle?) {
+    override fun <T> openAndFinishActivityWithClearTopNewTaskClearTaskFlags(cls: Class<T>, extras: Bundle?) {
         Intent(context, cls).apply {
 
             if (extras != null)

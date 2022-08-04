@@ -12,10 +12,9 @@ interface OrderDetailsNavigator : BaseNavigator {
     fun setOrderListAdapter(
         orderedProductsAdapter: OrderedProductsAdapter,
         onOrderItemClicked: (Int) -> Unit,
-        onOfferClicked: (offerList: List<OfferApplied>) -> Unit
+        onOfferClicked: (offerList: OfferApplied) -> Unit,
     )
 
     fun openProductDetailsActivity(productData: ProductData)
 
-    fun openAppliedOfferDetailActivity(offerAppliedList: List<OfferApplied>)
 }

@@ -91,7 +91,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         }
     }
 
-    override fun <T> openAndFinishActivityWithFlags(cls: Class<T>, extras: Bundle?) {
+    override fun <T> openAndFinishActivityWithClearTopNewTaskClearTaskFlags(cls: Class<T>, extras: Bundle?) {
         Intent(this, cls).apply {
 
             if (extras != null)

@@ -15,7 +15,7 @@ class OrderedProductsAdapter(orderedProducts: List<Product>) :
     RecyclerView.Adapter<OrderedProductsAdapter.CustomViewHolder>() {
     var orderedProductsList = orderedProducts
     var onItemDetailClicked: ((Int) -> Unit)? = null
-    var onOfferClicked: ((offerList: List<OfferApplied>) -> Unit)? = null
+    var onOfferClicked: ((offerList: OfferApplied) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         return CustomViewHolder(
@@ -34,7 +34,10 @@ class OrderedProductsAdapter(orderedProducts: List<Product>) :
                 onItemDetailClicked?.invoke(orderedProductsList[position].product_id)
             }
         holder.binding.tvOffersApplied.setOnClickListener {
-            onOfferClicked?.invoke(orderedProductsList[position].offer_applied)
+            if (orderedProductsList[position].offer_applied.isNotEmpty()) {
+                orderedProductsList[position].offer_applied[0].product_name = orderedProductsList[position].product_name
+                onOfferClicked?.invoke(orderedProductsList[position].offer_applied[0])
+            }
         }
     }
 

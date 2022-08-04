@@ -3,11 +3,13 @@ package agstack.gramophone.ui.orderdetails
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
-import agstack.gramophone.ui.cart.adapter.CartAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
+import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.orderdetails.adapter.OrderedProductsAdapter
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.utils.Constants
+import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -83,20 +85,35 @@ class OrderDetailsViewModel @Inject constructor(
                             else response.body()?.gp_api_response_data?.payment_method
                         this@OrderDetailsViewModel.productSize.value =
                             response.body()?.gp_api_response_data?.products?.size?.toString()
-                        this@OrderDetailsViewModel.username.value = response.body()?.gp_api_response_data?.products?.get(0)?.delivery_address?.name
-                        this@OrderDetailsViewModel.address.value = response.body()?.gp_api_response_data?.products?.get(0)?.delivery_address?.address
-                        this@OrderDetailsViewModel.mobile.value = response.body()?.gp_api_response_data?.products?.get(0)?.delivery_address?.mobile
+                        this@OrderDetailsViewModel.username.value =
+                            response.body()?.gp_api_response_data?.products?.get(0)?.delivery_address?.name
+                        this@OrderDetailsViewModel.address.value =
+                            response.body()?.gp_api_response_data?.products?.get(0)?.delivery_address?.address
+                        this@OrderDetailsViewModel.mobile.value =
+                            response.body()?.gp_api_response_data?.products?.get(0)?.delivery_address?.mobile
 
-                         getNavigator()?.setOrderListAdapter(
-                             OrderedProductsAdapter(response.body()?.gp_api_response_data?.products!!),
-                             {
-                                 //on cartItem clicked for details page
-                                 getNavigator()?.openProductDetailsActivity(ProductData(it.toInt()))
-                             },
-                             {
-                                 //on offer clicked
-                                 getNavigator()?.openAppliedOfferDetailActivity(it)
-                             })
+                        getNavigator()?.setOrderListAdapter(
+                            OrderedProductsAdapter(response.body()?.gp_api_response_data?.products!!),
+                            {
+                                //on cartItem clicked for details page
+                                getNavigator()?.openProductDetailsActivity(ProductData(it.toInt()))
+                            },
+                            {
+                                //on offer detail clicked
+                                val promotionListItem = PromotionListItem()
+                                promotionListItem.title = it.offer_name
+                                promotionListItem.applicable_on_sku = it.valid_on_sku
+                                promotionListItem.valid_till = it.valid_till
+                                promotionListItem.product_name = it.product_name
+                                promotionListItem.tnc = it.tnc
+                                promotionListItem.redemption = it.redemption
+                                getNavigator()?.openActivity(
+                                    OfferDetailActivity::class.java,
+                                    Bundle().apply {
+                                        putParcelable(Constants.OFFERSDATA, promotionListItem)
+
+                                    })
+                            })
                     } else {
                         getNavigator()?.showToast(response.message())
                     }

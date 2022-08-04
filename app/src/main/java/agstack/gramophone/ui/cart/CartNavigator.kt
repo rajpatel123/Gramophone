@@ -13,13 +13,11 @@ interface CartNavigator : BaseNavigator {
         cartAdapter: CartAdapter,
         onItemDetailClicked: (productId: String) -> Unit,
         onCartItemDeleteClicked: (productId: String) -> Unit,
-        onOfferClicked: (offerAppliedList: List<OfferApplied>) -> Unit,
+        onOfferClicked: (offerAppliedList: OfferApplied) -> Unit,
         onQuantityClicked: (cartItem: CartItem) -> Unit,
     )
 
     fun openProductDetailsActivity(productData: ProductData)
-
-    fun openAppliedOfferDetailActivity(offerAppliedList: List<OfferApplied>)
 
     fun openCheckoutStatusActivity(bundle: Bundle)
 

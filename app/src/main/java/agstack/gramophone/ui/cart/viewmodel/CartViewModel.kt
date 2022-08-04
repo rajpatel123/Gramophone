@@ -8,6 +8,8 @@ import agstack.gramophone.ui.cart.adapter.CartAdapter
 import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
+import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
@@ -108,7 +110,19 @@ class CartViewModel @Inject constructor(
                             },
                             {
                                 //on offer detail clicked
-                                getNavigator()?.openAppliedOfferDetailActivity(it)
+                                val promotionListItem = PromotionListItem()
+                                promotionListItem.title = it.offer_name
+                                promotionListItem.applicable_on_sku = it.valid_on_sku
+                                promotionListItem.valid_till = it.valid_till
+                                promotionListItem.product_name = it.product_name
+                                promotionListItem.tnc = it.tnc
+                                promotionListItem.redemption = it.redemption
+                                getNavigator()?.openActivity(
+                                    OfferDetailActivity::class.java,
+                                    Bundle().apply {
+                                        putParcelable(Constants.OFFERSDATA, promotionListItem)
+
+                                    })
                             }, {
                                 // on quantity increase and decrease clicked
                                 addToCart(AddToCartRequest(it.product_id.toInt(),

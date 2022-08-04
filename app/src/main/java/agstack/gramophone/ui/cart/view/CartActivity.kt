@@ -79,7 +79,7 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
         cartAdapter: CartAdapter,
         onItemDetailClicked: (productId: String) -> Unit,
         onCartItemDeleteClicked: (productId: String) -> Unit,
-        onOfferClicked: (offerAppliedList: List<OfferApplied>) -> Unit,
+        onOfferClicked: (offerAppliedList: OfferApplied) -> Unit,
         onQuantityClicked: (cartItem: CartItem) -> Unit,
     ) {
         cartAdapter.onItemDetailClicked = onItemDetailClicked
@@ -95,16 +95,12 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
         openActivity(ProductDetailsActivity::class.java, bundle)
     }
 
-    override fun openAppliedOfferDetailActivity(offerAppliedList: List<OfferApplied>) {
-
-    }
-
     override fun openCheckoutStatusActivity(bundle: Bundle) {
         openAndFinishActivity(CheckoutStatusActivity::class.java, bundle)
     }
 
     override fun openHomeActivity() {
-        openAndFinishActivityWithFlags(HomeActivity::class.java, null)
+        openAndFinishActivityWithClearTopNewTaskClearTaskFlags(HomeActivity::class.java, null)
     }
 
     override fun onLoading() {

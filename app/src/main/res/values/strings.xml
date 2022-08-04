@@ -228,6 +228,8 @@
     <string name="shop_now">Shop Now</string>
     <string name="order_placed_msg">One of our executive will get in touch with you shortly for your order confirmation!</string>
     <string name="delivery_address">Delivery Address</string>
+    <string name="valid_till">Valid till&#160;</string>
+    <string name="on">On&#160;</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

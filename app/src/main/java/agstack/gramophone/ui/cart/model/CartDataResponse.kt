@@ -1,5 +1,8 @@
 package agstack.gramophone.ui.cart.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 data class CartDataResponse(
     val gp_api_error_data: GpApiErrorData,
     val gp_api_exception: GpApiException,
@@ -39,6 +42,7 @@ data class CartItem(
 )
 
 data class OfferApplied(
+    var product_name: String,
     val discount: String,
     val offer_name: String,
     val pay_total: String,
@@ -47,13 +51,13 @@ data class OfferApplied(
     val valid_on_sku: String,
     val valid_till: String
 )
-
+@Parcelize
 data class Redemption(
     val `1`: String,
     val `2`: String
-)
-
+) : Parcelable
+@Parcelize
 data class Tnc(
     val `1`: String,
     val `2`: String
-)
+) : Parcelable
