@@ -5,15 +5,10 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityOrderDetailsBinding
-import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.orderdetails.adapter.OrderedProductsAdapter
 import agstack.gramophone.ui.orderdetails.model.OfferApplied
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
-import android.Manifest
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -51,18 +46,7 @@ class OrderDetailsActivity :
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.itemOrder -> {
-                if (requestPermission(Manifest.permission.CALL_PHONE)) {
-                    val supportNo: String? =
-                        SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CustomerSupportNo)
-                    if (supportNo?.isNotEmpty() == true) {
-                        val bottomSheet = BottomSheetDialog()
-                        bottomSheet.customerSupportNumber = supportNo
-                        bottomSheet.show(
-                            supportFragmentManager,
-                            Constants.BOTTOM_SHEET
-                        )
-                    }
-                }
+                orderDetailsViewModel.onHelpClick()
             }
         }
     }

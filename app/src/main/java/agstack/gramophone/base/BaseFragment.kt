@@ -1,6 +1,8 @@
 package agstack.gramophone.base
 
 import agstack.gramophone.R
+import agstack.gramophone.ui.dialog.BottomSheetDialog
+import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.LocaleManagerClass
 import android.app.Activity
 import android.content.Context
@@ -141,5 +143,14 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     override fun hideProgressBar() {
 
 
+    }
+
+    override fun proceedCall(helpLineNo: String) {
+        val bottomSheet = BottomSheetDialog()
+        bottomSheet.customerSupportNumber = helpLineNo
+        bottomSheet.show(
+            requireActivity().supportFragmentManager,
+            Constants.BOTTOM_SHEET
+        )
     }
 }

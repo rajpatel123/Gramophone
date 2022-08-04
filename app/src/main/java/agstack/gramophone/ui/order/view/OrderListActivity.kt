@@ -71,18 +71,7 @@ class OrderListActivity :
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.itemOrder -> {
-                if (requestPermission(Manifest.permission.CALL_PHONE)) {
-                    val supportNo: String? =
-                        SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CustomerSupportNo)
-                    if (supportNo?.isNotEmpty() == true) {
-                        val bottomSheet = BottomSheetDialog()
-                        bottomSheet.customerSupportNumber = supportNo
-                        bottomSheet.show(
-                            supportFragmentManager,
-                            Constants.BOTTOM_SHEET
-                        )
-                    }
-                }
+                orderListViewModel.onHelpClick()
             }
         }
     }

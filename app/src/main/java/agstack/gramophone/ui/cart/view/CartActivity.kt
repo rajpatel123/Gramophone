@@ -59,18 +59,7 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.itemCart -> {
-                if (requestPermission(Manifest.permission.CALL_PHONE)) {
-                    val supportNo: String? =
-                        SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CustomerSupportNo)
-                    if (supportNo?.isNotEmpty() == true) {
-                        val bottomSheet = BottomSheetDialog()
-                        bottomSheet.customerSupportNumber = supportNo
-                        bottomSheet.show(
-                            supportFragmentManager,
-                            Constants.BOTTOM_SHEET
-                        )
-                    }
-                }
+                cartViewModel.onHelpClick()
             }
         }
     }
