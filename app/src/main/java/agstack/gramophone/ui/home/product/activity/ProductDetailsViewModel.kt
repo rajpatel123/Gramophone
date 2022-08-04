@@ -46,7 +46,6 @@ class ProductDetailsViewModel @Inject constructor(
 
     var ratingSelected = ObservableField<Double>(0.0)
     var isHeartSelected = ObservableField<Boolean>(false)
-
     fun onHeartIconClicked() {
         isHeartSelected.set(!isHeartSelected.get()!!)
 
