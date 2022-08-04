@@ -5,6 +5,8 @@ import android.content.Context
 
 
 object Constants {
+    val Product_Base_Name="PRODUCT BASE NAME"
+    val PRODUCT_RATING_DATA_KEY="PRODUCT RATING DATA"
 
     val OFFERSDATA="OFFERSDATA"
 
@@ -12,6 +14,8 @@ object Constants {
     val TOP = "top"
     const val RECENT = "recent"
     const val PAST = "past"
+    val TOP_REVIEWS ="Top Reviews"
+    val RECENT_REVIEWS= "Recent Reviews"
     const val HELP_PHONE_NUMBER: String = "customer_support_no"
     const val LANG: String = "lang"
     const val PAGE_URL: String = "url"
@@ -71,6 +75,7 @@ object Constants {
 
     //Product
     const val ORDER_ID = "order_id"
+    const val BOTTOM_SHEET = "bottom_sheet"
     /**
      * For Broadcast
      */

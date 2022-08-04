@@ -3,21 +3,23 @@ package agstack.gramophone.ui.cart
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.ui.cart.adapter.CartAdapter
 import agstack.gramophone.ui.cart.model.CartItem
-import agstack.gramophone.ui.home.product.activity.ProductSKUOfferAdapter
-import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
+import agstack.gramophone.ui.cart.model.OfferApplied
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import android.os.Bundle
 
 interface CartNavigator : BaseNavigator {
 
     fun setCartAdapter(
         cartAdapter: CartAdapter,
-        onCartItemClicked: (CartItem) -> Unit,
-        onCartItemDeleteClicked: (String) -> Unit,
-        onOfferClicked: (cartItemList: List<CartItem>) -> Unit
+        onItemDetailClicked: (productId: String) -> Unit,
+        onCartItemDeleteClicked: (productId: String) -> Unit,
+        onOfferClicked: (offerAppliedList: OfferApplied) -> Unit,
+        onQuantityClicked: (cartItem: CartItem) -> Unit,
     )
 
-    fun openProductDetailsActivity()
+    fun openProductDetailsActivity(productData: ProductData)
 
-    fun deleteCartItem(productId: String)
+    fun openCheckoutStatusActivity(bundle: Bundle)
 
-    fun openAppliedOfferDetailActivity(cartItemList: List<CartItem>)
+    fun openHomeActivity()
 }

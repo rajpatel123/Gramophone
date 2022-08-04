@@ -191,6 +191,9 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
     implementation 'com.google.zxing:core:3.3.3'
 
+    //Gif dependency
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.24'
+
 
 }
 apply plugin: 'com.google.gms.google-services'

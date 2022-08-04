@@ -3,7 +3,10 @@ package agstack.gramophone.utils
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class EndlessRecyclerScrollListener(val mLinearLayoutManager: LinearLayoutManager, val onLoadMore: (Int, (()->Unit)?) -> Unit) :
+abstract class EndlessRecyclerScrollListener(
+    val mLinearLayoutManager: LinearLayoutManager,
+    val onLoadMore: (Int) -> Unit
+) :
     RecyclerView.OnScrollListener() {
 
     private var previousTotal = 0 // The total number of items in the dataset after the last load
@@ -11,6 +14,7 @@ class EndlessRecyclerScrollListener(val mLinearLayoutManager: LinearLayoutManage
     var firstVisibleItem: Int = 0
     var visibleItemCount: Int = 0
     var totalItemCount: Int = 0
+    var lastVisible = 0
 
     private var current_page = 1
 
@@ -21,29 +25,38 @@ class EndlessRecyclerScrollListener(val mLinearLayoutManager: LinearLayoutManage
         visibleItemCount = recyclerView.childCount
         totalItemCount = mLinearLayoutManager.getItemCount()
         firstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition()
+        lastVisible = mLinearLayoutManager.findLastCompletelyVisibleItemPosition()
 
-        if (loading) {
-            if (totalItemCount - 1 > previousTotal) {
-                loading = false
-                previousTotal = totalItemCount
+
+
+        if (!isLastPage()) {
+            if (lastVisible != RecyclerView.NO_POSITION && lastVisible + 1 == totalItemCount)
+             {
+
+                loading = true
+                onLoadMore(current_page+1)
+
             }
         }
-        if (!loading && (totalItemCount - visibleItemCount) <= firstVisibleItem && totalItemCount != visibleItemCount && totalItemCount%10==0) {
-            current_page++
-            loading = true
-            onLoadMore(totalItemCount/3){
-                this@EndlessRecyclerScrollListener.loading=false
-            }
-        }
+
+
+    }
+
+    abstract fun isLastPage(): Boolean
+
+    fun onListFetched(){
+        loading = false
+        current_page++
     }
 
     fun reset() {
-        previousTotal = 0
-        loading = true
-        firstVisibleItem = 0
+        firstVisibleItem= 0
         visibleItemCount = 0
         totalItemCount = 0
-        current_page=1
+        lastVisible = 0
+        current_page = 1
+        loading = false
     }
+
 
 }

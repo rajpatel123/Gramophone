@@ -21,7 +21,7 @@ public  class ProductImagesAdapter(
         * Passing the selected ProductImage to fragment
          */
     override fun getItem(position: Int): Fragment {
-        return ProductImagesFragment.newInstance(productImages[position]!!, position,){
+        return ProductImagesFragment.newInstance(productImages[position]!!, position){
 
 
         }

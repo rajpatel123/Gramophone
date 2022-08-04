@@ -30,20 +30,21 @@ object ApiModule {
     @Singleton
     fun provideOkHttpClient(logging: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
-                .addInterceptor(getHeaderInterceptor())
-                .connectTimeout(15, TimeUnit.SECONDS) // connect timeout
-                .readTimeout(15, TimeUnit.SECONDS)
-                .build()
+            .addInterceptor(getHeaderInterceptor())
+            .addInterceptor(logging)
+            .connectTimeout(15, TimeUnit.SECONDS) // connect timeout
+            .readTimeout(15, TimeUnit.SECONDS)
+            .build()
     }
 
     @Provides
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build()
+            .baseUrl(BuildConfig.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
     }
 
     @Provides
@@ -52,11 +53,16 @@ object ApiModule {
         return retrofit.create(GramAppService::class.java)
     }
 
-    private fun getHeaderInterceptor():Interceptor{
+    private fun getHeaderInterceptor(): Interceptor {
         return Interceptor { chain ->
             val request =
                 chain.request().newBuilder()
-                    .header(Constants.AUTHORIZATION, "Bearer "+ SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.session_token)!!)
+                    .header(
+                        Constants.AUTHORIZATION,
+                        "Bearer " + SharedPreferencesHelper.instance?.getString(
+                            SharedPreferencesKeys.session_token
+                        )!!
+                    )
                     .build()
             chain.proceed(request)
         }
