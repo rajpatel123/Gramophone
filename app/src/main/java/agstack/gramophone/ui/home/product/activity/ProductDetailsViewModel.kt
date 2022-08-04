@@ -6,6 +6,7 @@ import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
 import agstack.gramophone.ui.home.product.activity.productreview.AddEditProductReviewActivity
+import agstack.gramophone.ui.home.product.fragment.ExpertAdviceBottomSheetFragment
 import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
@@ -13,15 +14,11 @@ import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.RatingBar
-import androidx.databinding.Observable
 import androidx.databinding.ObservableField
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
-import java.lang.Exception
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,10 +44,10 @@ class ProductDetailsViewModel @Inject constructor(
     //Values selected by User
     var qtySelected = ObservableField<Int>(1)
 
-   var ratingSelected = ObservableField<Double>(0.0)
+    var ratingSelected = ObservableField<Double>(0.0)
     var isHeartSelected = ObservableField<Boolean>(false)
 
-    fun onHeartIconClicked(){
+    fun onHeartIconClicked() {
         isHeartSelected.set(!isHeartSelected.get()!!)
 
     }
@@ -82,7 +79,7 @@ class ProductDetailsViewModel @Inject constructor(
 
                 //Start Loader
 
-                 progressLoader.set(true)
+                progressLoader.set(true)
                 val productDataResponse = productRepository
                     .getProductData(productDetailstoBeFetched)
                 //stop loader
@@ -142,7 +139,8 @@ class ProductDetailsViewModel @Inject constructor(
         loadRelatedProductDataJob.cancelIfActive()
         loadRelatedProductDataJob = checkNetworkThenRun {
             try {
-                val relatedProductResponse = productRepository.getRelatedProductsData(productDetailstoBeFetched)
+                val relatedProductResponse =
+                    productRepository.getRelatedProductsData(productDetailstoBeFetched)
                 if (relatedProductResponse.body()?.gpApiStatus.equals(
                         Constants.GP_API_STATUS
                     )
@@ -164,10 +162,9 @@ class ProductDetailsViewModel @Inject constructor(
 
 
                     }
-                }else{
+                } else {
                     getNavigator()?.showToast(relatedProductResponse.body()?.gpApiMessage)
                 }
-
 
 
             } catch (e: Exception) {
@@ -186,31 +183,29 @@ class ProductDetailsViewModel @Inject constructor(
 
             try {
 
-                    val productReviewResponse = productRepository.getProductReviewsData(
-                        Constants.TOP,
-                        null,
-                        productDetailstoBeFetched
+                val productReviewResponse = productRepository.getProductReviewsData(
+                    Constants.TOP,
+                    null,
+                    productDetailstoBeFetched
+                )
+
+                if (productReviewResponse.body()?.gpApiStatus.equals(
+                        Constants.GP_API_STATUS
+                    )
+                ) {
+                    val gpApiResponseData = productReviewResponse.body()?.gpApiResponseData
+                    productReviewsData.set(gpApiResponseData)
+                    ratingSelected.set(gpApiResponseData?.selfRating?.rating)
+                    getNavigator()?.setRatingAndReviewsAdapter(
+                        RatingAndReviewsAdapter(
+                            productReviewsData.get()?.reviewList?.data as ArrayList<ReviewListItem?>,
+                            2
+                        )
                     )
 
-                    if (productReviewResponse.body()?.gpApiStatus.equals(
-                            Constants.GP_API_STATUS
-                        )
-                    ) {
-                        val gpApiResponseData = productReviewResponse.body()?.gpApiResponseData
-                        productReviewsData.set(gpApiResponseData)
-                        ratingSelected.set(gpApiResponseData?.selfRating?.rating)
-                        getNavigator()?.setRatingAndReviewsAdapter(
-                            RatingAndReviewsAdapter(
-                                productReviewsData.get()?.reviewList?.data as ArrayList<ReviewListItem?>,
-                                2
-                            )
-                        )
-
-                    }else{
-                        getNavigator()?.showToast(productReviewResponse.body()?.gpApiMessage)
-                    }
-
-
+                } else {
+                    getNavigator()?.showToast(productReviewResponse.body()?.gpApiMessage)
+                }
 
 
             } catch (e: Exception) {
@@ -280,7 +275,7 @@ class ProductDetailsViewModel @Inject constructor(
     }
 
 
-    fun openAddEditProductReview(rating:Double) {
+    fun openAddEditProductReview(rating: Double) {
 
         //If Genuine Customer
 
@@ -291,7 +286,7 @@ class ProductDetailsViewModel @Inject constructor(
 
                     putInt(Constants.Product_Id_Key, productId)
                     putString(Constants.Product_Base_Name, productData.get()?.productBaseName)
-                    putDouble(Constants.RATING_SELECTED,rating)
+                    putDouble(Constants.RATING_SELECTED, rating)
                     putParcelable(
                         Constants.PRODUCT_RATING_DATA_KEY,
                         productReviewsData.get()?.selfRating
@@ -327,13 +322,22 @@ class ProductDetailsViewModel @Inject constructor(
         }
     }
 
-    fun onAddToCartClicked(){
-       /* ratingSelected
-        isHeartSelected*/
+    fun onAddToCartClicked() {
+        /* ratingSelected
+         isHeartSelected*/
         getNavigator()?.openActivity(CartActivity::class.java)
     }
 
-    fun onExpertAdviceClicked(){
+    fun onExpertAdviceClicked() {
+        getNavigator()?.showExpertAdviceDialog(ExpertAdviceBottomSheetFragment(), {
+            Log.d("cancel", "cancel")
+//setAPICall
+            getNavigator()?.dismissExpertBottomSheet()
+
+        }, {
+            Log.d("ok", "ok")
+
+        })
 
     }
 
