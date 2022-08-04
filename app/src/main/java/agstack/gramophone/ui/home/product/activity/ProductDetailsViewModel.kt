@@ -333,6 +333,10 @@ class ProductDetailsViewModel @Inject constructor(
         getNavigator()?.openActivity(CartActivity::class.java)
     }
 
+    fun onExpertAdviceClicked(){
+
+    }
+
 }
 
 

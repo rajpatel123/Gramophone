@@ -660,6 +660,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_expertAdvice"
+                android:onClick="@{()->viewModel.onExpertAdviceClicked()}"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_48sdp"
                 android:layout_marginLeft="@dimen/_5sdp"
