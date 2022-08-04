@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -73,16 +72,15 @@
                                 android:textColor="@color/gray_strike_through"
                                 tools:hint="Valid till March 31,2022" />
 
-
                             <TextView
                                 android:id="@+id/tv_condition"
                                 style="@style/TextSize14Sp"
-                                android:textSize="@dimen/_10ssp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/manrope_bold"
                                 android:text="@{@string/on.concat(viewModel.MOffersItem.product_name).concat(@string/space).concat(viewModel.MOffersItem.applicable_on_sku)}"
                                 android:textColor="@color/gray_strike_through"
+                                android:textSize="@dimen/_10ssp"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/tv_valid_till"
                                 tools:hint="on UPL Oil 1Ltr." />
@@ -98,7 +96,6 @@
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -129,11 +126,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_20sdp"
                         android:text="@{@string/terms_n_conditions+` : `}" />
-
                 </LinearLayout>
-
             </LinearLayout>
         </ScrollView>
-
     </RelativeLayout>
 </layout>
