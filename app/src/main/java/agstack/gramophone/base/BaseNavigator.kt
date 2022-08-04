@@ -19,15 +19,18 @@ interface BaseNavigator {
     fun <T> openActivity(cls: Class<T>, extras: Bundle? = null)
 
     fun <T> openAndFinishActivity(cls:Class<T>,extras: Bundle?=null)
+
     fun<T: Activity> openActivityWithBottomToTopAnimation(cls:Class<T>,extras: Bundle?=null)
 
-    fun isNetworkAvailable():Boolean
+    fun <T> openAndFinishActivityWithClearTopNewTaskClearTaskFlags(cls: Class<T>, extras: Bundle? = null)
 
-    fun requestPermission(permission:String): Boolean
+    fun isNetworkAvailable(): Boolean
 
-    fun getLanguage():String
+    fun requestPermission(permission: String): Boolean
 
-    fun getMessage(stringResourceId:Int):String
+    fun getLanguage(): String
+
+    fun getMessage(stringResourceId: Int): String
 
     fun showToast(stringResourceId: Int)
 
@@ -42,4 +45,6 @@ interface BaseNavigator {
     fun hideProgressBar()
 
 
+
+    fun proceedCall(helpLineNo: String)
 }

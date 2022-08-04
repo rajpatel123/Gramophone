@@ -80,7 +80,10 @@ class LanguageViewModel @Inject constructor(
                         SharedPreferencesKeys.session_token,
                         initiateAppDataResponseModel?.gp_api_response_data?.temp_token
                     )
-
+                    SharedPreferencesHelper.instance?.putString(
+                        SharedPreferencesKeys.CustomerSupportNo,
+                        initiateAppDataResponseModel?.gp_api_response_data?.help_data_list?.customer_support_no
+                    )
                     SharedPreferencesHelper.instance?.putParcelable(
                         SharedPreferencesKeys.app_data,
                         initiateAppDataResponseModel!!

@@ -5,6 +5,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ProductDetailBinding
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
+import agstack.gramophone.ui.home.product.fragment.ExpertAdviceBottomSheetFragment
 import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
 import agstack.gramophone.ui.home.product.fragment.ProductImagesFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
@@ -61,13 +62,12 @@ class ProductDetailsActivity :
 
     private fun setSelfRatingBarChangeListener() {
         viewDataBinding.ratingbarReviews.ratingbarSelfRatingStars.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-            var rating =  rating.toDouble()
+            var rating = rating.toDouble()
             mViewModel?.ratingSelected?.set(rating)
             mViewModel?.openAddEditProductReview(rating)
 
 
         }
-
 
 
     }
@@ -80,6 +80,22 @@ class ProductDetailsActivity :
         genuineCustomerDialog = genuineCustomerRatingAlertFragment
         genuineCustomerDialog.setOnClickSelectedListener(onAddToCartClick)
         genuineCustomerDialog.show(supportFragmentManager, "genuineCustomerDialog")
+    }
+
+
+    private var expertAdviceBottomSheet = ExpertAdviceBottomSheetFragment.newInstance()
+    override fun showExpertAdviceDialog(
+        expertAdviceBottomSheetFragment: ExpertAdviceBottomSheetFragment,
+        onOkayClick: () -> Unit,
+        onCancelClick: () -> Unit
+    ) {
+        expertAdviceBottomSheet = expertAdviceBottomSheetFragment
+        expertAdviceBottomSheet.setOnClickSelectedListener(onOkayClick, onCancelClick)
+        expertAdviceBottomSheet.show(supportFragmentManager, "expertAdviceBottomSheet")
+    }
+
+    override fun dismissExpertBottomSheet() {
+        expertAdviceBottomSheet.dismiss()
     }
 
 

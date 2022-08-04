@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_16sdp"
         android:layout_marginBottom="@dimen/_16sdp"
-        android:background="@drawable/rounded_corner_16_solid_white_stroke_gray"
+        android:background="@drawable/rounded_corner_12_solid_white_stroke_gray"
         android:orientation="vertical">
 
         <ImageView
@@ -18,43 +18,45 @@
             android:background="@drawable/dummy_shop_by_store" />
 
         <TextView
-            android:fontFamily="@font/manrope_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"
             android:ellipsize="end"
+            android:fontFamily="@font/manrope_bold"
             android:maxLines="3"
             android:paddingStart="@dimen/_12sdp"
             android:paddingTop="@dimen/_10sdp"
             android:paddingEnd="@dimen/_4sdp"
+            android:text="Pesticides"
             android:textColor="@color/blakish"
             android:textSize="@dimen/_12ssp"
-            android:text="Pesticides" />
+            android:visibility="gone" />
 
         <TextView
-            android:fontFamily="@font/manrope_regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:ellipsize="end"
+            android:fontFamily="@font/manrope_regular"
             android:maxLines="1"
             android:paddingStart="@dimen/_12sdp"
             android:paddingEnd="@dimen/_4sdp"
+            android:text="Farming Accesories"
             android:textColor="@color/gray"
-            android:textSize="@dimen/_11ssp"
-            android:text="Farming Accesories" />
+            android:textSize="@dimen/_11ssp" />
 
         <TextView
-            android:fontFamily="@font/manrope_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"
-            android:paddingBottom="@dimen/_4sdp"
+            android:fontFamily="@font/manrope_bold"
             android:maxLines="1"
             android:paddingStart="@dimen/_12sdp"
             android:paddingEnd="@dimen/_4sdp"
+            android:paddingBottom="12dp"
+            android:text="Starts from ₹ 99"
             android:textColor="@color/green"
-            android:textSize="@dimen/_11ssp"
-            android:text="Starts from ₹ 99" />
+            android:textSize="@dimen/_11ssp" />
 
     </LinearLayout>
 </FrameLayout>

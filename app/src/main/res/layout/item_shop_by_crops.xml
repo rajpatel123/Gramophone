@@ -7,15 +7,14 @@
 
     <FrameLayout
         android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_80sdp"
-        android:background="@drawable/rounded_stroke">
+        android:layout_height="@dimen/_80sdp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:contentDescription="@string/image"
-            android:src="@drawable/dummy_category_item" />
+            android:src="@drawable/dummy_shop_by_crop" />
 
     </FrameLayout>
 
@@ -25,9 +24,9 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/_4sdp"
         android:layout_marginBottom="@dimen/_16sdp"
-        android:fontFamily="@font/manrope_medium"
-        android:text="Onion"
+        android:fontFamily="@font/manrope_bold"
+        android:text="Tomato"
         android:textColor="@color/gray"
-        android:textSize="@dimen/_12ssp" />
+        android:textSize="14sp" />
 
 </LinearLayout>

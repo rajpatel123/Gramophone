@@ -32,7 +32,7 @@
                 android:layout_gravity="center"
                 android:contentDescription="@string/image"
                 android:padding="@dimen/_4sdp"
-                android:src="@drawable/dummy_category_item" />
+                app:product_image="@{model.product_image}" />
 
         </FrameLayout>
 
@@ -46,6 +46,7 @@
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
+            tools:text="#234554677"
             android:text="@{@string/hash_sign.concat(model.order_id)}"
             android:textColor="@color/blakish"
             android:textSize="16sp" />
@@ -62,9 +63,9 @@
             android:gravity="center_vertical"
             android:lineSpacingExtra="-2sp"
             android:text="@{model.order_date.concat(@string/slash_sign).concat(model.quantity).concat(@string/items)}"
-            tools:text="05-Jul-2022 / 3 Items"
             android:textColor="@color/gray_strike_through"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            tools:text="05-Jul-2022 / 3 Items" />
 
         <TextView
             android:id="@+id/tv_total_amount"
@@ -75,9 +76,10 @@
             android:fontFamily="@font/manrope_bold"
             android:lineSpacingExtra="-1sp"
             android:text="@{@string/rupee_symbol.concat(model.price)}"
-            tools:text="₹4320"
             android:textColor="@color/blakish"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:text="₹4320"
+            tools:ignore="RelativeOverlap" />
 
         <View
             android:id="@+id/order_date_separator"
@@ -120,11 +122,11 @@
                     android:drawablePadding="@dimen/_6sdp"
                     android:fontFamily="@font/manrope_medium"
                     android:lineSpacingExtra="0sp"
-                    tools:text="Order Placed"
                     android:text="@{@string/order.concat(model.order_status)}"
                     android:textColor="@color/yellow_dark"
                     android:textSize="14sp"
-                    app:drawableStartCompat="@drawable/ic_order_placed" />
+                    app:drawableStartCompat="@drawable/ic_order_placed"
+                    tools:text="Order Placed" />
 
             </RelativeLayout>
 
@@ -151,10 +153,10 @@
         <View
             android:id="@+id/tab_separator"
             android:layout_width="match_parent"
-            android:layout_height="4dp"
+            android:layout_height="3dp"
             android:layout_below="@+id/ll_status"
             android:layout_marginTop="@dimen/_20sdp"
-            android:alpha="0.8"
+            android:alpha="0.5"
             android:background="@color/gray_strike_through"
             android:visibility="visible" />
 

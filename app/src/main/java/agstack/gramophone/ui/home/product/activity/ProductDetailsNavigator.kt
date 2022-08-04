@@ -2,6 +2,7 @@ package agstack.gramophone.ui.home.product.activity
 
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
+import agstack.gramophone.ui.home.product.fragment.ExpertAdviceBottomSheetFragment
 import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
@@ -21,5 +22,7 @@ interface ProductDetailsNavigator: BaseNavigator {
      fun openViewAllReviewRatingsActivity(productId: Int, productReviewsData: GpApiResponseData?)
     fun openProductDetailsActivity(productData: ProductData)
     fun showGenuineCustomerRatingDialog(genuineCustomerRatingAlertFragment: GenuineCustomerRatingAlertFragment, onAddToCartClick: () -> Unit)
-    //fun openAddEditProductReviewsFragment(newInstance: GenuineCustomerRatingAlertFragment)
+    fun showExpertAdviceDialog(expertAdviceBottomSheetFragment: ExpertAdviceBottomSheetFragment, onOkayClick: () -> Unit,onCancelClick: () -> Unit)
+    fun dismissExpertBottomSheet()
+
 }
