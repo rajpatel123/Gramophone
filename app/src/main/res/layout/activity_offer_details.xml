@@ -85,7 +85,6 @@
                                 app:layout_constraintTop_toBottomOf="@+id/tv_valid_till"
                                 tools:hint="on UPL Oil 1Ltr." />
                         </LinearLayout>
-
                         <ImageView
                             android:id="@+id/imageView2"
                             loadUri="@{viewModel.MOffersItem.image}"
