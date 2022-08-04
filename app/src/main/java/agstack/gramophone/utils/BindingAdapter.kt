@@ -45,7 +45,7 @@ class BindingAdapter {
         @JvmStatic
         fun isUserFavorite(imageView: AppCompatImageView,isUserfav:Boolean){
             if(isUserfav){
-                Glide.with(imageView).load(R.drawable.ic_call).into(imageView)
+                Glide.with(imageView).load(R.drawable.ic_heart_selected).into(imageView)
             }else{
           Glide.with(imageView).load(R.drawable.ic_heart_blank).into(imageView)
             }
