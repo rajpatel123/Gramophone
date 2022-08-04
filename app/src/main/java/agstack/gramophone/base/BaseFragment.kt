@@ -1,5 +1,8 @@
 package agstack.gramophone.base
 
+import agstack.gramophone.R
+import agstack.gramophone.ui.dialog.BottomSheetDialog
+import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.LocaleManagerClass
 import android.app.Activity
 import android.content.Context
@@ -85,6 +88,29 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
         }
     }
 
+    override fun <T:Activity> openActivityWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?) {
+        Intent(context, cls).apply {
+
+            if (extras != null)
+                putExtras(extras)
+            startActivity(this)
+            requireActivity().overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+
+        }
+    }
+
+
+    override fun <T> openAndFinishActivityWithClearTopNewTaskClearTaskFlags(cls: Class<T>, extras: Bundle?) {
+        Intent(context, cls).apply {
+
+            if (extras != null)
+                putExtras(extras)
+            this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(this)
+
+        }
+    }
+
     override fun requestPermission(permission: String) :Boolean{
         TODO("Not yet implemented")
     }
@@ -116,5 +142,15 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
 
     override fun hideProgressBar() {
 
+
+    }
+
+    override fun proceedCall(helpLineNo: String) {
+        val bottomSheet = BottomSheetDialog()
+        bottomSheet.customerSupportNumber = helpLineNo
+        bottomSheet.show(
+            requireActivity().supportFragmentManager,
+            Constants.BOTTOM_SHEET
+        )
     }
 }

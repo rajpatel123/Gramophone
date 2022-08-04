@@ -11,5 +11,8 @@ interface ProductReviewsNavigator :BaseNavigator {
     fun setProductReviewsAdapter(ratingAndReviewsAdapter: RatingAndReviewsAdapter)
     fun setSortBySpinnerAdapter(simpleListViewAdapter: SimpleListViewAdapter, onItemClick: (String) -> Unit)
     fun hideDropDown()
-
+    fun onListUpdated()
+    fun showLoaderFooter()
+    fun notifyDataSetChanged()
+    fun resetListPosition()
 }

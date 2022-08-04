@@ -60,7 +60,12 @@ class BindingAdapter {
         @BindingAdapter("percentageOff")
         @JvmStatic
         fun percentageOff(textView: TextView,model: RelatedProductItem){
-            textView.setText(((model.salesPrice)!!.toFloat()-(model.mrpPrice)!!.toFloat()).toString()+" % Off")
+            /*Formula = (MP-SP/SP *100 )*/
+            val numarator = ((model.mrpPrice!!.toFloat()-(model.salesPrice)!!.toFloat())*100)
+            val denominator = model.salesPrice.toFloat()
+            val percentage = numarator/denominator
+            val formatted_percentage = String.format("%.02f", percentage);
+            textView.setText(formatted_percentage+" % Off")
         }
 
     }

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.home.product.activity.productreview.AddEditProductReviewViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainLayout"
+        android:background="@drawable/rounded_corner_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_reviewTitle"
+            style="@style/TextSize16Sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_17sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/detailLayout"
+            android:text="@string/writeareview"
+            />
+
+        <ImageView
+            android:id="@+id/ic_cross"
+            android:onClick="@{()->viewModel.onCrossClicked()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_marginRight="@dimen/_17sdp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_cross" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_marginTop="@dimen/_18sdp"
+            android:id="@+id/detailLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/green_transparent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_reviewTitle">
+
+
+            <ImageView
+                android:id="@+id/iv_productImg"
+                android:layout_width="@dimen/_68sdp"
+                android:layout_height="@dimen/_68sdp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_12sdp"
+                android:background="@color/white"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/tv_productDescription"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/img_sample_prod" />
+
+
+            <TextView
+                android:id="@+id/tv_productDescription"
+                style="@style/TextSize13Sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_17sdp"
+                android:lines="2"
+                android:text="@{viewModel.productBaseName}"
+                app:layout_constraintLeft_toRightOf="@+id/iv_productImg"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="BioEnzymeeeeeeeeeeeeeeeeeee" />
+
+
+            <RatingBar
+                android:id="@+id/ratingbar_user"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_13sdp"
+                android:layout_marginBottom="@dimen/_18sdp"
+                android:isIndicator="false"
+                android:max="5"
+                android:numStars="5"
+                android:scaleX=".8"
+                android:scaleY=".8"
+                android:stepSize="0.1"
+                doubleToFloatRating="@{viewModel.productRating}"
+                android:theme="@style/RatingBar"
+                android:transformPivotX="0dp"
+                android:transformPivotY="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/iv_productImg"
+                app:layout_constraintTop_toBottomOf="@+id/tv_productDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etCustomerReview"
+            android:text="@={viewModel.customerReviewText}"
+            style="@style/TextSize14Sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="@dimen/_17sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_40sdp"
+            android:fontFamily="@font/manrope_medium"
+            android:hint="@string/share_your_experience"
+            app:layout_constraintTop_toBottomOf="@+id/detailLayout" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_24sdp"
+            android:layout_marginRight="@dimen/_24sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:background="@drawable/round_corner_rectangle_fill"
+            android:text="@string/submit"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:onClick="@{()->viewModel.onSubmitClick()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

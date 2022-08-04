@@ -18,6 +18,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import okhttp3.internal.notify
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -28,10 +29,12 @@ class ProductReviewsViewModel @Inject constructor(
 ) : BaseViewModel<ProductReviewsNavigator>() {
 
     var mProductReviewDataBundle = ObservableField<GpApiResponseData?>()
-    var sortByKey :String=Constants.RECENT
+    var sortByKey: String = Constants.RECENT
+    var sortBySpinnerText = ObservableField<String>()
     lateinit var sortByList: ArrayList<String>
-    var mProductReviewsList: MutableList<ReviewListItem?>? = null
+    var mProductReviewsList = ArrayList<ReviewListItem?>()
     private var loadProductOffersDataJob: Job? = null
+    var isLastPage = false
 
     fun getBundleData() {
         val bundle = getNavigator()?.getBundle()
@@ -39,8 +42,10 @@ class ProductReviewsViewModel @Inject constructor(
 
             mProductReviewDataBundle.set(bundle?.getParcelable<GpApiResponseData>(Constants.PRODUCTREVIEWDATA))
             getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.ratingandreviews)!!)
+            sortBySpinnerText.set(getNavigator()?.getMessage(R.string.top_reviews)!!)
 
-            var mProductReviewsList: List<ReviewListItem?>? = mProductReviewDataBundle?.get()?.reviewList?.data
+           mProductReviewsList=
+                (mProductReviewDataBundle?.get()?.reviewList?.data) as ArrayList<ReviewListItem?>
 
 
             getNavigator()?.setProductReviewsAdapter(RatingAndReviewsAdapter(mProductReviewsList))
@@ -52,25 +57,40 @@ class ProductReviewsViewModel @Inject constructor(
     fun setSortingListOptions(list: ArrayList<String>) {
         sortByList = list
         //set sortByList
-        getNavigator()?.setSortBySpinnerAdapter(SimpleListViewAdapter(sortByList)) {SortByValue->
-            if(SortByValue.equals(Constants.RECENT,true)){
-                sortByKey= Constants.RECENT
-            } else if(SortByValue.equals(Constants.TOP,true)){
-            sortByKey= Constants.TOP
-        }
+        getNavigator()?.setSortBySpinnerAdapter(SimpleListViewAdapter(sortByList)) { SortByValue ->
+            if (SortByValue.equals(Constants.RECENT_REVIEWS, true)) {
+                sortByKey = Constants.RECENT
+            } else if (SortByValue.equals(Constants.TOP_REVIEWS, true)) {
+                sortByKey = Constants.TOP
+            }
+            sortBySpinnerText.set(SortByValue)
+
             getNavigator()?.hideDropDown()
             viewModelScope.launch {
-            loadProductOffersDataJob.cancelIfActive()
-            loadProductOffersDataJob = checkNetworkThenRun {
-                val ReviewsResponse = productRepository.getProductReviewsData(sortByKey,
-                    "1", ProductData(mProductReviewDataBundle.get()?.selfRating?.productId!!))
-                //show loader
-                mProductReviewsList?.clear()
-                mProductReviewsList?.addAll(ReviewsResponse.body()?.gpApiResponseData?.reviewList?.data!!)
+                loadProductOffersDataJob.cancelIfActive()
+                loadProductOffersDataJob = checkNetworkThenRun {
+                    try{
+                    val ReviewsResponse = productRepository.getProductReviewsData(
+                        sortByKey,
+                        "1", ProductData(mProductReviewDataBundle.get()?.selfRating?.productId!!)
+                    )
+
+                        //for page 1, clear the list and load from starting
+                        mProductReviewsList?.clear()
+                        getNavigator()?.resetListPosition()
+                        isLastPage = false
+                        mProductReviewsList.addAll(ReviewsResponse.body()?.gpApiResponseData?.reviewList?.data!!)
+                        getNavigator()?.notifyDataSetChanged()
+
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
 
 
 
-            }}
+
+                }
+            }
 
 
         }
@@ -91,30 +111,35 @@ class ProductReviewsViewModel @Inject constructor(
         }
     }
 
-    val loadMore: (Int, (() -> Unit)?) -> Unit = { current_page, action ->
-
+    fun loadMore(currentPage:Int) {
         loadProductOffersDataJob.cancelIfActive()
-        //if current page =1, Clear the list sent to adapter
-        if(current_page==1){
-            mProductReviewsList?.clear()
-        }
+        getNavigator()?.showLoaderFooter()
+
         loadProductOffersDataJob = viewModelScope.launch {
-            // add this code on ScrollUp of recycler View with Pgno = Pgno+1
-            val productReviewsResponseDeferred = async {
-                productRepository.getProductReviewsData(sortByKey, current_page.toString(), ProductData(mProductReviewDataBundle.get()?.selfRating?.productId!!)
-                )
+
+            val ReviewsResponse = productRepository.getProductReviewsData(
+                sortByKey,
+                currentPage.toString(),
+                ProductData(mProductReviewDataBundle.get()?.selfRating?.productId!!)
+            )
+
+            if (ReviewsResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
+                mProductReviewsList.addAll(ReviewsResponse.body()?.gpApiResponseData?.reviewList?.data!!)
+                val lastpage = ReviewsResponse.body()?.gpApiResponseData?.reviewList?.meta?.to
+                if (currentPage == lastpage) {
+                    isLastPage = true
+
+                }
+                getNavigator()?.onListUpdated()
+            }else{
+                getNavigator()?.onListUpdated()
             }
 
-            val ReviewsResponse = productReviewsResponseDeferred.await()
-
-
         }
-
-
     }
 
 
-
-
-
 }
+
+
+

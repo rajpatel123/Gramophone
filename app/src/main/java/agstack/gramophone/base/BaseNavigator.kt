@@ -1,5 +1,6 @@
 package agstack.gramophone.base
 
+import android.app.Activity
 import android.os.Bundle
 
 /*
@@ -17,7 +18,11 @@ interface BaseNavigator {
 
     fun <T> openActivity(cls: Class<T>, extras: Bundle? = null)
 
-    fun <T> openAndFinishActivity(cls: Class<T>, extras: Bundle? = null)
+    fun <T> openAndFinishActivity(cls:Class<T>,extras: Bundle?=null)
+
+    fun<T: Activity> openActivityWithBottomToTopAnimation(cls:Class<T>,extras: Bundle?=null)
+
+    fun <T> openAndFinishActivityWithClearTopNewTaskClearTaskFlags(cls: Class<T>, extras: Bundle? = null)
 
     fun isNetworkAvailable(): Boolean
 
@@ -38,4 +43,6 @@ interface BaseNavigator {
     fun onLoading()
 
     fun hideProgressBar()
+
+    fun proceedCall(helpLineNo: String)
 }

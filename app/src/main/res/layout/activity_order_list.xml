@@ -16,27 +16,28 @@
         android:layout_height="match_parent">
 
         <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar_with_back_arrow_and_help" />
+            android:id="@+id/myToolbar"
+            layout="@layout/layout_toolbar" />
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
+            android:id="@+id/tabLayout"
             style="@style/TabIndicatorStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_44sdp"
-            android:layout_below="@+id/toolbar"
+            android:layout_below="@+id/myToolbar"
             android:layout_gravity="center_horizontal"
             app:tabIndicatorColor="@color/orange">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Recent Orders" />
+                android:text="@string/recent_orders" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabPast"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Past Orders" />
+                android:text="@string/past_orders" />
 
         </com.google.android.material.tabs.TabLayout>
 
@@ -44,41 +45,65 @@
             android:id="@+id/tab_separator"
             android:layout_width="match_parent"
             android:layout_height="14dp"
-            android:layout_below="@+id/tab_layout"
+            android:layout_below="@+id/tabLayout"
             android:background="#F2F4F7"
             android:visibility="visible" />
 
-
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_order"
+            android:id="@+id/rvRecent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tab_separator"
-            tools:listitem="@layout/item_order" />
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:recentSize="@{viewModel.recentOrderSize}"
+            app:selectedTab="@{viewModel.selectedTab}"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_order"
+            tools:visibility="visible" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tab_separator"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:pastSize="@{viewModel.pastOrderSize}"
+            app:selectedTab="@{viewModel.selectedTab}"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_order"
+            tools:visibility="visible" />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tab_separator"
             android:layout_centerInParent="true"
+            android:background="@color/gray_empty_bg"
             android:gravity="center"
-            android:layout_marginStart="@dimen/_56sdp"
-            android:layout_marginEnd="@dimen/_56sdp"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            android:visibility="gone"
+            app:pastSize="@{viewModel.pastOrderSize}"
+            app:recentSize="@{viewModel.recentOrderSize}"
+            app:selectedTab="@{viewModel.selectedTab}">
 
             <ImageView
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_100sdp"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_90sdp"
                 android:contentDescription="@string/image"
-                android:src="@drawable/ic_cart_empty" />
+                android:src="@drawable/ic_order_empty" />
 
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/_16sdp"
                 android:fontFamily="@font/manrope_bold"
-                android:text="No Orders"
+                android:text="@string/no_orders"
                 android:textColor="@color/brand_color"
                 android:textSize="18sp" />
 
@@ -89,9 +114,11 @@
                 android:layout_marginTop="@dimen/_4sdp"
                 android:fontFamily="@font/manrope_regular"
                 android:gravity="center"
+                android:hint="@string/no_recent_order"
                 android:lineSpacingExtra="0sp"
-                android:text="Orders older than 6 months will be displayed here, check “Recent orders” for recent orders."
+                android:text="@{viewModel.emptyText}"
                 android:textColor="@color/gray"
+                android:textColorHint="@color/gray"
                 android:textSize="14sp"
                 android:translationY="-0.24sp" />
 
@@ -106,7 +133,8 @@
                 android:focusable="true"
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="center"
-                android:text="Shop Now"
+                android:onClick="@{() -> viewModel.onClickShopNow()}"
+                android:text="@string/shop_now"
                 android:textColor="@color/white"
                 android:textSize="13sp"
                 android:textStyle="normal" />
@@ -118,6 +146,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="gone" />
+            android:visibility="@{viewModel.progress == true ? View.VISIBLE : View.GONE}" />
     </RelativeLayout>
 </layout>

@@ -5,12 +5,10 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ProductDetailBinding
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
+import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
 import agstack.gramophone.ui.home.product.fragment.ProductImagesFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
-import agstack.gramophone.ui.home.view.fragments.market.model.GpApiResponseData
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
-import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
-import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
+import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
@@ -21,6 +19,8 @@ import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatTextView
@@ -58,17 +58,35 @@ class ProductDetailsActivity :
     }
 
     private fun setSelfRatingBarChangeListener() {
-        viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.setOnRatingBarChangeListener{ ratingBar, rating, fromUser ->
+        viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
             mViewModel?.productReviewsData?.get()?.selfRating?.rating = rating.toDouble()
-            //Open a SelfRatingDialogFragment
+
 
         }
 
 
 
+        viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.setOnTouchListener(View.OnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                //if valid Customer , on Click of rating open ADD/Edit ProductReview
+                mViewModel?.openAddEditProductReview()
+                //else open GenuineCustomerRatingAlertFragment
+                GenuineCustomerRatingAlertFragment.newInstance("Write a review","")
+                    .show(supportFragmentManager,"")
+
+            }
+
+
+            return@OnTouchListener true
+        })
+
+
     }
 
-
+ /*   override fun openAddEditProductReviewsFragment(newInstance: GenuineCustomerRatingAlertFragment) {
+        newInstance.show(supportFragmentManager,"ProductReviewsDialog")
+    }
+*/
     private fun initProductDetailView() {
         viewDataBinding?.tvShowAllDetails?.setOnClickListener {
             isShowMoreClicked = !isShowMoreClicked
@@ -93,9 +111,6 @@ class ProductDetailsActivity :
                 .isShowMoreSelected = isShowMoreClicked
 
             (viewDataBinding?.rvProductDetails?.adapter as ProductDetailsAdapter).notifyDataSetChanged()
-
-
-
 
 
         }
@@ -192,7 +207,7 @@ class ProductDetailsActivity :
     override fun setProductSKUOfferAdapter(
         productSKUOfferAdapter: ProductSKUOfferAdapter,
         onOfferItemClicked: (PromotionListItem) -> Unit,
-        onViewDetailsClicked:(PromotionListItem)->Unit
+        onViewDetailsClicked: (PromotionListItem) -> Unit
     ) {
         productSKUOfferAdapter.selectedProduct = onOfferItemClicked
         productSKUOfferAdapter.onViewAllClicked = onViewDetailsClicked
@@ -240,11 +255,15 @@ class ProductDetailsActivity :
         productId: Int,
         productReviewsData: GpApiResponseData?
     ) {
-        openActivity(ProductAllReviewsActivity::class.java,Bundle().apply {
-            putParcelable(Constants.PRODUCTREVIEWDATA,productReviewsData)
-            putInt(Constants.PRODUCTID,productId)
+        openActivity(ProductAllReviewsActivity::class.java, Bundle().apply {
+            putParcelable(Constants.PRODUCTREVIEWDATA, productReviewsData)
+            putInt(Constants.PRODUCTID, productId)
         })
     }
 
-
+    override fun openProductDetailsActivity(productData: ProductData) {
+        openActivity(ProductDetailsActivity::class.java, Bundle().apply {
+            putParcelable("product", productData)
+        })
+    }
 }

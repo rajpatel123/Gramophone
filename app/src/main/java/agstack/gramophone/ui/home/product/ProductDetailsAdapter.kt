@@ -23,7 +23,7 @@ class ProductDetailsAdapter(productDetailsKeyValueList: ArrayList<KeyPointsItem?
     ): ProductDetailsAdapter.CustomViewHolder {
         mContext = viewGroup.context
         return CustomViewHolder(
-            ProductDetailsRowItemBinding.inflate(LayoutInflater.from(viewGroup.context))
+            ProductDetailsRowItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
         )
     }
 
@@ -32,7 +32,8 @@ class ProductDetailsAdapter(productDetailsKeyValueList: ArrayList<KeyPointsItem?
         holder.binding.setVariable(BR.model, model)
         val mBinding = holder.binding as ProductDetailsRowItemBinding
         if (position % 2 == 0) {
-            mBinding.mainContainer.setBackgroundResource(R.drawable.greensolid_with_grey_borders)
+            mBinding.tvKey.setBackgroundResource(R.drawable.greensolid_with_grey_borders)
+            mBinding.tvValue.setBackgroundResource(R.drawable.greensolid_with_grey_borders)
         }
     }
 

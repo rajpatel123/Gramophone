@@ -1,7 +1,10 @@
 package agstack.gramophone.base
 
 import agstack.gramophone.R
+import agstack.gramophone.ui.dialog.BottomSheetDialog
+import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.LocaleManagerClass
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -67,6 +70,17 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
         }
     }
+    override fun <T:Activity> openActivityWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?) {
+        Intent(this, cls).apply {
+
+            if (extras != null)
+                putExtras(extras)
+            startActivity(this)
+            overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+
+        }
+    }
+
 
     override fun <T> openAndFinishActivity(cls: Class<T>, extras: Bundle?) {
         Intent(this, cls).apply {
@@ -79,6 +93,16 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         }
     }
 
+    override fun <T> openAndFinishActivityWithClearTopNewTaskClearTaskFlags(cls: Class<T>, extras: Bundle?) {
+        Intent(this, cls).apply {
+
+            if (extras != null)
+                putExtras(extras)
+            this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(this)
+
+        }
+    }
 
     override fun isNetworkAvailable(): Boolean {
         return true
@@ -175,6 +199,15 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
                 return false
             }
         }
+    }
+
+    override fun proceedCall(helpLineNo: String) {
+        val bottomSheet = BottomSheetDialog()
+        bottomSheet.customerSupportNumber = helpLineNo
+        bottomSheet.show(
+            supportFragmentManager,
+            Constants.BOTTOM_SHEET
+        )
     }
 
     override fun onDestroy() {
