@@ -63,7 +63,6 @@ class ProductDetailsViewModel @Inject constructor(
         if (qtySelected.get()!! >= 2)
             qtySelected.set(qtySelected.get()!! - 1)
     }
-
     fun getBundleData() {
         val bundle = getNavigator()?.getBundle()
         if (bundle?.getParcelable<ProductData>("product") != null) {
