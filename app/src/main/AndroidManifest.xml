@@ -69,7 +69,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ui.home.view.HomeActivity" />
         <activity android:name=".ui.profile.view.ProfileActivity" />
-        <activity android:name=".ui.home.product.activity.ProductDetailsActivity" />
+        <activity android:name=".ui.home.product.activity.ProductDetailsActivity"
+            />
         <activity android:name=".ui.cart.view.CartActivity" />
         <activity android:name=".ui.order.view.OrderListActivity" />
         <activity android:name=".ui.checkout.CheckoutStatusActivity" />

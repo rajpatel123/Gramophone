@@ -94,12 +94,30 @@ interface GramAppService {
         @Body productData: ProductData
     ): Response<ProductReviewDataResponse>
 
+
+    @PUT("api/v5/review/update-review")
+    suspend fun updateReviewData(
+        @Body productData: ProductData
+    ): Response<ProductReviewDataResponse>
+
+
+    @POST("api/v5/review/add-review")
+    suspend fun addReviewData(
+        @Body productData: ProductData
+    ): Response<ProductReviewDataResponse>
+
+
+
     @POST("api/v5/product/get-related-product")
     suspend fun getRelatedProductsData(@Body productData: ProductData): Response<RelatedProductResponseData>
 
 
     @POST("api/v5/product/get-promotion")
     suspend fun getOffersOnProductData(@Body productData: ProductData): Response<OffersProductResponseData>
+
+
+    @POST("api/v5/cart/add-to-cart")
+    suspend fun addToCart(@Body productData: ProductData): Response<CartDataResponse>
 
     @POST("api/v5/cart/add-to-cart")
     suspend fun addToCart(@Body addToCartRequest: AddToCartRequest): Response<SuccessStatusResponse>

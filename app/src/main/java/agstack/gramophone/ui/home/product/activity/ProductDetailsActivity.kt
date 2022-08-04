@@ -5,6 +5,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ProductDetailBinding
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
+import agstack.gramophone.ui.home.product.fragment.ExpertAdviceBottomSheetFragment
 import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
 import agstack.gramophone.ui.home.product.fragment.ProductImagesFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
@@ -25,6 +26,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerFragment
@@ -37,6 +39,7 @@ class ProductDetailsActivity :
     ProductDetailsNavigator, ProductImagesFragment.ProductImagesFragmentInterface,
     YouTubePlayer.OnInitializedListener {
 
+
     private val productDetailsViewModel: ProductDetailsViewModel by viewModels()
     private var multipleImageDetailDialog: MultipleImageDetailDialog? = null
     private val TAG = ProductDetailsActivity::class.java.getSimpleName()
@@ -48,9 +51,9 @@ class ProductDetailsActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         productDetailsViewModel.getBundleData()
-        Handler().postDelayed({
-            initYoutubePlayer()
-        }, 500)
+        /*  Handler().postDelayed({
+              initYoutubePlayer()
+          }, 500)*/
         initProductDetailView()
         setSelfRatingBarChangeListener()
 
@@ -58,35 +61,44 @@ class ProductDetailsActivity :
     }
 
     private fun setSelfRatingBarChangeListener() {
-        viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-            mViewModel?.productReviewsData?.get()?.selfRating?.rating = rating.toDouble()
+        viewDataBinding.ratingbarReviews.ratingbarSelfRatingStars.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+            var rating = rating.toDouble()
+            mViewModel?.ratingSelected?.set(rating)
+            mViewModel?.openAddEditProductReview(rating)
 
 
         }
 
 
-
-        viewDataBinding?.ratingbarReviews?.ratingbarSelfRatingStars?.setOnTouchListener(View.OnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                //if valid Customer , on Click of rating open ADD/Edit ProductReview
-                mViewModel?.openAddEditProductReview()
-                //else open GenuineCustomerRatingAlertFragment
-                GenuineCustomerRatingAlertFragment.newInstance("Write a review","")
-                    .show(supportFragmentManager,"")
-
-            }
-
-
-            return@OnTouchListener true
-        })
-
-
     }
 
- /*   override fun openAddEditProductReviewsFragment(newInstance: GenuineCustomerRatingAlertFragment) {
-        newInstance.show(supportFragmentManager,"ProductReviewsDialog")
+    private var genuineCustomerDialog = GenuineCustomerRatingAlertFragment.newInstance()
+    override fun showGenuineCustomerRatingDialog(
+        genuineCustomerRatingAlertFragment: GenuineCustomerRatingAlertFragment,
+        onAddToCartClick: () -> Unit
+    ) {
+        genuineCustomerDialog = genuineCustomerRatingAlertFragment
+        genuineCustomerDialog.setOnClickSelectedListener(onAddToCartClick)
+        genuineCustomerDialog.show(supportFragmentManager, "genuineCustomerDialog")
     }
-*/
+
+
+    private var expertAdviceBottomSheet = ExpertAdviceBottomSheetFragment.newInstance()
+    override fun showExpertAdviceDialog(
+        expertAdviceBottomSheetFragment: ExpertAdviceBottomSheetFragment,
+        onOkayClick: () -> Unit,
+        onCancelClick: () -> Unit
+    ) {
+        expertAdviceBottomSheet = expertAdviceBottomSheetFragment
+        expertAdviceBottomSheet.setOnClickSelectedListener(onOkayClick, onCancelClick)
+        expertAdviceBottomSheet.show(supportFragmentManager, "expertAdviceBottomSheet")
+    }
+
+    override fun dismissExpertBottomSheet() {
+        expertAdviceBottomSheet.dismiss()
+    }
+
+
     private fun initProductDetailView() {
         viewDataBinding?.tvShowAllDetails?.setOnClickListener {
             isShowMoreClicked = !isShowMoreClicked
@@ -114,6 +126,7 @@ class ProductDetailsActivity :
 
 
         }
+
 
     }
 
@@ -240,7 +253,7 @@ class ProductDetailsActivity :
 
     override fun setProductImagesViewPagerAdapter(productImagesAdapter: ProductImagesAdapter) {
         viewDataBinding.productImagesViewPager?.adapter = productImagesAdapter
-        viewDataBinding.dotsIndicator.setViewPager(viewDataBinding.productImagesViewPager)
+        viewDataBinding.dotsIndicator.attachTo(viewDataBinding.productImagesViewPager)
     }
 
     override fun setProductDetailsAdapter(productDetailsAdapter: ProductDetailsAdapter) {

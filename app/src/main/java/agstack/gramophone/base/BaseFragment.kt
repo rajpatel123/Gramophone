@@ -142,8 +142,9 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
 
     override fun hideProgressBar() {
 
-
     }
+
+
 
     override fun proceedCall(helpLineNo: String) {
         val bottomSheet = BottomSheetDialog()

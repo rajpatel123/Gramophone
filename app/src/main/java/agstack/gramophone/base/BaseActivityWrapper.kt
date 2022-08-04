@@ -103,6 +103,21 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
         }
     }
+   /* fun <T:Activity> openActivityforResultWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?,requestCode:Int) {
+       var intent= Intent(this, cls).apply {
+            if (extras != null)
+                putExtras(extras)
+
+        }
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val value = it.data?.getStringExtra("input")
+            }
+        }.launch(intent)
+    }*/
+
 
     override fun isNetworkAvailable(): Boolean {
         return true

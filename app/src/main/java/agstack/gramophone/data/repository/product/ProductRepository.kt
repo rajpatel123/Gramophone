@@ -19,12 +19,17 @@ interface ProductRepository {
     suspend fun getProductData(productMap: ProductData): Response<ProductDataResponse>
 
     suspend fun getProductReviewsData(sortBy:String?,page:String?,productMap: ProductData):Response<ProductReviewDataResponse>
+    suspend fun addProductReviewsData(productData:ProductData):Response<ProductReviewDataResponse>
+
+    suspend fun updateProductReviewsData(productData:ProductData):Response<ProductReviewDataResponse>
 
     suspend fun getRelatedProductsData(productMap: ProductData):Response<RelatedProductResponseData>
 
     suspend fun getOffersOnProductData(productMap: ProductData):Response<OffersProductResponseData>
 
     suspend fun addToCart(addToCartRequest: AddToCartRequest): Response<SuccessStatusResponse>
+
+    suspend fun addToCart(productData:ProductData):Response<CartDataResponse>
 
     suspend fun getCartData(): Response<CartDataResponse>
 
@@ -35,4 +40,5 @@ interface ProductRepository {
     suspend fun getOrderDetails(orderDetailRequest: OrderDetailRequest): Response<OrderDetailResponse>
 
     suspend fun placeOrder(): Response<PlaceOrderResponse>
+
 }

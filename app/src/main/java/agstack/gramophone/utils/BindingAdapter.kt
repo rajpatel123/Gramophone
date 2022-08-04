@@ -3,6 +3,9 @@ package agstack.gramophone.utils
 import agstack.gramophone.R
 import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
 import android.net.Uri
+import android.os.Build
+import android.text.Html
+import android.text.Spanned
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RatingBar
@@ -42,7 +45,7 @@ class BindingAdapter {
         @JvmStatic
         fun isUserFavorite(imageView: AppCompatImageView,isUserfav:Boolean){
             if(isUserfav){
-                Glide.with(imageView).load(R.drawable.ic_call).into(imageView)
+                Glide.with(imageView).load(R.drawable.ic_heart_selected).into(imageView)
             }else{
           Glide.with(imageView).load(R.drawable.ic_heart_blank).into(imageView)
             }
@@ -67,6 +70,18 @@ class BindingAdapter {
             val formatted_percentage = String.format("%.02f", percentage);
             textView.setText(formatted_percentage+" % Off")
         }
+
+        @BindingAdapter("htmlText")
+        fun setHtmlTextValue(textView: TextView, htmlText: String?) {
+            if (htmlText == null) return
+            val result: Spanned = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY)
+            } else {
+                Html.fromHtml(htmlText)
+            }
+            textView.text = result
+        }
+
 
     }
 }
