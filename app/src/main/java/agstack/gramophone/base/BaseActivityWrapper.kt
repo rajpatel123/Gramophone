@@ -1,6 +1,8 @@
 package agstack.gramophone.base
 
 import agstack.gramophone.R
+import agstack.gramophone.ui.dialog.BottomSheetDialog
+import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.LocaleManagerClass
 import android.app.Activity
 import android.content.Intent
@@ -91,6 +93,16 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         }
     }
 
+    override fun <T> openAndFinishActivityWithClearTopNewTaskClearTaskFlags(cls: Class<T>, extras: Bundle?) {
+        Intent(this, cls).apply {
+
+            if (extras != null)
+                putExtras(extras)
+            this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(this)
+
+        }
+    }
    /* fun <T:Activity> openActivityforResultWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?,requestCode:Int) {
        var intent= Intent(this, cls).apply {
             if (extras != null)
@@ -204,11 +216,17 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         }
     }
 
+    override fun proceedCall(helpLineNo: String) {
+        val bottomSheet = BottomSheetDialog()
+        bottomSheet.customerSupportNumber = helpLineNo
+        bottomSheet.show(
+            supportFragmentManager,
+            Constants.BOTTOM_SHEET
+        )
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         viewDataBinding?.unbind()
     }
-
-
-
 }
