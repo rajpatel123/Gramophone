@@ -1,10 +1,12 @@
 package agstack.gramophone.di
 
 
-import agstack.gramophone.data.repository.product.ProductRepository
-import agstack.gramophone.data.repository.product.ProductRepositoryImpl
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepositoryImpl
+import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.data.repository.product.ProductRepositoryImpl
+import agstack.gramophone.data.repository.weather.WeatherRepository
+import agstack.gramophone.data.repository.weather.WeatherRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -21,4 +23,6 @@ interface RepositoryModule {
     @Binds
     fun bindProductRepository(impl: ProductRepositoryImpl): ProductRepository
 
+    @Binds
+    fun bindWeatherRepository(impl: WeatherRepositoryImpl): WeatherRepository
 }

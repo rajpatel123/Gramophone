@@ -11,6 +11,7 @@ import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.profile.view.ProfileActivity
+import agstack.gramophone.ui.weather.WeatherActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
@@ -80,6 +81,7 @@ class HomeActivity :
     private fun setupUi() {
         ivCart.setOnClickListener(this)
         ivFavourite.setOnClickListener(this)
+        ivNotification.setOnClickListener(this)
 
         val navHostFragment = supportFragmentManager.findFragmentById(
             R.id.nav_host
@@ -121,6 +123,9 @@ class HomeActivity :
             }
             R.id.ivFavourite -> {
                 openActivity(OrderListActivity::class.java, null)
+            }
+            R.id.ivNotification -> {
+                openActivity(WeatherActivity::class.java, null)
             }
         }
     }

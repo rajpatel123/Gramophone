@@ -230,6 +230,7 @@
     <string name="delivery_address">Delivery Address</string>
     <string name="valid_till">Valid till&#160;</string>
     <string name="on">On&#160;</string>
+    <string name="weather">Weather - Indore</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>
