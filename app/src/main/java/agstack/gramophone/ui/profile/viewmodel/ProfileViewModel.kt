@@ -36,10 +36,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
                 try {
                     if (getNavigator()?.isNetworkAvailable() == true) {
-                        val optInOutDeferred = async {
-                            onBoardingRepository.logoutUser()
-                        }
-                        val logoutResponse = optInOutDeferred.await()
+                        val logoutResponse = onBoardingRepository.logoutUser()
 
                         val logoutResponseModel = handleResponse(logoutResponse).data
 

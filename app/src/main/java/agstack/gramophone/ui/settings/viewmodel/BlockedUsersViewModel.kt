@@ -24,10 +24,7 @@ class BlockedUsersViewModel @Inject constructor(
         viewModelScope.launch {
                 try {
                     if (getNavigator()?.isNetworkAvailable() == true) {
-                        val blockedUsersDeferred = async {
-                            settingsRepository.getBlockedUsersList()
-                        }
-                        val blockedUsersList = blockedUsersDeferred.await()
+                        val blockedUsersList = settingsRepository.getBlockedUsersList()
 
                         val optInResponseData = handleResponse(blockedUsersList).data
 
@@ -55,10 +52,7 @@ class BlockedUsersViewModel @Inject constructor(
         viewModelScope.launch {
                 try {
                     if (getNavigator()?.isNetworkAvailable() == true) {
-                        val unBlockUserDeferred = async {
-                            settingsRepository.unBlockUser(customerId)
-                        }
-                        val blockedUserResponse = unBlockUserDeferred.await()
+                        val blockedUserResponse = settingsRepository.unBlockUser(customerId)
 
                         val blockedUser = handleResponse(blockedUserResponse).data
 
