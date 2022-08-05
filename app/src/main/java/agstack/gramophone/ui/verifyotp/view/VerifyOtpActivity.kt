@@ -48,9 +48,6 @@ class VerifyOtpActivity :
 
     override fun getBundle(): Bundle? = intent.extras
 
-    override fun changeNumber() {
-        openAndFinishActivity(LoginActivity::class.java, null)
-    }
 
     override fun showTimer() {
         tvTime.visibility = VISIBLE
@@ -96,9 +93,7 @@ class VerifyOtpActivity :
         )
     }
 
-    override fun <T> moveToNext(clazz: Class<T>) {
-        openAndFinishActivity(clazz, null)
-    }
+
 
     override fun onLanguageUpdate() {
         verifyOtpViewModel.updateLanguage()

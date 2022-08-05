@@ -21,8 +21,7 @@ class BlockedUsersViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) : BaseViewModel<BlockedUsersNavigator>() {
     fun getBlockedUsersList() {
-        viewModelScope.async {
-            if (getNavigator()?.isNetworkAvailable() == true) {
+        viewModelScope.launch {
                 try {
                     if (getNavigator()?.isNetworkAvailable() == true) {
                         val blockedUsersDeferred = async {
@@ -47,14 +46,13 @@ class BlockedUsersViewModel @Inject constructor(
                         else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                     }
                 }
-            }
+
         }
 
     }
 
     private fun unblockUser(customerId: Int) {
         viewModelScope.async {
-            if (getNavigator()?.isNetworkAvailable() == true) {
                 try {
                     if (getNavigator()?.isNetworkAvailable() == true) {
                         val unBlockUserDeferred = async {
@@ -78,7 +76,6 @@ class BlockedUsersViewModel @Inject constructor(
                         else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                     }
                 }
-            }
         }
 
     }
