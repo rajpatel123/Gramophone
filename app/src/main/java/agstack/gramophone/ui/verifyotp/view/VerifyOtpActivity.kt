@@ -83,26 +83,8 @@ class VerifyOtpActivity :
         }.start()
     }
 
-    override fun onError(message: String?) {
-
-    }
-
-    override fun onSuccess(message: String?) {
-        Toast.makeText(this@VerifyOtpActivity, message, Toast.LENGTH_LONG).show()
-
-    }
-
-    override fun onLoading() {
-
-    }
-
     override fun onHelpClick(number: String) {
-        val bottomSheet = BottomSheetDialog()
-        bottomSheet.customerSupportNumber = number
-        bottomSheet.show(
-            getSupportFragmentManager(),
-            getMessage(R.string.bottomsheet_tag)
-        )
+        verifyOtpViewModel.onHelpClick()
     }
 
     override fun onLanguageChangeClick() {

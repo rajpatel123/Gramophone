@@ -87,17 +87,17 @@ class VerifyOtpViewModel @Inject constructor(
                     } else {
                         getNavigator()?.moveToNext(StateListActivity::class.java)
                     }
-                    getNavigator()?.onSuccess(responseData?.gp_api_message)
+                    getNavigator()?.showToast(responseData?.gp_api_message)
                 } else {
-                    getNavigator()?.onError(responseData?.gp_api_message)
+                    getNavigator()?.showToast(responseData?.gp_api_message)
 
                 }
             } else
-                getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+                getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet)!!)
         } catch (ex: Exception) {
             when (ex) {
-                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
             }
         }
     }
@@ -143,17 +143,17 @@ class VerifyOtpViewModel @Inject constructor(
 
                 if (Constants.GP_API_STATUS.equals(sendOtpResponseModel?.gp_api_status)) {
                     getNavigator()?.showTimer()
-                    getNavigator()?.onSuccess(sendOtpResponseModel?.gp_api_message)
+                    getNavigator()?.showToast(sendOtpResponseModel?.gp_api_message)
                 } else {
-                    getNavigator()?.onError(sendOtpResponseModel?.gp_api_message)
+                    getNavigator()?.showToast(sendOtpResponseModel?.gp_api_message)
                 }
 
             } else
-                getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+                getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet)!!)
         } catch (ex: Exception) {
             when (ex) {
-                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
             }
         }
     }
@@ -198,18 +198,18 @@ class VerifyOtpViewModel @Inject constructor(
                 val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
-                    getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
+                    getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
                 } else {
-                    getNavigator()?.onError(updateLanguageResponseModel?.gp_api_message)
+                    getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
 
                 }
 
             } else
-                getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+                getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet)!!)
         } catch (ex: Exception) {
             when (ex) {
-                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
             }
         }
     }

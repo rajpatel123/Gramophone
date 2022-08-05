@@ -100,12 +100,7 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
     }
 
     override fun onHelpClick(number: String) {
-        val bottomSheet = BottomSheetDialog()
-        bottomSheet.customerSupportNumber = number
-        bottomSheet.show(
-            getSupportFragmentManager(),
-            getMessage(R.string.bottomsheet_tag)
-        )
+        loginViewModel.onHelpClick()
     }
 
     override fun onLanguageChangeClick() {

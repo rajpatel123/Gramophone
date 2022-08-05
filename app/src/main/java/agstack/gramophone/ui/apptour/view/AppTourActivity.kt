@@ -56,12 +56,7 @@ class AppTourActivity :
     }
 
     override fun onHelpClick(number: String) {
-        val bottomSheet = BottomSheetDialog()
-        bottomSheet.customerSupportNumber = number
-        bottomSheet.show(
-            getSupportFragmentManager(),
-            getMessage(R.string.bottomsheet_tag)
-        )
+        appTourViewModel.onHelpClick()
     }
 
     override fun onLanguageChangeClick() {
