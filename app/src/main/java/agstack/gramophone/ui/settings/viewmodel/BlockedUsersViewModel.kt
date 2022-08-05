@@ -52,7 +52,7 @@ class BlockedUsersViewModel @Inject constructor(
     }
 
     private fun unblockUser(customerId: Int) {
-        viewModelScope.async {
+        viewModelScope.launch {
                 try {
                     if (getNavigator()?.isNetworkAvailable() == true) {
                         val unBlockUserDeferred = async {
