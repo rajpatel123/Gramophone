@@ -5,10 +5,12 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityWeatherBinding
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,7 +27,17 @@ class WeatherActivity :
     }
 
     private fun setupUi() {
+        weatherViewModel.getWeatherData()
+
         setUpToolBar(true, getString(R.string.weather), R.drawable.ic_arrow_left)
+    }
+
+    override fun getWeatherColor(isRainView: Boolean) {
+        if (isRainView) {
+            weatherViewModel.weatherViewColor = ContextCompat.getColor(this, R.color.weather_rain)
+        } else {
+            weatherViewModel.weatherViewColor = ContextCompat.getColor(this, R.color.weather_clear)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -46,6 +58,14 @@ class WeatherActivity :
 
             }
         }
+    }
+
+    override fun setHourWiseForecastAdapter(hourWiseForecastAdapter: HourWiseForecastAdapter) {
+        viewDataBinding.rvHoursForecast.adapter = hourWiseForecastAdapter
+    }
+
+    override fun setDayWiseForecastAdapter(dayWiseForecastAdapter: DayWiseForecastAdapter) {
+        viewDataBinding.rvDayForecast.adapter = dayWiseForecastAdapter
     }
 
     override fun getLayoutID(): Int {

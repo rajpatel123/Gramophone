@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="agstack.gramophone.R" />
+
         <import type="android.view.View" />
 
         <variable
@@ -26,227 +28,313 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/myToolbar">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FCF3CC">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_weather_mask_light_orange" />
-
-                <TextView
-                    android:id="@+id/tvLocation"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="26dp"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:layout_toStartOf="@+id/tvChangeLoc"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:fontFamily="@font/manrope_medium"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="-2sp"
-                    android:text="Sawer, Indore, Madhya Pradesh"
-                    android:textColor="@color/gray"
-                    android:textSize="13sp"
-                    app:drawableStartCompat="@drawable/ic_location_marker_black" />
-
-                <TextView
-                    android:id="@+id/tvChangeLoc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:layout_marginEnd="24dp"
-                    android:fontFamily="@font/manrope_bold"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="-2sp"
-                    android:text="@string/change"
-                    android:textColor="@color/orange"
-                    android:textSize="13sp" />
-
-                <View
-                    android:id="@+id/viewLocSeparator"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_below="@+id/tvChangeLoc"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="@dimen/_14sdp"
-                    android:layout_marginEnd="24dp"
-                    android:background="@color/gray" />
+                android:orientation="vertical">
 
                 <RelativeLayout
-                    android:id="@+id/rlWeatherDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/viewLocSeparator"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_marginEnd="24dp">
-
-                    <TextView
-                        android:id="@+id/tvDayTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/manrope_bold"
-                        android:gravity="center_vertical"
-                        android:lineSpacingExtra="0sp"
-                        android:text="TODAY - 08:15 AM"
-                        android:textColor="@color/blakish"
-                        android:textSize="14sp" />
-
-                    <LinearLayout
-                        android:id="@+id/llTemp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tvDayTime"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tvTemp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/manrope_medium"
-                            android:gravity="center_vertical"
-                            android:text="28°"
-                            android:textColor="@color/blakish"
-                            android:textSize="56sp" />
-
-                        <TextView
-                            android:id="@+id/tvTempSign"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/manrope_regular"
-                            android:text="C"
-                            android:textColor="@color/blakish"
-                            android:textSize="34sp" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tvMinMaxTemp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/llTemp"
-                        android:fontFamily="@font/manrope_bold"
-                        android:gravity="center_vertical"
-                        android:lineSpacingExtra="0sp"
-                        android:text="Min 23°C  - Max 31°C"
-                        android:textColor="@color/blakish"
-                        android:textSize="14sp" />
+                    android:background="@color/weather_clear"
+                    app:backgroundResource="@{viewModel.isRainView() ? R.color.weather_rain : R.color.weather_clear}">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_weather_clear" />
+                        android:contentDescription="@string/image"
+                        android:src="@drawable/ic_weather_mask_light_orange" />
+
+                    <TextView
+                        android:id="@+id/tvLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="26dp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_toStartOf="@+id/tvChangeLoc"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="-2sp"
+                        android:text="Sawer, Indore, Madhya Pradesh"
+                        android:textColor="@color/gray"
+                        android:textSize="13sp"
+                        app:drawableStartCompat="@drawable/ic_location_marker_black" />
+
+                    <TextView
+                        android:id="@+id/tvChangeLoc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginEnd="24dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="-2sp"
+                        android:text="@string/change"
+                        android:textColor="@color/weather_orange"
+                        android:textSize="13sp" />
+
+                    <View
+                        android:id="@+id/viewLocSeparator"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@+id/tvChangeLoc"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:layout_marginEnd="24dp"
+                        android:background="@color/gray" />
+
+                    <RelativeLayout
+                        android:id="@+id/rlWeatherDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/viewLocSeparator"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginEnd="24dp">
+
+                        <TextView
+                            android:id="@+id/tvDayTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:gravity="center_vertical"
+                            android:lineSpacingExtra="0sp"
+                            android:text="TODAY - 08:15 AM"
+                            android:textColor="@color/blakish"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:id="@+id/llTemp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvDayTime"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvTemp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_medium"
+                                android:gravity="center_vertical"
+                                android:text="28°"
+                                android:textColor="@color/blakish"
+                                android:textSize="56sp" />
+
+                            <TextView
+                                android:id="@+id/tvTempSign"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_regular"
+                                android:text="C"
+                                android:textColor="@color/blakish"
+                                android:textSize="34sp" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvMinMaxTemp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/llTemp"
+                            android:fontFamily="@font/manrope_bold"
+                            android:gravity="center_vertical"
+                            android:lineSpacingExtra="0sp"
+                            android:text="Min 23°C  - Max 31°C"
+                            android:textColor="@color/blakish"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@{viewModel.isRainView() ? @drawable/ic_weather_rain :@drawable/ic_weather_clear}"
+                            tools:src="@drawable/ic_weather_clear" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tvChangingWeather"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rlWeatherDetail"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginEnd="24dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="-2sp"
+                        android:text="Turning cloudy"
+                        android:textColor="@{viewModel.isRainView()?@color/weather_blue:@color/weather_orange}"
+                        android:textSize="18sp"
+                        tools:textColor="@color/orange" />
+
+                    <View
+                        android:id="@+id/viewWeatherSeparator"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@+id/tvChangingWeather"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginEnd="24dp"
+                        android:background="@color/gray" />
+
+                    <LinearLayout
+                        android:id="@+id/llWeatherType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/viewWeatherSeparator"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginEnd="24dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvWeatherType"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_bold"
+                            android:gravity="center_vertical"
+                            android:lineSpacingExtra="0sp"
+                            android:text="Humidity"
+                            android:textColor="@color/blakish"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvPercent"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_bold"
+                            android:gravity="center_vertical"
+                            android:lineSpacingExtra="0sp"
+                            android:text="61%"
+                            android:textColor="@color/blakish"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llForecast"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/llWeatherType"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginBottom="@dimen/_20sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvRainProbability"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_bold"
+                            android:gravity="center_vertical"
+                            android:lineSpacingExtra="0sp"
+                            android:text="Rain probability"
+                            android:textColor="@color/blakish"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvRainStatus"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_bold"
+                            android:gravity="center_vertical"
+                            android:lineSpacingExtra="0sp"
+                            android:text="No Rainfall"
+                            android:textColor="@color/blakish"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tvChangingWeather"
-                    android:layout_width="wrap_content"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvHoursForecast"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rlWeatherDetail"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_marginEnd="24dp"
-                    android:fontFamily="@font/manrope_bold"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="-2sp"
-                    android:text="Turning cloudy"
-                    android:textColor="@color/orange"
-                    android:textSize="18sp" />
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="10"
+                    tools:listitem="@layout/item_hour_wise_forecast" />
 
                 <View
-                    android:id="@+id/viewWeatherSeparator"
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_below="@+id/tvChangingWeather"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_marginEnd="24dp"
-                    android:background="@color/gray" />
+                    android:layout_height="1dp"
+                    android:background="@color/gray_stroke" />
 
                 <LinearLayout
-                    android:id="@+id/llWeatherType"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/viewWeatherSeparator"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_medium"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="1sp"
+                        android:onClick="@{ ()-> viewModel.weatherChange() }"
+                        android:text="@string/powered_by"
+                        android:textColor="@color/gray"
+                        android:textSize="11sp" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:contentDescription="@string/image"
+                        android:src="@drawable/ic_accuweather" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="1sp"
+                        android:text="@string/accuweather"
+                        android:textColor="@color/blakish"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="@dimen/_20sdp"
-                    android:layout_marginEnd="24dp"
-                    android:orientation="horizontal">
+                    android:fontFamily="@font/manrope_bold"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="1sp"
+                    android:text="@string/forecast_for_the_next_days"
+                    android:textColor="@color/blakish"
+                    android:textSize="16sp" />
 
-                    <TextView
-                        android:id="@+id/tvWeatherType"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/manrope_bold"
-                        android:gravity="center_vertical"
-                        android:lineSpacingExtra="0sp"
-                        android:text="Humidity"
-                        android:textColor="@color/blakish"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tvPercent"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/manrope_bold"
-                        android:gravity="center_vertical"
-                        android:lineSpacingExtra="0sp"
-                        android:text="61%"
-                        android:textColor="@color/blakish"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvDayForecast"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/llWeatherType"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="@dimen/_6sdp"
-                    android:layout_marginEnd="24dp"
-                    android:layout_marginBottom="@dimen/_20sdp"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_day_wise_forecast" />
 
-                    <TextView
-                        android:id="@+id/tvRainProbability"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/manrope_bold"
-                        android:gravity="center_vertical"
-                        android:lineSpacingExtra="0sp"
-                        android:text="Rain probability"
-                        android:textColor="@color/blakish"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tvRainStatus"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/manrope_bold"
-                        android:gravity="center_vertical"
-                        android:lineSpacingExtra="0sp"
-                        android:text="No Rainfall"
-                        android:textColor="@color/blakish"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
+            </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
         <LinearLayout

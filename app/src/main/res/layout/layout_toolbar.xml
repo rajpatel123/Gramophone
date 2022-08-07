@@ -6,4 +6,5 @@
     android:layout_height="?actionBarSize"
     android:background="@color/white"
     app:titleTextColor="@color/blakish"
+    app:titleTextAppearance="@style/Toolbar.TitleText"
     android:theme="@style/ToolbarTheme" />

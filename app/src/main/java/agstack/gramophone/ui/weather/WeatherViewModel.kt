@@ -12,11 +12,25 @@ class WeatherViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
 ) : BaseViewModel<WeatherNavigator>() {
 
+    var weatherViewColor : Int = 0
     var progress = MutableLiveData<Boolean>()
+    var isRainView = MutableLiveData<Boolean>()
     var showWeatherView = MutableLiveData<Boolean>()
 
     init {
         progress.value = false
+        isRainView.value = false
         showWeatherView.value = false
+    }
+
+    fun getWeatherData() {
+        getNavigator()?.setHourWiseForecastAdapter(HourWiseForecastAdapter())
+
+        getNavigator()?.setDayWiseForecastAdapter(DayWiseForecastAdapter())
+    }
+
+    fun weatherChange() {
+        isRainView.value = isRainView.value != true
+
     }
 }
