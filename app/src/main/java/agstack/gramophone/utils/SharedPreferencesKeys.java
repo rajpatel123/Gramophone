@@ -45,7 +45,7 @@ public abstract class SharedPreferencesKeys {
     public static final String TokenRefreshedTimeKey = "tokenRefreshedTime";
     public static final String GetApiUrlLastUpdatedTime = "getLastUpdatedTime";
     public static final String GetUserId = "UserID";
-    public static final String GetUserPhoneNo = "PhoneNo";
+    public static final String USER_PHONE_NUMBER = "PhoneNo";
     public static final String GetUserImage = "Image";
     public static final String GetUserName = "Name";
     public static final String GetToken = "token";
@@ -94,4 +94,8 @@ public abstract class SharedPreferencesKeys {
     public static final String languageList="language_list";
     @Nullable
     public static final String app_data="app_data";
+    @Nullable
+    public static final String WHATSAPP_OPT_IN="opt_in";
+    @Nullable
+    public static final String APP_TOUR_ENABLED="app_tour_enabled";
 }

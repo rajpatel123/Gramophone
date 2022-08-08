@@ -12,4 +12,7 @@ interface LanguageActivityNavigator :BaseNavigator {
     fun getResource(): Resources
     abstract fun getContentResolver(): ContentResolver?
     fun initiateApp()
+    fun closeLanguageList()
+    fun getLanguageCode(): String?
+
 }

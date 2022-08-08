@@ -13,6 +13,7 @@ import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.languagelist.Language
 import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
 import agstack.gramophone.utils.ApiResponse
+import agstack.gramophone.utils.LocaleManagerClass
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
@@ -63,29 +64,26 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     private fun setupUi() {
         rvLanguage?.setHasFixedSize(true)
     }
-    override fun getLayoutID(): Int {
-        return R.layout.activity_language
-    }
+    override fun getLayoutID() = R.layout.activity_language
 
-    override fun getBindingVariable(): Int {
-        return BR.viewModel
-    }
+    override fun getBindingVariable()  = BR.viewModel
 
-    override fun getViewModel(): LanguageViewModel {
-        return languageViewModel
-    }
+    override fun getViewModel()  = languageViewModel
 
     override fun moveToNext() {
         openAndFinishActivity(AppTourActivity::class.java,null)
     }
 
-    override fun getResource(): Resources {
-        return resources
-    }
+    override fun getResource(): Resources = resources
 
     override fun initiateApp() {
         languageViewModel.initiateAppData(initiateAppDataRequestModel)
     }
+
+    override fun closeLanguageList() {
+    }
+
+    override fun getLanguageCode(): String? = LocaleManagerClass.getLangCodeAsPerAppLocale(this)
 
     override fun onError(message: String?) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

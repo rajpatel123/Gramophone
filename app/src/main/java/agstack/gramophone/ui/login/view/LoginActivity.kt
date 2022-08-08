@@ -82,7 +82,6 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
     }
 
-
     override fun getLayoutID(): Int {
         return R.layout.activity_login
     }
@@ -97,16 +96,11 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
 
     override fun onLoading() {
-        progress.visibility = View.VISIBLE
+        progress.visibility = VISIBLE
     }
 
     override fun onHelpClick(number: String) {
-        val bottomSheet = BottomSheetDialog()
-        bottomSheet.customerSupportNumber = number
-        bottomSheet.show(
-            getSupportFragmentManager(),
-            "bottomSheet"
-        )
+        loginViewModel.onHelpClick()
     }
 
     override fun onLanguageChangeClick() {
@@ -114,7 +108,7 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
         bottomSheet.setLanguageListener(this)
         bottomSheet.show(
             getSupportFragmentManager(),
-            "bottomSheet"
+            getMessage(R.string.bottomsheet_tag)
         )
     }
 

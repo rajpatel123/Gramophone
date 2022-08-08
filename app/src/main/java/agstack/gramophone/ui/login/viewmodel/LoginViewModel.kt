@@ -170,7 +170,6 @@ class LoginViewModel @Inject constructor(
     }
 
     fun updateLanguage() = viewModelScope.launch {
-
         val updateLanguageRequestModel = UpdateLanguageRequestModel(getNavigator()?.getLanguage()!!)
         updateLanguage(updateLanguageRequestModel)
     }

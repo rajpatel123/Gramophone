@@ -47,6 +47,21 @@ fun bindStateImage(view: ImageView, imageUrl: String?) {
     }
 }
 
+@BindingAdapter("profile_image")
+fun bindProfileImage(view: ImageView, imageUrl: String?) {
+    if (!imageUrl.isNullOrEmpty()) {
+        Glide.with(view.context)
+            .load(imageUrl)
+            .apply(
+                RequestOptions()
+                    .error(R.drawable.dummy_profile)
+                    .centerCrop()
+            )
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(view)
+    }
+}
+
 @BindingAdapter("login_banner")
 fun bindLoginBannerImage(view: ImageView, imageUrl: String?) {
     if (!imageUrl.isNullOrEmpty()) {

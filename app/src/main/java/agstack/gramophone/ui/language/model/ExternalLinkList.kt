@@ -13,5 +13,8 @@ data class ExternalLinkList(
     val referral_terms_conditions: String,
 
     @SerializedName("terms_of_service_url")
-    val terms_of_service_url: String
+    val terms_of_service_url: String,
+
+    @SerializedName("app_features_url")
+    val app_features_url: String
 ):Parcelable

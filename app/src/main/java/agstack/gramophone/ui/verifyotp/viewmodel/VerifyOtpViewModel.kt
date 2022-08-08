@@ -10,6 +10,7 @@ import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
+import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
@@ -21,7 +22,6 @@ import android.Manifest
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -47,86 +47,95 @@ class VerifyOtpViewModel @Inject constructor(
         if (otp.isNullOrEmpty()) {
             validateOtpResponseModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.please_enter_otp)!!))
         } else {
-            val validateOtpRequestModel = ValidateOtpRequestModel(getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).toString(), otp,
+            val validateOtpRequestModel = ValidateOtpRequestModel(
+                getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).toString(), otp,
                 getNavigator()?.getBundle()?.getInt(Constants.OTP_REFERENCE)!!
             )
-             validateOtp(validateOtpRequestModel)
+            validateOtp(validateOtpRequestModel)
         }
     }
 
-        private suspend fun validateOtp(validateOtpRequestModel: ValidateOtpRequestModel) {
+    private suspend fun validateOtp(validateOtpRequestModel: ValidateOtpRequestModel) {
 
-            validateOtpResponseModel.postValue(ApiResponse.Loading())
-            try {
-                if (getNavigator()?.isNetworkAvailable() == true) {
-                    val response = onBoardingRepository.validateOtp(validateOtpRequestModel)
-                    val responseData = handleOrderResponse(response).data
+        validateOtpResponseModel.postValue(ApiResponse.Loading())
+        try {
+            if (getNavigator()?.isNetworkAvailable() == true) {
+                val response = onBoardingRepository.validateOtp(validateOtpRequestModel)
+                val responseData = handleOrderResponse(response).data
 
-                    if (Constants.GP_API_STATUS.equals(responseData?.gp_api_status)) {
-                        SharedPreferencesHelper.instance?.putString(
-                            SharedPreferencesKeys.session_token,
-                            responseData?.gp_api_response_data?.token
+                if (Constants.GP_API_STATUS.equals(responseData?.gp_api_status)) {
+                    SharedPreferencesHelper.instance?.putString(
+                        SharedPreferencesKeys.session_token,
+                        responseData?.gp_api_response_data?.token
+                    )
+
+                    SharedPreferencesHelper.instance?.putString(
+                        SharedPreferencesKeys.UUIdKey,
+                        responseData?.gp_api_response_data?.uuid
+                    )
+
+                    SharedPreferencesHelper.instance?.putString(
+                        SharedPreferencesKeys.USER_PHONE_NUMBER,
+                        mobileNo
+                    )
+
+                    SharedPreferencesHelper.instance?.putBoolean(
+                        SharedPreferencesKeys.WHATSAPP_OPT_IN,
+                        responseData?.gp_api_response_data?.whatsapp_optin
+                    )
+
+                    if (responseData?.gp_api_response_data?.is_address == true) {
+                        SharedPreferencesHelper.instance?.putBoolean(
+                            SharedPreferencesKeys.logged_in,
+                            true
                         )
-
-                        SharedPreferencesHelper.instance?.putString(
-                            SharedPreferencesKeys.UUIdKey,
-                            responseData?.gp_api_response_data?.uuid
-                        )
-
-                        if (responseData?.gp_api_response_data?.is_address == true){
-                            SharedPreferencesHelper.instance?.putBoolean(
-                                SharedPreferencesKeys.logged_in,
-                                true
-                            )
-                            getNavigator()?.moveToNext(HomeActivity::class.java)
-                        }else{
-                            getNavigator()?.moveToNext(StateListActivity::class.java)
-                        }
-                        getNavigator()?.onSuccess(responseData?.gp_api_message)
-                    }else{
-                        getNavigator()?.onError(responseData?.gp_api_message)
-
+                        getNavigator()?.openAndFinishActivity(HomeActivity::class.java)
+                    } else {
+                        getNavigator()?.openAndFinishActivity(StateListActivity::class.java)
                     }
-                }  else
-                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
-            } catch (ex: Exception) {
-                when (ex) {
-                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
-                }
-            }
-        }
+                    getNavigator()?.showToast(responseData?.gp_api_message)
+                } else {
+                    getNavigator()?.showToast(responseData?.gp_api_message)
 
-        private fun handleOrderResponse(response: Response<ValidateOtpResponseModel>): ApiResponse<ValidateOtpResponseModel> {
-            if (response.isSuccessful) {
-                response.body()?.let { resultResponse ->
-                    return ApiResponse.Success(resultResponse)
                 }
+            } else
+                getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet)!!)
+        } catch (ex: Exception) {
+            when (ex) {
+                is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
             }
-            return ApiResponse.Error(response.message())
         }
+    }
+
+    private fun handleOrderResponse(response: Response<ValidateOtpResponseModel>): ApiResponse<ValidateOtpResponseModel> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                return ApiResponse.Success(resultResponse)
+            }
+        }
+        return ApiResponse.Error(response.message())
+    }
 
     fun updateMessage() {
-        otpHint = getNavigator()?.getMessage(R.string.otp_hint)+" "+getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).toString()
+        otpHint = getNavigator()?.getMessage(R.string.otp_hint) + " " + getNavigator()?.getBundle()
+            ?.getString(Constants.MOBILE_NO).toString()
         getNavigator()?.showTimer()
 
     }
 
-    fun changeNumber(v:View){
-        getNavigator()?.changeNumber()
+    fun changeNumber(v: View) {
+        getNavigator()?.openAndFinishActivity(LoginActivity::class.java,null)
     }
-    fun resendOTP(v: View) =  viewModelScope.launch {
 
-            val sendOtpRequestModel= SendOtpRequestModel()
+    fun resendOTP(v: View) = viewModelScope.launch {
 
-            sendOtpRequestModel.phone = getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).toString()
-            sendOtpRequestModel.retryType = "sms"
-            //sendOtpRequestModel.language = getNavigator()?.getLanguage()
-//            if (!referralCode.isNullOrEmpty()){
-//                sendOtpRequestModel.referral_code = referralCode
-//            }
+        val sendOtpRequestModel = SendOtpRequestModel()
 
-            sendOTPCall(sendOtpRequestModel)
+        sendOtpRequestModel.phone =
+            getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).toString()
+        sendOtpRequestModel.retryType = Constants.SMS
+        sendOTPCall(sendOtpRequestModel)
 
     }
 
@@ -140,17 +149,17 @@ class VerifyOtpViewModel @Inject constructor(
 
                 if (Constants.GP_API_STATUS.equals(sendOtpResponseModel?.gp_api_status)) {
                     getNavigator()?.showTimer()
-                    getNavigator()?.onSuccess(sendOtpResponseModel?.gp_api_message)
-                }else{
-                    getNavigator()?.onError(sendOtpResponseModel?.gp_api_message)
+                    getNavigator()?.showToast(sendOtpResponseModel?.gp_api_message)
+                } else {
+                    getNavigator()?.showToast(sendOtpResponseModel?.gp_api_message)
                 }
 
             } else
-                getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+                getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet)!!)
         } catch (ex: Exception) {
             when (ex) {
-                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
             }
         }
     }
@@ -165,17 +174,16 @@ class VerifyOtpViewModel @Inject constructor(
     }
 
 
-    fun onHelpClick(v:View){
+    fun onHelpClick(v: View) {
         var initiateAppDataResponseModel =
             SharedPreferencesHelper.instance?.getParcelable(
-                SharedPreferencesKeys.app_data
-                , InitiateAppDataResponseModel::class.java
+                SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java
             )
         if (getNavigator()?.requestPermission(Manifest.permission.CALL_PHONE) == true)
             getNavigator()?.onHelpClick(initiateAppDataResponseModel?.gp_api_response_data?.help_data_list?.customer_support_no!!)
     }
 
-    fun onLanguageClick(v:View){
+    fun onLanguageClick(v: View) {
         getNavigator()?.onLanguageChangeClick()
 
     }
@@ -196,18 +204,18 @@ class VerifyOtpViewModel @Inject constructor(
                 val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
-                    getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
-                }else{
-                    getNavigator()?.onError(updateLanguageResponseModel?.gp_api_message)
+                    getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
+                } else {
+                    getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
 
                 }
 
             } else
-                getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+                getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet)!!)
         } catch (ex: Exception) {
             when (ex) {
-                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
             }
         }
     }

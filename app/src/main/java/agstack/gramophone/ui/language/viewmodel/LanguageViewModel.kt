@@ -2,12 +2,14 @@ package agstack.gramophone.ui.language.viewmodel
 
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.data.model.UpdateLanguageRequestModel
+import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.language.LanguageActivityNavigator
 import agstack.gramophone.ui.language.adapter.LanguageAdapter
-import agstack.gramophone.ui.language.model.DeviceDetails
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
+import agstack.gramophone.ui.language.model.languagelist.GpApiResponseData
 import agstack.gramophone.ui.language.model.languagelist.Language
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.utils.ApiResponse
@@ -49,6 +51,8 @@ class LanguageViewModel @Inject constructor(
                     getNavigator()?.updateLanguageList(LanguageAdapter(languageData?.gp_api_response_data?.language_list!!)){
                         language=it
                     }
+
+
                 }else{
                     getNavigator()?.onError(languageData?.gp_api_message)
                 }
@@ -121,19 +125,102 @@ class LanguageViewModel @Inject constructor(
         return ApiResponse.Error(response.message())
     }
 
-    fun onLanguageUpdate(v:View) {
-        if (language!=null){
-            val langIsoCode = language?.language_code
-            if (langIsoCode != null && !langIsoCode.equals("", ignoreCase = true)) {
-                LocaleManagerClass.updateLocale(langIsoCode, getNavigator()?.getResource())
+     fun onLanguageUpdate(v:View) {
+        when (v.id) {
+            R.id.btnContinue -> {
+                if (language != null) {
+                    val langIsoCode = language?.language_code
+                    if (langIsoCode != null && !langIsoCode.equals("", ignoreCase = true)) {
+                        LocaleManagerClass.updateLocale(langIsoCode, getNavigator()?.getResource())
+                    }
+                    getNavigator()?.initiateApp()
+                } else {
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.select_language_msg_english))
+                }
             }
-            getNavigator()?.initiateApp()
-        }else{
-            getNavigator()?.onError(getNavigator()?.getMessage(R.string.select_language_msg_english))
+            R.id.btnSave -> {
+                if (language != null) {
+                    val langIsoCode = language?.language_code
+                    if (langIsoCode != null && !langIsoCode.equals("", ignoreCase = true)) {
+                        LocaleManagerClass.updateLocale(langIsoCode, getNavigator()?.getResource())
+                    }
+
+                    val updateLanguageRequestModel = UpdateLanguageRequestModel(getNavigator()?.getLanguage()!!)
+                    viewModelScope.launch {
+                        updateLanguage(updateLanguageRequestModel)
+                    }
+                } else {
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.select_language_msg_english))
+                }
+            }
         }
+
 
     }
 
+    fun populateLanguage() {
+        var gpApiResponseData =
+            SharedPreferencesHelper.instance?.getParcelable(
+                SharedPreferencesKeys.languageList, GpApiResponseData::class.java
+            )
+        var languageAdapter = LanguageAdapter(gpApiResponseData?.language_list!!)
+        getNavigator()?.updateLanguageList(languageAdapter) {
+            language = it
+        }
 
+        val languageCode = getNavigator()?.getLanguageCode()
+        if (!languageCode.isNullOrEmpty()) {
+            languageAdapter.mLanguageList.forEach {
+                if (it.language_code.equals(languageCode.toString(), true)) {
+                    it.selected = true
+                    language=it
+                }else{
+                    it.selected = false
+                }
+                language=it
+            }
+            language?.let {
+                languageAdapter.selectedLanguage?.invoke(it)
+                languageAdapter.notifyDataSetChanged()
+
+            }
+
+
+        }
+    }
+
+    suspend fun updateLanguage(sendOtpRequestModel: UpdateLanguageRequestModel) {
+
+        try {
+            if (getNavigator()?.isNetworkAvailable() == true) {
+                val response = onBoardingRepository.updateLanguage(sendOtpRequestModel)
+
+                val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
+
+                if (GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
+                    getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
+                    getNavigator()?.closeLanguageList()
+                } else {
+                    getNavigator()?.onError(updateLanguageResponseModel?.gp_api_message)
+                }
+
+            } else
+                getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+        } catch (ex: Exception) {
+            when (ex) {
+                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+            }
+        }
+    }
+
+    private fun handleLanguageUpdateResponse(response: Response<UpdateLanguageResponseModel>): ApiResponse<UpdateLanguageResponseModel> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                return ApiResponse.Success(resultResponse)
+            }
+        }
+        return ApiResponse.Error(response.message())
+    }
 
 }
