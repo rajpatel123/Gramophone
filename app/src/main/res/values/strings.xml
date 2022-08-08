@@ -234,6 +234,13 @@
     <string name="powered_by">Powered by</string>
     <string name="accuweather">AccuWeather</string>
     <string name="forecast_for_the_next_days">Forecast for the next few days</string>
+    <string name="ok">OK</string>
+    <string name="no_thanks">No Thanks</string>
+    <string name="turn_on_device_location">To continue, turn on device location, which uses Googles’s location services</string>
+    <string name="your_device_will_need_to">Your device will need to:</string>
+    <string name="use_gps_wi_fi">Use GPS, Wi-Fi, cell networks, and sesnsors</string>
+    <string name="use_google_s_location_service">Use Google\'s location service; as part of this service, Google may collect location data periodically and use this data in an anonymous way to improve location accuracy and location-based services.</string>
+    <string name="for_details_go_to_the_location_settings">For details, go to the location settings.</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

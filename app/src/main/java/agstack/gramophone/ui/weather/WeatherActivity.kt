@@ -5,18 +5,18 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityWeatherBinding
-import android.os.Build
+import agstack.gramophone.ui.dialog.LocationAccessDialog
+import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class WeatherActivity :
     BaseActivityWrapper<ActivityWeatherBinding, WeatherNavigator, WeatherViewModel>(),
-    WeatherNavigator, View.OnClickListener {
+    WeatherNavigator, View.OnClickListener, LocationAccessDialog.OkCancelListener {
 
     //initialise ViewModel
     private val weatherViewModel: WeatherViewModel by viewModels()
@@ -27,17 +27,9 @@ class WeatherActivity :
     }
 
     private fun setupUi() {
-        weatherViewModel.getWeatherData()
-
         setUpToolBar(true, getString(R.string.weather), R.drawable.ic_arrow_left)
-    }
-
-    override fun getWeatherColor(isRainView: Boolean) {
-        if (isRainView) {
-            weatherViewModel.weatherViewColor = ContextCompat.getColor(this, R.color.weather_rain)
-        } else {
-            weatherViewModel.weatherViewColor = ContextCompat.getColor(this, R.color.weather_clear)
-        }
+        viewDataBinding.tvChangeLoc.setOnClickListener(this)
+        weatherViewModel.getWeatherData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -57,7 +49,19 @@ class WeatherActivity :
             R.id.itemShare -> {
 
             }
+            R.id.tvChangeLoc -> {
+                val locationAccessDialog = LocationAccessDialog()
+                locationAccessDialog.listener = this
+                locationAccessDialog.show(
+                    supportFragmentManager,
+                    Constants.LOCATION_ACCESS_DIALOG
+                )
+            }
         }
+    }
+
+    override fun onGoToSettingClick() {
+        weatherViewModel.onLocationClick()
     }
 
     override fun setHourWiseForecastAdapter(hourWiseForecastAdapter: HourWiseForecastAdapter) {

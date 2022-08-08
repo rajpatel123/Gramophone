@@ -12,7 +12,6 @@ class WeatherViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
 ) : BaseViewModel<WeatherNavigator>() {
 
-    var weatherViewColor : Int = 0
     var progress = MutableLiveData<Boolean>()
     var isRainView = MutableLiveData<Boolean>()
     var showWeatherView = MutableLiveData<Boolean>()
@@ -31,6 +30,5 @@ class WeatherViewModel @Inject constructor(
 
     fun weatherChange() {
         isRainView.value = isRainView.value != true
-
     }
 }

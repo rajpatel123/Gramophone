@@ -10,6 +10,4 @@ interface WeatherNavigator : BaseNavigator {
     fun setDayWiseForecastAdapter(
         dayWiseForecastAdapter: DayWiseForecastAdapter,
     )
-
-    fun getWeatherColor(isRainView: Boolean)
 }

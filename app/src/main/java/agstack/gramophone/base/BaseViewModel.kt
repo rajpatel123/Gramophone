@@ -8,13 +8,12 @@ import kotlinx.coroutines.Job
 import java.lang.ref.WeakReference
 
 
-
-open class BaseViewModel< N:BaseNavigator>():ViewModel() {
+open class BaseViewModel<N : BaseNavigator>() : ViewModel() {
 
     private var mNavigator: WeakReference<N?> = WeakReference(null)
 
 
-    internal fun setNavigator(navigator: N?){
+    internal fun setNavigator(navigator: N?) {
         mNavigator = WeakReference(navigator)
     }
 
@@ -30,6 +29,12 @@ open class BaseViewModel< N:BaseNavigator>():ViewModel() {
             if (supportNo?.isNotEmpty() == true) {
                 getNavigator()?.proceedCall(supportNo)
             }
+        }
+    }
+
+    fun onLocationClick() {
+        if (getNavigator()?.requestPermission(Manifest.permission.ACCESS_FINE_LOCATION) == true) {
+            getNavigator()?.proceedOnLocationSetting()
         }
     }
 
