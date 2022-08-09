@@ -30,6 +30,7 @@ interface ProductDetailsNavigator: BaseNavigator {
     fun setRatingBarChangeListener()
     fun refreshOfferAdapter()
     fun showContactForPriceBottomSheetDialog(contactForPriceBottomSheetDialog: ContactForPriceBottomSheetDialog)
+    fun updateAddToCartButtonText(text:String?=null):String
 
 
 }

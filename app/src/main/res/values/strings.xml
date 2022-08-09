@@ -257,6 +257,7 @@
     <string name="yesplease">Yes, Please</string>
     <string name="contactforprice">Contact for price</string>
     <string name="executivewillcontactmessage">Our executive will be in touch with you shortly</string>
+    <string name="gotocart">Go to Cart</string>
 
 
     <string-array name="SortReviewsByOptions">

@@ -52,7 +52,7 @@ class ProductDetailsViewModel @Inject constructor(
     var isHeartSelected = ObservableField<Boolean>(false)
     var selectedSkuListItem = ProductSkuListItem()
     var selectedOfferItem = PromotionListItem()
-    var addToCartEnabled= ObservableField<Boolean>(true)
+    var addToCartEnabled = ObservableField<Boolean>(true)
     fun onHeartIconClicked() {
         isHeartSelected.set(!isHeartSelected.get()!!)
         updateProductFavoriteJob.cancelIfActive()
@@ -197,14 +197,14 @@ class ProductDetailsViewModel @Inject constructor(
         var finalSalePrice: Double = 0.0
         var finaldiscount = "0"
         var isMRPVisibile = false
-        var isContactforPriceVisible =false
+        var isContactforPriceVisible = false
         if (model.mrpPrice == null || model.salesPrice == null) {
 
             isOffersLayoutVisible = false
             isContactforPriceVisible = true
             addToCartEnabled.set(false)
         } else {
-            isContactforPriceVisible=false
+            isContactforPriceVisible = false
             addToCartEnabled.set(true)
 
             if (offerModel == null || offerModel?.amount_saved == 0.0) {
@@ -237,7 +237,7 @@ class ProductDetailsViewModel @Inject constructor(
         getNavigator()?.setPercentageOff_mrpVisibility(
             finalSalePrice.toString(),
             finaldiscount,
-            isMRPVisibile, isOffersLayoutVisible,isContactforPriceVisible
+            isMRPVisibile, isOffersLayoutVisible, isContactforPriceVisible
         )
 
     }
@@ -451,25 +451,31 @@ class ProductDetailsViewModel @Inject constructor(
 
     fun onAddToCartClicked() {
 
+        if (getNavigator()?.updateAddToCartButtonText() == getNavigator()?.getMessage(R.string.add_to_cart)) {
+            //because it is called multiple times , hence manually setting text as add to cart until the response is successful.
+            getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(R.string.add_to_cart)!!)
+            addToCartJob.cancelIfActive()
+            addToCartJob = checkNetworkThenRun {
+                progressLoader.set(true)
+                var producttoBeAdded = ProductData()
+                producttoBeAdded.product_id = selectedSkuListItem.productId!!.toInt()
+                producttoBeAdded.quantity = qtySelected.get()
+                producttoBeAdded.promotion_id = selectedOfferItem.promotion_id
+                val addTocartResponse =
+                    productRepository.addToCart(producttoBeAdded)
 
-        addToCartJob.cancelIfActive()
-        addToCartJob = checkNetworkThenRun {
-            progressLoader.set(true)
-            var producttoBeAdded = ProductData()
-            producttoBeAdded.product_id = selectedSkuListItem.productId!!.toInt()
-            producttoBeAdded.quantity = qtySelected.get()
-            producttoBeAdded.promotion_id = selectedOfferItem.promotion_id
-            val addTocartResponse =
-                productRepository.addToCart(producttoBeAdded)
+                if (addTocartResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+                    progressLoader.set(false)
+                    getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+                    getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(R.string.gotocart)!!)
 
-            if (addTocartResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
-                progressLoader.set(false)
-                getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
-                getNavigator()?.openActivity(CartActivity::class.java)
-            } else {
-                progressLoader.set(false)
-                getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+                } else {
+                    progressLoader.set(false)
+                    getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+                }
             }
+        } else {
+            getNavigator()?.openActivity(CartActivity::class.java)
         }
 
 
@@ -507,7 +513,7 @@ class ProductDetailsViewModel @Inject constructor(
 
     }
 
-    fun ContactForPriceClicked(){
+    fun ContactForPriceClicked() {
         getNavigator()?.showContactForPriceBottomSheetDialog(ContactForPriceBottomSheetDialog())
     }
 

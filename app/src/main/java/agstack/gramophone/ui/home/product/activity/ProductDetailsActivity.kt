@@ -335,4 +335,11 @@ class ProductDetailsActivity :
             putParcelable("product", productData)
         })
     }
+
+
+    override fun updateAddToCartButtonText(newText:String?) :String{
+        if(newText!=null)
+        viewDataBinding.btnAddtocart.setText(newText)
+        return viewDataBinding.btnAddtocart.text.toString()
+    }
 }
