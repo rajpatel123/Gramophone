@@ -43,11 +43,8 @@ class WhatsAppOptINOutViewModel @Inject constructor(
             if (getNavigator()?.isNetworkAvailable() == true) {
                 try {
                     if (getNavigator()?.isNetworkAvailable() == true) {
-                        val optInOutDeferred = async {
-                            settingsRepository.optInOutForWhatsappUpdates(type)
-                        }
 
-                        val optInOutResponse = optInOutDeferred.await()
+                        val optInOutResponse = settingsRepository.optInOutForWhatsappUpdates(type)
 
                         val optInResponseData = handleResponse(optInOutResponse).data
 

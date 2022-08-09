@@ -21,14 +21,10 @@ class BlockedUsersViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) : BaseViewModel<BlockedUsersNavigator>() {
     fun getBlockedUsersList() {
-        viewModelScope.async {
-            if (getNavigator()?.isNetworkAvailable() == true) {
+        viewModelScope.launch {
                 try {
                     if (getNavigator()?.isNetworkAvailable() == true) {
-                        val blockedUsersDeferred = async {
-                            settingsRepository.getBlockedUsersList()
-                        }
-                        val blockedUsersList = blockedUsersDeferred.await()
+                        val blockedUsersList = settingsRepository.getBlockedUsersList()
 
                         val optInResponseData = handleResponse(blockedUsersList).data
 
@@ -47,20 +43,16 @@ class BlockedUsersViewModel @Inject constructor(
                         else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                     }
                 }
-            }
+
         }
 
     }
 
     private fun unblockUser(customerId: Int) {
-        viewModelScope.async {
-            if (getNavigator()?.isNetworkAvailable() == true) {
+        viewModelScope.launch {
                 try {
                     if (getNavigator()?.isNetworkAvailable() == true) {
-                        val unBlockUserDeferred = async {
-                            settingsRepository.unBlockUser(customerId)
-                        }
-                        val blockedUserResponse = unBlockUserDeferred.await()
+                        val blockedUserResponse = settingsRepository.unBlockUser(customerId)
 
                         val blockedUser = handleResponse(blockedUserResponse).data
 
@@ -78,7 +70,6 @@ class BlockedUsersViewModel @Inject constructor(
                         else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                     }
                 }
-            }
         }
 
     }

@@ -16,6 +16,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
@@ -32,14 +33,10 @@ class ProfileViewModel @Inject constructor(
 
     private fun logoutUser() {
         progressBar.set(true)
-        viewModelScope.async {
-            if (getNavigator()?.isNetworkAvailable() == true) {
+        viewModelScope.launch {
                 try {
                     if (getNavigator()?.isNetworkAvailable() == true) {
-                        val optInOutDeferred = async {
-                            onBoardingRepository.logoutUser()
-                        }
-                        val logoutResponse = optInOutDeferred.await()
+                        val logoutResponse = onBoardingRepository.logoutUser()
 
                         val logoutResponseModel = handleResponse(logoutResponse).data
 
@@ -66,7 +63,7 @@ class ProfileViewModel @Inject constructor(
                         else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                     }
                 }
-            }
+
         }
 
     }

@@ -10,6 +10,7 @@ import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
+import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
@@ -88,9 +89,9 @@ class VerifyOtpViewModel @Inject constructor(
                             SharedPreferencesKeys.logged_in,
                             true
                         )
-                        getNavigator()?.moveToNext(HomeActivity::class.java)
+                        getNavigator()?.openAndFinishActivity(HomeActivity::class.java)
                     } else {
-                        getNavigator()?.moveToNext(StateListActivity::class.java)
+                        getNavigator()?.openAndFinishActivity(StateListActivity::class.java)
                     }
                     getNavigator()?.showToast(responseData?.gp_api_message)
                 } else {
@@ -124,7 +125,7 @@ class VerifyOtpViewModel @Inject constructor(
     }
 
     fun changeNumber(v: View) {
-        getNavigator()?.changeNumber()
+        getNavigator()?.openAndFinishActivity(LoginActivity::class.java,null)
     }
 
     fun resendOTP(v: View) = viewModelScope.launch {
