@@ -6,6 +6,7 @@ import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
 import agstack.gramophone.ui.home.product.activity.productreview.AddEditProductReviewActivity
+import agstack.gramophone.ui.home.product.fragment.ContactForPriceBottomSheetDialog
 import agstack.gramophone.ui.home.product.fragment.ExpertAdviceBottomSheetFragment
 import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
@@ -51,6 +52,7 @@ class ProductDetailsViewModel @Inject constructor(
     var isHeartSelected = ObservableField<Boolean>(false)
     var selectedSkuListItem = ProductSkuListItem()
     var selectedOfferItem = PromotionListItem()
+    var addToCartEnabled= ObservableField<Boolean>(true)
     fun onHeartIconClicked() {
         isHeartSelected.set(!isHeartSelected.get()!!)
         updateProductFavoriteJob.cancelIfActive()
@@ -149,6 +151,7 @@ class ProductDetailsViewModel @Inject constructor(
                                 selectedSkuListItem = it
                                 productDetailstoBeFetched.product_id =
                                     selectedSkuListItem.productId!!.toInt()
+
                                 setPercentage_mrpVisibility(selectedSkuListItem, selectedOfferItem)
 
                             }
@@ -191,37 +194,50 @@ class ProductDetailsViewModel @Inject constructor(
     ) {
         var isOffersLayoutVisible = true
         var priceDiff: Float = 0.0f
-        if (offerModel == null || offerModel?.amount_saved == 0.0) {
-            priceDiff = (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat())
-        } else if (offerModel != null && offerModel.amount_saved!! > 0.0) {
-            priceDiff =
-                (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat()) - offerModel.amount_saved.toFloat()
-        }
-
-        val numarator = (priceDiff * 100)
-        val denominator = model.salesPrice!!.toFloat()
-        val percentage = numarator / denominator
-        val formatted_percentage = String.format("%.02f", percentage);
-        var finaldiscount = (formatted_percentage + " % Off")
-        var isMRPVisibile = priceDiff > 0
         var finalSalePrice: Double = 0.0
-        offerModel?.let {
-            if (offerModel.amount_saved!! > 0) {
-                finalSalePrice = model.salesPrice.toDouble() - offerModel?.amount_saved!!
+        var finaldiscount = "0"
+        var isMRPVisibile = false
+        var isContactforPriceVisible =false
+        if (model.mrpPrice == null || model.salesPrice == null) {
+
+            isOffersLayoutVisible = false
+            isContactforPriceVisible = true
+            addToCartEnabled.set(false)
+        } else {
+            isContactforPriceVisible=false
+            addToCartEnabled.set(true)
+
+            if (offerModel == null || offerModel?.amount_saved == 0.0) {
+                priceDiff = (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat())
+            } else if (offerModel != null && offerModel.amount_saved!! > 0.0) {
+                priceDiff =
+                    (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat()) - offerModel.amount_saved.toFloat()
             }
-        }
-        if (offerModel == null || offerModel?.amount_saved == 0.0) {
-            finalSalePrice = model.salesPrice.toDouble()
-        }
+
+            val numarator = (priceDiff * 100)
+            val denominator = model.salesPrice!!.toFloat()
+            val percentage = numarator / denominator
+            val formatted_percentage = String.format("%.02f", percentage);
+            finaldiscount = (formatted_percentage + " % Off")
+            isMRPVisibile = priceDiff > 0
+
+            offerModel?.let {
+                if (offerModel.amount_saved!! > 0) {
+                    finalSalePrice = model.salesPrice.toDouble() - offerModel?.amount_saved!!
+                }
+            }
+            if (offerModel == null || offerModel?.amount_saved == 0.0) {
+                finalSalePrice = model.salesPrice.toDouble()
+            }
 // set offer detailsLayout visibility
-        if(model.mrpPrice.equals(null)){
-            isOffersLayoutVisible=false
+            isOffersLayoutVisible = !model.mrpPrice.equals(null)
+
         }
 
         getNavigator()?.setPercentageOff_mrpVisibility(
             finalSalePrice.toString(),
             finaldiscount,
-            isMRPVisibile,isOffersLayoutVisible
+            isMRPVisibile, isOffersLayoutVisible,isContactforPriceVisible
         )
 
     }
@@ -489,6 +505,10 @@ class ProductDetailsViewModel @Inject constructor(
 
         })
 
+    }
+
+    fun ContactForPriceClicked(){
+        getNavigator()?.showContactForPriceBottomSheetDialog(ContactForPriceBottomSheetDialog())
     }
 
 }

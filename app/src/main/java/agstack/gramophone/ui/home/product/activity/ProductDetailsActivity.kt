@@ -5,10 +5,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ProductDetailBinding
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
-import agstack.gramophone.ui.home.product.fragment.ExpertAdviceBottomSheetFragment
-import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
-import agstack.gramophone.ui.home.product.fragment.ProductImagesFragment
-import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
+import agstack.gramophone.ui.home.product.fragment.*
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
@@ -65,14 +62,12 @@ class ProductDetailsActivity :
 
     private fun setSelfRatingBarChangeListener() {
         viewDataBinding.ratingbarReviews.ratingbarSelfRatingStars.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-            var rating = rating.toDouble()
-            mViewModel?.ratingSelected?.set(rating)
-            mViewModel?.openAddEditProductReview(rating)
+            val ratingfinal = rating.toDouble()
+            mViewModel?.ratingSelected?.set(ratingfinal)
+            mViewModel?.openAddEditProductReview(ratingfinal)
 
 
         }
-
-
 
 
     }
@@ -85,6 +80,12 @@ class ProductDetailsActivity :
         genuineCustomerDialog = genuineCustomerRatingAlertFragment
         genuineCustomerDialog.setOnClickSelectedListener(onAddToCartClick)
         genuineCustomerDialog.show(supportFragmentManager, "genuineCustomerDialog")
+    }
+
+    private var contactforPriceDialog = ContactForPriceBottomSheetDialog.newInstance()
+    override fun showContactForPriceBottomSheetDialog(contactForPriceBottomSheetDialog: ContactForPriceBottomSheetDialog) {
+        contactforPriceDialog = contactForPriceBottomSheetDialog
+        contactforPriceDialog.show(supportFragmentManager, "contactForPriceDialog")
     }
 
 
@@ -116,7 +117,7 @@ class ProductDetailsActivity :
                 drawableEndArrow = getDrawable(R.drawable.ic_arrow_down_orange)!!
             }
             viewDataBinding.tvShowAllDetails.setText(showMoreOrLessText)
-            (viewDataBinding.tvShowAllDetails as AppCompatTextView).setCompoundDrawablesWithIntrinsicBounds(
+            viewDataBinding.tvShowAllDetails .setCompoundDrawablesWithIntrinsicBounds(
                 null,
                 null,
                 drawableEndArrow,
@@ -235,7 +236,8 @@ class ProductDetailsActivity :
         salesPrice: String,
         discountPercentage: String,
         isMRPVisible: Boolean,
-        isOffersLayoutVisible: Boolean
+        isOffersLayoutVisible: Boolean,
+        isContactforPriceVisible: Boolean
     ) {
         viewDataBinding.tvProductSP.setText(resources.getString(R.string.rupee_symbol) + " " + salesPrice)
         viewDataBinding.tvPercentageOffOnSelectedSKU.setText(discountPercentage)
@@ -243,6 +245,18 @@ class ProductDetailsActivity :
             viewDataBinding.tvProductMRP.visibility = View.VISIBLE
         } else {
             viewDataBinding.tvProductMRP.visibility = View.VISIBLE
+        }
+
+        if (isContactforPriceVisible) {
+            viewDataBinding.tvContactForPrice.visibility = View.VISIBLE
+            viewDataBinding.llPriceDiscount.visibility = View.GONE
+            viewDataBinding.llQty.visibility = View.GONE
+            viewDataBinding.tvInclusive.visibility = View.GONE
+        } else {
+            viewDataBinding.tvContactForPrice.visibility = View.GONE
+            viewDataBinding.llPriceDiscount.visibility = View.VISIBLE
+            viewDataBinding.llQty.visibility = View.VISIBLE
+            viewDataBinding.tvInclusive.visibility = View.VISIBLE
         }
 
         if (!isOffersLayoutVisible) {
@@ -291,16 +305,16 @@ class ProductDetailsActivity :
     }
 
     override fun setProductImagesViewPagerAdapter(productImagesAdapter: ProductImagesAdapter) {
-        viewDataBinding.productImagesViewPager?.adapter = productImagesAdapter
+        viewDataBinding.productImagesViewPager.adapter = productImagesAdapter
         viewDataBinding.dotsIndicator.attachTo(viewDataBinding.productImagesViewPager)
     }
 
     override fun setProductDetailsAdapter(productDetailsAdapter: ProductDetailsAdapter) {
-        viewDataBinding.rvProductDetails?.adapter = productDetailsAdapter
+        viewDataBinding.rvProductDetails.adapter = productDetailsAdapter
     }
 
     override fun setRatingAndReviewsAdapter(ratingAndReviewsAdapter: RatingAndReviewsAdapter) {
-        viewDataBinding.ratingbarReviews?.rvReviewsProduct?.adapter = ratingAndReviewsAdapter
+        viewDataBinding.ratingbarReviews.rvReviewsProduct.adapter = ratingAndReviewsAdapter
     }
 
     override fun openViewAllReviewRatingsActivity(

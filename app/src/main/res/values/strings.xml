@@ -255,6 +255,8 @@
     <string name="gramophone_confirmcall_disclaimer">You will get a call from our customer service. Would you like to continue?</string>
     <string name="notnow">Not Now</string>
     <string name="yesplease">Yes, Please</string>
+    <string name="contactforprice">Contact for price</string>
+    <string name="executivewillcontactmessage">Our executive will be in touch with you shortly</string>
 
 
     <string-array name="SortReviewsByOptions">

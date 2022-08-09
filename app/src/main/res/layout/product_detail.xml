@@ -50,7 +50,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:layout_marginLeft="@dimen/_17sdp"
+                        android:layout_marginStart="@dimen/_17sdp"
                         android:orientation="vertical">
 
                         <RatingBar
@@ -214,6 +214,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_qty"
                         android:background="@drawable/rounded_corner_4_solid_stroke_gray"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -249,6 +250,23 @@
                             android:onClick="@{()->viewModel.onAddQtyClicked()}" />
 
                     </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_contactForPrice"
+                        android:onClick="@{()->viewModel.ContactForPriceClicked()}"
+                        android:visibility="gone"
+                        style="@style/TextSize16Sp"
+                        android:textColor="@color/order_delivered_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_productname"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:background="@drawable/deselected_product_background"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:paddingLeft="@dimen/_16sdp"
+                        android:paddingRight="@dimen/_16sdp"
+                        android:text="@string/contactforprice" />
 
                 </RelativeLayout>
 
@@ -692,10 +710,10 @@
                 android:layout_marginRight="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_4sdp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corner"
-                android:backgroundTint="@color/orange"
                 android:drawableStart="@drawable/ic_cart_white"
                 android:drawablePadding="@dimen/_minus16sdp"
+                android:enabled="@{viewModel.addToCartEnabled}"
+                android:background="@{ viewModel.addToCartEnabled ? @drawable/active_button_background : @drawable/deactive_button_background}"
                 android:onClick="@{()->viewModel.onAddToCartClicked()}"
                 android:paddingStart="@dimen/_3sdp"
                 android:text="@string/add_to_cart"
