@@ -1,5 +1,7 @@
 package agstack.gramophone.di
 
+import agstack.gramophone.utils.Constants.MIN_DISTANCE_CHANGE_FOR_UPDATES
+import agstack.gramophone.utils.Constants.MIN_TIME_BW_UPDATES
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Service
@@ -156,15 +158,6 @@ class GPSTracker(context: Context) : Service(), LocationListener {
 
         // Showing Alert Message
         alertDialog.show()
-    }
-
-
-    companion object {
-        // The minimum distance to change Updates in meters
-        private const val MIN_DISTANCE_CHANGE_FOR_UPDATES: Float = 10f
-
-        // The minimum time between updates in milliseconds
-        private const val MIN_TIME_BW_UPDATES = (1000 * 60 * 1 ).toLong()
     }
 
     init {
