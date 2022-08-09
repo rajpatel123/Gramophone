@@ -64,4 +64,6 @@
     <color name="order_delivered_text">#62A41C</color>
     <color name="mask">#3AC34C</color>
     <color name="light_blue">#6FADD6</color>
+    <color name="red">#F81F0F</color>
+    <color name="sky_blue">#4875D4</color>
 </resources>
