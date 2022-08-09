@@ -62,9 +62,12 @@ class ProductDetailsActivity :
 
     private fun setSelfRatingBarChangeListener() {
         viewDataBinding.ratingbarReviews.ratingbarSelfRatingStars.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-            val ratingfinal = rating.toDouble()
-            mViewModel?.ratingSelected?.set(ratingfinal)
-            mViewModel?.openAddEditProductReview(ratingfinal)
+            if (fromUser) {
+
+                val ratingfinal = rating.toDouble()
+                mViewModel?.ratingSelected?.set(ratingfinal)
+                mViewModel?.openAddEditProductReview(ratingfinal)
+            }
 
 
         }
@@ -117,7 +120,7 @@ class ProductDetailsActivity :
                 drawableEndArrow = getDrawable(R.drawable.ic_arrow_down_orange)!!
             }
             viewDataBinding.tvShowAllDetails.setText(showMoreOrLessText)
-            viewDataBinding.tvShowAllDetails .setCompoundDrawablesWithIntrinsicBounds(
+            viewDataBinding.tvShowAllDetails.setCompoundDrawablesWithIntrinsicBounds(
                 null,
                 null,
                 drawableEndArrow,
