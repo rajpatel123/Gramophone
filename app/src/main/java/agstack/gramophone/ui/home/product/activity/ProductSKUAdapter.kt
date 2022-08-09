@@ -19,7 +19,7 @@ class ProductSKUAdapter(SKUList: ArrayList<ProductSkuListItem?>) :
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         mContext = viewGroup.context
         return CustomViewHolder(
-            ItemRadioProductPackingBinding.inflate(LayoutInflater.from(viewGroup.context))
+            ItemRadioProductPackingBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
         )
     }
 
@@ -28,6 +28,7 @@ class ProductSKUAdapter(SKUList: ArrayList<ProductSkuListItem?>) :
         var model: ProductSkuListItem = mSKUList[position]!!
         holder.binding.setVariable(BR.model, model)
         val mBinding = holder.binding as ItemRadioProductPackingBinding
+
         mBinding.radioBtn.setOnClickListener {
             mSKUList[lastSelectPosition]?.selected = false
             lastSelectPosition = position

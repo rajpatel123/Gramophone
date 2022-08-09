@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_5sdp"
-        android:background="@{model.selected ? @drawable/selected_product_background: @drawable/deselected_product_background}"
+        android:background="@{model.selected ? @drawable/offer_card_selected: @drawable/deselected_product_background}"
         card_view:cardCornerRadius="10dp"
         card_view:cardElevation="5dp"
         card_view:cardUseCompatPadding="true">

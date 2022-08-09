@@ -24,5 +24,10 @@ interface ProductDetailsNavigator: BaseNavigator {
     fun showGenuineCustomerRatingDialog(genuineCustomerRatingAlertFragment: GenuineCustomerRatingAlertFragment, onAddToCartClick: () -> Unit)
     fun showExpertAdviceDialog(expertAdviceBottomSheetFragment: ExpertAdviceBottomSheetFragment, onOkayClick: () -> Unit,onCancelClick: () -> Unit)
     fun dismissExpertBottomSheet()
+    fun refreshSKUAdapter()
+     fun setPercentageOff_mrpVisibility(salesprice:String,discount: String,isMRPVisible:Boolean,isOffersLayoutVisible:Boolean)
+    fun setRatingBarChangeListener()
+    fun refreshOfferAdapter()
+
 
 }

@@ -31,6 +31,11 @@ interface ProductRepository {
 
     suspend fun addToCart(productData:ProductData):Response<CartDataResponse>
 
+
+    suspend fun updateProductFavorite(productData:ProductData):Response<SuccessStatusResponse>
+
+
+
     suspend fun getCartData(): Response<CartDataResponse>
 
     suspend fun removeCartItem(productId: Int): Response<SuccessStatusResponse>
@@ -40,5 +45,7 @@ interface ProductRepository {
     suspend fun getOrderDetails(orderDetailRequest: OrderDetailRequest): Response<OrderDetailResponse>
 
     suspend fun placeOrder(): Response<PlaceOrderResponse>
+
+    suspend fun getExpertAdvice(productData:ProductData):Response<SuccessStatusResponse>
 
 }

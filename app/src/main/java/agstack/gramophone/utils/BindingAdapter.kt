@@ -1,11 +1,13 @@
 package agstack.gramophone.utils
 
 import agstack.gramophone.R
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
 import android.net.Uri
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
+import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RatingBar
@@ -80,6 +82,32 @@ class BindingAdapter {
                 Html.fromHtml(htmlText)
             }
             textView.text = result
+        }
+
+
+        @BindingAdapter("isMRPVisible")
+        @JvmStatic
+        fun isMRPVisible(textView: TextView,model: ProductSkuListItem){
+            /*Formula = (MP-SP/SP *100 )*/
+            val isGreater: Boolean = (model.mrpPrice!!.toFloat()>(model.salesPrice)!!.toFloat())
+                    if(isGreater){
+                        textView.visibility= View.VISIBLE
+
+                    }else{
+                        textView.visibility= View.INVISIBLE
+                    }
+
+
+        }
+
+        @BindingAdapter("percentageOffSKUItem")
+        @JvmStatic
+        fun percentageOffSKUItem(textView: TextView,model: ProductSkuListItem){
+            val numarator = ((model.mrpPrice!!.toFloat()-(model.salesPrice)!!.toFloat())*100)
+            val denominator = model.salesPrice.toFloat()
+            val percentage = numarator/denominator
+            val formatted_percentage = String.format("%.02f", percentage);
+            textView.setText(formatted_percentage+" % Off")
         }
 
 
