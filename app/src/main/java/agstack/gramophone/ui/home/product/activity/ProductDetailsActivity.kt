@@ -57,7 +57,6 @@ class ProductDetailsActivity :
           }, 500)*/
         initProductDetailView()
 
-
     }
 
     override fun setRatingBarChangeListener() {
