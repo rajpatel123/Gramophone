@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.orderdetails.model.Product" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivProduct"
+            android:layout_width="@dimen/_84sdp"
+            android:layout_height="@dimen/_84sdp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/image"
+            android:src="@drawable/dummy_neem_cake"
+            app:product_image="@{model.product_image}" />
+
+        <TextView
+            android:id="@+id/tvProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_toEndOf="@+id/ivProduct"
+            android:ellipsize="end"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="-2sp"
+            android:maxLines="2"
+            android:text="@{model.product_name}"
+            android:textColor="@color/blakish"
+            android:textSize="13sp"
+            tools:text="Fungicides Crystal Bavistin 50% WP Fun gicide Carbe ..." />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/CustomRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvProductName"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_toEndOf="@+id/ivProduct"
+            android:numStars="5"
+            android:rating="3"
+            android:stepSize="1" />
+
+        <TextView
+            android:id="@+id/tvSellingPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_22sdp"
+            android:layout_below="@+id/ratingBar"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_toEndOf="@+id/ivProduct"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="1sp"
+            android:text="@{@string/rupee_symbol.concat(model.price)}"
+            android:textColor="@color/blakish"
+            android:textSize="16sp"
+            tools:text="₹ 900" />
+
+        <TextView
+            android:id="@+id/tvActualPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_22sdp"
+            android:layout_below="@+id/ratingBar"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_toEndOf="@+id/tvSellingPrice"
+            android:background="@drawable/strike_through"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="1sp"
+            android:text="@{@string/rupee_symbol.concat(model.price)}"
+            android:textColor="@color/gray_strike_through"
+            android:textSize="13sp"
+            tools:text="₹ 1290" />
+
+        <TextView
+            android:id="@+id/tvDiscountPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_22sdp"
+            android:layout_below="@+id/ratingBar"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_toEndOf="@+id/tvActualPrice"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="1sp"
+            android:text="@string/_0_off"
+            android:textColor="@color/green_dark"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tvOffersApplied"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvSellingPrice"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_toEndOf="@+id/ivProduct"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="-2sp"
+            android:background="@drawable/rounded_corner_8_solid_white_stroke_orange"
+            android:textColor="@color/orange"
+            android:textSize="14sp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="Add to cart" />
+
+
+        <View
+            android:id="@+id/itemSeparator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/tvOffersApplied"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="18dp"
+            android:background="@color/gray_stroke" />
+    </RelativeLayout>
+</layout>
