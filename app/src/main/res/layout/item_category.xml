@@ -9,6 +9,7 @@
     android:paddingEnd="@dimen/_16sdp">
 
     <FrameLayout
+        android:id="@+id/frameItem"
         android:layout_width="@dimen/_80sdp"
         android:layout_height="@dimen/_80sdp"
         android:background="@drawable/circle_solid_white"

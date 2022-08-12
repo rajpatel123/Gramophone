@@ -7,6 +7,7 @@ import agstack.gramophone.databinding.FragmentMarketBinding
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.adapter.*
 import agstack.gramophone.ui.home.model.Banner
+import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -106,7 +107,9 @@ class MarketFragment : BaseFragment<FragmentMarketBinding, MarketFragmentNavigat
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         binding?.rvShopByCat?.setHasFixedSize(true)
         binding?.rvShopByCat?.adapter = ShopByCategoryAdapter()
-
+        binding?.tvCateg?.setOnClickListener {
+            openActivity(SubCategoryActivity::class.java, null)
+        }
 
 
         binding?.rvMandiRates?.layoutManager =

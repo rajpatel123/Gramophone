@@ -23,8 +23,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="16dp"
             android:contentDescription="@string/image"
-            android:src="@drawable/dummy_neem_cake"
-            app:product_image="@{model.product_image}" />
+            android:src="@drawable/dummy_neem_cake" />
 
         <TextView
             android:id="@+id/tvProductName"
@@ -39,10 +38,9 @@
             android:gravity="center_vertical"
             android:lineSpacingExtra="-2sp"
             android:maxLines="2"
-            android:text="@{model.product_name}"
             android:textColor="@color/blakish"
             android:textSize="13sp"
-            tools:text="Fungicides Crystal Bavistin 50% WP Fun gicide Carbe ..." />
+            android:text="Fungicides Crystal Bavistin 50% WP Fun gicide Carbe ..." />
 
         <RatingBar
             android:id="@+id/ratingBar"
@@ -68,10 +66,9 @@
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
-            android:text="@{@string/rupee_symbol.concat(model.price)}"
             android:textColor="@color/blakish"
             android:textSize="16sp"
-            tools:text="₹ 900" />
+            android:text="₹ 900" />
 
         <TextView
             android:id="@+id/tvActualPrice"
@@ -84,10 +81,9 @@
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
-            android:text="@{@string/rupee_symbol.concat(model.price)}"
             android:textColor="@color/gray_strike_through"
             android:textSize="13sp"
-            tools:text="₹ 1290" />
+            android:text="₹ 1290" />
 
         <TextView
             android:id="@+id/tvDiscountPercent"

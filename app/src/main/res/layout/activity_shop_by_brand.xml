@@ -18,7 +18,7 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_140sdp">
+            android:layout_height="@dimen/_80sdp">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar_layout"
@@ -28,7 +28,6 @@
                 app:expandedTitleGravity="top"
                 app:expandedTitleMarginEnd="64dp"
                 app:expandedTitleMarginStart="48dp"
-                app:title="Crop "
                 android:textAlignment="center"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -44,22 +43,11 @@
                         android:id="@+id/crop_nutrit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="23dp"
-                        android:layout_marginBottom="23dp"
+                        android:layout_centerInParent="true"
                         android:fontFamily="@font/manrope_bold"
-                        android:text="Crop Nutritions"
+                        android:text="Growth Regulators"
                         android:textColor="@color/blakish"
                         android:textSize="20sp" />
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_gravity="end|bottom"
-                        android:layout_marginBottom="24dp"
-                        android:src="@drawable/ic_category_thumb" />
 
                 </RelativeLayout>
                 <!--<ImageView
@@ -146,72 +134,10 @@
 
                     </LinearLayout>
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_160sdp">
-
-                        <androidx.viewpager.widget.ViewPager
-                            android:id="@+id/view_pager"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-
-                        <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
-                            android:id="@+id/dots_indicator"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="@dimen/_16sdp"
-                            app:dotsColor="@color/blue"
-                            app:dotsSize="12dp"
-                            app:dotsSpacing="5dp"
-                            app:dotsStrokeColor="@color/gray_stroke"
-                            app:progressMode="false"
-                            app:stiffness="300" />
-                    </RelativeLayout>
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="8dp"
                         android:background="@color/gray_stroke" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_16sdp"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:fontFamily="@font/manrope_bold"
-                        android:text="@string/shop_by_category"
-                        android:textColor="@color/blakish"
-                        android:textSize="@dimen/_14ssp"
-                        android:textStyle="normal" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvSubCategory"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_16sdp"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_category" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="8dp"
-                        android:layout_marginTop="@dimen/_14sdp"
-                        android:background="@color/gray_stroke" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_16sdp"
-                        android:layout_marginTop="@dimen/_14sdp"
-                        android:fontFamily="@font/manrope_bold"
-                        android:text="All Products"
-                        android:textColor="@color/blakish"
-                        android:textSize="@dimen/_14ssp"
-                        android:textStyle="normal" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvProducts"

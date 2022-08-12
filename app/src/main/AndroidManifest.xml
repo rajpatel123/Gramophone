@@ -68,6 +68,7 @@
         <activity android:name=".ui.home.product.activity.ProductAllReviewsActivity" />
         <activity android:name=".ui.home.product.activity.productreview.AddEditProductReviewActivity"/>
         <activity android:name=".ui.weather.WeatherActivity"/>
+        <activity android:name=".ui.home.subcategory.SubCategoryActivity"/>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
