@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 
 abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : BaseViewModel<N>> :
     AppCompatActivity(), BaseNavigator {
@@ -172,7 +173,8 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     }
 
     override fun showToast(message: String?) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        Snackbar.make(viewDataBinding.root, message!!, Snackbar.LENGTH_LONG)
+            .show()
     }
 
     override fun onError(message: String?) {
