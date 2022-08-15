@@ -4,25 +4,29 @@ package agstack.gramophone.ui.home.subcategory
 import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
-import agstack.gramophone.databinding.ActivityTestCollapseBinding
-import agstack.gramophone.databinding.ActivityWeatherBinding
-import agstack.gramophone.ui.dialog.LocationAccessDialog
+import agstack.gramophone.databinding.ActivityCategoryDetailBinding
 import agstack.gramophone.ui.home.adapter.ProductListAdapter
+import agstack.gramophone.ui.home.adapter.ViewPagerAdapter
+import agstack.gramophone.ui.home.model.Banner
 import agstack.gramophone.ui.home.subcategory.adapter.SubCategoryAdapter
-import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
+import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_category_detail.view.*
+import kotlin.math.abs
 
 @AndroidEntryPoint
 class SubCategoryActivity :
-    BaseActivityWrapper<ActivityTestCollapseBinding, SubCategoryNavigator, SubCategoryViewModel>(),
+    BaseActivityWrapper<ActivityCategoryDetailBinding, SubCategoryNavigator, SubCategoryViewModel>(),
     SubCategoryNavigator, View.OnClickListener {
 
     //initialise ViewModel
     private val subCategoryViewModel: SubCategoryViewModel by viewModels()
+    private lateinit var items: ArrayList<Banner>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,36 +34,63 @@ class SubCategoryActivity :
     }
 
     private fun setupUi() {
-        setUpToolBar(true, "Crop Nutrition", R.drawable.ic_arrow_left)
+        initCards()
+        viewDataBinding.appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+            //Check if the view is collapsed
+            if (abs(verticalOffset) >= viewDataBinding.appbar.totalScrollRange) {
+                viewDataBinding.collapsingToolbar.title = getString(R.string.crop_nutritions)
+                viewDataBinding.collapsingToolbar.setCollapsedTitleTextColor(ContextCompat.getColor(
+                    this,
+                    R.color.blakish))
+                viewDataBinding.collapsingToolbar.ivToolbar.visibility = View.VISIBLE
+            } else {
+                viewDataBinding.collapsingToolbar.title = ""
+                viewDataBinding.collapsingToolbar.ivToolbar.visibility = View.GONE
+            }
+        })
+
+        viewDataBinding.dotsIndicator.setOnClickListener { }
+        val adapter = ViewPagerAdapter(items)
+        viewDataBinding.viewPager.adapter = adapter
+        viewDataBinding.dotsIndicator.attachTo(viewDataBinding.viewPager)
+
+
         subCategoryViewModel.setAdapter()
+    }
+
+    private fun initCards() {
+        items = ArrayList<Banner>()
+
+        val cardConnected = Banner(
+            R.drawable.dummy_banner,
+            getString(R.string.connected),
+            getString(R.string.connected_sub_msg)
+        )
+        items.add(cardConnected)
+
+        val cardDelivery = Banner(
+            R.drawable.dummy_banner_2,
+            getString(R.string.delivery),
+            getString(R.string.delivery_sub_msg)
+        )
+        items.add(cardDelivery)
+
+        val cardUpdates = Banner(
+            R.drawable.dummy_banner,
+            getString(R.string.midea),
+            getString(R.string.midea_sub_msg)
+        )
+        items.add(cardUpdates)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_share, menu);
-        for (i in 0 until menu.size()) {
-            val item = menu.getItem(i)
-            if (item?.itemId == R.id.itemShare) {
-                item.actionView?.setOnClickListener(this)
-            }
-        }
+        menuInflater.inflate(R.menu.main_category, menu);
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onClick(view: View?) {
-        /*when (view?.id) {
-            R.id.itemShare -> {
 
-            }
-            R.id.tvChangeLoc -> {
-                val locationAccessDialog = LocationAccessDialog()
-                locationAccessDialog.listener = this
-                locationAccessDialog.show(
-                    supportFragmentManager,
-                    Constants.LOCATION_ACCESS_DIALOG
-                )
-            }
-        }*/
     }
 
     override fun setSubCategoryAdapter(subCategoryAdapter: SubCategoryAdapter) {
@@ -71,7 +102,7 @@ class SubCategoryActivity :
     }
 
     override fun getLayoutID(): Int {
-        return R.layout.activity_test_collapse
+        return R.layout.activity_category_detail
     }
 
     override fun getBindingVariable(): Int {

@@ -241,6 +241,9 @@
     <string name="use_gps_wi_fi">Use GPS, Wi-Fi, cell networks, and sesnsors</string>
     <string name="use_google_s_location_service">Use Google\'s location service; as part of this service, Google may collect location data periodically and use this data in an anonymous way to improve location accuracy and location-based services.</string>
     <string name="for_details_go_to_the_location_settings">For details, go to the location settings.</string>
+    <string name="crop_nutritions">Crop Nutritions</string>
+    <string name="search">search</string>
+    <string name="favourite">Favourite</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>
