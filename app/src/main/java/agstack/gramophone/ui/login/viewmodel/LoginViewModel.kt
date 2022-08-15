@@ -16,6 +16,7 @@ import agstack.gramophone.utils.SharedPreferencesKeys
 import android.Manifest
 import android.os.Bundle
 import android.view.View
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,20 +29,20 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val onBoardingRepository : OnBoardingRepository
 ) : BaseViewModel<LoginNavigator>() {
-    var mobileNo :String?=""
-    var referralCode :String?=null
+    var mobileNo = ObservableField<String>()
+    var referralCode = ObservableField<String>()
 
 
     fun sendOTP(v: View) = viewModelScope.launch {
-        if (mobileNo.isNullOrEmpty()){
+        if (mobileNo.get().isNullOrEmpty()){
             getNavigator()?.onError(getNavigator()?.getMessage(R.string.enter_mobile_lebel)!!)
         }else{
            val sendOtpRequestModel= SendOtpRequestModel()
 
-            sendOtpRequestModel.phone = mobileNo
+            sendOtpRequestModel.phone = mobileNo.get()
             sendOtpRequestModel.language = getNavigator()?.getLanguage()
-            if (!referralCode.isNullOrEmpty()){
-                sendOtpRequestModel.referral_code = referralCode
+            if (!referralCode.get().isNullOrEmpty()){
+                sendOtpRequestModel.referral_code = referralCode.get()
             }
 
             sendOTPCall(sendOtpRequestModel)
@@ -61,7 +62,7 @@ class LoginViewModel @Inject constructor(
 
                     var loginData = handleLoginResponse(response)
                     getNavigator()?.moveToNext(Bundle().apply {
-                        putString(Constants.MOBILE_NO,mobileNo)
+                        putString(Constants.MOBILE_NO,mobileNo.get())
                         putInt(Constants.OTP_REFERENCE,
                             loginData.data?.gp_api_response_data?.otp_reference_id!!
                         )
@@ -163,7 +164,7 @@ class LoginViewModel @Inject constructor(
 
 
     fun onRemoveReferralClicked() {
-        referralCode = null
+        referralCode.set("")
         getNavigator()?.referralCodeRemoved()
 
 
@@ -185,6 +186,9 @@ class LoginViewModel @Inject constructor(
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
                     getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
+                }else{
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+                    getNavigator()?.restartActivity()
                 }
 
             } else
@@ -204,6 +208,14 @@ class LoginViewModel @Inject constructor(
             }
         }
         return ApiResponse.Error(response.message())
+    }
+
+    fun setMobileNumber() {
+        if (!getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).isNullOrEmpty()){
+         mobileNo.set(getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO))
+        }else{
+            getNavigator()?.showMobileNumberHint()
+        }
     }
 }
 

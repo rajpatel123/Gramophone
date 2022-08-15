@@ -230,4 +230,10 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         super.onDestroy()
         viewDataBinding?.unbind()
     }
+
+    override fun restartActivity() {
+        val intent = intent
+        finish()
+        startActivity(intent)
+    }
 }

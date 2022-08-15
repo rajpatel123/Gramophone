@@ -66,7 +66,7 @@
     <string name="welcome_msg">Welcome to Gramophone</string>
     <string name="start_msg">TIP: Use your whatsapp number for notification</string>
     <string name="enter_mobile_lebel">Enter Mobile Number</string>
-    <string name="policy_txt">Continue you agree to our</string>
+    <string name="policy_txt">By Continue you agree to our</string>
     <string name="policy">Policy</string>
     <string name="submit">Submit</string>
     <string name="changeno">Change No.</string>
@@ -255,6 +255,7 @@
     <string name="gramophone_confirmcall_disclaimer">You will get a call from our customer service. Would you like to continue?</string>
     <string name="notnow">Not Now</string>
     <string name="yesplease">Yes, Please</string>
+    <string name="verify_number">Verify Number</string>
 
 
     <string-array name="SortReviewsByOptions">

@@ -19,7 +19,9 @@ import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.Manifest
+import android.os.Bundle
 import android.view.View
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,7 +37,8 @@ class VerifyOtpViewModel @Inject constructor(
 ) : BaseViewModel<VerifyOTPNavigator>() {
     var otp: String = ""
     var otpHint: String = ""
-    var mobileNo: String = ""
+    var mobileNo = ObservableField<String>()
+
     var time: String = ""
     var timeOver: Boolean = false
 
@@ -76,7 +79,7 @@ class VerifyOtpViewModel @Inject constructor(
 
                     SharedPreferencesHelper.instance?.putString(
                         SharedPreferencesKeys.USER_PHONE_NUMBER,
-                        mobileNo
+                        mobileNo.get()
                     )
 
                     SharedPreferencesHelper.instance?.putBoolean(
@@ -120,12 +123,17 @@ class VerifyOtpViewModel @Inject constructor(
     fun updateMessage() {
         otpHint = getNavigator()?.getMessage(R.string.otp_hint) + " " + getNavigator()?.getBundle()
             ?.getString(Constants.MOBILE_NO).toString()
+        mobileNo.set(getNavigator()?.getBundle()
+            ?.getString(Constants.MOBILE_NO).toString())
         getNavigator()?.showTimer()
 
     }
 
     fun changeNumber(v: View) {
-        getNavigator()?.openAndFinishActivity(LoginActivity::class.java,null)
+        getNavigator()?.openAndFinishActivity(LoginActivity::class.java, Bundle().apply {
+            putString(Constants.MOBILE_NO,mobileNo.get())
+        })
+
     }
 
     fun resendOTP(v: View) = viewModelScope.launch {
@@ -135,6 +143,7 @@ class VerifyOtpViewModel @Inject constructor(
         sendOtpRequestModel.phone =
             getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).toString()
         sendOtpRequestModel.retryType = Constants.SMS
+        sendOtpRequestModel.otp_reference_id = getNavigator()?.getBundle()?.getInt(Constants.OTP_REFERENCE)!!
         sendOTPCall(sendOtpRequestModel)
 
     }

@@ -9,6 +9,7 @@ import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
 import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
 import agstack.gramophone.ui.verifyotp.viewmodel.VerifyOtpViewModel
+import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View.GONE
@@ -37,7 +38,9 @@ class VerifyOtpActivity :
 
     override fun onBackPressed() {
         super.onBackPressed()
-        openActivity(LoginActivity::class.java, null)
+        openActivity(LoginActivity::class.java, Bundle().apply {
+            putString(Constants.MOBILE_NO,verifyOtpViewModel.mobileNo.get())
+        })
     }
 
     override fun getLayoutID(): Int = R.layout.activity_verify_otp

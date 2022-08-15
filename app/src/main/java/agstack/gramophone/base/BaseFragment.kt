@@ -154,4 +154,10 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
             Constants.BOTTOM_SHEET
         )
     }
+
+    override fun restartActivity() {
+        val intent = activity?.intent
+        activity?.finish()
+        startActivity(intent)
+    }
 }

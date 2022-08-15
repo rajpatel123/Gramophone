@@ -365,7 +365,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:background="@drawable/btn_rounded_corner"
             android:gravity="center"
             android:onClick="@{ ()-> viewModel.sendOTP(submitBtn) }"

@@ -15,6 +15,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -48,7 +49,7 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
                     IntentIntegrator.parseActivityResult(REQUEST_CODE, result.resultCode, data)
                 tvCodeApplied.text =
                     getMessage(R.string.referral_code) + result.contents + getMessage(R.string.applied)
-                loginViewModel.referralCode = result.contents
+                loginViewModel.referralCode.set(result.contents)
                 rlHaveReferralCode.visibility = GONE
                 rlAppliedCode.visibility = VISIBLE
             }
@@ -78,8 +79,7 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestMobileNoHint()
-
+        loginViewModel.setMobileNumber()
     }
 
     override fun getLayoutID(): Int {
@@ -114,6 +114,11 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
     override fun openWebView(bundle: Bundle) {
         openActivity(WebViewActivity::class.java, bundle)
+    }
+
+    override fun getBundle(): Bundle? = intent.extras
+    override fun showMobileNumberHint() {
+        requestMobileNoHint()
     }
 
 
@@ -152,7 +157,7 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
         tvApplyCode.setOnClickListener {
             if (!TextUtils.isEmpty(etReferralCode.text)) {
                 tvCodeApplied.text = "Referral Code " + etReferralCode.text.toString() + " Applied"
-                loginViewModel.referralCode = etReferralCode.text.toString()
+                loginViewModel.referralCode.set(etReferralCode.text.toString())
                 mAlertDialog.dismiss()
                 rlHaveReferralCode.visibility = GONE
                 rlAppliedCode.visibility = VISIBLE
@@ -205,6 +210,12 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
     override fun onLanguageUpdate() {
         loginViewModel.updateLanguage()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        outState
+
     }
 
 }

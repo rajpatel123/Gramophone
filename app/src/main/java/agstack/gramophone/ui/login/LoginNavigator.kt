@@ -10,4 +10,6 @@ interface LoginNavigator : BaseNavigator{
     fun openReferralDialog()
     fun referralCodeRemoved()
     fun moveToNext(bundle: Bundle)
+    fun getBundle(): Bundle?
+    fun showMobileNumberHint()
 }

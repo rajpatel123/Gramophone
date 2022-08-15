@@ -77,17 +77,18 @@ class AppTourViewModel@Inject constructor(
                 val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
-                    getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
+                    getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
+                    getNavigator()?.restartActivity()
                 }else{
-                    getNavigator()?.onError(updateLanguageResponseModel?.gp_api_message)
+                    getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
                 }
 
             } else
-                getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+                getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet)!!)
         } catch (ex: Exception) {
             when (ex) {
-                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
             }
         }
     }
