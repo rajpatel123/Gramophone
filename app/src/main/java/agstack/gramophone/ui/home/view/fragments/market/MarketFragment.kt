@@ -126,6 +126,11 @@ class MarketFragment : BaseFragment<FragmentMarketBinding, MarketFragmentNavigat
                 putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_STORE)
             })
         }
+        binding?.flViewAllShopByCompany?.setOnClickListener {
+            openActivity(ShopByStoreAndCropActivity::class.java, Bundle().apply {
+                putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_COMPANY)
+            })
+        }
 
         binding?.rvMandiRates?.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -158,6 +163,10 @@ class MarketFragment : BaseFragment<FragmentMarketBinding, MarketFragmentNavigat
         binding?.rvPopularProducts?.layoutManager = GridLayoutManager(activity, 2)
         binding?.rvPopularProducts?.setHasFixedSize(true)
         binding?.rvPopularProducts?.adapter = PopularProductAdapter()
+
+        binding?.rvShopByCompany?.layoutManager = GridLayoutManager(activity, 3)
+        binding?.rvShopByCompany?.setHasFixedSize(true)
+        binding?.rvShopByCompany?.adapter = ShopByCompanyAdapter()
     }
 
     private fun initCards() {

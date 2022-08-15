@@ -245,6 +245,7 @@
     <string name="search">search</string>
     <string name="favourite">Favourite</string>
     <string name="featured_products">Featured Products</string>
+    <string name="shop_by_company">Shop by Company</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

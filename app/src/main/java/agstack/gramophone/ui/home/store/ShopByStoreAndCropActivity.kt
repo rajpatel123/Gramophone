@@ -5,6 +5,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityShopByStoreBinding
+import agstack.gramophone.ui.home.adapter.ShopByCompanyAdapter
 import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
 import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
 import android.os.Bundle
@@ -51,6 +52,12 @@ class ShopByStoreAndCropActivity :
         viewDataBinding.rvShopBy.layoutManager = GridLayoutManager(this, 2)
         viewDataBinding.rvShopBy.setHasFixedSize(true)
         viewDataBinding.rvShopBy.adapter = shopByStoresAdapter
+    }
+
+    override fun setShopByCompanyAdapter(shopByCompanyAdapter: ShopByCompanyAdapter) {
+        viewDataBinding.rvShopBy.layoutManager = GridLayoutManager(this, 3)
+        viewDataBinding.rvShopBy.setHasFixedSize(true)
+        viewDataBinding.rvShopBy.adapter = shopByCompanyAdapter
     }
 
     override fun getBundle(): Bundle? {

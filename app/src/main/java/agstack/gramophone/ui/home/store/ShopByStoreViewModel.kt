@@ -3,6 +3,7 @@ package agstack.gramophone.ui.home.store
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.home.adapter.ProductListAdapter
+import agstack.gramophone.ui.home.adapter.ShopByCompanyAdapter
 import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
 import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
 import agstack.gramophone.utils.Constants
@@ -39,7 +40,8 @@ class ShopByStoreViewModel @Inject constructor(
                     getNavigator()?.setShopByStoresAdapter(ShopByStoresAdapter())
                 }
                 Constants.SHOP_BY_COMPANY -> {
-
+                    showWeatherView.value = true
+                    getNavigator()?.setShopByCompanyAdapter(ShopByCompanyAdapter())
                 }
             }
         }
