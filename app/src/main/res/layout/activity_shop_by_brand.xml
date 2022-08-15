@@ -34,7 +34,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/ic_collaspsing_stripe_bg"
+                    android:background="@drawable/ic_collapsing_stripe_bg"
                     android:orientation="horizontal"
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.7">

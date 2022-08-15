@@ -67,4 +67,5 @@
     <color name="weather_blue">#389EFF</color>
     <color name="weather_orange">#F86144</color>
     <color name="location_permission_title">#993C3C43</color>
+    <color name="selected_main_filter">#FAFCFF</color>
 </resources>

@@ -5,6 +5,8 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityCategoryDetailBinding
+import agstack.gramophone.ui.dialog.filter.BottomSheetFilterDialog
+import agstack.gramophone.ui.dialog.sortby.BottomSheetSortByDialog
 import agstack.gramophone.ui.home.adapter.ProductListAdapter
 import agstack.gramophone.ui.home.adapter.ViewPagerAdapter
 import agstack.gramophone.ui.home.model.Banner
@@ -35,6 +37,8 @@ class SubCategoryActivity :
 
     private fun setupUi() {
         initCards()
+        viewDataBinding.tvSortBy.setOnClickListener(this)
+        viewDataBinding.tvFilter.setOnClickListener(this)
         viewDataBinding.appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
             //Check if the view is collapsed
             if (abs(verticalOffset) >= viewDataBinding.appbar.totalScrollRange) {
@@ -85,12 +89,27 @@ class SubCategoryActivity :
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main_category, menu);
+        menuInflater.inflate(R.menu.menu_home, menu);
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onClick(view: View?) {
-
+        when (view?.id) {
+            R.id.tvSortBy -> {
+                val bottomSheet = BottomSheetSortByDialog()
+                bottomSheet.show(
+                    supportFragmentManager,
+                    "bottomSheet"
+                )
+            }
+            R.id.tvFilter -> {
+                val bottomSheet = BottomSheetFilterDialog()
+                bottomSheet.show(
+                    supportFragmentManager,
+                    "bottomSheet"
+                )
+            }
+        }
     }
 
     override fun setSubCategoryAdapter(subCategoryAdapter: SubCategoryAdapter) {

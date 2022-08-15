@@ -27,7 +27,7 @@
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/collapsingToolbar"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="160dp"
                 android:fitsSystemWindows="true"
                 app:contentScrim="@color/white"
                 app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
@@ -45,7 +45,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:layout_marginBottom="40dp"
+                        android:layout_marginBottom="28dp"
                         android:fontFamily="@font/manrope_bold"
                         android:gravity="center_vertical"
                         android:lineSpacingExtra="-3sp"
@@ -65,23 +65,25 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:theme="@style/ThemeOverlay.MaterialComponents"
+                    android:theme="@style/ToolbarTheme"
                     app:contentInsetLeft="0dp"
                     app:contentInsetStart="0dp"
                     app:contentInsetStartWithNavigation="0dp"
                     app:layout_collapseMode="pin"
-                    app:menu="@menu/main_category"
+                    app:menu="@menu/menu_home"
+                    app:navigationIcon="@drawable/ic_arrow_left"
                     app:titleTextAppearance="@style/Toolbar.TitleText"
-                    app:navigationIcon="@drawable/ic_arrow_left">
+                    app:layout_collapseParallaxMultiplier="0.7"
+                    app:titleTextColor="@color/blakish">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivToolbar"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_marginEnd="@dimen/_4sdp"
-                        android:src="@drawable/ic_category_thumb"
-                        android:visibility="gone" />
+                        android:src="@drawable/ic_category_toolbar_thumb"
+                        android:visibility="visible" />
 
                 </androidx.appcompat.widget.Toolbar>
 

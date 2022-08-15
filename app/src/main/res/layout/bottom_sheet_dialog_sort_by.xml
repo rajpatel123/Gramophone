@@ -47,11 +47,12 @@
             android:background="@color/gray_stroke" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_shop_by_cat"
+            android:id="@+id/rvSortBy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:orientation="vertical"
+            tools:itemCount="6"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_sort_by" />
 
