@@ -5,15 +5,17 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityShopByStoreBinding
+import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
 import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ShopByStoreActivity :
+class ShopByStoreAndCropActivity :
     BaseActivityWrapper<ActivityShopByStoreBinding, ShopByStoreNavigator, ShopByStoreViewModel>(),
     ShopByStoreNavigator, View.OnClickListener {
 
@@ -27,7 +29,7 @@ class ShopByStoreActivity :
 
     private fun setupUi() {
         setUpToolBar(true, getString(R.string.shop_by_store), R.drawable.ic_arrow_left)
-        shopByStoreViewModel.setAdapter()
+        shopByStoreViewModel.getBundleData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -39,8 +41,20 @@ class ShopByStoreActivity :
     override fun onClick(view: View?) {
     }
 
+    override fun setShopByCropAdapter(shopByCropsAdapter: ShopByCropsAdapter) {
+        viewDataBinding.rvShopBy.layoutManager = GridLayoutManager(this, 3)
+        viewDataBinding.rvShopBy.setHasFixedSize(true)
+        viewDataBinding.rvShopBy.adapter = shopByCropsAdapter
+    }
+
     override fun setShopByStoresAdapter(shopByStoresAdapter: ShopByStoresAdapter) {
-        viewDataBinding.rvShopByStore.adapter = shopByStoresAdapter
+        viewDataBinding.rvShopBy.layoutManager = GridLayoutManager(this, 2)
+        viewDataBinding.rvShopBy.setHasFixedSize(true)
+        viewDataBinding.rvShopBy.adapter = shopByStoresAdapter
+    }
+
+    override fun getBundle(): Bundle? {
+        return intent?.extras
     }
 
     override fun getLayoutID(): Int {

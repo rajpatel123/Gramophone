@@ -23,17 +23,12 @@
             layout="@layout/layout_toolbar" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvShopByStore"
+            android:id="@+id/rvShopBy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/myToolbar"
             android:layout_marginTop="@dimen/_12sdp"
-            android:orientation="vertical"
-            android:layout_marginStart="@dimen/_16sdp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:itemCount="20"
-            app:spanCount="2"
-            tools:listitem="@layout/item_shop_by_store" />
+            android:orientation="vertical" />
 
         <LinearLayout
             android:layout_width="wrap_content"

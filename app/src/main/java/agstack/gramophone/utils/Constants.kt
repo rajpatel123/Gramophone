@@ -8,6 +8,10 @@ object Constants {
     val Product_Base_Name="PRODUCT BASE NAME"
     val PRODUCT_RATING_DATA_KEY="PRODUCT RATING DATA"
     val OFFERSDATA="OFFERSDATA"
+    val SHOP_BY_TYPE="SHOP_BY_TYPE"
+    val SHOP_BY_CROP="SHOP_BY_CROP"
+    val SHOP_BY_STORE="SHOP_BY_STORE"
+    val SHOP_BY_COMPANY="SHOP_BY_COMPANY"
 
     //sortBy options
     val TOP = "top"

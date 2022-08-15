@@ -8,9 +8,10 @@ import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.adapter.*
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.model.Banner
-import agstack.gramophone.ui.home.store.ShopByStoreActivity
+import agstack.gramophone.ui.home.store.ShopByStoreAndCropActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_market.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -116,8 +116,15 @@ class MarketFragment : BaseFragment<FragmentMarketBinding, MarketFragmentNavigat
         binding?.flViewAllFeaturedProduct?.setOnClickListener {
             openActivity(FeaturedProductActivity::class.java, null)
         }
+        binding?.flShopByCrop?.setOnClickListener {
+            openActivity(ShopByStoreAndCropActivity::class.java, Bundle().apply {
+                putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
+            })
+        }
         binding?.flViewAllStore?.setOnClickListener {
-            openActivity(ShopByStoreActivity::class.java, null)
+            openActivity(ShopByStoreAndCropActivity::class.java, Bundle().apply {
+                putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_STORE)
+            })
         }
 
         binding?.rvMandiRates?.layoutManager =
