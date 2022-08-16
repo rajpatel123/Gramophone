@@ -55,7 +55,6 @@ class ShopByDetailActivity :
 
     override fun setProductListAdapter(productListAdapter: ProductListAdapter) {
         viewDataBinding.rvProduct.adapter = productListAdapter
-        viewDataBinding.nestedScroll.scrollTo(0, 0)
     }
 
     override fun getBundle(): Bundle? {
