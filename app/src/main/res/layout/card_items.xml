@@ -50,9 +50,9 @@
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_227sdp"
+            android:layout_height="@dimen/_267sdp"
             android:src="@drawable/connected"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_40sdp"
             login_banner="@{model.image}"
             app:layout_constraintTop_toBottomOf="@+id/subheading"
             />

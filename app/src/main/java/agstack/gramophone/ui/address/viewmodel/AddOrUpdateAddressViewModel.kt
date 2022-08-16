@@ -59,16 +59,6 @@ class AddOrUpdateAddressViewModel @Inject constructor(
             return
         }
 
-        if (TextUtils.isEmpty(villageName.get())) {
-            getNavigator()?.onError(getNavigator()?.getMessage(R.string.village_required))
-            return
-        }
-
-        if (TextUtils.isEmpty(address.get())) {
-            getNavigator()?.onError(getNavigator()?.getMessage(R.string.address_required))
-            return
-        }
-
         val updateAddressRequestModel = UpdateAddressRequestModel(
             address.get(),
             districtName.get(),

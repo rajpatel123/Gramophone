@@ -39,7 +39,7 @@
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="center_horizontal"
                 android:text="@{model.name}"
-                android:textColor="@{model.selected?@color/green:@color/blakish}"
+                android:textColor="@color/blakish"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="normal"
                 tools:text="Utter Pradesh" />

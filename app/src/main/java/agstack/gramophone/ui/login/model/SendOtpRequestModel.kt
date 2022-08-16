@@ -7,15 +7,15 @@ class SendOtpRequestModel {
     @SerializedName("mobile_no")
     var phone: String? = null
 
-    @SerializedName("language  ")
+    @SerializedName("language")
     var language  : String? = null
 
-    @SerializedName("referral_code  ")
+    @SerializedName("referral_code")
     var referral_code  : String? = null
 
-    @SerializedName("otp_reference_id  ")
+    @SerializedName("otp_reference_id")
     var otp_reference_id  : Int? = null
 
-    @SerializedName("retry_type  ")
+    @SerializedName("retry_type")
     var retryType  : String? = null
 }
