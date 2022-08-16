@@ -70,7 +70,8 @@
         <activity android:name=".ui.weather.WeatherActivity"/>
         <activity android:name=".ui.home.subcategory.SubCategoryActivity"/>
         <activity android:name=".ui.home.featured.FeaturedProductActivity"/>
-        <activity android:name=".ui.home.store.ShopByStoreAndCropActivity"/>
+        <activity android:name=".ui.home.shop.ShopByActivity"/>
+        <activity android:name=".ui.home.shopbydetail.ShopByDetailActivity"/>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"

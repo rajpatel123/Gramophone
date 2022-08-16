@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ShopByStoresAdapter :
     RecyclerView.Adapter<ShopByStoresAdapter.CustomViewHolder>() {
+    var onItemClicked: ((id: String) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         return CustomViewHolder(
@@ -16,7 +17,9 @@ class ShopByStoresAdapter :
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, i: Int) {
-
+        holder.binding.llItem.setOnClickListener {
+            onItemClicked?.invoke("")
+        }
     }
 
     override fun getItemCount(): Int {

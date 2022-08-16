@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="agstack.gramophone.ui.home.store.ShopByStoreViewModel" />
+            type="agstack.gramophone.ui.home.shop.ShopByViewModel" />
     </data>
 
     <RelativeLayout

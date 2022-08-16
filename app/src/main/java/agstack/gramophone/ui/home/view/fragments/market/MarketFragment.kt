@@ -8,7 +8,7 @@ import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.adapter.*
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.model.Banner
-import agstack.gramophone.ui.home.store.ShopByStoreAndCropActivity
+import agstack.gramophone.ui.home.shop.ShopByActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.utils.Constants
@@ -117,17 +117,17 @@ class MarketFragment : BaseFragment<FragmentMarketBinding, MarketFragmentNavigat
             openActivity(FeaturedProductActivity::class.java, null)
         }
         binding?.flShopByCrop?.setOnClickListener {
-            openActivity(ShopByStoreAndCropActivity::class.java, Bundle().apply {
+            openActivity(ShopByActivity::class.java, Bundle().apply {
                 putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
             })
         }
         binding?.flViewAllStore?.setOnClickListener {
-            openActivity(ShopByStoreAndCropActivity::class.java, Bundle().apply {
+            openActivity(ShopByActivity::class.java, Bundle().apply {
                 putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_STORE)
             })
         }
         binding?.flViewAllShopByCompany?.setOnClickListener {
-            openActivity(ShopByStoreAndCropActivity::class.java, Bundle().apply {
+            openActivity(ShopByActivity::class.java, Bundle().apply {
                 putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_COMPANY)
             })
         }

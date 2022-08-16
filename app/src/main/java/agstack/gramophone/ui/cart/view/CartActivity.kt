@@ -11,14 +11,9 @@ import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.cart.model.OfferApplied
 import agstack.gramophone.ui.cart.viewmodel.CartViewModel
 import agstack.gramophone.ui.checkout.CheckoutStatusActivity
-import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
-import android.Manifest
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -42,6 +37,9 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
 
     private fun setupUi() {
         setUpToolBar(true, getString(R.string.cart), R.drawable.ic_arrow_left)
+        viewDataBinding.llPriceBreakUp.setOnClickListener {
+            viewDataBinding.nestedScroll.fullScroll(View.FOCUS_DOWN)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -246,6 +246,7 @@
     <string name="favourite">Favourite</string>
     <string name="featured_products">Featured Products</string>
     <string name="shop_by_company">Shop by Company</string>
+    <string name="pesticides">Pesticides</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

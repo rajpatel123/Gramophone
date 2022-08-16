@@ -1,8 +1,8 @@
-package agstack.gramophone.ui.home.store
+package agstack.gramophone.ui.home.shop
 
+import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
-import agstack.gramophone.ui.home.adapter.ProductListAdapter
 import agstack.gramophone.ui.home.adapter.ShopByCompanyAdapter
 import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
 import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
@@ -13,9 +13,9 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class ShopByStoreViewModel @Inject constructor(
+class ShopByViewModel @Inject constructor(
     private val productRepository: ProductRepository,
-) : BaseViewModel<ShopByStoreNavigator>() {
+) : BaseViewModel<ShopByNavigator>() {
 
     var progress = MutableLiveData<Boolean>()
     var isRainView = MutableLiveData<Boolean>()
@@ -33,15 +33,24 @@ class ShopByStoreViewModel @Inject constructor(
             when (bundle.getString(Constants.SHOP_BY_TYPE)) {
                 Constants.SHOP_BY_CROP -> {
                     showWeatherView.value = true
-                    getNavigator()?.setShopByCropAdapter(ShopByCropsAdapter())
+                    getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.shop_by_crops)!!)
+                    getNavigator()?.setShopByCropAdapter(ShopByCropsAdapter()) {
+                        getNavigator()?.openShopByDetailActivity(it)
+                    }
                 }
                 Constants.SHOP_BY_STORE -> {
                     showWeatherView.value = true
-                    getNavigator()?.setShopByStoresAdapter(ShopByStoresAdapter())
+                    getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.shop_by_store)!!)
+                    getNavigator()?.setShopByStoresAdapter(ShopByStoresAdapter()) {
+                        getNavigator()?.openShopByDetailActivity(it)
+                    }
                 }
                 Constants.SHOP_BY_COMPANY -> {
                     showWeatherView.value = true
-                    getNavigator()?.setShopByCompanyAdapter(ShopByCompanyAdapter())
+                    getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.shop_by_company)!!)
+                    getNavigator()?.setShopByCompanyAdapter(ShopByCompanyAdapter()) {
+                        getNavigator()?.openShopByDetailActivity(it)
+                    }
                 }
             }
         }
