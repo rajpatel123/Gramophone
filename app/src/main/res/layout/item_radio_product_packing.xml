@@ -5,7 +5,9 @@
     xmlns:card_view="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="model"
             type="agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem" />
@@ -33,15 +35,15 @@
                 android:layout_width="@dimen/_24sdp"
                 android:layout_height="@dimen/_24sdp"
                 android:visibility="@{model.selected? View.VISIBLE:View.GONE}"
-                app:srcCompat="@drawable/ic_tick_check"/>
+                app:srcCompat="@drawable/ic_tick_check" />
 
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/radioBtn"
                 android:layout_width="@dimen/_24sdp"
                 android:layout_height="@dimen/_24sdp"
-                android:visibility="@{model.selected? View.GONE:View.VISIBLE}"
-                android:checked="@{model.selected}" />
+                android:checked="@{model.selected}"
+                android:visibility="@{model.selected? View.GONE:View.VISIBLE}" />
 
 
             <TextView
@@ -60,10 +62,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:hint="₹ 900"
-                android:text="@{`₹`+ model.mrpPrice.toString() }"
+                android:text='@{ model.mrpPrice!=null ? `₹` +model.mrpPrice.toString():""}'
                 android:textColor="@color/green"
-                android:textSize="@dimen/_12ssp" />
-
+                android:textSize="@dimen/_12ssp"
+                android:visibility='@{ model.mrpPrice!=null ?View.VISIBLE:View.INVISIBLE}' />
+            <!--android:text="@{`₹`+ model.mrpPrice.toString() }"-->
         </LinearLayout>
 
 

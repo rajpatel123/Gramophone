@@ -20,7 +20,7 @@ class ProductSKUOfferAdapter(SKUOfferList: ArrayList<PromotionListItem?>) :
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         mContext = viewGroup.context
         return CustomViewHolder(
-            ItemAvailableOffersBinding.inflate(LayoutInflater.from(viewGroup.context))
+            ItemAvailableOffersBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
         )
     }
 

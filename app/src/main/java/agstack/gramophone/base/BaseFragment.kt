@@ -143,8 +143,9 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
 
     override fun hideProgressBar() {
 
-
     }
+
+
 
     override fun proceedCall(helpLineNo: String) {
         val bottomSheet = BottomSheetDialog()
@@ -158,4 +159,8 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     override fun proceedOnLocationSetting() {
         startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
     }
+
+    /*override fun checkSelfPermissions( permission: String): Boolean {
+        TODO("Not yet implemented")
+    }*/
 }

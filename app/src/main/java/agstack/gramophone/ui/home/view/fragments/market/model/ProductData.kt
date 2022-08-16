@@ -7,7 +7,20 @@ import kotlinx.android.parcel.Parcelize
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Parcelize
- data class ProductData(
+data class ProductData(
     @SerializedName("product_id")
-    var product_id:Int =0
-): Parcelable
+    var product_id: Int = 0,
+    @SerializedName("rating")
+    var rating: Double? = null,
+
+    @SerializedName("comment")
+    var comment: String? = null,
+    @SerializedName("quantity")
+    var quantity: Int? = null,
+    @SerializedName("promotion_id")
+    var promotion_id: Int? = null,
+    @SerializedName("is_favourite")
+    var is_favourite  : Boolean? = null
+
+
+    ) : Parcelable

@@ -6,11 +6,14 @@ import agstack.gramophone.ui.address.model.AddressRequestModel
 import agstack.gramophone.ui.address.model.AddressResponseModel
 import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
+import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
+import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
+import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import retrofit2.Response
@@ -36,4 +39,8 @@ interface OnBoardingRepository {
     suspend fun getDistrict(type : String, sendOtpRequestModel: AddressRequestModel): Response<AddressResponseModel>
 
     suspend fun updateAddress(updateAddressRequestModel: UpdateAddressRequestModel): Response<SendOtpResponseModel>
+
+    suspend fun logoutUser(): Response<LogoutResponseModel>
+
+    suspend fun updateAddressByLatLong(addressRequestModel: AddressRequestWithLatLongModel): Response<AddressDataByLatLongResponseModel>
 }

@@ -5,20 +5,23 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.address.AddressNavigator
 import agstack.gramophone.ui.address.model.*
+import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
+import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
+import agstack.gramophone.ui.address.model.addressdetails.GpApiResponseData
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.Constants.DISTRICT
+import agstack.gramophone.utils.Constants.PINCODE
+import agstack.gramophone.utils.Constants.TEHSIL
+import agstack.gramophone.utils.Constants.VILLAGE
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.location.Address
-import android.os.Bundle
 import android.text.TextUtils
-import android.view.View
 import androidx.databinding.ObservableField
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.android.synthetic.main.activity_add_or_update_address.*
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
@@ -156,8 +159,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                     val dataList = ArrayList<AddressDataModel>()
 
                     when (type) {
-                        "district" -> {
-
+                        DISTRICT -> {
                             stateListData?.gp_api_response_data?.district_list?.forEach {
                                 val addressDataModel = AddressDataModel(it.name.toString())
                                 dataList.add(addressDataModel)
@@ -167,7 +169,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                                 districtName.set(it.name)
                                 getNavigator()?.closeDistrictDropDown()
                                 getTehsil(
-                                    "tehsil",
+                                    TEHSIL,
                                     stateNameStr.get().toString(),
                                     districtName.get().toString(),
                                     ""
@@ -175,7 +177,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                             }
                         }
 
-                        "tehsil" -> {
+                        TEHSIL -> {
                             stateListData?.gp_api_response_data?.tehsil_list?.forEach {
                                 val addressDataModel = AddressDataModel(it.name.toString())
                                 dataList.add(addressDataModel)
@@ -185,7 +187,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                                 tehsilName.set(it.name)
                                 getNavigator()?.closeTehsilDropDown()
                                 getVillage(
-                                    "village",
+                                    VILLAGE,
                                     stateNameStr.get().toString(),
                                     districtName.get().toString(),
                                     tehsilName.get().toString(),
@@ -193,7 +195,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                                 )
                             }
                         }
-                        "village" -> {
+                        VILLAGE -> {
                             stateListData?.gp_api_response_data?.village_list?.forEach {
                                 val addressDataModel = AddressDataModel(it.name.toString())
                                 dataList.add(addressDataModel)
@@ -203,7 +205,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                                 villageName.set(it.name)
                                 getNavigator()?.closeVillageDropDown()
                                 getPinCode(
-                                    "pincode",
+                                    PINCODE,
                                     stateNameStr.get().toString(),
                                     districtName.get().toString(),
                                     tehsilName.get().toString(),
@@ -212,7 +214,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                             }
                         }
 
-                        "pincode" -> {
+                        PINCODE -> {
                             stateListData?.gp_api_response_data?.pincode_list?.forEach {
                                 val addressDataModel = AddressDataModel(it.pincode.toString())
                                 dataList.add(addressDataModel)
@@ -266,18 +268,72 @@ class AddOrUpdateAddressViewModel @Inject constructor(
         stateImageUrl.set(image)
     }
 
-    fun getAddressViaLocation() {
+
+    fun getAddressByLocation() {
+
+        val gps = getNavigator()?.getGPSTracker()
+        if (gps?.canGetLocation() == true) {
+            val latitude: Double = gps.getLatitude()
+            val longitude: Double = gps.getLongitude()
+            val addressRequestModel =
+                AddressRequestWithLatLongModel(latitude.toString(), longitude.toString())
+            getAddressByLatLong(addressRequestModel = addressRequestModel)
+        } else {
+            // Can't get location.
+            // GPS or network is not enabled.
+            // Ask user to enable GPS/network in settings.
+            gps?.showSettingsAlert()
+        }
+    }
+
+
+    private fun getAddressByLatLong(addressRequestModel: AddressRequestWithLatLongModel) {
+
+        loading.set(true)
+        try {
+            if (getNavigator()?.isNetworkAvailable() == true) {
+                viewModelScope.launch {
+                    val addressResponse =
+                        onBoardingRepository.updateAddressByLatLong(addressRequestModel)
+
+                    val updateAddress = handleResponse(addressResponse).data
+                    loading.set(false)
+
+                    if (Constants.GP_API_STATUS.equals(updateAddress?.gp_api_status)) {
+                        updateAddressByLatLong(updateAddress?.gp_api_response_data)
+                    } else {
+                        getNavigator()?.onError(updateAddress?.gp_api_message)
+                    }
+
+                }
+            } else
+                getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+        } catch (ex: Exception) {
+            when (ex) {
+                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+            }
+        }
 
     }
 
-    fun updateAddress(location: Address) {
-        stateNameStr.set(location.adminArea)
-        districtName.set(location.subAdminArea)
-        tehsilName.set(location.subAdminArea)
-        villageName.set(location.featureName)
-        address.set(location.getAddressLine(0))
-        pinCode.set(location.postalCode)
+    private fun updateAddressByLatLong(address: GpApiResponseData?) {
+        if (address?.state != null) stateNameStr.set(address.state)
+        if (address?.district != null) districtName.set(address.state)
+        if (address?.tehsil != null) tehsilName.set(address.state)
+        if (address?.village != null) villageName.set(address.state)
+        if (address?.pincode_list != null && address.pincode_list.size > 0)
+            pinCode.set(address.pincode_list.get(0).pincode)
     }
 
+
+    private fun handleResponse(response: Response<AddressDataByLatLongResponseModel>): ApiResponse<AddressDataByLatLongResponseModel> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                return ApiResponse.Success(resultResponse)
+            }
+        }
+        return ApiResponse.Error(response.message())
+    }
 
 }

@@ -1,9 +1,12 @@
 package agstack.gramophone.utils
 
 import android.content.Context
+import android.os.Environment
 import android.text.SpannableString
 import android.text.style.BulletSpan
 import android.widget.Toast
+import java.io.File
+import java.io.IOException
 
 object Utility {
 
@@ -15,5 +18,20 @@ object Utility {
                 end
             }
         }
+    }
+
+
+    @Throws(IOException::class)
+    fun getPictureFile(
+        context: Context
+    ): File {
+        val pictureFile = System.currentTimeMillis().toString() + ".jpg"
+        val storageDir = getExternalFileDir(context)
+        return File(storageDir?.path + File.separator + pictureFile)
+    }
+
+
+    private fun getExternalFileDir(context: Context?): File? {
+        return context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
     }
 }

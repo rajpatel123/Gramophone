@@ -6,6 +6,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class SelfRating(
+	@field:SerializedName("is_certified_buyer")
+	var is_certified_buyer: Boolean? = false,
 
 	@field:SerializedName("date")
 	var date: String? = null,

@@ -4,7 +4,7 @@ package agstack.gramophone.ui.offer
 import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
-import agstack.gramophone.databinding.ActivityOfferDetailsBinding
+import agstack.gramophone.databinding.OfferDetailsActivityBinding
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class OfferDetailActivity :
-    BaseActivityWrapper<ActivityOfferDetailsBinding, OfferDetailNavigator, OfferDetailViewModel>(),
+    BaseActivityWrapper<OfferDetailsActivityBinding, OfferDetailNavigator, OfferDetailViewModel>(),
     OfferDetailNavigator {
 
     private val offerDetailViewModel: OfferDetailViewModel by viewModels()
@@ -38,7 +38,7 @@ class OfferDetailActivity :
     }
 
     override fun getLayoutID(): Int {
-        return R.layout.activity_offer_details
+        return R.layout.offer_details_activity
     }
 
     override fun getBindingVariable(): Int {

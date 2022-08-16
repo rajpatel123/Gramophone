@@ -300,6 +300,7 @@
                         android:text="@={viewModel.pinCode}"
                         android:paddingBottom="@dimen/_15sdp"
                         android:completionThreshold="1"
+                        android:maxLength="6"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>

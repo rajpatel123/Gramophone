@@ -24,14 +24,17 @@ class AddEditProductReviewActivity :
     }
 
     private fun setRatingListener() {
-        viewDataBinding?.ratingbarUser?.setOnTouchListener(View.OnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
 
-               // how to get rating value?
+        viewDataBinding.ratingbarUser.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+            var rating =  rating.toDouble()
+            mViewModel?.productRating?.set(rating)
 
-            }
-            return@OnTouchListener true
-        })
+
+
+        }
+
+
+
     }
 
     override fun getBundle(): Bundle? {
@@ -55,6 +58,12 @@ class AddEditProductReviewActivity :
 
     override fun finishActivity() {
         finish()
+    }
+
+    override fun finishActivityandRefreshProductDetails(){
+        finish()
+        //write setResult functionality here
+
     }
 
 }

@@ -12,5 +12,13 @@
     <string name="select_language_hi">हिन्दी</string>
     <string name="select_language_marathi">मराठी</string>
     <string name="select_language_gujarati">ગુજરાતી</string>
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <string name="cancel">Cancel</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="complete_action_using">Complete Action Using</string>
+    <string name="select_image_title">Select image</string>
+    <string name="crop_image_title_text">Crop</string>
 
 </resources>

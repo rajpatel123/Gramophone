@@ -5,6 +5,8 @@ import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepositoryImpl
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.data.repository.product.ProductRepositoryImpl
+import agstack.gramophone.data.repository.settings.SettingsRepository
+import agstack.gramophone.data.repository.settings.SettingsRepositoryImpl
 import agstack.gramophone.data.repository.weather.WeatherRepository
 import agstack.gramophone.data.repository.weather.WeatherRepositoryImpl
 import dagger.Binds
@@ -18,10 +20,13 @@ import dagger.hilt.components.SingletonComponent
 interface RepositoryModule {
 
     @Binds
-    fun bindOnBoardingRepository(impl: OnBoardingRepositoryImpl):OnBoardingRepository
+    fun bindOnBoardingRepository(impl: OnBoardingRepositoryImpl): OnBoardingRepository
 
     @Binds
     fun bindProductRepository(impl: ProductRepositoryImpl): ProductRepository
+
+    @Binds
+    fun bindSettingsRepository(impl: SettingsRepositoryImpl): SettingsRepository
 
     @Binds
     fun bindWeatherRepository(impl: WeatherRepositoryImpl): WeatherRepository

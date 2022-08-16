@@ -6,69 +6,53 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityVerifyOtpBinding
 import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
-import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
 import agstack.gramophone.ui.verifyotp.viewmodel.VerifyOtpViewModel
-import agstack.gramophone.utils.ApiResponse
-import agstack.gramophone.utils.Constants.MOBILE_NO
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_verify_otp.*
 import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
-class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOTPNavigator, VerifyOtpViewModel>(),
+class VerifyOtpActivity :
+    BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOTPNavigator, VerifyOtpViewModel>(),
     VerifyOTPNavigator, LanguageBottomSheetFragment.LanguageUpdateListener {
-    private  val verifyOtpViewModel: VerifyOtpViewModel by viewModels()
+    private val verifyOtpViewModel: VerifyOtpViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         updateUI()
-
     }
 
     private fun updateUI() {
-       verifyOtpViewModel.updateMessage()
+        verifyOtpViewModel.updateMessage()
     }
-
 
 
     override fun onBackPressed() {
         super.onBackPressed()
-        openActivity(LoginActivity::class.java,null)
+        openActivity(LoginActivity::class.java, null)
     }
 
-    override fun getLayoutID(): Int {
-        return R.layout.activity_verify_otp
-    }
+    override fun getLayoutID(): Int = R.layout.activity_verify_otp
 
-    override fun getBindingVariable(): Int {
-        return BR.viewModel
-    }
+    override fun getBindingVariable(): Int = BR.viewModel
 
-    override fun getViewModel(): VerifyOtpViewModel {
-      return verifyOtpViewModel
-    }
+    override fun getViewModel(): VerifyOtpViewModel = verifyOtpViewModel
 
-    override fun getBundle(): Bundle? {
-        return intent.extras
-    }
+    override fun getBundle(): Bundle? = intent.extras
 
-    override fun changeNumber() {
-        openAndFinishActivity(LoginActivity::class.java,null)
-    }
 
     override fun showTimer() {
-        tvTime.visibility=VISIBLE
-        tvResend.visibility=VISIBLE
-        tvResendOtp.visibility= GONE
+        tvTime.visibility = VISIBLE
+        tvResend.visibility = VISIBLE
+        tvResendOtp.visibility = GONE
         object : CountDownTimer(30000, 1000) {
             override fun onTick(millis: Long) {
                 val ms = java.lang.String.format(
@@ -84,38 +68,20 @@ class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOT
                         )
                     )
                 )
-                tvTime.text =ms+" Sec"
+                tvTime.text = ms + " " + getMessage(R.string.seconds)
                 //here you can have your logic to set text to edittext
             }
 
             override fun onFinish() {
-                tvTime.visibility=GONE
-                tvResend.visibility=GONE
-                tvResendOtp.visibility= VISIBLE
+                tvTime.visibility = GONE
+                tvResend.visibility = GONE
+                tvResendOtp.visibility = VISIBLE
             }
         }.start()
     }
 
-    override fun onError(message: String?) {
-
-    }
-
-    override fun onSuccess(message: String?) {
-        Toast.makeText(this@VerifyOtpActivity,message,Toast.LENGTH_LONG).show()
-
-    }
-
-    override fun onLoading() {
-
-    }
-
     override fun onHelpClick(number: String) {
-        val bottomSheet = BottomSheetDialog()
-        bottomSheet.customerSupportNumber= number
-        bottomSheet.show(
-            getSupportFragmentManager(),
-            "bottomSheet"
-        )
+        verifyOtpViewModel.onHelpClick()
     }
 
     override fun onLanguageChangeClick() {
@@ -123,13 +89,11 @@ class VerifyOtpActivity : BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOT
         bottomSheet.setLanguageListener(this)
         bottomSheet.show(
             getSupportFragmentManager(),
-            "bottomSheet"
+            getMessage(R.string.bottomsheet_tag)
         )
     }
 
-    override fun <T> moveToNext(clazz: Class<T>) {
-        openAndFinishActivity(clazz, null)
-    }
+
 
     override fun onLanguageUpdate() {
         verifyOtpViewModel.updateLanguage()

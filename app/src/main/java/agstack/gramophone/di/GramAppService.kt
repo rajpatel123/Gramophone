@@ -7,6 +7,8 @@ import agstack.gramophone.ui.address.model.AddressRequestModel
 import agstack.gramophone.ui.address.model.AddressResponseModel
 import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
+import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
+import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
@@ -19,7 +21,10 @@ import agstack.gramophone.ui.order.model.OrderListResponse
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
+import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
+import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
+import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import agstack.gramophone.utils.Constants
@@ -89,12 +94,36 @@ interface GramAppService {
         @Body productData: ProductData
     ): Response<ProductReviewDataResponse>
 
+
+    @PUT("api/v5/review/update-review")
+    suspend fun updateReviewData(
+        @Body productData: ProductData
+    ): Response<ProductReviewDataResponse>
+
+
+    @POST("api/v5/review/add-review")
+    suspend fun addReviewData(
+        @Body productData: ProductData
+    ): Response<ProductReviewDataResponse>
+
+
+
     @POST("api/v5/product/get-related-product")
     suspend fun getRelatedProductsData(@Body productData: ProductData): Response<RelatedProductResponseData>
 
 
     @POST("api/v5/product/get-promotion")
     suspend fun getOffersOnProductData(@Body productData: ProductData): Response<OffersProductResponseData>
+
+
+    @POST("api/v5/cart/add-to-cart")
+    suspend fun addToCart(@Body productData: ProductData): Response<CartDataResponse>
+
+    @POST("api/v5/product/get-expert-advice")
+    suspend fun getExpertAdvice(@Body productData: ProductData):Response<SuccessStatusResponse>
+
+    @PUT("api/v5/product/update-product-favourite")
+    suspend fun updateProductFavorite(@Body productData: ProductData):Response<SuccessStatusResponse>
 
     @POST("api/v5/cart/add-to-cart")
     suspend fun addToCart(@Body addToCartRequest: AddToCartRequest): Response<SuccessStatusResponse>
@@ -115,4 +144,20 @@ interface GramAppService {
     @POST("api/v5/cart/place-order")
     suspend fun placeOrder(): Response<PlaceOrderResponse>
 
+    @GET("api/v5/setting/user-blocked-list")
+    suspend fun getBlockedUsersList(): Response<BlockedUsersListResponseModel>
+
+
+    @PUT("api/v5/setting/whatsapp/{opt-in}")
+    suspend fun optInOutForWhatsappUpdates(@Path("opt-in") type: String): Response<WhatsAppOptInResponseModel>
+
+    @PUT("api/v5/general/logout")
+    suspend fun logoutUser(): Response<LogoutResponseModel>
+
+    @PUT("api/v5/setting/user-block/{customer_id}")
+    suspend fun unBlockUser(@Path("customer_id") customer_id :  Int): Response<BlockedUsersListResponseModel>
+
+
+    @POST("api/v5/general/address-fetch")
+    suspend fun updateAddressByLatLong(@Body addressRequestModel: AddressRequestWithLatLongModel): Response<AddressDataByLatLongResponseModel>
 }
