@@ -93,7 +93,7 @@
                             android:layout_marginTop="@dimen/_14sdp"
                             android:layout_marginEnd="@dimen/_14sdp"
                             android:layout_marginBottom="@dimen/_14sdp"
-                            android:visibility="@{viewModel.isImageAvailable? View.VISIBLE:View.GONE}"
+                            android:visibility="@{viewModel.isImageAvailable? View.VISIBLE:View.INVISIBLE}"
                             app:civ_border_color="@color/white"
                             app:civ_border_width="2dp" />
 
