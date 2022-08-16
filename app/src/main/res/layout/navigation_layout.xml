@@ -4,17 +4,17 @@
     <data>
         <import type="android.view.View" />
         <variable
-            name="viewModel"
-            type="agstack.gramophone.ui.profile.viewmodel.ProfileViewModel" />
+            name="navvm"
+            type="agstack.gramophone.ui.home.viewmodel.HomeViewModel" />
     </data>
     <RelativeLayout
-       android:layout_width="match_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.progressBar? View.VISIBLE:View.GONE}"
+            android:visibility="@{navvm.progressBar? View.VISIBLE:View.GONE}"
             android:layout_centerInParent="true"
             />
 
@@ -40,6 +40,7 @@
                         android:layout_width="@dimen/_70sdp"
                         android:layout_height="@dimen/_70sdp"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:onClick="@{ ()-> navvm.OpenUserProfile()}"
                         android:src="@drawable/dummy_profile" />
 
                     <TextView
@@ -381,7 +382,7 @@
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="@dimen/_26sdp"
                     android:paddingTop="@dimen/_15sdp"
-                    android:onClick="@{ ()-> viewModel.openSettings()}"
+                    android:onClick="@{ ()-> navvm.openSettings()}"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
@@ -561,7 +562,7 @@
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="@dimen/_26sdp"
                     android:text="@string/share_app"
-                    android:onClick="@{ ()-> viewModel.shareApp() }"
+                    android:onClick="@{ ()-> navvm.shareApp() }"
 
                     android:textColor="@color/blakish"
                     android:textSize="@dimen/_12ssp" />
@@ -574,7 +575,7 @@
                     android:layout_height="@dimen/_40sdp"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="@dimen/_26sdp"
-                    android:onClick="@{ ()-> viewModel.logout(tvLogout) }"
+                    android:onClick="@{ ()-> navvm.logout(tvLogout) }"
 
                     android:text="Logout"
                     android:layout_marginBottom="@dimen/_40sdp"

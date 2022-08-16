@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
@@ -7,221 +6,94 @@
 
     <data>
 
-        <import type="android.text.TextUtils" />
-
         <import type="android.view.View" />
 
         <variable
             name="viewModel"
-            type="agstack.gramophone.ui.home.product.activity.ProductDetailsViewModel" />
+            type="agstack.gramophone.ui.home.viewmodel.HomeViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".ui.home.product.activity.ProductDetailsActivity">
+        android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/myToolbar"
-            layout="@layout/layout_toolbar" />
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nestedscroll"
+        <androidx.drawerlayout.widget.DrawerLayout xmlns:fab="http://schemas.android.com/tools"
+            android:id="@+id/drawer_layout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent">
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/myToolbar">
-
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.home.view.HomeActivity">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar_home"
+                app:layout_constraintTop_toBottomOf="parent" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/nav_host"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:defaultNavHost="true"
+                app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:navGraph='@navigation/nav_graph' />
+
+            <FrameLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+            <agstack.gramophone.menu.BottomNavigationView
+                android:id="@+id/bottomNav"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:background="@color/bottom_background"
+                android:orientation="horizontal"
+                app:active_color="@color/gray_menu_active"
+                app:animation_duration="300"
+                app:item_padding="4dp"
+                app:item_text_size="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:menu="@menu/navigation_items"
+                app:passive_color="@color/gray_menu_passive"
+                app:pressed_color="@color/bottom_menu_pressed"
+                app:scale_percent="5" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
+
+
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/nav_view1"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_gravity="start"
+                android:fitsSystemWindows="true">
 
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_16sdp">
-
-                    <TextView
-                        android:id="@+id/tv_productname"
-                        style="@style/TextSize16Sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="Bioenzyme Organic Cold Pressed Water Soluble Pure Neem Oil"
-                        android:text="@{viewModel.productData.productBaseName}" />
-
-                    <LinearLayout
-                        android:visibility="gone"
-                        android:id="@+id/ll_price_discount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_productname"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:orientation="horizontal">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_productSP"
-                            style="@style/heading_title_bold_large"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="@{viewModel.selectedSkuListItem.salesPrice}"
-                            android:textColor="@color/blakish"
-                            android:textSize="@dimen/_18ssp"
-                            tools:text="₹799.00" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_productMRP"
-                            style="@style/heading_title_bold_large"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/_7sdp"
-                            android:background="@drawable/strike_through"
-                            android:gravity="center"
-                            tools:text="₹1,290"
-                            android:text="@{viewModel.selectedSkuListItem.mrpPrice}"
-                            android:textColor="@color/oldmrpcolor"
-                            android:textSize="@dimen/_12ssp" />
-                        <!-- android:visibility="@{Double.valueOf(viewModel.selectedSkuListItem.mrpPrice)>Double.valueOf(viewModel.selectedSkuListItem.salesPrice)?View.VISIBLE:View.INVISIBLE}"
-                        isMRPVisible="@{viewModel.selectedSkuListItem}"-->
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_percentageOffOnSelectedSKU"
-                            style="@style/heading_title_bold_large"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/_7sdp"
-                            android:gravity="center"
-                            tools:text="60%"
-                            android:textColor="@color/green"
-                            android:textSize="@dimen/_14ssp" />
-
-                        <!-- percentageOffSKUItem="@{viewModel.selectedSkuListItem}"-->
+                <include
+                    android:id="@+id/navigationlayout"
+                    layout="@layout/navigation_layout"
+                    bind:navvm="@{viewModel}" />
 
 
-                    </LinearLayout>
+            </com.google.android.material.navigation.NavigationView>
 
-                    <LinearLayout
-                        android:id="@+id/ll_qty"
-                        android:visibility="gone"
-                        android:background="@drawable/rounded_corner_4_solid_stroke_gray"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_productname"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:foregroundGravity="center"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:layout_width="@dimen/_32sdp"
-                            android:layout_height="@dimen/_32sdp"
-                            android:background="@drawable/ic_minus_frame"
-                            android:onClick="@{()->viewModel.onMinusQtyClicked()}" />
-
-                        <TextView
-                            android:layout_width="@dimen/_32sdp"
-                            android:layout_height="@dimen/_32sdp"
-                            android:fontFamily="@font/manrope_medium"
-                            android:gravity="center"
-                            android:text="@{viewModel.qtySelected.toString()}"
-                            android:textColor="@color/blakish"
-                            android:textSize="@dimen/_14ssp"
-                            android:textStyle="normal"
-                            tools:text="01" />
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:layout_width="@dimen/_32sdp"
-                            android:layout_height="@dimen/_32sdp"
-                            android:background="@drawable/ic_plus_frame"
-                            android:onClick="@{()->viewModel.onAddQtyClicked()}" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tv_contactForPrice"
-                        style="@style/TextSize16Sp"
-                        android:textColor="@color/order_delivered_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_productname"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:background="@drawable/deselected_product_background"
-                        android:paddingTop="@dimen/_8sdp"
-                        android:paddingBottom="@dimen/_8sdp"
-                        android:paddingLeft="@dimen/_16sdp"
-                        android:paddingRight="@dimen/_16sdp"
-                        android:text="@string/contactforprice" />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/tv_inclusive"
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_minus16sdp"
-                    android:fontFamily="@font/manrope_medium"
-                    android:text="@string/inclusiveoftaxes"
-                    android:textSize="@dimen/_9ssp">
-
-                </TextView>
-
-
-                <View
-                    android:id="@+id/v1_separator"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_2sdp"
-                    android:layout_below="@+id/tv_inclusive"
-                    android:layout_marginLeft="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_18sdp"
-                    android:layout_marginRight="@dimen/_16sdp"
-                    android:background="#F2F4F7" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_16sdp"
-                    android:fontFamily="@font/manrope_bold"
-                    android:text="@string/packing"
-                    android:textColor="@color/blakish"
-                    android:textSize="@dimen/_14sdp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_product_sku"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_16sdp"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="3"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/item_radio_product_packing" />
-
-                <View
-                    android:id="@+id/v2_separator"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_4sdp"
-                    android:layout_below="@+id/rv_product_sku"
-                    android:background="#F2F4F7" />
-
-
-
-
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.drawerlayout.widget.DrawerLayout>
+    </FrameLayout>
 </layout>

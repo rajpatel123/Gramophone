@@ -1,6 +1,7 @@
 package agstack.gramophone.utils
 
 
+import android.Manifest
 import android.content.Context
 
 
@@ -9,6 +10,11 @@ object Constants {
     val PRODUCT_RATING_DATA_KEY="PRODUCT RATING DATA"
     val RATING_SELECTED="RATING_SELECTED"
     val OFFERSDATA="OFFERSDATA"
+
+
+    val CAMERA_PERMISSION = Manifest.permission.CAMERA
+    val REQUEST_CAMERA = 1012
+    val REQUEST_GALLERY = 1013
 
     //sortBy options
     val TOP = "top"
@@ -98,5 +104,14 @@ object Constants {
         companion object {
             const val GOOGLE_API_KEY = "google_api_key"
         }
+    }
+
+
+    object Profile {
+        const val MAX_AVATAR_SIZE = 1280 //px, side of square
+        const val MIN_AVATAR_SIZE = 100 //px, side of square
+        const val MAX_NAME_LENGTH = 120
+        const val FollowerType = "follower"
+        const val FollowingType = "following"
     }
 }

@@ -4,6 +4,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ProductDetailBinding
+import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
 import agstack.gramophone.ui.home.product.fragment.*
 import agstack.gramophone.ui.home.view.fragments.market.model.*
@@ -188,7 +189,7 @@ class ProductDetailsActivity :
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_cart -> {
-                Log.d("Show cart clicked", "Show Cart")
+                openActivity(CartActivity::class.java)
             }
 
         }
@@ -337,9 +338,9 @@ class ProductDetailsActivity :
     }
 
 
-    override fun updateAddToCartButtonText(newText:String?) :String{
-        if(newText!=null)
-        viewDataBinding.btnAddtocart.setText(newText)
+    override fun updateAddToCartButtonText(newText: String?): String {
+        if (newText != null)
+            viewDataBinding.btnAddtocart.setText(newText)
         return viewDataBinding.btnAddtocart.text.toString()
     }
 }

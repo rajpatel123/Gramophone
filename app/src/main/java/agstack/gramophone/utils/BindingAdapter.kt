@@ -74,6 +74,7 @@ class BindingAdapter {
         }
 
         @BindingAdapter("htmlText")
+        @JvmStatic
         fun setHtmlTextValue(textView: TextView, htmlText: String?) {
             if (htmlText == null) return
             val result: Spanned = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

@@ -258,6 +258,14 @@
     <string name="contactforprice">Contact for price</string>
     <string name="executivewillcontactmessage">Our executive will be in touch with you shortly</string>
     <string name="gotocart">Go to Cart</string>
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <string name="cancel">Cancel</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="complete_action_using">Complete Action Using</string>
+    <string name="select_image_title">Select image</string>
+    <string name="crop_image_title_text">Crop</string>
 
 
     <string-array name="SortReviewsByOptions">

@@ -154,4 +154,8 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
             Constants.BOTTOM_SHEET
         )
     }
+
+    /*override fun checkSelfPermissions( permission: String): Boolean {
+        TODO("Not yet implemented")
+    }*/
 }
