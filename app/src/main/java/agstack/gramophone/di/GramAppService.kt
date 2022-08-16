@@ -119,6 +119,12 @@ interface GramAppService {
     @POST("api/v5/cart/add-to-cart")
     suspend fun addToCart(@Body productData: ProductData): Response<CartDataResponse>
 
+    @POST("api/v5/product/get-expert-advice")
+    suspend fun getExpertAdvice(@Body productData: ProductData):Response<SuccessStatusResponse>
+
+    @PUT("api/v5/product/update-product-favourite")
+    suspend fun updateProductFavorite(@Body productData: ProductData):Response<SuccessStatusResponse>
+
     @POST("api/v5/cart/add-to-cart")
     suspend fun addToCart(@Body addToCartRequest: AddToCartRequest): Response<SuccessStatusResponse>
 

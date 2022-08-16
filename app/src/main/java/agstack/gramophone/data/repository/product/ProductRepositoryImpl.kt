@@ -63,6 +63,18 @@ class ProductRepositoryImpl @Inject constructor(
         cartData
     }
 
+    override suspend fun getExpertAdvice(productData: ProductData): Response<SuccessStatusResponse> = withContext(
+        Dispatchers.IO) {
+        val expertAdvice = gramoAppService.getExpertAdvice(productData)
+        expertAdvice
+    }
+
+    override suspend fun updateProductFavorite(productData: ProductData): Response<SuccessStatusResponse> = withContext(
+        Dispatchers.IO) {
+        val response = gramoAppService.updateProductFavorite(productData)
+        response
+    }
+
     override suspend fun addToCart(addToCartRequest: AddToCartRequest): Response<SuccessStatusResponse> = withContext(
         Dispatchers.IO) {
         val addToCartResponse = gramoAppService.addToCart(addToCartRequest)

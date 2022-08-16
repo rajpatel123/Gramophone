@@ -4,11 +4,9 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ProductDetailBinding
+import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
-import agstack.gramophone.ui.home.product.fragment.ExpertAdviceBottomSheetFragment
-import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
-import agstack.gramophone.ui.home.product.fragment.ProductImagesFragment
-import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
+import agstack.gramophone.ui.home.product.fragment.*
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
@@ -27,6 +25,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
+import com.google.android.material.radiobutton.MaterialRadioButton
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerFragment
@@ -55,16 +54,21 @@ class ProductDetailsActivity :
               initYoutubePlayer()
           }, 500)*/
         initProductDetailView()
+
+    }
+
+    override fun setRatingBarChangeListener() {
         setSelfRatingBarChangeListener()
-
-
     }
 
     private fun setSelfRatingBarChangeListener() {
         viewDataBinding.ratingbarReviews.ratingbarSelfRatingStars.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-            var rating = rating.toDouble()
-            mViewModel?.ratingSelected?.set(rating)
-            mViewModel?.openAddEditProductReview(rating)
+            if (fromUser) {
+
+                val ratingfinal = rating.toDouble()
+                mViewModel?.ratingSelected?.set(ratingfinal)
+                mViewModel?.openAddEditProductReview(ratingfinal)
+            }
 
 
         }
@@ -80,6 +84,12 @@ class ProductDetailsActivity :
         genuineCustomerDialog = genuineCustomerRatingAlertFragment
         genuineCustomerDialog.setOnClickSelectedListener(onAddToCartClick)
         genuineCustomerDialog.show(supportFragmentManager, "genuineCustomerDialog")
+    }
+
+    private var contactforPriceDialog = ContactForPriceBottomSheetDialog.newInstance()
+    override fun showContactForPriceBottomSheetDialog(contactForPriceBottomSheetDialog: ContactForPriceBottomSheetDialog) {
+        contactforPriceDialog = contactForPriceBottomSheetDialog
+        contactforPriceDialog.show(supportFragmentManager, "contactForPriceDialog")
     }
 
 
@@ -100,7 +110,7 @@ class ProductDetailsActivity :
 
 
     private fun initProductDetailView() {
-        viewDataBinding?.tvShowAllDetails?.setOnClickListener {
+        viewDataBinding.tvShowAllDetails.setOnClickListener {
             isShowMoreClicked = !isShowMoreClicked
 
             if (isShowMoreClicked) {
@@ -110,8 +120,8 @@ class ProductDetailsActivity :
                 showMoreOrLessText = resources.getString(R.string.showmore)
                 drawableEndArrow = getDrawable(R.drawable.ic_arrow_down_orange)!!
             }
-            viewDataBinding?.tvShowAllDetails?.setText(showMoreOrLessText)
-            (viewDataBinding?.tvShowAllDetails as AppCompatTextView).setCompoundDrawablesWithIntrinsicBounds(
+            viewDataBinding.tvShowAllDetails.setText(showMoreOrLessText)
+            viewDataBinding.tvShowAllDetails.setCompoundDrawablesWithIntrinsicBounds(
                 null,
                 null,
                 drawableEndArrow,
@@ -119,10 +129,10 @@ class ProductDetailsActivity :
             )
 
 
-            (viewDataBinding?.rvProductDetails?.adapter as ProductDetailsAdapter)
+            (viewDataBinding.rvProductDetails.adapter as ProductDetailsAdapter)
                 .isShowMoreSelected = isShowMoreClicked
 
-            (viewDataBinding?.rvProductDetails?.adapter as ProductDetailsAdapter).notifyDataSetChanged()
+            (viewDataBinding.rvProductDetails.adapter as ProductDetailsAdapter).notifyDataSetChanged()
 
 
         }
@@ -179,7 +189,7 @@ class ProductDetailsActivity :
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_cart -> {
-                Log.d("Show cart clicked", "Show Cart")
+                openActivity(CartActivity::class.java)
             }
 
         }
@@ -212,10 +222,57 @@ class ProductDetailsActivity :
     ) {
 
         productSKUAdapter.selectedProduct = onSKUItemClicked
-        viewDataBinding?.rvProductSku?.adapter = productSKUAdapter
+        viewDataBinding.rvProductSku.adapter = productSKUAdapter
+        //if sku's price is null , then hide the offer section
+
 
     }
 
+    override fun refreshSKUAdapter() {
+        viewDataBinding.rvProductSku.adapter!!.notifyDataSetChanged()
+    }
+
+    override fun refreshOfferAdapter() {
+        viewDataBinding.rvAvailableoffers.adapter!!.notifyDataSetChanged()
+    }
+
+    override fun setPercentageOff_mrpVisibility(
+        salesPrice: String,
+        discountPercentage: String,
+        isMRPVisible: Boolean,
+        isOffersLayoutVisible: Boolean,
+        isContactforPriceVisible: Boolean
+    ) {
+        viewDataBinding.tvProductSP.setText(resources.getString(R.string.rupee_symbol) + " " + salesPrice)
+        viewDataBinding.tvPercentageOffOnSelectedSKU.setText(discountPercentage)
+        if (isMRPVisible) {
+            viewDataBinding.tvProductMRP.visibility = View.VISIBLE
+        } else {
+            viewDataBinding.tvProductMRP.visibility = View.VISIBLE
+        }
+
+        if (isContactforPriceVisible) {
+            viewDataBinding.tvContactForPrice.visibility = View.VISIBLE
+            viewDataBinding.llPriceDiscount.visibility = View.GONE
+            viewDataBinding.llQty.visibility = View.GONE
+            viewDataBinding.tvInclusive.visibility = View.GONE
+        } else {
+            viewDataBinding.tvContactForPrice.visibility = View.GONE
+            viewDataBinding.llPriceDiscount.visibility = View.VISIBLE
+            viewDataBinding.llQty.visibility = View.VISIBLE
+            viewDataBinding.tvInclusive.visibility = View.VISIBLE
+        }
+
+        if (!isOffersLayoutVisible) {
+            //v2_separator
+            viewDataBinding.v2Separator.visibility = View.GONE
+            viewDataBinding.rlAvailableOffers.visibility = View.GONE
+        } else {
+            viewDataBinding.v2Separator.visibility = View.VISIBLE
+            viewDataBinding.rlAvailableOffers.visibility = View.VISIBLE
+        }
+
+    }
 
     override fun setProductSKUOfferAdapter(
         productSKUOfferAdapter: ProductSKUOfferAdapter,
@@ -252,16 +309,16 @@ class ProductDetailsActivity :
     }
 
     override fun setProductImagesViewPagerAdapter(productImagesAdapter: ProductImagesAdapter) {
-        viewDataBinding.productImagesViewPager?.adapter = productImagesAdapter
+        viewDataBinding.productImagesViewPager.adapter = productImagesAdapter
         viewDataBinding.dotsIndicator.attachTo(viewDataBinding.productImagesViewPager)
     }
 
     override fun setProductDetailsAdapter(productDetailsAdapter: ProductDetailsAdapter) {
-        viewDataBinding.rvProductDetails?.adapter = productDetailsAdapter
+        viewDataBinding.rvProductDetails.adapter = productDetailsAdapter
     }
 
     override fun setRatingAndReviewsAdapter(ratingAndReviewsAdapter: RatingAndReviewsAdapter) {
-        viewDataBinding.ratingbarReviews?.rvReviewsProduct?.adapter = ratingAndReviewsAdapter
+        viewDataBinding.ratingbarReviews.rvReviewsProduct.adapter = ratingAndReviewsAdapter
     }
 
     override fun openViewAllReviewRatingsActivity(
@@ -278,5 +335,12 @@ class ProductDetailsActivity :
         openActivity(ProductDetailsActivity::class.java, Bundle().apply {
             putParcelable("product", productData)
         })
+    }
+
+
+    override fun updateAddToCartButtonText(newText: String?): String {
+        if (newText != null)
+            viewDataBinding.btnAddtocart.setText(newText)
+        return viewDataBinding.btnAddtocart.text.toString()
     }
 }

@@ -17,6 +17,10 @@ data class ProductData(
     var comment: String? = null,
     @SerializedName("quantity")
     var quantity: Int? = null,
+    @SerializedName("promotion_id")
+    var promotion_id: Int? = null,
+    @SerializedName("is_favourite")
+    var is_favourite  : Boolean? = null
 
 
     ) : Parcelable

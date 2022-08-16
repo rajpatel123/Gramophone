@@ -6,6 +6,7 @@ import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
 import agstack.gramophone.ui.home.product.activity.productreview.AddEditProductReviewActivity
+import agstack.gramophone.ui.home.product.fragment.ContactForPriceBottomSheetDialog
 import agstack.gramophone.ui.home.product.fragment.ExpertAdviceBottomSheetFragment
 import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
@@ -25,6 +26,7 @@ import javax.inject.Inject
 class ProductDetailsViewModel @Inject constructor(
     private val productRepository: ProductRepository
 ) : BaseViewModel<ProductDetailsNavigator>() {
+    val productDetailstoBeFetched = ProductData()
     var mSKUList = ArrayList<ProductSkuListItem?>()
 
     var mSkuOfferList = ArrayList<PromotionListItem?>()
@@ -39,6 +41,8 @@ class ProductDetailsViewModel @Inject constructor(
     private var loadProductReviewsDataJob: Job? = null
     private var loadProductOffersDataJob: Job? = null
     private var addToCartJob: Job? = null
+    private var expertAdviceJob: Job? = null
+    private var updateProductFavoriteJob: Job? = null
     var progressLoader = ObservableField<Boolean>(false)
 
     //Values selected by User
@@ -46,19 +50,43 @@ class ProductDetailsViewModel @Inject constructor(
 
     var ratingSelected = ObservableField<Double>(0.0)
     var isHeartSelected = ObservableField<Boolean>(false)
+    var selectedSkuListItem = ProductSkuListItem()
+    var selectedOfferItem = PromotionListItem()
+    var addToCartEnabled = ObservableField<Boolean>(true)
     fun onHeartIconClicked() {
         isHeartSelected.set(!isHeartSelected.get()!!)
+        updateProductFavoriteJob.cancelIfActive()
+        updateProductFavoriteJob = checkNetworkThenRun {
+            progressLoader.set(true)
+            var producttoBeAdded = ProductData()
+            producttoBeAdded.product_id = productId
+            producttoBeAdded.is_favourite = isHeartSelected.get()
+            val updateProductFavJobResponse =
+                productRepository.updateProductFavorite(producttoBeAdded)
+            progressLoader.set(false)
+
+            if (updateProductFavJobResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+                getNavigator()?.showToast(updateProductFavJobResponse.body()?.gp_api_message)
+            } else {
+                getNavigator()?.showToast(updateProductFavJobResponse.body()?.gp_api_message)
+            }
+        }
+
 
     }
 
     fun onAddQtyClicked() {
         qtySelected.set(qtySelected.get()!! + 1)
+        loadOffersData(productDetailstoBeFetched, qtySelected.get())
+
     }
 
     fun onMinusQtyClicked() {
         if (qtySelected.get()!! >= 2)
             qtySelected.set(qtySelected.get()!! - 1)
+        loadOffersData(productDetailstoBeFetched, qtySelected.get())
     }
+
     fun getBundleData() {
         val bundle = getNavigator()?.getBundle()
         if (bundle?.getParcelable<ProductData>("product") != null) {
@@ -68,7 +96,7 @@ class ProductDetailsViewModel @Inject constructor(
             )
 
             productId = (bundle?.getParcelable<ProductData>("product") as ProductData).product_id
-            val productDetailstoBeFetched = ProductData()
+
             productDetailstoBeFetched.product_id = productId
 
             loadProductDataJob?.takeIf { it.isActive }?.cancel()
@@ -78,25 +106,27 @@ class ProductDetailsViewModel @Inject constructor(
                 //Start Loader
 
                 progressLoader.set(true)
-                val productDataResponse = productRepository
+                val productAPIResponse = productRepository
                     .getProductData(productDetailstoBeFetched)
                 //stop loader
                 progressLoader.set(false)
-                if (productDataResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
-                    productData.set(productDataResponse.body()?.gpApiResponseData!!)
+                if (productAPIResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
+                    productData.set(productAPIResponse.body()?.gpApiResponseData!!)
                     productData.let {
-                        getNavigator()?.setToolbarTitle(productData?.get()?.productBaseName!!)
-                        productData?.get()?.productImages?.let {
+                        val productResponseData = productData.get()
+                        getNavigator()?.setToolbarTitle(productResponseData?.productBaseName!!)
+                        isHeartSelected.set(productResponseData?.isUserFavourite)
+                        productResponseData?.productImages?.let {
                             getNavigator()?.setProductImagesViewPagerAdapter(
                                 ProductImagesAdapter(
                                     getNavigator()?.getFragmentManagerPager()!!,
-                                    productData?.get()?.productImages!!
+                                    productResponseData?.productImages!!
                                 )
                             )
                         }
 
                         mProductDetailsKeyValues =
-                            (productData?.get()?.productDetails?.keyPoints!!).toMutableList()
+                            (productResponseData?.productDetails?.keyPoints!!).toMutableList()
 
                         //set ProductDetails Adapter
                         getNavigator()?.setProductDetailsAdapter(
@@ -110,20 +140,45 @@ class ProductDetailsViewModel @Inject constructor(
 
                         //set skuList
                         mSKUList = ArrayList(productData?.get()?.productSkuList)
+
                         mSKUList.let {
                             getNavigator()?.setProductSKUAdapter(
                                 ProductSKUAdapter(
                                     mSKUList
                                 )
                             ) {
+                                Log.d("productSKUItemSelected", it.productId.toString())
+                                selectedSkuListItem = it
+                                productDetailstoBeFetched.product_id =
+                                    selectedSkuListItem.productId!!.toInt()
 
+                                setPercentage_mrpVisibility(selectedSkuListItem, selectedOfferItem)
 
                             }
+
+                            val productIdDefault = productResponseData.productIdDefault
+                            for (item in mSKUList) {
+                                item?.selected = item?.productId!!.equals(productIdDefault)
+                                if (item?.selected == true) {
+                                    selectedSkuListItem = item
+                                    productDetailstoBeFetched.product_id =
+                                        selectedSkuListItem.productId!!.toInt()
+                                    setPercentage_mrpVisibility(
+                                        selectedSkuListItem,
+                                        selectedOfferItem
+                                    )
+
+                                }
+                            }
+                            getNavigator()?.refreshSKUAdapter()
+
                         }
                     }
+                    loadOffersData(productDetailstoBeFetched)
                     loadRelatedProductData(productDetailstoBeFetched)
-                } else {
 
+                } else {
+                    getNavigator()?.showToast(productAPIResponse.body()?.gpApiMessage)
                 }
 
 
@@ -131,6 +186,60 @@ class ProductDetailsViewModel @Inject constructor(
 
 
         }
+    }
+
+    private fun setPercentage_mrpVisibility(
+        model: ProductSkuListItem,
+        offerModel: PromotionListItem? = null
+    ) {
+        var isOffersLayoutVisible = true
+        var priceDiff: Float = 0.0f
+        var finalSalePrice: Double = 0.0
+        var finaldiscount = "0"
+        var isMRPVisibile = false
+        var isContactforPriceVisible = false
+        if (model.mrpPrice == null || model.salesPrice == null) {
+
+            isOffersLayoutVisible = false
+            isContactforPriceVisible = true
+            addToCartEnabled.set(false)
+        } else {
+            isContactforPriceVisible = false
+            addToCartEnabled.set(true)
+
+            if (offerModel == null || offerModel?.amount_saved == 0.0) {
+                priceDiff = (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat())
+            } else if (offerModel != null && offerModel.amount_saved!! > 0.0) {
+                priceDiff =
+                    (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat()) - offerModel.amount_saved.toFloat()
+            }
+
+            val numarator = (priceDiff * 100)
+            val denominator = model.salesPrice!!.toFloat()
+            val percentage = numarator / denominator
+            val formatted_percentage = String.format("%.02f", percentage);
+            finaldiscount = (formatted_percentage + " % Off")
+            isMRPVisibile = priceDiff > 0
+
+            offerModel?.let {
+                if (offerModel.amount_saved!! > 0) {
+                    finalSalePrice = model.salesPrice.toDouble() - offerModel?.amount_saved!!
+                }
+            }
+            if (offerModel == null || offerModel?.amount_saved == 0.0) {
+                finalSalePrice = model.salesPrice.toDouble()
+            }
+// set offer detailsLayout visibility
+            isOffersLayoutVisible = !model.mrpPrice.equals(null)
+
+        }
+
+        getNavigator()?.setPercentageOff_mrpVisibility(
+            finalSalePrice.toString(),
+            finaldiscount,
+            isMRPVisibile, isOffersLayoutVisible, isContactforPriceVisible
+        )
+
     }
 
     private fun loadRelatedProductData(productDetailstoBeFetched: ProductData) {
@@ -181,19 +290,21 @@ class ProductDetailsViewModel @Inject constructor(
 
             try {
 
-                val productReviewResponse = productRepository.getProductReviewsData(
+                val productReviewAPIResponse = productRepository.getProductReviewsData(
                     Constants.TOP,
                     null,
                     productDetailstoBeFetched
                 )
 
-                if (productReviewResponse.body()?.gpApiStatus.equals(
+                val productReviewResponse = productReviewAPIResponse.body()
+                if (productReviewResponse?.gpApiStatus.equals(
                         Constants.GP_API_STATUS
                     )
                 ) {
-                    val gpApiResponseData = productReviewResponse.body()?.gpApiResponseData
-                    productReviewsData.set(gpApiResponseData)
-                    ratingSelected.set(gpApiResponseData?.selfRating?.rating)
+                    val productReviewResponseData = productReviewResponse?.gpApiResponseData
+                    productReviewsData.set(productReviewResponseData)
+                    ratingSelected.set(productReviewResponseData?.selfRating?.rating)
+                    getNavigator()?.setRatingBarChangeListener()
                     getNavigator()?.setRatingAndReviewsAdapter(
                         RatingAndReviewsAdapter(
                             productReviewsData.get()?.reviewList?.data as ArrayList<ReviewListItem?>,
@@ -202,7 +313,7 @@ class ProductDetailsViewModel @Inject constructor(
                     )
 
                 } else {
-                    getNavigator()?.showToast(productReviewResponse.body()?.gpApiMessage)
+                    getNavigator()?.showToast(productReviewResponse?.gpApiMessage)
                 }
 
 
@@ -210,14 +321,16 @@ class ProductDetailsViewModel @Inject constructor(
                 Log.d("Exception", e.toString())
             }
         }
-        loadOffersData(productDetailstoBeFetched)
 
 
     }
 
-    private fun loadOffersData(productDetailstoBeFetched: ProductData) {
+    private fun loadOffersData(productDetailstoBeFetched: ProductData, quantity: Int? = 0) {
         loadProductOffersDataJob.cancelIfActive()
         loadProductOffersDataJob = checkNetworkThenRun {
+            if (quantity!! > 0) {
+                productDetailstoBeFetched.quantity = quantity
+            }
             val offersOnProductResponse =
                 productRepository.getOffersOnProductData(productDetailstoBeFetched)
             if (offersOnProductResponse.body()?.gpApiStatus.equals(
@@ -230,10 +343,26 @@ class ProductDetailsViewModel @Inject constructor(
                         ArrayList(offersOnProductResponse?.body()?.gpApiResponseData?.offersProductList)
                     prodOfferList.let {
                         mSkuOfferList = ArrayList(prodOfferList)
+                        selectedOfferItem.let {
+                            if (mSkuOfferList.contains(selectedOfferItem)) {
+                                for (item in mSkuOfferList) {
+                                    if (item!!.equals(selectedOfferItem)) {
+                                        item.selected = true
+                                    }
+                                    getNavigator()?.refreshOfferAdapter()
+                                }
+
+                            } else {
+                                //do nothing as a new list is loaded with selected = false
+                            }
+                        }
                         getNavigator()?.setProductSKUOfferAdapter(
                             ProductSKUOfferAdapter(mSkuOfferList),
                             {
                                 //When RadioButton is clicked
+                                selectedOfferItem = it
+
+                                setPercentage_mrpVisibility(selectedSkuListItem, selectedOfferItem)
 
                             },
                             {
@@ -321,22 +450,71 @@ class ProductDetailsViewModel @Inject constructor(
     }
 
     fun onAddToCartClicked() {
-        /* ratingSelected
-         isHeartSelected*/
-        getNavigator()?.openActivity(CartActivity::class.java)
+
+        if (getNavigator()?.updateAddToCartButtonText() == getNavigator()?.getMessage(R.string.add_to_cart)) {
+            //because it is called multiple times , hence manually setting text as add to cart until the response is successful.
+            getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(R.string.add_to_cart)!!)
+            addToCartJob.cancelIfActive()
+            addToCartJob = checkNetworkThenRun {
+                progressLoader.set(true)
+                var producttoBeAdded = ProductData()
+                producttoBeAdded.product_id = selectedSkuListItem.productId!!.toInt()
+                producttoBeAdded.quantity = qtySelected.get()
+                producttoBeAdded.promotion_id = selectedOfferItem.promotion_id
+                val addTocartResponse =
+                    productRepository.addToCart(producttoBeAdded)
+
+                if (addTocartResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+                    progressLoader.set(false)
+                    getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+                    getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(R.string.gotocart)!!)
+
+                } else {
+                    progressLoader.set(false)
+                    getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+                }
+            }
+        } else {
+            getNavigator()?.openActivity(CartActivity::class.java)
+        }
+
+
     }
 
     fun onExpertAdviceClicked() {
         getNavigator()?.showExpertAdviceDialog(ExpertAdviceBottomSheetFragment(), {
-            Log.d("cancel", "cancel")
-//setAPICall
+
             getNavigator()?.dismissExpertBottomSheet()
 
         }, {
-            Log.d("ok", "ok")
+
+            //Call ExpertAdviceAPI
+            Log.d("Click", "yesPleaseClicked")
+            expertAdviceJob.cancelIfActive()
+            expertAdviceJob = checkNetworkThenRun {
+                progressLoader.set(true)
+                var producttoBeAdded = ProductData()
+                producttoBeAdded.product_id = productId
+                val expertAdviceResponse =
+                    productRepository.getExpertAdvice(producttoBeAdded)
+                getNavigator()?.dismissExpertBottomSheet()
+                progressLoader.set(false)
+
+                if (expertAdviceResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+
+                    getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
+                } else {
+                    getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
+                }
+            }
+
 
         })
 
+    }
+
+    fun ContactForPriceClicked() {
+        getNavigator()?.showContactForPriceBottomSheetDialog(ContactForPriceBottomSheetDialog())
     }
 
 }

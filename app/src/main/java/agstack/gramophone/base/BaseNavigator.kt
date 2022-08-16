@@ -1,5 +1,6 @@
 package agstack.gramophone.base
 
+import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
 import android.app.Activity
 import android.os.Bundle
 
@@ -27,6 +28,7 @@ interface BaseNavigator {
     fun isNetworkAvailable(): Boolean
 
     fun requestPermission(permission: String): Boolean
+   /* fun checkSelfPermissions( permission: String,function: (Boolean) -> Unit) : Boolean*/
 
     fun getLanguage(): String
 
