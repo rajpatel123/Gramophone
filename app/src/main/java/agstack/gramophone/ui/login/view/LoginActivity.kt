@@ -116,7 +116,8 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
         openActivity(WebViewActivity::class.java, bundle)
     }
 
-    override fun getBundle(): Bundle? = intent.extras
+    override fun getBundle(): Bundle? = intent?.extras
+    override fun getIntent(): Intent = intent
     override fun showMobileNumberHint() {
         requestMobileNoHint()
     }

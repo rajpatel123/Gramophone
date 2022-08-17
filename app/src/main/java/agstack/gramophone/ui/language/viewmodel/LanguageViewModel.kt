@@ -34,6 +34,7 @@ class LanguageViewModel @Inject constructor(
     var isLanguageSelected = ObservableField<Boolean>()
 
     fun getLanguageList() = viewModelScope.launch {
+        isLanguageSelected.set(false)
         getLanguage()
     }
 

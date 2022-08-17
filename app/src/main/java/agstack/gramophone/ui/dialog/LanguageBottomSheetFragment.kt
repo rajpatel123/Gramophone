@@ -46,6 +46,7 @@ class LanguageBottomSheetFragment : BottomSheetDialogFragment(),
         gpApiResponseData?.language_list?.forEach {
             if (it.language_code.equals(languageCode.toString(), true)) {
                 it.selected = true
+                this.language=it
             }else{
                 it.selected = false
             }

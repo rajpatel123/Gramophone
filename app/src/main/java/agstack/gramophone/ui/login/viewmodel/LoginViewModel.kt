@@ -17,7 +17,6 @@ import android.Manifest
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.ObservableField
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -188,7 +187,9 @@ class LoginViewModel @Inject constructor(
                     getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
                 }else{
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
-                    getNavigator()?.restartActivity()
+                    getNavigator()?.restartActivity(Bundle().apply {
+                        putString(Constants.MOBILE_NO,mobileNo.get())
+                    })
                 }
 
             } else
@@ -213,6 +214,8 @@ class LoginViewModel @Inject constructor(
     fun setMobileNumber() {
         if (!getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).isNullOrEmpty()){
          mobileNo.set(getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO))
+        }else if(getNavigator()?.getIntent()?.hasExtra(Constants.BUNDLE) == true){
+            mobileNo.set(getNavigator()?.getIntent()?.getBundleExtra(Constants.BUNDLE)?.getString(Constants.MOBILE_NO))
         }else{
             getNavigator()?.showMobileNumberHint()
         }

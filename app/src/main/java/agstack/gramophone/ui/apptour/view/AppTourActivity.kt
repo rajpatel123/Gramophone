@@ -10,6 +10,7 @@ import agstack.gramophone.ui.apptour.viewmodel.AppTourViewModel
 import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
 import agstack.gramophone.ui.language.model.LoginBanner
 import agstack.gramophone.ui.login.view.LoginActivity
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -99,6 +100,9 @@ class AppTourActivity :
     }
 
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
 
+    }
 
 }

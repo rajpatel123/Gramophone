@@ -15,6 +15,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -27,14 +28,14 @@
                 tools:context=".ui.address.view.AddOrUpdateAddressActivity">
 
                 <ProgressBar
+                    android:id="@+id/stateProgressBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/stateProgressBar"
                     android:layout_gravity="center"
-                    android:visibility="@{viewModel.loading? View.VISIBLE:View.GONE}"
                     android:backgroundTint="@color/zxing_viewfinder_laser"
                     android:elevation="@dimen/_1sdp"
-                    />
+                    android:visibility="@{viewModel.loading? View.VISIBLE:View.GONE}" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -115,8 +116,8 @@
                             android:layout_marginTop="@dimen/_5ssp"
                             android:layout_toEndOf="@+id/ivStateImage"
                             android:fontFamily="@font/manrope_bold"
-                            android:text="@string/change"
                             android:onClick="@{ ()-> viewModel.changeState() }"
+                            android:text="@string/change"
 
                             android:textColor="@color/green"
                             android:textSize="@dimen/_12ssp" />
@@ -144,30 +145,42 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/EditTextInputLayoutStyle"
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_20sdp"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginEnd="@dimen/_20sdp"
-                        app:boxStrokeWidth="0dp"
-                        app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
-                        app:endIconMode="none"
-                        >
+                        app:boxCornerRadiusBottomEnd="@dimen/_8sdp">
 
-                        <!--add all properties in stle and apply here -->
-                        <AutoCompleteTextView
-                            style="@style/AutoCompleteTextViewLayoutStyle"
-                            android:id="@+id/districtSpinner"
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/EditTextInputLayoutStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@={viewModel.districtName}"
-                            android:paddingBottom="@dimen/_15sdp"
-                            android:completionThreshold="1"
-                            />
+                            app:boxStrokeWidth="0dp"
+                            app:endIconMode="none">
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                            <!--add all properties in stle and apply here -->
+                            <AutoCompleteTextView
+                                android:id="@+id/districtSpinner"
+                                style="@style/AutoCompleteTextViewLayoutStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:completionThreshold="1"
+                                android:paddingBottom="@dimen/_15sdp"
+                                android:text="@={viewModel.districtName}" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_medium"
+                            android:text="*"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_gravity="top|end"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/_15ssp" />
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -180,29 +193,41 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/EditTextInputLayoutStyle"
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_20sdp"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginEnd="@dimen/_20sdp"
-                        app:boxStrokeWidth="0dp"
-                        app:endIconMode="none"
-                        >
-
-                        <!--add all properties in stle and apply here -->
-                        <AutoCompleteTextView
-                            style="@style/AutoCompleteTextViewLayoutStyle"
-                            android:id="@+id/tehsilSpinner"
+                        android:layout_marginEnd="@dimen/_20sdp">
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/EditTextInputLayoutStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@={viewModel.tehsilName}"
-                            android:paddingBottom="@dimen/_15sdp"
-                            android:completionThreshold="1"
-                            />
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                            app:boxStrokeWidth="0dp"
+                            app:endIconMode="none">
+
+                            <!--add all properties in stle and apply here -->
+                            <AutoCompleteTextView
+                                android:id="@+id/tehsilSpinner"
+                                style="@style/AutoCompleteTextViewLayoutStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:completionThreshold="1"
+                                android:paddingBottom="@dimen/_15sdp"
+                                android:text="@={viewModel.tehsilName}" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_medium"
+                            android:text="*"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_gravity="top|end"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/_15ssp" />
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -223,19 +248,17 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginEnd="@dimen/_20sdp"
                         app:boxStrokeWidth="0dp"
-                        app:endIconMode="none"
-                        >
+                        app:endIconMode="none">
 
                         <!--add all properties in stle and apply here -->
                         <AutoCompleteTextView
-                            style="@style/AutoCompleteTextViewLayoutStyle"
                             android:id="@+id/villageNameSpinner"
+                            style="@style/AutoCompleteTextViewLayoutStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@={viewModel.villageName}"
-                            android:paddingBottom="@dimen/_15sdp"
                             android:completionThreshold="1"
-                            />
+                            android:paddingBottom="@dimen/_15sdp"
+                            android:text="@={viewModel.villageName}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -292,23 +315,22 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginEnd="@dimen/_20sdp"
                         app:boxStrokeWidth="0dp"
-                        app:endIconMode="none"
-                        >
+
+                        app:endIconMode="none">
 
                         <!--add all properties in stle and apply here -->
                         <AutoCompleteTextView
-                            style="@style/AutoCompleteTextViewLayoutStyle"
                             android:id="@+id/pincodeSpinner"
+                            style="@style/AutoCompleteTextViewLayoutStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@={viewModel.pinCode}"
-                            android:paddingBottom="@dimen/_15sdp"
                             android:completionThreshold="1"
                             android:maxLength="6"
-                            />
+                            android:inputType="number"
+                            android:paddingBottom="@dimen/_15sdp"
+                            android:text="@={viewModel.pinCode}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
-
 
 
                 </LinearLayout>
@@ -321,8 +343,8 @@
             android:id="@+id/submitBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/brand_color"
             android:layout_alignParentBottom="true"
+            android:background="@color/brand_color"
             android:gravity="center"
             android:onClick="@{ ()-> viewModel.submitAddress() }"
             android:padding="@dimen/_13sdp"

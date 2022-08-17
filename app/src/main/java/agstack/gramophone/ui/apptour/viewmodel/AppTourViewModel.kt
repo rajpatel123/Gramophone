@@ -12,6 +12,7 @@ import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.Manifest
+import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -73,6 +74,7 @@ class AppTourViewModel@Inject constructor(
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
                 val response = onBoardingRepository.updateLanguage(sendOtpRequestModel)
+                getNavigator()?.restartActivity()
 
                 val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
 

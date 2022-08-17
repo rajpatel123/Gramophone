@@ -7,6 +7,7 @@ import agstack.gramophone.utils.LocaleManagerClass
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,7 +22,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import retrofit2.Response
 
 abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : BaseViewModel<N>> :
     AppCompatActivity(), BaseNavigator {
@@ -238,9 +238,20 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         viewDataBinding?.unbind()
     }
 
+    override fun restartActivity(bundle: Bundle) {
+        val intent = intent
+        intent.putExtra(Constants.BUNDLE,bundle)
+        finish()
+        startActivity(intent)
+    }
+
     override fun restartActivity() {
         val intent = intent
         finish()
         startActivity(intent)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
     }
 }

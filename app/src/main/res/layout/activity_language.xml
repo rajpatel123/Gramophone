@@ -68,10 +68,10 @@
             android:text="@string/_continue"
             android:padding="@dimen/_13sdp"
             android:gravity="center"
-            android:enabled="@{viewModel.isLanguageSelected?false:true}"
+            android:enabled="@{viewModel.isLanguageSelected}"
             android:onClick="@{ ()-> viewModel.onLanguageUpdate(btnContinue) }"
             android:textColor="@color/white"
-            android:background="@{viewModel.language!=null?@color/blue:@color/grey}"/>
+            android:background="@{viewModel.isLanguageSelected?@color/blue:@color/grey}"/>
 
     </LinearLayout>
 </layout>
