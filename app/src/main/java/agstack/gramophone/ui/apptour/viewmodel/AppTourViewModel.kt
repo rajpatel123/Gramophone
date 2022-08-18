@@ -74,8 +74,6 @@ class AppTourViewModel @Inject constructor(
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
                 val response = onBoardingRepository.updateLanguage(sendOtpRequestModel)
-                getNavigator()?.restartActivity()
-
                 val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {

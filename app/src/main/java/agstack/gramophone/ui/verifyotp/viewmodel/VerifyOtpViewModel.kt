@@ -220,13 +220,12 @@ class VerifyOtpViewModel @Inject constructor(
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
                     getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
-
-                } else {
-                    getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
                     getNavigator()?.restartActivity(Bundle().apply {
                         putString(Constants.MOBILE_NO, mobileNo.get())
                         putInt(Constants.OTP_REFERENCE, otpReference.get()?.toInt()!!)
                     })
+                } else {
+                    getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
                 }
 
             } else

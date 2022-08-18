@@ -187,11 +187,11 @@ class LoginViewModel @Inject constructor(
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
                     getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
-                }else{
-                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
                     getNavigator()?.restartActivity(Bundle().apply {
                         putString(Constants.MOBILE_NO,mobileNo.get())
                     })
+                }else{
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
                 }
 
             } else
