@@ -114,7 +114,8 @@ class HomeActivity :
                         navController.navigate(R.id.communityFragment3)
                     }
                     3 -> {
-                        openActivity(ProfileActivity::class.java)
+                        showToast("Coming in next iteration")
+                        //will be added as per new design
                     }
                 }
                 if (navigationItem.position != 3)

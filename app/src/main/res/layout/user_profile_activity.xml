@@ -44,7 +44,7 @@
 
                 />
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <com.amnix.xtension.widgets.CircularImageView
                 android:id="@+id/cv_profile_pic"
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
@@ -53,7 +53,6 @@
                 android:scaleType="centerInside"
                 android:shadowColor="@color/grey"
                 android:shadowRadius="10"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/view"
                 app:layout_constraintVertical_chainStyle="packed"
