@@ -183,9 +183,10 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{ ()-> navvm.openOrderList()}"
                     android:paddingStart="@dimen/_16sdp"
-                    android:paddingEnd="@dimen/_26sdp"
                     android:paddingTop="@dimen/_15sdp"
+                    android:paddingEnd="@dimen/_26sdp"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
@@ -223,7 +224,6 @@
                             android:textSize="@dimen/_10sdp" />
 
                     </LinearLayout>
-
 
 
                 </RelativeLayout>
@@ -379,10 +379,10 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/_16sdp"
-                    android:paddingEnd="@dimen/_26sdp"
-                    android:paddingTop="@dimen/_15sdp"
                     android:onClick="@{ ()-> navvm.openSettings()}"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:paddingTop="@dimen/_15sdp"
+                    android:paddingEnd="@dimen/_26sdp"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
@@ -439,9 +439,10 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{ ()-> navvm.openWeather()}"
                     android:paddingStart="@dimen/_16sdp"
-                    android:paddingEnd="@dimen/_26sdp"
                     android:paddingTop="@dimen/_15sdp"
+                    android:paddingEnd="@dimen/_26sdp"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView

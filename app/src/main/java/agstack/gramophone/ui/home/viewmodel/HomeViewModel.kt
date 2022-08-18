@@ -4,9 +4,11 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
+import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.settings.view.SettingsActivity
 import agstack.gramophone.ui.userprofile.UserProfileActivity
+import agstack.gramophone.ui.weather.WeatherActivity
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
@@ -78,9 +80,19 @@ class HomeViewModel @Inject constructor(
         return ApiResponse.Error(logoutResponse.message())
     }
 
+    fun openOrderList() {
+        getNavigator()?.closeDrawer()
+        getNavigator()?.openActivity(OrderListActivity::class.java, null)
+    }
 
     fun openSettings() {
+        getNavigator()?.closeDrawer()
         getNavigator()?.openActivity(SettingsActivity::class.java, null)
+    }
+
+    fun openWeather() {
+        getNavigator()?.closeDrawer()
+        getNavigator()?.openActivity(WeatherActivity::class.java, null)
     }
 
     fun shareApp() {

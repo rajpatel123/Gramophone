@@ -60,6 +60,7 @@
 
                     <agstack.gramophone.menu.BottomNavigationView
                         android:id="@+id/bottomNav"
+                        android:elevation="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_50sdp"
                         android:background="@color/bottom_background"
