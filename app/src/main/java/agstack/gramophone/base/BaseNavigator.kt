@@ -51,4 +51,6 @@ interface BaseNavigator {
     fun restartActivity()
 
     fun proceedCall(helpLineNo: String)
+
+    fun proceedOnLocationSetting()
 }

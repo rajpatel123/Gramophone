@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/llItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_16sdp"
         android:layout_marginBottom="@dimen/_16sdp"
         android:background="@drawable/rounded_corner_12_solid_white_stroke_gray"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/_156sdp"
             android:layout_gravity="center_horizontal"
@@ -20,43 +26,29 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:ellipsize="end"
-            android:fontFamily="@font/manrope_bold"
-            android:maxLines="3"
-            android:paddingStart="@dimen/_12sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_4sdp"
-            android:text="Pesticides"
-            android:textColor="@color/blakish"
-            android:textSize="@dimen/_12ssp"
-            android:visibility="gone" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:ellipsize="end"
-            android:fontFamily="@font/manrope_regular"
+            android:fontFamily="@font/manrope_bold"
             android:maxLines="1"
-            android:paddingStart="@dimen/_12sdp"
-            android:paddingEnd="@dimen/_4sdp"
-            android:text="Farming Accesories"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/_11ssp" />
+            android:lineSpacingExtra="1sp"
+            android:paddingStart="12dp"
+            android:paddingEnd="4dp"
+            android:text="Pestisides"
+            android:textColor="@color/blakish"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
             android:fontFamily="@font/manrope_bold"
             android:maxLines="1"
-            android:paddingStart="@dimen/_12sdp"
-            android:paddingEnd="@dimen/_4sdp"
+            android:paddingStart="12dp"
+            android:paddingEnd="4dp"
+            android:lineSpacingExtra="-2sp"
             android:paddingBottom="12dp"
             android:text="Starts from ₹ 99"
-            android:textColor="@color/green"
-            android:textSize="@dimen/_11ssp" />
+            android:textColor="@color/green_dark"
+            android:textSize="13sp" />
 
     </LinearLayout>
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

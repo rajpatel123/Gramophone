@@ -11,6 +11,10 @@ object Constants {
     val PRODUCT_RATING_DATA_KEY="PRODUCT RATING DATA"
     val RATING_SELECTED="RATING_SELECTED"
     val OFFERSDATA="OFFERSDATA"
+    val SHOP_BY_TYPE="SHOP_BY_TYPE"
+    val SHOP_BY_CROP="SHOP_BY_CROP"
+    val SHOP_BY_STORE="SHOP_BY_STORE"
+    val SHOP_BY_COMPANY="SHOP_BY_COMPANY"
 
 
     val CAMERA_PERMISSION = Manifest.permission.CAMERA
@@ -88,6 +92,7 @@ object Constants {
     //Product
     const val ORDER_ID = "order_id"
     const val BOTTOM_SHEET = "bottom_sheet"
+    const val LOCATION_ACCESS_DIALOG = "location_access_dialog"
     /**
      * For Broadcast
      */

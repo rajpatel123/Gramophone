@@ -102,6 +102,14 @@
         <activity android:name=".ui.home.product.activity.ProductAllReviewsActivity" />
         <activity android:name=".ui.home.product.activity.productreview.AddEditProductReviewActivity"/>
         <activity android:name=".ui.userprofile.UserProfileActivity"/>
+        <activity android:name=".ui.weather.WeatherActivity"/>
+        <activity android:name=".ui.home.subcategory.SubCategoryActivity"/>
+        <activity android:name=".ui.home.featured.FeaturedProductActivity"/>
+        <activity android:name=".ui.home.shop.ShopByActivity"/>
+        <activity android:name=".ui.home.shopbydetail.ShopByDetailActivity"/>
+        <activity android:name=".ui.home.stage.CropStageActivity"/>
+        <activity android:name=".ui.home.stagedetail.CropStageDetailActivity"/>
+        <activity android:name=".ui.home.cropdetail.CropDetailActivity"/>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
