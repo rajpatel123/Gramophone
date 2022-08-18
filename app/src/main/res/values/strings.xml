@@ -266,11 +266,19 @@
     <string name="complete_action_using">Complete Action Using</string>
     <string name="select_image_title">Select image</string>
     <string name="crop_image_title_text">Crop</string>
+    <string name="unit_convertor">Unit Converter</string>
 
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>
         <item>Recent Reviews</item>
 
+    </string-array>
+
+    <string-array name="units_array">
+        <item>Bigha</item>
+        <item>Acre</item>
+        <item>Hectare</item>
+        <item>Square Feet</item>
     </string-array>
 </resources>

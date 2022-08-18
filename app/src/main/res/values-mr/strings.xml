@@ -20,5 +20,13 @@
     <string name="complete_action_using">Complete Action Using</string>
     <string name="select_image_title">Select image</string>
     <string name="crop_image_title_text">Crop</string>
+    <string name="unit_convertor">Unit Converter</string>
+
+    <string-array name="units_array">
+        <item>बिघा</item>
+        <item>एकर</item>
+        <item>हेक्टर</item>
+        <item>चौरस फूट</item>
+    </string-array>
 
 </resources>

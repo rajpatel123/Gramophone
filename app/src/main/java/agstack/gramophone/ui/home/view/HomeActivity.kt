@@ -203,16 +203,10 @@ class HomeActivity :
     }
 
 
-    /*  override fun onCreateOptionsMenu(menu: Menu): Boolean {
-          val inflator = menuInflater
-          inflator.inflate(R.menu.menu_home_activity, menu)
-          return true
-      }
-  */
 
     override fun onResume() {
         super.onResume()
-        // If you want to change active navigation item programmatically
+
 
     }
 
