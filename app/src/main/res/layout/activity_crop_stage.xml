@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="agstack.gramophone.ui.cart.viewmodel.CartViewModel" />
+            type="agstack.gramophone.ui.home.stage.CropStageViewModel" />
     </data>
 
     <RelativeLayout
@@ -23,7 +23,7 @@
             layout="@layout/layout_toolbar" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCart"
+            android:id="@+id/rvCropStage"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_centerHorizontal="true"
@@ -43,8 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
+            android:visibility="gone"
             android:orientation="vertical"
-            android:visibility="@{viewModel.showCartView == false ? View.VISIBLE : View.GONE}"
             tools:visibility="gone">
 
             <ImageView
@@ -87,7 +87,6 @@
                 android:focusable="true"
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="center"
-                android:onClick="@{() -> viewModel.onClickStartShopping()}"
                 android:text="@string/start_shopping"
                 android:textColor="@color/white"
                 android:textSize="14sp"

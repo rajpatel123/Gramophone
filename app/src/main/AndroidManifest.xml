@@ -101,6 +101,9 @@
         <activity android:name=".ui.home.featured.FeaturedProductActivity"/>
         <activity android:name=".ui.home.shop.ShopByActivity"/>
         <activity android:name=".ui.home.shopbydetail.ShopByDetailActivity"/>
+        <activity android:name=".ui.home.stage.CropStageActivity"/>
+        <activity android:name=".ui.home.stagedetail.CropStageDetailActivity"/>
+        <activity android:name=".ui.home.cropdetail.CropDetailActivity"/>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"

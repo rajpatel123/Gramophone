@@ -35,7 +35,7 @@ class ShopByViewModel @Inject constructor(
                     showWeatherView.value = true
                     getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.shop_by_crops)!!)
                     getNavigator()?.setShopByCropAdapter(ShopByCropsAdapter()) {
-                        getNavigator()?.openShopByDetailActivity(it)
+                        getNavigator()?.openCropStageActivity(it)
                     }
                 }
                 Constants.SHOP_BY_STORE -> {
