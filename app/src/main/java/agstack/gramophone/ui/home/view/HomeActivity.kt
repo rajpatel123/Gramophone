@@ -86,7 +86,6 @@ class HomeActivity :
             }
 
     }
-
     private fun setupUi() {
         setUpNavigationDrawer()
 
