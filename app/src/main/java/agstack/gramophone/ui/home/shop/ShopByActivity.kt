@@ -8,6 +8,7 @@ import agstack.gramophone.databinding.ActivityShopByStoreBinding
 import agstack.gramophone.ui.home.adapter.ShopByCompanyAdapter
 import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
 import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
+import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
 import agstack.gramophone.ui.home.shopbydetail.ShopByDetailActivity
 import agstack.gramophone.ui.home.stage.CropStageActivity
 import agstack.gramophone.utils.Constants
@@ -81,7 +82,7 @@ class ShopByActivity :
     }
 
     override fun openCropStageActivity(id: String) {
-        openActivity(CropStageActivity::class.java, Bundle().apply {
+        openActivity(CropDetailActivity::class.java, Bundle().apply {
             putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
         })
     }

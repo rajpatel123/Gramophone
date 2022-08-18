@@ -27,7 +27,7 @@ class CropStageAdapter :
     }
 
     override fun getItemCount(): Int {
-        return 20
+        return 4
     }
 
     override fun getItemId(position: Int): Long {

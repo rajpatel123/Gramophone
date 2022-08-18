@@ -3,6 +3,7 @@ package agstack.gramophone.ui.home.cropdetail
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.home.adapter.PopularProductAdapter
+import agstack.gramophone.ui.home.stage.CropStageAdapter
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -20,7 +21,11 @@ class CropDetailViewModel @Inject constructor(
     }
 
     fun setAdapter() {
-        getNavigator()?.setRecommendedProductAdapter(PopularProductAdapter()) {
+        getNavigator()?.setFeaturedProductAdapter(PopularProductAdapter()) {
+//            getNavigator()?.openShopByDetailActivity(it)
+        }
+
+        getNavigator()?.setCropStageAdapter(CropStageAdapter()) {
 //            getNavigator()?.openShopByDetailActivity(it)
         }
     }
