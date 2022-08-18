@@ -267,6 +267,8 @@
     <string name="select_image_title">Select image</string>
     <string name="crop_image_title_text">Crop</string>
     <string name="verify_number">Verify Number</string>
+    <string name="please_enter_6_digit_otp">Please enter 6 digit OTP</string>
+    <string name="enter_10_digit_mob">Enter 10 digit mobile number</string>
 
 
     <string-array name="SortReviewsByOptions">

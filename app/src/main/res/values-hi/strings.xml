@@ -35,7 +35,7 @@
     <string name="_continue">इसे जारी रखें</string>
     <string name="enter_your_name">अपना नाम दर्ज करें</string>
     <string name="login">लॉग इन करें</string>
-    <string name="eng">अंग्रेज़ी</string>
+    <string name="eng">भाषा</string>
     <string name="terms">शर्तें</string>
     <string name="and"><![CDATA[और]]></string>
     <string name="otp_hint">"6 अंकों का कोड दर्ज करें जिसे हमने भेजा है"</string>

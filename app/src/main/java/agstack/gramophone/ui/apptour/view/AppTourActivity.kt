@@ -90,9 +90,6 @@ class AppTourActivity :
         appTourViewModel.startScroller()
     }
 
-    override fun moveToLogin() {
-        openAndFinishActivity(LoginActivity::class.java, null)
-    }
 
 
     override fun onLanguageUpdate() {

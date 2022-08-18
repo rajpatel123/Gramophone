@@ -12,6 +12,6 @@ interface LoginNavigator : BaseNavigator{
     fun referralCodeRemoved()
     fun moveToNext(bundle: Bundle)
     fun getBundle(): Bundle?
-    fun getIntent(): Intent?
+    fun getMobileBundle(): Bundle?
     fun showMobileNumberHint()
 }

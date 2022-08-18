@@ -7,12 +7,12 @@ import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.apptour.AppTourNavigator
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
+import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.Manifest
-import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +25,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class AppTourViewModel@Inject constructor(
+class AppTourViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository
 ) : BaseViewModel<AppTourNavigator>() {
     private lateinit var initiateAppDataResponseModel: InitiateAppDataResponseModel
@@ -81,7 +81,7 @@ class AppTourViewModel@Inject constructor(
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
                     getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
                     getNavigator()?.restartActivity()
-                }else{
+                } else {
                     getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
                 }
 
@@ -113,9 +113,9 @@ class AppTourViewModel@Inject constructor(
     }
 
 
-    fun moveToLogin(){
+    fun moveToLogin() {
         scrollImagesJob?.cancel()
-getNavigator()?.moveToLogin()
+        getNavigator()?.openAndFinishActivity(LoginActivity::class.java, null)
     }
 
 }

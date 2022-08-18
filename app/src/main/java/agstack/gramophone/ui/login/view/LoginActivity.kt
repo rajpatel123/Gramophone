@@ -11,6 +11,7 @@ import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.viewmodel.LoginViewModel
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.ui.webview.view.WebViewActivity
+import agstack.gramophone.utils.Constants
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
@@ -117,7 +118,7 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
     }
 
     override fun getBundle(): Bundle? = intent?.extras
-    override fun getIntent(): Intent = intent
+    override fun getMobileBundle(): Bundle? = intent?.getBundleExtra(Constants.BUNDLE)
     override fun showMobileNumberHint() {
         requestMobileNoHint()
     }

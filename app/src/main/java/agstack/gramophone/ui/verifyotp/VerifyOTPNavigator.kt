@@ -8,4 +8,6 @@ interface VerifyOTPNavigator :BaseNavigator {
     fun showTimer()
     fun onHelpClick(bundle: String)
     fun onLanguageChangeClick()
+    fun getMobileBundle(): Bundle?
+
 }

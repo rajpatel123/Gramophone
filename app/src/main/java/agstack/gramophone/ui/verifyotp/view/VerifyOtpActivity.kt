@@ -12,6 +12,7 @@ import agstack.gramophone.ui.verifyotp.viewmodel.VerifyOtpViewModel
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
@@ -32,9 +33,11 @@ class VerifyOtpActivity :
     }
 
     private fun updateUI() {
+        Log.d("Raj","Update in Activity")
         verifyOtpViewModel.updateMessage()
     }
 
+    override fun getMobileBundle(): Bundle? = intent?.getBundleExtra(Constants.BUNDLE)
 
     override fun onBackPressed() {
         super.onBackPressed()

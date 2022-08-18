@@ -33,14 +33,16 @@ class LoginViewModel @Inject constructor(
 
 
     fun sendOTP(v: View) = viewModelScope.launch {
-        if (mobileNo.get().isNullOrEmpty()){
+        if (mobileNo.get().isNullOrEmpty()) {
             getNavigator()?.onError(getNavigator()?.getMessage(R.string.enter_mobile_lebel)!!)
-        }else{
-           val sendOtpRequestModel= SendOtpRequestModel()
+        } else if (mobileNo.get()?.length!! < 10) {
+            getNavigator()?.onError(getNavigator()?.getMessage(R.string.enter_10_digit_mob)!!)
+        } else {
+            val sendOtpRequestModel = SendOtpRequestModel()
 
             sendOtpRequestModel.phone = mobileNo.get()
             sendOtpRequestModel.language = getNavigator()?.getLanguage()
-            if (!referralCode.get().isNullOrEmpty()){
+            if (!referralCode.get().isNullOrEmpty()) {
                 sendOtpRequestModel.referral_code = referralCode.get()
             }
 
@@ -212,11 +214,14 @@ class LoginViewModel @Inject constructor(
     }
 
     fun setMobileNumber() {
-        if (!getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).isNullOrEmpty()){
-         mobileNo.set(getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO))
-        }else if(getNavigator()?.getIntent()?.hasExtra(Constants.BUNDLE) == true){
-            mobileNo.set(getNavigator()?.getIntent()?.getBundleExtra(Constants.BUNDLE)?.getString(Constants.MOBILE_NO))
-        }else{
+        if (!getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).isNullOrEmpty()) {
+            mobileNo.set(getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO))
+        } else if (!getNavigator()?.getMobileBundle()?.getString(Constants.MOBILE_NO)
+                .isNullOrEmpty()
+        ) {
+            mobileNo.set(getNavigator()?.getMobileBundle()?.getString(Constants.MOBILE_NO))
+        } else {
+
             getNavigator()?.showMobileNumberHint()
         }
     }

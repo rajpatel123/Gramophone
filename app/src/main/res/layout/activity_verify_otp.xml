@@ -13,8 +13,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-       >
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:id="@+id/rlToolbar"
@@ -41,12 +40,11 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_toStartOf="@+id/llLanguageLinearLayout"
                 android:background="@drawable/rounded_corner_with_grey_color"
+                android:onClick="@{ ()-> viewModel.onHelpClick(llHelpLinearLayout) }"
                 android:paddingStart="@dimen/_8sdp"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:onClick="@{ ()-> viewModel.onHelpClick(llHelpLinearLayout) }"
-                >
+                android:paddingBottom="@dimen/_5sdp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -74,12 +72,11 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@drawable/rounded_corner_with_grey_color"
+                android:onClick="@{ ()-> viewModel.onLanguageClick(llLanguageLinearLayout) }"
                 android:paddingStart="@dimen/_8sdp"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:onClick="@{ ()-> viewModel.onLanguageClick(llLanguageLinearLayout) }"
-                >
+                android:paddingBottom="@dimen/_5sdp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -108,40 +105,39 @@
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:background="#F2F4F7"
-            app:layout_constraintTop_toBottomOf="@+id/rlToolbar"/>
-
+            app:layout_constraintTop_toBottomOf="@+id/rlToolbar" />
 
 
         <LinearLayout
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_separator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_31sdp"
             android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_31sdp"
             android:layout_marginEnd="@dimen/_20sdp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_separator">
+
             <TextView
+                style="@style/heading_title_bold_large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/heading_title_bold_large"
                 android:text="@string/verify_number"
-                android:textColor="@color/brand_color"/>
+                android:textColor="@color/brand_color" />
 
             <TextView
                 android:id="@+id/tvOTPmessageWithNumber"
+                style="@style/small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/small"
-                android:text="@={viewModel.otpHint}"
-                android:textColor="@color/grey"
                 android:layout_marginTop="@dimen/_4sdp"
+                android:text="@={viewModel.otpHint}"
+                android:textColor="@color/gray"
                 android:textSize="@dimen/_10ssp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_22sdp"
-                >
+                android:layout_marginTop="@dimen/_22sdp">
 
                 <TextView
                     style="@style/small"
@@ -156,26 +152,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     android:onClick="@{ ()-> viewModel.changeNumber(tvChangeNumber) }"
                     android:text="@string/changeno"
                     android:textColor="@color/green_dark" />
             </RelativeLayout>
 
-                <com.chaos.view.PinView
+            <com.chaos.view.PinView
                 android:id="@+id/firstPinView"
                 style="@style/PinWidget.PinView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:cursorVisible="true"
-                android:gravity="center"
-                android:hint="Hint."
                 android:layout_marginTop="@dimen/_3sdp"
+                android:cursorVisible="true"
+                android:fontFamily="@font/manrope_bold"
+                android:hint="Hint."
                 android:inputType="number"
+                android:layout_gravity="center_horizontal"
+                android:state_selected="true"
+                android:text="@={viewModel.otp}"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:text="@={viewModel.otp}"
                 android:textStyle="bold"
-                android:fontFamily="@font/manrope_bold"
+                android:itemBackground="@color/mute_grey"
                 app:cursorColor="@color/brand_color"
                 app:cursorWidth="2dp"
                 app:hideLineWhenFilled="false"
@@ -183,17 +182,14 @@
                 app:itemHeight="50dp"
                 app:itemRadius="4dp"
                 app:itemWidth="50dp"
-                    app:itemSpacing="@dimen/_6sdp"
-                android:state_selected="true"
-                app:lineColor="@color/grey"
-                app:lineWidth="2dp"
+                app:lineColor="@color/colorTransparent"
+
                 app:viewType="rectangle" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                >
+                android:layout_marginTop="@dimen/_8sdp">
 
                 <TextView
                     android:id="@+id/tvResend"
@@ -201,9 +197,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/resend_otp"
-                    android:visibility="@{viewModel.timeOver? View.GONE:View.VISIBLE}"
+                    android:textColor="@color/blakish"
 
-                    android:textColor="@color/blakish" />
+                    android:visibility="@{viewModel.timeOver? View.GONE:View.VISIBLE}" />
 
                 <TextView
                     android:id="@+id/tvResendOtp"
@@ -227,31 +223,29 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="@dimen/_20sdp"
                     android:layout_toEndOf="@+id/tvResend"
-                    android:textColor="@color/brand_color"
-                    />
+                    android:textColor="@color/brand_color" />
             </RelativeLayout>
 
         </LinearLayout>
-
 
 
         <TextView
             android:id="@+id/verifyOtpBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/_continue"
-            android:gravity="center"
-            android:textSize="@dimen/_14ssp"
-            android:textColor="@color/white"
-            android:clickable="true"
-            android:onClick="@{ ()-> viewModel.submitOtp(verifyOtpBtn) }"
-            android:padding="@dimen/_13sdp"
             android:layout_marginStart="@dimen/_24sdp"
             android:layout_marginEnd="@dimen/_24sdp"
-            android:background="@drawable/btn_rounded_corner"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="@dimen/_20sdp"
-            android:focusable="true" />
+            android:background="@drawable/btn_rounded_corner"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:onClick="@{ ()-> viewModel.submitOtp(verifyOtpBtn) }"
+            android:padding="@dimen/_13sdp"
+            android:text="@string/_continue"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
