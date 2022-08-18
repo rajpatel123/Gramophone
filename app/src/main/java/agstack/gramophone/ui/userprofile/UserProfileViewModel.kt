@@ -20,7 +20,6 @@ class UserProfileViewModel @Inject constructor(
         if(hasCameraPermission!!){
             getNavigator()?.openCameraToCapture()
         }
-
        /* getNavigator()?.showImageSelect(FilePicker(false), {
 
             var hasCameraPermission = getNavigator()?.requestPermission(CAMERA_PERMISSION)
