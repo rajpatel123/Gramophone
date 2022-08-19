@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.home.view.fragments.market.model.KeyPointsItem" />
+    </data>
+
+
+    <LinearLayout
+        android:id="@+id/mainContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/tv_key"
+            style="@style/TextSize14Sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/no_corner_with_grey_color"
+            android:gravity="center"
+            android:hint="Insectictice/Fungicide/Herrbicide"
+            android:padding="@dimen/_4sdp"
+            android:text="@{model.key }"
+            android:textColor="@color/grey_weight" />
+
+
+        <TextView
+            android:id="@+id/tv_value"
+            style="@style/heading_title_bold_large"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/no_corner_with_grey_color"
+            android:gravity="center"
+            android:hint="Herbicide"
+            android:padding="@dimen/_4sdp"
+            android:text="@{model.value }"
+            android:textColor="@color/green"
+            android:textSize="@dimen/_12ssp" />
+
+    </LinearLayout>
+
+</layout>

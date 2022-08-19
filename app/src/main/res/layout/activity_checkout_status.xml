@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.checkout.CheckoutStatusViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rl_header"
+            android:layout_width="match_parent"
+            android:layout_height="340dp"
+            android:background="@drawable/ic_bg_thankyou">
+
+            <TextView
+                android:id="@+id/tv_thank_you"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/manrope_bold"
+                android:lineSpacingExtra="-3sp"
+                android:paddingStart="40dp"
+                android:paddingEnd="20dp"
+                android:text="@string/thank_you"
+                android:textColor="@color/blakish"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_thank_you"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/manrope_bold"
+                android:paddingStart="40dp"
+                android:paddingEnd="20dp"
+                android:text="@string/order_naccepted_successfully"
+                android:textColor="@color/blakish"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_order_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_status"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/manrope_medium"
+                android:paddingStart="40dp"
+                android:paddingEnd="20dp"
+                android:text="@{@string/your_order_id_is.concat(viewModel.orderId)}"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                tool:text="Your order no. is #12345678" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_expectation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_header"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/manrope_bold"
+            android:paddingStart="40dp"
+            android:paddingEnd="20dp"
+            android:text="@string/what_to_expect_next"
+            android:textColor="@color/blakish"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_point1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_expectation"
+            android:layout_marginTop="16dp"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/manrope_regular"
+            android:paddingStart="40dp"
+            android:paddingEnd="20dp"
+            android:text="@string/our_team_confirm_the_order"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            app:drawableStartCompat="@drawable/ic_circle_green" />
+
+        <ImageView
+            android:id="@+id/view_vertical_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_point1"
+            android:layout_marginStart="45dp"
+            android:contentDescription="@string/image"
+            android:src="@drawable/line_vertical" />
+
+        <TextView
+            android:id="@+id/tv_point2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view_vertical_1"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/manrope_regular"
+            android:paddingStart="40dp"
+            android:paddingEnd="20dp"
+            android:text="@string/your_goods_will_be_packed_and_sent"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            app:drawableStartCompat="@drawable/ic_circle_green" />
+
+        <ImageView
+            android:id="@+id/view_vertical_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_point2"
+            android:layout_marginStart="45dp"
+            android:contentDescription="@string/image"
+            android:src="@drawable/line_vertical" />
+
+        <TextView
+            android:id="@+id/tv_point3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view_vertical_2"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/manrope_regular"
+            android:paddingStart="40dp"
+            android:paddingEnd="20dp"
+            android:text="@string/your_order_will_reach_you"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            app:drawableStartCompat="@drawable/ic_circle_green" />
+
+        <TextView
+            android:id="@+id/submitBtn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:background="@drawable/rounded_corner_12_solid_orange"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{() -> viewModel.onTrackOrderClick()}"
+            android:gravity="center"
+            android:text="@string/track_your_order"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+</layout>

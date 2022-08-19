@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/relatedProdDetailsContainer"
+        android:layout_marginHorizontal="@dimen/_8sdp"
+        android:layout_width="@dimen/_156sdp"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="4dp"
+        card_view:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:background="@drawable/deselected_product_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            >
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:layout_margin="@dimen/_20sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:id="@+id/iv_productImage"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_offpercentage"
+                    android:layout_width="@dimen/_116sdp"
+                    android:layout_height="@dimen/_116sdp"
+                    app:srcCompat="@drawable/img_sample_prod"
+                    loadUri="@{model.productImage}"
+                    />
+
+
+                <TextView
+                    android:id="@+id/tv_offpercentage"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:fontFamily="@font/manrope_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/percent_off_background"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp"
+                    android:textColor="@color/green_alert"
+                    android:textSize="@dimen/_10ssp"
+                    android:text="20 %Off"
+                    percentageOff="@{model}"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:padding="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/mute_grey"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvProductDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_medium"
+                    android:hint="@string/product_details"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:lines="2"
+                    android:gravity="center_vertical"
+                    android:text="@{model.productBaseName}"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_13ssp" />
+
+
+                <RatingBar
+                    android:id="@+id/ratingbar_user"
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:isIndicator="true"
+                    android:max="5"
+                    android:numStars="5"
+                    doubleToFloatRating="@{model.totalRating}"
+                    android:scaleX=".8"
+                    android:scaleY=".8"
+                    android:stepSize="0.1"
+                    android:theme="@style/RatingBar"
+                    android:transformPivotX="0dp"
+                    android:transformPivotY="0dp" />
+                <LinearLayout
+                    android:background="@color/mute_grey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvSalesPrice"
+                        style="@style/heading_title_bold_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        priceWithSymbol="@{model.salesPrice}"
+                        android:textColor="@color/blakish"
+                        android:hint="200"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvMrpPrice"
+                        style="@style/heading_title_bold_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/_4sdp"
+                        android:background="@drawable/strike_through_mutegrey"
+                        android:gravity="center"
+                        android:hint="400"
+                        priceWithSymbol="@{model.mrpPrice}"
+                        android:textColor="@color/oldmrpcolor"
+                        android:textSize="@dimen/_11ssp" />
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

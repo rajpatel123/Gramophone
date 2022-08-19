@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.login.viewmodel.LoginViewModel" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rlToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:minHeight="@dimen/_58sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/logo" />
+
+            <LinearLayout
+                android:id="@+id/llHelpLinearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_toStartOf="@+id/llLanguageLinearLayout"
+                android:background="@drawable/rounded_corner_with_grey_color"
+                android:onClick="@{ ()-> viewModel.onHelpClick(llHelpLinearLayout) }"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_5sdp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_toStartOf="@+id/tv_help"
+                    app:srcCompat="@drawable/ic_phone_call" />
+
+                <TextView
+                    android:id="@+id/tv_language"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:text="@string/help"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_10ssp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llLanguageLinearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/rounded_corner_with_grey_color"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:onClick="@{ ()-> viewModel.onLanguageClick(llLanguageLinearLayout) }"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_toStartOf="@+id/tv_help"
+                    app:srcCompat="@drawable/ic_langague" />
+
+                <TextView
+                    android:id="@+id/tv_help"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:text="@string/eng"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_10ssp" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/toolbarSeparator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F2F4F7"
+            android:layout_below="@+id/rlToolbar"
+            app:layout_constraintTop_toBottomOf="@+id/rlToolbar"/>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_31sdp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_below="@+id/toolbarSeparator"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/heading_title_bold_large"
+                android:text="@string/welcome_msg"
+                android:fontFamily="@font/manrope_bold"
+                android:textColor="@color/brand_color"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/small"
+                android:text="@string/enter_mobile_lebel"
+                android:layout_marginTop="@dimen/_22sdp"
+                android:textColor="@color/blakish" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/countryCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:background="@drawable/rounded_corner"
+                    android:backgroundTint="@color/mute_grey"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        app:srcCompat="@drawable/flag_india" />
+
+                    <TextView
+                        style="@style/small"
+                        android:fontFamily="@font/manrope_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:text="+91"
+                        android:textColor="@color/blakish" />
+
+                    <ImageView
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_8sdp"
+                        app:srcCompat="@drawable/ic_arrow_right_black"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:rotation="90"
+                        />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/etMobile"
+                    style="@style/small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_toEndOf="@+id/countryCode"
+                    android:background="@drawable/rounded_corner"
+                    android:backgroundTint="@color/mute_grey"
+                    android:hint="@string/enter_mobile_lebel"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:letterSpacing=".05"
+                    android:maxLength="10"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_2sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:singleLine="true"
+                    android:text="@={viewModel.mobileNo}"
+                    android:textSize="@dimen/_12ssp" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/small"
+                android:fontFamily="@font/manrope_semibold"
+                android:text="@string/start_msg"
+                android:textSize="@dimen/_11ssp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:textColor="@color/grey" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlHaveReferralCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tvPolicyStr"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/referral_background"
+            android:onClick="@{ ()-> viewModel.onReferralCodeClicked() }"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/ivReferral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_referral" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/ivReferral"
+                android:fontFamily="@font/manrope_semibold"
+                android:text="@string/have_referral"
+                android:textColor="@color/have_referral"
+                android:textSize="@dimen/_10ssp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlAppliedCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tvPolicyStr"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:visibility="gone"
+            android:background="@drawable/referral_applied_background"
+            android:padding="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/ivCodeApplied"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_green_tick" />
+
+            <TextView
+                android:id="@+id/tvCodeApplied"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/ivCodeApplied"
+                android:fontFamily="@font/manrope_semibold"
+                android:textColor="@color/green_dark"
+                android:text="@={viewModel.referralCode}"
+                android:textSize="@dimen/_10ssp" />
+
+            <ImageView
+                android:id="@+id/ivRemoveCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/tvCodeApplied"
+                android:onClick="@{ ()-> viewModel.onRemoveReferralClicked() }"
+
+                app:srcCompat="@drawable/ic_cross" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvPolicyStr"
+            style="@style/mini"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/submitBtn"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:fontFamily="@font/manrope_semibold"
+            android:gravity="start"
+            android:paddingStart="@dimen/_15sdp"
+            android:text="@string/policy_txt"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintBottom_toTopOf="@+id/submitBtn" />
+
+
+        <TextView
+            android:id="@+id/tvTerms"
+            style="@style/mini"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/submitBtn"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/tvPolicyStr"
+            android:fontFamily="@font/manrope_semibold"
+            android:gravity="start"
+            android:text="@string/terms"
+            android:onClick="@{ ()-> viewModel.onTermsClicked(tvTerms) }"
+            android:textColor="@color/brand_color"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintBottom_toTopOf="@+id/submitBtn" />
+
+        <TextView
+            android:id="@+id/and"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/and"
+            android:layout_above="@+id/submitBtn"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/tvTerms"
+            android:fontFamily="@font/manrope_semibold"
+            android:gravity="start"
+            android:textSize="@dimen/_11ssp"
+            />
+
+        <TextView
+            android:id="@+id/tvPolicy"
+            style="@style/mini"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/submitBtn"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/and"
+            android:fontFamily="@font/manrope_semibold"
+            android:gravity="start"
+            android:text="@string/policy"
+            android:onClick="@{ ()-> viewModel.onPrivacyClicked(tvPolicy) }"
+            android:textColor="@color/brand_color"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintBottom_toTopOf="@+id/submitBtn" />
+
+
+        <TextView
+            android:id="@+id/submitBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:background="@drawable/btn_rounded_corner"
+            android:gravity="center"
+            android:onClick="@{ ()-> viewModel.sendOTP(submitBtn) }"
+            android:padding="@dimen/_13sdp"
+            android:text="@string/_continue"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+</layout>

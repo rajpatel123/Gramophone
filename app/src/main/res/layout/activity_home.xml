@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.home.viewmodel.HomeViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.drawerlayout.widget.DrawerLayout xmlns:fab="http://schemas.android.com/tools"
+            android:id="@+id/drawer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:context=".ui.home.view.HomeActivity">
+
+                    <include
+                        android:id="@+id/toolbar"
+                        layout="@layout/layout_toolbar"
+                        app:layout_constraintTop_toBottomOf="parent" />
+
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/nav_host"
+                        android:name="androidx.navigation.fragment.NavHostFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:defaultNavHost="true"
+                        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                        app:navGraph='@navigation/nav_graph' />
+
+                    <FrameLayout
+                        android:id="@+id/fragment_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+                    <agstack.gramophone.menu.BottomNavigationView
+                        android:id="@+id/bottomNav"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50sdp"
+                        android:background="@color/bottom_background"
+                        android:orientation="horizontal"
+                        app:active_color="@color/gray_menu_active"
+                        app:animation_duration="300"
+                        app:item_padding="4dp"
+                        app:item_text_size="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:menu="@menu/navigation_items"
+                        app:passive_color="@color/gray_menu_passive"
+                        app:pressed_color="@color/bottom_menu_pressed"
+                        app:scale_percent="5" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
+
+
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/nav_view1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:fitsSystemWindows="true">
+
+
+                <include
+                    android:id="@+id/navigationlayout"
+                    layout="@layout/navigation_layout"
+                    bind:navvm="@{viewModel}" />
+
+
+            </com.google.android.material.navigation.NavigationView>
+
+        </androidx.drawerlayout.widget.DrawerLayout>
+    </FrameLayout>
+</layout>

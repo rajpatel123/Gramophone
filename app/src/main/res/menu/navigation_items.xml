@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_home"
+        android:checked="true"
+        android:contentDescription="@string/market"
+        android:icon="@drawable/ic_market"
+        android:title="@string/market" />
+
+    <item
+        android:id="@+id/action_browse"
+        android:contentDescription="@string/trade"
+        android:icon="@drawable/ic_trade"
+        android:title="@string/trade" />
+
+    <item
+        android:id="@+id/action_search"
+        android:contentDescription="@string/community"
+        android:icon="@drawable/ic_community"
+        android:title="@string/community" />
+
+    <item
+        android:id="@+id/action_radio"
+        android:contentDescription="@string/me"
+        android:icon="@drawable/ic_me"
+        android:title="@string/me" />
+</menu>

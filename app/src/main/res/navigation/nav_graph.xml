@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/marketFragment">
+
+
+    <fragment
+        android:id="@+id/marketFragment"
+        android:name="agstack.gramophone.ui.home.view.fragments.market.MarketFragment"
+        android:label="MarketFragment"
+        tools:layout="@layout/fragment_market">
+        <action
+            android:id="@+id/action_marketFragment_to_tradeFragment22"
+            app:destination="@id/tradeFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/tradeFragment2"
+        android:name="agstack.gramophone.ui.home.view.fragments.trading.TradeFragment"
+        android:label="fragment_trade"
+        tools:layout="@layout/fragment_trade" >
+        <action
+            android:id="@+id/action_tradeFragment2_to_communityFragment3"
+            app:destination="@id/communityFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/communityFragment3"
+        android:name="agstack.gramophone.ui.home.view.fragments.community.CommunityFragment"
+        android:label="fragment_community"
+        tools:layout="@layout/fragment_community" >
+        <action
+            android:id="@+id/action_communityFragment3_to_profileFragment2"
+            app:destination="@id/profileFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment2"
+        android:name="agstack.gramophone.ui.home.view.fragments.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>
