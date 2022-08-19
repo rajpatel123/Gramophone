@@ -7,8 +7,10 @@ import agstack.gramophone.databinding.UnitConverterActivityBinding
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class UnitConverterActivity :
@@ -16,6 +18,7 @@ class UnitConverterActivity :
     UnitConvertorNavigator {
 
     private val unitViewModel: UnitConverterViewModel by viewModels()
+
     override fun getLayoutID(): Int {
         return R.layout.unit_converter_activity
     }
@@ -53,6 +56,11 @@ class UnitConverterActivity :
             }
 
         })
+        val mUnitsList = resources.getStringArray(R.array.units_array)
+        val unitKindArrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, R.layout.spinner_item, mUnitsList)
+        unitKindArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        viewDataBinding.spinnerArea.setAdapter(unitKindArrayAdapter)
+
     }
 
     override fun setOutputValue(finalValue: String) {

@@ -281,4 +281,8 @@
         <item>Hectare</item>
         <item>Square Feet</item>
     </string-array>
+
+    <string-array name="units_kind_array">
+        <item>Area</item>
+    </string-array>
 </resources>

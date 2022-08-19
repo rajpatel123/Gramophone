@@ -34,15 +34,23 @@
             app:layout_constraintVertical_bias="0.0"
             tools:layout_editor_absoluteX="0dp">
 
+            <Spinner
+                android:id="@+id/spinnerArea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_24sdp"
+                android:entries="@array/units_kind_array"
+                android:textColor="@android:color/white"
+                app:backgroundTint="@color/white" />
 
-            <ImageView
+           <!-- <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_9sdp"
                 android:layout_marginLeft="@dimen/_24sdp"
                 android:layout_marginTop="@dimen/_24sdp"
                 android:layout_marginBottom="@dimen/_27sdp"
-                app:srcCompat="@drawable/ic_area_witharrows" />
+                app:srcCompat="@drawable/ic_area_witharrows" />-->
 
 
         </LinearLayout>

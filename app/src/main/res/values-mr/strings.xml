@@ -28,5 +28,8 @@
         <item>हेक्टर</item>
         <item>चौरस फूट</item>
     </string-array>
+    <string-array name="units_kind_array">
+        <item>क्षेत्रफळ</item>
+    </string-array>
 
 </resources>

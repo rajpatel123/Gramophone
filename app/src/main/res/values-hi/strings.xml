@@ -91,6 +91,9 @@
         <item>हैक्टर</item>
         <item>वर्ग फुट</item>
     </string-array>
+    <string-array name="units_kind_array">
+        <item>क्षेत्रफल</item>
+    </string-array>
 </resources>
 
 
