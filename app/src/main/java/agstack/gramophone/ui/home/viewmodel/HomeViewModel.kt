@@ -7,6 +7,7 @@ import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.settings.view.SettingsActivity
+import agstack.gramophone.ui.unitconverter.UnitConverterActivity
 import agstack.gramophone.ui.userprofile.UserProfileActivity
 import agstack.gramophone.ui.weather.WeatherActivity
 import agstack.gramophone.utils.ApiResponse
@@ -107,5 +108,9 @@ class HomeViewModel @Inject constructor(
 
     fun OpenUserProfile(){
         getNavigator()?.openActivity(UserProfileActivity::class.java, null)
+    }
+
+    fun openUnitConverter(){
+        getNavigator()?.openActivity(UnitConverterActivity::class.java , null)
     }
 }

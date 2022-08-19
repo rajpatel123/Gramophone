@@ -122,6 +122,8 @@
         <activity android:name="com.canhub.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"/>
 
+        <activity android:name=".ui.unitconverter.UnitConverterActivity"/>
+
         <service android:name=".pushnotification.MyFirebaseMessagingService" />
         <service
             android:name=".di.GetAddressIntentService"
