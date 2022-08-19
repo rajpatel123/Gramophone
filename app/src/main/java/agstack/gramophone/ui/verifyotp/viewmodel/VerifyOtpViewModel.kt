@@ -232,14 +232,7 @@ class VerifyOtpViewModel @Inject constructor(
             } else
                 getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet)!!)
         } catch (ex: Exception) {
-            getNavigator()?.restartActivity(Bundle().apply {
-                putString(Constants.MOBILE_NO, mobileNo.get())
-                putInt(
-                    Constants.OTP_REFERENCE,
-                    getNavigator()?.getBundle()?.getInt(Constants.OTP_REFERENCE)!!
-                )
-            })
-            when (ex) {
+                        when (ex) {
                 is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure)!!)
                 else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
 
