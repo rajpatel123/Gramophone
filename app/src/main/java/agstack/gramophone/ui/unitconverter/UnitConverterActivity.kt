@@ -15,7 +15,6 @@ class UnitConverterActivity :
     BaseActivityWrapper<UnitConverterActivityBinding, UnitConvertorNavigator, UnitConverterViewModel>(),
     UnitConvertorNavigator {
 
-
     private val unitViewModel: UnitConverterViewModel by viewModels()
     override fun getLayoutID(): Int {
         return R.layout.unit_converter_activity
