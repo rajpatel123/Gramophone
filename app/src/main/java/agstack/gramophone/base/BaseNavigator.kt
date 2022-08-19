@@ -46,10 +46,6 @@ interface BaseNavigator {
 
     fun hideProgressBar()
 
-    fun restartActivity(apply: Bundle)
-
-    fun restartActivity()
-
     fun proceedCall(helpLineNo: String)
 
     fun proceedOnLocationSetting()

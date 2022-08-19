@@ -156,19 +156,6 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
         )
     }
 
-    override fun restartActivity(bundle: Bundle) {
-        val intent = activity?.intent
-        intent?.putExtra(Constants.BUNDLE,bundle)
-        activity?.finish()
-        startActivity(intent)
-    }
-    override fun restartActivity() {
-        val intent = activity?.intent
-
-        activity?.finish()
-        startActivity(intent)
-    }
-
     override fun proceedOnLocationSetting() {
         startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
     }

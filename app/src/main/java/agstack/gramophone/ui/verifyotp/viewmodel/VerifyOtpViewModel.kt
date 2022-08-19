@@ -14,6 +14,7 @@ import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
+import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
@@ -220,7 +221,7 @@ class VerifyOtpViewModel @Inject constructor(
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
                     getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
-                    getNavigator()?.restartActivity(Bundle().apply {
+                    getNavigator()?.openAndFinishActivity(VerifyOtpActivity::class.java,Bundle().apply {
                         putString(Constants.MOBILE_NO, mobileNo.get())
                         putInt(Constants.OTP_REFERENCE, otpReference.get()?.toInt()!!)
                     })
@@ -231,14 +232,7 @@ class VerifyOtpViewModel @Inject constructor(
             } else
                 getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet)!!)
         } catch (ex: Exception) {
-            getNavigator()?.restartActivity(Bundle().apply {
-                putString(Constants.MOBILE_NO, mobileNo.get())
-                putInt(
-                    Constants.OTP_REFERENCE,
-                    getNavigator()?.getBundle()?.getInt(Constants.OTP_REFERENCE)!!
-                )
-            })
-            when (ex) {
+                        when (ex) {
                 is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure)!!)
                 else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
 
