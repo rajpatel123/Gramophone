@@ -6,6 +6,7 @@ import agstack.gramophone.data.model.UpdateLanguageRequestModel
 import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.apptour.AppTourNavigator
+import agstack.gramophone.ui.apptour.view.AppTourActivity
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.utils.ApiResponse
@@ -78,7 +79,7 @@ class AppTourViewModel @Inject constructor(
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
                     getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
-                    getNavigator()?.restartActivity()
+                    getNavigator()?.openAndFinishActivity(AppTourActivity::class.java,null)
                 } else {
                     getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
                 }

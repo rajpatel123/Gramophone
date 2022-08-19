@@ -9,6 +9,7 @@ import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
+import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
@@ -187,7 +188,7 @@ class LoginViewModel @Inject constructor(
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
                     getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
-                    getNavigator()?.restartActivity(Bundle().apply {
+                    getNavigator()?.openAndFinishActivity(LoginActivity::class.java,Bundle().apply {
                         putString(Constants.MOBILE_NO,mobileNo.get())
                     })
                 }else{

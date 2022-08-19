@@ -89,8 +89,9 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
             if (extras != null)
                 putExtras(extras)
-            startActivity(this)
             finish()
+            startActivity(this)
+
 
         }
     }
@@ -243,18 +244,6 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         viewDataBinding.unbind()
     }
 
-    override fun restartActivity(bundle: Bundle) {
-        val intent = intent
-        intent.putExtra(Constants.BUNDLE,bundle)
-        finish()
-        startActivity(intent)
-    }
-
-    override fun restartActivity() {
-        val intent = intent
-        finish()
-        startActivity(intent)
-    }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
