@@ -45,8 +45,7 @@ class ProductReviewsViewModel @Inject constructor(
             sortBySpinnerText.set(getNavigator()?.getMessage(R.string.top_reviews)!!)
 
            mProductReviewsList=
-                (mProductReviewDataBundle?.get()?.reviewList?.data) as ArrayList<ReviewListItem?>
-
+               (mProductReviewDataBundle?.get()?.reviewList?.data) as ArrayList<ReviewListItem?>
 
             getNavigator()?.setProductReviewsAdapter(RatingAndReviewsAdapter(mProductReviewsList))
 

@@ -84,6 +84,13 @@
     <string name="complete_action_using">Complete Action Using</string>
     <string name="select_image_title">फोटो का चयन कर</string>
     <string name="crop_image_title_text">Crop</string>
+    <string name="unit_convertor">Unit Converter</string>
+    <string-array name="units_array">
+        <item>बीघा</item>
+        <item>एकड़</item>
+        <item>हैक्टर</item>
+        <item>वर्ग फुट</item>
+    </string-array>
 </resources>
 
 
