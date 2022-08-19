@@ -9,8 +9,10 @@ import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
 import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
 import agstack.gramophone.ui.verifyotp.viewmodel.VerifyOtpViewModel
+import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
@@ -31,13 +33,17 @@ class VerifyOtpActivity :
     }
 
     private fun updateUI() {
+        Log.d("Raj","Update in Activity")
         verifyOtpViewModel.updateMessage()
     }
 
+    override fun getMobileBundle(): Bundle? = intent?.getBundleExtra(Constants.BUNDLE)
 
     override fun onBackPressed() {
         super.onBackPressed()
-        openActivity(LoginActivity::class.java, null)
+        openActivity(LoginActivity::class.java, Bundle().apply {
+            putString(Constants.MOBILE_NO,verifyOtpViewModel.mobileNo.get())
+        })
     }
 
     override fun getLayoutID(): Int = R.layout.activity_verify_otp

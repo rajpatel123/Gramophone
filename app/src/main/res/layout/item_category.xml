@@ -9,8 +9,9 @@
     android:paddingEnd="@dimen/_16sdp">
 
     <FrameLayout
-        android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_80sdp"
+        android:id="@+id/frameItem"
+        android:layout_width="@dimen/_72sdp"
+        android:layout_height="@dimen/_72sdp"
         android:background="@drawable/circle_solid_white"
         android:backgroundTint="#EFF6E8"
         android:paddingTop="@dimen/_10sdp">
@@ -29,12 +30,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_6sdp"
         android:fontFamily="@font/manrope_bold"
         android:gravity="center_horizontal|center_vertical"
-        android:lineSpacingExtra="0sp"
+        android:lineSpacingExtra="-2sp"
         android:textColor="@color/green_dark"
-        android:textSize="14sp"
-        tools:text="Onion" />
+        android:textSize="13sp"
+        android:text="Onion" />
 
 </LinearLayout>

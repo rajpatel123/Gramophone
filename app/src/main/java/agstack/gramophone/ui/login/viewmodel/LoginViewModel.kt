@@ -9,6 +9,7 @@ import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
+import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
@@ -16,7 +17,7 @@ import agstack.gramophone.utils.SharedPreferencesKeys
 import android.Manifest
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.MutableLiveData
+import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -28,20 +29,22 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val onBoardingRepository : OnBoardingRepository
 ) : BaseViewModel<LoginNavigator>() {
-    var mobileNo :String?=""
-    var referralCode :String?=null
+    var mobileNo = ObservableField<String>()
+    var referralCode = ObservableField<String>()
 
 
     fun sendOTP(v: View) = viewModelScope.launch {
-        if (mobileNo.isNullOrEmpty()){
+        if (mobileNo.get().isNullOrEmpty()) {
             getNavigator()?.onError(getNavigator()?.getMessage(R.string.enter_mobile_lebel)!!)
-        }else{
-           val sendOtpRequestModel= SendOtpRequestModel()
+        } else if (mobileNo.get()?.length!! < 10) {
+            getNavigator()?.onError(getNavigator()?.getMessage(R.string.enter_10_digit_mob)!!)
+        } else {
+            val sendOtpRequestModel = SendOtpRequestModel()
 
-            sendOtpRequestModel.phone = mobileNo
+            sendOtpRequestModel.phone = mobileNo.get()
             sendOtpRequestModel.language = getNavigator()?.getLanguage()
-            if (!referralCode.isNullOrEmpty()){
-                sendOtpRequestModel.referral_code = referralCode
+            if (!referralCode.get().isNullOrEmpty()) {
+                sendOtpRequestModel.referral_code = referralCode.get()
             }
 
             sendOTPCall(sendOtpRequestModel)
@@ -61,7 +64,7 @@ class LoginViewModel @Inject constructor(
 
                     var loginData = handleLoginResponse(response)
                     getNavigator()?.moveToNext(Bundle().apply {
-                        putString(Constants.MOBILE_NO,mobileNo)
+                        putString(Constants.MOBILE_NO,mobileNo.get())
                         putInt(Constants.OTP_REFERENCE,
                             loginData.data?.gp_api_response_data?.otp_reference_id!!
                         )
@@ -163,7 +166,7 @@ class LoginViewModel @Inject constructor(
 
 
     fun onRemoveReferralClicked() {
-        referralCode = null
+        referralCode.set("")
         getNavigator()?.referralCodeRemoved()
 
 
@@ -179,12 +182,17 @@ class LoginViewModel @Inject constructor(
 
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
-                val response = onBoardingRepository.updateLanguage(sendOtpRequestModel)
+                val response = onBoardingRepository.updateLanguageWhileOnBoarding(sendOtpRequestModel)
 
                 val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
                     getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
+                    getNavigator()?.openAndFinishActivity(LoginActivity::class.java,Bundle().apply {
+                        putString(Constants.MOBILE_NO,mobileNo.get())
+                    })
+                }else{
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
                 }
 
             } else
@@ -204,6 +212,19 @@ class LoginViewModel @Inject constructor(
             }
         }
         return ApiResponse.Error(response.message())
+    }
+
+    fun setMobileNumber() {
+        if (!getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).isNullOrEmpty()) {
+            mobileNo.set(getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO))
+        } else if (!getNavigator()?.getMobileBundle()?.getString(Constants.MOBILE_NO)
+                .isNullOrEmpty()
+        ) {
+            mobileNo.set(getNavigator()?.getMobileBundle()?.getString(Constants.MOBILE_NO))
+        } else {
+
+            getNavigator()?.showMobileNumberHint()
+        }
     }
 }
 

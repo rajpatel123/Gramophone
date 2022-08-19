@@ -10,7 +10,6 @@ import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.language.view.LanguageActivity
-import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.profile.view.ProfileActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
@@ -43,6 +42,7 @@ class HomeActivity :
     private lateinit var navController: NavController
     private lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
     var currentFragmentPosition = 0
+    var drawer: DrawerLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -140,7 +140,7 @@ class HomeActivity :
             actionbar.setDisplayHomeAsUpEnabled(true)
         }
 
-        val drawer = viewDataBinding.drawerLayout as DrawerLayout
+        drawer = viewDataBinding.drawerLayout as DrawerLayout
 
         val toggle = ActionBarDrawerToggle(
             this,
@@ -149,7 +149,7 @@ class HomeActivity :
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
-        drawer.addDrawerListener(toggle)
+        drawer?.addDrawerListener(toggle)
         toggle.isDrawerIndicatorEnabled = true
         toggle.syncState()
 
@@ -159,7 +159,7 @@ class HomeActivity :
         }
 
         viewDataBinding.toolbar.myToolbar.setNavigationOnClickListener {
-            drawer.open()
+            drawer?.open()
         }
     }
 
@@ -169,6 +169,10 @@ class HomeActivity :
 
 
         }
+    }
+
+    override fun closeDrawer() {
+        drawer?.close()
     }
 
     override fun onClick(view: View?) {
@@ -187,11 +191,6 @@ class HomeActivity :
             R.id.item_cart -> {
                 openActivity(CartActivity::class.java)
             }
-
-            R.id.item_favorite -> {
-                openActivity(OrderListActivity::class.java, null)
-            }
-
         }
         return true
     }

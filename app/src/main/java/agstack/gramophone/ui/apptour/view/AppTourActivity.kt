@@ -7,16 +7,18 @@ import agstack.gramophone.databinding.ActivityApptourBinding
 import agstack.gramophone.ui.apptour.AppTourNavigator
 import agstack.gramophone.ui.apptour.adapter.DotIndicatorPager2Adapter
 import agstack.gramophone.ui.apptour.viewmodel.AppTourViewModel
-import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
 import agstack.gramophone.ui.language.model.LoginBanner
 import agstack.gramophone.ui.login.view.LoginActivity
+import android.content.res.Configuration
 import android.os.Bundle
-import android.os.Handler
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_apptour.*
+
 
 @AndroidEntryPoint
 class AppTourActivity :
@@ -84,17 +86,20 @@ class AppTourActivity :
 
         dots_indicator.attachTo(view_pager)
 
+
         appTourViewModel.startScroller()
     }
 
-    override fun moveToLogin() {
-        openAndFinishActivity(LoginActivity::class.java, null)
-    }
 
 
     override fun onLanguageUpdate() {
         appTourViewModel.updateLanguage()
     }
 
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+    }
 
 }

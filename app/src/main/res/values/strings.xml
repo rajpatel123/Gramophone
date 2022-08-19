@@ -29,7 +29,7 @@
     <string name="view_all">View All</string>
     <string name="mandi_rates">Mandi Rates</string>
     <string name="shop_by_crops">Shop by Crops</string>
-    <string name="shop_by_stores">Shop by Stores</string>
+    <string name="shop_by_store">Shop by Store</string>
     <string name="gramophone_exclusive">Gramophone Exclusive</string>
     <string name="recently_viewed">Recently Viewed</string>
     <string name="pickup_where_you_left">Pickup where you left</string>
@@ -66,7 +66,7 @@
     <string name="welcome_msg">Welcome to Gramophone</string>
     <string name="start_msg">TIP: Use your whatsapp number for notification</string>
     <string name="enter_mobile_lebel">Enter Mobile Number</string>
-    <string name="policy_txt">Continue you agree to our</string>
+    <string name="policy_txt">By Continue you agree to our</string>
     <string name="policy">Policy</string>
     <string name="submit">Submit</string>
     <string name="changeno">Change No.</string>
@@ -266,7 +266,29 @@
     <string name="complete_action_using">Complete Action Using</string>
     <string name="select_image_title">Select image</string>
     <string name="crop_image_title_text">Crop</string>
+    <string name="verify_number">Verify Number</string>
+    <string name="please_enter_6_digit_otp">Please enter 6 digit OTP</string>
+    <string name="enter_10_digit_mob">Enter 10 digit mobile number</string>
 
+    <string name="weather">Weather - Indore</string>
+    <string name="powered_by">Powered by</string>
+    <string name="accuweather">AccuWeather</string>
+    <string name="forecast_for_the_next_days">Forecast for the next few days</string>
+    <string name="ok">OK</string>
+    <string name="no_thanks">No Thanks</string>
+    <string name="turn_on_device_location">To continue, turn on device location, which uses Googles’s location services</string>
+    <string name="your_device_will_need_to">Your device will need to:</string>
+    <string name="use_gps_wi_fi">Use GPS, Wi-Fi, cell networks, and sesnsors</string>
+    <string name="use_google_s_location_service">Use Google\'s location service; as part of this service, Google may collect location data periodically and use this data in an anonymous way to improve location accuracy and location-based services.</string>
+    <string name="for_details_go_to_the_location_settings">For details, go to the location settings.</string>
+    <string name="crop_nutritions">Crop Nutritions</string>
+    <string name="search">search</string>
+    <string name="favourite">Favourite</string>
+    <string name="featured_products">Featured Products</string>
+    <string name="shop_by_company">Shop by Company</string>
+    <string name="pesticides">Pesticides</string>
+    <string name="production_stages">Production Stages</string>
+    <string name="crop_stage_detail">CroOn the young seedlings initially, water soaked areas developed at the collar region and a brown sunken lesion which soon appeared as girdled resulting in seeding collapse.\n\nOn adult plant initially, slight drooping of leaves which led to drying of leaves starting from lower ones extended from root to stem region and plants exhibited wilting symptom.p Protection</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

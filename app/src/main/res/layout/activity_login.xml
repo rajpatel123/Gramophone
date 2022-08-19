@@ -200,11 +200,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/small"
-                android:fontFamily="@font/manrope_semibold"
+                android:fontFamily="@font/manrope_medium"
                 android:text="@string/start_msg"
                 android:textSize="@dimen/_11ssp"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:textColor="@color/grey" />
+                android:textColor="@color/gray" />
         </LinearLayout>
 
         <RelativeLayout
@@ -365,7 +365,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:background="@drawable/btn_rounded_corner"
             android:gravity="center"
             android:onClick="@{ ()-> viewModel.sendOTP(submitBtn) }"

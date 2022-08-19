@@ -59,7 +59,15 @@
 
     <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:statusBarColor">@color/blue_opacity_80</item>
+        <item name="android:actionButtonStyle">@style/ActionButtonStyle</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+    </style>
+
+    <style name="ActionButtonStyle" parent="@android:style/Widget.ActionButton">
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:drawablePadding">0dp</item>
     </style>
 
     <style name="TabIndicatorStyle" parent="Widget.Design.TabLayout">

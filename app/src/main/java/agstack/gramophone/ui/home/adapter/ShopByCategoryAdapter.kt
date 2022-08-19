@@ -17,6 +17,7 @@ class ShopByCategoryAdapter :
 
     override fun onBindViewHolder(holder: DeveloperViewHolder, i: Int) {
         holder.binding.tvCatName.text = "Onion"
+
     }
 
     override fun getItemCount(): Int {

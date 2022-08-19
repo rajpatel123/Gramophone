@@ -6,8 +6,12 @@ import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentMarketBinding
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.adapter.*
+import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.model.Banner
+import agstack.gramophone.ui.home.shop.ShopByActivity
+import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +21,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_market.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -107,7 +110,27 @@ class MarketFragment : BaseFragment<FragmentMarketBinding, MarketFragmentNavigat
         binding?.rvShopByCat?.setHasFixedSize(true)
         binding?.rvShopByCat?.adapter = ShopByCategoryAdapter()
 
-
+        binding?.tvCateg?.setOnClickListener {
+            openActivity(SubCategoryActivity::class.java, null)
+        }
+        binding?.flViewAllFeaturedProduct?.setOnClickListener {
+            openActivity(FeaturedProductActivity::class.java, null)
+        }
+        binding?.flShopByCrop?.setOnClickListener {
+            openActivity(ShopByActivity::class.java, Bundle().apply {
+                putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
+            })
+        }
+        binding?.flViewAllStore?.setOnClickListener {
+            openActivity(ShopByActivity::class.java, Bundle().apply {
+                putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_STORE)
+            })
+        }
+        binding?.flViewAllShopByCompany?.setOnClickListener {
+            openActivity(ShopByActivity::class.java, Bundle().apply {
+                putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_COMPANY)
+            })
+        }
 
         binding?.rvMandiRates?.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -140,6 +163,10 @@ class MarketFragment : BaseFragment<FragmentMarketBinding, MarketFragmentNavigat
         binding?.rvPopularProducts?.layoutManager = GridLayoutManager(activity, 2)
         binding?.rvPopularProducts?.setHasFixedSize(true)
         binding?.rvPopularProducts?.adapter = PopularProductAdapter()
+
+        binding?.rvShopByCompany?.layoutManager = GridLayoutManager(activity, 3)
+        binding?.rvShopByCompany?.setHasFixedSize(true)
+        binding?.rvShopByCompany?.adapter = ShopByCompanyAdapter()
     }
 
     private fun initCards() {

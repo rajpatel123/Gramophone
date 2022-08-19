@@ -7,6 +7,8 @@ import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.data.repository.product.ProductRepositoryImpl
 import agstack.gramophone.data.repository.settings.SettingsRepository
 import agstack.gramophone.data.repository.settings.SettingsRepositoryImpl
+import agstack.gramophone.data.repository.weather.WeatherRepository
+import agstack.gramophone.data.repository.weather.WeatherRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -26,4 +28,6 @@ interface RepositoryModule {
     @Binds
     fun bindSettingsRepository(impl: SettingsRepositoryImpl): SettingsRepository
 
+    @Binds
+    fun bindWeatherRepository(impl: WeatherRepositoryImpl): WeatherRepository
 }

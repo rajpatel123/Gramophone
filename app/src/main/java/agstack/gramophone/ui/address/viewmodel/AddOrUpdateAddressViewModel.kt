@@ -35,6 +35,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
     var state: State? = null
     var stateNameStr = ObservableField<String>()
     var stateImageUrl = ObservableField<String>()
+    var isImageAvailable = ObservableField<Boolean>()
     var districtName = ObservableField<String>()
     var tehsilName = ObservableField<String>()
     var villageName = ObservableField<String>()
@@ -56,16 +57,6 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
         if (TextUtils.isEmpty(tehsilName.get())) {
             getNavigator()?.onError(getNavigator()?.getMessage(R.string.tehsil_required))
-            return
-        }
-
-        if (TextUtils.isEmpty(villageName.get())) {
-            getNavigator()?.onError(getNavigator()?.getMessage(R.string.village_required))
-            return
-        }
-
-        if (TextUtils.isEmpty(address.get())) {
-            getNavigator()?.onError(getNavigator()?.getMessage(R.string.address_required))
             return
         }
 
@@ -266,6 +257,12 @@ class AddOrUpdateAddressViewModel @Inject constructor(
     fun setStatesName(stateName: String, image: String) {
         stateNameStr.set(stateName)
         stateImageUrl.set(image)
+        if (image.isNullOrEmpty()){
+            isImageAvailable.set(false)
+        }else{
+            isImageAvailable.set(true)
+
+        }
     }
 
 

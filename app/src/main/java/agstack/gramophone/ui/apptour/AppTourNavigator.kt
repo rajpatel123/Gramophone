@@ -9,5 +9,4 @@ interface AppTourNavigator : BaseNavigator{
     fun onLanguageChangeClick()
     fun updateImages(currentPage: Int)
     fun setupViewPager(loginBannerList: List<LoginBanner>?)
-    fun moveToLogin()
 }

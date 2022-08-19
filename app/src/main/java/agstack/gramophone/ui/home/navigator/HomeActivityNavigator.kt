@@ -7,4 +7,5 @@ interface HomeActivityNavigator :BaseNavigator {
 
     fun logout()
     fun shareApp(intent: Intent)
+    fun closeDrawer()
 }

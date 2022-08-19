@@ -14,12 +14,16 @@ import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
+import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.Manifest
+import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,7 +39,9 @@ class VerifyOtpViewModel @Inject constructor(
 ) : BaseViewModel<VerifyOTPNavigator>() {
     var otp: String = ""
     var otpHint: String = ""
-    var mobileNo: String = ""
+    var mobileNo = ObservableField<String>()
+    var otpReference = ObservableField<String>()
+
     var time: String = ""
     var timeOver: Boolean = false
 
@@ -45,11 +51,13 @@ class VerifyOtpViewModel @Inject constructor(
 
     fun submitOtp(v: View) = viewModelScope.launch {
         if (otp.isNullOrEmpty()) {
-            validateOtpResponseModel.postValue(ApiResponse.Error(getNavigator()?.getMessage(R.string.please_enter_otp)!!))
+            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.please_enter_otp)!!)
+        } else if (otp.length < 6) {
+            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.please_enter_6_digit_otp)!!)
         } else {
             val validateOtpRequestModel = ValidateOtpRequestModel(
-                getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).toString(), otp,
-                getNavigator()?.getBundle()?.getInt(Constants.OTP_REFERENCE)!!
+                mobileNo.get().toString(), otp,
+                otpReference.get()?.toInt()!!
             )
             validateOtp(validateOtpRequestModel)
         }
@@ -76,7 +84,7 @@ class VerifyOtpViewModel @Inject constructor(
 
                     SharedPreferencesHelper.instance?.putString(
                         SharedPreferencesKeys.USER_PHONE_NUMBER,
-                        mobileNo
+                        mobileNo.get()
                     )
 
                     SharedPreferencesHelper.instance?.putBoolean(
@@ -118,23 +126,31 @@ class VerifyOtpViewModel @Inject constructor(
     }
 
     fun updateMessage() {
-        otpHint = getNavigator()?.getMessage(R.string.otp_hint) + " " + getNavigator()?.getBundle()
-            ?.getString(Constants.MOBILE_NO).toString()
+        if (!getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).isNullOrEmpty()) {
+            val bundle = getNavigator()?.getBundle()
+            otpHint =
+                getNavigator()?.getMessage(R.string.otp_hint) + " " + bundle?.getString(Constants.MOBILE_NO)
+                    .toString()
+            mobileNo.set(bundle?.getString(Constants.MOBILE_NO).toString())
+            otpReference.set(bundle?.getInt(Constants.OTP_REFERENCE).toString())
+        }
         getNavigator()?.showTimer()
-
     }
 
     fun changeNumber(v: View) {
-        getNavigator()?.openAndFinishActivity(LoginActivity::class.java,null)
+        getNavigator()?.openAndFinishActivity(LoginActivity::class.java, Bundle().apply {
+            putString(Constants.MOBILE_NO,mobileNo.get())
+        })
+
     }
 
     fun resendOTP(v: View) = viewModelScope.launch {
 
         val sendOtpRequestModel = SendOtpRequestModel()
 
-        sendOtpRequestModel.phone =
-            getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).toString()
+        sendOtpRequestModel.phone = mobileNo.get().toString()
         sendOtpRequestModel.retryType = Constants.SMS
+        sendOtpRequestModel.otp_reference_id = otpReference.get()?.toInt()
         sendOTPCall(sendOtpRequestModel)
 
     }
@@ -199,23 +215,27 @@ class VerifyOtpViewModel @Inject constructor(
 
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
-                val response = onBoardingRepository.updateLanguage(sendOtpRequestModel)
+                val response = onBoardingRepository.updateLanguageWhileOnBoarding(sendOtpRequestModel)
 
                 val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
                     getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
+                    getNavigator()?.openAndFinishActivity(VerifyOtpActivity::class.java,Bundle().apply {
+                        putString(Constants.MOBILE_NO, mobileNo.get())
+                        putInt(Constants.OTP_REFERENCE, otpReference.get()?.toInt()!!)
+                    })
                 } else {
                     getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
-
                 }
 
             } else
                 getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet)!!)
         } catch (ex: Exception) {
-            when (ex) {
+                        when (ex) {
                 is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure)!!)
                 else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+
             }
         }
     }

@@ -160,7 +160,7 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
     annotationProcessor "androidx.hilt:hilt-compiler:1.0.0"
 
-
+    implementation 'com.github.CanHub:Android-Image-Cropper:4.2.0'
     //pin view
     implementation 'com.chaos.view:pinview:1.4.4'
 
@@ -197,7 +197,7 @@ dependencies {
     implementation 'com.amnix.xtension:AmniXtension:1.0.0-beta10'
     implementation "com.github.CanHub:Android-Image-Cropper:4.3.1"
 
-
+    implementation 'com.amnix.xtension:AmniXtension:1.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

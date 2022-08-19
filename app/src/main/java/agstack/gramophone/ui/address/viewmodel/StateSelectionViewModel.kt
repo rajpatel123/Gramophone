@@ -108,7 +108,7 @@ class StateSelectionViewModel @Inject constructor(
 
     fun setStateSelection(stateStr: String?) {
         stateName.set(stateStr)
-
+        state = State(stateStr,"",false,"")
         getNavigator()?.onStateSelected()
 
         stateListAdapter.mStateList.forEach {
