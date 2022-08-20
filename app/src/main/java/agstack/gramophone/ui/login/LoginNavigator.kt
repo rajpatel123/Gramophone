@@ -14,4 +14,5 @@ interface LoginNavigator : BaseNavigator{
     fun getBundle(): Bundle?
     fun getMobileBundle(): Bundle?
     fun showMobileNumberHint()
+    fun scanQR()
 }
