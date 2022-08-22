@@ -10,9 +10,10 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 object Utility {
-    const val MONTH_DATE_YEAR_FORMAT = "MMM dd, yyyy" /*Jun 21, 2022*/
-    const val DATE_MONTH_YEAR_FORMAT = "dd-MMM-yyyy"  /*05-Jul-2022*/
+    private const val MONTH_DATE_YEAR_FORMAT = "MMM dd, yyyy" /*"Jun 21, 2022"*/
+    private const val DATE_MONTH_YEAR_FORMAT = "dd-MMM-yyyy"  /*05-Jul-2022*/
 
     fun List<String>.toBulletedList(): CharSequence {
         return SpannableString(this.joinToString("\n")).apply {
@@ -41,23 +42,18 @@ object Utility {
 
     fun getFormattedDate(
         dateString: String,
-        dateFormatString: String,
-        expectedDateFormatString: String,
     ): String {
         try {
             // Creating date format
-            val dateFormat: DateFormat = SimpleDateFormat(dateFormatString)
-            val format = SimpleDateFormat(expectedDateFormatString)
-            // Creating date from milliseconds
-            // using Date() constructor
-            val date: Date = format.parse(dateString)
+            val dateFormat: DateFormat = SimpleDateFormat(DATE_MONTH_YEAR_FORMAT, Locale.ENGLISH)
+            val format = SimpleDateFormat(MONTH_DATE_YEAR_FORMAT, Locale.ENGLISH)
+            val date: Date = format.parse(dateString)!!
 
-            // Formatting Date according to the
-            // given format
+            // Formatting Date according to the given format
             return dateFormat.format(date).toString()
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        return ""
+        return dateString
     }
 }

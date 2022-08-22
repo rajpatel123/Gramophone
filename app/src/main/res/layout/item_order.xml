@@ -46,7 +46,7 @@
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
-            android:text="@{@string/order.concat(@string/hash_sign).concat(model.order_id)}"
+            android:text="@{@string/hash_sign.concat(model.order_id)}"
             android:textColor="@color/blakish"
             android:textSize="16sp"
             tools:text="#234554677" />

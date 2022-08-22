@@ -195,9 +195,7 @@ fun pastOrderRecyclerHandling(
 fun setDateAndItemCount(
     textView: TextView, orderDate: String, quantity: String, itemsText: String,
 ) {
-    textView.text = Utility.getFormattedDate(orderDate,
-        Utility.MONTH_DATE_YEAR_FORMAT,
-        Utility.DATE_MONTH_YEAR_FORMAT) + " / " + quantity + itemsText
+    textView.text = Utility.getFormattedDate(orderDate) + " / " + quantity + itemsText
 }
 
 
