@@ -9,8 +9,11 @@ import android.os.Bundle
 interface StateNavigator: BaseNavigator {
     fun updateStateList(stateListAdapter: StateListAdapter, onStateSelected: (State) -> Unit)
     fun onStateSelected()
-    fun moveToNext(bundle: Bundle)
     fun selectOtherState(bundle: Bundle)
     fun onRemoveSelection()
+    fun getBundle(): Bundle?
+    fun fetchStateList()
+    fun checkPermission(): Boolean
+    fun requestForLocation()
 
 }
