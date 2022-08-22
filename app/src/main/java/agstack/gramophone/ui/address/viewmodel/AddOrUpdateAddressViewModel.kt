@@ -322,9 +322,9 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
     private fun updateAddressByLatLong(address: GpApiResponseData?) {
         if (address?.state != null) stateNameStr.set(address.state)
-        if (address?.district != null) districtName.set(address.state)
-        if (address?.tehsil != null) tehsilName.set(address.state)
-        if (address?.village != null) villageName.set(address.state)
+        if (address?.district != null) districtName.set(address.district)
+        if (address?.tehsil != null) tehsilName.set(address.tehsil)
+        if (address?.village != null) villageName.set(address.village)
 
         isImageAvailable.set(false)
         stateNameInitial.set(stateNameStr.get()?.subSequence(0,1).toString())
