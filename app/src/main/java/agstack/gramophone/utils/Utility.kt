@@ -4,11 +4,15 @@ import android.content.Context
 import android.os.Environment
 import android.text.SpannableString
 import android.text.style.BulletSpan
-import android.widget.Toast
 import java.io.File
 import java.io.IOException
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 object Utility {
+    const val MONTH_DATE_YEAR_FORMAT = "MMM dd, yyyy" /*Jun 21, 2022*/
+    const val DATE_MONTH_YEAR_FORMAT = "dd-MMM-yyyy"  /*05-Jul-2022*/
 
     fun List<String>.toBulletedList(): CharSequence {
         return SpannableString(this.joinToString("\n")).apply {
@@ -23,7 +27,7 @@ object Utility {
 
     @Throws(IOException::class)
     fun getPictureFile(
-        context: Context
+        context: Context,
     ): File {
         val pictureFile = System.currentTimeMillis().toString() + ".jpg"
         val storageDir = getExternalFileDir(context)
@@ -33,5 +37,27 @@ object Utility {
 
     private fun getExternalFileDir(context: Context?): File? {
         return context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+    }
+
+    fun getFormattedDate(
+        dateString: String,
+        dateFormatString: String,
+        expectedDateFormatString: String,
+    ): String {
+        try {
+            // Creating date format
+            val dateFormat: DateFormat = SimpleDateFormat(dateFormatString)
+            val format = SimpleDateFormat(expectedDateFormatString)
+            // Creating date from milliseconds
+            // using Date() constructor
+            val date: Date = format.parse(dateString)
+
+            // Formatting Date according to the
+            // given format
+            return dateFormat.format(date).toString()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return ""
     }
 }
