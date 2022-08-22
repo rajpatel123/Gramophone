@@ -243,6 +243,7 @@
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="@dimen/_26sdp"
                     android:paddingTop="@dimen/_15sdp"
+                    android:onClick="@{()->navvm.openOfferListClicked()}"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
@@ -600,7 +601,8 @@
                     android:layout_height="@dimen/_40sdp"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="@dimen/_26sdp"
-                    android:text="Feedback"
+                    android:text="@string/feedback"
+                    android:onClick="@{()->navvm.openLeaveFeedback()}"
                     android:textColor="@color/blakish"
                     android:textSize="@dimen/_12ssp" />
 

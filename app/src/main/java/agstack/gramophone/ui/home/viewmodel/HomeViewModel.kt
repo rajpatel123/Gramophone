@@ -4,6 +4,8 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
+import agstack.gramophone.ui.feedback.FeedbackActivity
+import agstack.gramophone.ui.offerslist.OffersListActivity
 import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.settings.view.SettingsActivity
@@ -112,5 +114,13 @@ class HomeViewModel @Inject constructor(
 
     fun openUnitConverter(){
         getNavigator()?.openActivity(UnitConverterActivity::class.java , null)
+    }
+
+    fun openLeaveFeedback(){
+        getNavigator()?.openActivity(FeedbackActivity::class.java , null)
+    }
+
+    fun openOfferListClicked(){
+        getNavigator()?.openActivity(OffersListActivity::class.java , null)
     }
 }

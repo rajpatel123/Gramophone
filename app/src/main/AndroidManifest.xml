@@ -123,6 +123,8 @@
             android:theme="@style/Base.Theme.AppCompat"/>
 
         <activity android:name=".ui.unitconverter.UnitConverterActivity"/>
+        <activity android:name=".ui.feedback.FeedbackActivity"/>
+        <activity android:name=".ui.offerslist.OffersListActivity"/>
 
         <service android:name=".pushnotification.MyFirebaseMessagingService" />
         <service

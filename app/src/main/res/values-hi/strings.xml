@@ -85,6 +85,12 @@
     <string name="select_image_title">फोटो का चयन कर</string>
     <string name="crop_image_title_text">Crop</string>
     <string name="unit_convertor">Unit Converter</string>
+    <string name="feedback">Feedback</string>
+    <string name="leave_feedback">Leave Feedback</string>
+    <string name="whatcanweimprove">What can we improve?</string>
+    <string name="send">Send</string>
+    <string name="please_enter_feedback">Please enter your feedback</string>
+    <string name="all_offers">All Offers</string>
     <string-array name="units_array">
         <item>बीघा</item>
         <item>एकड़</item>

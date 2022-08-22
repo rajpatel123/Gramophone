@@ -198,6 +198,7 @@ dependencies {
     implementation "com.github.CanHub:Android-Image-Cropper:4.3.1"
 
     implementation 'com.amnix.xtension:AmniXtension:1.0.1'
+    api 'com.miguelcatalan:materialsearchview:1.4.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

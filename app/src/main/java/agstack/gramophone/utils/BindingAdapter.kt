@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.miguelcatalan.materialsearchview.MaterialSearchView
 import kotlinx.android.synthetic.main.product_detail.view.*
 
 
@@ -109,6 +110,24 @@ class BindingAdapter {
             val percentage = numarator/denominator
             val formatted_percentage = String.format("%.02f", percentage);
             textView.setText(formatted_percentage+" % Off")
+        }
+
+        @BindingAdapter("queryListener")
+        @JvmStatic
+        fun setOnQueryListener(
+            materialSearchView: MaterialSearchView,
+            listener: MaterialSearchView.OnQueryTextListener
+        ) {
+            materialSearchView.setOnQueryTextListener(listener)
+        }
+
+        @BindingAdapter("materialHideListener")
+        @JvmStatic
+        fun setOnMaterialBack(
+            materialSearchView: MaterialSearchView,
+            listener: MaterialSearchView.SearchViewListener
+        ) {
+            materialSearchView.setOnSearchViewListener(listener)
         }
 
 
