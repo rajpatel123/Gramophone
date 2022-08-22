@@ -57,7 +57,7 @@
                 android:fontFamily="@font/manrope_medium"
                 android:paddingStart="40dp"
                 android:paddingEnd="20dp"
-                android:text="@{@string/your_order_id_is.concat(viewModel.orderId)}"
+                android:text="@{@string/your_order_no_is.concat(viewModel.orderId)}"
                 android:textColor="@color/gray"
                 android:textSize="14sp"
                 tool:text="Your order no. is #12345678" />
