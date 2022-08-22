@@ -10,6 +10,5 @@ interface SubCategoryNavigator : BaseNavigator {
     )
 
     fun setProductListAdapter(
-        productListAdapter: ProductListAdapter
-    )
+        productListAdapter: ProductListAdapter, onAddToCartClick: ((productId: String) -> Unit))
 }

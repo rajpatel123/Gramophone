@@ -48,10 +48,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@{viewModel.selectedSkuListItem.salesPrice}"
                         android:textColor="@color/blakish"
                         android:textSize="@dimen/_18ssp"
-                        tools:text="₹799.00" />
+                        android:text="₹799.00" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_productMRP"
@@ -61,10 +60,9 @@
                         android:layout_marginLeft="@dimen/_7sdp"
                         android:background="@drawable/strike_through"
                         android:gravity="center"
-                        android:text="@{viewModel.selectedSkuListItem.mrpPrice}"
                         android:textColor="@color/oldmrpcolor"
                         android:textSize="@dimen/_12ssp"
-                        tools:text="₹1,290" />
+                        android:text="₹1,290" />
                     <!-- android:visibility="@{Double.valueOf(viewModel.selectedSkuListItem.mrpPrice)>Double.valueOf(viewModel.selectedSkuListItem.salesPrice)?View.VISIBLE:View.INVISIBLE}"
                     isMRPVisible="@{viewModel.selectedSkuListItem}"-->
 
@@ -77,7 +75,7 @@
                         android:gravity="center"
                         android:textColor="@color/green"
                         android:textSize="@dimen/_14ssp"
-                        tools:text="60%" />
+                        android:text="60%" />
 
                     <!-- percentageOffSKUItem="@{viewModel.selectedSkuListItem}"-->
 
@@ -88,7 +86,6 @@
                     android:id="@+id/ll_qty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_productname"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:background="@drawable/rounded_corner_4_solid_stroke_gray"
@@ -100,24 +97,23 @@
                         android:layout_width="@dimen/_32sdp"
                         android:layout_height="@dimen/_32sdp"
                         android:background="@drawable/ic_minus_frame"
-                        android:onClick="@{()->viewModel.onMinusQtyClicked()}" />
+                         />
 
                     <TextView
                         android:layout_width="@dimen/_32sdp"
                         android:layout_height="@dimen/_32sdp"
                         android:fontFamily="@font/manrope_medium"
                         android:gravity="center"
-                        android:text="@{viewModel.qtySelected.toString()}"
                         android:textColor="@color/blakish"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="normal"
-                        tools:text="01" />
+                        android:text="01" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="@dimen/_32sdp"
                         android:layout_height="@dimen/_32sdp"
                         android:background="@drawable/ic_plus_frame"
-                        android:onClick="@{()->viewModel.onAddQtyClicked()}" />
+                        />
 
                 </LinearLayout>
 
@@ -128,7 +124,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"
                     android:background="@drawable/deselected_product_background"
-                    android:onClick="@{()->viewModel.ContactForPriceClicked()}"
                     android:paddingLeft="@dimen/_16sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingRight="@dimen/_16sdp"
@@ -156,7 +151,6 @@
                 android:id="@+id/v1_separator"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_2sdp"
-                android:layout_below="@+id/tv_inclusive"
                 android:layout_marginLeft="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginRight="@dimen/_16sdp"
@@ -165,7 +159,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_16sdp"
                 android:fontFamily="@font/manrope_bold"
                 android:text="@string/packing"
                 android:textColor="@color/blakish"
@@ -210,7 +204,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/iv_availableoffers"
-                    android:text="@string/available_offers"></TextView>
+                    android:text="@string/available_offers"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_availableoffers"

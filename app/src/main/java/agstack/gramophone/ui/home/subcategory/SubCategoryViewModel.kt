@@ -28,7 +28,9 @@ class SubCategoryViewModel @Inject constructor(
     fun setAdapter() {
         getNavigator()?.setSubCategoryAdapter(SubCategoryAdapter())
 
-        getNavigator()?.setProductListAdapter(ProductListAdapter())
+        getNavigator()?.setProductListAdapter(ProductListAdapter()) {
+            getNavigator()?.proceedCall()
+        }
     }
 
     fun weatherChange() {

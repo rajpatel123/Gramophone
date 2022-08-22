@@ -116,7 +116,8 @@ class SubCategoryActivity :
         viewDataBinding.rvSubCategory.adapter = subCategoryAdapter
     }
 
-    override fun setProductListAdapter(productListAdapter: ProductListAdapter) {
+    override fun setProductListAdapter(productListAdapter: ProductListAdapter, onAddToCartClick: (productId: String) -> Unit,) {
+        productListAdapter.onAddToCartClick = onAddToCartClick
         viewDataBinding.rvProducts.adapter = productListAdapter
     }
 

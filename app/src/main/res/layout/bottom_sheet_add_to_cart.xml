@@ -14,17 +14,24 @@
 
 
         <RelativeLayout
+            android:background="@color/orange"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp">
 
+            <TextView
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_bold"
+                android:lineSpacingExtra="0sp"
+                android:text="Add to Cart"
+                android:gravity="center"
+                android:drawablePadding="8dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:drawableStartCompat="@drawable/ic_cart_white" />
 
         </RelativeLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:background="@color/orange"
-            text
-            android:layout_height="@dimen/_40sdp"/>
 
     </LinearLayout>
 
