@@ -29,9 +29,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <include
-            android:id="@+id/myToolbar"
-            layout="@layout/layout_toolbar" />
+
+            <include
+                android:id="@+id/myToolbar"
+                layout="@layout/layout_toolbar" />
         </com.google.android.material.appbar.AppBarLayout>
         <FrameLayout
             android:id="@+id/flBannerFrameLayout"
@@ -43,13 +44,13 @@
                 android:layout_height="@dimen/_48sdp"
                 android:layout_gravity="bottom"
                 android:layout_marginStart="@dimen/_40sdp"
-                android:layout_marginTop="@dimen/_46sdp"
+                android:layout_marginTop="@dimen/_43sdp"
                 android:elevation="@dimen/_16sdp"
                 app:srcCompat="@drawable/ic_whatsapp" />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elevation="-4dp">
+              >
 
                 <View
                     android:id="@+id/rectangle_3"
@@ -80,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/flBannerFrameLayout"
             android:layout_marginStart="@dimen/_40sdp"
-            android:layout_marginTop="@dimen/_80sdp"
+            android:layout_marginTop="@dimen/_30sdp"
             android:fontFamily="@font/manrope_bold"
             android:gravity="top"
             android:lineSpacingExtra="-1sp"
