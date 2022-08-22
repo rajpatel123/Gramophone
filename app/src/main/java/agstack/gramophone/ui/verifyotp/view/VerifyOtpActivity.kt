@@ -4,7 +4,6 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityVerifyOtpBinding
-import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
 import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
@@ -15,11 +14,11 @@ import android.os.CountDownTimer
 import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Toast
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_verify_otp.*
 import java.util.concurrent.TimeUnit
+
 
 @AndroidEntryPoint
 class VerifyOtpActivity :
@@ -104,4 +103,6 @@ class VerifyOtpActivity :
     override fun onLanguageUpdate() {
         verifyOtpViewModel.updateLanguage()
     }
+
+
 }
