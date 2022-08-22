@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/addToCart"
+            layout="@layout/layout_add_to_cart" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp">
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:background="@color/orange"
+            text
+            android:layout_height="@dimen/_40sdp"/>
+
+    </LinearLayout>
+
+</layout>
