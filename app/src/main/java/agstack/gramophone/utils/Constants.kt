@@ -6,6 +6,9 @@ import android.content.Context
 
 
 object Constants {
+    val REMAINING_TIME: String="remaining_time"
+    val RESEND_OTP_TIME: Long=30000
+    val CHANGE_LANGUAGE:String = "change_language"
     val CHANGE_STATE:String ="change"
     val BUNDLE: String="bundle"
     val Product_Base_Name="PRODUCT BASE NAME"

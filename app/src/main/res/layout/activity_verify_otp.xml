@@ -146,16 +146,6 @@
                     android:text="@string/enter_otp"
                     android:textColor="@color/blakish" />
 
-                <TextView
-                    android:id="@+id/tvChangeNumber"
-                    style="@style/small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:onClick="@{ ()-> viewModel.changeNumber(tvChangeNumber) }"
-                    android:text="@string/changeno"
-                    android:textColor="@color/green_dark" />
             </RelativeLayout>
 
             <com.chaos.view.PinView
@@ -179,11 +169,11 @@
                 app:cursorWidth="2dp"
                 app:hideLineWhenFilled="false"
                 app:itemCount="6"
-                app:itemHeight="50dp"
-                app:itemRadius="4dp"
-                app:itemWidth="50dp"
+                app:itemHeight="60dp"
+                app:itemRadius="6dp"
+                app:itemWidth="40dp"
+                app:itemSpacing="@dimen/_6sdp"
                 app:lineColor="@color/colorTransparent"
-
                 app:viewType="rectangle" />
 
             <RelativeLayout
@@ -198,8 +188,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/resend_otp"
                     android:textColor="@color/blakish"
-
-                    android:visibility="@{viewModel.timeOver? View.GONE:View.VISIBLE}" />
+                    android:visibility="@{viewModel.timeOver? View.INVISIBLE:View.VISIBLE}" />
 
                 <TextView
                     android:id="@+id/tvResendOtp"
@@ -209,21 +198,44 @@
                     android:fontFamily="@font/manrope_bold"
                     android:onClick="@{ ()-> viewModel.resendOTP(tvResendOtp) }"
                     android:text="@string/resend"
+                    android:textSize="@dimen/_10ssp"
                     android:textColor="@color/green"
-
-                    android:visibility="@{viewModel.timeOver? View.VISIBLE:View.GONE}"
-
-                    />
+                    android:visibility="@{viewModel.timeOver? View.VISIBLE:View.GONE}" />
 
                 <TextView
                     android:id="@+id/tvTime"
                     style="@style/small"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_toEndOf="@+id/tvResend"
+                    android:text="00:43"
+                    android:visibility="@{viewModel.timeOver? View.GONE:View.VISIBLE}"
                     android:textColor="@color/brand_color" />
+
+                <TextView
+                    android:id="@+id/tvUnit"
+                    style="@style/small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
+                    android:layout_toStartOf="@+id/tvChangeNumber"
+                    android:text="@string/seconds"
+                    android:textColor="@color/brand_color"
+                    android:visibility="@{viewModel.timeOver? View.INVISIBLE:View.VISIBLE}" />
+
+                <TextView
+                    android:id="@+id/tvChangeNumber"
+                    style="@style/small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_55sdp"
+                    android:onClick="@{ ()-> viewModel.changeNumber(tvChangeNumber) }"
+                    android:text="@string/changeno"
+                    android:textColor="@color/green_dark"
+                    android:textSize="@dimen/_10ssp" />
             </RelativeLayout>
 
         </LinearLayout>

@@ -4,7 +4,6 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityVerifyOtpBinding
-import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
 import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
@@ -13,9 +12,9 @@ import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Toast
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_verify_otp.*
@@ -55,12 +54,13 @@ class VerifyOtpActivity :
     override fun getBundle(): Bundle? = intent.extras
 
 
-    override fun showTimer() {
+    override fun showTimer(duration: Long) {
         tvTime.visibility = VISIBLE
         tvResend.visibility = VISIBLE
         tvResendOtp.visibility = GONE
-        object : CountDownTimer(30000, 1000) {
+        object : CountDownTimer(duration, 1000) {
             override fun onTick(millis: Long) {
+                verifyOtpViewModel.remaningDuration=millis
                 val ms = java.lang.String.format(
                     "%02d:%02d",
                     TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(
@@ -74,14 +74,15 @@ class VerifyOtpActivity :
                         )
                     )
                 )
-                tvTime.text = ms + " " + getMessage(R.string.seconds)
+                tvTime.text = ms
                 //here you can have your logic to set text to edittext
             }
 
             override fun onFinish() {
-                tvTime.visibility = GONE
-                tvResend.visibility = GONE
-                tvResendOtp.visibility = VISIBLE
+                verifyOtpViewModel.timeOver.set(true)
+//                tvTime.visibility = View.INVISIBLE
+//                tvResend.visibility = View.INVISIBLE
+//                tvResendOtp.visibility = VISIBLE
             }
         }.start()
     }
