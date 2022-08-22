@@ -12,14 +12,11 @@
         android:background="@color/white"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="match_parent">
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:minHeight="?attr/actionBarSize"
-            android:background="@color/brand_color"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
+        <include
+            android:id="@+id/myToolbar"
+            layout="@layout/layout_toolbar"
+            />
+
 
         <FrameLayout
             android:layout_width="match_parent"
