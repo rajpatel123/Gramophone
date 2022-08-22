@@ -5,7 +5,6 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityLoginBinding
-import agstack.gramophone.databinding.ActivityLoginNewBinding
 import agstack.gramophone.databinding.ActivityReferralDialogBinding
 import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
 import agstack.gramophone.ui.login.LoginNavigator
