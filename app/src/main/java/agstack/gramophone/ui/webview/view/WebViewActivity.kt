@@ -35,10 +35,7 @@ class WebViewActivity :
         super.onCreate(savedInstanceState)
         webViewContent!!.settings.javaScriptEnabled = true // enable javascript
         progressBar = findViewById<View>(R.id.webViewProgressBar) as ProgressBar?
-        setSupportActionBar(toolbar)
-        if (supportActionBar != null) {
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        }
+
         webViewViewModel.populateData()
 
     }
@@ -49,8 +46,12 @@ class WebViewActivity :
     }
 
     override fun updatePage(url: String?, title: String?) {
-        supportActionBar?.title = title;
-
+//        supportActionBar?.title = title;
+        setUpToolBar(
+            enableBackButton = true,
+            title!!,
+            R.drawable.ic_arrow_left
+        )
         if (TextUtils.isEmpty(url)) {
             finish();
             return;
