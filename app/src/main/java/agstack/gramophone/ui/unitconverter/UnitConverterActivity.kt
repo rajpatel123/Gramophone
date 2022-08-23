@@ -63,6 +63,7 @@ class UnitConverterActivity :
 
     }
 
+
     override fun setOutputValue(finalValue: String) {
         viewDataBinding.editTextUnit2.setText(finalValue)
     }
