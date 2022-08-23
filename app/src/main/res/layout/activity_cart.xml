@@ -180,7 +180,7 @@
                         android:textColor="@color/blakish"
                         android:textSize="11sp" />
 
-                    <ImageView
+                    <pl.droidsonroids.gif.GifImageView
                         android:id="@+id/ivGramCash"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
@@ -189,7 +189,7 @@
                         android:layout_marginTop="2dp"
                         android:layout_toEndOf="@+id/tvAvailableGramCash"
                         android:contentDescription="@string/image"
-                        android:src="@drawable/ic_gram_cash" />
+                        android:src="@drawable/ic_gram_coin_gif" />
 
                     <TextView
                         android:id="@+id/tvGramCash"

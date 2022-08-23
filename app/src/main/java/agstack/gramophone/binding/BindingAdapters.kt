@@ -198,5 +198,20 @@ fun setDateAndItemCount(
     textView.text = Utility.getFormattedDate(orderDate) + " / " + quantity + itemsText
 }
 
+@BindingAdapter("product_quantity")
+fun setQuantity(textView: TextView, quantity: String) {
+    val productQuantity: Int
+    try {
+        productQuantity = quantity.toInt()
+        if (productQuantity < 10) {
+            textView.text = "0".plus(productQuantity)
+        } else {
+            textView.text = productQuantity.toString()
+        }
+    } catch (e: Exception) {
+        textView.text = quantity
+    }
+}
+
 
 
