@@ -8,13 +8,15 @@ import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.apptour.AppTourNavigator
 import agstack.gramophone.ui.apptour.view.AppTourActivity
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
+import agstack.gramophone.ui.language.model.LoginBanner
 import agstack.gramophone.ui.login.view.LoginActivity
-import agstack.gramophone.utils.ApiResponse
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.*
 import android.Manifest
+import android.os.Build
 import android.view.View
+import android.widget.LinearLayout
+import androidx.annotation.RequiresApi
+import androidx.core.view.get
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -37,12 +39,11 @@ class AppTourViewModel @Inject constructor(
     fun startScroller() {
         scrollImagesJob = viewModelScope.launch {
             while (isActive) {
-                delay(3_000)
+                delay(2_000)
                 if (currentPage === initiateAppDataResponseModel?.gp_api_response_data?.login_banner_list?.size) {
                     currentPage = 0
                 }
                 getNavigator()?.updateImages(currentPage)
-
                 currentPage++
             }
 
@@ -115,6 +116,22 @@ class AppTourViewModel @Inject constructor(
     fun moveToLogin() {
         scrollImagesJob?.cancel()
         getNavigator()?.openAndFinishActivity(LoginActivity::class.java, null)
+    }
+
+
+    fun setPageIndicators(loginBanners: List<LoginBanner>) {
+        for (i in loginBanners){
+            getNavigator()?.addIndicatorView()
+        }
+    }
+
+    fun updateIndicator(currentPage: Int, llIndicator: LinearLayout?) {
+        for (i in 0..llIndicator?.childCount!!-1){
+            val view = llIndicator.get(i)
+            view.setBackgroundResource(R.drawable.indicator_bg)
+        }
+        llIndicator.get(currentPage).setBackgroundResource(R.drawable.brand_color_indicator_bg)
+
     }
 
 }
