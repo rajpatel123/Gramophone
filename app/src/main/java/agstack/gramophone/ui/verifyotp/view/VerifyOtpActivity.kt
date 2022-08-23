@@ -32,7 +32,6 @@ class VerifyOtpActivity :
     }
 
     private fun updateUI() {
-        Log.d("Raj","Update in Activity")
         verifyOtpViewModel.updateMessage()
     }
 

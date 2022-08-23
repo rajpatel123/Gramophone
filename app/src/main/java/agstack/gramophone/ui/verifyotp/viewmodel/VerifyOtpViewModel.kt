@@ -26,6 +26,8 @@ import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -103,7 +105,9 @@ class VerifyOtpViewModel @Inject constructor(
                     }
                     getNavigator()?.showToast(responseData?.gp_api_message)
                 } else {
-                    getNavigator()?.showToast(responseData?.gp_api_message)
+                    val arrayTutorialType = object : TypeToken<ValidateOtpResponseModel>() {}.type
+                    var errorResponse: ValidateOtpResponseModel = Gson().fromJson(response.errorBody()?.string(), arrayTutorialType)
+                    getNavigator()?.showToast(errorResponse.gp_api_message)
 
                 }
             } else

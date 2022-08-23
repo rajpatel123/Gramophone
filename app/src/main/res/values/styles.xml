@@ -9,6 +9,7 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="android:foregroundGravity">center_horizontal</item>
         <item name="android:textAllCaps">false</item>
+        <item name="elevation">@dimen/_1sdp</item>
         <item name="android:textSize">16sp</item>
     </style>
 
