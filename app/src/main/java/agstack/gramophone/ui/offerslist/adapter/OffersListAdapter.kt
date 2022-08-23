@@ -11,10 +11,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class OffersListAdapter(relatedProductItemList: List<PromotionListItem>) :
+class OffersListAdapter(offersList: List<PromotionListItem>) :
     RecyclerView.Adapter<OffersListAdapter.CustomViewHolder>() {
-    var mRelatedProductItemList = relatedProductItemList
-    var selectedProduct: ((RelatedProductItem) -> Unit)? = null
+    var mOffersList = offersList
+    var selectedOffer: ((PromotionListItem) -> Unit)? = null
 
 
 
@@ -26,7 +26,7 @@ class OffersListAdapter(relatedProductItemList: List<PromotionListItem>) :
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
 
-        val model: PromotionListItem = mRelatedProductItemList[position]
+        val model: PromotionListItem = mOffersList[position]
         holder.binding.setVariable(BR.model, model)
         val mBinding = holder.binding as OffersListItemBinding
 
@@ -34,7 +34,8 @@ class OffersListAdapter(relatedProductItemList: List<PromotionListItem>) :
     }
 
     override fun getItemCount(): Int {
-        return mRelatedProductItemList.size
+      return mOffersList.size
+
     }
 
     inner class CustomViewHolder(var binding: OffersListItemBinding) :

@@ -129,7 +129,12 @@ class BindingAdapter {
         ) {
             materialSearchView.setOnSearchViewListener(listener)
         }
+        @BindingAdapter("format2Digit")
+        @JvmStatic
+        fun format2Digit(view: TextView, qty: Int) {
+            view.setText( String.format("%02d", qty));
 
+        }
 
     }
 }
