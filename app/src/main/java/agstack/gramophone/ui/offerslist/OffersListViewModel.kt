@@ -19,7 +19,6 @@ class OffersListViewModel @Inject constructor(
     fun getAllOffersData() {
       // getNavigator()?.setOffersListAdapter(OffersListAdapter(allOfferslist))
     }
-
     override fun onQueryTextSubmit(query: String?): Boolean {
     return true
     }
