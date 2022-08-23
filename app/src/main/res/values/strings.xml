@@ -266,6 +266,7 @@
     <string name="complete_action_using">Complete Action Using</string>
     <string name="select_image_title">Select image</string>
     <string name="crop_image_title_text">Crop</string>
+    <string name="unit_convertor">Unit Converter</string>
     <string name="verify_number">Verify Number</string>
     <string name="please_enter_6_digit_otp">Please enter 6 digit OTP</string>
     <string name="enter_10_digit_mob">Enter 10 digit mobile number</string>
@@ -289,10 +290,27 @@
     <string name="pesticides">Pesticides</string>
     <string name="production_stages">Production Stages</string>
     <string name="crop_stage_detail">CroOn the young seedlings initially, water soaked areas developed at the collar region and a brown sunken lesion which soon appeared as girdled resulting in seeding collapse.\n\nOn adult plant initially, slight drooping of leaves which led to drying of leaves starting from lower ones extended from root to stem region and plants exhibited wilting symptom.p Protection</string>
+    <string name="feedback">Feedback</string>
+    <string name="leave_feedback">Leave Feedback</string>
+    <string name="whatcanweimprove">What can we improve?</string>
+    <string name="send">Send</string>
+    <string name="please_enter_feedback">Please enter your feedback</string>
+    <string name="all_offers">All Offers</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>
         <item>Recent Reviews</item>
 
+    </string-array>
+
+    <string-array name="units_array">
+        <item>Bigha</item>
+        <item>Acre</item>
+        <item>Hectare</item>
+        <item>Square Feet</item>
+    </string-array>
+
+    <string-array name="units_kind_array">
+        <item>Area</item>
     </string-array>
 </resources>
