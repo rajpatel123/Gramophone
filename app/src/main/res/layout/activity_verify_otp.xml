@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -132,7 +133,41 @@
                 android:layout_marginTop="@dimen/_4sdp"
                 android:text="@={viewModel.otpHint}"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/_10ssp" />
+                android:textSize="@dimen/_10ssp"
+                tools:text="urhfruwufwuoeryoweoworyoewyrowryowr"
+                />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_4sdp"
+
+                >
+                <TextView
+                    android:id="@+id/tvMobileNumber"
+                    style="@style/small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@={viewModel.mobileNo}"
+                    android:textColor="@color/gray"
+                    tools:text="+91 82858484848"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_10ssp" />
+                <TextView
+                    android:id="@+id/tvChangeNumber"
+                    style="@style/small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_55sdp"
+                    android:onClick="@{ ()-> viewModel.changeNumber(tvChangeNumber) }"
+                    android:text="@string/changeno"
+                    android:textStyle="bold"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:textColor="@color/green_dark"
+                    android:textSize="@dimen/_10ssp" />
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -169,9 +204,9 @@
                 app:cursorWidth="2dp"
                 app:hideLineWhenFilled="false"
                 app:itemCount="6"
-                app:itemHeight="60dp"
+                app:itemHeight="50dp"
                 app:itemRadius="6dp"
-                app:itemWidth="40dp"
+                app:itemWidth="50dp"
                 app:itemSpacing="@dimen/_6sdp"
                 app:lineColor="@color/colorTransparent"
                 app:viewType="rectangle" />
@@ -186,21 +221,21 @@
                     style="@style/small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/resend_otp"
                     android:textColor="@color/blakish"
-                    android:visibility="@{viewModel.timeOver? View.INVISIBLE:View.VISIBLE}" />
+                    android:text="@={viewModel.resendOTPType}"
+                    />
 
                 <TextView
                     android:id="@+id/tvResendOtp"
                     style="@style/small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/manrope_bold"
-                    android:onClick="@{ ()-> viewModel.resendOTP(tvResendOtp) }"
-                    android:text="@string/resend"
+                    android:fontFamily="@font/manrope_medium"
+                    android:text="@={viewModel.resendOTPType}"
+                    android:textColor="@color/gray"
                     android:textSize="@dimen/_10ssp"
-                    android:textColor="@color/green"
-                    android:visibility="@{viewModel.timeOver? View.VISIBLE:View.GONE}" />
+                    tools:text="@string/resend"
+                    tools:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tvTime"
@@ -210,34 +245,83 @@
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_toEndOf="@+id/tvResend"
                     android:text="00:43"
-                    android:visibility="@{viewModel.timeOver? View.GONE:View.VISIBLE}"
-                    android:textColor="@color/brand_color" />
-
-                <TextView
-                    android:id="@+id/tvUnit"
-                    style="@style/small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:layout_marginEnd="@dimen/_30sdp"
-                    android:layout_toStartOf="@+id/tvChangeNumber"
-                    android:text="@string/seconds"
+                    android:textSize="@dimen/_10ssp"
+                    android:visibility="gone"
                     android:textColor="@color/brand_color"
-                    android:visibility="@{viewModel.timeOver? View.INVISIBLE:View.VISIBLE}" />
+                     />
 
-                <TextView
-                    android:id="@+id/tvChangeNumber"
-                    style="@style/small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/_55sdp"
-                    android:onClick="@{ ()-> viewModel.changeNumber(tvChangeNumber) }"
-                    android:text="@string/changeno"
-                    android:textColor="@color/green_dark"
-                    android:textSize="@dimen/_10ssp" />
+
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/llSMS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@drawable/otp_medium_bg"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_5sdp">
+
+                    <ImageView
+                        android:id="@+id/ivSMS"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_2sdp"
+                        app:srcCompat="@drawable/ic_sms"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvSMS"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_semibold"
+                        android:enabled="@{viewModel.timeOver? true:false}"
+                        android:text="@string/sms"
+                        android:onClick="@{ ()-> viewModel.onResendClicked(tvSMS) }"
+                        android:textColor="@{viewModel.timeOver? @color/brand_color:@color/gray}"
+                        android:textSize="@dimen/_10ssp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llCall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@drawable/otp_medium_bg"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/ivCall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_2sdp"
+                        app:srcCompat="@drawable/ic_call_enabled" />
+
+                    <TextView
+                        android:id="@+id/tvCall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_semibold"
+                        android:text="@string/call"
+                        android:onClick="@{ ()-> viewModel.onResendClicked(tvCall) }"
+                        android:enabled="@{viewModel.timeOver? true:false}"
+                        android:textColor="@{viewModel.timeOver? @color/brand_color:@color/gray}"
+                        android:textSize="@dimen/_10ssp" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
 

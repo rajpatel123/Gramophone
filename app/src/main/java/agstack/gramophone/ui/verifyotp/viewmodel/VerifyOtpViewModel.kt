@@ -22,6 +22,7 @@ import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.Manifest
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -42,6 +43,9 @@ class VerifyOtpViewModel @Inject constructor(
     var otpHint: String = ""
     var mobileNo = ObservableField<String>()
     var otpReference = ObservableField<String>()
+    var resendOTPType = ObservableField<String>()
+    var type: String = Constants.SMS
+
 
     var time: String = ""
     var timeOver = ObservableField<Boolean>()
@@ -130,25 +134,34 @@ class VerifyOtpViewModel @Inject constructor(
         if (!getNavigator()?.getBundle()?.getString(Constants.MOBILE_NO).isNullOrEmpty()) {
             val bundle = getNavigator()?.getBundle()
             otpHint =
-                getNavigator()?.getMessage(R.string.otp_hint) + " " + bundle?.getString(Constants.MOBILE_NO)
-                    .toString()
+                getNavigator()?.getMessage(R.string.otp_hint)!!
             mobileNo.set(bundle?.getString(Constants.MOBILE_NO).toString())
             otpReference.set(bundle?.getInt(Constants.OTP_REFERENCE).toString())
-            if (bundle?.getString(Constants.Otp)?.equals("null") != true && bundle?.getString(Constants.Otp)!=null)
+            if (!TextUtils.isEmpty(bundle?.getString(Constants.Otp)))
                 otp.set(bundle?.getString(Constants.Otp).toString())
             else
                 otp.set("")
 
 
-            if (bundle?.getBoolean(Constants.CHANGE_LANGUAGE) == true){
-                getNavigator()?.showTimer(bundle?.getLong(REMAINING_TIME))
-            }else{
+            //resendOTPType.set(String.getNavigator()?.getMessage(R.string.resend_otp))
+            val text: String =
+                java.lang.String.format(getNavigator()?.getMessage(R.string.resend_otp)!!, type)
+            resendOTPType.set(text)
+            if (bundle?.getBoolean(Constants.CHANGE_LANGUAGE) == true) {
+                if (bundle.getLong(REMAINING_TIME) > 0) {
+                    timeOver.set(false)
+                    getNavigator()?.showTimer(bundle.getLong(REMAINING_TIME))
+                } else {
+                    timeOver.set(true)
+                    getNavigator()?.updateOTPView()
+                    resendOTPType.set(getNavigator()?.getMessage(R.string.resend))
+                }
+            } else {
                 getNavigator()?.showTimer(Constants.RESEND_OTP_TIME)
+                timeOver.set(false)
             }
-            timeOver.set(false)
 
         }
-
     }
 
     fun changeNumber(v: View) {
@@ -158,15 +171,17 @@ class VerifyOtpViewModel @Inject constructor(
 
     }
 
-    fun resendOTP(v: View) = viewModelScope.launch {
+    fun resendOTP(type: String) = viewModelScope.launch {
 
         val sendOtpRequestModel = SendOtpRequestModel()
 
         sendOtpRequestModel.phone = mobileNo.get().toString()
-        sendOtpRequestModel.retryType = Constants.SMS
+        sendOtpRequestModel.retryType = type
         sendOtpRequestModel.otp_reference_id = otpReference.get()?.toInt()
         sendOTPCall(sendOtpRequestModel)
-
+        val text: String =
+            java.lang.String.format(getNavigator()?.getMessage(R.string.resend_otp)!!, type.uppercase())
+        resendOTPType.set(text)
     }
 
     private suspend fun sendOTPCall(sendOtpRequestModel: SendOtpRequestModel) {
@@ -268,5 +283,19 @@ class VerifyOtpViewModel @Inject constructor(
             }
         }
         return ApiResponse.Error(response.message())
+    }
+
+    fun onResendClicked(v: View) {
+        when (v.id) {
+            R.id.tvSMS -> {
+                resendOTP(Constants.SMS)
+            }
+
+            R.id.tvCall -> {
+                resendOTP(Constants.VOICE)
+
+            }
+        }
+
     }
 }

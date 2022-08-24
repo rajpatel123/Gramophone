@@ -75,6 +75,7 @@ object Constants {
     const val VILLAGE = "village"
     const val PINCODE = "pincode"
     const val SMS = "sms"
+    const val VOICE = "voice"
 
 
     //MyFarm

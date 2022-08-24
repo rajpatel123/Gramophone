@@ -9,5 +9,6 @@ interface VerifyOTPNavigator :BaseNavigator {
     fun onHelpClick(bundle: String)
     fun onLanguageChangeClick()
     fun getMobileBundle(): Bundle?
+    fun updateOTPView()
 
 }
