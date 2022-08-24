@@ -20,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_verify_otp.*
 import java.util.concurrent.TimeUnit
 
+
 @AndroidEntryPoint
 class VerifyOtpActivity :
     BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOTPNavigator, VerifyOtpViewModel>(),
@@ -33,7 +34,6 @@ class VerifyOtpActivity :
     }
 
     private fun updateUI() {
-        Log.d("Raj","Update in Activity")
         verifyOtpViewModel.updateMessage()
     }
 
@@ -120,4 +120,6 @@ class VerifyOtpActivity :
     override fun onLanguageUpdate() {
         verifyOtpViewModel.updateLanguage()
     }
+
+
 }

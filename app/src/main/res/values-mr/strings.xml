@@ -20,5 +20,22 @@
     <string name="complete_action_using">Complete Action Using</string>
     <string name="select_image_title">Select image</string>
     <string name="crop_image_title_text">Crop</string>
+    <string name="unit_convertor">Unit Converter</string>
+    <string name="feedback">Feedback</string>
+    <string name="leave_feedback">Leave Feedback</string>
+    <string name="whatcanweimprove">What can we improve?</string>
+    <string name="send">Send</string>
+    <string name="please_enter_feedback">Please enter your feedback</string>
+    <string name="all_offers">All Offers</string>
+
+    <string-array name="units_array">
+        <item>बिघा</item>
+        <item>एकर</item>
+        <item>हेक्टर</item>
+        <item>चौरस फूट</item>
+    </string-array>
+    <string-array name="units_kind_array">
+        <item>क्षेत्रफळ</item>
+    </string-array>
 
 </resources>

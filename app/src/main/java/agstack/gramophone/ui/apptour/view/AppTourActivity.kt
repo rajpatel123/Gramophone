@@ -9,15 +9,20 @@ import agstack.gramophone.ui.apptour.adapter.DotIndicatorPager2Adapter
 import agstack.gramophone.ui.apptour.viewmodel.AppTourViewModel
 import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
 import agstack.gramophone.ui.language.model.LoginBanner
-import agstack.gramophone.ui.login.view.LoginActivity
-import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
+import androidx.annotation.RequiresApi
 import androidx.core.view.get
+import com.amnix.xtension.extensions.childs
+import com.amnix.xtension.extensions.setPaddingStart
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_apptour.*
+import kotlinx.android.synthetic.main.activity_apptour.llIndicator
+import kotlinx.android.synthetic.main.page_indicator.*
 
 
 @AndroidEntryPoint
@@ -33,17 +38,11 @@ class AppTourActivity :
         appTourViewModel.setupViewPager()
     }
 
-    override fun getLayoutID(): Int {
-        return R.layout.activity_apptour
-    }
+    override fun getLayoutID(): Int = R.layout.activity_apptour
 
-    override fun getBindingVariable(): Int {
-        return BR.viewModel
-    }
+    override fun getBindingVariable(): Int = BR.viewModel
 
-    override fun getViewModel(): AppTourViewModel {
-        return appTourViewModel
-    }
+    override fun getViewModel(): AppTourViewModel = appTourViewModel
 
     override fun onError(message: String?) {
         Toast.makeText(this@AppTourActivity, message, Toast.LENGTH_LONG).show()
@@ -72,10 +71,12 @@ class AppTourActivity :
 
     override fun updateImages(currentPage: Int) {
         view_pager.setCurrentItem(currentPage, true)
+        appTourViewModel.updateIndicator(currentPage,llIndicator)
     }
 
     override fun setupViewPager(loginBanners: List<LoginBanner>?) {
         this.loginBanners = loginBanners!!
+        appTourViewModel.setPageIndicators(loginBanners)
         val adapter = DotIndicatorPager2Adapter(loginBanners)
         view_pager.adapter = adapter
 
@@ -84,22 +85,24 @@ class AppTourActivity :
             zoomOutPageTransformer.transformPage(page, position)
         }
 
-        dots_indicator.attachTo(view_pager)
-
+        appTourViewModel.updateIndicator(0,llIndicator)
 
         appTourViewModel.startScroller()
     }
 
+    override fun addIndicatorView() {
+        val pageIndicator =
+            LayoutInflater.from(this).inflate(R.layout.page_indicator, null)
+        pageIndicator.setPaddingStart(10)
+        val layoutParams = LinearLayout.LayoutParams(130, 30)
+        layoutParams.setMargins(14, 0, 14, 0)
+        llIndicator.addView(pageIndicator,layoutParams)
+    }
 
 
     override fun onLanguageUpdate() {
         appTourViewModel.updateLanguage()
     }
 
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-
-    }
 
 }
