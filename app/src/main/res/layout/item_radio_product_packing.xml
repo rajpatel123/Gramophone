@@ -2,7 +2,7 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -13,62 +13,64 @@
             type="agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem" />
     </data>
 
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/productDetailsContainer"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:minWidth="@dimen/_80sdp"
         android:layout_height="wrap_content"
-        card_view:cardCornerRadius="10dp"
-        card_view:cardElevation="5dp"
-        card_view:cardUseCompatPadding="true">
+        android:background="@{model.selected ? @drawable/selected_product_background: @drawable/deselected_product_background}"
+        android:gravity="start"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
-        <LinearLayout
-            android:layout_width="97dp"
+        <ImageView
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:visibility="@{model.selected? View.VISIBLE:View.GONE}"
+            app:srcCompat="@drawable/ic_tick_check" />
+
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/radioBtn"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:checked="@{model.selected}"
+            android:visibility="@{model.selected? View.GONE:View.VISIBLE}" />
+
+
+        <TextView
+            android:layout_marginStart="@dimen/_4sdp"
+            android:id="@+id/tvProductWeight"
+            style="@style/TextSize14Sp"
+            tools:text="250 Gm"
+            android:textSize="@dimen/_14ssp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@{model.selected ? @drawable/selected_product_background: @drawable/deselected_product_background}"
-            android:orientation="vertical"
-            android:padding="@dimen/_10sdp"
-
-            >
-
-            <ImageView
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
-                android:visibility="@{model.selected? View.VISIBLE:View.GONE}"
-                app:srcCompat="@drawable/ic_tick_check" />
+            android:text="@{model.productSku}"
+            android:textColor="@color/grey_weight" />
 
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/radioBtn"
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
-                android:checked="@{model.selected}"
-                android:visibility="@{model.selected? View.GONE:View.VISIBLE}" />
+        <TextView
+            android:layout_marginStart="@dimen/_4sdp"
+            style="@style/heading_title_bold_large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="₹ 900"
+            android:text='@{ model.mrpPrice!=null ? `₹` +model.mrpPrice.toString():""}'
+            android:textColor="@color/green_medium"
+            android:textSize="@dimen/_16ssp"
+            android:visibility='@{ model.mrpPrice!=null ?View.VISIBLE:View.INVISIBLE}' />
+        <!--android:text="@{`₹`+ model.mrpPrice.toString() }"-->
+    </LinearLayout>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/tvProductWeight"
-                style="@style/TextSize14Sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="250"
-                android:text="@{model.productSku}"
-                android:textColor="@color/grey_weight" />
-
-
-            <TextView
-                style="@style/heading_title_bold_large"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:hint="₹ 900"
-                android:text='@{ model.mrpPrice!=null ? `₹` +model.mrpPrice.toString():""}'
-                android:textColor="@color/green"
-                android:textSize="@dimen/_12ssp"
-                android:visibility='@{ model.mrpPrice!=null ?View.VISIBLE:View.INVISIBLE}' />
-            <!--android:text="@{`₹`+ model.mrpPrice.toString() }"-->
-        </LinearLayout>
-
-
-    </androidx.cardview.widget.CardView>
 </layout>
