@@ -131,8 +131,7 @@
                         android:contentDescription="@string/image"
                         android:minWidth="@dimen/_24sdp"
                         android:minHeight="@dimen/_24sdp"
-                        android:src="@drawable/ic_whatsapp"
-                        app:tint="@color/black" />
+                        android:src="@drawable/ic_black_whatsapp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"

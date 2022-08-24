@@ -108,6 +108,22 @@
                             app:civ_border_width="2dp" />
 
                         <TextView
+                            android:id="@+id/tvStateName"
+                            android:layout_width="@dimen/_50sdp"
+                            android:layout_height="@dimen/_50sdp"
+                            android:layout_marginStart="@dimen/_14sdp"
+                            android:layout_marginTop="@dimen/_14sdp"
+                            android:layout_marginEnd="@dimen/_14sdp"
+                            android:layout_marginBottom="@dimen/_14sdp"
+                            android:background="@drawable/state_initial_bg"
+                            android:fontFamily="@font/manrope_bold"
+                            android:gravity="center"
+                            android:text="@{viewModel.stateNameInitial}"
+                            android:textColor="@color/brand_color"
+                            android:textSize="@dimen/_18ssp"
+                            android:visibility="@{viewModel.isImageAvailable? View.GONE:View.VISIBLE}"
+                            tools:text="A" />
+                        <TextView
                             android:id="@+id/etStateName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -177,6 +193,7 @@
                                 android:layout_height="wrap_content"
                                 android:completionThreshold="1"
                                 android:paddingBottom="@dimen/_15sdp"
+                                android:imeOptions="actionNext"
                                 android:text="@={viewModel.districtName}" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -224,6 +241,7 @@
                                 android:layout_height="wrap_content"
                                 android:completionThreshold="1"
                                 android:paddingBottom="@dimen/_15sdp"
+                                android:imeOptions="actionNext"
                                 android:text="@={viewModel.tehsilName}" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -267,6 +285,7 @@
                             android:layout_height="wrap_content"
                             android:completionThreshold="1"
                             android:paddingBottom="@dimen/_15sdp"
+                            android:imeOptions="actionNext"
                             android:text="@={viewModel.villageName}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -294,7 +313,7 @@
                         android:layout_toEndOf="@+id/countryCode"
                         android:background="@drawable/rounded_corner"
                         android:backgroundTint="@color/mute_grey"
-                        android:imeOptions="actionDone"
+                        android:imeOptions="actionNext"
                         android:letterSpacing=".05"
                         android:minHeight="@dimen/_50sdp"
                         android:paddingStart="@dimen/_5sdp"
@@ -336,6 +355,7 @@
                             android:completionThreshold="1"
                             android:maxLength="6"
                             android:inputType="number"
+                            android:imeOptions="actionDone"
                             android:paddingBottom="@dimen/_15sdp"
                             android:text="@={viewModel.pinCode}" />
 

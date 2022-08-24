@@ -63,6 +63,7 @@ class UnitConverterActivity :
 
     }
 
+
     override fun setOutputValue(finalValue: String) {
         viewDataBinding.editTextUnit2.setText(finalValue)
     }
@@ -74,6 +75,7 @@ class UnitConverterActivity :
         }
 
     }
+
 
     override fun convertValue_SetOutput() {
         mViewModel?.convertVal(
