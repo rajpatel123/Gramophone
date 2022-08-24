@@ -193,6 +193,7 @@ dependencies {
 
     //Gif dependency
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.24'
+    implementation 'com.airbnb.android:lottie:5.2.0'
     //Utils Libs
     implementation 'com.amnix.xtension:AmniXtension:1.0.0-beta10'
     implementation "com.github.CanHub:Android-Image-Cropper:4.3.1"

@@ -140,7 +140,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="72dp"
                     android:layout_below="@+id/viewItemSeparator"
-                    android:background="@drawable/linear_gradient_white_blue"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:visibility="@{viewModel.gramCash>0 ? View.VISIBLE : View.GONE}">
@@ -167,44 +166,48 @@
                         android:textColor="@color/blakish"
                         android:textSize="16sp" />
 
-                    <TextView
-                        android:id="@+id/tvAvailableGramCash"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tvPayUsingGramCash"
-                        android:layout_marginTop="2dp"
-                        android:layout_toEndOf="@+id/chkPayUsingGramCash"
-                        android:fontFamily="@font/manrope_medium"
-                        android:lineSpacingExtra="1sp"
-                        android:text="@string/available_gram_cash_balance"
-                        android:textColor="@color/blakish"
-                        android:textSize="11sp" />
+                        android:layout_toEndOf="@+id/chkPayUsingGramCash">
 
-                    <pl.droidsonroids.gif.GifImageView
-                        android:id="@+id/ivGramCash"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_below="@+id/tvPayUsingGramCash"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_toEndOf="@+id/tvAvailableGramCash"
-                        android:contentDescription="@string/image"
-                        android:src="@drawable/ic_gram_coin_gif" />
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:id="@+id/tvAvailableGramCash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_medium"
+                            android:lineSpacingExtra="1sp"
+                            android:text="@string/available_gram_cash_balance"
+                            android:textColor="@color/blakish"
+                            android:textSize="11sp" />
 
-                    <TextView
-                        android:id="@+id/tvGramCash"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tvPayUsingGramCash"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_toEndOf="@+id/ivGramCash"
-                        android:fontFamily="@font/manrope_bold"
-                        android:lineSpacingExtra="1sp"
-                        android:text="@{String.valueOf(viewModel.gramCash)}"
-                        android:textColor="@color/blakish"
-                        android:textSize="11sp"
-                        tools:text="50" />
+                        <pl.droidsonroids.gif.GifImageView
+                            android:layout_centerVertical="true"
+                            android:id="@+id/ivGramCash"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_toEndOf="@+id/tvAvailableGramCash"
+                            android:contentDescription="@string/image"
+                            android:src="@drawable/ic_gram_coinn" />
+
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:id="@+id/tvGramCash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_toEndOf="@+id/ivGramCash"
+                            android:fontFamily="@font/manrope_bold"
+                            android:lineSpacingExtra="1sp"
+                            android:text="@{String.valueOf(viewModel.gramCash)}"
+                            android:textColor="@color/blakish"
+                            android:textSize="11sp"
+                            tools:text="50" />
+
+                    </RelativeLayout>
 
                 </RelativeLayout>
 
