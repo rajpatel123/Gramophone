@@ -244,7 +244,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_toEndOf="@+id/tvResend"
-                    android:text="00:43"
+                    android:text="@={viewModel.remainigTimeForOTP}"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10ssp"
                     android:visibility="gone"

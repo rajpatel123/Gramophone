@@ -33,6 +33,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -46,6 +47,7 @@ class VerifyOtpViewModel @Inject constructor(
     var mobileNo = ObservableField<String>()
     var otpReference = ObservableField<String>()
     var resendOTPType = ObservableField<String>()
+    var remainigTimeForOTP = ObservableField<String>()
     var type: String = Constants.SMS
 
 
@@ -301,5 +303,22 @@ class VerifyOtpViewModel @Inject constructor(
             }
         }
 
+    }
+
+    fun calculateRemainigTime(millis: Long) {
+        val ms = java.lang.String.format(
+            "%02d:%02d",
+            TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(
+                TimeUnit.MILLISECONDS.toHours(
+                    millis
+                )
+            ),
+            TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(
+                TimeUnit.MILLISECONDS.toMinutes(
+                    millis
+                )
+            )
+        )
+        remainigTimeForOTP.set(ms+getNavigator()?.getMessage(R.string.seconds))
     }
 }
