@@ -47,6 +47,7 @@ class VerifyOtpActivity :
         tvResendOtp.visibility = VISIBLE
     }
 
+
     override fun onBackPressed() {
         super.onBackPressed()
         openActivity(LoginActivity::class.java, Bundle().apply {
@@ -72,20 +73,7 @@ class VerifyOtpActivity :
         object : CountDownTimer(duration, 1000) {
             override fun onTick(millis: Long) {
                 verifyOtpViewModel.remaningDuration=millis
-                val ms = java.lang.String.format(
-                    "%02d:%02d",
-                    TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(
-                        TimeUnit.MILLISECONDS.toHours(
-                            millis
-                        )
-                    ),
-                    TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(
-                        TimeUnit.MILLISECONDS.toMinutes(
-                            millis
-                        )
-                    )
-                )
-                tvTime.text = ms+getMessage(R.string.seconds)
+                verifyOtpViewModel.calculateRemainigTime(millis)
                 //here you can have your logic to set text to edittext
             }
 
