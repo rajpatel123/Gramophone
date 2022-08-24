@@ -245,6 +245,7 @@
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_toEndOf="@+id/tvResend"
                     android:text="00:43"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10ssp"
                     android:visibility="gone"
                     android:textColor="@color/brand_color"
