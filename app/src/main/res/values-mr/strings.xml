@@ -27,6 +27,27 @@
     <string name="send">Send</string>
     <string name="please_enter_feedback">Please enter your feedback</string>
     <string name="all_offers">All Offers</string>
+    <string name="edit">Edit</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="selectyourrole">Select your role</string>
+    <string name="selectrolecontent">This will help us understand you so that we can serve you better</string>
+    <string name="farmer">Farmer</string>
+    <string name="trader">Trader</string>
+    <string name="firm">Firm</string>
+    <string name="add">Add</string>
+    <string name="mandi">Mandi</string>
+    <string name="editprofile">Edit Profile</string>
+    <string name="save">Save</string>
+    <string name="mobile_no_label">Mobile Number</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="add_firm_name">Add Firm Name</string>
+    <string name="save_continue"><![CDATA[Save & Continue]]></string>
+    <string name="enter_firm_name">Enter Firm Name</string>
+    <string name="add_firm">Add Firm</string>
 
     <string-array name="units_array">
         <item>बिघा</item>

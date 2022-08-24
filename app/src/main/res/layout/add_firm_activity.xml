@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.userprofile.firm.AddFirmViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <include
+            android:id="@+id/myToolbar"
+            layout="@layout/layout_toolbar" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/myToolbar">
+
+
+
+
+            <TextView
+                style="@style/small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:text="@string/add_firm_name"
+                android:textColor="@color/blakish" />
+
+            <EditText
+                android:id="@+id/etFirmName"
+                style="@style/small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/rounded_corner"
+                android:backgroundTint="@color/mute_grey"
+                android:hint="@string/enter_firm_name"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:letterSpacing=".05"
+                android:maxLength="10"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_2sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:singleLine="true"
+                android:text="@={viewModel.mobileNo}"
+                android:textSize="@dimen/_12ssp" />
+
+
+
+
+
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/verifyOtpBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/orange"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:onClick="@{ ()-> viewModel.SaveandContinue() }"
+            android:padding="@dimen/_13sdp"
+            android:text="@string/save_continue"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

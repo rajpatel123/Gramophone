@@ -6,6 +6,7 @@ import android.content.Context
 
 
 object Constants {
+    val FROM_EDIT_PROFILE="FROM_EDIT_PROFILE"
     val BUNDLE: String="bundle"
     val Product_Base_Name="PRODUCT BASE NAME"
     val PRODUCT_RATING_DATA_KEY="PRODUCT RATING DATA"

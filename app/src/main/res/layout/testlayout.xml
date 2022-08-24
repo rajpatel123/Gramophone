@@ -1,754 +1,376 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <import type="android.text.TextUtils" />
 
         <import type="android.view.View" />
 
         <variable
             name="viewModel"
-            type="agstack.gramophone.ui.home.product.activity.ProductDetailsViewModel" />
+            type="agstack.gramophone.ui.address.viewmodel.AddOrUpdateAddressViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".ui.home.product.activity.ProductDetailsActivity">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/toolbar"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:isScrollContainer="true"
-            android:background="@color/white"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
-            app:contentInsetStartWithNavigation="0dp"
-            app:layout_collapseMode="pin"
-            app:menu="@menu/menu_product_details"
-            app:navigationIcon="@drawable/ic_arrow_left" />
+            android:layout_height="match_parent">
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nestedscroll"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/layout_bottom"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar">
-
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:id="@+id/rl_product_images_top"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_9sdp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginStart="@dimen/_17sdp"
-                        android:orientation="vertical">
-
-                        <RatingBar
-                            android:id="@+id/rating"
-                            style="?android:attr/ratingBarStyleIndicator"
-                            doubleToFloatRating="@{viewModel.productReviewsData.rating.totalRating}"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:isIndicator="true"
-                            android:numStars="5"
-                            android:stepSize="0.1"
-                            android:theme="@style/RatingBar"
-                            android:visibility="@{viewModel.productReviewsData.rating.totalReview>0?View.VISIBLE : View.INVISIBLE}" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvTotalReviews"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/manrope_bold"
-                            android:hint="15 Farmers"
-                            android:text="@{viewModel.productReviewsData.rating.totalReview.toString()+` `+ @string/farmers}"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_13ssp" />
+                android:background="@color/white"
+                android:orientation="vertical"
+                tools:context=".ui.address.view.AddOrUpdateAddressActivity">
 
 
-                    </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="@dimen/_78sdp"
-                            android:layout_height="@dimen/_32sdp"
-                            android:background="@drawable/button_oval"
-                            android:orientation="horizontal">
-
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="@dimen/_18sdp"
-                                android:layout_height="@dimen/_18sdp"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="@dimen/_7sdp"
-                                app:srcCompat="@drawable/ic_whatsapp" />
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="@dimen/_5sdp"
-                                android:layout_marginTop="@dimen/_8sdp"
-                                android:layout_marginBottom="@dimen/_8sdp"
-                                android:fontFamily="@font/manrope_bold"
-                                android:gravity="center"
-                                android:text="@string/share"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_13ssp" />
-
-                        </LinearLayout>
-
-                        <!--  <ImageView
-                              app:srcCompat="@drawable/ic_whatsappshare"
-                              android:layout_width="wrap_content"
-                              android:layout_height="match_parent"/>-->
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            isUserFavorite="@{viewModel.isHeartSelected}"
-                            android:layout_width="@dimen/_18sdp"
-                            android:layout_height="@dimen/_16sdp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/_11sdp"
-                            android:layout_marginRight="@dimen/_19sdp"
-                            android:onClick="@{()->viewModel.onHeartIconClicked()}"
-                            app:srcCompat="@drawable/ic_heart_blank" />
-
-                    </LinearLayout>
-
-
-                </RelativeLayout>
-
-
-                <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/product_images_view_pager"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_216sdp"
-                    android:foregroundGravity="center" />
-
-
-                <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
-                    android:id="@+id/dots_indicator"
+                <ProgressBar
+                    android:id="@+id/stateProgressBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_18sdp"
-                    app:dotsColor="@color/orange"
-                    app:dotsSize="12dp"
-                    app:dotsSpacing="5dp"
-                    app:dotsStrokeColor="@color/gray_stroke"
-                    app:progressMode="false"
-                    app:stiffness="300" />
+                    android:backgroundTint="@color/zxing_viewfinder_laser"
+                    android:elevation="@dimen/_1sdp"
+                    android:visibility="@{viewModel.loading? View.VISIBLE:View.GONE}" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_16sdp">
+                    android:background="@color/state_bg"
+                    android:minHeight="@dimen/_170sdp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_back"
+                        android:src="@drawable/ic_action_navigation_arrow_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
                     <TextView
-                        android:id="@+id/tv_productname"
-                        style="@style/TextSize16Sp"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tvCompleteAddress"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Bioenzyme Organic Cold Pressed Water Soluble Pure Neem Oil"
-                        android:text="@{viewModel.productData.productBaseName}" />
-
-                    <LinearLayout
-                        android:id="@+id/ll_price_discount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_productname"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:orientation="horizontal">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_productSP"
-                            style="@style/heading_title_bold_large"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="@{viewModel.selectedSkuListItem.salesPrice}"
-                            android:textColor="@color/blakish"
-                            android:textSize="@dimen/_18ssp"
-                            tools:text="₹799.00" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_productMRP"
-                            style="@style/heading_title_bold_large"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/_7sdp"
-                            android:background="@drawable/strike_through"
-                            android:gravity="center"
-                            tools:text="₹1,290"
-                            android:text="@{viewModel.selectedSkuListItem.mrpPrice}"
-                            android:textColor="@color/oldmrpcolor"
-                            android:textSize="@dimen/_12ssp" />
-                        <!-- android:visibility="@{Double.valueOf(viewModel.selectedSkuListItem.mrpPrice)>Double.valueOf(viewModel.selectedSkuListItem.salesPrice)?View.VISIBLE:View.INVISIBLE}"
-                        isMRPVisible="@{viewModel.selectedSkuListItem}"-->
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_percentageOffOnSelectedSKU"
-                            style="@style/heading_title_bold_large"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/_7sdp"
-                            android:gravity="center"
-                            tools:text="60%"
-                            android:textColor="@color/green"
-                            android:textSize="@dimen/_14ssp" />
-
-                        <!-- percentageOffSKUItem="@{viewModel.selectedSkuListItem}"-->
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_qty"
-                        android:background="@drawable/rounded_corner_4_solid_stroke_gray"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_productname"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:foregroundGravity="center"
+                        android:layout_marginTop="80dp"
+                        android:fontFamily="@font/manrope_bold"
                         android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:layout_width="@dimen/_32sdp"
-                            android:layout_height="@dimen/_32sdp"
-                            android:background="@drawable/ic_minus_frame"
-                            android:onClick="@{()->viewModel.onMinusQtyClicked()}" />
-
-                        <TextView
-                            android:layout_width="@dimen/_32sdp"
-                            android:layout_height="@dimen/_32sdp"
-                            android:fontFamily="@font/manrope_medium"
-                            android:gravity="center"
-                            format2Digit="@{viewModel.qtySelected}"
-                            android:textColor="@color/blakish"
-                            android:textSize="@dimen/_14ssp"
-                            android:textStyle="normal"
-                            tools:text="01" />
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:layout_width="@dimen/_32sdp"
-                            android:layout_height="@dimen/_32sdp"
-                            android:background="@drawable/ic_plus_frame"
-                            android:onClick="@{()->viewModel.onAddQtyClicked()}" />
-
-                    </LinearLayout>
+                        android:text="@string/complete_address"
+                        android:textColor="@color/brand_color"
+                        android:textSize="@dimen/_16ssp"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/tv_contactForPrice"
-                        android:onClick="@{()->viewModel.ContactForPriceClicked()}"
-                        android:visibility="gone"
-                        style="@style/TextSize16Sp"
-                        android:textColor="@color/order_delivered_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_productname"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:background="@drawable/deselected_product_background"
-                        android:paddingTop="@dimen/_8sdp"
-                        android:paddingBottom="@dimen/_8sdp"
-                        android:paddingLeft="@dimen/_16sdp"
-                        android:paddingRight="@dimen/_16sdp"
-                        android:text="@string/contactforprice" />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/tv_inclusive"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_minus16sdp"
-                    android:fontFamily="@font/manrope_medium"
-                    android:text="@string/inclusiveoftaxes"
-                    android:textColor="@color/oldmrpcolor"
-                    android:textSize="@dimen/_9ssp">
-
-                </TextView>
-
-
-                <View
-                    android:id="@+id/v1_separator"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_2sdp"
-                    android:layout_below="@+id/tv_inclusive"
-                    android:layout_marginLeft="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_18sdp"
-                    android:layout_marginRight="@dimen/_16sdp"
-                    android:background="#F2F4F7" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_16sdp"
-                    android:fontFamily="@font/manrope_bold"
-                    android:text="@string/packing"
-                    android:textColor="@color/blakish"
-                    android:textSize="@dimen/_14sdp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_product_sku"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_16sdp"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:drawablePadding="@dimen/_minus20sdp"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="3"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/item_radio_product_packing" />
-
-                <View
-                    android:id="@+id/v2_separator"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_4sdp"
-                    android:layout_below="@+id/rv_product_sku"
-                    android:background="#F2F4F7" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_available_offers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_16sdp">
-
-                    <ImageView
-                        android:id="@+id/iv_availableoffers"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginRight="@dimen/_14sdp"
-                        app:srcCompat="@drawable/ic_available_offers" />
-
-                    <TextView
-                        style="@style/TextSize16Sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/iv_availableoffers"
-                        android:text="@string/available_offers"></TextView>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_availableoffers"
+                        android:id="@+id/tvTips"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/iv_availableoffers"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_available_offers" />
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:gravity="center"
+                        android:text="@string/get_apporopriate_solution"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintTop_toBottomOf="@+id/tvCompleteAddress"
+                        tools:layout_editor_absoluteX="0dp" />
+                </LinearLayout>
 
-
-                </RelativeLayout>
-
-                <View
-                    android:id="@+id/v3_separator"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_4sdp"
-                    android:layout_below="@+id/rl_available_offers"
-                    android:background="#F2F4F7" />
-
-
-                <RelativeLayout
-                    android:id="@+id/rl_howtouse"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    >
+                    android:layout_marginStart="@dimen/_24sdp"
+                    android:layout_marginTop="@dimen/_150sdp"
+                    android:layout_marginEnd="@dimen/_24sdp"
+                    android:background="@color/white"
+                    android:padding="@dimen/_10sdp"
+                    app:cardCornerRadius="@dimen/_10sdp">
 
-                    <ImageView
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:layout_marginBottom="@dimen/_16sdp"
-                        android:layout_marginLeft="@dimen/_16sdp"
-                        android:id="@+id/iv_video"
+
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginRight="@dimen/_14sdp"
-                        app:srcCompat="@drawable/ic_how_to_use_gardening" />
+                        android:layout_gravity="start">
 
-                    <TextView
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:layout_marginBottom="@dimen/_16sdp"
-                        style="@style/TextSize16Sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/iv_video"
-                        android:text="@string/how_to_use"></TextView>
-
-
-                    <fragment
-                        android:id="@+id/youtube_player_fragment"
-                        android:name="com.google.android.youtube.player.YouTubePlayerFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_216sdp"
-                        android:layout_below="@id/iv_video" />
-
-
-                </RelativeLayout>
-
-                <View
-                    android:id="@+id/seperator"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_4sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:background="#F2F4F7" />
-
-
-                <RelativeLayout
-                    android:id="@+id/rl_deliverytime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_16sdp">
-
-                    <TextView
-                        android:id="@+id/tv_deliveryLocation"
-                        style="@style/TextSize16Sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="Delivery-"
-                        android:text="@{@string/delivery_+`  `+viewModel.productData.shippingDetails.address}" />
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_deliveryLocation"
-                        android:layout_marginTop="@dimen/_19sdp"
-                        android:orientation="horizontal">
-
-
-                        <ImageView
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp"
-                            app:srcCompat="@drawable/ic_clock_orange" />
-
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/tv_estimated_title"
-                                style="@style/TextSize16Sp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/estimated_delivery"
-                                android:textColor="@color/gray" />
-
-                            <TextView
-                                android:id="@+id/tvProductWeight"
-                                style="@style/TextSize16Sp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/manrope_bold"
-                                android:text="@{viewModel.productData.shippingDetails.estimatedDelivery}" />
-
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_2sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="#F2F4F7"/>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
-                    android:layout_marginLeft="@dimen/_7sdp"
-                    app:srcCompat="@drawable/ic_truck_frame" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_4sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="#F2F4F7" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_productDetails"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_16sdp">
-
-                    <TextView
-                        android:id="@+id/product_detail_title"
-                        style="@style/TextSize16Sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_9sdp"
-                        android:text="@string/product_details" />
-
-                    <LinearLayout
-                        android:id="@+id/ll_KeyPointsContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/product_detail_title"
-                        android:background="@drawable/rounded_corner"
-                        android:orientation="vertical">
-
-                        <TextView
-                            style="@style/TextSize14Sp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/grey_rounded_corner_solid_grey_color"
-                            android:padding="@dimen/_8sdp"
-                            android:text="@string/key_points"></TextView>
-
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:background="@drawable/rounded_corner_with_grey_color"
-                            android:id="@+id/rv_productDetails"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:nestedScrollingEnabled="false"
-                            android:orientation="vertical"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            tools:listitem="@layout/product_details_row_item" />
-                    </LinearLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ll_KeyPointsContainer">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_showAllDetails"
-                            style="@style/TextSize14Sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/ivStateImage"
+                            state_image="@{viewModel.stateImageUrl}"
+                            android:layout_width="@dimen/_50sdp"
+                            android:layout_height="@dimen/_50sdp"
+                            android:layout_marginStart="@dimen/_14sdp"
                             android:layout_marginTop="@dimen/_14sdp"
-                            android:layout_marginBottom="@dimen/_9sdp"
-                            android:background="@drawable/rounded_corner_with_pink_color"
-                            android:drawableEnd="@drawable/ic_arrow_down_orange"
-                            android:drawableRight="@drawable/ic_arrow_down_orange"
-                            android:drawablePadding="@dimen/_10sdp"
-                            android:padding="@dimen/_6sdp"
-                            android:text="@string/showmore"
-                            android:textAllCaps="false"
-                            android:textColor="@color/orange"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:layout_marginEnd="@dimen/_14sdp"
+                            android:layout_marginBottom="@dimen/_14sdp"
+                            android:visibility="@{viewModel.isImageAvailable? View.VISIBLE:View.INVISIBLE}"
+                            app:civ_border_color="@color/white"
+                            app:civ_border_width="2dp" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/etStateName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16ssp"
+                            android:layout_toEndOf="@+id/ivStateImage"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@{viewModel.stateNameStr}"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_16ssp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/etStateName"
+                            android:layout_marginTop="@dimen/_5ssp"
+                            android:layout_toEndOf="@+id/ivStateImage"
+                            android:fontFamily="@font/manrope_bold"
+                            android:onClick="@{ ()-> viewModel.changeState() }"
+                            android:text="@string/change"
+
+                            android:textColor="@color/green"
+                            android:textSize="@dimen/_12ssp" />
+
+                    </RelativeLayout>
 
 
-                </RelativeLayout>
+                </androidx.cardview.widget.CardView>
 
-                <View
-                    android:id="@+id/viewaboverelatedprods"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_4sdp"
-                    android:background="#F2F4F7" />
-
-                <androidx.appcompat.widget.AppCompatImageView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/viewaboverelatedprods"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_gramophone_promise" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_related_products"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_16sdp">
+                    android:layout_marginTop="@dimen/_250sdp"
+                    android:layout_marginBottom="@dimen/_150sdp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_relproduct_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_32sdp"
-                        android:fontFamily="@font/manrope_bold"
-                        android:text="@string/related_products"
-                        android:textColor="@color/blakish"
-                        android:textSize="@dimen/_14sdp" />
-
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_related_products"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_relproduct_title"
-                        android:layout_marginHorizontal="@dimen/_8sdp"
-                        android:orientation="horizontal"
-                        android:scrollbars="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:listitem="@layout/item_related_product_fragment">
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:text="@string/_district"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp" />
 
-                    </androidx.recyclerview.widget.RecyclerView>
-                </RelativeLayout>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        app:boxCornerRadiusBottomEnd="@dimen/_8sdp">
 
-                <View
-                    android:id="@+id/viewbelowrelatedprods"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_4sdp"
-                    android:background="#F2F4F7" />
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/EditTextInputLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:boxStrokeWidth="0dp"
+                            app:endIconMode="none">
 
+                            <!--add all properties in stle and apply here -->
+                            <AutoCompleteTextView
+                                android:id="@+id/districtSpinner"
+                                style="@style/AutoCompleteTextViewLayoutStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:completionThreshold="1"
+                                android:paddingBottom="@dimen/_15sdp"
+                                android:text="@={viewModel.districtName}" />
 
-                <RelativeLayout
-                    android:id="@+id/rl_rating_reviews"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_16sdp">
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_medium"
+                            android:text="*"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_gravity="top|end"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/_15ssp" />
+                    </FrameLayout>
 
                     <TextView
-                        android:id="@+id/tv_rating_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_16sdp"
-                        android:fontFamily="@font/manrope_bold"
-                        android:text="@string/ratingandreviews"
-                        android:textColor="@color/blakish"
-                        android:textSize="@dimen/_14sdp" />
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:text="@string/_tahsil"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp" />
 
-
-                </RelativeLayout>
-
-                <include
-                    android:id="@+id/ratingbar_reviews"
-                    layout="@layout/ratingbarandreviews"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/tv_rating_title"
-                    bind:rvm="@{viewModel}" />
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_viewAllReviews"
-                        style="@style/TextSize14Sp"
-                        android:layout_width="wrap_content"
+                    <FrameLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_marginTop="@dimen/_24sdp"
-                        android:layout_marginBottom="@dimen/_19sdp"
-                        android:drawableEnd="@drawable/ic_arrow_orange_right"
-                        android:drawableRight="@drawable/ic_arrow_orange_right"
-                        android:drawablePadding="@dimen/_10sdp"
-                        android:gravity="center"
-                        android:onClick="@{()->viewModel.viewAllReviewsOnClick()}"
-                        android:text="@string/view_all"
-                        android:textAllCaps="true"
-                        android:textColor="@color/orange" />
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_20sdp">
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/EditTextInputLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
 
-                </RelativeLayout>
+                            app:boxStrokeWidth="0dp"
+                            app:endIconMode="none">
+
+                            <!--add all properties in stle and apply here -->
+                            <AutoCompleteTextView
+                                android:id="@+id/tehsilSpinner"
+                                style="@style/AutoCompleteTextViewLayoutStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:completionThreshold="1"
+                                android:paddingBottom="@dimen/_15sdp"
+                                android:text="@={viewModel.tehsilName}" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_medium"
+                            android:text="*"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_gravity="top|end"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/_15ssp" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:text="@string/_village"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/EditTextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        app:boxStrokeWidth="0dp"
+                        app:endIconMode="none">
+
+                        <!--add all properties in stle and apply here -->
+                        <AutoCompleteTextView
+                            android:id="@+id/villageNameSpinner"
+                            style="@style/AutoCompleteTextViewLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:completionThreshold="1"
+                            android:paddingBottom="@dimen/_15sdp"
+                            android:text="@={viewModel.villageName}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:text="@string/address"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp" />
 
-        </androidx.core.widget.NestedScrollView>
+                    <EditText
+                        android:id="@+id/etAddress"
+                        style="@style/small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:layout_toEndOf="@+id/countryCode"
+                        android:background="@drawable/rounded_corner"
+                        android:backgroundTint="@color/mute_grey"
+                        android:imeOptions="actionDone"
+                        android:letterSpacing=".05"
+                        android:minHeight="@dimen/_50sdp"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:singleLine="true"
+                        android:text="@={viewModel.address}"
+                        android:textSize="@dimen/_12ssp" />
 
-        <ProgressBar
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:visibility="@{viewModel.progressLoader? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toTopOf="@+id/layout_bottom"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/myToolbar" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:text="@string/pincode"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp" />
 
-        <LinearLayout
-            android:id="@+id/layout_bottom"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/EditTextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        app:boxStrokeWidth="0dp"
+
+                        app:endIconMode="none">
+
+                        <!--add all properties in stle and apply here -->
+                        <AutoCompleteTextView
+                            android:id="@+id/pincodeSpinner"
+                            style="@style/AutoCompleteTextViewLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:completionThreshold="1"
+                            android:maxLength="6"
+                            android:inputType="number"
+                            android:paddingBottom="@dimen/_15sdp"
+                            android:text="@={viewModel.pinCode}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/submitBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nestedscroll">
+            android:layout_alignParentBottom="true"
+            android:background="@color/brand_color"
+            android:gravity="center"
+            android:onClick="@{ ()-> viewModel.submitAddress() }"
+            android:padding="@dimen/_13sdp"
+            android:text="@string/go_to_app"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_expertAdvice"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_48sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:layout_marginBottom="@dimen/_4sdp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_corner"
-                android:backgroundTint="@color/mute_grey"
-                android:drawableStart="@drawable/ic_expert_grey"
-                android:drawablePadding="@dimen/_minus20sdp"
-                android:onClick="@{()->viewModel.onExpertAdviceClicked()}"
-                android:paddingStart="@dimen/_5sdp"
-                android:text="@string/expert_advice"
-                android:textAllCaps="false"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/_14ssp" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_addtocart"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_48sdp"
-                android:layout_marginLeft="@dimen/_6sdp"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_4sdp"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/ic_cart_white"
-                android:drawablePadding="@dimen/_minus20sdp"
-                android:enabled="@{viewModel.addToCartEnabled}"
-                android:background="@{ viewModel.addToCartEnabled ? @drawable/active_button_background : @drawable/deactive_button_background}"
-                android:onClick="@{()->viewModel.onAddToCartClicked()}"
-                android:paddingStart="@dimen/_5sdp"
-                android:text="@string/add_to_cart"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14ssp" />
-
-
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/saveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/brand_color"
+            android:gravity="center"
+            android:onClick="@{ ()-> viewModel.submitAddress() }"
+            android:padding="@dimen/_13sdp"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp" />
+    </RelativeLayout>
 </layout>
