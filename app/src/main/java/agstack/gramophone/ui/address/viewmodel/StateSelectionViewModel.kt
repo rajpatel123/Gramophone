@@ -8,10 +8,13 @@ import agstack.gramophone.ui.address.adapter.StateListAdapter
 import agstack.gramophone.ui.address.model.AddressRequestModel
 import agstack.gramophone.ui.address.model.State
 import agstack.gramophone.ui.address.model.StateResponseModel
+import agstack.gramophone.ui.address.view.AddOrUpdateAddressActivity
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
+import android.Manifest
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.ActivityCompat
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,7 +40,7 @@ class StateSelectionViewModel @Inject constructor(
 
     fun onStateUpdate(v: View) {
         if (state != null) {
-            getNavigator()?.moveToNext(Bundle().apply {
+            getNavigator()?.openAndFinishActivity(AddOrUpdateAddressActivity::class.java,Bundle().apply {
                 putString(Constants.STATE, state?.name)
                 putString(Constants.STATE_IMAGE_URL, state?.image)
             })
@@ -129,6 +132,19 @@ class StateSelectionViewModel @Inject constructor(
         }
         state = null
         stateListAdapter.notifyDataSetChanged()
+    }
+
+    fun updateUI() {
+        if (!getNavigator()?.getBundle()?.getString(Constants.CHANGE_STATE).isNullOrEmpty()){
+            getNavigator()?.fetchStateList()
+        }else{
+            if (getNavigator()?.checkPermission() == true){
+                getNavigator()?.openAndFinishActivity(AddOrUpdateAddressActivity::class.java,null)
+            }else{
+                getNavigator()?.requestForLocation()
+            }
+        }
+
     }
 
 }

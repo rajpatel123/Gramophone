@@ -42,15 +42,16 @@ class StateListActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)){
-            openAndFinishActivity(AddOrUpdateAddressActivity::class.java,null)
-        }else{
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),1)
-        }
+        stateSelectionViewModel.updateUI()
     }
 
+    override fun checkPermission(): Boolean {
+        return checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+    }
 
+    override fun requestForLocation() {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),1)
+    }
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
@@ -63,7 +64,7 @@ class StateListActivity :
 
 
     }
-    private fun fetchStateList() {
+    override fun fetchStateList() {
         stateSelectionViewModel.fetchStateList()
     }
 
@@ -101,10 +102,6 @@ class StateListActivity :
         rvStates.adapter = stateListAdapter
     }
 
-    override fun moveToNext(bundle: Bundle) {
-        openActivity(AddOrUpdateAddressActivity::class.java, bundle)
-    }
-
     override fun selectOtherState(bundle: Bundle) {
         otherActivityLauncher.launch(Intent(this, SelectOtherStateActivity::class.java).apply {
             if (bundle != null)
@@ -118,6 +115,8 @@ class StateListActivity :
         tvSelectedState.text = ""
         stateSelectionViewModel.resetStateSelection()
     }
+
+    override fun getBundle(): Bundle? = intent.extras
 
     override fun onStateSelected() {
         tvOthers.visibility = GONE

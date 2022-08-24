@@ -41,9 +41,10 @@
     <string name="otp_hint">"6 अंकों का कोड दर्ज करें जिसे हमने भेजा है"</string>
     <string name="enter_otp">ओटीपी दर्ज करें</string>
     <string name="please_enter_otp">कृपया ओटीपी दर्ज करें</string>
-    <string name="resend_otp">"फिर से भेजें "</string>
-    <string name="resend">"ओटीपी पुनः भेजें "</string>
+    <string name="resend_otp">"फिर से %1$s के माध्यम से ओटीपी प्राप्त करें"</string>
     <string name="no_internet">"कोई इंटरनेट कनेक्शन नहीं है "</string>
+    <string name="seconds">सेकंड</string>
+
     <string name="privacy">गोपनीयता नीति</string>
     <string name="talk_to_customer_care">हमारे कस्टमर केयर एक्जीक्यूटिव से बात करें</string>
     <string name="call_now">अभी कॉल करें</string>
