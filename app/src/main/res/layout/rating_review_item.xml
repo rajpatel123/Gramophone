@@ -30,7 +30,6 @@
             doubleToFloatRating="@{model.rating}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_6sdp"
             android:isIndicator="true"
             android:max="5"
             android:numStars="5"
@@ -43,7 +42,7 @@
 
         <TextView
             android:id="@+id/tv_userComment"
-            style="@style/TextSize16Sp"
+            style="@style/TextSize14Sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/manrope_medium"
@@ -58,14 +57,14 @@
             android:layout_height="wrap_content"
             android:hint="Ramnarayan Kobind"
             android:text="@{model.customerName}"
+            android:textColor="@color/blakish"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_location"
-            style="@style/TextSize16Sp"
+            style="@style/TextSize14Sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/manrope_medium"
             android:hint="Sawer, Madhya Pradesh"
             android:text="@{model.customerAddress}"

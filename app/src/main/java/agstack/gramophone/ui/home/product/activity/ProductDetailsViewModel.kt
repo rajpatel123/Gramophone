@@ -218,7 +218,7 @@ class ProductDetailsViewModel @Inject constructor(
             val denominator = model.salesPrice!!.toFloat()
             val percentage = numarator / denominator
             val formatted_percentage = String.format("%.02f", percentage);
-            finaldiscount = (formatted_percentage + " % Off")
+            finaldiscount = (formatted_percentage + " % off")
             isMRPVisibile = priceDiff > 0
 
             offerModel?.let {

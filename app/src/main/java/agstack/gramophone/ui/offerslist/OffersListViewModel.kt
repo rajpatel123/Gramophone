@@ -14,10 +14,13 @@ class OffersListViewModel @Inject constructor(
 ) : BaseViewModel<OffersListNavigator>() , MaterialSearchView.OnQueryTextListener,
     MaterialSearchView.SearchViewListener {
 
-    var allOfferslist:List<PromotionListItem> = ArrayList()
+    var allOfferslist:MutableList<PromotionListItem> = ArrayList()
 
     fun getAllOffersData() {
-      // getNavigator()?.setOffersListAdapter(OffersListAdapter(allOfferslist))
+        var item= PromotionListItem(1,1,"50% Off on Pesticide",null,null,0.0,false,"Test","Valid on ","Valid till")
+
+    allOfferslist.add(item)
+    getNavigator()?.setOffersListAdapter(OffersListAdapter(allOfferslist))
     }
     override fun onQueryTextSubmit(query: String?): Boolean {
     return true
