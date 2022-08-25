@@ -323,6 +323,24 @@
     <string name="save_continue"><![CDATA[Save & Continue]]></string>
     <string name="enter_firm_name">Enter Firm Name</string>
     <string name="add_firm">Add Firm</string>
+    <string name="_01">01</string>
+    <string name="_60">60%</string>
+    <string name="_1_290">₹1,290</string>
+    <string name="_799_00">₹799.00</string>
+    <string name="get_accurate_information_nabout_your_farm_for_better_nharvest">Get accurate information\nabout your farm for better\nharvest</string>
+    <string name="add_you_farm">+ Add you Farm</string>
+    <string name="know_more_about_my_farm"><![CDATA[Know more about My Farm >]]></string>
+    <string name="checkout">Checkout</string>
+    <string name="sub_text_will_be_displayed_here">Sub text will be displayed here</string>
+    <string name="receive_order_related_information_on_whatsapp">Receive order related information on whatsapp</string>
+    <string name="gramophone_promise">Gramophone Promise</string>
+    <string name="_100_genuine_nproducts">100% Genuine\nProducts</string>
+    <string name="free_shipping_nat_doorstep">Free Shipping\nat doorstep</string>
+    <string name="best_price_nguaranteed">Best Price\nGuaranteed</string>
+    <string name="genuine_ngst_bill">Genuine\nGST Bill</string>
+    <string name="easy_return">Easy Return</string>
+    <string name="free_expert_nadvice">Free Expert\nAdvice</string>
+    <string name="product_fungicide">Fungicides Crystal Bavistin 50% WP Fun gicide Carbe ...</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>
