@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.order.model.Data" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/item_transaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingTop="@dimen/_24sdp"
+        android:paddingEnd="@dimen/_12sdp">
+
+        <FrameLayout
+            android:id="@+id/frame_product"
+            android:layout_width="@dimen/_44sdp"
+            android:layout_height="@dimen/_44sdp"
+            android:background="@drawable/rounded_corner_8_solid_white_stroke_gray">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="@string/image"
+                android:padding="@dimen/_4sdp"
+                app:srcCompat="@drawable/ic_person_standing"
+               />
+
+            <!-- app:product_image="@{model.product_image}" -->
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_earned_expired"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_toEndOf="@+id/frame_product"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="1sp"
+            tools:text="Earned"
+            android:text="@string/earned"
+            android:textColor="@color/blakish"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_earned_how"
+            android:layout_width="205dp"
+            android:layout_height="16dp"
+            android:layout_below="@+id/tv_earned_expired"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_toEndOf="@+id/frame_product"
+            android:fontFamily="@font/manrope_regular"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="-2sp"
+            android:textColor="@color/gray_strike_through"
+            android:textSize="13sp"
+            tools:text="05-Jul-2022 / 3 Items" />
+
+        <TextView
+            android:id="@+id/tv_total_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:lineSpacingExtra="-1sp"
+
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            tools:text="₹4320"
+            tools:ignore="RelativeOverlap" />
+        <!-- android:text="@{@string/rupee_symbol.concat(model.price)}"-->
+
+
+
+
+
+    </RelativeLayout>
+</layout>
