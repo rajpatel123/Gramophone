@@ -8,6 +8,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OfferDetailViewModel @Inject constructor(
+
 ) : BaseViewModel<OfferDetailNavigator>() {
 
     var mOffersItem =ObservableField<PromotionListItem>()

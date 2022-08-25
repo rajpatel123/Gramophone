@@ -8,6 +8,7 @@ import agstack.gramophone.ui.feedback.FeedbackActivity
 import agstack.gramophone.ui.offerslist.OffersListActivity
 import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
+import agstack.gramophone.ui.referandearn.ReferAndEarnActivity
 import agstack.gramophone.ui.settings.view.SettingsActivity
 import agstack.gramophone.ui.unitconverter.UnitConverterActivity
 import agstack.gramophone.ui.userprofile.UserProfileActivity
@@ -122,5 +123,9 @@ class HomeViewModel @Inject constructor(
 
     fun openOfferListClicked(){
         getNavigator()?.openActivity(OffersListActivity::class.java , null)
+    }
+
+    fun ReferandEarnClicked(){
+        getNavigator()?.openActivity(ReferAndEarnActivity::class.java , null)
     }
 }

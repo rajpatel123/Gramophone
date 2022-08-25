@@ -48,6 +48,13 @@
     <string name="save_continue"><![CDATA[Save & Continue]]></string>
     <string name="enter_firm_name">Enter Firm Name</string>
     <string name="add_firm">Add Firm</string>
+    <string name="check_referral_points">Check your referral points</string>
+    <string name="share_earn">Share Gramophone App and earn upto \u20B9 150!</string>
+    <string name="share_earn_message2">Share gramophone app with your farmer friends, they download the app then you can earn up to Rs. 150!</string>
+    <string name="share_your_referral_qr_code">SHARE YOUR REFERRAL CODE AND QR CODE</string>
+    <string name="share_now">Share Now</string>
+    <string name="frequently_asked_quest">Frequently Asked Questions</string>
+    <string name="referral_rules">Referral Rules</string>
 
     <string-array name="units_array">
         <item>बिघा</item>

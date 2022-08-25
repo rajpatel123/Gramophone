@@ -60,6 +60,7 @@ android {
             buildConfigField "String", "BASE_URL_SOCIAL", "\"https://community-api.gramophone.in/api/v1/\""
             buildConfigField "String", "BASE_URL", "\"https://mobility-api-dev.gramophone.in/\""
             buildConfigField "String", "BASE_URL_YOUTUBE", "\"https://www.googleapis.com/youtube/v3/\""
+            buildConfigField "String" , "BASE_URL_PROMOTION","\"https://promotions-api-qa.gramophone.in/api/v1/\""
             signingConfig signingConfigs.release
 
         }
@@ -69,6 +70,7 @@ android {
             buildConfigField "String", "BASE_URL_SOCIAL", "\"https://community-api-dev.gramophone.in/api/v1/\""
             buildConfigField "String", "BASE_URL", "\"https://mobility-api-dev.gramophone.in/\""
             buildConfigField "String", "BASE_URL_YOUTUBE", "\"https://www.googleapis.com/youtube/v3/\""
+            buildConfigField "String" , "BASE_URL_PROMOTION","\"https://promotions-api-qa.gramophone.in/api/v1/\""
             signingConfig signingConfigs.debug
         }
         staging {
@@ -78,6 +80,7 @@ android {
             buildConfigField "String", "BASE_URL_SOCIAL", "\"https://community-api-qa.gramophone.in/api/v1/\""
             buildConfigField "String", "BASE_URL", "\"https://mobility-api-dev.gramophone.in/\""
             buildConfigField "String", "BASE_URL_YOUTUBE", "\"https://www.googleapis.com/youtube/v3/\""
+            buildConfigField "String" , "BASE_URL_PROMOTION","\"https://promotions-api-qa.gramophone.in/api/v1/\""
             signingConfig signingConfigs.debug
         }
     }
