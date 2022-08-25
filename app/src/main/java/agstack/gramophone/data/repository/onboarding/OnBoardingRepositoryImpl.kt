@@ -65,6 +65,12 @@ class OnBoardingRepositoryImpl @Inject constructor(
         resendOtp
     }
 
+    override suspend fun updateLanguageWhileOnBoarding(updateLanguageRequestModel: UpdateLanguageRequestModel):Response<UpdateLanguageResponseModel> = withContext(
+        Dispatchers.IO) {
+        val resendOtp = gramAppService.updateLanguageWhileOnBoarding(updateLanguageRequestModel)
+        resendOtp
+    }
+
     override suspend fun getAddressDataByType(type:String, addressRequestModel: AddressRequestModel ):Response<StateResponseModel> = withContext(
         Dispatchers.IO){
         val resendOtp = gramAppService.getAddressData(type , addressRequestModel)

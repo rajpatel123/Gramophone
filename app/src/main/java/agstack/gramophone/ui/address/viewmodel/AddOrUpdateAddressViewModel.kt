@@ -8,6 +8,7 @@ import agstack.gramophone.ui.address.model.*
 import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.addressdetails.GpApiResponseData
+import agstack.gramophone.ui.address.view.StateListActivity
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
@@ -18,6 +19,7 @@ import agstack.gramophone.utils.Constants.VILLAGE
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.location.Address
+import android.os.Bundle
 import android.text.TextUtils
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -34,7 +36,9 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 ) : BaseViewModel<AddressNavigator>() {
     var state: State? = null
     var stateNameStr = ObservableField<String>()
+    var stateNameInitial = ObservableField<String>()
     var stateImageUrl = ObservableField<String>()
+    var isImageAvailable = ObservableField<Boolean>()
     var districtName = ObservableField<String>()
     var tehsilName = ObservableField<String>()
     var villageName = ObservableField<String>()
@@ -44,8 +48,14 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
 
     fun changeState() {
-        getNavigator()?.changeState()
+        getNavigator()?.openAndFinishActivity(StateListActivity::class.java, Bundle().apply {
+            putString(Constants.CHANGE_STATE,Constants.CHANGE_STATE)
+        })
     }
+
+   fun onBackPressedClick(){
+       getNavigator()?.onBackPressClick()
+   }
 
     fun submitAddress() {
 
@@ -56,16 +66,6 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
         if (TextUtils.isEmpty(tehsilName.get())) {
             getNavigator()?.onError(getNavigator()?.getMessage(R.string.tehsil_required))
-            return
-        }
-
-        if (TextUtils.isEmpty(villageName.get())) {
-            getNavigator()?.onError(getNavigator()?.getMessage(R.string.village_required))
-            return
-        }
-
-        if (TextUtils.isEmpty(address.get())) {
-            getNavigator()?.onError(getNavigator()?.getMessage(R.string.address_required))
             return
         }
 
@@ -266,6 +266,13 @@ class AddOrUpdateAddressViewModel @Inject constructor(
     fun setStatesName(stateName: String, image: String) {
         stateNameStr.set(stateName)
         stateImageUrl.set(image)
+        if (image.isNullOrEmpty()){
+            isImageAvailable.set(false)
+            stateNameInitial.set(stateName.subSequence(0,1).toString())
+        }else{
+            isImageAvailable.set(true)
+
+        }
     }
 
 
@@ -319,9 +326,13 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
     private fun updateAddressByLatLong(address: GpApiResponseData?) {
         if (address?.state != null) stateNameStr.set(address.state)
-        if (address?.district != null) districtName.set(address.state)
-        if (address?.tehsil != null) tehsilName.set(address.state)
-        if (address?.village != null) villageName.set(address.state)
+        if (address?.district != null) districtName.set(address.district)
+        if (address?.tehsil != null) tehsilName.set(address.tehsil)
+        if (address?.village != null) villageName.set(address.village)
+
+        isImageAvailable.set(false)
+        stateNameInitial.set(stateNameStr.get()?.subSequence(0,1).toString())
+
         if (address?.pincode_list != null && address.pincode_list.size > 0)
             pinCode.set(address.pincode_list.get(0).pincode)
     }

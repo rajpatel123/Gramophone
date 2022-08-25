@@ -60,6 +60,10 @@ interface GramAppService {
     @JvmSuppressWildcards
     suspend fun updateLanguage(@Body updateLanguageRequestModel: UpdateLanguageRequestModel): Response<UpdateLanguageResponseModel>
 
+    @PUT("api/v5/onboarding/update-language")
+    @JvmSuppressWildcards
+    suspend fun updateLanguageWhileOnBoarding(@Body updateLanguageRequestModel: UpdateLanguageRequestModel): Response<UpdateLanguageResponseModel>
+
 
     @PUT("api/v5/general/address-update")
     @JvmSuppressWildcards

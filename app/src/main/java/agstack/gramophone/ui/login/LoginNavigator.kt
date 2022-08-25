@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.login
 
 import agstack.gramophone.base.BaseNavigator
+import android.content.Intent
 import android.os.Bundle
 
 interface LoginNavigator : BaseNavigator{
@@ -10,4 +11,8 @@ interface LoginNavigator : BaseNavigator{
     fun openReferralDialog()
     fun referralCodeRemoved()
     fun moveToNext(bundle: Bundle)
+    fun getBundle(): Bundle?
+    fun getMobileBundle(): Bundle?
+    fun showMobileNumberHint()
+    fun scanQR()
 }

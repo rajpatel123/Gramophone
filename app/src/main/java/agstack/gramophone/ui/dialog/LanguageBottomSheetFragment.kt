@@ -40,6 +40,18 @@ class LanguageBottomSheetFragment : BottomSheetDialogFragment(),
                 SharedPreferencesKeys.languageList
             , GpApiResponseData::class.java)
 
+
+       val languageCode = LocaleManagerClass.getLangCodeAsPerAppLocale(activity)
+
+        gpApiResponseData?.language_list?.forEach {
+            if (it.language_code.equals(languageCode.toString(), true)) {
+                it.selected = true
+                this.language=it
+            }else{
+                it.selected = false
+            }
+
+        }
         val languageAdapter = LanguageAdapter(gpApiResponseData?.language_list!!)
         languageAdapter.setLanguageSelectedListener(this)
         binding?.rvLanguage?.setHasFixedSize(true)

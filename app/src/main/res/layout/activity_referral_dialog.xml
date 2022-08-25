@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.login.viewmodel.LoginViewModel" />
+    </data>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,9 +60,10 @@
                     android:background="@drawable/rounded_corner"
                     android:backgroundTint="@color/mute_grey"
                     android:imeOptions="actionDone"
-                    android:letterSpacing=".05"
                     android:inputType="textCapCharacters"
+                    android:letterSpacing=".05"
                     android:maxLength="10"
+                    android:text="@={viewModel.referralCode}"
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_2sdp"
@@ -76,6 +82,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:padding="@dimen/_10ssp"
+                    android:onClick="@{ ()-> viewModel.scanQR() }"
                     android:paddingBottom="@dimen/_10sdp">
 
                     <ImageView
@@ -100,6 +107,8 @@
                 android:maxHeight="@dimen/_485sdp"
                 android:padding="@dimen/_9sdp"
                 android:text="@string/apply"
+                android:onClick="@{ ()-> viewModel.applyCode() }"
+
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp" />
 
@@ -112,6 +121,8 @@
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:gravity="center"
                 android:padding="@dimen/_9sdp"
+                android:onClick="@{ ()-> viewModel.onTermsOfUseClicked() }"
+
                 android:text="@string/terms_of_use"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_14ssp" />
@@ -124,6 +135,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/llContentLayout"
             android:layout_centerInParent="true"
+            android:onClick="@{ ()-> viewModel.closeDialog() }"
+
             android:layout_marginTop="@dimen/_20sdp"
             android:background="@drawable/circle_solid_gray"
             android:gravity="center_vertical"

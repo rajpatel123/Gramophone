@@ -46,11 +46,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:textColor="@color/blakish"
                 android:contentDescription="@string/resource_img_icon"
-                android:src="@drawable/ic_made_with_in_india" />
+                />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="@dimen/_24sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:id="@+id/rvLanguage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,10 +68,10 @@
             android:text="@string/_continue"
             android:padding="@dimen/_13sdp"
             android:gravity="center"
+            android:enabled="@{viewModel.isLanguageSelected}"
             android:onClick="@{ ()-> viewModel.onLanguageUpdate(btnContinue) }"
-
             android:textColor="@color/white"
-            android:background="@color/blue"/>
+            android:background="@{viewModel.isLanguageSelected?@color/blue:@color/grey}"/>
 
     </LinearLayout>
 </layout>

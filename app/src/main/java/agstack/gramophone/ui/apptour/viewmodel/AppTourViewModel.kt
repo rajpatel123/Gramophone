@@ -6,13 +6,17 @@ import agstack.gramophone.data.model.UpdateLanguageRequestModel
 import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.apptour.AppTourNavigator
+import agstack.gramophone.ui.apptour.view.AppTourActivity
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
-import agstack.gramophone.utils.ApiResponse
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.ui.language.model.LoginBanner
+import agstack.gramophone.ui.login.view.LoginActivity
+import agstack.gramophone.utils.*
 import android.Manifest
+import android.os.Build
 import android.view.View
+import android.widget.LinearLayout
+import androidx.annotation.RequiresApi
+import androidx.core.view.get
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -24,7 +28,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class AppTourViewModel@Inject constructor(
+class AppTourViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository
 ) : BaseViewModel<AppTourNavigator>() {
     private lateinit var initiateAppDataResponseModel: InitiateAppDataResponseModel
@@ -35,12 +39,11 @@ class AppTourViewModel@Inject constructor(
     fun startScroller() {
         scrollImagesJob = viewModelScope.launch {
             while (isActive) {
-                delay(3_000)
+                delay(2_000)
                 if (currentPage === initiateAppDataResponseModel?.gp_api_response_data?.login_banner_list?.size) {
                     currentPage = 0
                 }
                 getNavigator()?.updateImages(currentPage)
-
                 currentPage++
             }
 
@@ -72,22 +75,22 @@ class AppTourViewModel@Inject constructor(
 
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
-                val response = onBoardingRepository.updateLanguage(sendOtpRequestModel)
-
+                val response = onBoardingRepository.updateLanguageWhileOnBoarding(sendOtpRequestModel)
                 val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
-                    getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
-                }else{
-                    getNavigator()?.onError(updateLanguageResponseModel?.gp_api_message)
+                    getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
+                    getNavigator()?.openAndFinishActivity(AppTourActivity::class.java,null)
+                } else {
+                    getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
                 }
 
             } else
-                getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+                getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet)!!)
         } catch (ex: Exception) {
             when (ex) {
-                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
             }
         }
     }
@@ -110,9 +113,25 @@ class AppTourViewModel@Inject constructor(
     }
 
 
-    fun moveToLogin(){
+    fun moveToLogin() {
         scrollImagesJob?.cancel()
-getNavigator()?.moveToLogin()
+        getNavigator()?.openAndFinishActivity(LoginActivity::class.java, null)
+    }
+
+
+    fun setPageIndicators(loginBanners: List<LoginBanner>) {
+        for (i in loginBanners){
+            getNavigator()?.addIndicatorView()
+        }
+    }
+
+    fun updateIndicator(currentPage: Int, llIndicator: LinearLayout?) {
+        for (i in 0..llIndicator?.childCount!!-1){
+            val view = llIndicator.get(i)
+            view.setBackgroundResource(R.drawable.indicator_bg)
+        }
+        llIndicator.get(currentPage).setBackgroundResource(R.drawable.brand_color_indicator_bg)
+
     }
 
 }

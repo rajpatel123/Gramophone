@@ -6,6 +6,12 @@ import android.content.Context
 
 
 object Constants {
+    val FROM_EDIT_PROFILE="FROM_EDIT_PROFILE"
+    val REMAINING_TIME: String="remaining_time"
+    val RESEND_OTP_TIME: Long=30000
+    val CHANGE_LANGUAGE:String = "change_language"
+    val CHANGE_STATE:String ="change"
+    val BUNDLE: String="bundle"
     val Product_Base_Name="PRODUCT BASE NAME"
     val PRODUCT_RATING_DATA_KEY="PRODUCT RATING DATA"
     val RATING_SELECTED="RATING_SELECTED"
@@ -70,6 +76,7 @@ object Constants {
     const val VILLAGE = "village"
     const val PINCODE = "pincode"
     const val SMS = "sms"
+    const val VOICE = "voice"
 
 
     //MyFarm

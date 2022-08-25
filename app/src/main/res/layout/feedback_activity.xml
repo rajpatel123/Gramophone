@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.feedback.FeedbackViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.unitconverter.UnitConverterActivity">
+
+        <LinearLayout
+            android:id="@+id/ll_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFF"
+            android:elevation="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/myToolbar"
+                layout="@layout/layout_toolbar" />
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/et_feeback"
+            android:background="@drawable/transparent_background"
+            style="@style/TextSize16Sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_18sdp"
+            android:fontFamily="@font/manrope_regular"
+            android:hint="@string/whatcanweimprove"
+            app:layout_constraintTop_toBottomOf="@id/ll_top" />
+
+
+        <Button
+            android:layout_width="@dimen/_91sdp"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_margin="@dimen/_20sdp"
+            android:background="@drawable/btn_rounded_corner"
+            android:onClick="@{()->viewModel.onSendClick()}"
+            android:text="@string/send"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

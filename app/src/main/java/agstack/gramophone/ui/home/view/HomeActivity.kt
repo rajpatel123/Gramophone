@@ -19,6 +19,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.forEach
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -97,8 +98,12 @@ class HomeActivity :
         supportActionBar?.setDisplayShowTitleEnabled(false)
         title = "Gram"
 
+
         viewDataBinding.toolbar.myToolbar.navigationIcon =
-            resources.getDrawable(R.drawable.ic_logo_toolbar_logo)
+            ResourcesCompat.getDrawable(getResources(), R.drawable.ic_burger_menu, null)
+        viewDataBinding.toolbar.myToolbar.title = "  "+resources.getString(R.string.app_name)
+        viewDataBinding.toolbar.myToolbar.logo =
+            ResourcesCompat.getDrawable(getResources(), R.drawable.ic_gramophone_leaf, null)
         //Logo,title
         val actionbar = supportActionBar
         actionbar?.let {
@@ -149,9 +154,11 @@ class HomeActivity :
         return true
     }
 
+
+
     override fun onResume() {
         super.onResume()
-        // If you want to change active navigation item programmatically
+
 
     }
 

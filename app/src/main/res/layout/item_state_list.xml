@@ -27,8 +27,8 @@
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/state_img"
                 state_image="@{model.image}"
-                app:civ_border_color="@color/white"
-                app:civ_border_width="2dp" />
+                app:civ_border_color="@color/green"
+                app:civ_border_width="@dimen/_4sdp" />
 
             <TextView
                 android:id="@+id/tvLanguageTitle"
@@ -39,7 +39,7 @@
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="center_horizontal"
                 android:text="@{model.name}"
-                android:textColor="@{model.selected?@color/green:@color/blakish}"
+                android:textColor="@color/blakish"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="normal"
                 tools:text="Utter Pradesh" />

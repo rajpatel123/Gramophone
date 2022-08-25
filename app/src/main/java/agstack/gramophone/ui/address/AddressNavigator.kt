@@ -21,5 +21,6 @@ interface AddressNavigator : BaseNavigator{
     fun closeVillageDropDown()
     fun closePincodeDropDown()
     fun getGPSTracker(): GPSTracker
+    fun onBackPressClick()
 
 }

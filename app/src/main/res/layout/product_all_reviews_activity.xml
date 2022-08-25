@@ -70,12 +70,13 @@
                             style="?android:attr/progressBarStyleHorizontal"
                             progressAdapter="@{viewModel.mProductReviewDataBundle.rating.ratingCount.jsonMember5}"
                             android:layout_width="fill_parent"
-                            android:layout_height="42dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_8sdp"
                             android:indeterminate="false"
                             android:max="100"
-                            android:paddingTop="8dp"
-                            android:paddingBottom="8dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:scaleY="2"
                             android:progressTint="@color/green_dark"
                             app:trackCornerRadius="2dp"
                             app:trackThickness="@dimen/_5sdp" />
@@ -105,8 +106,9 @@
                             android:layout_marginLeft="@dimen/_8sdp"
                             android:indeterminate="false"
                             android:max="100"
-                            android:paddingTop="8dp"
-                            android:paddingBottom="8dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:scaleY="2"
                             android:progressTint="@color/green" />
                     </LinearLayout>
 
@@ -132,8 +134,9 @@
                             android:layout_marginLeft="@dimen/_8sdp"
                             android:indeterminate="false"
                             android:max="100"
-                            android:paddingTop="8dp"
-                            android:paddingBottom="8dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:scaleY="2"
                             android:progressTint="@color/star_yellow" />
                     </LinearLayout>
 
@@ -158,8 +161,9 @@
                             android:layout_marginLeft="@dimen/_8sdp"
                             android:indeterminate="false"
                             android:max="100"
-                            android:paddingTop="8dp"
-                            android:paddingBottom="8dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:scaleY="2"
                             android:progressTint="#FF9376" />
                     </LinearLayout>
 
@@ -184,8 +188,9 @@
                             android:layout_marginLeft="@dimen/_8sdp"
                             android:indeterminate="false"
                             android:max="100"
-                            android:paddingTop="8dp"
-                            android:paddingBottom="8dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:scaleY="2"
                             android:progressTint="#F8111B" />
                     </LinearLayout>
                 </LinearLayout>
@@ -202,7 +207,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="@dimen/_10sdp">
+                        android:padding="@dimen/_5sdp">
 
                         <TextView
                             android:id="@+id/tv_rating_all"
@@ -235,8 +240,8 @@
                         android:max="5"
                         android:numStars="5"
                         android:rating="5"
-                        android:scaleX=".8"
-                        android:scaleY=".8"
+                        android:scaleX=".6"
+                        android:scaleY=".6"
                         android:stepSize="0.1"
                         android:theme="@style/RatingBar"
                         android:transformPivotX="0dp"
@@ -250,8 +255,7 @@
                         android:layout_below="@+id/rating_stars_all"
                         android:fontFamily="@font/manrope_bold"
                         android:hint="Based on 38 reviews"
-                        android:padding="@dimen/_2sdp"
-                        android:text="@{@string/basedon+` `+viewModel.mProductReviewDataBundle.rating.totalReview+` `+@string/reviews}" />
+                        android:text="@{@string/basedon+` `+viewModel.mProductReviewDataBundle.rating.totalReview+` `+@string/reviews}"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_12sdp" />
 

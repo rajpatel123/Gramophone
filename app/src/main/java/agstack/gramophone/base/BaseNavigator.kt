@@ -46,8 +46,6 @@ interface BaseNavigator {
 
     fun hideProgressBar()
 
-
-
     fun proceedCall(helpLineNo: String)
 
     fun proceedOnLocationSetting()

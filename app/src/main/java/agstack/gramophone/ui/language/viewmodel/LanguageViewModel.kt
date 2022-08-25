@@ -18,6 +18,7 @@ import agstack.gramophone.utils.LocaleManagerClass
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.view.View
+import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -30,8 +31,10 @@ class LanguageViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository,
 ) : BaseViewModel<LanguageActivityNavigator>() {
     var language: Language? = null
+    var isLanguageSelected = ObservableField<Boolean>()
 
     fun getLanguageList() = viewModelScope.launch {
+        isLanguageSelected.set(false)
         getLanguage()
     }
 
@@ -50,6 +53,7 @@ class LanguageViewModel @Inject constructor(
 
                     getNavigator()?.updateLanguageList(LanguageAdapter(languageData?.gp_api_response_data?.language_list!!)){
                         language=it
+                        isLanguageSelected.set(true)
                     }
 
 

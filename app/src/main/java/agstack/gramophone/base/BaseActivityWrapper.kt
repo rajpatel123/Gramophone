@@ -7,6 +7,7 @@ import agstack.gramophone.utils.LocaleManagerClass
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -22,7 +23,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import retrofit2.Response
 
 abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : BaseViewModel<N>> :
     AppCompatActivity(), BaseNavigator {
@@ -89,8 +89,9 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
             if (extras != null)
                 putExtras(extras)
-            startActivity(this)
             finish()
+            startActivity(this)
+
 
         }
     }
@@ -225,38 +226,6 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         }
     }
 
-
-  /*  fun checkPermissionNew(permission: String,response: (Boolean) -> Unit): Boolean {
-        when {
-            ContextCompat.checkSelfPermission(
-                this,
-                permission
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                response.invoke(true)
-                return true
-            }
-
-            ActivityCompat.shouldShowRequestPermissionRationale(
-                this,
-                permission
-            ) -> {
-                requestPermissionLauncher.launch(
-                    permission
-                )
-                response.invoke(false)
-                return false
-            }
-
-            else -> {
-                requestPermissionLauncher.launch(
-                    permission
-                )
-                response.invoke(false)
-                return false
-            }
-        }
-    }*/
-
     override fun proceedCall(helpLineNo: String) {
         val bottomSheet = BottomSheetDialog()
         bottomSheet.customerSupportNumber = helpLineNo
@@ -274,4 +243,5 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         super.onDestroy()
         viewDataBinding.unbind()
     }
+
 }

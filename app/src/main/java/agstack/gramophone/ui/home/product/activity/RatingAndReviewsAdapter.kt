@@ -38,7 +38,7 @@ class RatingAndReviewsAdapter(reviewList: ArrayList<ReviewListItem?>?, limit: In
         if (holder is CustomViewHolder) {
 
             var model: ReviewListItem = mReviewList?.get(position)!!
-            model.date = "Position $position"
+           // model.date = "Position $position"
             holder.binding.setVariable(BR.model, model)
             val mBinding = holder.binding as RatingReviewItemBinding
         } else if (holder is LoadingViewHolder) {
