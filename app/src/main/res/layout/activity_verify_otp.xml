@@ -206,8 +206,8 @@
                 app:itemCount="6"
                 app:itemHeight="50dp"
                 app:itemRadius="6dp"
-                app:itemWidth="50dp"
-                app:itemSpacing="@dimen/_6sdp"
+                app:itemWidth="45dp"
+                app:itemSpacing="@dimen/_2sdp"
                 app:lineColor="@color/colorTransparent"
                 app:viewType="rectangle" />
 
