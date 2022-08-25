@@ -100,24 +100,24 @@
             android:textSize="13sp" />
 
         <TextView
-            android:id="@+id/tvOffersApplied"
+            android:id="@+id/tvAddToCart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvSellingPrice"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_2sdp"
             android:layout_toEndOf="@+id/ivProduct"
+            android:background="@drawable/rounded_corner_8_solid_white_stroke_orange"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="-2sp"
-            android:background="@drawable/rounded_corner_8_solid_white_stroke_orange"
-            android:textColor="@color/orange"
-            android:textSize="14sp"
             android:paddingStart="16dp"
-            android:paddingEnd="16dp"
             android:paddingTop="8dp"
+            android:paddingEnd="16dp"
             android:paddingBottom="8dp"
-            android:text="Add to cart" />
+            android:text="Add to cart"
+            android:textColor="@color/orange"
+            android:textSize="14sp" />
 
 
         <View

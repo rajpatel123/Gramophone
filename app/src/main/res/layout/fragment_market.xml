@@ -622,6 +622,234 @@
 
                 </FrameLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@string/gramophone_tv"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="normal" />
+
+                <!--<com.google.android.youtube.player.YouTubePlayerView
+                    android:id="@+id/ytPlayer"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />-->
+
+                <FrameLayout
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_width="match_parent"
+                    android:background="@color/blakish"
+                    android:layout_height="200dp" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginBottom="@dimen/_16sdp"
+                    android:background="@drawable/rounded_corner_32"
+                    android:backgroundTint="@color/pink"
+                    android:paddingStart="16dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="6dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="@string/view_all"
+                        android:textColor="@color/orange"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="normal"
+                        app:drawableEndCompat="@drawable/ic_arrow_right" />
+
+                </FrameLayout>
+
+                <RelativeLayout
+                    android:paddingStart="@dimen/_20sdp"
+                    android:paddingEnd="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:background="@color/mute_grey">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivWhatsapp"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_whatsapp_large"/>
+
+                    <TextView
+                        android:id="@+id/tvGramophone"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_toEndOf="@+id/ivWhatsapp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="@string/gramophone_tv"
+                        android:textColor="@color/blakish"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:layout_toStartOf="@+id/scAppTour"
+                        android:layout_below="@+id/tvGramophone"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_toEndOf="@+id/ivWhatsapp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_medium"
+                        android:text="Receive order related information on whatsapp"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="normal" />
+
+                    <!--android:checked="@={viewModel.swAppTourChecked}"
+                        android:onCheckedChanged="@{ ()-> viewModel.onAppTourCheckChanged(swAppTour) }"-->
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/scAppTour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:checked="false" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_marginBottom="@dimen/_70sdp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/ic_gramophone_promise_bg"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="Gramophone Promise"
+                        android:textColor="@color/blakish"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="normal" />
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="100% Genuine\nProducts"
+                            android:textColor="@color/blakish"
+                            android:textSize="10sp"
+                            android:gravity="center"
+                            android:textStyle="normal"
+                            app:drawableTopCompat="@drawable/ic_promise_genuine_products"
+                            tools:ignore="SmallSp" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="Free Shipping\nat doorstep"
+                            android:textColor="@color/blakish"
+                            android:textSize="10sp"
+                            android:gravity="center"
+                            android:textStyle="normal"
+                            app:drawableTopCompat="@drawable/ic_promise_free_shipping"
+                            tools:ignore="SmallSp" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="Best Price\nGuaranteed"
+                            android:textColor="@color/blakish"
+                            android:textSize="10sp"
+                            android:gravity="center"
+                            android:textStyle="normal"
+                            app:drawableTopCompat="@drawable/ic_promise_best_price"
+                            tools:ignore="SmallSp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="Genuine\nGST Bill"
+                            android:textColor="@color/blakish"
+                            android:textSize="10sp"
+                            android:gravity="center"
+                            android:textStyle="normal"
+                            app:drawableTopCompat="@drawable/ic_promise_gst"
+                            tools:ignore="SmallSp" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="Easy Return"
+                            android:textColor="@color/blakish"
+                            android:textSize="10sp"
+                            android:gravity="center"
+                            android:textStyle="normal"
+                            app:drawableTopCompat="@drawable/ic_promise_easy_return"
+                            tools:ignore="SmallSp" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="Free Expert\nAdvice"
+                            android:textColor="@color/blakish"
+                            android:textSize="10sp"
+                            android:gravity="center"
+                            android:textStyle="normal"
+                            app:drawableTopCompat="@drawable/ic_promise_expert_advice"
+                            tools:ignore="SmallSp" />
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_wheat_bg"/>
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

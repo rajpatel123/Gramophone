@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp">
+
+            <LinearLayout
+                android:id="@+id/ll_price_discount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_productSP"
+                    style="@style/heading_title_bold_large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="₹799.00"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_18ssp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_productMRP"
+                    style="@style/heading_title_bold_large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:background="@drawable/strike_through"
+                    android:gravity="center"
+                    android:text="₹1,290"
+                    android:textColor="@color/oldmrpcolor"
+                    android:textSize="@dimen/_12ssp" />
+                <!-- android:visibility="@{Double.valueOf(viewModel.selectedSkuListItem.mrpPrice)>Double.valueOf(viewModel.selectedSkuListItem.salesPrice)?View.VISIBLE:View.INVISIBLE}"
+                isMRPVisible="@{viewModel.selectedSkuListItem}"-->
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_percentageOffOnSelectedSKU"
+                    style="@style/heading_title_bold_large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:gravity="center"
+                    android:text="60%"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_14ssp" />
+
+                <!-- percentageOffSKUItem="@{viewModel.selectedSkuListItem}"-->
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_qty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/rounded_corner_4_solid_stroke_gray"
+                android:foregroundGravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:background="@drawable/ic_minus_frame" />
+
+                <TextView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:fontFamily="@font/manrope_medium"
+                    android:gravity="center"
+                    android:text="01"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="normal" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:background="@drawable/ic_plus_frame" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_contactForPrice"
+                style="@style/TextSize16Sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/deselected_product_background"
+                android:paddingLeft="@dimen/_16sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingRight="@dimen/_16sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:text="@string/contactforprice"
+                android:textColor="@color/order_delivered_text"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_inclusive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_minus16sdp"
+            android:fontFamily="@font/manrope_medium"
+            android:text="@string/inclusiveoftaxes"
+            android:textSize="@dimen/_9ssp">
+
+        </TextView>
+
+        <View
+            android:id="@+id/v1_separator"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_2sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:background="#F2F4F7" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:text="@string/packing"
+            android:textColor="@color/blakish"
+            android:textSize="@dimen/_14sdp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_product_sku"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="3"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_radio_product_packing" />
+
+        <View
+            android:id="@+id/v2_separator"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_4sdp"
+            android:background="#F2F4F7" />
+
+        <RelativeLayout
+            android:id="@+id/rl_available_offers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp">
+
+            <ImageView
+                android:id="@+id/iv_availableoffers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="@dimen/_14sdp"
+                app:srcCompat="@drawable/ic_available_offers" />
+
+            <TextView
+                style="@style/TextSize16Sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/iv_availableoffers"
+                android:text="@string/available_offers" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_availableoffers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_availableoffers"
+                android:layout_marginTop="@dimen/_19sdp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_available_offers" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@color/orange">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="center"
+                android:lineSpacingExtra="0sp"
+                android:text="Add to Cart"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:drawableStartCompat="@drawable/ic_cart_white" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>

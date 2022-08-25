@@ -36,7 +36,7 @@
     <string name="products_in_your_cart_3">Products in your cart (3)</string>
     <string name="new_articles">New Articles</string>
     <string name="popular_products_in_indore">Popular Products in Indore</string>
-    <string name="market">Market</string>
+    <string name="home">Home</string>
     <string name="trade">Trade</string>
     <string name="community">Community</string>
     <string name="me">Me</string>
@@ -286,6 +286,8 @@
     <string name="pesticides">Pesticides</string>
     <string name="production_stages">Production Stages</string>
     <string name="crop_stage_detail">CroOn the young seedlings initially, water soaked areas developed at the collar region and a brown sunken lesion which soon appeared as girdled resulting in seeding collapse.\n\nOn adult plant initially, slight drooping of leaves which led to drying of leaves starting from lower ones extended from root to stem region and plants exhibited wilting symptom.p Protection</string>
+    <string name="gramophone_tv">Gramophone TV</string>
+    <string name="my_profile">My Profile</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>
