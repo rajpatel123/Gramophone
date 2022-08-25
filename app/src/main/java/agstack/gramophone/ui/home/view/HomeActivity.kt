@@ -88,9 +88,27 @@ class HomeActivity :
             R.id.navigation_home, R.id.navigation_community, R.id.navigation_profile, R.id.navigation_trade))
         setupActionBarWithNavController(navController, appBarConfiguration)*/
         viewDataBinding.navView.setupWithNavController(navController)
-
-        /*if (navigationItem.position != 3)
-            updateMenuItemVisiblity(navigationItem.position == 0)*/
+        viewDataBinding.navView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.navigation_home -> {
+                    updateMenuItemVisibility(true)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.navigation_community -> {
+                    updateMenuItemVisibility(false)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.navigation_profile -> {
+                    updateMenuItemVisibility(false)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.navigation_trade -> {
+                    updateMenuItemVisibility(false)
+                    return@setOnItemSelectedListener true
+                }
+            }
+            false
+        }
     }
 
     private fun setUpNavigationDrawer() {
@@ -101,7 +119,7 @@ class HomeActivity :
 
         viewDataBinding.toolbar.myToolbar.navigationIcon =
             ResourcesCompat.getDrawable(getResources(), R.drawable.ic_burger_menu, null)
-        viewDataBinding.toolbar.myToolbar.title = "  "+resources.getString(R.string.app_name)
+        viewDataBinding.toolbar.myToolbar.title = "  " + resources.getString(R.string.app_name)
         viewDataBinding.toolbar.myToolbar.logo =
             ResourcesCompat.getDrawable(getResources(), R.drawable.ic_gramophone_leaf, null)
         //Logo,title
@@ -133,11 +151,13 @@ class HomeActivity :
         }
     }
 
-    private fun updateMenuItemVisiblity(showItems: Boolean) {
+    private fun updateMenuItemVisibility(showItems: Boolean) {
         viewDataBinding.toolbar.myToolbar.menu.forEach {
-            it.setVisible(showItems)
-
-
+            if (showItems) {
+                it.isVisible = true
+            } else {
+                it.isVisible = it.itemId == R.id.item_search
+            }
         }
     }
 
@@ -153,7 +173,6 @@ class HomeActivity :
         }
         return true
     }
-
 
 
     override fun onResume() {
