@@ -142,6 +142,8 @@
     <string-array name="units_kind_array">
         <item>क्षेत्रफल</item>
     </string-array>
+
+    <string name="aaa">All Tran_1111</string>
 </resources>
 
 
