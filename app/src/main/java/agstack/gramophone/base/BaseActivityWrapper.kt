@@ -141,10 +141,10 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     }*/
     open fun replaceFragment(fragment: Fragment, TAG: String?) {
         try {
-            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            /*val fragmentTransaction = supportFragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.fragment_container, fragment, TAG)
             fragmentTransaction.addToBackStack(TAG)
-            fragmentTransaction.commitAllowingStateLoss()
+            fragmentTransaction.commitAllowingStateLoss()*/
         } catch (e: Exception) {
             e.printStackTrace()
         }
