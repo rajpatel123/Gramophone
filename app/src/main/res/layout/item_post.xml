@@ -121,11 +121,11 @@
 
     <include
         android:id="@+id/banner_layout"
-        android:layout_below="@+id/tvDesc"
         layout="@layout/banner_image"
         android:layout_width="match_parent"
-        android:visibility="visible"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDesc"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tvTag"
@@ -192,8 +192,8 @@
                 android:id="@+id/tvComment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_2sdp"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_2sdp"
                 android:layout_toEndOf="@+id/ivComment"
                 tools:text="Comments" />
         </RelativeLayout>
@@ -313,6 +313,7 @@
             android:layout_below="@+id/rel_expert"
             android:layout_marginLeft="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_8ssp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:text="3:40 PM "
             android:textColor="@color/gray"
             android:textSize="@dimen/_15sdp" />
@@ -326,20 +327,21 @@
             android:src="@drawable/horizontal_dot" />
 
     </RelativeLayout>
+
     <RelativeLayout
+        android:id="@+id/llActions3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/llActions1"
-        android:layout_marginStart="@dimen/_12sdp"
-       >
+        android:layout_marginStart="@dimen/_12sdp">
 
         <ImageView
             android:id="@+id/ivCommentBottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            app:tint="@color/grey"
-            app:srcCompat="@drawable/ic_comment" />
+            app:srcCompat="@drawable/ic_comment"
+            app:tint="@color/grey" />
 
         <TextView
             android:id="@+id/tvCommentBottom"
@@ -347,10 +349,20 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/_2sdp"
-            android:textColor="@color/grey"
             android:layout_toEndOf="@+id/ivCommentBottom"
+            android:textColor="@color/grey"
             tools:text="Write a comment..." />
+
     </RelativeLayout>
+
+
+    <include layout="@layout/item_poll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10ssp"
+        android:visibility="gone"
+        android:layout_below="@+id/llActions3">
+    </include>
 
     <RelativeLayout
         android:layout_width="wrap_content"
