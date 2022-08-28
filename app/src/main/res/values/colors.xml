@@ -69,9 +69,10 @@
     <color name="sky_blue">#4875D4</color>
     <color name="gjg">#0638A0</color>
     <color name="weather_rain">#DAEDFF</color>
-    <color name="weather_clear">#FCF3CC</color>
+    <color name="weather_clear">#FCF3CC</color> //#FCF3CC
     <color name="weather_blue">#389EFF</color>
     <color name="weather_orange">#F86144</color>
     <color name="location_permission_title">#993C3C43</color>
     <color name="selected_main_filter">#FAFCFF</color>
+    <color name="gray_light">#77EDEFF3</color>
 </resources>
