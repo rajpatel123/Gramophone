@@ -92,8 +92,8 @@
 
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="@dimen/_18sdp"
+                                android:layout_height="@dimen/_18sdp"
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="@dimen/_7sdp"
                                 app:srcCompat="@drawable/ic_whatsapp" />
@@ -112,6 +112,11 @@
                                 android:textSize="@dimen/_13ssp" />
 
                         </LinearLayout>
+
+                      <!--  <ImageView
+                            app:srcCompat="@drawable/ic_whatsappshare"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"/>-->
 
                         <androidx.appcompat.widget.AppCompatImageView
                             isUserFavorite="@{viewModel.isHeartSelected}"
@@ -237,7 +242,7 @@
                             android:layout_height="@dimen/_32sdp"
                             android:fontFamily="@font/manrope_medium"
                             android:gravity="center"
-                            android:text="@{viewModel.qtySelected.toString()}"
+                            format2Digit="@{viewModel.qtySelected}"
                             android:textColor="@color/blakish"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
@@ -278,6 +283,7 @@
                     android:layout_marginTop="@dimen/_minus16sdp"
                     android:fontFamily="@font/manrope_medium"
                     android:text="@string/inclusiveoftaxes"
+                    android:textColor="@color/oldmrpcolor"
                     android:textSize="@dimen/_9ssp">
 
                 </TextView>
@@ -310,6 +316,8 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_16sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:drawablePadding="@dimen/_minus20sdp"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="3"
                     tools:itemCount="3"
@@ -349,7 +357,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/iv_availableoffers"
-                        android:layout_marginTop="@dimen/_19sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_available_offers" />
@@ -369,9 +377,12 @@
                     android:id="@+id/rl_howtouse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_16sdp">
+                   >
 
                     <ImageView
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginBottom="@dimen/_16sdp"
+                        android:layout_marginLeft="@dimen/_16sdp"
                         android:id="@+id/iv_video"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -381,6 +392,8 @@
                         app:srcCompat="@drawable/ic_how_to_use_gardening" />
 
                     <TextView
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginBottom="@dimen/_16sdp"
                         style="@style/TextSize16Sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -467,7 +480,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_2sdp"
-                    android:layout_marginTop="@dimen/_18sdp" />
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="#F2F4F7"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="match_parent"
@@ -478,7 +492,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_4sdp"
-                    android:layout_marginTop="@dimen/_8sdp" />
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="#F2F4F7" />
 
                 <RelativeLayout
                     android:id="@+id/rl_productDetails"
@@ -499,6 +514,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/product_detail_title"
+                        android:background="@drawable/rounded_corner"
                         android:orientation="vertical">
 
                         <TextView
@@ -511,10 +527,10 @@
 
 
                         <androidx.recyclerview.widget.RecyclerView
+                            android:background="@drawable/rounded_corner_with_grey_color"
                             android:id="@+id/rv_productDetails"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
                             android:nestedScrollingEnabled="false"
                             android:orientation="vertical"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -532,15 +548,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/_24sdp"
-                            android:layout_marginBottom="@dimen/_19sdp"
+                            android:layout_marginTop="@dimen/_14sdp"
+                            android:layout_marginBottom="@dimen/_9sdp"
                             android:background="@drawable/rounded_corner_with_pink_color"
                             android:drawableEnd="@drawable/ic_arrow_down_orange"
                             android:drawableRight="@drawable/ic_arrow_down_orange"
                             android:drawablePadding="@dimen/_10sdp"
                             android:padding="@dimen/_6sdp"
                             android:text="@string/showmore"
-                            android:textAllCaps="true"
+                            android:textAllCaps="false"
                             android:textColor="@color/orange"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -610,7 +626,7 @@
                     android:id="@+id/rl_rating_reviews"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_16sdp">
+                   android:layout_margin="@dimen/_16sdp">
 
                     <TextView
                         android:id="@+id/tv_rating_title"
@@ -693,11 +709,11 @@
                 android:background="@drawable/rounded_corner"
                 android:backgroundTint="@color/mute_grey"
                 android:drawableStart="@drawable/ic_expert_grey"
-                android:drawablePadding="@dimen/_minus16sdp"
+                android:drawablePadding="@dimen/_minus20sdp"
                 android:onClick="@{()->viewModel.onExpertAdviceClicked()}"
-                android:paddingStart="@dimen/_3sdp"
+                android:paddingStart="@dimen/_5sdp"
                 android:text="@string/expert_advice"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_14ssp" />
 
@@ -711,13 +727,13 @@
                 android:layout_marginBottom="@dimen/_4sdp"
                 android:layout_weight="1"
                 android:drawableStart="@drawable/ic_cart_white"
-                android:drawablePadding="@dimen/_minus16sdp"
+                android:drawablePadding="@dimen/_minus20sdp"
                 android:enabled="@{viewModel.addToCartEnabled}"
                 android:background="@{ viewModel.addToCartEnabled ? @drawable/active_button_background : @drawable/deactive_button_background}"
                 android:onClick="@{()->viewModel.onAddToCartClicked()}"
-                android:paddingStart="@dimen/_3sdp"
+                android:paddingStart="@dimen/_5sdp"
                 android:text="@string/add_to_cart"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp" />
 

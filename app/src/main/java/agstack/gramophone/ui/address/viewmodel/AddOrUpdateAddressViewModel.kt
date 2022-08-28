@@ -56,6 +56,10 @@ class AddOrUpdateAddressViewModel @Inject constructor(
         })
     }
 
+   fun onBackPressedClick(){
+       getNavigator()?.onBackPressClick()
+   }
+
     fun submitAddress() {
 
         if (TextUtils.isEmpty(districtName.get())) {

@@ -4,13 +4,10 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityHomeBinding
-import agstack.gramophone.menu.BottomNavigationView
-import agstack.gramophone.menu.OnNavigationItemChangeListener
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.language.view.LanguageActivity
-import agstack.gramophone.ui.profile.view.ProfileActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
@@ -18,7 +15,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -26,32 +22,26 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.forEach
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.FirebaseApp
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_home.*
 
 @AndroidEntryPoint
 class HomeActivity :
     BaseActivityWrapper<ActivityHomeBinding, HomeActivityNavigator, HomeViewModel>(),
-    HomeActivityNavigator, View.OnClickListener {
+    HomeActivityNavigator {
 
     private val homeViewModel: HomeViewModel by viewModels()
-    private lateinit var navController: NavController
     private lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
-    var currentFragmentPosition = 0
     var drawer: DrawerLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
         setUpFirebaseConfig()
-
-        bottomNav.setActiveNavigationIndex(currentFragmentPosition)
-
     }
 
     private fun setUpFirebaseConfig() {
@@ -90,54 +80,46 @@ class HomeActivity :
 
     private fun setupUi() {
         setUpNavigationDrawer()
-
-        val navHostFragment = supportFragmentManager.findFragmentById(
-            R.id.nav_host
-        ) as NavHostFragment
-        navController = navHostFragment.navController
-
-        /* If you want to change active navigation item programmatically
-               bottomMenu.setActiveNavigationIndex(2)
-          */
-        bottomNav.setOnNavigationItemChangedListener(object :
-            OnNavigationItemChangeListener {
-            override fun onNavigationItemChanged(navigationItem: BottomNavigationView.NavigationItem) {
-                when (navigationItem.position) {
-                    0 -> {
-                        currentFragmentPosition = 0
-                        navController.navigate(R.id.marketFragment)
-                    }
-                    1 -> {
-                        currentFragmentPosition = 1
-                        navController.navigate(R.id.tradeFragment2)
-                    }
-                    2 -> {
-                        currentFragmentPosition = 2
-                        navController.navigate(R.id.communityFragment3)
-                    }
-                    3 -> {
-                        openActivity(ProfileActivity::class.java)
-                    }
+        viewDataBinding.navView.itemIconTintList = null
+        val navController = findNavController(R.id.nav_host)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        /*val appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.navigation_home, R.id.navigation_community, R.id.navigation_profile, R.id.navigation_trade))
+        setupActionBarWithNavController(navController, appBarConfiguration)*/
+        viewDataBinding.navView.setupWithNavController(navController)
+        viewDataBinding.navView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.navigation_home -> {
+                    updateMenuItemVisibility(true)
+                    return@setOnItemSelectedListener true
                 }
-                if (navigationItem.position != 3)
-                    updateMenuItemVisiblity(navigationItem.position == 0)
-
+                R.id.navigation_community -> {
+                    updateMenuItemVisibility(false)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.navigation_profile -> {
+                    updateMenuItemVisibility(false)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.navigation_trade -> {
+                    updateMenuItemVisibility(false)
+                    return@setOnItemSelectedListener true
+                }
             }
-        })
+            false
+        }
     }
 
     private fun setUpNavigationDrawer() {
         setUpToolBar(true, resources.getString(R.string.app_name), R.drawable.ic_cart_menu)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        setTitle("Gram")
-
-
-
+        title = "Gram"
 
 
         viewDataBinding.toolbar.myToolbar.navigationIcon =
             ResourcesCompat.getDrawable(getResources(), R.drawable.ic_burger_menu, null)
-        viewDataBinding.toolbar.myToolbar.title = "  "+resources.getString(R.string.app_name)
+        viewDataBinding.toolbar.myToolbar.title = "  " + resources.getString(R.string.app_name)
         viewDataBinding.toolbar.myToolbar.logo =
             ResourcesCompat.getDrawable(getResources(), R.drawable.ic_gramophone_leaf, null)
         //Logo,title
@@ -169,27 +151,18 @@ class HomeActivity :
         }
     }
 
-    private fun updateMenuItemVisiblity(showItems: Boolean) {
+    private fun updateMenuItemVisibility(showItems: Boolean) {
         viewDataBinding.toolbar.myToolbar.menu.forEach {
-            it.setVisible(showItems)
-
-
+            if (showItems) {
+                it.isVisible = true
+            } else {
+                it.isVisible = it.itemId == R.id.item_search
+            }
         }
     }
 
     override fun closeDrawer() {
         drawer?.close()
-    }
-
-    override fun onClick(view: View?) {
-        /* when (view?.id) {
-             R.id.ivCart -> {
-                 openActivity(CartActivity::class.java, null)
-             }
-             R.id.ivFavourite -> {
-                 openActivity(OrderListActivity::class.java, null)
-             }
-         }*/
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -200,7 +173,6 @@ class HomeActivity :
         }
         return true
     }
-
 
 
     override fun onResume() {
