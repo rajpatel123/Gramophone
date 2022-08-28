@@ -1,30 +1,35 @@
 package agstack.gramophone.ui.home.view.fragments.market
 
-import agstack.gramophone.R
 import agstack.gramophone.BR
+import agstack.gramophone.R
 import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentMarketBinding
-import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.adapter.*
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.model.Banner
+import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.shop.ShopByActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.utils.Constants
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.youtube.player.YouTubeInitializationResult
+import com.google.android.youtube.player.YouTubePlayer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -72,7 +77,7 @@ class MarketFragment : BaseFragment<FragmentMarketBinding, MarketFragmentNavigat
     override fun onCreateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): FragmentMarketBinding = FragmentMarketBinding.inflate(inflater, container, false)
 
     /**
@@ -197,7 +202,7 @@ class MarketFragment : BaseFragment<FragmentMarketBinding, MarketFragmentNavigat
 
     override fun setFeaturedProductsAdapter(
         adapter: ProductListAdapter,
-        onProductListItemClick: (ProductData) -> Unit
+        onProductListItemClick: (ProductData) -> Unit,
     ) {
         uiScope.launch {
         adapter.selectedProduct = onProductListItemClick
@@ -221,4 +226,36 @@ class MarketFragment : BaseFragment<FragmentMarketBinding, MarketFragmentNavigat
     override fun getViewModel(): MarketFragmentViewModel {
      return marketFragmentViewModel
     }
+
+   /* private fun initializeYoutube() {
+        binding?.ytPlayer?.initialize(
+            "api_key",
+            object : YouTubePlayer.OnInitializedListener {
+                // Implement two methods by clicking on red
+                // error bulb inside onInitializationSuccess
+                // method add the video link or the playlist
+                // link that you want to play In here we
+                // also handle the play and pause
+                // functionality
+                override fun onInitializationSuccess(
+                    provider: YouTubePlayer.Provider,
+                    youTubePlayer: YouTubePlayer, b: Boolean,
+                ) {
+                    youTubePlayer.loadVideo("HzeK7g8cD0Y")
+                    youTubePlayer.play()
+                }
+
+                // Inside onInitializationFailure
+                // implement the failure functionality
+                // Here we will show toast
+                override fun onInitializationFailure(
+                    provider: YouTubePlayer.Provider,
+                    youTubeInitializationResult: YouTubeInitializationResult,
+                ) {
+                    Toast.makeText(activity,
+                        "Video player Failed",
+                        Toast.LENGTH_SHORT).show()
+                }
+            })
+    }*/
 }

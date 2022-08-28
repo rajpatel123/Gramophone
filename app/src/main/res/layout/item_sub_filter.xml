@@ -27,6 +27,6 @@
         android:fontFamily="@font/manrope_regular"
         android:id="@+id/chkPayUsingGramCash"
         android:text="Samridhdhie Kit"
-        android:button="@drawable/custom_checkbox_filter" />
+        android:button="@drawable/custom_checkbox" />
 
 </LinearLayout>

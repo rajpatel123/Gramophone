@@ -178,7 +178,7 @@
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="center"
                 android:maxLength="3"
-                android:text="@{model.quantity}"
+                app:product_quantity="@{model.quantity}"
                 android:textColor="@color/gray"
                 android:textSize="13sp"
                 tools:text="01" />

@@ -1,6 +1,7 @@
 package agstack.gramophone.binding
 
 import agstack.gramophone.R
+import agstack.gramophone.utils.Utility
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
@@ -147,7 +148,8 @@ fun setHtmlTextValue(textView: TextView, htmlText: String?) {
 }
 
 @BindingAdapter(value = ["selectedTab", "recentSize", "pastSize"], requireAll = true)
-fun orderEmptyViewHandling(emptyView: LinearLayout, selectedTab: Int, recentSize: Int, pastSize: Int,
+fun orderEmptyViewHandling(
+    emptyView: LinearLayout, selectedTab: Int, recentSize: Int, pastSize: Int,
 ) {
     when (selectedTab) {
         0 -> {
@@ -169,7 +171,8 @@ fun orderEmptyViewHandling(emptyView: LinearLayout, selectedTab: Int, recentSize
 
 @BindingAdapter(value = ["selectedTab", "recentSize"], requireAll = true)
 fun recentOrderRecyclerHandling(
-    recyclerView: RecyclerView, selectedTab: Int, recentSize: Int,) {
+    recyclerView: RecyclerView, selectedTab: Int, recentSize: Int,
+) {
     if (selectedTab == 0 && recentSize > 0) {
         recyclerView.visibility = View.VISIBLE
     } else {
@@ -185,6 +188,28 @@ fun pastOrderRecyclerHandling(
         recyclerView.visibility = View.VISIBLE
     } else {
         recyclerView.visibility = View.GONE
+    }
+}
+
+@BindingAdapter(value = ["orderDate", "quantity", "items"], requireAll = true)
+fun setDateAndItemCount(
+    textView: TextView, orderDate: String, quantity: String, itemsText: String,
+) {
+    textView.text = Utility.getFormattedDate(orderDate) + " / " + quantity + itemsText
+}
+
+@BindingAdapter("product_quantity")
+fun setQuantity(textView: TextView, quantity: String) {
+    val productQuantity: Int
+    try {
+        productQuantity = quantity.toInt()
+        if (productQuantity < 10) {
+            textView.text = "0".plus(productQuantity)
+        } else {
+            textView.text = productQuantity.toString()
+        }
+    } catch (e: Exception) {
+        textView.text = quantity
     }
 }
 

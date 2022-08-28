@@ -4,10 +4,12 @@ import agstack.gramophone.R
 import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.LocaleManagerClass
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.location.Geocoder
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -23,6 +25,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import java.util.*
 
 abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : BaseViewModel<N>> :
     AppCompatActivity(), BaseNavigator {
@@ -141,10 +144,10 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     }*/
     open fun replaceFragment(fragment: Fragment, TAG: String?) {
         try {
-            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            /*val fragmentTransaction = supportFragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.fragment_container, fragment, TAG)
             fragmentTransaction.addToBackStack(TAG)
-            fragmentTransaction.commitAllowingStateLoss()
+            fragmentTransaction.commitAllowingStateLoss()*/
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -242,6 +245,22 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     override fun onDestroy() {
         super.onDestroy()
         viewDataBinding.unbind()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED){
+            mViewModel?.onHelpClick()
+        }
+    }
+
+
+    override fun getGeoCoder(): Geocoder {
+        return Geocoder(this, Locale.getDefault())
     }
 
 }

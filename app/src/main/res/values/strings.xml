@@ -36,7 +36,7 @@
     <string name="products_in_your_cart_3">Products in your cart (3)</string>
     <string name="new_articles">New Articles</string>
     <string name="popular_products_in_indore">Popular Products in Indore</string>
-    <string name="market">Market</string>
+    <string name="home">Home</string>
     <string name="trade">Trade</string>
     <string name="community">Community</string>
     <string name="me">Me</string>
@@ -49,7 +49,7 @@
     <string name="share">Share</string>
     <string name="plus">+</string>
     <string name="minus">-</string>
-    <string name="inclusiveoftaxes">Inclusive of all taxes</string>
+
     <string name="packing">Packing</string>
     <string name="available_offers">Available Offers</string>
     <string name="how_to_use">How to use</string>
@@ -86,8 +86,7 @@
     <string name="otp_hint">"Enter 6 Digit code we have sent on "</string>
     <string name="enter_otp">Enter OTP</string>
     <string name="please_enter_otp">Please enter OTP</string>
-    <string name="resend_otp">"Resend in "</string>
-    <string name="resend">"Resend OTP "</string>
+    <string name="resend_otp">"Getting OTP via %1$s, Resend in "</string>
     <string name="privacy">Privacy Policy</string>
     <string name="talk_to_customer_care">Talk to our customer care executive</string>
     <string name="call_now">Call Now</string>
@@ -98,7 +97,7 @@
     <string name="terms_of_use">Terms of use</string>
     <string name="have_referral">Do you have referral code?</string>
     <string name="select_language">Select your Language</string>
-    <string name="enter_referral_code">Enter Referral code (Optional)</string>
+    <string name="enter_referral_code">Enter Referral code</string>
     <string name="enter_referral_code_hint">Enter referral code</string>
     <string name="help">Help</string>
     <string name="get_help">Get Help</string>
@@ -119,10 +118,10 @@
     <string name="pincode">Pincode</string>
     <string name="go_to_app">Go to the app</string>
     <string name="state_required">Please select state</string>
-    <string name="district_required">Please select district</string>
-    <string name="tehsil_required">Please select tehsil</string>
-    <string name="village_required">Please enter village</string>
-    <string name="address_required">Please enter address</string>
+    <string name="district_required">Please enter your district name.</string>
+    <string name="tehsil_required">Please enter your tehsil name.</string>
+    <string name="village_required">Please enter your village name</string>
+    <string name="address_required">Please enter your address</string>
 
     <!--    OnBoarding strings-->
 
@@ -159,6 +158,7 @@
     <string name="sku">SKU:&#160;</string>
     <string name="offers_applied">&#160;Offers applied</string>
     <string name="rupee_symbol">₹&#160;</string>
+    <string name="rupee">\u20B9</string>
     <string name="minus_rupee_symbol">-₹&#160;</string>
     <string name="save_extra_rupees">Save extra ₹</string>
     <string name="using">&#160;using&#160;</string>
@@ -211,7 +211,7 @@
     <string name="no_recent_order">Orders till 6 months will be displayed here, check \"Past Orders\" for past orders.</string>
     <string name="no_past_order">Orders older than 6 months will be displayed here, check \"Recent Orders\" for recent orders.</string>
     <string name="no_orders">No Orders</string>
-    <string name="your_order_id_is">Your order id. is #</string>
+    <string name="your_order_no_is">Your order no. is #</string>
     <string name="thank_you">Thank you!</string>
     <string name="order_naccepted_successfully">Your order has been\naccepted successfully!</string>
     <string name="what_to_expect_next">What to expect next</string>
@@ -266,6 +266,7 @@
     <string name="complete_action_using">Complete Action Using</string>
     <string name="select_image_title">Select image</string>
     <string name="crop_image_title_text">Crop</string>
+    <string name="unit_convertor">Unit Converter</string>
     <string name="verify_number">Verify Number</string>
     <string name="please_enter_6_digit_otp">Please enter 6 digit OTP</string>
     <string name="enter_10_digit_mob">Enter 10 digit mobile number</string>
@@ -289,10 +290,73 @@
     <string name="pesticides">Pesticides</string>
     <string name="production_stages">Production Stages</string>
     <string name="crop_stage_detail">CroOn the young seedlings initially, water soaked areas developed at the collar region and a brown sunken lesion which soon appeared as girdled resulting in seeding collapse.\n\nOn adult plant initially, slight drooping of leaves which led to drying of leaves starting from lower ones extended from root to stem region and plants exhibited wilting symptom.p Protection</string>
+    <string name="gramophone_tv">Gramophone TV</string>
+    <string name="my_profile">My Profile</string>
+    <string name="resend">Didn’t recieved OTP? Retry via</string>
+    <string name="call">Call</string>
+    <string name="sms">SMS</string>
+    <string name="feedback">Feedback</string>
+    <string name="leave_feedback">Leave Feedback</string>
+    <string name="whatcanweimprove">What can we improve?</string>
+    <string name="send">Send</string>
+    <string name="please_enter_feedback">Please enter your feedback</string>
+    <string name="all_offers">All Offers</string>
+    <string name="page_tag">pageTag</string>
+    <string name="inclusiveoftaxes">(Inclusive of all taxes)</string>
+    <string name="edit">Edit</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="selectyourrole">Select your role</string>
+    <string name="selectrolecontent">This will help us understand you so that we can serve you better</string>
+    <string name="farmer">Farmer</string>
+    <string name="trader">Trader</string>
+    <string name="firm">Firm</string>
+    <string name="add">Add</string>
+    <string name="mandi">Mandi</string>
+    <string name="editprofile">Edit Profile</string>
+    <string name="save">Save</string>
+    <string name="mobile_no_label">Mobile Number</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="add_firm_name">Add Firm Name</string>
+    <string name="save_continue"><![CDATA[Save & Continue]]></string>
+    <string name="enter_firm_name">Enter Firm Name</string>
+    <string name="add_firm">Add Firm</string>
+    <string name="_01">01</string>
+    <string name="_60">60%</string>
+    <string name="_1_290">₹1,290</string>
+    <string name="_799_00">₹799.00</string>
+    <string name="get_accurate_information_nabout_your_farm_for_better_nharvest">Get accurate information\nabout your farm for better\nharvest</string>
+    <string name="add_you_farm">+ Add you Farm</string>
+    <string name="know_more_about_my_farm"><![CDATA[Know more about My Farm >]]></string>
+    <string name="checkout">Checkout</string>
+    <string name="sub_text_will_be_displayed_here">Sub text will be displayed here</string>
+    <string name="receive_order_related_information_on_whatsapp">Receive order related information on whatsapp</string>
+    <string name="gramophone_promise">Gramophone Promise</string>
+    <string name="_100_genuine_nproducts">100% Genuine\nProducts</string>
+    <string name="free_shipping_nat_doorstep">Free Shipping\nat doorstep</string>
+    <string name="best_price_nguaranteed">Best Price\nGuaranteed</string>
+    <string name="genuine_ngst_bill">Genuine\nGST Bill</string>
+    <string name="easy_return">Easy Return</string>
+    <string name="free_expert_nadvice">Free Expert\nAdvice</string>
+    <string name="product_fungicide">Fungicides Crystal Bavistin 50% WP Fun gicide Carbe ...</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>
         <item>Recent Reviews</item>
 
+    </string-array>
+
+    <string-array name="units_array">
+        <item>Bigha</item>
+        <item>Acre</item>
+        <item>Hectare</item>
+        <item>Square Feet</item>
+    </string-array>
+
+    <string-array name="units_kind_array">
+        <item>Area</item>
     </string-array>
 </resources>

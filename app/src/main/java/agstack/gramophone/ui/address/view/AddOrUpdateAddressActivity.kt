@@ -20,6 +20,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.google.android.gms.location.*
@@ -54,7 +55,10 @@ class AddOrUpdateAddressActivity :
 
 
     //Can be improved
-    override fun updateDistrict(adapter: AddressDataListAdapter, onSelect: (AddressDataModel) -> Unit) {
+    override fun updateDistrict(
+        adapter: AddressDataListAdapter,
+        onSelect: (AddressDataModel) -> Unit
+    ) {
         adapter.selectedItem = onSelect
         districtSpinner.setAdapter(adapter)
         districtSpinner.setOnClickListener {
@@ -62,7 +66,10 @@ class AddOrUpdateAddressActivity :
         }
     }
 
-    override fun updateTehsil(adapter: AddressDataListAdapter, onSelect: (AddressDataModel) -> Unit) {
+    override fun updateTehsil(
+        adapter: AddressDataListAdapter,
+        onSelect: (AddressDataModel) -> Unit
+    ) {
         adapter.selectedItem = onSelect
         tehsilSpinner.setAdapter(adapter)
         tehsilSpinner.setOnClickListener {
@@ -70,7 +77,10 @@ class AddOrUpdateAddressActivity :
         }
     }
 
-    override fun updateVillage(adapter: AddressDataListAdapter, onSelect: (AddressDataModel) -> Unit) {
+    override fun updateVillage(
+        adapter: AddressDataListAdapter,
+        onSelect: (AddressDataModel) -> Unit
+    ) {
         adapter.selectedItem = onSelect
         villageNameSpinner.setAdapter(adapter)
         villageNameSpinner.setOnClickListener {
@@ -78,7 +88,10 @@ class AddOrUpdateAddressActivity :
         }
     }
 
-    override fun updatePinCode(adapter: AddressDataListAdapter, onSelect: (AddressDataModel) -> Unit) {
+    override fun updatePinCode(
+        adapter: AddressDataListAdapter,
+        onSelect: (AddressDataModel) -> Unit
+    ) {
         adapter.selectedItem = onSelect
         pincodeSpinner.setAdapter(adapter)
         pincodeSpinner.setOnClickListener {
@@ -88,7 +101,14 @@ class AddOrUpdateAddressActivity :
 
 
     override fun goToApp() {
-        openAndFinishActivity(HomeActivity::class.java, null)
+        //add check here , if intent from Edit Profile then just finish this activity else
+
+        if (intent?.extras?.containsKey(Constants.FROM_EDIT_PROFILE) == true) {
+            finish()
+
+        } else {
+            openAndFinishActivity(HomeActivity::class.java, null)
+        }
     }
 
     override fun getState(): String? = etStateName.text.toString()
@@ -101,25 +121,25 @@ class AddOrUpdateAddressActivity :
     override fun closeDistrictDropDown() {
         districtSpinner.threshold = 1000
         districtSpinner.dismissDropDown()
-        districtSpinner.nextFocusDownId=R.id.tehsilSpinner
+        districtSpinner.nextFocusDownId = R.id.tehsilSpinner
     }
 
     override fun closeTehsilDropDown() {
         tehsilSpinner.threshold = 1000
         tehsilSpinner.dismissDropDown()
-        tehsilSpinner.nextFocusDownId=R.id.villageNameSpinner
+        tehsilSpinner.nextFocusDownId = R.id.villageNameSpinner
     }
 
     override fun closeVillageDropDown() {
         villageNameSpinner.threshold = 1000
         villageNameSpinner.dismissDropDown()
-        villageNameSpinner.nextFocusDownId=R.id.pincodeSpinner
+        villageNameSpinner.nextFocusDownId = R.id.pincodeSpinner
     }
 
     override fun closePincodeDropDown() {
         pincodeSpinner.threshold = 1000
         pincodeSpinner.dismissDropDown()
-        pincodeSpinner.nextFocusDownId=R.id.submitBtn
+        pincodeSpinner.nextFocusDownId = R.id.submitBtn
     }
 
     override fun getGPSTracker(): GPSTracker = GPSTracker(this@AddOrUpdateAddressActivity)
@@ -128,6 +148,7 @@ class AddOrUpdateAddressActivity :
         Toast.makeText(this@AddOrUpdateAddressActivity, message, Toast.LENGTH_SHORT).show()
 
     }
+
     private fun showResults(currentAdd: String) {
         Toast.makeText(this@AddOrUpdateAddressActivity, currentAdd, Toast.LENGTH_SHORT).show()
 
@@ -136,7 +157,10 @@ class AddOrUpdateAddressActivity :
     override fun onResume() {
         super.onResume()
         if (intent?.extras?.containsKey(Constants.STATE) == true) {
-            addOrUpdateAddressViewModel.setStatesName(intent?.extras?.get(Constants.STATE) as String, intent?.extras?.get(Constants.STATE_IMAGE_URL) as String)
+            addOrUpdateAddressViewModel.setStatesName(
+                intent?.extras?.get(Constants.STATE) as String,
+                intent?.extras?.get(Constants.STATE_IMAGE_URL) as String
+            )
             addOrUpdateAddressViewModel.getDistrict(
                 "district",
                 intent?.extras?.get(Constants.STATE) as String,
@@ -146,6 +170,19 @@ class AddOrUpdateAddressActivity :
         } else {
             addOrUpdateAddressViewModel.getAddressByLocation()
         }
+
+        if (intent?.extras?.containsKey(Constants.FROM_EDIT_PROFILE) == true) {
+            viewDataBinding.ivBack.visibility = View.VISIBLE
+            viewDataBinding.saveBtn.visibility=View.VISIBLE
+
+        } else {
+            viewDataBinding.ivBack.visibility = View.GONE
+            viewDataBinding.saveBtn.visibility=View.GONE
+        }
+    }
+
+    override fun onBackPressClick() {
+        super.onBackPressed()
     }
 
 }
