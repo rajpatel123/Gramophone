@@ -10,4 +10,5 @@ interface AppTourNavigator : BaseNavigator{
     fun updateImages(currentPage: Int)
     fun setupViewPager(loginBannerList: List<LoginBanner>?)
     fun addIndicatorView()
+    fun updateImage(currentPage: Int)
 }

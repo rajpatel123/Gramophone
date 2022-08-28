@@ -115,14 +115,14 @@ class AppTourViewModel @Inject constructor(
         }
     }
 
-    fun updateIndicator(currentPage: Int, llIndicator: LinearLayout?) {
+    fun updateIndicator(nextPage: Int, llIndicator: LinearLayout?) {
         for (i in 0..llIndicator?.childCount!!-1){
             val view = llIndicator.get(i)
-            this.currentPage = currentPage
+            this.currentPage = nextPage
             view.setBackgroundResource(R.drawable.indicator_bg)
         }
         llIndicator.get(currentPage).setBackgroundResource(R.drawable.brand_color_indicator_bg)
-
+        getNavigator()?.updateImage(currentPage)
     }
 
 }

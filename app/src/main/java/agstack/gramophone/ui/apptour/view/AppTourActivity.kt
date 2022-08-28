@@ -112,11 +112,15 @@ class AppTourActivity :
         pageIndicator.setPaddingStart(10)
         val layoutParams = LinearLayout.LayoutParams(130, 30)
         layoutParams.setMargins(14, 0, 14, 0)
-        pageIndicator.setTag(R.string.page_tag,llIndicator.childCount)
+        pageIndicator.setTag(llIndicator.childCount)
         llIndicator.addView(pageIndicator,layoutParams)
         pageIndicator.setOnClickListener {
-            appTourViewModel.updateIndicator(pageIndicator.getTag(R.string.page_tag) as Int,llIndicator)
+            appTourViewModel.updateIndicator(pageIndicator.tag as Int,llIndicator)
         }
+    }
+
+    override fun updateImage(currentPage: Int) {
+        view_pager.setCurrentItem(currentPage, true)
     }
 
     override fun onLanguageUpdate() {
