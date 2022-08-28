@@ -102,6 +102,8 @@
         <activity android:name=".ui.home.product.activity.ProductAllReviewsActivity" />
         <activity android:name=".ui.home.product.activity.productreview.AddEditProductReviewActivity"/>
         <activity android:name=".ui.userprofile.UserProfileActivity"/>
+        <activity android:name=".ui.userprofile.EditProfileActivity"/>
+        <activity android:name=".ui.userprofile.firm.AddFirmActivity"/>
         <activity android:name=".ui.weather.WeatherActivity"/>
         <activity android:name=".ui.home.subcategory.SubCategoryActivity"/>
         <activity android:name=".ui.home.featured.FeaturedProductActivity"/>

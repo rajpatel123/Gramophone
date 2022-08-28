@@ -7,22 +7,86 @@
     <data>
 
         <import type="android.view.View" />
+
         <variable
             name="model"
             type="agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem" />
     </data>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/relatedProdDetailsContainer"
-        android:layout_marginHorizontal="@dimen/_8sdp"
-        android:layout_width="@dimen/_156sdp"
-        android:layout_height="wrap_content"
-        card_view:cardCornerRadius="10dp"
-        card_view:cardElevation="4dp"
-        card_view:cardUseCompatPadding="true">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginLeft="@dimen/_13sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_13sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:background="@drawable/ic_offer_cards">
+
+        <LinearLayout
+            android:id="@+id/ll_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_48sdp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/TextSize16Sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_bold"
+                android:hint="50% Off on Pesticide"
+                android:text="@{model.title}" />
+
+            <TextView
+                android:id="@+id/tv_valid_till"
+                style="@style/TextSize14Sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_bold"
+                android:hint="Valid till date"
+                android:text="@{model.valid_till}"
+                android:textColor="@color/gray_strike_through" />
+
+            <ImageView
+                android:id="@+id/ic_offer_details"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginBottom="@dimen/_6sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_valid_till"
+                app:srcCompat="@drawable/ic_offer_details" />
 
 
+            <TextView
+                android:id="@+id/tv_condition"
+                style="@style/TextSize14Sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_bold"
+                android:hint="50% Off on Pesticide"
+                android:text="@{model.applicable_on_sku}"
+                android:textColor="@color/gray_strike_through"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_valid_till" />
+        </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/ll_details"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+        <!--  loadUri="@{model.image}"-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

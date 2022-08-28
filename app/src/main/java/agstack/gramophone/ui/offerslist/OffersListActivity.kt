@@ -5,6 +5,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.OffersListActivityBinding
+import agstack.gramophone.ui.offerslist.adapter.OffersListAdapter
 import android.os.Bundle
 import android.view.Menu
 import androidx.activity.viewModels
@@ -49,6 +50,10 @@ class OffersListActivity :
 
         return super.onCreateOptionsMenu(menu)
 
+    }
+
+    override fun setOffersListAdapter(offersListAdapter: OffersListAdapter) {
+        viewDataBinding.rvOffersList.adapter = offersListAdapter
     }
 
     /*  override fun onOptionsItemSelected(item: MenuItem): Boolean {
