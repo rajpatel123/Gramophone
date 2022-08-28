@@ -7,6 +7,7 @@ import agstack.gramophone.utils.LocaleManagerClass
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.location.Geocoder
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import java.util.*
 
 abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewModel<N>> : Fragment(),
     BaseNavigator {
@@ -163,4 +165,8 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     /*override fun checkSelfPermissions( permission: String): Boolean {
         TODO("Not yet implemented")
     }*/
+
+    override fun getGeoCoder(): Geocoder {
+        return Geocoder(activity, Locale.getDefault())
+    }
 }

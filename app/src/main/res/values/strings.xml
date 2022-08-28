@@ -118,10 +118,10 @@
     <string name="pincode">Pincode</string>
     <string name="go_to_app">Go to the app</string>
     <string name="state_required">Please select state</string>
-    <string name="district_required">Please select district</string>
-    <string name="tehsil_required">Please select tehsil</string>
-    <string name="village_required">Please enter village</string>
-    <string name="address_required">Please enter address</string>
+    <string name="district_required">Please enter your district name.</string>
+    <string name="tehsil_required">Please enter your tehsil name.</string>
+    <string name="village_required">Please enter your village name</string>
+    <string name="address_required">Please enter your address</string>
 
     <!--    OnBoarding strings-->
 
@@ -298,6 +298,7 @@
     <string name="send">Send</string>
     <string name="please_enter_feedback">Please enter your feedback</string>
     <string name="all_offers">All Offers</string>
+    <string name="page_tag">pageTag</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

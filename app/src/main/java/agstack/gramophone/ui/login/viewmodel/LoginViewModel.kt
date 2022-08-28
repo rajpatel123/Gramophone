@@ -38,7 +38,7 @@ class LoginViewModel @Inject constructor(
     var referralCodeValue: String? = null
     var mAlertDialog: AlertDialog? = null
 
-    fun sendOTP(v: View) = viewModelScope.launch {
+    fun sendOTP() = viewModelScope.launch {
         if (mobileNo.get().isNullOrEmpty()) {
             getNavigator()?.onError(getNavigator()?.getMessage(R.string.enter_mobile_lebel)!!)
         } else if (mobileNo.get()?.length!! < 10) {
@@ -99,22 +99,12 @@ class LoginViewModel @Inject constructor(
         return ApiResponse.Error(response.message())
     }
 
-    fun onHelpClick(v: View) {
-        var initiateAppDataResponseModel =
-            SharedPreferencesHelper.instance?.getParcelable(
-                SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java
-            )
-
-        if (getNavigator()?.requestPermission(Manifest.permission.CALL_PHONE) == true)
-            getNavigator()?.onHelpClick(initiateAppDataResponseModel?.gp_api_response_data?.help_data_list?.customer_support_no!!)
-    }
-
-    fun onLanguageClick(v: View) {
+    fun onLanguageClick() {
         getNavigator()?.onLanguageChangeClick()
 
     }
 
-    fun onPrivacyClicked(v: View) {
+    fun onPrivacyClicked() {
         var initiateAppDataResponseModel =
             SharedPreferencesHelper.instance?.getParcelable(
                 SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java
@@ -130,7 +120,7 @@ class LoginViewModel @Inject constructor(
         })
     }
 
-    fun onTermsClicked(v: View) {
+    fun onTermsClicked() {
         var initiateAppDataResponseModel =
             SharedPreferencesHelper.instance?.getParcelable(
                 SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java

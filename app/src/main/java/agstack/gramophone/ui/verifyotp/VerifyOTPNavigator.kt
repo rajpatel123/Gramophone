@@ -6,7 +6,6 @@ import android.os.Bundle
 interface VerifyOTPNavigator :BaseNavigator {
     fun getBundle(): Bundle?
     fun showTimer(duration: Long)
-    fun onHelpClick(bundle: String)
     fun onLanguageChangeClick()
     fun getMobileBundle(): Bundle?
     fun updateOTPView()

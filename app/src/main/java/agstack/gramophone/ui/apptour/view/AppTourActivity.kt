@@ -9,15 +9,14 @@ import agstack.gramophone.ui.apptour.adapter.DotIndicatorPager2Adapter
 import agstack.gramophone.ui.apptour.viewmodel.AppTourViewModel
 import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
 import agstack.gramophone.ui.language.model.LoginBanner
-import android.os.Build
+import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
-import androidx.core.view.get
-import com.amnix.xtension.extensions.childs
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import androidx.viewpager2.widget.ViewPager2
 import com.amnix.xtension.extensions.setPaddingStart
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_apptour.*
@@ -32,6 +31,16 @@ class AppTourActivity :
     LanguageBottomSheetFragment.LanguageUpdateListener {
     private lateinit var loginBanners: List<LoginBanner>
     private val appTourViewModel: AppTourViewModel by viewModels()
+
+
+
+
+    var pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            appTourViewModel.updateIndicator(position,llIndicator)
+
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,9 +65,6 @@ class AppTourActivity :
     override fun onLoading() {
     }
 
-    override fun onHelpClick(number: String) {
-        appTourViewModel.onHelpClick()
-    }
 
     override fun onLanguageChangeClick() {
         val bottomSheet = LanguageBottomSheetFragment()
@@ -88,17 +94,30 @@ class AppTourActivity :
         appTourViewModel.updateIndicator(0,llIndicator)
 
         appTourViewModel.startScroller()
+
+        view_pager.registerOnPageChangeCallback(pageChangeCallback)
+
+
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        view_pager.unregisterOnPageChangeCallback(pageChangeCallback)
+
     }
 
     override fun addIndicatorView() {
-        val pageIndicator =
-            LayoutInflater.from(this).inflate(R.layout.page_indicator, null)
+        val pageIndicator = LayoutInflater.from(this).inflate(R.layout.page_indicator, null)
         pageIndicator.setPaddingStart(10)
         val layoutParams = LinearLayout.LayoutParams(130, 30)
         layoutParams.setMargins(14, 0, 14, 0)
+        pageIndicator.setTag(R.string.page_tag,llIndicator.childCount)
         llIndicator.addView(pageIndicator,layoutParams)
+        pageIndicator.setOnClickListener {
+            appTourViewModel.updateIndicator(pageIndicator.getTag(R.string.page_tag) as Int,llIndicator)
+        }
     }
-
 
     override fun onLanguageUpdate() {
         appTourViewModel.updateLanguage()

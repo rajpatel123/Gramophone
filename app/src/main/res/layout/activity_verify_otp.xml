@@ -41,7 +41,7 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_toStartOf="@+id/llLanguageLinearLayout"
                 android:background="@drawable/rounded_corner_with_grey_color"
-                android:onClick="@{ ()-> viewModel.onHelpClick(llHelpLinearLayout) }"
+                android:onClick="@{ ()-> viewModel.onHelpClick() }"
                 android:paddingStart="@dimen/_8sdp"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_8sdp"
@@ -73,7 +73,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@drawable/rounded_corner_with_grey_color"
-                android:onClick="@{ ()-> viewModel.onLanguageClick(llLanguageLinearLayout) }"
+                android:onClick="@{ ()-> viewModel.onLanguageClick() }"
                 android:paddingStart="@dimen/_8sdp"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_8sdp"
@@ -109,11 +109,15 @@
             app:layout_constraintTop_toBottomOf="@+id/rlToolbar" />
 
 
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@+id/toolbar_separator">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_31sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_20sdp"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_separator">
@@ -249,7 +253,7 @@
                     android:textSize="@dimen/_10ssp"
                     android:visibility="gone"
                     android:textColor="@color/brand_color"
-                     />
+                    />
 
 
             </RelativeLayout>
@@ -325,7 +329,7 @@
             </LinearLayout>
         </LinearLayout>
 
-
+</ScrollView>
         <TextView
             android:id="@+id/verifyOtpBtn"
             android:layout_width="match_parent"

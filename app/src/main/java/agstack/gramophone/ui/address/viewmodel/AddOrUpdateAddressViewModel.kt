@@ -19,10 +19,13 @@ import agstack.gramophone.utils.Constants.VILLAGE
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -278,8 +281,29 @@ class AddOrUpdateAddressViewModel @Inject constructor(
         if (gps?.canGetLocation() == true) {
             val latitude: Double = gps.getLatitude()
             val longitude: Double = gps.getLongitude()
+
+            val geocoder: Geocoder
+            val addresses: List<Address>
+
+
+            addresses = getNavigator()?.getGeoCoder()?.getFromLocation(
+                latitude,
+                longitude,
+                1
+            )!! // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+
+            val address =
+                addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+
+            val city = addresses[0].locality
+            val state = addresses[0].adminArea
+            val postalCode = addresses[0].postalCode
+
+
             val addressRequestModel =
-                AddressRequestWithLatLongModel(latitude.toString(), longitude.toString())
+                AddressRequestWithLatLongModel(latitude.toString(), longitude.toString(),state,city,"","", pin_code = postalCode)
+            Log.d("AddressPayload", Gson().toJson(addressRequestModel))
             getAddressByLatLong(addressRequestModel = addressRequestModel)
         } else {
             // Can't get location.
