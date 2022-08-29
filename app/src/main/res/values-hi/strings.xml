@@ -73,7 +73,7 @@
     <string name="pincode">पिन कोड</string>
     <string name="go_to_app">ऐप पर जाएं</string>
     <string name="state_required">कृपया राज्य का चयन करें</string>
-    <string name="district_required">कृपया जिले का चयन करें</string>
+    <string name="district_required">Please enter your district name.</string>
     <string name="tehsil_required">कृपया तहसील का चयन करें</string>
     <string name="village_required">कृपया गांव में प्रवेश करें</string>
     <string name="address_required">कृपया अपना पता भरें</string>

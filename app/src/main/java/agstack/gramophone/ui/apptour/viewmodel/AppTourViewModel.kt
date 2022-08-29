@@ -12,10 +12,8 @@ import agstack.gramophone.ui.language.model.LoginBanner
 import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.utils.*
 import android.Manifest
-import android.os.Build
 import android.view.View
 import android.widget.LinearLayout
-import androidx.annotation.RequiresApi
 import androidx.core.view.get
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,7 +37,7 @@ class AppTourViewModel @Inject constructor(
     fun startScroller() {
         scrollImagesJob = viewModelScope.launch {
             while (isActive) {
-                delay(2_000)
+                delay(Constants.DELAY)
                 if (currentPage === initiateAppDataResponseModel?.gp_api_response_data?.login_banner_list?.size) {
                     currentPage = 0
                 }
@@ -51,16 +49,8 @@ class AppTourViewModel @Inject constructor(
         scrollImagesJob?.start()
     }
 
-    fun onHelpClick(v: View) {
-        var initiateAppDataResponseModel =
-            SharedPreferencesHelper.instance?.getParcelable(
-                SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java
-            )
-        if (getNavigator()?.requestPermission(Manifest.permission.CALL_PHONE) == true)
-            getNavigator()?.onHelpClick(initiateAppDataResponseModel?.gp_api_response_data?.help_data_list?.customer_support_no!!)
-    }
 
-    fun onLanguageClick(v: View) {
+    fun onLanguageClick() {
         getNavigator()?.onLanguageChangeClick()
 
     }
@@ -125,13 +115,14 @@ class AppTourViewModel @Inject constructor(
         }
     }
 
-    fun updateIndicator(currentPage: Int, llIndicator: LinearLayout?) {
+    fun updateIndicator(nextPage: Int, llIndicator: LinearLayout?) {
         for (i in 0..llIndicator?.childCount!!-1){
             val view = llIndicator.get(i)
+            this.currentPage = nextPage
             view.setBackgroundResource(R.drawable.indicator_bg)
         }
         llIndicator.get(currentPage).setBackgroundResource(R.drawable.brand_color_indicator_bg)
-
+        getNavigator()?.updateImage(currentPage)
     }
 
 }
