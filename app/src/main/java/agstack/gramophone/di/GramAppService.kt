@@ -164,4 +164,19 @@ interface GramAppService {
 
     @POST("api/v5/general/address-fetch")
     suspend fun updateAddressByLatLong(@Body addressRequestModel: AddressRequestWithLatLongModel): Response<AddressDataByLatLongResponseModel>
+
+    @GET("api/v5/category/banner-data")
+    suspend fun getBanners(): Response<BannerResponse>
+
+    @GET("api/v5/category/product-app-category")
+    suspend fun getCategories(): Response<CategoryResponse>
+
+    @GET("api/v5/category/companies")
+    suspend fun getCompanies(): Response<CompanyResponse>
+
+    @GET("api/v5/category/stores")
+    suspend fun getStores(): Response<StoreResponse>
+
+    @GET("api/v5/category/crops")
+    suspend fun getCrops(): Response<CropResponse>
 }

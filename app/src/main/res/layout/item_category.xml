@@ -1,41 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:paddingStart="0dp"
-    android:paddingEnd="@dimen/_16sdp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
-        android:id="@+id/frameItem"
-        android:layout_width="@dimen/_72sdp"
-        android:layout_height="@dimen/_72sdp"
-        android:background="@drawable/circle_solid_white"
-        android:backgroundTint="#EFF6E8"
-        android:paddingTop="@dimen/_10sdp">
+    <data>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:contentDescription="@string/image"
-            android:src="@drawable/dummy_category_item" />
+        <import type="android.view.View" />
 
-    </FrameLayout>
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.home.view.fragments.market.model.CategoryData" />
+    </data>
 
-    <TextView
-        android:id="@+id/tvCatName"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/_6sdp"
-        android:fontFamily="@font/manrope_bold"
-        android:gravity="center_horizontal|center_vertical"
-        android:lineSpacingExtra="-2sp"
-        android:textColor="@color/green_dark"
-        android:textSize="13sp"
-        android:text="Onion" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/_16sdp">
 
-</LinearLayout>
+        <FrameLayout
+            android:id="@+id/itemView"
+            android:layout_width="@dimen/_72sdp"
+            android:layout_height="@dimen/_72sdp"
+            android:background="@drawable/circle_solid_white"
+            android:backgroundTint="#EFF6E8">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:layout_gravity="center"
+                app:product_image='@{model.category_image ?? ""}'
+                android:contentDescription="@string/image"
+                android:src="@drawable/dummy_shop_by_crop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvCatName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_horizontal|center_vertical"
+            android:lineSpacingExtra="-2sp"
+            tools:text="Onion"
+            android:text='@{model.category_name ?? ""}'
+            android:textColor="@color/green_dark"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+</layout>

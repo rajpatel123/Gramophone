@@ -110,4 +110,36 @@ class ProductRepositoryImpl @Inject constructor(
         val placeOrderResponse = gramoAppService.placeOrder()
         placeOrderResponse
     }
+
+    override suspend fun getBanners(): Response<BannerResponse>  = withContext(
+        Dispatchers.IO) {
+        val bannerResponse = gramoAppService.getBanners()
+        bannerResponse
+    }
+
+    override suspend fun getCategories(): Response<CategoryResponse>  = withContext(
+        Dispatchers.IO) {
+        val categoryResponse = gramoAppService.getCategories()
+        categoryResponse
+    }
+
+    override suspend fun getCompanies(): Response<CompanyResponse>  = withContext(
+        Dispatchers.IO) {
+        val companiesResponse = gramoAppService.getCompanies()
+        companiesResponse
+    }
+
+    override suspend fun getStores(): Response<StoreResponse>  = withContext(
+        Dispatchers.IO) {
+        val storeResponse = gramoAppService.getStores()
+        storeResponse
+    }
+
+    override suspend fun getCrops(): Response<CropResponse>  = withContext(
+        Dispatchers.IO) {
+        val cropResponse = gramoAppService.getCrops()
+        cropResponse
+    }
+
+
 }

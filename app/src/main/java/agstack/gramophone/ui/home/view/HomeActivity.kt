@@ -6,6 +6,10 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityHomeBinding
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
+import agstack.gramophone.ui.home.view.fragments.community.CommunityFragment
+import agstack.gramophone.ui.home.view.fragments.market.MarketFragment
+import agstack.gramophone.ui.home.view.fragments.profile.ProfileFragment
+import agstack.gramophone.ui.home.view.fragments.trading.TradeFragment
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.utils.Constants
@@ -22,6 +26,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.forEach
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.FirebaseApp
@@ -78,32 +84,57 @@ class HomeActivity :
 
     }
 
+    private lateinit var marketFragment: MarketFragment
+    private lateinit var communityFragment: CommunityFragment
+    private lateinit var profileFragment: ProfileFragment
+    private lateinit var tradeFragment: TradeFragment
+    private lateinit var activeFragment: Fragment
+
     private fun setupUi() {
+        marketFragment = MarketFragment()
+        communityFragment = CommunityFragment()
+        profileFragment = ProfileFragment()
+        tradeFragment = TradeFragment()
+        activeFragment = marketFragment
+
+        supportFragmentManager.beginTransaction().add(R.id.fragment_container, tradeFragment, "trade_fragment").hide(tradeFragment).commit()
+        supportFragmentManager.beginTransaction().add(R.id.fragment_container, profileFragment, "profile_fragment").hide(profileFragment).commit()
+        supportFragmentManager.beginTransaction().add(R.id.fragment_container,communityFragment, "community_fragment").hide(communityFragment).commit()
+        supportFragmentManager.beginTransaction().add(R.id.fragment_container,marketFragment, "market_fragment").commit()
+
         setUpNavigationDrawer()
         viewDataBinding.navView.itemIconTintList = null
-        val navController = findNavController(R.id.nav_host)
+        /*val navController = findNavController(R.id.nav_host)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        /*val appBarConfiguration = AppBarConfiguration(setOf(
+        *//*val appBarConfiguration = AppBarConfiguration(setOf(
             R.id.navigation_home, R.id.navigation_community, R.id.navigation_profile, R.id.navigation_trade))
-        setupActionBarWithNavController(navController, appBarConfiguration)*/
-        viewDataBinding.navView.setupWithNavController(navController)
+        setupActionBarWithNavController(navController, appBarConfiguration)*//*
+        viewDataBinding.navView.setupWithNavController(navController)*/
         viewDataBinding.navView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_home -> {
                     updateMenuItemVisibility(true)
+                    supportFragmentManager.beginTransaction().hide(activeFragment).show(marketFragment).commit()
+                    activeFragment = marketFragment
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_community -> {
                     updateMenuItemVisibility(false)
+                    supportFragmentManager.beginTransaction().hide(activeFragment).show(communityFragment).commit()
+                    activeFragment = communityFragment
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_profile -> {
                     updateMenuItemVisibility(false)
+                    supportFragmentManager.beginTransaction().hide(activeFragment).show(profileFragment).commit()
+                    activeFragment = profileFragment
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_trade -> {
                     updateMenuItemVisibility(false)
+                    supportFragmentManager.beginTransaction().hide(activeFragment).show(tradeFragment).commit()
+                    activeFragment = tradeFragment
                     return@setOnItemSelectedListener true
                 }
             }
@@ -151,7 +182,7 @@ class HomeActivity :
         }
     }
 
-    private fun updateMenuItemVisibility(showItems: Boolean) {
+    public fun updateMenuItemVisibility(showItems: Boolean) {
         viewDataBinding.toolbar.myToolbar.menu.forEach {
             if (showItems) {
                 it.isVisible = true
