@@ -45,7 +45,7 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
     }
 
     override fun moveToLogIn() {
-        openAndFinishActivity(LanguageActivity::class.java,null)
+        openAndFinishActivity(HomeActivity::class.java,null)
 
     }
 

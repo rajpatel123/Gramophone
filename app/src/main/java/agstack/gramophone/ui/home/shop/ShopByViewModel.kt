@@ -34,21 +34,21 @@ class ShopByViewModel @Inject constructor(
                 Constants.SHOP_BY_CROP -> {
                     showWeatherView.value = true
                     getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.shop_by_crops)!!)
-                    getNavigator()?.setShopByCropAdapter(ShopByCropsAdapter()) {
+                    getNavigator()?.setShopByCropAdapter(ShopByCropsAdapter(ArrayList())) {
                         getNavigator()?.openCropStageActivity(it)
                     }
                 }
                 Constants.SHOP_BY_STORE -> {
                     showWeatherView.value = true
                     getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.shop_by_store)!!)
-                    getNavigator()?.setShopByStoresAdapter(ShopByStoresAdapter()) {
+                    getNavigator()?.setShopByStoresAdapter(ShopByStoresAdapter(ArrayList())) {
                         getNavigator()?.openShopByDetailActivity(it)
                     }
                 }
                 Constants.SHOP_BY_COMPANY -> {
                     showWeatherView.value = true
                     getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.shop_by_company)!!)
-                    getNavigator()?.setShopByCompanyAdapter(ShopByCompanyAdapter()) {
+                    getNavigator()?.setShopByCompanyAdapter(ShopByCompanyAdapter(ArrayList())) {
                         getNavigator()?.openShopByDetailActivity(it)
                     }
                 }

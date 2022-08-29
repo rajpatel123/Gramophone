@@ -2,11 +2,12 @@ package agstack.gramophone.ui.home.adapter
 
 
 import agstack.gramophone.databinding.ItemShopByStoreBinding
+import agstack.gramophone.ui.home.view.fragments.market.model.StoreData
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ShopByStoresAdapter :
+class ShopByStoresAdapter(private val storeList: List<StoreData>?) :
     RecyclerView.Adapter<ShopByStoresAdapter.CustomViewHolder>() {
     var onItemClicked: ((id: String) -> Unit)? = null
 
@@ -17,13 +18,14 @@ class ShopByStoresAdapter :
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, i: Int) {
-        holder.binding.llItem.setOnClickListener {
-            onItemClicked?.invoke("")
+        holder.binding.model = storeList!![i]
+        holder.binding.itemView.setOnClickListener {
+            onItemClicked?.invoke(storeList[i].store_id.toString())
         }
     }
 
     override fun getItemCount(): Int {
-        return /*languageList.size*/4
+        return storeList?.size!!
     }
 
     inner class CustomViewHolder(var binding: ItemShopByStoreBinding) :

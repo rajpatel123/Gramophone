@@ -341,6 +341,7 @@
     <string name="easy_return">Easy Return</string>
     <string name="free_expert_nadvice">Free Expert\nAdvice</string>
     <string name="product_fungicide">Fungicides Crystal Bavistin 50% WP Fun gicide Carbe ...</string>
+    <string name="starts_from_99">Starts from ₹ 99</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

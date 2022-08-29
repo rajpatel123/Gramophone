@@ -58,13 +58,9 @@ class SubCategoryActivity :
         })
 
         viewDataBinding.dotsIndicator.setOnClickListener { }
-        val adapter = ViewPagerAdapter(items)
-        viewDataBinding.viewPager.adapter = adapter
-        viewDataBinding.dotsIndicator.attachTo(viewDataBinding.viewPager)
 
 
         subCategoryViewModel.setAdapter()
-        subCategoryViewModel.fetchProductDetail()
     }
 
     private fun initCards() {
@@ -137,6 +133,10 @@ class SubCategoryActivity :
            supportFragmentManager,
             Constants.BOTTOM_SHEET
         )
+    }
+
+    override fun getBundle(): Bundle? {
+        return intent?.extras
     }
 
     override fun getLayoutID(): Int {
