@@ -7,5 +7,5 @@ data class AddressRequestWithLatLongModel(
     val district: String,
     val tehsil: String?,
     val village: String?,
-    val pin_code: String
+    val pincode: String
 )
