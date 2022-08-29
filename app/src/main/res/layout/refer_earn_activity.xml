@@ -203,7 +203,8 @@
 
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/shareFacebook"
+                android:id="@+id/shareall"
+                android:onClick="@{()->viewModel.onShareClick()}"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:paddingHorizontal="40dp"
@@ -222,6 +223,7 @@
                 android:visibility="visible" />
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/shareWhatsapp"
+                android:onClick="@{()->viewModel.onWhatsappShareClick()}"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:paddingHorizontal="40dp"

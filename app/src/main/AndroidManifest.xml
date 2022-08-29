@@ -105,6 +105,8 @@
         <activity android:name=".ui.userprofile.EditProfileActivity"/>
         <activity android:name=".ui.referandearn.ReferAndEarnActivity"/>
         <activity android:name=".ui.referandearn.referralpoints.ReferralPointsActivity"/>
+
+        <activity android:name=".ui.referandearn.aboutreferralpoints.AboutReferralPointsBalanceActivity"/>
         <activity android:name=".ui.referandearn.transaction.AllTransactionsListActivity"/>
         <activity android:name=".ui.faq.FAQActivity"/>
 

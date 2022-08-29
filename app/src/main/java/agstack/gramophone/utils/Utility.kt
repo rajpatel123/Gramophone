@@ -1,12 +1,30 @@
 package agstack.gramophone.utils
 
+import agstack.gramophone.R
+import android.content.ContentResolver
+import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Build
 import android.os.Environment
+import android.provider.MediaStore
 import android.text.SpannableString
 import android.text.style.BulletSpan
+import android.util.Log
 import android.widget.Toast
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.WriterException
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
+import java.io.OutputStream
+import java.net.URL
+import java.util.*
+
 
 object Utility {
 
@@ -33,5 +51,76 @@ object Utility {
 
     private fun getExternalFileDir(context: Context?): File? {
         return context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+    }
+
+
+
+    fun generateQR(content: String?, size: Int): Bitmap? {
+        var bitmap: Bitmap? = null
+        try {
+            val barcodeEncoder = BarcodeEncoder()
+            bitmap = barcodeEncoder.encodeBitmap(
+                content,
+                BarcodeFormat.QR_CODE, size, size
+            )
+        } catch (e: WriterException) {
+            Log.e("generateQR()", e.message!!)
+        }
+        return bitmap
+    }
+
+
+
+    fun saveImage(context: Context,finalBitmap: Bitmap?) {
+        var imagePath = "/Gramophone"
+        var generator = Random()
+        var n = 10000
+        n = generator.nextInt(n)
+        var fname: String = "Gramophone-qr-code-" + n + ".jpg"
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            saveFileAboveQ(context,finalBitmap,imagePath,fname)
+        }else {
+            saveFileBelowQ(finalBitmap,imagePath,fname)
+        }
+        Toast.makeText(context, R.string.download_to_gallery, Toast.LENGTH_SHORT).show()
+    }
+
+
+    private fun saveFileAboveQ(context: Context,finalBitmap: Bitmap?,imagePath:String,fileName:String) {
+        val resolver: ContentResolver? = context?.contentResolver
+        val contentValues = ContentValues()
+        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
+        contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES+imagePath)
+        val imageUri: Uri? = resolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+        val out: OutputStream?=resolver?.openOutputStream(imageUri!!)
+        finalBitmap?.compress(Bitmap.CompressFormat.JPEG, 90, out);
+        out?.flush();
+        out?.close();
+    }
+
+    private fun saveFileBelowQ(finalBitmap: Bitmap?,imagePath:String,fileName:String) {
+        var root = Environment.getExternalStorageDirectory().toString();
+
+        var myDir = File(root + imagePath);
+        if (!myDir.exists()) {
+            myDir.mkdirs()
+        }
+
+        var file = File(myDir, fileName)
+        if (file.exists())
+            file.delete();
+        try {
+            var out = FileOutputStream(file);
+            finalBitmap?.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
+
+        } catch (e: Exception) {
+            e.printStackTrace();
+        }
+
+
     }
 }

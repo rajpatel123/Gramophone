@@ -144,6 +144,9 @@
     </string-array>
 
     <string name="aaa">All Tran_1111</string>
+    <string name="download_to_gallery">Downloaded to Gallery</string>
+    <string name="home_share_subject">बेहतर गुणवत्ता वाले कृषि उत्पाद खरीदें, ग्रामोफ़ोन एप्प से!</string>
+    <string name="about_referral_point_balance">About Referral Points balance</string>
 </resources>
 
 

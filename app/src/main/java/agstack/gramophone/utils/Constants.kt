@@ -23,6 +23,7 @@ object Constants {
 
 
     val CAMERA_PERMISSION = Manifest.permission.CAMERA
+   val  READ_EXTERNAL_STORAGE =  Manifest.permission.CAMERA
     val REQUEST_CAMERA = 1012
     val REQUEST_GALLERY = 1013
 
@@ -99,6 +100,8 @@ object Constants {
     const val ORDER_ID = "order_id"
     const val BOTTOM_SHEET = "bottom_sheet"
     const val LOCATION_ACCESS_DIALOG = "location_access_dialog"
+
+    const val postShareRequestKey = 7001
     /**
      * For Broadcast
      */
