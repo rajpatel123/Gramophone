@@ -29,6 +29,13 @@ class SubCategoryViewModel @Inject constructor(
         progress.value = false
     }
 
+    fun getBundleData() {
+        val bundle = getNavigator()?.getBundle()
+        if (bundle?.containsKey(Constants.CATEGORY_ID)!! && bundle.getString(Constants.CATEGORY_ID) != null) {
+            /*getSubCategory(bundle.get(Constants.CATEGORY_ID) as String)*/
+        }
+    }
+
     fun setAdapter() {
         getNavigator()?.setSubCategoryAdapter(SubCategoryAdapter())
 
@@ -37,7 +44,7 @@ class SubCategoryViewModel @Inject constructor(
         }
     }
 
-    fun fetchProductDetail() {
+    private fun fetchProductDetail() {
         val product = ProductData(700322)
         viewModelScope.launch {
             try {

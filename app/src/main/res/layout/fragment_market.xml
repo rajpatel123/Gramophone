@@ -160,14 +160,12 @@
                     android:paddingBottom="@dimen/_20sdp"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/state_bg">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_16sdp"
-
                         android:fontFamily="@font/manrope_bold"
                         android:text="@string/shop_by_crops"
                         android:textColor="@color/blakish"

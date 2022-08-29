@@ -6,6 +6,9 @@ import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.home.adapter.ShopByCompanyAdapter
 import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
 import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
+import agstack.gramophone.ui.home.view.fragments.market.model.CropData
+import agstack.gramophone.ui.home.view.fragments.market.model.CropResponse
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.utils.Constants
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,8 +36,9 @@ class ShopByViewModel @Inject constructor(
             when (bundle.getString(Constants.SHOP_BY_TYPE)) {
                 Constants.SHOP_BY_CROP -> {
                     showWeatherView.value = true
+                    val cropResponse: CropResponse = bundle.getParcelable<ProductData>(Constants.SHOP_BY_CROP) as CropResponse
                     getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.shop_by_crops)!!)
-                    getNavigator()?.setShopByCropAdapter(ShopByCropsAdapter(ArrayList())) {
+                    getNavigator()?.setShopByCropAdapter(ShopByCropsAdapter(cropResponse.gpApiResponseData?.cropsList)) {
                         getNavigator()?.openCropStageActivity(it)
                     }
                 }

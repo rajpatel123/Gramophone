@@ -20,7 +20,7 @@ class ShopByCropsAdapter(private val cropList: List<CropData>?) :
     override fun onBindViewHolder(holder: CustomViewHolder, i: Int) {
         holder.binding.model = cropList?.get(i)
         holder.binding.itemView.setOnClickListener {
-            onItemClicked?.invoke(cropList?.get(i)?.crop_id.toString())
+            onItemClicked?.invoke(cropList?.get(i)?.cropId.toString())
         }
     }
 
