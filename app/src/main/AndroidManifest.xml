@@ -11,118 +11,115 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-
     <queries>
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
         </intent>
         <intent>
             <action android:name="android.intent.action.PICK" />
+
             <data android:mimeType="image/*" />
         </intent>
         <intent>
             <action android:name="android.intent.action.ACTION_GET_CONTENT" />
+
             <data android:mimeType="image/*" />
         </intent>
-
     </queries>
 
     <application
         android:name=".utils.GramAppApplication"
         android:allowBackup="true"
+        android:configChanges="layoutDirection|locale"
         android:icon="@mipmap/leaf_logo"
         android:label="@string/app_name"
-        android:configChanges="layoutDirection|locale"
-        android:roundIcon="@mipmap/leaf_logo"
         android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/leaf_logo"
         android:supportsRtl="true"
         android:theme="@style/SplashTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.home.view.fragments.community.LikedpostUserListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.settings.view.BlockedUsersActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.settings.view.WhatsAppOptInOptOutActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.settings.view.LanguageUpdateActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.settings.view.SettingsActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.address.view.SelectOtherStateActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.splash.view.SplashActivity"
             android:exported="true"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.address.view.AddOrUpdateAddressActivity"
             android:exported="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.address.view.StateListActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" >
-
-        </activity>
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity
             android:name=".ui.language.view.LanguageActivity"
             android:noHistory="true"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.verifyotp.view.VerifyOtpActivity"
-            android:windowSoftInputMode="adjustResize"
+        <activity
+            android:name=".ui.verifyotp.view.VerifyOtpActivity"
             android:configChanges="layoutDirection|locale"
             android:exported="true"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity
             android:name=".ui.apptour.view.AppTourActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.profileselection.view.ProfileSelectionActivity" />
         <activity
             android:name=".ui.login.view.LoginActivity"
-            android:screenOrientation="portrait"
             android:configChanges="layoutDirection|locale"
-            android:windowSoftInputMode="adjustResize"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.home.view.HomeActivity" />
         <activity android:name=".ui.profile.view.ProfileActivity" />
-        <activity android:name=".ui.home.product.activity.ProductDetailsActivity"
-            />
+        <activity android:name=".ui.home.product.activity.ProductDetailsActivity" />
         <activity android:name=".ui.cart.view.CartActivity" />
         <activity android:name=".ui.order.view.OrderListActivity" />
         <activity android:name=".ui.checkout.CheckoutStatusActivity" />
         <activity android:name=".ui.offer.OfferDetailActivity" />
         <activity android:name=".ui.orderdetails.OrderDetailsActivity" />
         <activity android:name=".ui.home.product.activity.ProductAllReviewsActivity" />
-        <activity android:name=".ui.home.product.activity.productreview.AddEditProductReviewActivity"/>
-        <activity android:name=".ui.userprofile.UserProfileActivity"/>
-        <activity android:name=".ui.userprofile.EditProfileActivity"/>
-        <activity android:name=".ui.userprofile.firm.AddFirmActivity"/>
-        <activity android:name=".ui.weather.WeatherActivity"/>
-        <activity android:name=".ui.home.subcategory.SubCategoryActivity"/>
-        <activity android:name=".ui.home.featured.FeaturedProductActivity"/>
-        <activity android:name=".ui.home.shop.ShopByActivity"/>
-        <activity android:name=".ui.home.shopbydetail.ShopByDetailActivity"/>
-        <activity android:name=".ui.home.stage.CropStageActivity"/>
-        <activity android:name=".ui.home.stagedetail.CropStageDetailActivity"/>
-        <activity android:name=".ui.home.cropdetail.CropDetailActivity"/>
+        <activity android:name=".ui.home.product.activity.productreview.AddEditProductReviewActivity" />
+        <activity android:name=".ui.userprofile.UserProfileActivity" />
+        <activity android:name=".ui.userprofile.EditProfileActivity" />
+        <activity android:name=".ui.userprofile.firm.AddFirmActivity" />
+        <activity android:name=".ui.weather.WeatherActivity" />
+        <activity android:name=".ui.home.subcategory.SubCategoryActivity" />
+        <activity android:name=".ui.home.featured.FeaturedProductActivity" />
+        <activity android:name=".ui.home.shop.ShopByActivity" />
+        <activity android:name=".ui.home.shopbydetail.ShopByDetailActivity" />
+        <activity android:name=".ui.home.stage.CropStageActivity" />
+        <activity android:name=".ui.home.stagedetail.CropStageDetailActivity" />
+        <activity android:name=".ui.home.cropdetail.CropDetailActivity" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
@@ -131,19 +128,17 @@
         <activity
             android:name=".ui.webview.view.WebViewActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name="com.canhub.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
-
-        <activity android:name=".ui.unitconverter.UnitConverterActivity"/>
-        <activity android:name=".ui.feedback.FeedbackActivity"/>
-        <activity android:name=".ui.offerslist.OffersListActivity"/>
+        <activity
+            android:name="com.canhub.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity android:name=".ui.unitconverter.UnitConverterActivity" />
+        <activity android:name=".ui.feedback.FeedbackActivity" />
+        <activity android:name=".ui.offerslist.OffersListActivity" />
 
         <service android:name=".pushnotification.MyFirebaseMessagingService" />
         <service
             android:name=".di.GetAddressIntentService"
             android:exported="true" />
-
         <service
             android:name=".di.GPSTracker"
             android:exported="true"

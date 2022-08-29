@@ -1,4 +1,4 @@
-package view.pager.recycler.view
+package agstack.gramophone.ui.home.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 
 import view.pager.recycler.R
 import view.pager.recycler.model.Data
-import view.pager.recycler.nestedviewpager.BannerViewPagerAdapter
 import view.pager.recycler.utils.Check
 import view.pager.recycler.utils.SquareViewPager
 

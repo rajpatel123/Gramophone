@@ -1,4 +1,4 @@
-package view.pager.recycler.nestedviewpager
+package agstack.gramophone.ui.home.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
