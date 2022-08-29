@@ -198,43 +198,33 @@
                 tools:text="Comments" />
         </RelativeLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.2">
+            android:layout_weight="1.2"
+            android:gravity="center_vertical">
 
             <ImageView
                 android:id="@+id/ivWhatsapp"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_14sdp"
-                android:layout_marginTop="@dimen/_14sdp"
-                android:layout_marginEnd="@dimen/_12sdp"
-                android:layout_marginBottom="@dimen/_14sdp"
-                android:layout_toStartOf="@+id/ivFacebook"
+                android:layout_weight="1"
                 app:srcCompat="@drawable/ic_whatsapp" />
+
 
             <ImageView
                 android:id="@+id/ivFacebook"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_14sdp"
-                android:layout_marginEnd="@dimen/_12sdp"
-                android:layout_marginBottom="@dimen/_14sdp"
-                android:layout_toStartOf="@+id/ivBookmark"
+                android:layout_weight="1"
                 app:srcCompat="@drawable/ic_facebook" />
-
             <ImageView
                 android:id="@+id/ivBookmark"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="@dimen/_14sdp"
-                android:layout_marginEnd="@dimen/_14sdp"
-                android:layout_marginBottom="@dimen/_14sdp"
+                android:layout_weight="1"
                 app:srcCompat="@drawable/ic_bookmark" />
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -243,7 +233,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/llActions"
-        android:layout_marginStart="@dimen/_12sdp">
+        android:layout_margin="@dimen/_10sdp"
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivProfileImage1"

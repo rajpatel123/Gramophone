@@ -342,6 +342,12 @@
     <string name="easy_return">Easy Return</string>
     <string name="free_expert_nadvice">Free Expert\nAdvice</string>
     <string name="product_fungicide">Fungicides Crystal Bavistin 50% WP Fun gicide Carbe ...</string>
+    <string name="tab_latest">Latest</string>
+    <string name="tab_trending">Trending</string>
+    <string name="tab_following">Following</string>
+    <string name="tab_expert">Expert</string>
+    <string name="tab_my_post">My Post</string>
+    <string name="tab_saved_post">Saved Post</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

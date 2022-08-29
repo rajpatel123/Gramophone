@@ -26,58 +26,68 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_bold"
             android:text="Who is the prime minister of india? "
+            android:textAlignment="center"
             android:textColor="@color/black"
-            android:textStyle="bold"
             android:textSize="@dimen/_16sdp"
-            android:textAlignment="center"/>
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
-            android:text="Narendra Modi"
-            android:textStyle="bold"
-            android:paddingTop="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_13sdp"
             android:background="@drawable/poll_rectangle_bg"
+            android:fontFamily="@font/manrope_medium"
+            android:paddingTop="@dimen/_12sdp"
+            android:text="Narendra Modi"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
-            android:textAlignment="center"/>
+            android:textStyle="bold" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:textStyle="bold"
-            android:paddingTop="@dimen/_12sdp"
             android:background="@drawable/poll_rectangle_bg"
+            android:fontFamily="@font/manrope_medium"
+            android:paddingTop="@dimen/_12sdp"
+
             android:text="Ram nath Kovind"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
-            android:textAlignment="center"/>
+            android:textStyle="bold" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
-            android:text="Arvind kejriwal"
-            android:paddingTop="@dimen/_12sdp"
-            android:textStyle="bold"
-            android:background="@drawable/poll_rectangle_bg"
             android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/poll_rectangle_bg"
+            android:fontFamily="@font/manrope_medium"
+            android:paddingTop="@dimen/_12sdp"
+
+            android:text="Arvind kejriwal"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
-            android:textAlignment="center"/>
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/tv_last_ans"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
-            android:text="Amit Shah"
-            android:textStyle="bold"
-            android:paddingTop="@dimen/_12sdp"
-            android:background="@drawable/poll_rectangle_bg"
-            android:layout_marginBottom="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/poll_rectangle_bg"
+            android:fontFamily="@font/manrope_medium"
+            android:paddingTop="@dimen/_12sdp"
+            android:text="Amit Shah"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
-            android:textAlignment="center"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -92,18 +102,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="23 farmer answered "
-        android:textColor="@color/black"
-        android:textSize="@dimen/_12sdp"
-        android:textAlignment="center"/>
+        android:layout_weight="1"
+        android:gravity="start"
+        android:textColor="@color/blakish"
+        android:textSize="@dimen/_13ssp"
+        android:fontFamily="@font/manrope_regular"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1 Day remaining "
-            android:layout_marginStart="@dimen/_100sdp"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"
-            android:textAlignment="center"/>
+            android:fontFamily="@font/manrope_regular"
+            android:textColor="@color/blakish"
+            android:textSize="@dimen/_13ssp"
+            android:layout_weight="1"
+            android:gravity="end"
+            />
 
     </LinearLayout>
 
@@ -113,6 +127,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/poll_ll1"
         android:layout_marginTop="@dimen/_10sdp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
 
@@ -126,9 +141,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_4ssp"
+            android:fontFamily="@font/manrope_regular"
             android:text="Share"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/blakish"
             android:textSize="@dimen/_12sdp" />
 
         <ImageView
@@ -136,15 +152,17 @@
             android:layout_height="@dimen/_20sdp"
             android:layout_marginStart="@dimen/_170sdp"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_facebook" />
+            android:src="@drawable/ic_facebook"
+            android:textColor="@color/blakish" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
+            android:fontFamily="@font/manrope_regular"
             android:text="Share "
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/blakish"
             android:textSize="@dimen/_12sdp" />
 
     </LinearLayout>

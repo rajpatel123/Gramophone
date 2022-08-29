@@ -19,31 +19,20 @@ private const val ARG_PARAM2 = "param2"
 
 @AndroidEntryPoint
 class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragmentNavigator,CommunityViewModel>() , CommunityFragmentNavigator{
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
 
     private val communityViewModel: CommunityViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
 
-    override fun getLayoutID(): Int {
-        return R.layout.fragment_community
-    }
+    override fun getLayoutID(): Int = R.layout.fragment_community
 
-    override fun getBindingVariable(): Int {
-        return BR.viewModel
-    }
+    override fun getBindingVariable(): Int = BR.viewModel
 
-    override fun getViewModel(): CommunityViewModel {
-       return communityViewModel
-    }
+    override fun getViewModel(): CommunityViewModel = communityViewModel
 
     override fun onCreateBinding(
         inflater: LayoutInflater,
@@ -51,23 +40,4 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         savedInstanceState: Bundle?
     ): FragmentCommunityBinding = FragmentCommunityBinding.inflate(inflater, container, false)
 
-    /* companion object {
-         *//**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ConnectedFragment.
-         *//*
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MarketFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }*/
 }
