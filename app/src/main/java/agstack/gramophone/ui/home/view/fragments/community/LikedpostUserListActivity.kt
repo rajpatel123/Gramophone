@@ -8,7 +8,9 @@ import agstack.gramophone.ui.home.view.fragments.community.viewmodel.LikedUserVi
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LikedpostUserListActivity : BaseActivityWrapper<ActivityLikedpostUserListBinding, LikedUserNavigator, LikedUserViewModel>(), LikedUserNavigator {
 
     private val likedUserViewModel: LikedUserViewModel by viewModels()

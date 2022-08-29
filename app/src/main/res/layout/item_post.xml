@@ -30,7 +30,7 @@
         android:fontFamily="@font/manrope_bold"
         android:textColor="@color/black"
         android:textSize="@dimen/_11ssp"
-        tools:text="Thakur Bhanupratap" />
+        android:text="Thakur Bhanupratap" />
 
     <TextView
         android:id="@+id/tvCity"
@@ -41,7 +41,7 @@
         android:fontFamily="@font/manrope_medium"
         android:textColor="@color/red"
         android:textSize="@dimen/_10ssp"
-        tools:text="+ Add Address" />
+        android:text="+ Add Address" />
 
     <TextView
         android:id="@+id/tvDate"
@@ -52,7 +52,7 @@
         android:fontFamily="@font/manrope_medium"
         android:textColor="@color/grey"
         android:textSize="@dimen/_10ssp"
-        tools:text="15 Aug 2022" />
+        android:text="15 Aug 2022" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
             android:fontFamily="@font/manrope_medium"
             android:textColor="@color/white"
             android:textSize="@dimen/_7ssp"
-            tools:text="ADMIN" />
+            android:text="ADMIN" />
     </RelativeLayout>
 
     <ImageView
@@ -115,9 +115,9 @@
         android:layout_marginTop="@dimen/_30sdp"
         android:layout_marginEnd="@dimen/_12sdp"
         android:fontFamily="@font/manrope_bold"
+        android:text="Which is the system of farming in which the farmer is directly related to the state?"
         android:textColor="@color/black"
-        android:textSize="@dimen/_16ssp"
-        tools:text="Which is the system of farming in which the farmer is directly related to the state?" />
+        android:textSize="@dimen/_16ssp" />
 
     <include
         android:id="@+id/banner_layout"
@@ -126,6 +126,20 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvDesc"
         android:visibility="gone" />
+
+    <include
+        android:id="@+id/poll"
+        layout="@layout/item_poll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDesc"
+        android:visibility="gone" />
+
+    <agstack.gramophone.ui.home.view.fragments.community.SquareViewPager
+        android:id="@+id/bannerPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tvTag"
@@ -140,9 +154,9 @@
         android:paddingTop="@dimen/_2sdp"
         android:paddingEnd="@dimen/_7sdp"
         android:paddingBottom="@dimen/_3sdp"
+        android:text="Tomato"
         android:textColor="@color/blakish"
-        android:textSize="@dimen/_10ssp"
-        tools:text="Tomato" />
+        android:textSize="@dimen/_10ssp" />
 
     <LinearLayout
         android:id="@+id/llActions"
@@ -173,7 +187,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_2sdp"
                 android:layout_toEndOf="@+id/ivLike"
-                tools:text="2 Likes" />
+                android:text="2 Likes" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -195,7 +209,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_2sdp"
                 android:layout_toEndOf="@+id/ivComment"
-                tools:text="Comments" />
+                android:text="Comments" />
         </RelativeLayout>
 
         <LinearLayout
@@ -229,12 +243,14 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/llActions1"
+        android:id="@+id/llChat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/llActions"
-        android:layout_margin="@dimen/_10sdp"
-        >
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivProfileImage1"
@@ -265,10 +281,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_2sdp"
                 android:fontFamily="@font/manrope_bold"
+                android:text="Jacob Rana"
                 android:textColor="@color/blue"
                 android:textSize="@dimen/_14ssp"
-                android:textStyle="bold"
-                tools:text="Jacob Rana" />
+                android:textStyle="bold" />
 
             <TextView
 
@@ -280,10 +296,10 @@
                 android:background="@drawable/expert_bg"
                 android:fontFamily="@font/manrope_medium"
                 android:padding="@dimen/_3sdp"
+                android:text="EXPERT"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_5ssp"
-                android:textStyle="bold"
-                tools:text="EXPERT" />
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -323,7 +339,7 @@
         android:id="@+id/llActions3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/llActions1"
+        android:layout_below="@+id/llChat"
         android:layout_marginStart="@dimen/_12sdp">
 
         <ImageView
@@ -341,8 +357,8 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/_2sdp"
             android:layout_toEndOf="@+id/ivCommentBottom"
-            android:textColor="@color/grey"
-            tools:text="Write a comment..." />
+            android:text="Write a comment..."
+            android:textColor="@color/grey" />
 
     </RelativeLayout>
 

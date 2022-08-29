@@ -4,24 +4,27 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentCommunityBinding
+import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
+import agstack.gramophone.ui.home.view.fragments.community.model.Data
 import agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_community.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 @AndroidEntryPoint
 class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragmentNavigator,CommunityViewModel>() , CommunityFragmentNavigator{
 
 
     private val communityViewModel: CommunityViewModel by viewModels()
+    private var recyclerView: RecyclerView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -40,4 +43,20 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         savedInstanceState: Bundle?
     ): FragmentCommunityBinding = FragmentCommunityBinding.inflate(inflater, container, false)
 
+
+    override fun onResume() {
+        super.onResume()
+        recyclerView = rvPost.apply {
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            setHasFixedSize(false)
+            adapter = CommunityPostAdapter(requireActivity())
+        }
+
+        communityViewModel.dataList.observe(viewLifecycleOwner, {dataList ->
+            (dataList as? MutableList<Data>)?.let {
+                (recyclerView?.adapter as? CommunityPostAdapter)?.dataList = it
+            }
+        })
+        communityViewModel.loadData()
+    }
 }

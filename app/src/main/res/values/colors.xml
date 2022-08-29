@@ -75,4 +75,5 @@
     <color name="location_permission_title">#993C3C43</color>
     <color name="selected_main_filter">#FAFCFF</color>
     <color name="gray_light">#77EDEFF3</color>
+    <color name="tab_color">#FC8587</color>
 </resources>

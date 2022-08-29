@@ -1,5 +1,7 @@
 package agstack.gramophone.ui.home.adapter
 
+import agstack.gramophone.R
+import agstack.gramophone.ui.home.view.fragments.community.model.PagerItem
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -7,12 +9,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 import java.util.ArrayList
 
-import view.pager.recycler.R
-import view.pager.recycler.model.PagerItem
 
 
 class BannerViewPagerAdapter(list: List<PagerItem>?, private val mContext: Context) : PagerAdapter() {
@@ -23,7 +24,7 @@ class BannerViewPagerAdapter(list: List<PagerItem>?, private val mContext: Conte
 
     init {
 
-        if (list != null && list.isNotEmpty())
+        if (list != null)
             mPagerList.addAll(list)
 
         this.mInflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -31,16 +32,19 @@ class BannerViewPagerAdapter(list: List<PagerItem>?, private val mContext: Conte
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
 
-        val rootView = mInflater.inflate(R.layout.item_pager, container, false)
+        val rootView = mInflater.inflate(R.layout.item_banner_pager, container, false)
 
         val holder = ViewHolder(rootView)
 
         val data = mPagerList[position]
 
         holder.pagerText.text ="Viewpager Item Number "+ data.itemText
-        Picasso.get().load(data.itemImageUrl)
-                .placeholder(R.drawable.placeholder)
-                .into(holder.imageView)
+        Glide.with(rootView.context)
+            .load(data.itemImageUrl)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
+            .fitCenter()
+            .into(holder.imageView)
         container.addView(rootView)
 
         return rootView

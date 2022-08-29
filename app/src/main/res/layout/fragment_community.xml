@@ -18,18 +18,23 @@
         <HorizontalScrollView
             android:id="@+id/hsvTabBar"
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             app:layout_constraintTop_toTopOf="parent"
+            android:paddingBottom="@dimen/_5sdp"
             tools:layout_editor_absoluteX="-162dp">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"
-                style="@style/TabIndicatorStyle"
+                style="@style/SocialTabIndicatorStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_44sdp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="-2dp"
+                android:layout_margin="@dimen/_3sdp"
+                app:tabBackground="@drawable/rounded_tab"
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextColor="@color/grey"
+                app:tabMode="scrollable"
                 app:tabIndicatorColor="@color/orange">
 
                 <com.google.android.material.tabs.TabItem
@@ -81,6 +86,7 @@
             tools:itemCount="2"
             app:layout_constraintTop_toBottomOf="@+id/hsvTabBar"
             tools:listitem="@layout/item_post"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
