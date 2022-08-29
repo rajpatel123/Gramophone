@@ -37,7 +37,7 @@ class AppTourViewModel @Inject constructor(
     fun startScroller() {
         scrollImagesJob = viewModelScope.launch {
             while (isActive) {
-                delay(3_000)
+                delay(Constants.DELAY)
                 if (currentPage === initiateAppDataResponseModel?.gp_api_response_data?.login_banner_list?.size) {
                     currentPage = 0
                 }
