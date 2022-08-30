@@ -28,13 +28,11 @@
     <application
         android:name=".utils.GramAppApplication"
         android:allowBackup="true"
-        android:configChanges="layoutDirection|locale"
         android:icon="@mipmap/leaf_logo"
         android:label="@string/app_name"
         android:configChanges="layoutDirection|locale"
         android:roundIcon="@mipmap/leaf_logo"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/leaf_logo"
         android:supportsRtl="true"
         android:theme="@style/SplashTheme"
         android:usesCleartextTraffic="true">
@@ -78,7 +76,7 @@
             android:name=".ui.address.view.StateListActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.language.view.LanguageActivity"
             android:noHistory="true"
@@ -88,7 +86,7 @@
             android:configChanges="layoutDirection|locale"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.apptour.view.AppTourActivity"
             android:screenOrientation="portrait" />
@@ -126,18 +124,6 @@
         <activity android:name=".ui.home.stage.CropStageActivity"/>
         <activity android:name=".ui.home.stagedetail.CropStageDetailActivity"/>
         <activity android:name=".ui.home.cropdetail.CropDetailActivity"/>
-        <activity android:name=".ui.home.product.activity.productreview.AddEditProductReviewActivity" />
-        <activity android:name=".ui.userprofile.UserProfileActivity" />
-        <activity android:name=".ui.userprofile.EditProfileActivity" />
-        <activity android:name=".ui.userprofile.firm.AddFirmActivity" />
-        <activity android:name=".ui.weather.WeatherActivity" />
-        <activity android:name=".ui.home.subcategory.SubCategoryActivity" />
-        <activity android:name=".ui.home.featured.FeaturedProductActivity" />
-        <activity android:name=".ui.home.shop.ShopByActivity" />
-        <activity android:name=".ui.home.shopbydetail.ShopByDetailActivity" />
-        <activity android:name=".ui.home.stage.CropStageActivity" />
-        <activity android:name=".ui.home.stagedetail.CropStageDetailActivity" />
-        <activity android:name=".ui.home.cropdetail.CropDetailActivity" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
