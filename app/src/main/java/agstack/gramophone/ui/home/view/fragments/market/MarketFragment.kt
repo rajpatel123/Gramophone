@@ -94,7 +94,6 @@ class MarketFragment :
         super.onViewCreated(view, savedInstanceState)
         setUpUI()
         marketFragmentViewModel.getFeaturedProducts(HashMap<Any, Any>())
-        marketFragmentViewModel.getBanners()
         marketFragmentViewModel.getCategories()
         marketFragmentViewModel.getCompanies()
         marketFragmentViewModel.getStores()
@@ -196,6 +195,11 @@ class MarketFragment :
 
     override fun openSubCategoryActivity(bundle: Bundle) {
         openActivity(SubCategoryActivity::class.java, bundle)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        marketFragmentViewModel.getBanners()
     }
 
     override fun getLayoutID(): Int {

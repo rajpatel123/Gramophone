@@ -82,7 +82,6 @@ class LanguageViewModel @Inject constructor(
                 val initiateAppDataResponseModel = handleOrderResponse(response).data
 
                 if (GP_API_STATUS.equals(initiateAppDataResponseModel?.gp_api_status)) {
-                    getBanners()
                     SharedPreferencesHelper.instance?.putString(
                         SharedPreferencesKeys.session_token,
                         initiateAppDataResponseModel?.gp_api_response_data?.temp_token
@@ -95,7 +94,7 @@ class LanguageViewModel @Inject constructor(
                         SharedPreferencesKeys.app_data,
                         initiateAppDataResponseModel!!
                     )
-                    getNavigator()?.moveToNext()
+                    getBanners()
                 }else{
                     getNavigator()?.onError(initiateAppDataResponseModel?.gp_api_message)
 
@@ -203,7 +202,6 @@ class LanguageViewModel @Inject constructor(
                 if (GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
                     getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
                     getBanners()
-                    getNavigator()?.closeLanguageList()
                 } else {
                     getNavigator()?.onError(updateLanguageResponseModel?.gp_api_message)
                 }
@@ -239,6 +237,7 @@ class LanguageViewModel @Inject constructor(
                             bannerResponseModel
                         )
                     }
+                    getNavigator()?.closeActivity()
                 } else getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
             } catch (ex: Exception) {
                 when (ex) {
