@@ -26,16 +26,36 @@ class CommunityPostAdapter(private val context: Context) : RecyclerView.Adapter<
     var dataList = immutableListOf<Data>()
 
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         val inflater = LayoutInflater.from(parent.context)
-        return  TextItemHolder(inflater.inflate(R.layout.item_post, parent, false))
+
+        return when (viewType) {
+            VIEW_TYPE_TEXT ->
+                TextItemHolder(inflater.inflate(R.layout.item_post, parent, false))
+            else ->
+                PagerItemHolder(inflater.inflate(R.layout.item_recycler_pager, parent, false))
+        }
+
 
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            val textHolder = holder as TextItemHolder
-            configureTextItem(textHolder, position)
+
+        when (holder.itemViewType) {
+
+            VIEW_TYPE_TEXT -> {
+                val textHolder = holder as TextItemHolder
+                configureTextItem(textHolder, position)
+            }
+
+            VIEW_TYPE_PAGER -> {
+                val pagerHolder = holder as PagerItemHolder
+                configurePagerHolder(pagerHolder, position)
+            }
+        }
+
     }
 
     private fun configureTextItem(holder: TextItemHolder, position: Int) {
@@ -48,8 +68,9 @@ class CommunityPostAdapter(private val context: Context) : RecyclerView.Adapter<
                 holder.llChat.visibility= GONE
                 holder.llActions.visibility= GONE
                 holder.tvTag.visibility= GONE
-
+                holder.llComment.visibility= GONE
             }
+
             position%2==0 -> {
                 holder.banner_layout.visibility=VISIBLE
                 holder.tvDesc.visibility=GONE
@@ -57,6 +78,7 @@ class CommunityPostAdapter(private val context: Context) : RecyclerView.Adapter<
                 holder.llChat.visibility= VISIBLE
                 holder.llActions.visibility= VISIBLE
                 holder.tvTag.visibility= VISIBLE
+                holder.llComment.visibility= VISIBLE
 
             }
             else -> {
@@ -66,6 +88,7 @@ class CommunityPostAdapter(private val context: Context) : RecyclerView.Adapter<
                 holder.llChat.visibility= VISIBLE
                 holder.llActions.visibility= VISIBLE
                 holder.tvTag.visibility= VISIBLE
+                holder.llComment.visibility= VISIBLE
 
             }
         }
@@ -74,15 +97,15 @@ class CommunityPostAdapter(private val context: Context) : RecyclerView.Adapter<
     }
 
     private fun configurePagerHolder(holder: PagerItemHolder, position: Int) {
-//        val data = dataList[position]
-//        val adapter = BannerViewPagerAdapter(data.pagerItemList, context)
-//        holder.viewPager.adapter = adapter
-//
-//        if (viewPageStates.containsKey(position)) {
-//            viewPageStates[position]?.let {
-//                holder.viewPager.currentItem = it
-//            }
-//        }
+        val data = dataList[position]
+        val adapter = BannerViewPagerAdapter(data.pagerItemList, context)
+        holder.viewPager.adapter = adapter
+
+        if (viewPageStates.containsKey(position)) {
+            viewPageStates[position]?.let {
+                holder.viewPager.currentItem = it
+            }
+        }
     }
 
     override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
@@ -92,10 +115,13 @@ class CommunityPostAdapter(private val context: Context) : RecyclerView.Adapter<
         }
     }
 
-//    override fun getItemViewType(position: Int): Int = dataList[position].viewType
+    override fun getItemViewType(position: Int): Int = dataList[position].viewType
 
     override fun getItemCount(): Int = dataList.size
-
+    companion object {
+        internal const val VIEW_TYPE_TEXT = 51
+        internal const val VIEW_TYPE_PAGER = 52
+    }
 }
 
 /**
@@ -108,6 +134,7 @@ private class TextItemHolder(view: View) : RecyclerView.ViewHolder(view) {
   val llActions :View =  view.findViewById(R.id.llActions)
   val llChat :View =  view.findViewById(R.id.llChat)
   val tvTag :View =  view.findViewById(R.id.tvTag)
+  val llComment :View =  view.findViewById(R.id.llComment)
 }
 
 /**

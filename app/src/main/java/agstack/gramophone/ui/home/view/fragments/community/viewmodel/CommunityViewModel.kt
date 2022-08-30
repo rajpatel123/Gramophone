@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.home.view.fragments.community.viewmodel
 
 import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
 import agstack.gramophone.ui.home.view.fragments.community.model.Data
 import agstack.gramophone.ui.home.view.fragments.community.model.PagerItem
@@ -10,7 +11,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 
@@ -27,21 +27,25 @@ class CommunityViewModel @Inject constructor(
 
             val finalList = ArrayList<Data>()
 
-            for (i in 1..30) {
+            for (i in 1..20) {
 
-                val data = if (i % 5 == 0) {
+                val data = if (i % 2 == 0) {
                     val pagerItemList = ArrayList<PagerItem>()
-                        for (j in 1..3) {
-                            pagerItemList.add(
-                                PagerItem(
-                                    itemText = j.toString(),
-                                    itemImageUrl = imageUrls()[j]
-                                )
+                    for (j in 1..10) {
+                        pagerItemList.add(
+                            PagerItem(
+                                itemText = j.toString(),
+                                itemImageUrl = imageUrls()[j]
                             )
-                        }
-                    Data(pagerItemList = pagerItemList )
+                        )
+                    }
+                    Data(
+                        viewType = CommunityPostAdapter.VIEW_TYPE_PAGER,
+                        pagerItemList = pagerItemList
+                    )
                 } else {
                     Data(
+                        viewType = CommunityPostAdapter.VIEW_TYPE_TEXT,
                         textItem = "List Item: $i"
                     )
                 }

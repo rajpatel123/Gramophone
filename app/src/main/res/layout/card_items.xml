@@ -24,7 +24,7 @@
             android:gravity="center"
             android:paddingStart="@dimen/_20sdp"
             android:paddingEnd="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:text="@{model.title}"
 
             app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_227sdp"
             android:src="@drawable/connected"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             login_banner="@{model.image}"
             app:layout_constraintTop_toBottomOf="@+id/subheading"
             />

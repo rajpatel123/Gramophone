@@ -88,27 +88,27 @@ class HomeActivity :
             R.id.navigation_home, R.id.navigation_community, R.id.navigation_profile, R.id.navigation_trade))
         setupActionBarWithNavController(navController, appBarConfiguration)*/
         viewDataBinding.navView.setupWithNavController(navController)
-        viewDataBinding.navView.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.navigation_home -> {
-                    updateMenuItemVisibility(true)
-                    return@setOnItemSelectedListener true
-                }
-                R.id.navigation_community -> {
-                    updateMenuItemVisibility(false)
-                    return@setOnItemSelectedListener true
-                }
-                R.id.navigation_profile -> {
-                    updateMenuItemVisibility(false)
-                    return@setOnItemSelectedListener true
-                }
-                R.id.navigation_trade -> {
-                    updateMenuItemVisibility(false)
-                    return@setOnItemSelectedListener true
-                }
-            }
-            false
-        }
+//        viewDataBinding.navView.setOnItemSelectedListener {
+//            when (it.itemId) {
+//                R.id.navigation_home -> {
+//                    updateMenuItemVisibility(true)
+//                    return@setOnItemSelectedListener true
+//                }
+//                R.id.navigation_community -> {
+//                    updateMenuItemVisibility(false)
+//                    return@setOnItemSelectedListener true
+//                }
+//                R.id.navigation_profile -> {
+//                    updateMenuItemVisibility(false)
+//                    return@setOnItemSelectedListener true
+//                }
+//                R.id.navigation_trade -> {
+//                    updateMenuItemVisibility(false)
+//                    return@setOnItemSelectedListener true
+//                }
+//            }
+//            false
+//        }
     }
 
     private fun setUpNavigationDrawer() {

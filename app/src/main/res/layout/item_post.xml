@@ -133,13 +133,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvDesc"
+        android:layout_margin="@dimen/_10sdp"
         android:visibility="gone" />
 
-    <agstack.gramophone.ui.home.view.fragments.community.SquareViewPager
-        android:id="@+id/bannerPager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tvTag"
@@ -336,7 +332,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/llActions3"
+        android:id="@+id/llComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/llChat"

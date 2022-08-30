@@ -46,16 +46,15 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     override fun onResume() {
         super.onResume()
-        recyclerView = rvPost.apply {
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            setHasFixedSize(false)
-            adapter = CommunityPostAdapter(requireActivity())
-        }
+        rvPost.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        rvPost.setHasFixedSize(false)
+        val adapter = CommunityPostAdapter(requireActivity())
+        rvPost.adapter = adapter
+
 
         communityViewModel.dataList.observe(viewLifecycleOwner, {dataList ->
-            (dataList as? MutableList<Data>)?.let {
-                (recyclerView?.adapter as? CommunityPostAdapter)?.dataList = it
-            }
+            adapter.dataList = dataList
+            adapter.notifyDataSetChanged()
         })
         communityViewModel.loadData()
     }
