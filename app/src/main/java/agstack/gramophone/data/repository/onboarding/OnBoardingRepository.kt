@@ -8,6 +8,7 @@ import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
+import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
@@ -45,4 +46,6 @@ interface OnBoardingRepository {
     suspend fun logoutUser(): Response<LogoutResponseModel>
 
     suspend fun updateAddressByLatLong(addressRequestModel: AddressRequestWithLatLongModel): Response<AddressDataByLatLongResponseModel>
+
+    suspend fun getBanners(): Response<BannerResponse>
 }

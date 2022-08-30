@@ -306,7 +306,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
 
             val addressRequestModel =
-                AddressRequestWithLatLongModel(latitude.toString(), longitude.toString(),state,city,"","", pin_code = postalCode)
+                AddressRequestWithLatLongModel(latitude.toString(), longitude.toString(),state,city,"","", pincode = postalCode)
             Log.d("AddressPayload", Gson().toJson(addressRequestModel))
             getAddressByLatLong(addressRequestModel = addressRequestModel)
         } else {

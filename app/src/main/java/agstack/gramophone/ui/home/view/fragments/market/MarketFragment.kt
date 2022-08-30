@@ -6,24 +6,20 @@ import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentMarketBinding
 import agstack.gramophone.ui.home.adapter.*
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
-import agstack.gramophone.ui.home.model.Banner
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.shop.ShopByActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
+import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.utils.Constants
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.youtube.player.YouTubeInitializationResult
-import com.google.android.youtube.player.YouTubePlayer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,11 +38,11 @@ private const val ARG_PARAM2 = "param2"
 
 
 @AndroidEntryPoint
-class MarketFragment : BaseFragment<FragmentMarketBinding, MarketFragmentNavigator, MarketFragmentViewModel>(),
+class MarketFragment :
+    BaseFragment<FragmentMarketBinding, MarketFragmentNavigator, MarketFragmentViewModel>(),
     MarketFragmentNavigator {
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var items: ArrayList<Banner>
     private val marketFragmentViewModel: MarketFragmentViewModel by viewModels()
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -89,9 +85,6 @@ class MarketFragment : BaseFragment<FragmentMarketBinding, MarketFragmentNavigat
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        uiScope.launch {
-            marketFragmentViewModel?.getFeaturedproducts(HashMap<Any, Any>())
-        }
     }
 
     /**
@@ -100,40 +93,33 @@ class MarketFragment : BaseFragment<FragmentMarketBinding, MarketFragmentNavigat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpUI()
+        marketFragmentViewModel.getFeaturedProducts(HashMap<Any, Any>())
+        marketFragmentViewModel.getCategories()
+        marketFragmentViewModel.getCompanies()
+        marketFragmentViewModel.getStores()
+        marketFragmentViewModel.getCrops()
     }
 
     private fun setUpUI() {
-        initCards()
-
-        binding?.dotsIndicator?.setOnClickListener { }
-        val adapter = ViewPagerAdapter(items)
-        binding?.viewPager?.adapter = adapter
-        binding?.dotsIndicator?.attachTo(binding?.viewPager!!)
-
-        binding?.rvShopByCat?.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        binding?.rvShopByCat?.setHasFixedSize(true)
-        binding?.rvShopByCat?.adapter = ShopByCategoryAdapter()
-
-        binding?.tvCateg?.setOnClickListener {
-            openActivity(SubCategoryActivity::class.java, null)
-        }
-        binding?.flViewAllFeaturedProduct?.setOnClickListener {
+        binding?.viewAllFeaturedProduct?.setOnClickListener {
             openActivity(FeaturedProductActivity::class.java, null)
         }
-        binding?.flShopByCrop?.setOnClickListener {
+        binding?.viewAllCrops?.setOnClickListener {
             openActivity(ShopByActivity::class.java, Bundle().apply {
                 putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
+                putParcelable(Constants.SHOP_BY_CROP, marketFragmentViewModel.cropResponse)
             })
         }
-        binding?.flViewAllStore?.setOnClickListener {
+        binding?.viewAllStores?.setOnClickListener {
             openActivity(ShopByActivity::class.java, Bundle().apply {
                 putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_STORE)
+                putParcelable(Constants.SHOP_BY_STORE, marketFragmentViewModel.storeResponse)
             })
         }
-        binding?.flViewAllShopByCompany?.setOnClickListener {
+        binding?.viewAllCompanies?.setOnClickListener {
             openActivity(ShopByActivity::class.java, Bundle().apply {
                 putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_COMPANY)
+                putParcelable(Constants.SHOP_BY_COMPANY, marketFragmentViewModel.companyResponse)
             })
         }
 
@@ -141,14 +127,6 @@ class MarketFragment : BaseFragment<FragmentMarketBinding, MarketFragmentNavigat
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         binding?.rvMandiRates?.setHasFixedSize(true)
         binding?.rvMandiRates?.adapter = MandiRatesAdapter()
-
-        binding?.rvShopByCrops?.layoutManager = GridLayoutManager(activity, 3)
-        binding?.rvShopByCrops?.setHasFixedSize(true)
-        binding?.rvShopByCrops?.adapter = ShopByCropsAdapter()
-
-        binding?.rvShopByStores?.layoutManager = GridLayoutManager(activity, 2)
-        binding?.rvShopByStores?.setHasFixedSize(true)
-        binding?.rvShopByStores?.adapter = ShopByStoresAdapter()
 
         binding?.rvRecentlyViewed?.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -168,51 +146,60 @@ class MarketFragment : BaseFragment<FragmentMarketBinding, MarketFragmentNavigat
         binding?.rvPopularProducts?.layoutManager = GridLayoutManager(activity, 2)
         binding?.rvPopularProducts?.setHasFixedSize(true)
         binding?.rvPopularProducts?.adapter = PopularProductAdapter()
-
-        binding?.rvShopByCompany?.layoutManager = GridLayoutManager(activity, 3)
-        binding?.rvShopByCompany?.setHasFixedSize(true)
-        binding?.rvShopByCompany?.adapter = ShopByCompanyAdapter()
     }
 
-    private fun initCards() {
-        items = ArrayList<Banner>()
-
-        val cardConnected = Banner(
-            R.drawable.dummy_banner,
-            getString(R.string.connected),
-            getString(R.string.connected_sub_msg)
-        )
-        items.add(cardConnected)
-
-        val cardDelivery = Banner(
-            R.drawable.dummy_banner_2,
-            getString(R.string.delivery),
-            getString(R.string.delivery_sub_msg)
-        )
-        items.add(cardDelivery)
-
-        val cardUpdates = Banner(
-            R.drawable.dummy_banner,
-            getString(R.string.midea),
-            getString(R.string.midea_sub_msg)
-        )
-        items.add(cardUpdates)
+    override fun setViewPagerAdapter(bannerList: List<Banner>?) {
+        val adapter = ViewPagerAdapter(bannerList!!)
+        binding?.viewPager?.adapter = adapter
+        binding?.dotsIndicator?.attachTo(binding?.viewPager!!)
     }
-
 
     override fun setFeaturedProductsAdapter(
         adapter: ProductListAdapter,
         onProductListItemClick: (ProductData) -> Unit,
     ) {
         uiScope.launch {
-        adapter.selectedProduct = onProductListItemClick
-       binding?.rvFeatureProduct?.adapter = adapter }
+            adapter.selectedProduct = onProductListItemClick
+            binding?.rvFeatureProduct?.adapter = adapter
+        }
+    }
+
+    override fun setCategoryAdapter(
+        adapter: ShopByCategoryAdapter,
+        onCategoryClick: (String) -> Unit,
+    ) {
+        adapter.itemClicked = onCategoryClick
+        binding?.rvShopByCat?.adapter = adapter
+    }
+
+    override fun setCropAdapter(adapter: ShopByCropsAdapter, onItemClick: (String) -> Unit) {
+        adapter.onItemClicked = onItemClick
+        binding?.rvShopByCrops?.adapter = adapter
+    }
+
+    override fun setCompanyAdapter(adapter: ShopByCompanyAdapter, onItemClick: (String) -> Unit) {
+        adapter.onItemClicked = onItemClick
+        binding?.rvShopByCompany?.adapter = adapter
+    }
+
+    override fun setStoreAdapter(adapter: ShopByStoresAdapter, onItemClick: (String) -> Unit) {
+        adapter.onItemClicked = onItemClick
+        binding?.rvShopByStores?.adapter = adapter
     }
 
     override fun startProductDetailsActivity(it: ProductData) {
         val bundle = Bundle()
         bundle.putParcelable("product", it)
-        openActivity(ProductDetailsActivity::class.java,bundle)
+        openActivity(ProductDetailsActivity::class.java, bundle)
+    }
+
+    override fun openSubCategoryActivity(bundle: Bundle) {
+        openActivity(SubCategoryActivity::class.java, bundle)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        marketFragmentViewModel.getBanners()
     }
 
     override fun getLayoutID(): Int {
@@ -220,42 +207,42 @@ class MarketFragment : BaseFragment<FragmentMarketBinding, MarketFragmentNavigat
     }
 
     override fun getBindingVariable(): Int {
-     return  BR.viewModel
+        return BR.viewModel
     }
 
     override fun getViewModel(): MarketFragmentViewModel {
-     return marketFragmentViewModel
+        return marketFragmentViewModel
     }
 
-   /* private fun initializeYoutube() {
-        binding?.ytPlayer?.initialize(
-            "api_key",
-            object : YouTubePlayer.OnInitializedListener {
-                // Implement two methods by clicking on red
-                // error bulb inside onInitializationSuccess
-                // method add the video link or the playlist
-                // link that you want to play In here we
-                // also handle the play and pause
-                // functionality
-                override fun onInitializationSuccess(
-                    provider: YouTubePlayer.Provider,
-                    youTubePlayer: YouTubePlayer, b: Boolean,
-                ) {
-                    youTubePlayer.loadVideo("HzeK7g8cD0Y")
-                    youTubePlayer.play()
-                }
+    /* private fun initializeYoutube() {
+         binding?.ytPlayer?.initialize(
+             "api_key",
+             object : YouTubePlayer.OnInitializedListener {
+                 // Implement two methods by clicking on red
+                 // error bulb inside onInitializationSuccess
+                 // method add the video link or the playlist
+                 // link that you want to play In here we
+                 // also handle the play and pause
+                 // functionality
+                 override fun onInitializationSuccess(
+                     provider: YouTubePlayer.Provider,
+                     youTubePlayer: YouTubePlayer, b: Boolean,
+                 ) {
+                     youTubePlayer.loadVideo("HzeK7g8cD0Y")
+                     youTubePlayer.play()
+                 }
 
-                // Inside onInitializationFailure
-                // implement the failure functionality
-                // Here we will show toast
-                override fun onInitializationFailure(
-                    provider: YouTubePlayer.Provider,
-                    youTubeInitializationResult: YouTubeInitializationResult,
-                ) {
-                    Toast.makeText(activity,
-                        "Video player Failed",
-                        Toast.LENGTH_SHORT).show()
-                }
-            })
-    }*/
+                 // Inside onInitializationFailure
+                 // implement the failure functionality
+                 // Here we will show toast
+                 override fun onInitializationFailure(
+                     provider: YouTubePlayer.Provider,
+                     youTubeInitializationResult: YouTubeInitializationResult,
+                 ) {
+                     Toast.makeText(activity,
+                         "Video player Failed",
+                         Toast.LENGTH_SHORT).show()
+                 }
+             })
+     }*/
 }

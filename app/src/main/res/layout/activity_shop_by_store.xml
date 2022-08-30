@@ -26,6 +26,9 @@
             android:id="@+id/rvShopBy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            tools:listitem="@layout/item_shop_by_store"
+            app:spanCount="2"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             android:layout_below="@+id/myToolbar"
             android:layout_marginTop="@dimen/_12sdp"
             android:orientation="vertical" />

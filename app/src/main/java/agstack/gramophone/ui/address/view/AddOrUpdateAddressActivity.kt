@@ -145,7 +145,7 @@ class AddOrUpdateAddressActivity :
     override fun getGPSTracker(): GPSTracker = GPSTracker(this@AddOrUpdateAddressActivity)
 
     override fun onError(message: String?) {
-        Toast.makeText(this@AddOrUpdateAddressActivity, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@AddOrUpdateAddressActivity, ""+message, Toast.LENGTH_SHORT).show()
 
     }
 

@@ -9,6 +9,7 @@ import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
+import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
@@ -103,5 +104,9 @@ class OnBoardingRepositoryImpl @Inject constructor(
         addressData
     }
 
-
+    override suspend fun getBanners(): Response<BannerResponse>  = withContext(
+        Dispatchers.IO) {
+        val bannerResponse = gramAppService.getBanners()
+        bannerResponse
+    }
 }

@@ -38,10 +38,6 @@ class LanguageUpdateActivity :
 
     override fun getViewModel() = languageViewModel
 
-    override fun moveToNext() {
-
-    }
-
     override fun updateLanguageList(
         languageAdapter: LanguageAdapter,
         onLanguageClicked: (Language) -> Unit
@@ -55,7 +51,7 @@ class LanguageUpdateActivity :
     override fun initiateApp() {
     }
 
-    override fun closeLanguageList() {
+    override fun closeActivity() {
         finish()
     }
 

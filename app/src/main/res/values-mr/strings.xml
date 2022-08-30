@@ -48,6 +48,26 @@
     <string name="save_continue"><![CDATA[Save & Continue]]></string>
     <string name="enter_firm_name">Enter Firm Name</string>
     <string name="add_firm">Add Firm</string>
+    <string name="check_referral_points">Check your referral points</string>
+    <string name="share_earn">Share Gramophone App and earn upto \u20B9 150!</string>
+    <string name="share_earn_message2">Share gramophone app with your farmer friends, they download the app then you can earn up to Rs. 150!</string>
+    <string name="share_your_referral_qr_code">SHARE YOUR REFERRAL CODE AND QR CODE</string>
+    <string name="share_now">Share Now</string>
+    <string name="frequently_asked_quest">Frequently Asked Questions</string>
+    <string name="referral_rules">Referral Rules</string>
+    <string name="know_more_about_referral_point">Know more about Referral Points Balance</string>
+    <string name="view_all_referral_transactions">View All Referral Transactions</string>
+    <string name="my_referrals">My Referrals</string>
+    <string name="you_have_no_referral">You have no referral yet!</string>
+    <string name="share_earn_referral_msg"> To earn more points please refer app to your friends.</string>
+    <string name="refer_a_friend">Refer a friend</string>
+    <string name="available">Available</string>
+    <string name="pending">Pending</string>
+    <string name="all">All</string>
+    <string name="referrals">Referrals</string>
+    <string name="no_transactions">No transactions done</string>
+    <string name="earned">Earned</string>
+    <string name="all_transactions">All Transactions</string>
 
     <string-array name="units_array">
         <item>बिघा</item>
@@ -58,5 +78,11 @@
     <string-array name="units_kind_array">
         <item>क्षेत्रफळ</item>
     </string-array>
+
+
+    <string name="aaa">All Tran_1111</string>
+    <string name="download_to_gallery">Downloaded to Gallery</string>
+    <string name="home_share_subject">ग्रामोफोन अॅप वरून दर्जेदार शेती उत्पादने मिळवा</string>
+    <string name="about_referral_point_balance">About Referral Points balance</string>
 
 </resources>

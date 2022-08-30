@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.referandearn.ReferandEarnViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <include
+
+            android:id="@+id/myToolbar"
+            layout="@layout/layout_toolbar" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/layout_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/myToolbar"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:onClick="@{()->viewModel.showReferralPointsActivity()}"
+                    android:id="@+id/ll_checkReferral"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/referral_text_bg"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:weightSum="5"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="26dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight=".5"
+                        app:srcCompat="@drawable/ic_coin" />
+
+                    <TextView
+                        android:id="@+id/allTransactionTextView"
+                        style="@style/TextSize13Sp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3.5"
+                        android:text="@string/check_referral_points"
+                        android:textSize="@dimen/_13ssp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_referral_points"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_corner_12_solid_orange"
+                            android:paddingLeft="@dimen/_8sdp"
+
+                            android:paddingTop="@dimen/_3sdp"
+                            android:paddingRight="@dimen/_8sdp"
+                            android:paddingBottom="@dimen/_3sdp"
+                            android:text="100"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            app:srcCompat="@drawable/ic_arrow_right_black" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_blueback"
+                    android:paddingLeft="@dimen/_21sdp"
+                    android:paddingRight="@dimen/_21sdp"
+                    app:layout_constraintTop_toBottomOf="@id/ll_checkReferral">
+
+                    <TextView
+                        android:id="@+id/tv_heading"
+                        android:gravity="center_horizontal"
+                        style="@style/TextSize14Sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_21sdp"
+                        android:text="@string/share_earn"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_20ssp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_subheading"
+                        android:gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_11sdp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/share_earn_message2"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_13ssp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_heading" />
+
+                    <ImageView
+                        android:id="@+id/iv_top"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_subheading"
+                        app:srcCompat="@drawable/ic_graphic_refer_earn" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_minus45sdp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintTop_toBottomOf="@id/iv_top"
+                    app:srcCompat="@drawable/ic_referearn_pointslist" />
+
+
+                <include
+                    android:id="@+id/shareyourreferal"
+                    android:layout_marginTop="@dimen/_minus20sdp"
+                    layout="@layout/share_referal_code_qrcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    bind:rvm="@{viewModel}" />
+
+                <TextView
+                    android:onClick="@{()->viewModel.onFAQClicked()}"
+                    android:id="@+id/tv_FAQ"
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/_24sdp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:text="@string/frequently_asked_quest"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_13ssp"/>
+
+                <TextView
+                    android:id="@+id/tv_referral_rules"
+                    android:onClick="@{()->viewModel.onFAQClicked()}"
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_17sdp"
+                    android:layout_marginBottom="@dimen/_35sdp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:text="@string/referral_rules"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_13ssp"
+
+                    />
+
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:id="@+id/layout_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_12sdp"
+            android:elevation="@dimen/_36sdp"
+            android:layout_marginTop="@dimen/_1sdp"
+            >
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/shareall"
+                android:onClick="@{()->viewModel.onShareClick()}"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:paddingHorizontal="40dp"
+                android:layout_weight=".5"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rounded_corner_12_solid_orange"
+                android:drawableStart="@drawable/ic_share_white"
+                android:elevation="24dp"
+                android:text="@string/share"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                android:visibility="visible" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/shareWhatsapp"
+                android:onClick="@{()->viewModel.onWhatsappShareClick()}"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:paddingHorizontal="40dp"
+                android:layout_weight=".5"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rounded_corner_4_whatsapp_solid_green"
+                android:drawableStart="@drawable/ic_whatsapp_white"
+                android:elevation="24dp"
+                android:text="@string/whatsapp"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                android:visibility="visible" />
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
