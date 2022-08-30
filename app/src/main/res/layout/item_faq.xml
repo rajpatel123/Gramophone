@@ -74,9 +74,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:text="@{model.answer}"
-                android:textColor="@color/blakish"
+                android:textColor="@color/gray"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="normal"
+                android:fontFamily="@font/manrope_regular"
                 tools:text="Answer" />
 
         </LinearLayout>
