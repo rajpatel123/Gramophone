@@ -195,7 +195,7 @@ class LanguageViewModel @Inject constructor(
 
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
-                val response = onBoardingRepository.updateLanguage(sendOtpRequestModel)
+                val response = onBoardingRepository.updateLanguageWhileOnBoarding(sendOtpRequestModel)
 
                 val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
 

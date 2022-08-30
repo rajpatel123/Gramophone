@@ -14,7 +14,6 @@ interface AddressNavigator : BaseNavigator{
     fun updatePinCode(adapter: AddressDataListAdapter, onSelect: (AddressDataModel) -> Unit)
     fun goToApp()
     fun getState(): String?
-    fun changeState()
     fun getAdapter(dataList: ArrayList<AddressDataModel>): AddressDataListAdapter
     fun closeDistrictDropDown()
     fun closeTehsilDropDown()

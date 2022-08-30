@@ -111,13 +111,8 @@ class AddOrUpdateAddressActivity :
         }
     }
 
-    override fun getState(): String? {
-        return etStateName.text.toString()
-    }
+    override fun getState(): String? = etStateName.text.toString()
 
-    override fun changeState() {
-        openAndFinishActivity(StateListActivity::class.java, null)
-    }
 
     override fun getAdapter(dataList: ArrayList<AddressDataModel>): AddressDataListAdapter {
         return AddressDataListAdapter(this, R.layout.item_address_data_name, dataList)
