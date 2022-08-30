@@ -1,7 +1,7 @@
 package agstack.gramophone.ui.home.adapter
 
 import agstack.gramophone.R
-import agstack.gramophone.ui.home.model.Banner
+import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.viewpager.widget.PagerAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import java.util.*
 
 class ViewPagerAdapter(private val imageList: List<Banner>) : PagerAdapter() {
@@ -42,8 +45,11 @@ class ViewPagerAdapter(private val imageList: List<Banner>) : PagerAdapter() {
         // on below line we are setting
         // image resource for image view.
         //imageView.setImageResource(imageList[position].id)
-        imageView.setBackgroundResource(imageList[position].id)
-
+        Glide.with(container.context)
+            .load(imageList[position].bannerImage)
+            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(imageView)
         // on the below line we are adding this
         // item view to the container.
         Objects.requireNonNull(container).addView(itemView)

@@ -1,33 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
-        android:id="@+id/flItem"
-        android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_80sdp">
+    <data>
 
-        <ImageView
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.home.view.fragments.market.model.CropData" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/itemView"
+            android:background="@drawable/rounded_corner_20_solid_white"
+            android:layout_width="@dimen/_80sdp"
+            android:padding="@dimen/_2sdp"
+            android:layout_height="@dimen/_80sdp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize20Percent"
+                android:contentDescription="@string/image"
+                app:product_image='@{model.cropImage ?? ""}'
+                tools:src="@drawable/dummy_crop" />
+
+        </FrameLayout>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:contentDescription="@string/image"
-            android:src="@drawable/dummy_shop_by_crop" />
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:text='@{model.cropName ?? ""}'
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            tools:text="Tomato" />
 
-    </FrameLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:layout_marginBottom="@dimen/_16sdp"
-        android:fontFamily="@font/manrope_bold"
-        android:text="Tomato"
-        android:textColor="@color/gray"
-        android:textSize="14sp" />
-
-</LinearLayout>
+    </LinearLayout>
+</layout>

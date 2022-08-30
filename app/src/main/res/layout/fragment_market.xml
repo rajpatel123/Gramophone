@@ -98,7 +98,7 @@
                     tools:listitem="@layout/item_feature_product" />
 
                 <FrameLayout
-                    android:id="@+id/flViewAllFeaturedProduct"
+                    android:id="@+id/viewAllFeaturedProduct"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -160,14 +160,12 @@
                     android:paddingBottom="@dimen/_20sdp"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/state_bg">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_16sdp"
-
                         android:fontFamily="@font/manrope_bold"
                         android:text="@string/shop_by_crops"
                         android:textColor="@color/blakish"
@@ -187,7 +185,7 @@
                         tools:listitem="@layout/item_shop_by_crops" />
 
                     <FrameLayout
-                        android:id="@+id/flShopByCrop"
+                        android:id="@+id/viewAllCrops"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -291,7 +289,6 @@
                     android:id="@+id/rv_shop_by_stores"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_16sdp"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -300,7 +297,7 @@
                     tools:listitem="@layout/item_shop_by_store" />
 
                 <FrameLayout
-                    android:id="@+id/flViewAllStore"
+                    android:id="@+id/viewAllStores"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -596,7 +593,7 @@
                     tools:listitem="@layout/item_shop_by_company" />
 
                 <FrameLayout
-                    android:id="@+id/flViewAllShopByCompany"
+                    android:id="@+id/viewAllCompanies"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

@@ -98,4 +98,6 @@ public abstract class SharedPreferencesKeys {
     public static final String WHATSAPP_OPT_IN="opt_in";
     @Nullable
     public static final String APP_TOUR_ENABLED="app_tour_enabled";
+    @Nullable
+    public static final String BANNER_DATA="banner_data";
 }
