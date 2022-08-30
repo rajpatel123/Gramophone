@@ -35,7 +35,7 @@
             android:paddingTop="@dimen/_5sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:paddingBottom="@dimen/_5sdp"
-            android:onClick="@{ ()-> viewModel.onHelpClick(llHelpLinearLayout) }"
+            android:onClick="@{ ()-> viewModel.onHelpClick() }"
             >
 
             <ImageView
@@ -68,7 +68,7 @@
             android:paddingTop="@dimen/_5sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:paddingBottom="@dimen/_5sdp"
-            android:onClick="@{ ()-> viewModel.onLanguageClick(llLanguageLinearLayout) }"
+            android:onClick="@{ ()-> viewModel.onLanguageClick() }"
             >
 
             <ImageView

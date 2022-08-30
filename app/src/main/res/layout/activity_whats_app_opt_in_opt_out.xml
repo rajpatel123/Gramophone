@@ -44,7 +44,7 @@
                 android:layout_height="@dimen/_48sdp"
                 android:layout_gravity="bottom"
                 android:layout_marginStart="@dimen/_40sdp"
-                android:layout_marginTop="@dimen/_43sdp"
+                android:layout_marginTop="@dimen/_47sdp"
                 android:elevation="@dimen/_16sdp"
                 app:srcCompat="@drawable/ic_whatsapp" />
             <RelativeLayout
