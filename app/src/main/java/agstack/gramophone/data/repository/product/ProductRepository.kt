@@ -46,6 +46,8 @@ interface ProductRepository {
 
     suspend fun getExpertAdvice(productData:ProductData):Response<SuccessStatusResponse>
 
+    suspend fun getBanners():Response<BannerResponse>
+
     suspend fun getCategories():Response<CategoryResponse>
 
     suspend fun getCompanies():Response<CompanyResponse>
