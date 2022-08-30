@@ -3,7 +3,6 @@ package agstack.gramophone.ui.home.featured
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.home.adapter.ProductListAdapter
-import agstack.gramophone.ui.home.subcategory.adapter.SubCategoryAdapter
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

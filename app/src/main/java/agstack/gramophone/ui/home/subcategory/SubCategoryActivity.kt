@@ -9,9 +9,8 @@ import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.dialog.filter.BottomSheetFilterDialog
 import agstack.gramophone.ui.dialog.sortby.BottomSheetSortByDialog
 import agstack.gramophone.ui.home.adapter.ProductListAdapter
+import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.adapter.ViewPagerAdapter
-import agstack.gramophone.ui.home.model.Banner
-import agstack.gramophone.ui.home.subcategory.adapter.SubCategoryAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.utils.Constants
@@ -32,15 +31,15 @@ class SubCategoryActivity :
 
     //initialise ViewModel
     private val subCategoryViewModel: SubCategoryViewModel by viewModels()
-    private lateinit var items: ArrayList<Banner>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        subCategoryViewModel.getBundleData()
+        subCategoryViewModel.getBanners()
         setupUi()
     }
 
     private fun setupUi() {
-        initCards()
         viewDataBinding.tvSortBy.setOnClickListener(this)
         viewDataBinding.tvFilter.setOnClickListener(this)
         viewDataBinding.appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
@@ -58,40 +57,7 @@ class SubCategoryActivity :
         })
 
         viewDataBinding.dotsIndicator.setOnClickListener { }
-
-
         subCategoryViewModel.setAdapter()
-    }
-
-    private fun initCards() {
-        items = ArrayList<Banner>()
-
-        val cardConnected = Banner(
-            R.drawable.dummy_banner,
-            getString(R.string.connected),
-            getString(R.string.connected_sub_msg)
-        )
-        items.add(cardConnected)
-
-        val cardDelivery = Banner(
-            R.drawable.dummy_banner_2,
-            getString(R.string.delivery),
-            getString(R.string.delivery_sub_msg)
-        )
-        items.add(cardDelivery)
-
-        val cardUpdates = Banner(
-            R.drawable.dummy_banner,
-            getString(R.string.midea),
-            getString(R.string.midea_sub_msg)
-        )
-        items.add(cardUpdates)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_home, menu);
-        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onClick(view: View?) {
@@ -113,7 +79,23 @@ class SubCategoryActivity :
         }
     }
 
-    override fun setSubCategoryAdapter(subCategoryAdapter: SubCategoryAdapter) {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_home, menu);
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun setViewPagerAdapter(bannerList: List<agstack.gramophone.ui.home.view.fragments.market.model.Banner>?) {
+        val adapter = ViewPagerAdapter(bannerList!!)
+        viewDataBinding.viewPager.adapter = adapter
+        viewDataBinding.dotsIndicator.attachTo(viewDataBinding.viewPager)
+    }
+
+    override fun setSubCategoryAdapter(
+        subCategoryAdapter: ShopByCategoryAdapter,
+        onItemClick: (String) -> Unit,
+    ) {
+        subCategoryAdapter.itemClicked = onItemClick
         viewDataBinding.rvSubCategory.adapter = subCategoryAdapter
     }
 

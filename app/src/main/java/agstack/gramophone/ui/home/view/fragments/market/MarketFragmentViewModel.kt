@@ -14,6 +14,7 @@ import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import java.io.IOException
@@ -76,6 +77,15 @@ class MarketFragmentViewModel
                 )
                 if (bannerResponse?.gpApiStatus == Constants.GP_API_STATUS) {
                     getNavigator()?.setViewPagerAdapter(bannerResponse.gpApiResponseData?.homeBanner1)
+                } else {
+                    val response = productRepository.getBanners()
+                    if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS) {
+                        SharedPreferencesHelper.instance?.putParcelable(
+                            SharedPreferencesKeys.BANNER_DATA,
+                            response.body()!!
+                        )
+                        getNavigator()?.setViewPagerAdapter(response.body()?.gpApiResponseData?.homeBanner1)
+                    }
                 }
             } catch (ex: Exception) {
                 when (ex) {
