@@ -4,6 +4,7 @@ package agstack.gramophone.data.repository.product
 import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
+import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.order.model.OrderListResponse
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
@@ -45,8 +46,6 @@ interface ProductRepository {
 
     suspend fun getExpertAdvice(productData:ProductData):Response<SuccessStatusResponse>
 
-    suspend fun getBanners():Response<BannerResponse>
-
     suspend fun getCategories():Response<CategoryResponse>
 
     suspend fun getCompanies():Response<CompanyResponse>
@@ -54,4 +53,6 @@ interface ProductRepository {
     suspend fun getStores():Response<StoreResponse>
 
     suspend fun getCrops():Response<CropResponse>
+
+    suspend fun getSubCategories(categoryId: String):Response<SubCategoryResponse>
 }

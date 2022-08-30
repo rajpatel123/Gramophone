@@ -46,7 +46,7 @@ class ViewPagerAdapter(private val imageList: List<Banner>) : PagerAdapter() {
         // image resource for image view.
         //imageView.setImageResource(imageList[position].id)
         Glide.with(container.context)
-            .load(imageList[position].banner_image)
+            .load(imageList[position].bannerImage)
             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(imageView)

@@ -33,7 +33,7 @@
                 android:layout_gravity="center"
                 app:product_image='@{model.category_image ?? ""}'
                 android:contentDescription="@string/image"
-                android:src="@drawable/dummy_shop_by_crop"
+                tools:src="@drawable/dummy_shop_by_crop"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
         </FrameLayout>

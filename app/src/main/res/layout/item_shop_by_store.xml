@@ -20,9 +20,9 @@
             android:id="@+id/itemView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:layout_marginBottom="@dimen/_16sdp"
-            android:background="@drawable/rounded_corner_20_solid_white_stroke_gray"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -32,39 +32,49 @@
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_156sdp"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize20Percent"
-                app:product_image='@{model.store_image ?? ""}'
                 android:layout_gravity="center_horizontal"
                 android:scaleType="fitXY"
+                app:product_image='@{model.storeImage ?? ""}'
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerTopOnly20"
+                app:strokeColor="@color/gray_stroke"
+                app:strokeWidth="1dp"
                 tools:src="@drawable/dummy_shop_by_store" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/manrope_bold"
-                android:lineSpacingExtra="1sp"
-                android:maxLines="1"
-                android:paddingStart="12dp"
-                android:paddingEnd="4dp"
-                tools:text="Pesticides"
-                android:text='@{model.store_name ?? ""}'
-                android:textColor="@color/blakish"
-                android:textSize="16sp" />
+                android:background="@drawable/rounded_corner_bottom_16_solid_white_stroke_gray"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/manrope_bold"
-                android:lineSpacingExtra="-2sp"
-                android:maxLines="1"
-                android:paddingStart="12dp"
-                android:paddingEnd="4dp"
-                android:paddingBottom="12dp"
-                android:text="@string/starts_from_99"
-                android:textColor="@color/green_dark"
-                android:textSize="13sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/manrope_bold"
+                    android:lineSpacingExtra="1sp"
+                    android:maxLines="1"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="4dp"
+                    android:text='@{model.storeName ?? ""}'
+                    android:textColor="@color/blakish"
+                    android:textSize="16sp"
+                    tools:text="Pesticides" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_bold"
+                    android:lineSpacingExtra="-2sp"
+                    android:maxLines="1"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="4dp"
+                    android:paddingBottom="12dp"
+                    android:text="@string/starts_from_99"
+                    android:textColor="@color/green_dark"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

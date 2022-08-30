@@ -1,19 +1,24 @@
 package agstack.gramophone.ui.home.view.fragments.market.model
 
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class StoreResponse(
-    val gp_api_error_data: GpApiErrorData,
-    val gp_api_message: String,
-    val gp_api_response_data: GpApiResponseStoreData,
-    val gp_api_status: String,
-    val gp_api_trace: GpApiTrace,
-)
+    @SerializedName("gp_api_status") var gpApiStatus: String? = null,
+    @SerializedName("gp_api_message") var gpApiMessage: String? = null,
+    @SerializedName("gp_api_response_data") var gpApiResponseData: GpApiResponseStoreData? = GpApiResponseStoreData(),
+) : Parcelable
 
+@Parcelize
 data class GpApiResponseStoreData(
-    val stores_list: List<StoreData>,
-)
+    @SerializedName("stores_list") var storeList: ArrayList<StoreData> = arrayListOf(),
+) : Parcelable
 
+@Parcelize
 data class StoreData(
-    val store_id: Int,
-    val store_image: String,
-    val store_name: String,
-)
+    @SerializedName("store_id") var storeId: Int? = null,
+    @SerializedName("store_image") var storeImage: String? = null,
+    @SerializedName("store_name") var storeName: String? = null,
+) : Parcelable

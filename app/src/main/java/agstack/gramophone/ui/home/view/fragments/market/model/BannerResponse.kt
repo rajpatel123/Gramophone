@@ -1,30 +1,28 @@
 package agstack.gramophone.ui.home.view.fragments.market.model
 
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class BannerResponse(
-    val gp_api_error_data: GpApiErrorData,
-    val gp_api_message: String,
-    val gp_api_response_data: GpApiResponseBannerData,
-    val gp_api_status: String,
-    val gp_api_trace: GpApiTrace
-)
+    @SerializedName("gp_api_status") var gpApiStatus: String? = null,
+    @SerializedName("gp_api_message") var gpApiMessage: String? = null,
+    @SerializedName("gp_api_response_data") var gpApiResponseData: GpApiResponseBannerData? = GpApiResponseBannerData(),
+) : Parcelable
 
-class GpApiErrorData
-
+@Parcelize
 data class GpApiResponseBannerData(
-    val home_banner_1: List<Banner>,
-    val home_gramophone_exclusive: List<Banner>,
-    val home_referral_banner: List<Banner>
-)
+    @SerializedName("home_banner_1") var homeBanner1: ArrayList<Banner> = arrayListOf(),
+    @SerializedName("home_gramophone_exclusive") var homeGramophoneExclusive: ArrayList<Banner> = arrayListOf(),
+    @SerializedName("home_referral_banner") var homeReferralBanner: ArrayList<Banner> = arrayListOf(),
+) : Parcelable
 
-data class GpApiTrace(
-    val gp_request_id: String,
-    val gp_trace_id: String
-)
-
+@Parcelize
 data class Banner(
-    val banner_image: String,
-    val banner_link: String,
-    val banner_type: String,
-    val banner_type_display: String,
-    val banner_type_screen: String
-)
+    @SerializedName("banner_type") var bannerType: String? = null,
+    @SerializedName("banner_image") var bannerImage: String? = null,
+    @SerializedName("banner_link") var bannerLink: String? = null,
+    @SerializedName("banner_type_display") var bannerTypeDisplay: String? = null,
+    @SerializedName("banner_type_screen") var bannerTypeScreen: String? = null,
+) : Parcelable

@@ -102,28 +102,25 @@ class MarketFragment :
     }
 
     private fun setUpUI() {
-        binding?.dotsIndicator?.setOnClickListener { }
-
-        binding?.tvCateg?.setOnClickListener {
-            openActivity(SubCategoryActivity::class.java, null)
-        }
-        binding?.flViewAllFeaturedProduct?.setOnClickListener {
+        binding?.viewAllFeaturedProduct?.setOnClickListener {
             openActivity(FeaturedProductActivity::class.java, null)
         }
-        binding?.flShopByCrop?.setOnClickListener {
+        binding?.viewAllCrops?.setOnClickListener {
             openActivity(ShopByActivity::class.java, Bundle().apply {
                 putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
                 putParcelable(Constants.SHOP_BY_CROP, marketFragmentViewModel.cropResponse)
             })
         }
-        binding?.flViewAllStore?.setOnClickListener {
+        binding?.viewAllStores?.setOnClickListener {
             openActivity(ShopByActivity::class.java, Bundle().apply {
                 putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_STORE)
+                putParcelable(Constants.SHOP_BY_STORE, marketFragmentViewModel.storeResponse)
             })
         }
-        binding?.flViewAllShopByCompany?.setOnClickListener {
+        binding?.viewAllCompanies?.setOnClickListener {
             openActivity(ShopByActivity::class.java, Bundle().apply {
                 putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_COMPANY)
+                putParcelable(Constants.SHOP_BY_COMPANY, marketFragmentViewModel.companyResponse)
             })
         }
 

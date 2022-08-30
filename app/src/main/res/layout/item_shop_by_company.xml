@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:contentDescription="@string/image"
-                app:product_image='@{model.company_image ?? ""}'
+                app:product_image='@{model.companyImage ?? ""}'
                 android:src="@drawable/dummy_shop_by_company" />
 
         </FrameLayout>

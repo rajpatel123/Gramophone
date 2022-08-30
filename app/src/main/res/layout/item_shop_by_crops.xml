@@ -20,18 +20,20 @@
 
         <FrameLayout
             android:id="@+id/itemView"
-            android:background="@drawable/rounded_corner_24_solid_white"
+            android:background="@drawable/rounded_corner_20_solid_white"
             android:layout_width="@dimen/_80sdp"
+            android:padding="@dimen/_2sdp"
             android:layout_height="@dimen/_80sdp">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize24Percent"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize20Percent"
                 android:contentDescription="@string/image"
                 app:product_image='@{model.cropImage ?? ""}'
-                tools:src="@drawable/dummy_shop_by_crop" />
+                tools:src="@drawable/dummy_crop" />
 
         </FrameLayout>
 

@@ -20,7 +20,7 @@ class ShopByStoresAdapter(private val storeList: List<StoreData>?) :
     override fun onBindViewHolder(holder: CustomViewHolder, i: Int) {
         holder.binding.model = storeList!![i]
         holder.binding.itemView.setOnClickListener {
-            onItemClicked?.invoke(storeList[i].store_id.toString())
+            onItemClicked?.invoke(storeList[i].storeId.toString())
         }
     }
 

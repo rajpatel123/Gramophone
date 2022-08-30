@@ -11,6 +11,7 @@ import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongRe
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
+import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
@@ -179,4 +180,7 @@ interface GramAppService {
 
     @GET("api/v5/category/crops")
     suspend fun getCrops(): Response<CropResponse>
+
+    @GET("api/v5/category/product-app-category/{category_id}")
+    suspend fun getSubCategory(@Path("category_id") categoryId: String): Response<SubCategoryResponse>
 }

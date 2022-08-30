@@ -20,7 +20,7 @@ class ShopByCompanyAdapter(private val companyList: List<CompanyData>?) :
     override fun onBindViewHolder(holder: CustomViewHolder, i: Int) {
         holder.binding.model = companyList?.get(i)
         holder.binding.flCompany.setOnClickListener {
-            onItemClicked?.invoke(companyList?.get(i)?.company_id.toString())
+            onItemClicked?.invoke(companyList?.get(i)?.companyId.toString())
         }
     }
 

@@ -5,6 +5,7 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.model.UpdateLanguageRequestModel
 import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
+import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.language.LanguageActivityNavigator
 import agstack.gramophone.ui.language.adapter.LanguageAdapter
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
@@ -12,11 +13,8 @@ import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.GpApiResponseData
 import agstack.gramophone.ui.language.model.languagelist.Language
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
-import agstack.gramophone.utils.ApiResponse
+import agstack.gramophone.utils.*
 import agstack.gramophone.utils.Constants.GP_API_STATUS
-import agstack.gramophone.utils.LocaleManagerClass
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -84,6 +82,7 @@ class LanguageViewModel @Inject constructor(
                 val initiateAppDataResponseModel = handleOrderResponse(response).data
 
                 if (GP_API_STATUS.equals(initiateAppDataResponseModel?.gp_api_status)) {
+                    getBanners()
                     SharedPreferencesHelper.instance?.putString(
                         SharedPreferencesKeys.session_token,
                         initiateAppDataResponseModel?.gp_api_response_data?.temp_token
@@ -203,6 +202,7 @@ class LanguageViewModel @Inject constructor(
 
                 if (GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
                     getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
+                    getBanners()
                     getNavigator()?.closeLanguageList()
                 } else {
                     getNavigator()?.onError(updateLanguageResponseModel?.gp_api_message)
@@ -219,6 +219,37 @@ class LanguageViewModel @Inject constructor(
     }
 
     private fun handleLanguageUpdateResponse(response: Response<UpdateLanguageResponseModel>): ApiResponse<UpdateLanguageResponseModel> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                return ApiResponse.Success(resultResponse)
+            }
+        }
+        return ApiResponse.Error(response.message())
+    }
+
+    private fun getBanners() {
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    val response = onBoardingRepository.getBanners()
+                    val bannerResponseModel = handleBannerResponse(response).data
+                    if (GP_API_STATUS == bannerResponseModel?.gpApiStatus) {
+                        SharedPreferencesHelper.instance?.putParcelable(
+                            SharedPreferencesKeys.BANNER_DATA,
+                            bannerResponseModel
+                        )
+                    }
+                } else getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
+
+    private fun handleBannerResponse(response: Response<BannerResponse>): ApiResponse<BannerResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
                 return ApiResponse.Success(resultResponse)
