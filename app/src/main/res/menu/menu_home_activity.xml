@@ -16,7 +16,7 @@
         android:title="Favorite Item"
         android:orderInCategory="1"
         android:visible="true"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/item_cart"
@@ -24,6 +24,6 @@
         android:title="show cart"
         android:orderInCategory="1"
         android:visible="true"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
 </menu>

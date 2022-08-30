@@ -149,6 +149,7 @@ class HomeActivity :
         }
     }
 
+
     private fun setUpNavigationDrawer() {
         setUpToolBar(true, resources.getString(R.string.app_name), R.drawable.ic_cart_menu)
         supportActionBar?.setDisplayShowTitleEnabled(false)

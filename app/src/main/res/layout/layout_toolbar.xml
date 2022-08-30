@@ -8,6 +8,6 @@
     app:contentInsetStart="0dp"
     app:contentInsetStartWithNavigation="0dp"
     android:background="@color/white"
-    app:titleTextColor="@color/brand_color"
+    app:titleTextColor="@color/blakish"
     app:titleTextAppearance="@style/Toolbar.TitleText"
     android:theme="@style/ToolbarTheme" />

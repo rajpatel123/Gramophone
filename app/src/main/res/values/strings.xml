@@ -195,7 +195,8 @@
     <string name="share_app">Share App</string>
     <string name="app_url"><![CDATA[https://play.google.com/store/apps/details?id=agstack.gramophone&hl=en_IN&gl=US]]></string>
     <string name="share_app_link">Share App link!</string>
-    <string name="whatsapp">Whatsapp opt-in</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="whatsapp_in">Whatsapp opt-in</string>
     <string name="whatsapp_update">Get updates over Whatsapp</string>
     <string name="recieve_del">Recieve delivery updates and reminders from Gramophone with WhatsApp, Feel free to contact us too!</string>
     <string name="unblock">Unblock</string>
@@ -324,6 +325,27 @@
     <string name="save_continue"><![CDATA[Save & Continue]]></string>
     <string name="enter_firm_name">Enter Firm Name</string>
     <string name="add_firm">Add Firm</string>
+    <string name="check_referral_points">Check your referral points</string>
+    <string name="share_earn">Share Gramophone App and earn upto \u20B9 150!</string>
+    <string name="share_earn_message2">Share gramophone app with your farmer friends, they download the app then you can earn up to Rs. 150!</string>
+    <string name="share_your_referral_qr_code">SHARE YOUR REFERRAL CODE AND QR CODE</string>
+    <string name="share_now">Share Now</string>
+    <string name="frequently_asked_quest">Frequently Asked Questions</string>
+    <string name="referral_rules">Referral Rules</string>
+    <string name="referral_points">Referral Points</string>
+    <string name="know_more_about_referral_point">Know more about Referral Points Balance</string>
+    <string name="view_all_referral_transactions">View All Referral Transactions</string>
+    <string name="my_referrals">My Referrals</string>
+    <string name="you_have_no_referral">You have no referral yet!</string>
+    <string name="share_earn_referral_msg">To earn more points please refer app to your friends.</string>
+    <string name="refer_a_friend">Refer a friend</string>
+    <string name="available">Available</string>
+    <string name="pending">Pending</string>
+    <string name="all">All</string>
+    <string name="referrals">Referrals</string>
+    <string name="no_transactions">No transactions done</string>
+    <string name="earned">Earned</string>
+    <string name="all_transactions">All Transactions</string>
     <string name="_01">01</string>
     <string name="_60">60%</string>
     <string name="_1_290">₹1,290</string>
@@ -342,6 +364,12 @@
     <string name="easy_return">Easy Return</string>
     <string name="free_expert_nadvice">Free Expert\nAdvice</string>
     <string name="product_fungicide">Fungicides Crystal Bavistin 50% WP Fun gicide Carbe ...</string>
+    <string name="tab_latest">Latest</string>
+    <string name="tab_trending">Trending</string>
+    <string name="tab_following">Following</string>
+    <string name="tab_expert">Expert</string>
+    <string name="tab_my_post">My Post</string>
+    <string name="tab_saved_post">Saved Post</string>
     <string name="starts_from_99">Starts from ₹ 99</string>
     <string name="shop_by_sub_category">Shop by Sub Category</string>
     <string name="sort_by">Sort by</string>
@@ -363,4 +391,9 @@
     <string-array name="units_kind_array">
         <item>Area</item>
     </string-array>
+
+    <string name="aaa">All Tran_1111</string>
+    <string name="download_to_gallery">Downloaded to Gallery</string>
+    <string name="home_share_subject">Get best quality agriculture products from Gramophone App</string>
+    <string name="about_referral_point_balance">About Referral Points balance</string>
 </resources>
