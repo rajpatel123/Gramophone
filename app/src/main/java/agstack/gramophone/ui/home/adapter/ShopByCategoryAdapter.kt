@@ -2,12 +2,14 @@ package agstack.gramophone.ui.home.adapter
 
 
 import agstack.gramophone.databinding.ItemCategoryBinding
+import agstack.gramophone.ui.home.view.fragments.market.model.CategoryData
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ShopByCategoryAdapter :
+class ShopByCategoryAdapter(private var categoryList: List<CategoryData>?) :
     RecyclerView.Adapter<ShopByCategoryAdapter.DeveloperViewHolder>() {
+    var itemClicked: ((String) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): DeveloperViewHolder {
         return DeveloperViewHolder(
@@ -16,12 +18,14 @@ class ShopByCategoryAdapter :
     }
 
     override fun onBindViewHolder(holder: DeveloperViewHolder, i: Int) {
-        holder.binding.tvCatName.text = "Onion"
-
+        holder.binding.model = categoryList?.get(i)
+        holder.itemView.setOnClickListener {
+            itemClicked?.invoke(categoryList?.get(i)?.category_id?.toString()!!)
+        }
     }
 
     override fun getItemCount(): Int {
-        return /*languageList.size*/10
+        return categoryList?.size!!
     }
 
     inner class DeveloperViewHolder(var binding: ItemCategoryBinding) :

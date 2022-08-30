@@ -90,9 +90,6 @@ class VerifyOtpActivity :
         }.start()
     }
 
-    override fun onHelpClick(number: String) {
-        verifyOtpViewModel.onHelpClick()
-    }
 
     override fun onLanguageChangeClick() {
         val bottomSheet = LanguageBottomSheetFragment()

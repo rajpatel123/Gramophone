@@ -20,7 +20,7 @@ class SubCategoryAdapter() :
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        holder.binding.frameItem.setOnClickListener {
+        holder.binding.itemView.setOnClickListener {
             onItemClicked?.invoke("1")
         }
     }

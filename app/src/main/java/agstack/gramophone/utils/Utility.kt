@@ -21,12 +21,18 @@ import com.journeyapps.barcodescanner.BarcodeEncoder
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+
 import java.io.OutputStream
 import java.net.URL
 import java.util.*
 
 
 object Utility {
+    private const val MONTH_DATE_YEAR_FORMAT = "MMM dd, yyyy" /*"Jun 21, 2022"*/
+    private const val DATE_MONTH_YEAR_FORMAT = "dd-MMM-yyyy"  /*05-Jul-2022*/
 
     fun List<String>.toBulletedList(): CharSequence {
         return SpannableString(this.joinToString("\n")).apply {
@@ -41,7 +47,7 @@ object Utility {
 
     @Throws(IOException::class)
     fun getPictureFile(
-        context: Context
+        context: Context,
     ): File {
         val pictureFile = System.currentTimeMillis().toString() + ".jpg"
         val storageDir = getExternalFileDir(context)
@@ -122,5 +128,22 @@ object Utility {
         }
 
 
+    }
+
+    fun getFormattedDate(
+        dateString: String,
+    ): String {
+        try {
+            // Creating date format
+            val dateFormat: DateFormat = SimpleDateFormat(DATE_MONTH_YEAR_FORMAT, Locale.ENGLISH)
+            val format = SimpleDateFormat(MONTH_DATE_YEAR_FORMAT, Locale.ENGLISH)
+            val date: Date = format.parse(dateString)!!
+
+            // Formatting Date according to the given format
+            return dateFormat.format(date).toString()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return dateString
     }
 }

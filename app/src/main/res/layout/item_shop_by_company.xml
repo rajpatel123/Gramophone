@@ -1,25 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
-        android:id="@+id/flCompany"
-        android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_80sdp"
-        android:padding="@dimen/_6sdp"
-        android:background="@drawable/rounded_corner_16_solid_white_stroke_gray"
-        android:layout_marginBottom="@dimen/_16sdp">
+    <data>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:contentDescription="@string/image"
-            android:src="@drawable/dummy_shop_by_company" />
+        <import type="android.view.View" />
 
-    </FrameLayout>
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.home.view.fragments.market.model.CompanyData" />
+    </data>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/flCompany"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:background="@drawable/rounded_corner_16_solid_white_stroke_gray"
+            android:padding="@dimen/_6sdp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="@string/image"
+                app:product_image='@{model.companyImage ?? ""}'
+                android:src="@drawable/dummy_shop_by_company" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+</layout>

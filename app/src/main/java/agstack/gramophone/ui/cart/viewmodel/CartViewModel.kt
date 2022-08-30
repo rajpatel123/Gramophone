@@ -12,6 +12,7 @@ import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
+import android.widget.CompoundButton
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,6 +32,7 @@ class CartViewModel @Inject constructor(
     var gramCash = MutableLiveData<Int>()
     var totalAmount = MutableLiveData<Int>()
     var progress = MutableLiveData<Boolean>()
+    var showGramCashCoinView = MutableLiveData<Boolean>()
     var showCartView = MutableLiveData<Boolean>()
 
     init {
@@ -40,6 +42,7 @@ class CartViewModel @Inject constructor(
         gramCash.value = 0
         totalAmount.value = 0
         progress.value = false
+        showGramCashCoinView.value = true
         showCartView.value = true
     }
 
@@ -49,6 +52,10 @@ class CartViewModel @Inject constructor(
             subTotal += cartItem.price.toFloat().toInt() * cartItem.quantity.toInt()
         }
         amount.value = subTotal
+    }
+
+    fun onCheckedChange(button: CompoundButton, check: Boolean) {
+        showGramCashCoinView.value = check
     }
 
     fun onClickPlaceOrder() {

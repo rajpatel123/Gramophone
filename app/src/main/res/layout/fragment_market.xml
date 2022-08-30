@@ -98,7 +98,7 @@
                     tools:listitem="@layout/item_feature_product" />
 
                 <FrameLayout
-                    android:id="@+id/flViewAllFeaturedProduct"
+                    android:id="@+id/viewAllFeaturedProduct"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -160,14 +160,12 @@
                     android:paddingBottom="@dimen/_20sdp"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/state_bg">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_16sdp"
-
                         android:fontFamily="@font/manrope_bold"
                         android:text="@string/shop_by_crops"
                         android:textColor="@color/blakish"
@@ -187,7 +185,7 @@
                         tools:listitem="@layout/item_shop_by_crops" />
 
                     <FrameLayout
-                        android:id="@+id/flShopByCrop"
+                        android:id="@+id/viewAllCrops"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -230,7 +228,7 @@
                         android:layout_marginTop="@dimen/_30sdp"
                         android:fontFamily="@font/manrope_bold"
                         android:gravity="center"
-                        android:text="Get accurate information\nabout your farm for better\nharvest"
+                        android:text="@string/get_accurate_information_nabout_your_farm_for_better_nharvest"
                         android:textColor="@color/blakish"
                         android:textSize="@dimen/_16ssp"
                         android:textStyle="normal" />
@@ -241,7 +239,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:gravity="center"
-                        android:text="Get accurate information about your\nfarm for better harvest"
+                        android:text="@string/get_accurate_information_nabout_your_farm_for_better_nharvest"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/_12ssp" />
 
@@ -256,7 +254,7 @@
                         android:focusable="true"
                         android:fontFamily="@font/manrope_bold"
                         android:gravity="center"
-                        android:text="+  Add you Farm"
+                        android:text="@string/add_you_farm"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="normal" />
@@ -268,7 +266,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:fontFamily="@font/manrope_bold"
-                        android:text="Know more about My Farm >"
+                        android:text="@string/know_more_about_my_farm"
                         android:textColor="@color/blue"
                         android:textSize="@dimen/_11ssp"
                         android:textStyle="normal" />
@@ -291,7 +289,6 @@
                     android:id="@+id/rv_shop_by_stores"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_16sdp"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -300,7 +297,7 @@
                     tools:listitem="@layout/item_shop_by_store" />
 
                 <FrameLayout
-                    android:id="@+id/flViewAllStore"
+                    android:id="@+id/viewAllStores"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -456,7 +453,7 @@
                     android:focusable="true"
                     android:fontFamily="@font/manrope_bold"
                     android:gravity="center"
-                    android:text="Checkout"
+                    android:text="@string/checkout"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="normal" />
@@ -523,7 +520,7 @@
                         style="@style/regular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Sub text will be displayed here"
+                        android:text="@string/sub_text_will_be_displayed_here"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/_11ssp" />
 
@@ -596,7 +593,7 @@
                     tools:listitem="@layout/item_shop_by_company" />
 
                 <FrameLayout
-                    android:id="@+id/flViewAllShopByCompany"
+                    android:id="@+id/viewAllCompanies"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -621,6 +618,234 @@
                         app:drawableEndCompat="@drawable/ic_arrow_right" />
 
                 </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@string/gramophone_tv"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="normal" />
+
+                <!--<com.google.android.youtube.player.YouTubePlayerView
+                    android:id="@+id/ytPlayer"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />-->
+
+                <FrameLayout
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_width="match_parent"
+                    android:background="@color/blakish"
+                    android:layout_height="200dp" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginBottom="@dimen/_16sdp"
+                    android:background="@drawable/rounded_corner_32"
+                    android:backgroundTint="@color/pink"
+                    android:paddingStart="16dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="6dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="@string/view_all"
+                        android:textColor="@color/orange"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="normal"
+                        app:drawableEndCompat="@drawable/ic_arrow_right" />
+
+                </FrameLayout>
+
+                <RelativeLayout
+                    android:paddingStart="@dimen/_20sdp"
+                    android:paddingEnd="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:background="@color/mute_grey">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivWhatsapp"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_whatsapp_large"/>
+
+                    <TextView
+                        android:id="@+id/tvGramophone"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_toEndOf="@+id/ivWhatsapp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="@string/gramophone_tv"
+                        android:textColor="@color/blakish"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:layout_toStartOf="@+id/scAppTour"
+                        android:layout_below="@+id/tvGramophone"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_toEndOf="@+id/ivWhatsapp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_medium"
+                        android:text="@string/receive_order_related_information_on_whatsapp"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="normal" />
+
+                    <!--android:checked="@={viewModel.swAppTourChecked}"
+                        android:onCheckedChanged="@{ ()-> viewModel.onAppTourCheckChanged(swAppTour) }"-->
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/scAppTour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:checked="false" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_marginBottom="@dimen/_70sdp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/ic_gramophone_promise_bg"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="@string/gramophone_promise"
+                        android:textColor="@color/blakish"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="normal" />
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/_100_genuine_nproducts"
+                            android:textColor="@color/blakish"
+                            android:textSize="10sp"
+                            android:gravity="center"
+                            android:textStyle="normal"
+                            app:drawableTopCompat="@drawable/ic_promise_genuine_products"
+                            tools:ignore="SmallSp" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/free_shipping_nat_doorstep"
+                            android:textColor="@color/blakish"
+                            android:textSize="10sp"
+                            android:gravity="center"
+                            android:textStyle="normal"
+                            app:drawableTopCompat="@drawable/ic_promise_free_shipping"
+                            tools:ignore="SmallSp" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/best_price_nguaranteed"
+                            android:textColor="@color/blakish"
+                            android:textSize="10sp"
+                            android:gravity="center"
+                            android:textStyle="normal"
+                            app:drawableTopCompat="@drawable/ic_promise_best_price"
+                            tools:ignore="SmallSp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/genuine_ngst_bill"
+                            android:textColor="@color/blakish"
+                            android:textSize="10sp"
+                            android:gravity="center"
+                            android:textStyle="normal"
+                            app:drawableTopCompat="@drawable/ic_promise_gst"
+                            tools:ignore="SmallSp" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/easy_return"
+                            android:textColor="@color/blakish"
+                            android:textSize="10sp"
+                            android:gravity="center"
+                            android:textStyle="normal"
+                            app:drawableTopCompat="@drawable/ic_promise_easy_return"
+                            tools:ignore="SmallSp" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/free_expert_nadvice"
+                            android:textColor="@color/blakish"
+                            android:textSize="10sp"
+                            android:gravity="center"
+                            android:textStyle="normal"
+                            app:drawableTopCompat="@drawable/ic_promise_expert_advice"
+                            tools:ignore="SmallSp" />
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_wheat_bg"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 

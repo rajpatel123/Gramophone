@@ -22,6 +22,7 @@ class OrderListViewModel @Inject constructor(
     var selectedTab = MutableLiveData<Int>()
     var recentOrderSize = MutableLiveData<Int>()
     var pastOrderSize = MutableLiveData<Int>()
+    var orderDate = MutableLiveData<String>()
     var emptyText = MutableLiveData<String>(getNavigator()?.getMessage(R.string.no_recent_order))
     var progress = MutableLiveData<Boolean>()
 
@@ -29,6 +30,7 @@ class OrderListViewModel @Inject constructor(
         selectedTab.value = 0
         recentOrderSize.value = 0
         pastOrderSize.value = 0
+        orderDate.value = ""
         progress.value = false
         emptyText.value = getNavigator()?.getMessage(R.string.no_recent_order)
     }

@@ -23,4 +23,5 @@ interface AddressNavigator : BaseNavigator{
     fun getGPSTracker(): GPSTracker
     fun onBackPressClick()
 
+
 }

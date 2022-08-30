@@ -6,6 +6,8 @@ import android.content.Context
 
 
 object Constants {
+    val DELAY: Long=3_000
+    val INDEX: String = "pageIndex"
     val FROM_EDIT_PROFILE="FROM_EDIT_PROFILE"
     val REMAINING_TIME: String="remaining_time"
     val RESEND_OTP_TIME: Long=30000
@@ -98,6 +100,10 @@ object Constants {
 
     //Product
     const val ORDER_ID = "order_id"
+    const val CATEGORY_ID = "category_id"
+    const val COMPANY_ID = "company_id"
+    const val STORE_ID = "store_id"
+    const val CROP_ID = "crop_id"
     const val BOTTOM_SHEET = "bottom_sheet"
     const val LOCATION_ACCESS_DIALOG = "location_access_dialog"
 

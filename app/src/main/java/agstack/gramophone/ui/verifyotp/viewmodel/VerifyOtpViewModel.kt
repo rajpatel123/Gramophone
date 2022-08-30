@@ -228,17 +228,7 @@ class VerifyOtpViewModel @Inject constructor(
         return ApiResponse.Error(response.message())
     }
 
-
-    fun onHelpClick(v: View) {
-        var initiateAppDataResponseModel =
-            SharedPreferencesHelper.instance?.getParcelable(
-                SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java
-            )
-        if (getNavigator()?.requestPermission(Manifest.permission.CALL_PHONE) == true)
-            getNavigator()?.onHelpClick(initiateAppDataResponseModel?.gp_api_response_data?.help_data_list?.customer_support_no!!)
-    }
-
-    fun onLanguageClick(v: View) {
+    fun onLanguageClick() {
         getNavigator()?.onLanguageChangeClick()
 
     }

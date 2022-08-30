@@ -5,12 +5,16 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityCategoryDetailBinding
+import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.dialog.filter.BottomSheetFilterDialog
 import agstack.gramophone.ui.dialog.sortby.BottomSheetSortByDialog
 import agstack.gramophone.ui.home.adapter.ProductListAdapter
 import agstack.gramophone.ui.home.adapter.ViewPagerAdapter
 import agstack.gramophone.ui.home.model.Banner
 import agstack.gramophone.ui.home.subcategory.adapter.SubCategoryAdapter
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
+import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
+import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -54,9 +58,6 @@ class SubCategoryActivity :
         })
 
         viewDataBinding.dotsIndicator.setOnClickListener { }
-        val adapter = ViewPagerAdapter(items)
-        viewDataBinding.viewPager.adapter = adapter
-        viewDataBinding.dotsIndicator.attachTo(viewDataBinding.viewPager)
 
 
         subCategoryViewModel.setAdapter()
@@ -116,8 +117,26 @@ class SubCategoryActivity :
         viewDataBinding.rvSubCategory.adapter = subCategoryAdapter
     }
 
-    override fun setProductListAdapter(productListAdapter: ProductListAdapter) {
+    override fun setProductListAdapter(productListAdapter: ProductListAdapter, onAddToCartClick: (productId: String) -> Unit,) {
+        productListAdapter.onAddToCartClick = onAddToCartClick
         viewDataBinding.rvProducts.adapter = productListAdapter
+    }
+
+    override fun openAddToCartDialog(
+        mSKUList: ArrayList<ProductSkuListItem?>,
+        mSkuOfferList: ArrayList<PromotionListItem?>
+    ) {
+        val bottomSheet = AddToCartBottomSheetDialog()
+        bottomSheet.mSKUList = mSKUList
+        bottomSheet.mSkuOfferList = mSkuOfferList
+        bottomSheet.show(
+           supportFragmentManager,
+            Constants.BOTTOM_SHEET
+        )
+    }
+
+    override fun getBundle(): Bundle? {
+        return intent?.extras
     }
 
     override fun getLayoutID(): Int {

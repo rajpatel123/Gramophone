@@ -2,6 +2,7 @@ package agstack.gramophone.base
 
 import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
 import android.app.Activity
+import android.location.Geocoder
 import android.os.Bundle
 
 /*
@@ -49,4 +50,6 @@ interface BaseNavigator {
     fun proceedCall(helpLineNo: String)
 
     fun proceedOnLocationSetting()
+
+    fun getGeoCoder(): Geocoder?
 }
