@@ -5,6 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="?actionBarSize"
     android:background="@color/white"
-    app:titleTextColor="@color/brand_color"
+    app:titleTextColor="@color/blakish"
     app:titleTextAppearance="@style/Toolbar.TitleText"
     android:theme="@style/ToolbarTheme" />
