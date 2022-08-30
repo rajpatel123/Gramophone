@@ -49,5 +49,5 @@ interface OnBoardingRepository {
     suspend fun updateAddressByLatLong(addressRequestModel: AddressRequestWithLatLongModel): Response<AddressDataByLatLongResponseModel>
 
     suspend fun getBanners(): Response<BannerResponse>
-    suspend fun getLocationAddress(url:String): Response<JSONObject>
+    suspend fun getLocationAddress(lat: String, key: String): Response<JSONObject>
 }

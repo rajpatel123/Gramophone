@@ -27,7 +27,6 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
@@ -311,24 +310,13 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                         "",
                         pincode = postalCode
                     )
+                getAddressByLocationFromApi(latitude,longitude)
+                Log.d("AddressPayload", Gson().toJson(addressRequestModel))
+                getAddressByLatLong(addressRequestModel = addressRequestModel)
             }else{
-                 addressRequestModel =
-                    AddressRequestWithLatLongModel(
-                        latitude.toString(),
-                        longitude.toString(),
-                       "Maharashtra",
-                        "",
-                        "",
-                        "",
-                        ""
-                    )
+                getAddressByLocationFromApi(latitude,longitude)
             }
 
-
-
-
-            Log.d("AddressPayload", Gson().toJson(addressRequestModel))
-            getAddressByLatLong(addressRequestModel = addressRequestModel)
         } else {
             // Can't get location.
             // GPS or network is not enabled.
@@ -336,6 +324,32 @@ class AddOrUpdateAddressViewModel @Inject constructor(
             gps?.showSettingsAlert()
         }
     }
+
+
+
+    private fun getAddressByLocationFromApi(latitude: Double, longitude: Double) {
+        try {
+            if (getNavigator()?.isNetworkAvailable() == true) {
+                viewModelScope.launch {
+
+                    val url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=22.337799,114.139847&key=AIzaSyAgy7OYQrHaPSXndFDMjXU2pMcpk48uyt0"
+                    val addressResponse =
+                        onBoardingRepository.getLocationAddress(""+latitude+","+longitude,"AIzaSyAgy7OYQrHaPSXndFDMjXU2pMcpk48uyt0")
+
+                   Log.d("Data",addressResponse.toString())
+
+                }
+             } else
+                getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+        } catch (ex: Exception) {
+            when (ex) {
+                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+            }
+        }
+
+    }
+
 
 
     private fun getAddressByLatLong(addressRequestModel: AddressRequestWithLatLongModel) {

@@ -112,9 +112,9 @@ class OnBoardingRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun getLocationAddress(url:String): Response<JSONObject>  = withContext(
+    override suspend fun getLocationAddress(lat: String, key: String): Response<JSONObject>  = withContext(
         Dispatchers.IO) {
-        val bannerResponse = gramAppService.getLocationAddress(url)
+        val bannerResponse = gramAppService.getLocationAddress(lat,key)
         bannerResponse
     }
 
