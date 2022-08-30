@@ -70,7 +70,7 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
 
     override fun getViewModel()  = languageViewModel
 
-    override fun closeActivity() {
+    override fun moveToNext() {
         openAndFinishActivity(AppTourActivity::class.java,null)
     }
 
@@ -78,6 +78,9 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
 
     override fun initiateApp() {
         languageViewModel.initiateAppData(initiateAppDataRequestModel)
+    }
+
+    override fun closeLanguageList() {
     }
 
     override fun getLanguageCode(): String? = LocaleManagerClass.getLangCodeAsPerAppLocale(this)
