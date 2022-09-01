@@ -28,9 +28,9 @@
         android:layout_marginTop="@dimen/_12sdp"
         android:layout_toEndOf="@+id/ivProfileImage"
         android:fontFamily="@font/manrope_bold"
+        android:text="Thakur Bhanupratap"
         android:textColor="@color/black"
-        android:textSize="@dimen/_11ssp"
-        android:text="Thakur Bhanupratap" />
+        android:textSize="@dimen/_11ssp" />
 
     <TextView
         android:id="@+id/tvCity"
@@ -39,9 +39,9 @@
         android:layout_below="@+id/tvName"
         android:layout_toEndOf="@+id/ivProfileImage"
         android:fontFamily="@font/manrope_medium"
+        android:text="+ Add Address"
         android:textColor="@color/red"
-        android:textSize="@dimen/_10ssp"
-        android:text="+ Add Address" />
+        android:textSize="@dimen/_10ssp" />
 
     <TextView
         android:id="@+id/tvDate"
@@ -50,9 +50,9 @@
         android:layout_below="@+id/tvCity"
         android:layout_toEndOf="@+id/ivProfileImage"
         android:fontFamily="@font/manrope_medium"
+        android:text="15 Aug 2022"
         android:textColor="@color/grey"
-        android:textSize="@dimen/_10ssp"
-        android:text="15 Aug 2022" />
+        android:textSize="@dimen/_10ssp" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -81,9 +81,9 @@
             android:layout_marginStart="@dimen/_2sdp"
             android:layout_toEndOf="@+id/ivLeaf"
             android:fontFamily="@font/manrope_medium"
+            android:text="ADMIN"
             android:textColor="@color/white"
-            android:textSize="@dimen/_7ssp"
-            android:text="ADMIN" />
+            android:textSize="@dimen/_7ssp" />
     </RelativeLayout>
 
     <ImageView
@@ -117,7 +117,7 @@
         android:fontFamily="@font/manrope_bold"
         android:text="Which is the system of farming in which the farmer is directly related to the state?"
         android:textColor="@color/black"
-        android:textSize="@dimen/_16ssp" />
+        android:textSize="@dimen/_14ssp" />
 
     <include
         android:id="@+id/banner_layout"
@@ -169,6 +169,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
+
             <ImageView
                 android:id="@+id/ivLike"
                 android:layout_width="wrap_content"

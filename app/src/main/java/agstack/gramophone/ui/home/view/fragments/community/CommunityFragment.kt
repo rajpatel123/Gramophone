@@ -6,7 +6,6 @@ import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentCommunityBinding
 import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
-import agstack.gramophone.ui.home.view.fragments.community.model.Data
 import agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -46,16 +45,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     override fun onResume() {
         super.onResume()
+        communityViewModel.loadData()
+    }
+
+    override fun updatePostList(communityPostAdapter: CommunityPostAdapter, post: () -> Unit) {
         rvPost.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         rvPost.setHasFixedSize(false)
-        val adapter = CommunityPostAdapter(requireActivity())
-        rvPost.adapter = adapter
-
-
-        communityViewModel.dataList.observe(viewLifecycleOwner, {dataList ->
-            adapter.dataList = dataList
-            adapter.notifyDataSetChanged()
-        })
-        communityViewModel.loadData()
+        rvPost.adapter = communityPostAdapter
     }
 }
