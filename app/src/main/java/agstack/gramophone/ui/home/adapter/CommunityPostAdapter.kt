@@ -3,6 +3,7 @@ package agstack.gramophone.ui.home.adapter
 import agstack.gramophone.R
 import agstack.gramophone.ui.home.view.fragments.community.SquareViewPager
 import agstack.gramophone.ui.home.view.fragments.community.model.Data
+import agstack.gramophone.ui.home.view.fragments.community.model.LikedUsers
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -14,17 +15,17 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import okhttp3.internal.immutableListOf
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
  * [RecyclerView.Adapter] holding [NestedRecyclerFragment] view pager logic
  */
-class CommunityPostAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CommunityPostAdapter(private val dataList: ArrayList<Data>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val viewPageStates = HashMap<Int, Int>()
 
-    var dataList = immutableListOf<Data>()
-
+    var clickEvent: ((LikedUsers,Int) -> Unit)? = null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

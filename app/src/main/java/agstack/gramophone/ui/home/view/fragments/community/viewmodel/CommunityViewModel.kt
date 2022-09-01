@@ -4,6 +4,7 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
 import agstack.gramophone.ui.home.view.fragments.community.model.Data
+import agstack.gramophone.ui.home.view.fragments.community.model.LikedUsers
 import agstack.gramophone.ui.home.view.fragments.community.model.PagerItem
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,8 +20,13 @@ class CommunityViewModel @Inject constructor(
 
 ) : BaseViewModel<CommunityFragmentNavigator>() {
     private val _dataList = MutableLiveData<List<Data>>()
+    private val userList = MutableLiveData<List<LikedUsers>>()
     val dataList: LiveData<List<Data>>
         get() = _dataList
+
+
+    val likedUserList: LiveData<List<LikedUsers>>
+        get() = userList
 
     fun loadData() {
         viewModelScope.launch(Dispatchers.Default) {
@@ -53,7 +59,9 @@ class CommunityViewModel @Inject constructor(
                 finalList.add(data)
             }
 
-            _dataList.postValue(finalList)
+            getNavigator()?.updatePostList(CommunityPostAdapter(finalList)){
+
+            }
         }
     }
 
