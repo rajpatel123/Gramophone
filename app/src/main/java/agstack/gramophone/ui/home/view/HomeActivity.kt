@@ -27,6 +27,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.forEach
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.FirebaseApp
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
@@ -50,6 +52,7 @@ class HomeActivity :
         super.onCreate(savedInstanceState)
         setupUi()
         setUpFirebaseConfig()
+        homeViewModel.getProfile()
     }
 
     private fun setUpFirebaseConfig() {
@@ -83,6 +86,17 @@ class HomeActivity :
                     "remoteConfig initAssetList: cancelled "
                 )
             }
+    }
+
+    override fun setImageNameMobile(name: String, mobile: String, profileImage: String) {
+        viewDataBinding.navigationlayout?.tvName.text = name
+        viewDataBinding.navigationlayout?.tvContact.text = mobile
+        Glide.with(this)
+            .load(profileImage)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
+            .fitCenter()
+            .into(viewDataBinding.navigationlayout?.ivProfile)
     }
 
     private fun setupUi() {

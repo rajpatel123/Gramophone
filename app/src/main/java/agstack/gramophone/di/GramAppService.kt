@@ -23,6 +23,7 @@ import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
+import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
@@ -183,4 +184,7 @@ interface GramAppService {
 
     @GET("api/v5/category/product-app-category/{category_id}")
     suspend fun getSubCategory(@Path("category_id") categoryId: String): Response<SubCategoryResponse>
+
+    @GET("api/v5/customer/profile-data")
+    suspend fun getProfile(): Response<ProfileResponse>
 }
