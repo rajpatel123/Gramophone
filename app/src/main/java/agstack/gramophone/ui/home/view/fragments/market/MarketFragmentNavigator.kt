@@ -1,10 +1,7 @@
 package agstack.gramophone.ui.home.view.fragments.market
 
 import agstack.gramophone.base.BaseNavigator
-import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
-import agstack.gramophone.ui.home.adapter.ShopByCompanyAdapter
-import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
-import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
+import agstack.gramophone.ui.home.adapter.*
 import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import android.os.Bundle
@@ -40,4 +37,11 @@ interface MarketFragmentNavigator : BaseNavigator {
         adapter: ShopByCropsAdapter,
         onItemClick: (String) -> Unit,
     )
+
+    fun setExclusiveBannerAdapter(
+        adapter: ExclusiveBannerAdapter,
+        onItemClick: (String) -> Unit,
+    )
+
+    fun setExclusiveAndReferralImage(exclusiveUrl: String, referralUrl: String)
 }

@@ -3,16 +3,14 @@ package agstack.gramophone.ui.home.view.fragments.market
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
-import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
-import agstack.gramophone.ui.home.adapter.ShopByCompanyAdapter
-import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
-import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
+import agstack.gramophone.ui.home.adapter.*
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,6 +28,14 @@ class MarketFragmentViewModel
     var cropResponse: CropResponse? = null
     var storeResponse: StoreResponse? = null
     var companyResponse: CompanyResponse? = null
+    var exclusiveBanner = MutableLiveData<String>()
+    var referralBanner = MutableLiveData<String>()
+    var exclusiveBannerSize = MutableLiveData<Int>()
+
+    init {
+        exclusiveBanner.value = ""
+        exclusiveBannerSize.value = 0
+    }
 
     fun getFeaturedProducts(hashMap: HashMap<Any, Any>) {
         viewModelScope.launch {
@@ -72,20 +78,26 @@ class MarketFragmentViewModel
     fun getBanners() {
         viewModelScope.launch {
             try {
-                val bannerResponse = SharedPreferencesHelper.instance?.getParcelable(
+                var bannerResponse = SharedPreferencesHelper.instance?.getParcelable(
                     SharedPreferencesKeys.BANNER_DATA, BannerResponse::class.java
                 )
-                if (bannerResponse?.gpApiStatus == Constants.GP_API_STATUS) {
-                    getNavigator()?.setViewPagerAdapter(bannerResponse.gpApiResponseData?.homeBanner1)
-                } else {
+                if (bannerResponse?.gpApiStatus != Constants.GP_API_STATUS) {
                     val response = productRepository.getBanners()
                     if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS) {
+                        bannerResponse = response.body()
                         SharedPreferencesHelper.instance?.putParcelable(
                             SharedPreferencesKeys.BANNER_DATA,
-                            response.body()!!
+                            bannerResponse!!
                         )
-                        getNavigator()?.setViewPagerAdapter(response.body()?.gpApiResponseData?.homeBanner1)
                     }
+                }
+                getNavigator()?.setViewPagerAdapter(bannerResponse?.gpApiResponseData?.homeBanner1)
+                referralBanner.value = bannerResponse?.gpApiResponseData?.homeReferralBanner?.get(0)?.bannerImage!!
+                exclusiveBanner.value = bannerResponse.gpApiResponseData?.homeGramophoneExclusive?.get(0)?.bannerImage!!
+                exclusiveBannerSize.value = bannerResponse.gpApiResponseData?.homeGramophoneExclusive?.size
+
+                getNavigator()?.setExclusiveAndReferralImage(exclusiveBanner.value.toString(), referralBanner.value.toString())
+                getNavigator()?.setExclusiveBannerAdapter(ExclusiveBannerAdapter(bannerResponse.gpApiResponseData?.homeGramophoneExclusive!!)) {
                 }
             } catch (ex: Exception) {
                 when (ex) {

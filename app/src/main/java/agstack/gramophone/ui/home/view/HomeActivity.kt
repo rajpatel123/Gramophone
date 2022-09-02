@@ -89,14 +89,14 @@ class HomeActivity :
     }
 
     override fun setImageNameMobile(name: String, mobile: String, profileImage: String) {
-        viewDataBinding.navigationlayout?.tvName.text = name
-        viewDataBinding.navigationlayout?.tvContact.text = mobile
+        viewDataBinding.navigationlayout.tvName.text = name
+        viewDataBinding.navigationlayout.tvContact.text = mobile
         Glide.with(this)
             .load(profileImage)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .skipMemoryCache(true)
             .fitCenter()
-            .into(viewDataBinding.navigationlayout?.ivProfile)
+            .into(viewDataBinding.navigationlayout.ivProfile)
     }
 
     private fun setupUi() {

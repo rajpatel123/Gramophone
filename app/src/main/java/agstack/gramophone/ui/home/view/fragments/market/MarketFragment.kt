@@ -20,6 +20,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -65,6 +67,17 @@ class MarketFragment :
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun setExclusiveAndReferralImage(bannerUrl: String, referralUrl: String) {
+        Glide.with(requireContext())
+            .load(bannerUrl)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(binding?.ivExclusiveBanner!!)
+        /*Glide.with(requireContext())
+            .load(referralUrl)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(binding?.ivReferralBanner!!)*/
     }
 
     /**
@@ -185,6 +198,11 @@ class MarketFragment :
     override fun setStoreAdapter(adapter: ShopByStoresAdapter, onItemClick: (String) -> Unit) {
         adapter.onItemClicked = onItemClick
         binding?.rvShopByStores?.adapter = adapter
+    }
+
+    override fun setExclusiveBannerAdapter(adapter: ExclusiveBannerAdapter, onItemClick: (String) -> Unit, ) {
+        adapter.itemClicked = onItemClick
+        binding?.rvExclusive?.adapter = adapter
     }
 
     override fun startProductDetailsActivity(it: ProductData) {

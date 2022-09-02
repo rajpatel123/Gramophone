@@ -156,11 +156,11 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:paddingTop="@dimen/_20sdp"
-                    android:paddingBottom="@dimen/_20sdp"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/_20sdp"
+                    android:paddingBottom="@dimen/_20sdp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -337,45 +337,34 @@
                     app:drawableStartCompat="@drawable/ic_exclusive" />
 
                 <ImageView
+                    android:id="@+id/ivExclusiveBanner"
+                    state_image="@{viewModel.exclusiveBanner}"
+                    android:layout_width="match_parent"
+                    android:layout_height="360dp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:contentDescription="@string/image"
+                    android:scaleType="fitXY"
+                    android:visibility="@{(viewModel.exclusiveBannerSize%2==0) ? View.VISIBLE : View.GONE}" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvExclusive"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:background="@drawable/dummy_gramophone_exclusive"
-                    android:contentDescription="@string/image" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image"
-                        android:src="@drawable/dummy_exclusive_1" />
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image"
-                        android:src="@drawable/dummy_exclusive_2" />
-
-                </LinearLayout>
+                    android:layout_marginTop="@dimen/_4sdp"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_exclusive_banner" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="8dp"
-                    android:background="@color/gray_stroke"/>
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:background="@color/gray_stroke" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
@@ -413,10 +402,12 @@
                 </LinearLayout>
 
                 <ImageView
+                    state_image="@{viewModel.referralBanner}"
+                    android:id="@+id/ivReferralBanner"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_200sdp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:background="@drawable/dummy_invite"
+                    android:scaleType="fitXY"
                     android:contentDescription="@string/image" />
 
                 <TextView
@@ -640,12 +631,12 @@
                     android:layout_height="200dp" />-->
 
                 <FrameLayout
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
                     android:layout_width="match_parent"
-                    android:background="@color/blakish"
-                    android:layout_height="200dp" />
+                    android:layout_height="200dp"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:background="@color/blakish" />
 
                 <FrameLayout
                     android:layout_width="wrap_content"
@@ -674,28 +665,28 @@
                 </FrameLayout>
 
                 <RelativeLayout
-                    android:paddingStart="@dimen/_20sdp"
-                    android:paddingEnd="@dimen/_12sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:background="@color/mute_grey"
+                    android:paddingStart="@dimen/_20sdp"
                     android:paddingTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"
-                    android:background="@color/mute_grey">
+                    android:paddingEnd="@dimen/_12sdp"
+                    android:paddingBottom="@dimen/_10sdp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivWhatsapp"
-                        android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_whatsapp_large"/>
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_whatsapp_large" />
 
                     <TextView
                         android:id="@+id/tvGramophone"
-                        android:layout_marginStart="@dimen/_14sdp"
-                        android:layout_toEndOf="@+id/ivWhatsapp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_toEndOf="@+id/ivWhatsapp"
                         android:fontFamily="@font/manrope_bold"
                         android:text="@string/gramophone_tv"
                         android:textColor="@color/blakish"
@@ -703,12 +694,12 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:layout_toStartOf="@+id/scAppTour"
-                        android:layout_below="@+id/tvGramophone"
-                        android:layout_marginStart="@dimen/_14sdp"
-                        android:layout_toEndOf="@+id/ivWhatsapp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvGramophone"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_toStartOf="@+id/scAppTour"
+                        android:layout_toEndOf="@+id/ivWhatsapp"
                         android:fontFamily="@font/manrope_medium"
                         android:text="@string/receive_order_related_information_on_whatsapp"
                         android:textColor="@color/gray"
@@ -728,65 +719,65 @@
                 </RelativeLayout>
 
                 <LinearLayout
-                    android:layout_marginBottom="@dimen/_70sdp"
-                    android:orientation="vertical"
-                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_70sdp"
                     android:background="@drawable/ic_gramophone_promise_bg"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/_16sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16sdp"
                         android:fontFamily="@font/manrope_bold"
+                        android:gravity="center_horizontal"
                         android:text="@string/gramophone_promise"
                         android:textColor="@color/blakish"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="normal" />
 
                     <LinearLayout
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:fontFamily="@font/manrope_bold"
+                            android:gravity="center"
                             android:text="@string/_100_genuine_nproducts"
                             android:textColor="@color/blakish"
                             android:textSize="10sp"
-                            android:gravity="center"
                             android:textStyle="normal"
                             app:drawableTopCompat="@drawable/ic_promise_genuine_products"
                             tools:ignore="SmallSp" />
 
                         <TextView
-                            android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:fontFamily="@font/manrope_bold"
+                            android:gravity="center"
                             android:text="@string/free_shipping_nat_doorstep"
                             android:textColor="@color/blakish"
                             android:textSize="10sp"
-                            android:gravity="center"
                             android:textStyle="normal"
                             app:drawableTopCompat="@drawable/ic_promise_free_shipping"
                             tools:ignore="SmallSp" />
 
                         <TextView
-                            android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:fontFamily="@font/manrope_bold"
+                            android:gravity="center"
                             android:text="@string/best_price_nguaranteed"
                             android:textColor="@color/blakish"
                             android:textSize="10sp"
-                            android:gravity="center"
                             android:textStyle="normal"
                             app:drawableTopCompat="@drawable/ic_promise_best_price"
                             tools:ignore="SmallSp" />
@@ -794,46 +785,46 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginTop="@dimen/_20sdp"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:fontFamily="@font/manrope_bold"
+                            android:gravity="center"
                             android:text="@string/genuine_ngst_bill"
                             android:textColor="@color/blakish"
                             android:textSize="10sp"
-                            android:gravity="center"
                             android:textStyle="normal"
                             app:drawableTopCompat="@drawable/ic_promise_gst"
                             tools:ignore="SmallSp" />
 
                         <TextView
-                            android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:fontFamily="@font/manrope_bold"
+                            android:gravity="center"
                             android:text="@string/easy_return"
                             android:textColor="@color/blakish"
                             android:textSize="10sp"
-                            android:gravity="center"
                             android:textStyle="normal"
                             app:drawableTopCompat="@drawable/ic_promise_easy_return"
                             tools:ignore="SmallSp" />
 
                         <TextView
-                            android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:fontFamily="@font/manrope_bold"
+                            android:gravity="center"
                             android:text="@string/free_expert_nadvice"
                             android:textColor="@color/blakish"
                             android:textSize="10sp"
-                            android:gravity="center"
                             android:textStyle="normal"
                             app:drawableTopCompat="@drawable/ic_promise_expert_advice"
                             tools:ignore="SmallSp" />
@@ -843,7 +834,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_wheat_bg"/>
+                        android:src="@drawable/ic_wheat_bg" />
 
                 </LinearLayout>
 
