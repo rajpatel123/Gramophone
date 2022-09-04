@@ -3,9 +3,11 @@ package agstack.gramophone.ui.home.view.fragments.community.viewmodel
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
+import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActivity
 import agstack.gramophone.ui.home.view.fragments.community.model.Data
 import agstack.gramophone.ui.home.view.fragments.community.model.LikedUsers
 import agstack.gramophone.ui.home.view.fragments.community.model.PagerItem
+import agstack.gramophone.ui.postdetails.view.PostDetailsActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -33,7 +35,7 @@ class CommunityViewModel @Inject constructor(
 
             val finalList = ArrayList<Data>()
 
-            for (i in 1..20) {
+            for (i in 1..40) {
 
                 val data = if (i % 2 == 0) {
                     val pagerItemList = ArrayList<PagerItem>()
@@ -50,18 +52,43 @@ class CommunityViewModel @Inject constructor(
                         pagerItemList = pagerItemList
                     )
                 } else {
-                    Data(
-                        viewType = CommunityPostAdapter.VIEW_TYPE_TEXT,
-                        textItem = "List Item: $i"
-                    )
+
+                    if (i==9){
+                        Data(
+                            viewType = CommunityPostAdapter.VIEW_TYPE_IMAGE_TEXT,
+                            textItem = "List Item: $i"
+                        )
+                    }else  if(i==15){
+                        Data(
+                            viewType = CommunityPostAdapter.VIEW_TYPE_POLL,
+                            textItem = "List Item: $i"
+                        )
+                    }else{
+                        Data(
+                            viewType = CommunityPostAdapter.VIEW_TYPE_TEXT,
+                            textItem = "List Item: $i"
+                        )
+                    }
+
                 }
 
                 finalList.add(data)
             }
 
-            getNavigator()?.updatePostList(CommunityPostAdapter(finalList)){
-
-            }
+            getNavigator()?.updatePostList(CommunityPostAdapter(finalList),
+                {//postDetail click
+                 getNavigator()?.openActivity(PostDetailsActivity::class.java,null)
+                },
+                {//likes click
+                    getNavigator()?.openActivity(LikedPostUserListActivity::class.java,null)
+                },
+                {//comments click
+                    getNavigator()?.openActivity(LikedPostUserListActivity::class.java,null)
+                },
+                {//whatsapp/facebook/bookmark click
+                    getNavigator()?.openActivity(LikedPostUserListActivity::class.java,null)
+                }
+            )
         }
     }
 

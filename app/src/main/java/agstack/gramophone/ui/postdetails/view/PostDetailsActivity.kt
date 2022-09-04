@@ -16,6 +16,11 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setUpToolBar(
+            enableBackButton = true,
+            "",
+            R.drawable.ic_arrow_left
+        )
     }
 
     private val postDetailViewModel : PostDetailViewModel by viewModels()

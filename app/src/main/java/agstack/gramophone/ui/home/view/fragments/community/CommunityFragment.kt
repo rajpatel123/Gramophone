@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.amnix.xtension.extensions.runOnUIThread
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_community.*
 
@@ -48,9 +49,22 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         communityViewModel.loadData()
     }
 
-    override fun updatePostList(communityPostAdapter: CommunityPostAdapter, post: () -> Unit) {
-        rvPost.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        rvPost.setHasFixedSize(false)
-        rvPost.adapter = communityPostAdapter
+
+    override fun updatePostList(
+        communityPostAdapter: CommunityPostAdapter,
+        onItemDetailClicked: (postId: String) -> Unit,
+        onItemLikesClicked: (postId: String) -> Unit,
+        onItemCommentsClicked: (postId: String) -> Unit,
+        onWhatsAppClicked: (postId: String) -> Unit
+    ) {
+        runOnUIThread {//will be removed while api integrations
+            communityPostAdapter.onItemCommentsClicked=onItemCommentsClicked
+            communityPostAdapter.onItemLikesClicked=onItemLikesClicked
+            communityPostAdapter.onItemDetailClicked=onItemDetailClicked
+            communityPostAdapter.onShareOrBookMarkClicked=onWhatsAppClicked
+            rvPost.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            rvPost.setHasFixedSize(false)
+            rvPost.adapter = communityPostAdapter
+        }
     }
 }

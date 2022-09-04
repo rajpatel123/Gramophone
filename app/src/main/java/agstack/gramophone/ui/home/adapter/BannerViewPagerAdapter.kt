@@ -38,7 +38,6 @@ class BannerViewPagerAdapter(list: List<PagerItem>?, private val mContext: Conte
 
         val data = mPagerList[position]
 
-        holder.pagerText.text ="Viewpager Item Number "+ data.itemText
         Glide.with(rootView.context)
             .load(data.itemImageUrl)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -71,11 +70,9 @@ class BannerViewPagerAdapter(list: List<PagerItem>?, private val mContext: Conte
      */
     internal inner class ViewHolder(rootView: View) {
 
-        var pagerText: TextView
         var imageView:ImageView
 
         init {
-            pagerText = rootView.findViewById(R.id.tvPager)
             imageView= rootView.findViewById(R.id.imageViewViewpager)
         }
     }

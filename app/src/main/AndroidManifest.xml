@@ -40,10 +40,14 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.postdetails.view.PostDetailsActivity"
-            android:exported="false" />
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".ui.home.view.fragments.community.LikedPostUserListActivity"
-            android:exported="false" />
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".ui.settings.view.BlockedUsersActivity"
             android:exported="false"

@@ -14,9 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import okhttp3.internal.immutableListOf
 
 
-class LikedUsersAdapter(private val context: ArrayList<LikedUsers>) :
+class LikedUsersAdapter(private val dataList: ArrayList<LikedUsers>) :
     RecyclerView.Adapter<LikedUsersAdapter.DeveloperViewHolder>() {
-    var dataList = immutableListOf<LikedUsers>()
     var followClicked: ((LikedUsers) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): DeveloperViewHolder {

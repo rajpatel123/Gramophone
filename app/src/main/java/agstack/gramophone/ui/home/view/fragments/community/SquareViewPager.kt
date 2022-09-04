@@ -17,7 +17,7 @@ class SquareViewPager : ViewPager {
         // so instead of height we pass width as a parameter
         super.onMeasure(widthMeasureSpec, widthMeasureSpec)
 
-        setMeasuredDimension(measuredWidth, measuredWidth)
+        setMeasuredDimension(measuredWidth, measuredWidth*3/4)
     }
 
     override fun onTouchEvent(ev: MotionEvent): Boolean {
