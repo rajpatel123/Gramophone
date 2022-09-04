@@ -5,6 +5,7 @@ import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.di.GramAppService
 import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
+import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.order.model.OrderListResponse
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
@@ -109,5 +110,41 @@ class ProductRepositoryImpl @Inject constructor(
         Dispatchers.IO) {
         val placeOrderResponse = gramoAppService.placeOrder()
         placeOrderResponse
+    }
+
+    override suspend fun getBanners(): Response<BannerResponse>  = withContext(
+        Dispatchers.IO) {
+        val bannerResponse = gramoAppService.getBanners()
+        bannerResponse
+    }
+
+    override suspend fun getCategories(): Response<CategoryResponse>  = withContext(
+        Dispatchers.IO) {
+        val categoryResponse = gramoAppService.getCategories()
+        categoryResponse
+    }
+
+    override suspend fun getCompanies(): Response<CompanyResponse>  = withContext(
+        Dispatchers.IO) {
+        val companiesResponse = gramoAppService.getCompanies()
+        companiesResponse
+    }
+
+    override suspend fun getStores(): Response<StoreResponse>  = withContext(
+        Dispatchers.IO) {
+        val storeResponse = gramoAppService.getStores()
+        storeResponse
+    }
+
+    override suspend fun getCrops(): Response<CropResponse>  = withContext(
+        Dispatchers.IO) {
+        val cropResponse = gramoAppService.getCrops()
+        cropResponse
+    }
+
+    override suspend fun getSubCategories(categoryId: String): Response<SubCategoryResponse>  = withContext(
+        Dispatchers.IO) {
+        val subCategoryResponse = gramoAppService.getSubCategory(categoryId)
+        subCategoryResponse
     }
 }

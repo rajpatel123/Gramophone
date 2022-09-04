@@ -46,7 +46,7 @@
                     android:fontFamily="@font/manrope_bold"
                     android:gravity="center_vertical"
                     android:lineSpacingExtra="1sp"
-                    android:text="@{@string/hash_sign.concat(viewModel.orderId)}"
+                    android:text="@{@string/order.concat(@string/hash_sign).concat(viewModel.orderId)}"
                     android:textColor="@color/blakish"
                     android:textSize="16sp"
                     tools:text="#234554677" />
@@ -61,9 +61,11 @@
                     android:fontFamily="@font/manrope_regular"
                     android:gravity="center_vertical"
                     android:lineSpacingExtra="-2sp"
-                    android:text="@{viewModel.orderDate.concat(@string/slash_sign).concat(viewModel.quantity).concat(@string/items)}"
                     android:textColor="@color/gray_strike_through"
                     android:textSize="13sp"
+                    app:items="@{@string/items}"
+                    app:orderDate="@{viewModel.orderDate}"
+                    app:quantity="@{viewModel.quantity}"
                     tools:text="05-Jul-2022 / 3 Items" />
 
 

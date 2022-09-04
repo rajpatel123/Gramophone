@@ -9,8 +9,8 @@ data class ExternalLinkList(
     @SerializedName("privacy_policy_url")
     val privacy_policy_url: String,
 
-    @SerializedName("referral_terms_conditions")
-    val referral_terms_conditions: String,
+    @SerializedName("referral_terms_conditions_url")
+    val referral_terms_conditions_url: String,
 
     @SerializedName("terms_of_service_url")
     val terms_of_service_url: String,

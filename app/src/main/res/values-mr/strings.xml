@@ -20,5 +20,69 @@
     <string name="complete_action_using">Complete Action Using</string>
     <string name="select_image_title">Select image</string>
     <string name="crop_image_title_text">Crop</string>
+    <string name="unit_convertor">Unit Converter</string>
+    <string name="feedback">Feedback</string>
+    <string name="leave_feedback">Leave Feedback</string>
+    <string name="whatcanweimprove">What can we improve?</string>
+    <string name="send">Send</string>
+    <string name="please_enter_feedback">Please enter your feedback</string>
+    <string name="all_offers">All Offers</string>
+    <string name="edit">Edit</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="selectyourrole">Select your role</string>
+    <string name="selectrolecontent">This will help us understand you so that we can serve you better</string>
+    <string name="farmer">Farmer</string>
+    <string name="trader">Trader</string>
+    <string name="firm">Firm</string>
+    <string name="add">Add</string>
+    <string name="mandi">Mandi</string>
+    <string name="editprofile">Edit Profile</string>
+    <string name="save">Save</string>
+    <string name="mobile_no_label">Mobile Number</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="add_firm_name">Add Firm Name</string>
+    <string name="save_continue"><![CDATA[Save & Continue]]></string>
+    <string name="enter_firm_name">Enter Firm Name</string>
+    <string name="add_firm">Add Firm</string>
+    <string name="check_referral_points">Check your referral points</string>
+    <string name="share_earn">Share Gramophone App and earn upto \u20B9 150!</string>
+    <string name="share_earn_message2">Share gramophone app with your farmer friends, they download the app then you can earn up to Rs. 150!</string>
+    <string name="share_your_referral_qr_code">SHARE YOUR REFERRAL CODE AND QR CODE</string>
+    <string name="share_now">Share Now</string>
+    <string name="frequently_asked_quest">Frequently Asked Questions</string>
+    <string name="referral_rules">Referral Rules</string>
+    <string name="know_more_about_referral_point">Know more about Referral Points Balance</string>
+    <string name="view_all_referral_transactions">View All Referral Transactions</string>
+    <string name="my_referrals">My Referrals</string>
+    <string name="you_have_no_referral">You have no referral yet!</string>
+    <string name="share_earn_referral_msg"> To earn more points please refer app to your friends.</string>
+    <string name="refer_a_friend">Refer a friend</string>
+    <string name="available">Available</string>
+    <string name="pending">Pending</string>
+    <string name="all">All</string>
+    <string name="referrals">Referrals</string>
+    <string name="no_transactions">No transactions done</string>
+    <string name="earned">Earned</string>
+    <string name="all_transactions">All Transactions</string>
+
+    <string-array name="units_array">
+        <item>बिघा</item>
+        <item>एकर</item>
+        <item>हेक्टर</item>
+        <item>चौरस फूट</item>
+    </string-array>
+    <string-array name="units_kind_array">
+        <item>क्षेत्रफळ</item>
+    </string-array>
+
+
+    <string name="aaa">All Tran_1111</string>
+    <string name="download_to_gallery">Downloaded to Gallery</string>
+    <string name="home_share_subject">ग्रामोफोन अॅप वरून दर्जेदार शेती उत्पादने मिळवा</string>
+    <string name="about_referral_point_balance">About Referral Points balance</string>
 
 </resources>

@@ -23,19 +23,34 @@
             android:visibility="@{viewModel.progressBar? View.VISIBLE:View.GONE}"
             android:layout_centerInParent="true"
             />
-        <include
-            android:id="@+id/myToolbar"
-            layout="@layout/layout_toolbar" />
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+            <include
+                android:id="@+id/myToolbar"
+                layout="@layout/layout_toolbar" />
+        </com.google.android.material.appbar.AppBarLayout>
         <FrameLayout
             android:id="@+id/flBannerFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/myToolbar">
-
+            android:layout_below="@+id/appbar">
+            <ImageView
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_47sdp"
+                android:elevation="@dimen/_16sdp"
+                app:srcCompat="@drawable/ic_whatsapp" />
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+              >
 
                 <View
                     android:id="@+id/rectangle_3"
@@ -53,19 +68,12 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="bottom"
                     android:alpha=".3"
-                    android:elevation="@dimen/_1sdp"
                     app:srcCompat="@drawable/ic_whatsapp_mask" />
             </RelativeLayout>
 
-            <ImageView
-                android:layout_width="@dimen/_48sdp"
-                android:layout_height="@dimen/_48sdp"
-                android:layout_gravity="bottom"
-                android:layout_marginStart="@dimen/_40sdp"
-                android:layout_marginTop="@dimen/_46sdp"
-                android:elevation="@dimen/_1sdp"
-                app:srcCompat="@drawable/ic_whatsapp" />
+
         </FrameLayout>
+
 
         <TextView
             android:id="@+id/get_updates"
@@ -73,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/flBannerFrameLayout"
             android:layout_marginStart="@dimen/_40sdp"
-            android:layout_marginTop="@dimen/_80sdp"
+            android:layout_marginTop="@dimen/_30sdp"
             android:fontFamily="@font/manrope_bold"
             android:gravity="top"
             android:lineSpacingExtra="-1sp"

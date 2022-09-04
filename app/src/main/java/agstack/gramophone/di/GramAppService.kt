@@ -11,6 +11,7 @@ import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongRe
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
+import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
@@ -28,6 +29,7 @@ import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListRespons
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import agstack.gramophone.utils.Constants
+import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -164,4 +166,25 @@ interface GramAppService {
 
     @POST("api/v5/general/address-fetch")
     suspend fun updateAddressByLatLong(@Body addressRequestModel: AddressRequestWithLatLongModel): Response<AddressDataByLatLongResponseModel>
+
+    @GET("api/v5/category/banner-data")
+    suspend fun getBanners(): Response<BannerResponse>
+
+    @GET("https://maps.googleapis.com/maps/api/geocode/json")
+    suspend fun getLocationAddress(@Query("latlng") latlng: String, @Query("key") key: String): Response<JSONObject>
+
+    @GET("api/v5/category/product-app-category")
+    suspend fun getCategories(): Response<CategoryResponse>
+
+    @GET("api/v5/category/companies")
+    suspend fun getCompanies(): Response<CompanyResponse>
+
+    @GET("api/v5/category/stores")
+    suspend fun getStores(): Response<StoreResponse>
+
+    @GET("api/v5/category/crops")
+    suspend fun getCrops(): Response<CropResponse>
+
+    @GET("api/v5/category/product-app-category/{category_id}")
+    suspend fun getSubCategory(@Path("category_id") categoryId: String): Response<SubCategoryResponse>
 }

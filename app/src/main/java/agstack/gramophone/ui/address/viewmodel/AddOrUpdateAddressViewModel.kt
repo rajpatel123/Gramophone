@@ -19,10 +19,13 @@ import agstack.gramophone.utils.Constants.VILLAGE
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -49,8 +52,12 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
     fun changeState() {
         getNavigator()?.openAndFinishActivity(StateListActivity::class.java, Bundle().apply {
-            putString(Constants.CHANGE_STATE,Constants.CHANGE_STATE)
+            putString(Constants.CHANGE_STATE, Constants.CHANGE_STATE)
         })
+    }
+
+    fun onBackPressedClick() {
+        getNavigator()?.onBackPressClick()
     }
 
     fun submitAddress() {
@@ -261,11 +268,10 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
     fun setStatesName(stateName: String, image: String) {
         stateNameStr.set(stateName)
-        stateImageUrl.set(image)
-        if (image.isNullOrEmpty()){
+        if (image.isNullOrEmpty()) {
             isImageAvailable.set(false)
-            stateNameInitial.set(stateName.subSequence(0,1).toString())
-        }else{
+            stateNameInitial.set(stateName.subSequence(0, 1).toString())
+        } else {
             isImageAvailable.set(true)
 
         }
@@ -278,9 +284,39 @@ class AddOrUpdateAddressViewModel @Inject constructor(
         if (gps?.canGetLocation() == true) {
             val latitude: Double = gps.getLatitude()
             val longitude: Double = gps.getLongitude()
-            val addressRequestModel =
-                AddressRequestWithLatLongModel(latitude.toString(), longitude.toString())
-            getAddressByLatLong(addressRequestModel = addressRequestModel)
+
+            val geocoder: Geocoder
+            val addresses: List<Address>
+
+
+            addresses = getNavigator()?.getGeoCoder()?.getFromLocation(
+                latitude,
+                longitude,
+                1
+            )!! // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+            var addressRequestModel:AddressRequestWithLatLongModel
+            if (addresses != null && addresses.size > 0) {
+                val city = addresses[0].locality
+                val state = addresses[0].adminArea
+                val postalCode = addresses[0].postalCode
+
+                 addressRequestModel =
+                    AddressRequestWithLatLongModel(
+                        latitude.toString(),
+                        longitude.toString(),
+                        state,
+                        city,
+                        "",
+                        "",
+                        pincode = postalCode
+                    )
+                getAddressByLocationFromApi(latitude,longitude)
+                Log.d("AddressPayload", Gson().toJson(addressRequestModel))
+                getAddressByLatLong(addressRequestModel = addressRequestModel)
+            }else{
+                getAddressByLocationFromApi(latitude,longitude)
+            }
+
         } else {
             // Can't get location.
             // GPS or network is not enabled.
@@ -288,6 +324,32 @@ class AddOrUpdateAddressViewModel @Inject constructor(
             gps?.showSettingsAlert()
         }
     }
+
+
+
+    private fun getAddressByLocationFromApi(latitude: Double, longitude: Double) {
+        try {
+            if (getNavigator()?.isNetworkAvailable() == true) {
+                viewModelScope.launch {
+
+                    val url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=22.337799,114.139847&key=AIzaSyAgy7OYQrHaPSXndFDMjXU2pMcpk48uyt0"
+                    val addressResponse =
+                        onBoardingRepository.getLocationAddress(""+latitude+","+longitude,"AIzaSyAgy7OYQrHaPSXndFDMjXU2pMcpk48uyt0")
+
+                   Log.d("Data",addressResponse.toString())
+
+                }
+             } else
+                getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+        } catch (ex: Exception) {
+            when (ex) {
+                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+            }
+        }
+
+    }
+
 
 
     private fun getAddressByLatLong(addressRequestModel: AddressRequestWithLatLongModel) {
@@ -322,12 +384,12 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
     private fun updateAddressByLatLong(address: GpApiResponseData?) {
         if (address?.state != null) stateNameStr.set(address.state)
-        if (address?.district != null) districtName.set(address.state)
-        if (address?.tehsil != null) tehsilName.set(address.state)
-        if (address?.village != null) villageName.set(address.state)
+        if (address?.district != null) districtName.set(address.district)
+        if (address?.tehsil != null) tehsilName.set(address.tehsil)
+        if (address?.village != null) villageName.set(address.village)
 
         isImageAvailable.set(false)
-        stateNameInitial.set(stateNameStr.get()?.subSequence(0,1).toString())
+        stateNameInitial.set(stateNameStr.get()?.subSequence(0, 1).toString())
 
         if (address?.pincode_list != null && address.pincode_list.size > 0)
             pinCode.set(address.pincode_list.get(0).pincode)

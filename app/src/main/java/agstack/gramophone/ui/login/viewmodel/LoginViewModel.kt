@@ -15,10 +15,13 @@ import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.Manifest
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNull
+import com.google.zxing.integration.android.IntentResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -27,13 +30,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val onBoardingRepository : OnBoardingRepository
+    private val onBoardingRepository: OnBoardingRepository
 ) : BaseViewModel<LoginNavigator>() {
     var mobileNo = ObservableField<String>()
     var referralCode = ObservableField<String>()
+    var isReferralCodeApplied = ObservableField<Boolean>()
+    var referralCodeValue: String? = null
+    var mAlertDialog: AlertDialog? = null
 
-
-    fun sendOTP(v: View) = viewModelScope.launch {
+    fun sendOTP() = viewModelScope.launch {
         if (mobileNo.get().isNullOrEmpty()) {
             getNavigator()?.onError(getNavigator()?.getMessage(R.string.enter_mobile_lebel)!!)
         } else if (mobileNo.get()?.length!! < 10) {
@@ -43,8 +48,8 @@ class LoginViewModel @Inject constructor(
 
             sendOtpRequestModel.phone = mobileNo.get()
             sendOtpRequestModel.language = getNavigator()?.getLanguage()
-            if (!referralCode.get().isNullOrEmpty()) {
-                sendOtpRequestModel.referral_code = referralCode.get()
+            if (!referralCodeValue.isNullOrEmpty()) {
+                sendOtpRequestModel.referral_code = referralCodeValue
             }
 
             sendOTPCall(sendOtpRequestModel)
@@ -64,17 +69,18 @@ class LoginViewModel @Inject constructor(
 
                     var loginData = handleLoginResponse(response)
                     getNavigator()?.moveToNext(Bundle().apply {
-                        putString(Constants.MOBILE_NO,mobileNo.get())
-                        putInt(Constants.OTP_REFERENCE,
+                        putString(Constants.MOBILE_NO, mobileNo.get())
+                        putInt(
+                            Constants.OTP_REFERENCE,
                             loginData.data?.gp_api_response_data?.otp_reference_id!!
                         )
                     })
-                }else{
+                } else {
                     getNavigator()?.onError(sendOtpResponseModel?.gp_api_message)
 
                 }
 
-            }  else
+            } else
                 getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
         } catch (ex: Exception) {
             when (ex) {
@@ -93,39 +99,31 @@ class LoginViewModel @Inject constructor(
         return ApiResponse.Error(response.message())
     }
 
-    fun onHelpClick(v:View) {
-        var initiateAppDataResponseModel =
-            SharedPreferencesHelper.instance?.getParcelable(
-                SharedPreferencesKeys.app_data,InitiateAppDataResponseModel::class.java)
-
-        if (getNavigator()?.requestPermission(Manifest.permission.CALL_PHONE) == true)
-            getNavigator()?.onHelpClick(initiateAppDataResponseModel?.gp_api_response_data?.help_data_list?.customer_support_no!!)
-    }
-
-    fun onLanguageClick(v:View){
+    fun onLanguageClick() {
         getNavigator()?.onLanguageChangeClick()
 
     }
 
-    fun onPrivacyClicked(v:View){
+    fun onPrivacyClicked() {
         var initiateAppDataResponseModel =
             SharedPreferencesHelper.instance?.getParcelable(
-                SharedPreferencesKeys.app_data
-           , InitiateAppDataResponseModel::class.java
-        )
+                SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java
+            )
 
 
         getNavigator()?.openWebView(Bundle().apply {
-            putString(Constants.PAGE_URL, initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.privacy_policy_url)
+            putString(
+                Constants.PAGE_URL,
+                initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.privacy_policy_url
+            )
             putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.privacy))
         })
     }
 
-    fun onTermsClicked(v:View){
+    fun onTermsClicked() {
         var initiateAppDataResponseModel =
             SharedPreferencesHelper.instance?.getParcelable(
-                SharedPreferencesKeys.app_data
-                , InitiateAppDataResponseModel::class.java
+                SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java
             )
 
 
@@ -145,14 +143,13 @@ class LoginViewModel @Inject constructor(
     fun onTermsOfUseClicked() {
         var initiateAppDataResponseModel =
             SharedPreferencesHelper.instance?.getParcelable(
-                SharedPreferencesKeys.app_data
-                , InitiateAppDataResponseModel::class.java
+                SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java
             )
 
         getNavigator()?.openWebView(Bundle().apply {
             putString(
                 Constants.PAGE_URL,
-                initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.referral_terms_conditions
+                initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.referral_terms_conditions_url
             )
             putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.terms_of_use))
 
@@ -161,12 +158,14 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onReferralCodeClicked() {
-      getNavigator()?.openReferralDialog()
+        getNavigator()?.openReferralDialog()
     }
 
 
     fun onRemoveReferralClicked() {
         referralCode.set("")
+        referralCodeValue = ""
+        isReferralCodeApplied.set(false)
         getNavigator()?.referralCodeRemoved()
 
 
@@ -182,16 +181,19 @@ class LoginViewModel @Inject constructor(
 
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
-                val response = onBoardingRepository.updateLanguageWhileOnBoarding(sendOtpRequestModel)
+                val response =
+                    onBoardingRepository.updateLanguageWhileOnBoarding(sendOtpRequestModel)
 
                 val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
                     getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
-                    getNavigator()?.openAndFinishActivity(LoginActivity::class.java,Bundle().apply {
-                        putString(Constants.MOBILE_NO,mobileNo.get())
-                    })
-                }else{
+                    getNavigator()?.openAndFinishActivity(
+                        LoginActivity::class.java,
+                        Bundle().apply {
+                            putString(Constants.MOBILE_NO, mobileNo.get())
+                        })
+                } else {
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
                 }
 
@@ -226,6 +228,44 @@ class LoginViewModel @Inject constructor(
             getNavigator()?.showMobileNumberHint()
         }
     }
+
+    fun setDialog(mDialog: AlertDialog?) {
+        mAlertDialog = mDialog
+    }
+
+    fun applyCode() {
+        if (referralCode.get().isNotNull() && referralCode.get()?.length!! > 0) {
+            referralCodeValue = referralCode.get()
+            referralCode.set(
+                getNavigator()?.getMessage(R.string.referral_code) + referralCode.get() + getNavigator()?.getMessage(
+                    R.string.applied
+                )
+            )
+            isReferralCodeApplied.set(true)
+            mAlertDialog?.dismiss()
+        } else {
+            getNavigator()?.showToast(R.string.enter_referral_code)
+        }
+
+    }
+
+    fun closeDialog() {
+        mAlertDialog?.dismiss()
+    }
+
+    fun scanQR() {
+        getNavigator()?.scanQR()
+        mAlertDialog?.dismiss()
+    }
+
+    fun setReferralCodeFromQR(resultData: IntentResult) {
+        referralCodeValue=resultData.contents
+        isReferralCodeApplied.set(true)
+        referralCode.set(
+            getNavigator()?.getMessage(R.string.referral_code) +referralCodeValue + getNavigator()?.getMessage(
+                R.string.applied))
+    }
 }
+
 
 

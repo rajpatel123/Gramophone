@@ -74,11 +74,22 @@
         <item name="tabIndicatorHeight">2dp</item>
         <item name="tabIndicatorFullWidth">true</item>
         <item name="tabRippleColor">@null</item>
+        <item name="singleLine">true</item>
         <item name="tabSelectedTextColor">@color/brand_color</item>
         <item name="tabTextColor">@color/gray_strike_through</item>
         <item name="tabTextAppearance">@style/bold</item>
     </style>
 
+
+    <style name="SocialTabIndicatorStyle" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabIndicatorFullWidth">true</item>
+        <item name="tabRippleColor">@null</item>
+        <item name="singleLine">true</item>
+        <item name="tabSelectedTextColor">@color/brand_color</item>
+        <item name="tabTextColor">@color/gray_strike_through</item>
+        <item name="tabTextAppearance">@style/bold</item>
+    </style>
     <style name="AppBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
     </style>

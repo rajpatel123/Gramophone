@@ -3,9 +3,11 @@ package agstack.gramophone.base
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.Manifest
+import android.location.Geocoder
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Job
 import java.lang.ref.WeakReference
+import java.util.*
 
 
 open class BaseViewModel<N : BaseNavigator>() : ViewModel() {
@@ -16,6 +18,7 @@ open class BaseViewModel<N : BaseNavigator>() : ViewModel() {
     internal fun setNavigator(navigator: N?) {
         mNavigator = WeakReference(navigator)
     }
+
 
 
     fun getNavigator() = mNavigator.get()
@@ -32,6 +35,9 @@ open class BaseViewModel<N : BaseNavigator>() : ViewModel() {
         }
     }
 
+    fun getGeoCoder(): Geocoder? {
+        return getNavigator()?.getGeoCoder()
+    }
     fun onLocationClick() {
         if (getNavigator()?.requestPermission(Manifest.permission.ACCESS_FINE_LOCATION) == true) {
             getNavigator()?.proceedOnLocationSetting()

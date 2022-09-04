@@ -243,12 +243,12 @@ class ProductDetailsActivity :
         isOffersLayoutVisible: Boolean,
         isContactforPriceVisible: Boolean
     ) {
-        viewDataBinding.tvProductSP.setText(resources.getString(R.string.rupee_symbol) + " " + salesPrice)
+        viewDataBinding.tvProductSP.setText(resources.getString(R.string.rupee) + "" + salesPrice)
         viewDataBinding.tvPercentageOffOnSelectedSKU.setText(discountPercentage)
         if (isMRPVisible) {
             viewDataBinding.tvProductMRP.visibility = View.VISIBLE
         } else {
-            viewDataBinding.tvProductMRP.visibility = View.VISIBLE
+            viewDataBinding.tvProductMRP.visibility = View.GONE
         }
 
         if (isContactforPriceVisible) {
@@ -318,7 +318,7 @@ class ProductDetailsActivity :
     }
 
     override fun setRatingAndReviewsAdapter(ratingAndReviewsAdapter: RatingAndReviewsAdapter) {
-        viewDataBinding.ratingbarReviews.rvReviewsProduct.adapter = ratingAndReviewsAdapter
+       viewDataBinding.ratingbarReviews.rvReviewsProduct.adapter = ratingAndReviewsAdapter
     }
 
     override fun openViewAllReviewRatingsActivity(

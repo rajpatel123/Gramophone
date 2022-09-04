@@ -10,7 +10,7 @@ import javax.inject.Singleton
 @Singleton
 class ProductListAdapter() :
     RecyclerView.Adapter<ProductListAdapter.CustomViewHolder>() {
-
+    var onAddToCartClick: ((productId: String) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         return CustomViewHolder(
@@ -19,7 +19,9 @@ class ProductListAdapter() :
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-
+        holder.binding.tvAddToCart.setOnClickListener {
+            onAddToCartClick?.invoke("1")
+        }
     }
 
     override fun getItemCount(): Int {

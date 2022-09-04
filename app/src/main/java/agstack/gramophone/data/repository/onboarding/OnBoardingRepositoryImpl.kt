@@ -9,6 +9,7 @@ import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
+import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
@@ -19,6 +20,7 @@ import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -103,5 +105,17 @@ class OnBoardingRepositoryImpl @Inject constructor(
         addressData
     }
 
+    override suspend fun getBanners(): Response<BannerResponse>  = withContext(
+        Dispatchers.IO) {
+        val bannerResponse = gramAppService.getBanners()
+        bannerResponse
+    }
+
+
+    override suspend fun getLocationAddress(lat: String, key: String): Response<JSONObject>  = withContext(
+        Dispatchers.IO) {
+        val bannerResponse = gramAppService.getLocationAddress(lat,key)
+        bannerResponse
+    }
 
 }

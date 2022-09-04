@@ -5,6 +5,7 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.model.UpdateLanguageRequestModel
 import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
+import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.language.LanguageActivityNavigator
 import agstack.gramophone.ui.language.adapter.LanguageAdapter
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
@@ -103,12 +104,12 @@ class LanguageViewModel @Inject constructor(
                 }
             } else
                 getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
-      } catch (ex: Exception) {
-         when (ex) {
-            is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-            else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
-         }
-      }
+        } catch (ex: Exception) {
+            when (ex) {
+                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+            }
+        }
     }
 
     private fun handleOrderResponse(response: Response<InitiateAppDataResponseModel>): ApiResponse<InitiateAppDataResponseModel> {
@@ -129,7 +130,7 @@ class LanguageViewModel @Inject constructor(
         return ApiResponse.Error(response.message())
     }
 
-     fun onLanguageUpdate(v:View) {
+    fun onLanguageUpdate(v:View) {
         when (v.id) {
             R.id.btnContinue -> {
                 if (language != null) {
@@ -197,12 +198,16 @@ class LanguageViewModel @Inject constructor(
 
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
-                val response = onBoardingRepository.updateLanguageWhileOnBoarding(sendOtpRequestModel)
+                val response = onBoardingRepository.updateLanguage(sendOtpRequestModel)
 
                 val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
 
                 if (GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
                     getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
+                    SharedPreferencesHelper.instance?.putParcelable(
+                        SharedPreferencesKeys.BANNER_DATA,
+                        BannerResponse("")
+                    )
                     getNavigator()?.closeLanguageList()
                 } else {
                     getNavigator()?.onError(updateLanguageResponseModel?.gp_api_message)

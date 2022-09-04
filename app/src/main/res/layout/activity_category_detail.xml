@@ -89,26 +89,7 @@
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-            <!--<com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@android:color/transparent"
-                app:tabIconTint="#F57C00"
-                app:tabIndicatorColor="#F57C00"
-                app:tabIndicatorHeight="4dp"
-                app:tabMode="scrollable"
-                app:tabSelectedTextColor="#F5F5F5"
-                app:tabTextColor="#FFE0B2" />-->
-
         </com.google.android.material.appbar.AppBarLayout>
-
-        <!-- <androidx.viewpager2.widget.ViewPager2
-             android:id="@+id/viewPager2"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
-
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -140,7 +121,7 @@
                             android:fontFamily="@font/manrope_medium"
                             android:gravity="center"
                             android:lineSpacingExtra="0sp"
-                            android:text="Sort by"
+                            android:text="@string/sort_by"
                             android:textColor="@color/gray"
                             android:textSize="14sp"
                             app:drawableStartCompat="@drawable/ic_sort_by" />
@@ -161,7 +142,7 @@
                             android:fontFamily="@font/manrope_medium"
                             android:gravity="center"
                             android:lineSpacingExtra="0sp"
-                            android:text="Filter"
+                            android:text="@string/filter"
                             android:textColor="@color/gray"
                             android:textSize="14sp"
                             app:drawableStartCompat="@drawable/ic_filter" />
@@ -201,7 +182,7 @@
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:fontFamily="@font/manrope_bold"
-                    android:text="Shop by Sub Category"
+                    android:text="@string/shop_by_sub_category"
                     android:textColor="@color/blakish"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="normal" />
@@ -238,6 +219,13 @@
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.progress == true ? View.VISIBLE : View.GONE}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

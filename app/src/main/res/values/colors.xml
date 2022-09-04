@@ -27,6 +27,7 @@
     <color name="gray_empty_bg">#F5F5F5</color>
     <color name="grey_weight">#8010203E</color>
     <color name="green">#79BD2E</color>
+    <color name="whatsappgreen">#44BC37</color>
     <color name="green_medium">#62A41C</color>
     <color name="green_dark">#468600</color>
     <color name="green_transparent">#EFF6E8</color>
@@ -51,6 +52,7 @@
     <color name="pink">#FEE7E3</color>
     <color name="blue_20">#D6E3FF</color>
     <color name="blue_happy">#1F5385</color>
+    <color name="blue_area">#4875D4</color>
     <color name="viewcolor">#F2F4F7</color>
     <color name="order_placed_bg">#FCF3CC</color>
     <color name="order_placed_text">#97651A</color>
@@ -74,4 +76,5 @@
     <color name="location_permission_title">#993C3C43</color>
     <color name="selected_main_filter">#FAFCFF</color>
     <color name="gray_light">#77EDEFF3</color>
+    <color name="tab_color">#FC8587</color>
 </resources>

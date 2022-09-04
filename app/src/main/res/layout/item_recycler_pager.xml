@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <agstack.gramophone.ui.home.view.fragments.community.SquareViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/bannerPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            />
+
+        <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+            android:id="@+id/dots_indicator"
+            app:dotsColor="@color/blue"
+            app:dotsSize="12dp"
+            app:dotsSpacing="5dp"
+            app:dotsStrokeColor="@color/gray_stroke"
+            app:progressMode="false"
+            app:stiffness="300"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="@dimen/_16sdp" />
+
+
+    </FrameLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_below="@+id/frameLayout"
+        android:background="@color/grey" />
+</RelativeLayout>

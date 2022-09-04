@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,8 +12,7 @@
             type="agstack.gramophone.ui.order.viewmodel.OrderListViewModel" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -26,6 +27,7 @@
             android:layout_height="@dimen/_44sdp"
             android:layout_below="@+id/myToolbar"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="-2dp"
             app:tabIndicatorColor="@color/orange">
 
             <com.google.android.material.tabs.TabItem

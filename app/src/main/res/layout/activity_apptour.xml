@@ -44,7 +44,7 @@
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:onClick="@{ ()-> viewModel.onHelpClick(llHelpLinearLayout) }"
+                android:onClick="@{ ()-> viewModel.onHelpClick() }"
                 >
 
                 <ImageView
@@ -77,7 +77,7 @@
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:onClick="@{ ()-> viewModel.onLanguageClick(llLanguageLinearLayout) }"
+                android:onClick="@{ ()-> viewModel.onLanguageClick() }"
                 >
 
                 <ImageView
@@ -131,13 +131,15 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
-                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-                    android:id="@+id/dots_indicator"
+
+                <LinearLayout
+                    android:id="@+id/llIndicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="112dp"
                     android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
                     app:dotsColor="@color/grey"
                     app:dotsCornerRadius="8dp"
                     app:dotsSize="16dp"
