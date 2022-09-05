@@ -21,6 +21,7 @@ import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -110,6 +111,14 @@ class OnBoardingRepositoryImpl @Inject constructor(
         val bannerResponse = gramAppService.getBanners()
         bannerResponse
     }
+
+
+    override suspend fun getLocationAddress(url:String): Response<JSONObject>  = withContext(
+        Dispatchers.IO) {
+        val bannerResponse = gramAppService.getLocationAddress(url)
+        bannerResponse
+    }
+
 
     override suspend fun getProfile(): Response<ProfileResponse>  = withContext(
         Dispatchers.IO) {

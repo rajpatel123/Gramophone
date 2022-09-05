@@ -27,6 +27,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
@@ -52,13 +53,13 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
     fun changeState() {
         getNavigator()?.openAndFinishActivity(StateListActivity::class.java, Bundle().apply {
-            putString(Constants.CHANGE_STATE,Constants.CHANGE_STATE)
+            putString(Constants.CHANGE_STATE, Constants.CHANGE_STATE)
         })
     }
 
-   fun onBackPressedClick(){
-       getNavigator()?.onBackPressClick()
-   }
+    fun onBackPressedClick() {
+        getNavigator()?.onBackPressClick()
+    }
 
     fun submitAddress() {
 
@@ -268,11 +269,10 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
     fun setStatesName(stateName: String, image: String) {
         stateNameStr.set(stateName)
-        stateImageUrl.set(image)
-        if (image.isNullOrEmpty()){
+        if (image.isNullOrEmpty()) {
             isImageAvailable.set(false)
-            stateNameInitial.set(stateName.subSequence(0,1).toString())
-        }else{
+            stateNameInitial.set(stateName.subSequence(0, 1).toString())
+        } else {
             isImageAvailable.set(true)
 
         }
@@ -295,18 +295,38 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                 longitude,
                 1
             )!! // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+            var addressRequestModel:AddressRequestWithLatLongModel
+            if (addresses != null && addresses.size > 0) {
+                val city = addresses[0].locality
+                val state = addresses[0].adminArea
+                val postalCode = addresses[0].postalCode
+
+                 addressRequestModel =
+                    AddressRequestWithLatLongModel(
+                        latitude.toString(),
+                        longitude.toString(),
+                        state,
+                        city,
+                        "",
+                        "",
+                        pincode = postalCode
+                    )
+            }else{
+                 addressRequestModel =
+                    AddressRequestWithLatLongModel(
+                        latitude.toString(),
+                        longitude.toString(),
+                       "Maharashtra",
+                        "",
+                        "",
+                        "",
+                        ""
+                    )
+            }
 
 
-            val address =
-                addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-
-            val city = addresses[0].locality
-            val state = addresses[0].adminArea
-            val postalCode = addresses[0].postalCode
 
 
-            val addressRequestModel =
-                AddressRequestWithLatLongModel(latitude.toString(), longitude.toString(),state,city,"","", pincode = postalCode)
             Log.d("AddressPayload", Gson().toJson(addressRequestModel))
             getAddressByLatLong(addressRequestModel = addressRequestModel)
         } else {
@@ -355,7 +375,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
         if (address?.village != null) villageName.set(address.village)
 
         isImageAvailable.set(false)
-        stateNameInitial.set(stateNameStr.get()?.subSequence(0,1).toString())
+        stateNameInitial.set(stateNameStr.get()?.subSequence(0, 1).toString())
 
         if (address?.pincode_list != null && address.pincode_list.size > 0)
             pinCode.set(address.pincode_list.get(0).pincode)

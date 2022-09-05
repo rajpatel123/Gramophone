@@ -221,6 +221,7 @@ class ProductDetailsViewModel @Inject constructor(
             finaldiscount = (formatted_percentage + " % off")
             isMRPVisibile = priceDiff > 0
 
+
             offerModel?.let {
                 if (offerModel.amount_saved!! > 0) {
                     finalSalePrice = model.salesPrice.toDouble() - offerModel?.amount_saved!!

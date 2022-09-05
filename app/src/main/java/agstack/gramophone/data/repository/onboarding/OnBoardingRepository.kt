@@ -18,6 +18,7 @@ import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
+import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Singleton
 
@@ -49,6 +50,7 @@ interface OnBoardingRepository {
     suspend fun updateAddressByLatLong(addressRequestModel: AddressRequestWithLatLongModel): Response<AddressDataByLatLongResponseModel>
 
     suspend fun getBanners(): Response<BannerResponse>
+    suspend fun getLocationAddress(url:String): Response<JSONObject>
 
     suspend fun getProfile(): Response<ProfileResponse>
 }

@@ -30,6 +30,7 @@ import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListRespons
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import agstack.gramophone.utils.Constants
+import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -169,6 +170,8 @@ interface GramAppService {
 
     @GET("api/v5/category/banner-data")
     suspend fun getBanners(): Response<BannerResponse>
+
+    suspend fun getLocationAddress(@Url url:String): Response<JSONObject>
 
     @GET("api/v5/category/product-app-category")
     suspend fun getCategories(): Response<CategoryResponse>
