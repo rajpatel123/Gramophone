@@ -1,67 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel" />
+    </data>
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_200sdp"
-    android:orientation="horizontal">
-
-
-    <TextView
-        android:id="@+id/tv_block_dailogue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="@dimen/_32sdp"
-        android:layout_marginTop="@dimen/_32sdp"
-        android:text="Block user"
-        android:textColor="#0638A0"
-        android:textSize="@dimen/_20ssp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tv_dailogue_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="@dimen/_32sdp"
-        android:layout_marginTop="@dimen/_64sdp"
-        android:layout_marginRight="@dimen/_32sdp"
-        android:text=" Are you sure you want to block this user? "
-        android:textColor="#10203E"
-        android:textSize="@dimen/_16ssp" />
-
-    <EditText
+    android:layout_height="wrap_content">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_115sdp"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-    <TextView
-        android:id="@+id/tv_cancel_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_180sdp"
-        android:layout_marginTop="@dimen/_158sdp"
-        android:text="Cancel"
-        android:textStyle="bold"
-        android:textColor="#606774"
-        android:textSize="@dimen/_17ssp" />
-
-    <TextView
-        android:id="@+id/tv_Del_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_22sdp"
-        android:layout_marginTop="@dimen/_158sdp"
-        android:layout_toRightOf="@+id/tv_cancel_box"
-        android:text="Block"
-        android:textColor="#0638A0"
-        android:textSize="@dimen/_17ssp"
-        android:textStyle="bold" />
+        android:paddingBottom="@dimen/_16sdp"
+        android:orientation="vertical"
+        android:background="@drawable/menu_dialog_shape"
+        >
 
 
+        <TextView
+            android:id="@+id/tv_block_dailogue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="Block user"
+            android:textColor="#0638A0"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_dailogue_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_14ssp"
+            android:text=" Are you sure you want to block this user? "
+            android:textColor="#10203E"
+            android:textSize="@dimen/_12ssp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/grey"
+            android:layout_marginTop="@dimen/_14ssp"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <TextView
+                android:id="@+id/tv_cancel_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->viewModel.onCancel()}"
+                android:text="Cancel"
+                android:fontFamily="@font/manrope_semibold"
+                android:layout_marginEnd="@dimen/_18sdp"
+                android:layout_toStartOf="@+id/tvReport"
+                android:textColor="#606774"
+                android:textSize="@dimen/_14ssp"
+                />
+
+            <TextView
+                android:id="@+id/tvReport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:fontFamily="@font/manrope_semibold"
+                android:onClick="@{()->viewModel.onReport()}"
+                android:text="@string/block_user"
+                android:textColor="@color/brand_color"
+                android:textSize="@dimen/_14ssp"
+                />
+        </RelativeLayout>
 
 
+    </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
+</layout>

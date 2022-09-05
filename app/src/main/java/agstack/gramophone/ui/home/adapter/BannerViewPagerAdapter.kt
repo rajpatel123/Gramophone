@@ -1,8 +1,10 @@
 package agstack.gramophone.ui.home.adapter
 
 import agstack.gramophone.R
+import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActivity
 import agstack.gramophone.ui.home.view.fragments.community.model.PagerItem
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +47,10 @@ class BannerViewPagerAdapter(list: List<PagerItem>?, private val mContext: Conte
             .fitCenter()
             .into(holder.imageView)
         container.addView(rootView)
+
+        rootView.setOnClickListener {
+            container.context.startActivity(Intent(container.context,LikedPostUserListActivity::class.java))
+        }
 
         return rootView
     }

@@ -6,12 +6,12 @@ import android.net.Uri
 
 class ShareSheetPresenter(
     private val presentingActivity: androidx.fragment.app.FragmentActivity,
-    private val genericUriHandler: GenericUriHandler
+    private val genericUriHandler: GenericUriHandler?=null
 ) {
 
 
     fun shareDynamicLink() {
-        genericUriHandler.processGenericUri(GENERIC_URI)
+        genericUriHandler?.processGenericUri(GENERIC_URI)
     }
 
     fun shareDeepLinkWithExtraTextWithOption(
@@ -31,6 +31,13 @@ class ShareSheetPresenter(
             when (shareOn) {
                 IntentKeys.WhatsAppShareKey -> {
                     intent.setPackage("com.whatsapp")
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    intent.putExtra(Intent.EXTRA_STREAM,GENERIC_URI);
+                    intent.setType("*/*")
+                }
+
+                IntentKeys.FacebookShareKey -> {
+                    intent.setPackage("com.facebook")
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     intent.putExtra(Intent.EXTRA_STREAM,GENERIC_URI);
                     intent.setType("*/*")

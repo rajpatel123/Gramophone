@@ -329,10 +329,10 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_2sdp"
                         android:background="@null"
-                        android:textColor="@color/grey"
-                        android:singleLine="true"
+                        android:hint="Write a comment..."
                         android:paddingEnd="@dimen/_40sdp"
-                        android:hint="Write a comment..." />
+                        android:singleLine="true"
+                        android:textColor="@color/grey" />
 
                     <ImageView
                         android:id="@+id/ivCameraButton"
