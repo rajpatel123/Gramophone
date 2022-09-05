@@ -107,10 +107,11 @@ class MarketFragment :
         super.onViewCreated(view, savedInstanceState)
         setUpUI()
         marketFragmentViewModel.getFeaturedProducts(HashMap<Any, Any>())
-        marketFragmentViewModel.getCategories()
+        /*marketFragmentViewModel.getCategories()
         marketFragmentViewModel.getCompanies()
         marketFragmentViewModel.getStores()
-        marketFragmentViewModel.getCrops()
+        marketFragmentViewModel.getCrops()*/
+
     }
 
     private fun setUpUI() {
@@ -159,6 +160,11 @@ class MarketFragment :
         binding?.rvPopularProducts?.layoutManager = GridLayoutManager(activity, 2)
         binding?.rvPopularProducts?.setHasFixedSize(true)
         binding?.rvPopularProducts?.adapter = PopularProductAdapter()
+    }
+
+    override fun setHomeAdapter(adapter: HomeAdapter, onItemClick: (String) -> Unit) {
+        adapter.onItemClicked = onItemClick
+        binding?.rvHome?.adapter = adapter
     }
 
     override fun setViewPagerAdapter(bannerList: List<Banner>?) {

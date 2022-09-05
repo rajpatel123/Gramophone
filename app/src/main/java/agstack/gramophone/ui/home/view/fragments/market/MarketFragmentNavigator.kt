@@ -13,6 +13,11 @@ interface MarketFragmentNavigator : BaseNavigator {
 
     fun openSubCategoryActivity(bundle: Bundle)
 
+    fun setHomeAdapter(
+        adapter: HomeAdapter,
+        onItemClick: (String) -> Unit,
+    )
+
     fun setCategoryAdapter(
         adapter: ShopByCategoryAdapter,
         onCategoryClick: (String) -> Unit,

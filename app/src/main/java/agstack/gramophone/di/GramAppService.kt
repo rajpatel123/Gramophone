@@ -187,4 +187,7 @@ interface GramAppService {
 
     @GET("api/v5/customer/profile-data")
     suspend fun getProfile(): Response<ProfileResponse>
+
+    @GET("api/v5/category/home-data")
+    suspend fun getHomeData(): Response<HomeDataResponse>
 }

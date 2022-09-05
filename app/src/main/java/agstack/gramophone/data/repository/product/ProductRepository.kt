@@ -57,4 +57,6 @@ interface ProductRepository {
     suspend fun getCrops():Response<CropResponse>
 
     suspend fun getSubCategories(categoryId: String):Response<SubCategoryResponse>
+
+    suspend fun getHomeData():Response<HomeDataResponse>
 }

@@ -5,14 +5,12 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.home.adapter.*
 import agstack.gramophone.ui.home.view.fragments.market.model.*
-import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.amnix.xtension.extensions.isNotNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import java.io.IOException
@@ -28,6 +26,8 @@ class MarketFragmentViewModel
     var cropResponse: CropResponse? = null
     var storeResponse: StoreResponse? = null
     var companyResponse: CompanyResponse? = null
+    var allBannerResponse: BannerResponse? = null
+    var categoryResponse: CategoryResponse? = null
     var exclusiveBanner = MutableLiveData<String>()
     var referralBanner = MutableLiveData<String>()
     var exclusiveBannerSize = MutableLiveData<Int>()
@@ -35,6 +35,28 @@ class MarketFragmentViewModel
     init {
         exclusiveBanner.value = ""
         exclusiveBannerSize.value = 0
+    }
+
+    fun getHomeData() {
+        viewModelScope.launch {
+            try {
+                val response = productRepository.getHomeData()
+                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
+                    getNavigator()?.setHomeAdapter(HomeAdapter(response.body()?.gp_api_response_data?.home_screen_sequence!!,
+                        allBannerResponse, categoryResponse, productList,
+                        cropResponse,
+                        storeResponse, companyResponse)) {
+
+                    }
+
+                }
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
     }
 
     fun getFeaturedProducts(hashMap: HashMap<Any, Any>) {
@@ -64,7 +86,7 @@ class MarketFragmentViewModel
                 getNavigator()?.setFeaturedProductsAdapter(ProductListAdapter(productList)) {
                     getNavigator()?.startProductDetailsActivity(it)
                 }
-
+                getBanners()
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -81,6 +103,7 @@ class MarketFragmentViewModel
                 var bannerResponse = SharedPreferencesHelper.instance?.getParcelable(
                     SharedPreferencesKeys.BANNER_DATA, BannerResponse::class.java
                 )
+                allBannerResponse = bannerResponse
                 if (bannerResponse?.gpApiStatus != Constants.GP_API_STATUS) {
                     val response = productRepository.getBanners()
                     if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS) {
@@ -92,13 +115,19 @@ class MarketFragmentViewModel
                     }
                 }
                 getNavigator()?.setViewPagerAdapter(bannerResponse?.gpApiResponseData?.homeBanner1)
-                referralBanner.value = bannerResponse?.gpApiResponseData?.homeReferralBanner?.get(0)?.bannerImage!!
-                exclusiveBanner.value = bannerResponse.gpApiResponseData?.homeGramophoneExclusive?.get(0)?.bannerImage!!
-                exclusiveBannerSize.value = bannerResponse.gpApiResponseData?.homeGramophoneExclusive?.size
+                referralBanner.value =
+                    bannerResponse?.gpApiResponseData?.homeReferralBanner?.get(0)?.bannerImage!!
+                exclusiveBanner.value =
+                    bannerResponse.gpApiResponseData?.homeGramophoneExclusive?.get(0)?.bannerImage!!
+                exclusiveBannerSize.value =
+                    bannerResponse.gpApiResponseData?.homeGramophoneExclusive?.size
 
-                getNavigator()?.setExclusiveAndReferralImage(exclusiveBanner.value.toString(), referralBanner.value.toString())
+                getNavigator()?.setExclusiveAndReferralImage(exclusiveBanner.value.toString(),
+                    referralBanner.value.toString())
                 getNavigator()?.setExclusiveBannerAdapter(ExclusiveBannerAdapter(bannerResponse.gpApiResponseData?.homeGramophoneExclusive!!)) {
                 }
+
+                getCategories()
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -112,14 +141,20 @@ class MarketFragmentViewModel
         viewModelScope.launch {
             try {
                 val response = productRepository.getCategories()
+                categoryResponse = response.body()
                 if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
-                    getNavigator()?.setCategoryAdapter(ShopByCategoryAdapter(response.body()?.gp_api_response_data?.product_app_categories_list)) {
+                    getNavigator()?.setCategoryAdapter(ShopByCategoryAdapter(response.body()?.gp_api_response_data?.product_app_categories_list) {
+                        getNavigator()?.openSubCategoryActivity(Bundle().apply {
+                            putString(Constants.CATEGORY_ID,
+                                it)
+                        })
+                    }) {
                         getNavigator()?.openSubCategoryActivity(Bundle().apply {
                             putString(Constants.CATEGORY_ID,
                                 it)
                         })
                     }
-
+                    getCrops()
                 }
             } catch (ex: Exception) {
                 when (ex) {
@@ -152,7 +187,7 @@ class MarketFragmentViewModel
                         })
 
                     }
-
+                    getStores()
                 }
             } catch (ex: Exception) {
                 when (ex) {
@@ -185,7 +220,7 @@ class MarketFragmentViewModel
                         })
 
                     }
-
+                    getCompanies()
                 }
             } catch (ex: Exception) {
                 when (ex) {
@@ -200,7 +235,7 @@ class MarketFragmentViewModel
         viewModelScope.launch {
             try {
                 val response = productRepository.getCompanies()
-                if (response.isSuccessful && response.body()?.gpApiStatus== Constants.GP_API_STATUS
+                if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS
                     && response.body()?.gpApiResponseData?.companiesList?.size!! > 0
                 ) {
                     companyResponse = response.body()
@@ -216,6 +251,7 @@ class MarketFragmentViewModel
                                 it)
                         })*/
                     }
+                    getHomeData()
                 }
             } catch (ex: Exception) {
                 when (ex) {

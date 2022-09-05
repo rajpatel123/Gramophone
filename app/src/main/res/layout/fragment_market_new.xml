@@ -22,12 +22,6 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -843,16 +837,6 @@
                         android:src="@drawable/ic_wheat_bg" />
 
                 </LinearLayout>
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvHome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_home_banner" />
 
             </LinearLayout>
 
