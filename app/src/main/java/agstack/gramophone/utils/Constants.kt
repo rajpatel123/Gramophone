@@ -28,6 +28,15 @@ object Constants {
     val SHOP_BY_CROP="SHOP_BY_CROP"
     val SHOP_BY_STORE="SHOP_BY_STORE"
     val SHOP_BY_COMPANY="SHOP_BY_COMPANY"
+    val HOME_BANNER_1="home_banner_1"
+    val HOME_SHOP_BY_CATEGORY="shop_by_category"
+    val HOME_FEATURED_PRODUCTS="featured_products"
+    val HOME_SHOP_BY_CROP="shop_by_crop"
+    val HOME_SHOP_BY_STORE="shop_by_store"
+    val HOME_SHOP_BY_COMPANY="shop_by_company"
+    val HOME_BANNER_EXCLUSIVE="gramophone_exclusive"
+    val HOME_BANNER_REFERRAL="home_referral_banner"
+
 
 
     val CAMERA_PERMISSION = Manifest.permission.CAMERA
@@ -105,6 +114,7 @@ object Constants {
     const val Product_Id_Key = "product_id"
 
     //Product
+    const val PRODUCT = "product"
     const val ORDER_ID = "order_id"
     const val CATEGORY_ID = "category_id"
     const val COMPANY_ID = "company_id"

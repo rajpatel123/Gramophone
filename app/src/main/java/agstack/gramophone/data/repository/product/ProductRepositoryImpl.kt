@@ -147,4 +147,10 @@ class ProductRepositoryImpl @Inject constructor(
         val subCategoryResponse = gramoAppService.getSubCategory(categoryId)
         subCategoryResponse
     }
+
+    override suspend fun getHomeData(): Response<HomeDataResponse>  = withContext(
+        Dispatchers.IO) {
+        val homeDataResponse = gramoAppService.getHomeData()
+        homeDataResponse
+    }
 }

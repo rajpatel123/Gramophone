@@ -3,11 +3,13 @@ package agstack.gramophone.ui.home.adapter
 
 import agstack.gramophone.databinding.ItemShopByCropsBinding
 import agstack.gramophone.ui.home.view.fragments.market.model.CropData
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ShopByCropsAdapter(private val cropList: List<CropData>?) :
+class ShopByCropsAdapter(private val cropList: List<CropData>?,
+                         private val listener: (String) -> Unit) :
     RecyclerView.Adapter<ShopByCropsAdapter.CustomViewHolder>() {
     var onItemClicked: ((id: String) -> Unit)? = null
 
@@ -20,7 +22,8 @@ class ShopByCropsAdapter(private val cropList: List<CropData>?) :
     override fun onBindViewHolder(holder: CustomViewHolder, i: Int) {
         holder.binding.model = cropList?.get(i)
         holder.binding.itemView.setOnClickListener {
-            onItemClicked?.invoke(cropList?.get(i)?.cropId.toString())
+            /*onItemClicked?.invoke(cropList?.get(i)?.cropId.toString())*/
+            listener.invoke(cropList?.get(i)?.cropId.toString())
         }
     }
 

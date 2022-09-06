@@ -66,7 +66,12 @@ class SubCategoryViewModel @Inject constructor(
                     progress.value = false
 
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
-                        getNavigator()?.setSubCategoryAdapter(ShopByCategoryAdapter(response.body()?.gp_api_response_data?.product_app_sub_categories_list)) {
+                        getNavigator()?.setSubCategoryAdapter(ShopByCategoryAdapter(response.body()?.gp_api_response_data?.product_app_sub_categories_list) {
+                            /*getNavigator()?.openCheckoutStatusActivity(Bundle().apply {
+                                putString(Constants.ORDER_ID,
+                                    response.body()?.gp_api_response_data?.order_ref_id.toString())
+                            })*/
+                        }) {
                             /*getNavigator()?.openCheckoutStatusActivity(Bundle().apply {
                                 putString(Constants.ORDER_ID,
                                     response.body()?.gp_api_response_data?.order_ref_id.toString())

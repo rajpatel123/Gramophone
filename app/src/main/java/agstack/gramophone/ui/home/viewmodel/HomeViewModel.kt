@@ -20,6 +20,7 @@ import agstack.gramophone.utils.SharedPreferencesKeys
 import android.content.Intent
 import android.view.View
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -29,13 +30,61 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val onBoardingRepository: OnBoardingRepository
-    ) : BaseViewModel<HomeActivityNavigator>() {
+    private val onBoardingRepository: OnBoardingRepository,
+) : BaseViewModel<HomeActivityNavigator>() {
 
     var progressBar = ObservableField<Boolean>()
+    var profileName = MutableLiveData<String>()
+    var profileMobile = MutableLiveData<String>()
+    var profileImage = MutableLiveData<String>()
 
     fun logout(v: View) {
         logoutUser()
+    }
+
+    fun getProfile() {
+        progressBar.set(true)
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    val response = onBoardingRepository.getProfile()
+                    progressBar.set(false)
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
+                        val name = response.body()?.gp_api_response_data?.customer_name
+                        val mobile = response.body()?.gp_api_response_data?.mobile_no
+                        val image = response.body()?.gp_api_response_data?.profile_image
+                        profileName.value = name!!
+                        profileMobile.value = mobile!!
+                        profileImage.value = image!!
+                        getNavigator()?.setImageNameMobile(name, mobile, image)
+                        SharedPreferencesHelper.instance?.putString(
+                            SharedPreferencesKeys.USERNAME,
+                            name
+                        )
+                        SharedPreferencesHelper.instance?.putString(
+                            SharedPreferencesKeys.USER_MOBILE,
+                            mobile
+                        )
+                        SharedPreferencesHelper.instance?.putString(
+                            SharedPreferencesKeys.USER_IMAGE,
+                            image
+                        )
+                    } else {
+                        getNavigator()?.onError(response.message())
+                    }
+
+
+                } else
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                }
+            }
+
+        }
+
     }
 
     private fun logoutUser() {
@@ -109,23 +158,23 @@ class HomeViewModel @Inject constructor(
         })
     }
 
-    fun OpenUserProfile(){
+    fun OpenUserProfile() {
         getNavigator()?.openActivity(UserProfileActivity::class.java, null)
     }
 
-    fun openUnitConverter(){
-        getNavigator()?.openActivity(UnitConverterActivity::class.java , null)
+    fun openUnitConverter() {
+        getNavigator()?.openActivity(UnitConverterActivity::class.java, null)
     }
 
-    fun openLeaveFeedback(){
-        getNavigator()?.openActivity(FeedbackActivity::class.java , null)
+    fun openLeaveFeedback() {
+        getNavigator()?.openActivity(FeedbackActivity::class.java, null)
     }
 
-    fun openOfferListClicked(){
-        getNavigator()?.openActivity(OffersListActivity::class.java , null)
+    fun openOfferListClicked() {
+        getNavigator()?.openActivity(OffersListActivity::class.java, null)
     }
 
-    fun ReferandEarnClicked(){
-        getNavigator()?.openActivity(ReferAndEarnActivity::class.java , null)
+    fun ReferandEarnClicked() {
+        getNavigator()?.openActivity(ReferAndEarnActivity::class.java, null)
     }
 }
