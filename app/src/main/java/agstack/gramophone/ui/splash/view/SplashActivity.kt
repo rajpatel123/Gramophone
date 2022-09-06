@@ -9,8 +9,10 @@ import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.ui.splash.SplashNavigator
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
 import agstack.gramophone.utils.ApiResponse
+import agstack.gramophone.utils.Utils
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -50,7 +52,8 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
     }
 
     override fun moveTOHome() {
-        val data =
+        val data = Utils.getJsonFromAssets(this,"location.json")
+        Log.d("Data",""+data)
 
         //openAndFinishActivity(HomeActivity::class.java,null)
 
