@@ -35,38 +35,38 @@ class HomeAdapter(
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when (viewType) {
-            0 -> {
+            Constants.HOME_BANNER_VIEW_TYPE -> {
                 return Banner1ViewHolder(ItemHomeBannerBinding.inflate(LayoutInflater.from(viewGroup.context)))
             }
-            1 -> {
-                return ShopByCategoryViewHolder(ItemHomeShopByCategoryBinding.inflate(LayoutInflater.from(
-                    viewGroup.context)))
-            }
-            2 -> {
-                return FeaturedProductsViewHolder(ItemHomeFeaturedProductBinding.inflate(
-                    LayoutInflater.from(viewGroup.context)))
-            }
-            3 -> {
-                return ShopByCropViewHolder(ItemHomeShopByCropBinding.inflate(LayoutInflater.from(
-                    viewGroup.context)))
-            }
-            4 -> {
-                return ShopByStoreViewHolder(ItemHomeShopByStoreBinding.inflate(LayoutInflater.from(
-                    viewGroup.context)))
-            }
-            5 -> {
-                return ShopByCompanyViewHolder(ItemHomeShopByCompanyBinding.inflate(LayoutInflater.from(
-                    viewGroup.context)))
-            }
-            6 -> {
+            Constants.HOME_BANNER_EXCLUSIVE_VIEW_TYPE -> {
                 return ExclusiveBannerViewHolder(ItemHomeExclusiveBannerBinding.inflate(
                     LayoutInflater.from(
                         viewGroup.context)))
             }
-            7 -> {
+            Constants.HOME_BANNER_REFERRAL_VIEW_TYPE -> {
                 return ReferralBannerViewHolder(ItemHomeBannerBinding.inflate(
                     LayoutInflater.from(
                         viewGroup.context)))
+            }
+            Constants.HOME_SHOP_BY_CATEGORY_VIEW_TYPE -> {
+                return ShopByCategoryViewHolder(ItemHomeShopByCategoryBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
+            }
+            Constants.HOME_FEATURED_PRODUCTS_VIEW_TYPE -> {
+                return FeaturedProductsViewHolder(ItemHomeFeaturedProductBinding.inflate(
+                    LayoutInflater.from(viewGroup.context)))
+            }
+            Constants.HOME_SHOP_BY_CROP_VIEW_TYPE -> {
+                return ShopByCropViewHolder(ItemHomeShopByCropBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
+            }
+            Constants.HOME_SHOP_BY_STORE_VIEW_TYPE -> {
+                return ShopByStoreViewHolder(ItemHomeShopByStoreBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
+            }
+            Constants.HOME_SHOP_BY_COMPANY_VIEW_TYPE -> {
+                return ShopByCompanyViewHolder(ItemHomeShopByCompanyBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
             }
         }
         return Banner1ViewHolder(
@@ -216,28 +216,28 @@ class HomeAdapter(
     override fun getItemViewType(position: Int): Int {
         when (homeScreenSequenceList[position]) {
             Constants.HOME_BANNER_1 -> {
-                return 0
-            }
-            Constants.HOME_SHOP_BY_CATEGORY -> {
-                return 1
-            }
-            Constants.HOME_FEATURED_PRODUCTS -> {
-                return 2
-            }
-            Constants.HOME_SHOP_BY_CROP -> {
-                return 3
-            }
-            Constants.HOME_SHOP_BY_STORE -> {
-                return 4
-            }
-            Constants.HOME_SHOP_BY_COMPANY -> {
-                return 5
+                return Constants.HOME_BANNER_VIEW_TYPE
             }
             Constants.HOME_BANNER_EXCLUSIVE -> {
-                return 6
+                return Constants.HOME_BANNER_EXCLUSIVE_VIEW_TYPE
             }
             Constants.HOME_BANNER_REFERRAL -> {
-                return 7
+                return Constants.HOME_BANNER_REFERRAL_VIEW_TYPE
+            }
+            Constants.HOME_SHOP_BY_CATEGORY -> {
+                return Constants.HOME_SHOP_BY_CATEGORY_VIEW_TYPE
+            }
+            Constants.HOME_FEATURED_PRODUCTS -> {
+                return Constants.HOME_FEATURED_PRODUCTS_VIEW_TYPE
+            }
+            Constants.HOME_SHOP_BY_CROP -> {
+                return Constants.HOME_SHOP_BY_CROP_VIEW_TYPE
+            }
+            Constants.HOME_SHOP_BY_STORE -> {
+                return Constants.HOME_SHOP_BY_STORE_VIEW_TYPE
+            }
+            Constants.HOME_SHOP_BY_COMPANY -> {
+                return Constants.HOME_SHOP_BY_COMPANY_VIEW_TYPE
             }
         }
         return super.getItemViewType(position)
