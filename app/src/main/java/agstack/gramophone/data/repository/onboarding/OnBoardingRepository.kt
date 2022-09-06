@@ -53,4 +53,5 @@ interface OnBoardingRepository {
     suspend fun getLocationAddress(url:String): Response<JSONObject>
 
     suspend fun getProfile(): Response<ProfileResponse>
+    suspend fun getLocationAddress(lat: String, key: String): Response<JSONObject>
 }

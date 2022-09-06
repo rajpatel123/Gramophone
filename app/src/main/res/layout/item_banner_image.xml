@@ -9,11 +9,13 @@
             type="agstack.gramophone.ui.home.view.fragments.community.model.Data" />
     </data>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/rel_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:layout_margin="@dimen/_5sdp"
+        android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivProfileImage"
@@ -107,33 +109,89 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:minWidth="@dimen/_20sdp"
             android:layout_marginStart="@dimen/_14sdp"
             android:layout_marginTop="@dimen/_14sdp"
-            android:minWidth="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_14sdp"
             android:layout_marginBottom="@dimen/_14sdp"
             app:srcCompat="@drawable/ic_menu_tripple_dot" />
-
 
         <TextView
             android:id="@+id/tvDesc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvDate"
-            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_below="@+id/ivMenu"
+            android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_30sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:fontFamily="@font/manrope_bold"
+
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:fontFamily="@font/manrope_semibold"
             android:text="Which is the system of farming in which the farmer is directly related to the state?"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp" />
+            android:textSize="@dimen/_12ssp" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvImageBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvDesc"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            app:cardCornerRadius="@dimen/_5sdp">
+            <ImageView
+                android:id="@+id/image_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/single_image_horizontal" />
+        </androidx.cardview.widget.CardView>
 
+        <LinearLayout
+            android:id="@+id/llStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_below="@+id/cvImageBanner"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/start_display_bg"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/image_expert"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:src="@drawable/banner_shield" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Get faster response form Agri Expert."
+                android:textColor="@color/order_placed_text"
+                android:textSize="@dimen/_11sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Start"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_11sdp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvDesc"
+            android:layout_below="@+id/llStartDate"
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_14sdp"
             android:background="@drawable/following_bg"
@@ -352,14 +410,6 @@
 
         </RelativeLayout>
 
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_below="@+id/llComment"
-            android:background="@color/grey" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -442,11 +492,11 @@
 
             <LinearLayout
                 android:id="@+id/llDelete"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:gravity="center_vertical"
-
                 android:orientation="horizontal">
 
                 <ImageView
@@ -510,6 +560,30 @@
         </LinearLayout>
 
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_below="@+id/llComment"
+            android:background="@color/grey" />
     </RelativeLayout>
+
 </layout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -1,173 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rel_poll"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_10sdp"
-    android:orientation="vertical">
+<layout>
 
-    <ImageView
-        android:id="@+id/poll_banner"
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.home.view.fragments.community.model.Data" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rel_poll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:src="@drawable/poll_image_horizontal" />
-
-    <LinearLayout
-        android:id="@+id/poll_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/poll_banner"
-        android:layout_marginTop="@dimen/_5sdp"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/manrope_bold"
-            android:text="Who is the prime minister of india? "
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_16sdp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginTop="@dimen/_13sdp"
-            android:background="@drawable/poll_rectangle_bg"
-            android:fontFamily="@font/manrope_medium"
-            android:paddingTop="@dimen/_12sdp"
-            android:text="Narendra Modi"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/poll_rectangle_bg"
-            android:fontFamily="@font/manrope_medium"
-            android:paddingTop="@dimen/_12sdp"
-
-            android:text="Ram nath Kovind"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/poll_rectangle_bg"
-            android:fontFamily="@font/manrope_medium"
-            android:paddingTop="@dimen/_12sdp"
-
-            android:text="Arvind kejriwal"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tv_last_ans"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:background="@drawable/poll_rectangle_bg"
-            android:fontFamily="@font/manrope_medium"
-            android:paddingTop="@dimen/_12sdp"
-            android:text="Amit Shah"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/poll_ll1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/poll_ll">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="23 farmer answered "
-        android:layout_weight="1"
-        android:gravity="start"
-        android:textColor="@color/blakish"
-        android:textSize="@dimen/_13ssp"
-        android:fontFamily="@font/manrope_regular"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1 Day remaining "
-            android:fontFamily="@font/manrope_regular"
-            android:textColor="@color/blakish"
-            android:textSize="@dimen/_13ssp"
-            android:layout_weight="1"
-            android:gravity="end"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/poll_ll2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/poll_ll1"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-
         <ImageView
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_whatsapp" />
-
-        <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/poll_banner"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_4ssp"
-            android:fontFamily="@font/manrope_regular"
-            android:text="Share"
-            android:textAlignment="center"
-            android:textColor="@color/blakish"
-            android:textSize="@dimen/_12sdp" />
-
-        <ImageView
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_170sdp"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_facebook"
-            android:textColor="@color/blakish" />
+            android:layout_margin="@dimen/_10sdp"
+            android:src="@drawable/poll_image_horizontal" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/poll_ll"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:fontFamily="@font/manrope_regular"
-            android:text="Share "
-            android:textAlignment="center"
-            android:textColor="@color/blakish"
-            android:textSize="@dimen/_12sdp" />
+            android:layout_below="@+id/poll_banner"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_bold"
+                android:text="Who is the prime minister of india? "
+                android:textAlignment="center"
+                android:layout_margin="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold" />
 
-</RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:background="@drawable/poll_rectangle_bg"
+                android:fontFamily="@font/manrope_medium"
+                android:paddingTop="@dimen/_12sdp"
+                android:text="Narendra Modi"
+                android:layout_margin="@dimen/_10sdp"
+
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/poll_rectangle_bg"
+                android:fontFamily="@font/manrope_medium"
+                android:paddingTop="@dimen/_12sdp"
+                android:layout_margin="@dimen/_10sdp"
+
+                android:text="Ram nath Kovind"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/poll_rectangle_bg"
+                android:fontFamily="@font/manrope_medium"
+                android:paddingTop="@dimen/_12sdp"
+                android:layout_margin="@dimen/_10sdp"
+
+                android:text="Arvind kejriwal"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_last_ans"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@drawable/poll_rectangle_bg"
+                android:fontFamily="@font/manrope_medium"
+                android:paddingTop="@dimen/_12sdp"
+                android:text="Amit Shah"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/poll_ll1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/poll_ll"
+            android:layout_margin="@dimen/_10sdp"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/manrope_regular"
+                android:gravity="start"
+                android:text="23 farmer answered "
+                android:textColor="@color/blakish"
+                android:textSize="@dimen/_13ssp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/manrope_regular"
+                android:gravity="end"
+                android:text="1 Day remaining "
+                android:textColor="@color/blakish"
+                android:textSize="@dimen/_13ssp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/poll_ll2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/poll_ll1"
+            android:layout_margin="@dimen/_10sdp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_whatsapp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4ssp"
+                android:fontFamily="@font/manrope_regular"
+                android:text="Share"
+                android:textAlignment="center"
+                android:textColor="@color/blakish"
+                android:textSize="@dimen/_12sdp" />
+
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_170sdp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_facebook"
+                android:textColor="@color/blakish" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:fontFamily="@font/manrope_regular"
+                android:text="Share "
+                android:textAlignment="center"
+                android:textColor="@color/blakish"
+                android:textSize="@dimen/_12sdp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_5sdp"
+            android:layout_below="@+id/poll_ll2"
+            android:background="@color/grey" />
+
+    </RelativeLayout>
+
+</layout>
 
 
 

@@ -56,12 +56,13 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="64dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_44sdp"
+            android:layout_height="@dimen/_44sdp"
             android:layout_marginStart="@dimen/_3sdp"
             android:layout_marginTop="@dimen/_3sdp"
             android:layout_marginEnd="@dimen/_3sdp"
             android:layout_marginBottom="@dimen/_3sdp"
+            app:srcCompat="@drawable/dummy_profile"
              />
 
 

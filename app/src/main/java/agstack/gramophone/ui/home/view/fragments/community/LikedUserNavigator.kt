@@ -7,4 +7,5 @@ import agstack.gramophone.ui.language.model.languagelist.Language
 
 interface LikedUserNavigator : BaseNavigator {
      fun updateUserList(likedUsersAdapter: LikedUsersAdapter, onLanguageClicked: (LikedUsers) -> Unit)
+     fun setUpToolBar(size: Int)
 }

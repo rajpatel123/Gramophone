@@ -171,7 +171,8 @@ interface GramAppService {
     @GET("api/v5/category/banner-data")
     suspend fun getBanners(): Response<BannerResponse>
 
-    suspend fun getLocationAddress(@Url url:String): Response<JSONObject>
+    @GET("https://maps.googleapis.com/maps/api/geocode/json")
+    suspend fun getLocationAddress(@Query("latlng") latlng: String, @Query("key") key: String): Response<JSONObject>
 
     @GET("api/v5/category/product-app-category")
     suspend fun getCategories(): Response<CategoryResponse>

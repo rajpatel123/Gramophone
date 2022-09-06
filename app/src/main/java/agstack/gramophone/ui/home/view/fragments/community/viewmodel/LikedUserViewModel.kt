@@ -29,8 +29,8 @@ class LikedUserViewModel @Inject constructor(
                     location = "Gurgaon"
                 ))
             }
-
-          getNavigator()?.updateUserList(LikedUsersAdapter(finalList)){
+            getNavigator()?.setUpToolBar(finalList.size)
+            getNavigator()?.updateUserList(LikedUsersAdapter(finalList)){
               getNavigator()?.showToast(it.name)
           }
         }

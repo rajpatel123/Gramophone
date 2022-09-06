@@ -6,6 +6,12 @@ import android.content.Context
 
 
 object Constants {
+    val PIN_POST: String="pinpost"
+    val EDIT_POST: String="edit_post"
+    val COPY_POST: String="copy_post"
+    val DELETE_POST: String="delete_post"
+    val BLOCK_USER: String="block"
+    val REPORT_POST: String="report"
     val DELAY: Long=3_000
     val INDEX: String = "pageIndex"
     val FROM_EDIT_PROFILE="FROM_EDIT_PROFILE"
