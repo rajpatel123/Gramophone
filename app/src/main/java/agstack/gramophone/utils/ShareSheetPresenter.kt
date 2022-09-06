@@ -6,7 +6,7 @@ import android.net.Uri
 
 class ShareSheetPresenter(
     private val presentingActivity: androidx.fragment.app.FragmentActivity,
-    private val genericUriHandler: GenericUriHandler
+        private val genericUriHandler: GenericUriHandler
 ) {
 
 
@@ -17,27 +17,30 @@ class ShareSheetPresenter(
     fun shareDeepLinkWithExtraTextWithOption(
         extraText: String,
         extraSubject: String,
+        extraImage:Uri?=null,
         shareOn: String
     ) {
 
         if (shareOn != null) {
             val intent = Intent(Intent.ACTION_SEND)
-           // intent.type = "text/plain"
             intent.putExtra(Intent.EXTRA_TEXT, extraText)
             intent.putExtra(Intent.EXTRA_SUBJECT, extraSubject)
-          //  intent.setData(GENERIC_URI)
+           // intent.putExtra(IntentKeys.ShareImageKey, extraImage.toString());
+
 
 
             when (shareOn) {
                 IntentKeys.WhatsAppShareKey -> {
                     intent.setPackage("com.whatsapp")
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    intent.putExtra(Intent.EXTRA_STREAM,GENERIC_URI);
                     intent.setType("*/*")
+                    intent.putExtra(Intent.EXTRA_STREAM,extraImage)
                 }
                 IntentKeys.OtherShareKey -> {
-                    intent.setType("text/plain")
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.setType("*/*")
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    intent.putExtra(Intent.EXTRA_STREAM,extraImage)
 
 
 

@@ -8,6 +8,7 @@ import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.IntentKeys
 import agstack.gramophone.utils.Utility.generateQR
 import agstack.gramophone.utils.Utility.saveImage
+import android.graphics.Bitmap
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -16,6 +17,7 @@ class ReferandEarnViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) : BaseViewModel<ReferandEarnNavigator>() {
     private var currentShareOption=""
+    var QR_BitmapfromURL: Bitmap? =null
 
     fun showReferralPointsActivity() {
         getNavigator()?.openActivity(ReferralPointsActivity::class.java)
@@ -27,9 +29,8 @@ class ReferandEarnViewModel @Inject constructor(
 
     fun generateQrCode(extraText: String) {
 
-
-        val bitmap = generateQR(extraText, 512)
-        getNavigator()?.setQRCodeImage(bitmap)
+        QR_BitmapfromURL= generateQR(extraText, 512)
+        getNavigator()?.setQRCodeImage(QR_BitmapfromURL)
 
 
     }

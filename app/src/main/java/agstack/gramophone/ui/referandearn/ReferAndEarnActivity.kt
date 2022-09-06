@@ -20,6 +20,7 @@ class ReferAndEarnActivity :
 
     private val referandEarnViewModel: ReferandEarnViewModel by viewModels()
     private var shareSheetPresenter: ShareSheetPresenter? = null
+    var qrBitmap: Bitmap?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +33,13 @@ class ReferAndEarnActivity :
         parameterizedUri = ShareSheetPresenter.GENERIC_URI
         shareSheetPresenter = this?.let { ShareSheetPresenter(this,it) }
         shareSheetPresenter!!.shareDynamicLink()
+    }
+
+
+    override fun setQRCodeImage(bitmap: Bitmap?) {
+        qrBitmap = bitmap
+        viewDataBinding?.shareyourreferal.referralCodeImageView?.setImageBitmap(bitmap)
+
     }
 
     override fun getLayoutID(): Int {
@@ -58,19 +66,18 @@ class ReferAndEarnActivity :
         val shareMessage = resources.getString(R.string.welcome_msg)
       //  val extraText = shareMessage + "\n" + genericUri.toString()
         val extraText = shareMessage
-        shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(extraText, getString(R.string.home_share_subject), currentShareOption)
+
+        var QRCodeURI :Uri? = Utility.bitmapToUri(this,qrBitmap)
+        shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(extraText, getString(R.string.home_share_subject),QRCodeURI ,currentShareOption)
+
+
     }
 
 
-    override fun setQRCodeImage(bitmap: Bitmap?) {
-        viewDataBinding?.shareyourreferal.referralCodeImageView?.setImageBitmap(bitmap)
-       // Utility.saveImage(this, bitmap)
-    }
+
 
     override fun convertedReferralLayoutsBitmap() {
-        val view = viewDataBinding.shareyourreferal.referralCodeImageView
-        val bitmaptoShare = view.drawToBitmap()
-        Utility.saveImage(this, bitmaptoShare)
+        Utility.saveImage(this, mViewModel?.QR_BitmapfromURL)
 
 
     }

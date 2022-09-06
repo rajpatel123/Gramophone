@@ -51,7 +51,7 @@ class ProductDetailsViewModel @Inject constructor(
 
     var ratingSelected = ObservableField<Double>(0.0)
     var isHeartSelected = ObservableField<Boolean>(false)
-    var selectedSkuListItem = ProductSkuListItem()
+    var selectedSkuListItem = ObservableField<ProductSkuListItem>()
     var selectedOfferItem = PromotionListItem()
     var addToCartEnabled = ObservableField<Boolean>(true)
     fun onHeartIconClicked() {
@@ -149,11 +149,11 @@ class ProductDetailsViewModel @Inject constructor(
                                 )
                             ) {
                                 Log.d("productSKUItemSelected", it.productId.toString())
-                                selectedSkuListItem = it
+                                selectedSkuListItem.set(it)
                                 productDetailstoBeFetched.product_id =
-                                    selectedSkuListItem.productId!!.toInt()
+                                    selectedSkuListItem.get()?.productId!!.toInt()
 
-                                setPercentage_mrpVisibility(selectedSkuListItem, selectedOfferItem)
+                                setPercentage_mrpVisibility(selectedSkuListItem.get()!!, selectedOfferItem)
 
                             }
 
@@ -161,11 +161,11 @@ class ProductDetailsViewModel @Inject constructor(
                             for (item in mSKUList) {
                                 item?.selected = item?.productId!!.equals(productIdDefault)
                                 if (item?.selected == true) {
-                                    selectedSkuListItem = item
+                                    selectedSkuListItem.set(item)
                                     productDetailstoBeFetched.product_id =
-                                        selectedSkuListItem.productId!!.toInt()
+                                        selectedSkuListItem.get()?.productId!!.toInt()
                                     setPercentage_mrpVisibility(
-                                        selectedSkuListItem,
+                                        selectedSkuListItem.get()!!,
                                         selectedOfferItem
                                     )
 
@@ -364,7 +364,7 @@ class ProductDetailsViewModel @Inject constructor(
                                 //When RadioButton is clicked
                                 selectedOfferItem = it
 
-                                setPercentage_mrpVisibility(selectedSkuListItem, selectedOfferItem)
+                                setPercentage_mrpVisibility(selectedSkuListItem.get()!!, selectedOfferItem)
 
                             },
                             {
@@ -460,7 +460,7 @@ class ProductDetailsViewModel @Inject constructor(
             addToCartJob = checkNetworkThenRun {
                 progressLoader.set(true)
                 var producttoBeAdded = ProductData()
-                producttoBeAdded.product_id = selectedSkuListItem.productId!!.toInt()
+                producttoBeAdded.product_id = selectedSkuListItem.get()?.productId!!.toInt()
                 producttoBeAdded.quantity = qtySelected.get()
                 producttoBeAdded.promotion_id = selectedOfferItem.promotion_id
                 val addTocartResponse =

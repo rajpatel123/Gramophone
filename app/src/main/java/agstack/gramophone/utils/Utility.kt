@@ -4,9 +4,7 @@ import agstack.gramophone.R
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -18,15 +16,9 @@ import android.widget.Toast
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
+import java.io.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
-
-import java.io.OutputStream
-import java.net.URL
 import java.util.*
 
 
@@ -145,5 +137,19 @@ object Utility {
             e.printStackTrace()
         }
         return dateString
+    }
+
+    fun bitmapToUri(inContext: Context,bitmap: Bitmap?): Uri? {
+        val bytes = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path: String = MediaStore.Images.Media.insertImage(
+            inContext.getContentResolver(),
+            bitmap,
+            "Title",
+            null
+        )
+        return Uri.parse(path)
+
+
     }
 }
