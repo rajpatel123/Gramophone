@@ -8,25 +8,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ExclusiveBannerAdapter(private var bannerList: ArrayList<Banner>) :
+class ExclusiveBannerAdapter(
+    private var bannerList: List<Banner>,
+    private val listener: (String) -> Unit,
+) :
     RecyclerView.Adapter<ExclusiveBannerAdapter.DeveloperViewHolder>() {
     var itemClicked: ((String) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): DeveloperViewHolder {
-        return DeveloperViewHolder(
-            ItemExclusiveBannerBinding.inflate(LayoutInflater.from(viewGroup.context))
-        )
+        return DeveloperViewHolder(ItemExclusiveBannerBinding.inflate(LayoutInflater.from(viewGroup.context)))
     }
 
     override fun onBindViewHolder(holder: DeveloperViewHolder, i: Int) {
         holder.binding.model = bannerList[i]
         if (i % 2 == 0) {
-            holder.binding.viewSeparator.visibility = View.GONE
-        } else {
             holder.binding.viewSeparator.visibility = View.VISIBLE
+        } else {
+            holder.binding.viewSeparator.visibility = View.GONE
         }
         holder.itemView.setOnClickListener {
-            itemClicked?.invoke("")
+            /*itemClicked?.invoke("")*/
+            listener.invoke("")
         }
     }
 

@@ -28,6 +28,8 @@ object Constants {
     val HOME_SHOP_BY_CROP="shop_by_crop"
     val HOME_SHOP_BY_STORE="shop_by_store"
     val HOME_SHOP_BY_COMPANY="shop_by_company"
+    val HOME_BANNER_EXCLUSIVE="gramophone_exclusive"
+    val HOME_BANNER_REFERRAL="home_referral_banner"
 
 
 

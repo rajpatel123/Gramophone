@@ -107,6 +107,7 @@ class MarketFragment :
         super.onViewCreated(view, savedInstanceState)
         setUpUI()
         marketFragmentViewModel.getFeaturedProducts(HashMap<Any, Any>())
+        marketFragmentViewModel.getBanners()
         /*marketFragmentViewModel.getCategories()
         marketFragmentViewModel.getCompanies()
         marketFragmentViewModel.getStores()

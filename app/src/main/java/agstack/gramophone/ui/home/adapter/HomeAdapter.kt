@@ -15,8 +15,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 class HomeAdapter(
     private val homeScreenSequenceList: List<String>,
@@ -54,6 +57,16 @@ class HomeAdapter(
             5 -> {
                 return ShopByCompanyViewHolder(ItemHomeShopByCompanyBinding.inflate(LayoutInflater.from(
                     viewGroup.context)))
+            }
+            6 -> {
+                return ExclusiveBannerViewHolder(ItemHomeExclusiveBannerBinding.inflate(
+                    LayoutInflater.from(
+                        viewGroup.context)))
+            }
+            7 -> {
+                return ReferralBannerViewHolder(ItemHomeBannerBinding.inflate(
+                    LayoutInflater.from(
+                        viewGroup.context)))
             }
         }
         return Banner1ViewHolder(
@@ -165,6 +178,38 @@ class HomeAdapter(
                         })
                 }
             }
+            is ExclusiveBannerViewHolder -> {
+                val exclusiveBanner = allBannerResponse?.gpApiResponseData?.homeGramophoneExclusive
+                val tempBanner: List<Banner>
+                if (exclusiveBanner?.size!! > 0) {
+                    if (exclusiveBanner.size % 2 == 0) {
+                        holder.binding.ivExclusiveBanner.visibility = View.GONE
+                        tempBanner = exclusiveBanner.subList(0, exclusiveBanner.size)
+                    } else {
+                        holder.binding.ivExclusiveBanner.visibility = View.VISIBLE
+                        tempBanner = exclusiveBanner.subList(1, exclusiveBanner.size)
+                        Glide.with(holder.itemView.context)
+                            .load(exclusiveBanner[0])
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .into(holder.binding.ivExclusiveBanner)
+                    }
+                    val exclusiveBannerAdapter = ExclusiveBannerAdapter(tempBanner) {
+                        /* Do anything on banner click */
+                    }
+                    holder.binding.rvExclusive.adapter = exclusiveBannerAdapter
+                }
+            }
+            is ReferralBannerViewHolder -> {
+                val referralBanner = allBannerResponse?.gpApiResponseData?.homeReferralBanner!!
+                /*val referralBannerAdapter = ReferralBannerAdapter(referralBanner) {
+                    *//* Do anything on banner click *//*
+                }
+                holder.binding.rvReferral.adapter = referralBannerAdapter*/
+
+                holder.binding.viewPager.adapter =
+                    ViewPagerAdapter(referralBanner)
+                holder.binding.dotsIndicator.attachTo(holder.binding.viewPager)
+            }
         }
     }
 
@@ -187,6 +232,12 @@ class HomeAdapter(
             }
             Constants.HOME_SHOP_BY_COMPANY -> {
                 return 5
+            }
+            Constants.HOME_BANNER_EXCLUSIVE -> {
+                return 6
+            }
+            Constants.HOME_BANNER_REFERRAL -> {
+                return 7
             }
         }
         return super.getItemViewType(position)
@@ -220,5 +271,11 @@ class HomeAdapter(
         RecyclerView.ViewHolder(binding.root)
 
     inner class ShopByCompanyViewHolder(var binding: ItemHomeShopByCompanyBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    inner class ExclusiveBannerViewHolder(var binding: ItemHomeExclusiveBannerBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    inner class ReferralBannerViewHolder(var binding: ItemHomeBannerBinding) :
         RecyclerView.ViewHolder(binding.root)
 }

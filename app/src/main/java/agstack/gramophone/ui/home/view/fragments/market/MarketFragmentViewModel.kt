@@ -116,18 +116,9 @@ class MarketFragmentViewModel
                         )
                     }
                 }
-                getNavigator()?.setViewPagerAdapter(bannerResponse?.gpApiResponseData?.homeBanner1)
-                referralBanner.value =
-                    bannerResponse?.gpApiResponseData?.homeReferralBanner?.get(0)?.bannerImage!!
-                exclusiveBanner.value =
-                    bannerResponse.gpApiResponseData?.homeGramophoneExclusive?.get(0)?.bannerImage!!
-                exclusiveBannerSize.value =
-                    bannerResponse.gpApiResponseData?.homeGramophoneExclusive?.size
 
-                getNavigator()?.setExclusiveAndReferralImage(exclusiveBanner.value.toString(),
-                    referralBanner.value.toString())
-                getNavigator()?.setExclusiveBannerAdapter(ExclusiveBannerAdapter(bannerResponse.gpApiResponseData?.homeGramophoneExclusive!!)) {
-                }
+
+
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))

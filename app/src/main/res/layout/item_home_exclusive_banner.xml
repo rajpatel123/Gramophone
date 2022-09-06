@@ -35,11 +35,11 @@
             android:scaleType="fitXY" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_shop_by_company"
+            android:id="@+id/rvExclusive"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_4sdp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
