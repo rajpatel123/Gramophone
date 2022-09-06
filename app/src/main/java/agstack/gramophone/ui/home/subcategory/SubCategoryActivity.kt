@@ -42,6 +42,7 @@ class SubCategoryActivity :
     private fun setupUi() {
         viewDataBinding.tvSortBy.setOnClickListener(this)
         viewDataBinding.tvFilter.setOnClickListener(this)
+        viewDataBinding.toolbar.setNavigationOnClickListener { finish() }
         viewDataBinding.appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
             //Check if the view is collapsed
             if (abs(verticalOffset) >= viewDataBinding.appbar.totalScrollRange) {

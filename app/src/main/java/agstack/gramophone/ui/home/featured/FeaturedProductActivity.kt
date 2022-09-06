@@ -29,7 +29,9 @@ class FeaturedProductActivity :
     }
 
     private fun setupUi() {
-        setUpToolBar(true, getString(R.string.cart), R.drawable.ic_arrow_left)
+        viewDataBinding.toolbar.setNavigationOnClickListener {
+            finish()
+        }
         viewDataBinding.appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
             //Check if the view is collapsed
             if (abs(verticalOffset) >= viewDataBinding.appbar.totalScrollRange) {
