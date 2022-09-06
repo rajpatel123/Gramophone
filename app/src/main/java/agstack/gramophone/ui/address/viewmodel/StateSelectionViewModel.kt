@@ -121,7 +121,6 @@ class StateSelectionViewModel @Inject constructor(
             } else {
                 it.selected = false
             }
-
         }
         stateListAdapter.notifyDataSetChanged()
     }

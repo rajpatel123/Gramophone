@@ -7,11 +7,12 @@ import android.content.ContentResolver
 import android.content.res.Resources
 
 interface LanguageActivityNavigator :BaseNavigator {
+    fun moveToNext()
     fun updateLanguageList(languageAdapter: LanguageAdapter, onLanguageClicked: (Language) -> Unit)
     fun getResource(): Resources
     abstract fun getContentResolver(): ContentResolver?
     fun initiateApp()
-    fun closeActivity()
+    fun closeLanguageList()
     fun getLanguageCode(): String?
 
 }

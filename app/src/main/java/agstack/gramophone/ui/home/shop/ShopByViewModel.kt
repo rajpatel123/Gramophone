@@ -36,7 +36,9 @@ class ShopByViewModel @Inject constructor(
                     showWeatherView.value = true
                     val cropResponse: CropResponse = bundle.getParcelable<ProductData>(Constants.SHOP_BY_CROP) as CropResponse
                     getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.shop_by_crops)!!)
-                    getNavigator()?.setShopByCropAdapter(ShopByCropsAdapter(cropResponse.gpApiResponseData?.cropsList)) {
+                    getNavigator()?.setShopByCropAdapter(ShopByCropsAdapter(cropResponse.gpApiResponseData?.cropsList) {
+                        getNavigator()?.openCropStageActivity(it)
+                    }) {
                         getNavigator()?.openCropStageActivity(it)
                     }
                 }
@@ -44,7 +46,9 @@ class ShopByViewModel @Inject constructor(
                     showWeatherView.value = true
                     val storeResponse: StoreResponse = bundle.getParcelable<ProductData>(Constants.SHOP_BY_STORE) as StoreResponse
                     getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.shop_by_store)!!)
-                    getNavigator()?.setShopByStoresAdapter(ShopByStoresAdapter(storeResponse.gpApiResponseData?.storeList)) {
+                    getNavigator()?.setShopByStoresAdapter(ShopByStoresAdapter(storeResponse.gpApiResponseData?.storeList) {
+                        getNavigator()?.openShopByDetailActivity(it)
+                    }) {
                         getNavigator()?.openShopByDetailActivity(it)
                     }
                 }
@@ -52,7 +56,9 @@ class ShopByViewModel @Inject constructor(
                     showWeatherView.value = true
                     val companyResponse: CompanyResponse = bundle.getParcelable<ProductData>(Constants.SHOP_BY_COMPANY) as CompanyResponse
                     getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.shop_by_company)!!)
-                    getNavigator()?.setShopByCompanyAdapter(ShopByCompanyAdapter(companyResponse.gpApiResponseData?.companiesList)) {
+                    getNavigator()?.setShopByCompanyAdapter(ShopByCompanyAdapter(companyResponse.gpApiResponseData?.companiesList) {
+                        getNavigator()?.openShopByDetailActivity(it)
+                    }) {
                         getNavigator()?.openShopByDetailActivity(it)
                     }
                 }

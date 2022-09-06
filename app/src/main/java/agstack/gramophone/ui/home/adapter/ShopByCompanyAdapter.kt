@@ -7,7 +7,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ShopByCompanyAdapter(private val companyList: List<CompanyData>?) :
+class ShopByCompanyAdapter(private val companyList: List<CompanyData>?,
+                           private val listener: (String) -> Unit) :
     RecyclerView.Adapter<ShopByCompanyAdapter.CustomViewHolder>() {
     var onItemClicked: ((id: String) -> Unit)? = null
 
@@ -20,7 +21,8 @@ class ShopByCompanyAdapter(private val companyList: List<CompanyData>?) :
     override fun onBindViewHolder(holder: CustomViewHolder, i: Int) {
         holder.binding.model = companyList?.get(i)
         holder.binding.flCompany.setOnClickListener {
-            onItemClicked?.invoke(companyList?.get(i)?.companyId.toString())
+            /*onItemClicked?.invoke(companyList?.get(i)?.companyId.toString())*/
+            listener.invoke(companyList?.get(i)?.companyId.toString())
         }
     }
 

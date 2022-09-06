@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/_16sdp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:drawablePadding="@dimen/_14sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:text="@string/gramophone_exclusive"
+            android:textColor="@color/blakish"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="normal"
+            app:drawableStartCompat="@drawable/ic_exclusive" />
+
+        <ImageView
+            android:id="@+id/ivExclusiveBanner"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:contentDescription="@string/image"
+            android:scaleType="fitXY" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvExclusive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_exclusive_banner" />
+
+    </LinearLayout>
+</RelativeLayout>

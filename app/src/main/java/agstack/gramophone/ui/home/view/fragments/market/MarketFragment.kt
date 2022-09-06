@@ -20,6 +20,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -67,6 +69,17 @@ class MarketFragment :
             }
     }
 
+    override fun setExclusiveAndReferralImage(bannerUrl: String, referralUrl: String) {
+        Glide.with(requireContext())
+            .load(bannerUrl)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(binding?.ivExclusiveBanner!!)
+        /*Glide.with(requireContext())
+            .load(referralUrl)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(binding?.ivReferralBanner!!)*/
+    }
+
     /**
      * Create Binding
      */
@@ -93,14 +106,22 @@ class MarketFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpUI()
+        marketFragmentViewModel.getBanners()
         marketFragmentViewModel.getFeaturedProducts(HashMap<Any, Any>())
-        marketFragmentViewModel.getCategories()
+
+        /*marketFragmentViewModel.getCategories()
         marketFragmentViewModel.getCompanies()
         marketFragmentViewModel.getStores()
-        marketFragmentViewModel.getCrops()
+        marketFragmentViewModel.getCrops()*/
+
     }
 
     private fun setUpUI() {
+        binding?.swipeRefresh?.setColorSchemeResources(R.color.blue)
+        binding?.swipeRefresh?.setOnRefreshListener {
+            marketFragmentViewModel.getHomeData()
+            binding?.swipeRefresh?.isRefreshing = false
+        }
         binding?.viewAllFeaturedProduct?.setOnClickListener {
             openActivity(FeaturedProductActivity::class.java, null)
         }
@@ -148,6 +169,11 @@ class MarketFragment :
         binding?.rvPopularProducts?.adapter = PopularProductAdapter()
     }
 
+    override fun setHomeAdapter(adapter: HomeAdapter, onItemClick: (String) -> Unit) {
+        adapter.onItemClicked = onItemClick
+        binding?.rvHome?.adapter = adapter
+    }
+
     override fun setViewPagerAdapter(bannerList: List<Banner>?) {
         val adapter = ViewPagerAdapter(bannerList!!)
         binding?.viewPager?.adapter = adapter
@@ -185,6 +211,14 @@ class MarketFragment :
     override fun setStoreAdapter(adapter: ShopByStoresAdapter, onItemClick: (String) -> Unit) {
         adapter.onItemClicked = onItemClick
         binding?.rvShopByStores?.adapter = adapter
+    }
+
+    override fun setExclusiveBannerAdapter(
+        adapter: ExclusiveBannerAdapter,
+        onItemClick: (String) -> Unit,
+    ) {
+        adapter.itemClicked = onItemClick
+        binding?.rvExclusive?.adapter = adapter
     }
 
     override fun startProductDetailsActivity(it: ProductData) {

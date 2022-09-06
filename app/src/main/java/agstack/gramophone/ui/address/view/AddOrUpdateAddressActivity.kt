@@ -37,7 +37,12 @@ class AddOrUpdateAddressActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        if (intent?.extras?.containsKey(Constants.STATE) == true) {
+            addOrUpdateAddressViewModel.setStatesName(
+                intent?.extras?.get(Constants.STATE) as String,
+                intent?.extras?.get(Constants.STATE_IMAGE_URL) as String
+            )
+        }
     }
 
     override fun getLayoutID(): Int {

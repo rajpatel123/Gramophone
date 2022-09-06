@@ -248,7 +248,7 @@ class ProductDetailsActivity :
         if (isMRPVisible) {
             viewDataBinding.tvProductMRP.visibility = View.VISIBLE
         } else {
-            viewDataBinding.tvProductMRP.visibility = View.VISIBLE
+            viewDataBinding.tvProductMRP.visibility = View.GONE
         }
 
         if (isContactforPriceVisible) {

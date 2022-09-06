@@ -371,6 +371,9 @@
     <string name="tab_my_post">My Post</string>
     <string name="tab_saved_post">Saved Post</string>
     <string name="starts_from_99">Starts from ₹ 99</string>
+    <string name="shop_by_sub_category">Shop by Sub Category</string>
+    <string name="sort_by">Sort by</string>
+    <string name="filter">Filter</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>

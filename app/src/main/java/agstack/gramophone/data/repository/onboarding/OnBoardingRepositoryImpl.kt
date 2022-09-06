@@ -16,10 +16,12 @@ import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
+import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -108,5 +110,19 @@ class OnBoardingRepositoryImpl @Inject constructor(
         Dispatchers.IO) {
         val bannerResponse = gramAppService.getBanners()
         bannerResponse
+    }
+
+
+    override suspend fun getLocationAddress(url:String): Response<JSONObject>  = withContext(
+        Dispatchers.IO) {
+        val bannerResponse = gramAppService.getLocationAddress(url)
+        bannerResponse
+    }
+
+
+    override suspend fun getProfile(): Response<ProfileResponse>  = withContext(
+        Dispatchers.IO) {
+        val profileResponse = gramAppService.getProfile()
+        profileResponse
     }
 }
