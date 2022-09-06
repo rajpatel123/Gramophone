@@ -106,8 +106,9 @@ class MarketFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpUI()
-        marketFragmentViewModel.getFeaturedProducts(HashMap<Any, Any>())
         marketFragmentViewModel.getBanners()
+        marketFragmentViewModel.getFeaturedProducts(HashMap<Any, Any>())
+
         /*marketFragmentViewModel.getCategories()
         marketFragmentViewModel.getCompanies()
         marketFragmentViewModel.getStores()
