@@ -106,6 +106,11 @@ object Constants {
     const val PRODUCTREVIEWDATA = "PRODUCTREVIEWDATA"
     const val PRODUCTID = "PRODUCTID"
     const val Product_Id_Key = "product_id"
+    const val EXPERT_ADVICE = "expert-advice"
+    const val HELP = "help"
+    const val FEEDBACK = "feedback"
+    const val CONTACTFORPRICE = "contact-for-price"
+
 
     //Product
     const val PRODUCT = "product"
