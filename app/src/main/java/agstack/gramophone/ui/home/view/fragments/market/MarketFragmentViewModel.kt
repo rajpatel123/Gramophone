@@ -3,18 +3,14 @@ package agstack.gramophone.ui.home.view.fragments.market
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
-import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
-import agstack.gramophone.ui.home.adapter.ShopByCompanyAdapter
-import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
-import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
+import agstack.gramophone.ui.home.adapter.*
 import agstack.gramophone.ui.home.view.fragments.market.model.*
-import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.amnix.xtension.extensions.isNotNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import java.io.IOException
@@ -30,6 +26,38 @@ class MarketFragmentViewModel
     var cropResponse: CropResponse? = null
     var storeResponse: StoreResponse? = null
     var companyResponse: CompanyResponse? = null
+    var allBannerResponse: BannerResponse? = null
+    var categoryResponse: CategoryResponse? = null
+    var exclusiveBanner = MutableLiveData<String>()
+    var referralBanner = MutableLiveData<String>()
+    var exclusiveBannerSize = MutableLiveData<Int>()
+
+    init {
+        exclusiveBanner.value = ""
+        exclusiveBannerSize.value = 0
+    }
+
+    fun getHomeData() {
+        viewModelScope.launch {
+            try {
+                val response = productRepository.getHomeData()
+                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
+                    getNavigator()?.setHomeAdapter(HomeAdapter(response.body()?.gp_api_response_data?.home_screen_sequence!!,
+                        allBannerResponse, categoryResponse, productList,
+                        cropResponse,
+                        storeResponse, companyResponse)) {
+
+                    }
+
+                }
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
 
     fun getFeaturedProducts(hashMap: HashMap<Any, Any>) {
         viewModelScope.launch {
@@ -55,10 +83,12 @@ class MarketFragmentViewModel
                 )
                 //set received productList in Adapter
 
-                getNavigator()?.setFeaturedProductsAdapter(ProductListAdapter(productList)) {
+                getNavigator()?.setFeaturedProductsAdapter(ProductListAdapter(productList) {
+
+                }) {
                     getNavigator()?.startProductDetailsActivity(it)
                 }
-
+                getCategories()
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -72,21 +102,23 @@ class MarketFragmentViewModel
     fun getBanners() {
         viewModelScope.launch {
             try {
-                val bannerResponse = SharedPreferencesHelper.instance?.getParcelable(
+                var bannerResponse = SharedPreferencesHelper.instance?.getParcelable(
                     SharedPreferencesKeys.BANNER_DATA, BannerResponse::class.java
                 )
-                if (bannerResponse?.gpApiStatus == Constants.GP_API_STATUS) {
-                    getNavigator()?.setViewPagerAdapter(bannerResponse.gpApiResponseData?.homeBanner1)
-                } else {
+                allBannerResponse = bannerResponse
+                if (bannerResponse?.gpApiStatus != Constants.GP_API_STATUS) {
                     val response = productRepository.getBanners()
                     if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS) {
+                        bannerResponse = response.body()
                         SharedPreferencesHelper.instance?.putParcelable(
                             SharedPreferencesKeys.BANNER_DATA,
-                            response.body()!!
+                            bannerResponse!!
                         )
-                        getNavigator()?.setViewPagerAdapter(response.body()?.gpApiResponseData?.homeBanner1)
                     }
                 }
+
+
+
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -100,14 +132,20 @@ class MarketFragmentViewModel
         viewModelScope.launch {
             try {
                 val response = productRepository.getCategories()
+                categoryResponse = response.body()
                 if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
-                    getNavigator()?.setCategoryAdapter(ShopByCategoryAdapter(response.body()?.gp_api_response_data?.product_app_categories_list)) {
+                    getNavigator()?.setCategoryAdapter(ShopByCategoryAdapter(response.body()?.gp_api_response_data?.product_app_categories_list) {
+                        getNavigator()?.openSubCategoryActivity(Bundle().apply {
+                            putString(Constants.CATEGORY_ID,
+                                it)
+                        })
+                    }) {
                         getNavigator()?.openSubCategoryActivity(Bundle().apply {
                             putString(Constants.CATEGORY_ID,
                                 it)
                         })
                     }
-
+                    getCrops()
                 }
             } catch (ex: Exception) {
                 when (ex) {
@@ -133,14 +171,16 @@ class MarketFragmentViewModel
                         cropList.subList(0, 9)
                     else cropList
 
-                    getNavigator()?.setCropAdapter(ShopByCropsAdapter(tempCropList)) {
+                    getNavigator()?.setCropAdapter(ShopByCropsAdapter(tempCropList) {
+
+                    }) {
                         getNavigator()?.openSubCategoryActivity(Bundle().apply {
                             putString(Constants.CROP_ID,
                                 it)
                         })
 
                     }
-
+                    getStores()
                 }
             } catch (ex: Exception) {
                 when (ex) {
@@ -166,14 +206,16 @@ class MarketFragmentViewModel
                         storeList.subList(0, 4)
                     else storeList
 
-                    getNavigator()?.setStoreAdapter(ShopByStoresAdapter(tempStoreList)) {
+                    getNavigator()?.setStoreAdapter(ShopByStoresAdapter(tempStoreList) {
+
+                    }) {
                         getNavigator()?.openSubCategoryActivity(Bundle().apply {
                             putString(Constants.STORE_ID,
                                 it)
                         })
 
                     }
-
+                    getCompanies()
                 }
             } catch (ex: Exception) {
                 when (ex) {
@@ -188,7 +230,7 @@ class MarketFragmentViewModel
         viewModelScope.launch {
             try {
                 val response = productRepository.getCompanies()
-                if (response.isSuccessful && response.body()?.gpApiStatus== Constants.GP_API_STATUS
+                if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS
                     && response.body()?.gpApiResponseData?.companiesList?.size!! > 0
                 ) {
                     companyResponse = response.body()
@@ -198,12 +240,15 @@ class MarketFragmentViewModel
                     val tempCompanyList: List<CompanyData> = if (companyList.size >= 6)
                         companyList.subList(0, 6)
                     else companyList
-                    getNavigator()?.setCompanyAdapter(ShopByCompanyAdapter(tempCompanyList)) {
+                    getNavigator()?.setCompanyAdapter(ShopByCompanyAdapter(tempCompanyList) {
+
+                    }) {
                         /*getNavigator()?.openSubCategoryActivity(Bundle().apply {
                             putString(Constants.COMPANIES_ID,
                                 it)
                         })*/
                     }
+                    getHomeData()
                 }
             } catch (ex: Exception) {
                 when (ex) {

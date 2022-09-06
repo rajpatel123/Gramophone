@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.home.view.fragments.market.model.Banner" />
+    </data>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            state_image="@{model.bannerImage}"
+            android:id="@+id/ivExclusiveBanner"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/_160sdp"
+            android:contentDescription="@string/image"
+            android:scaleType="fitXY"/>
+
+        <View
+            android:visibility="gone"
+            android:id="@+id/viewSeparator"
+            android:layout_width="@dimen/_3sdp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</layout>

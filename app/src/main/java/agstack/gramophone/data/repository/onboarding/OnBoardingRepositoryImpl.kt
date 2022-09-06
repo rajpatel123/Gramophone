@@ -16,6 +16,7 @@ import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
+import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import kotlinx.coroutines.Dispatchers
@@ -118,4 +119,10 @@ class OnBoardingRepositoryImpl @Inject constructor(
         bannerResponse
     }
 
+
+    override suspend fun getProfile(): Response<ProfileResponse>  = withContext(
+        Dispatchers.IO) {
+        val profileResponse = gramAppService.getProfile()
+        profileResponse
+    }
 }

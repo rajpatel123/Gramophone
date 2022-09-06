@@ -45,6 +45,7 @@ class UserProfileActivity :
         super.onCreate(savedInstanceState)
         window.statusBarColor = ContextCompat.getColor(this, R.color.order_delivered_text)
 
+        userProfileViewModel.setProfilePic()
         cropImage = registerForActivityResult(CropImageContract()) { result ->
             if (result.isSuccessful) {
                 // use the returned uri
