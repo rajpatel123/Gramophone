@@ -67,10 +67,66 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tvSortBy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:drawablePadding="8dp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:gravity="center"
+                        android:lineSpacingExtra="0sp"
+                        android:text="@string/sort_by"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"
+                        app:drawableStartCompat="@drawable/ic_sort_by" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tvFilter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:drawablePadding="8dp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:gravity="center"
+                        android:lineSpacingExtra="0sp"
+                        android:text="@string/filter"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"
+                        app:drawableStartCompat="@drawable/ic_filter" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_6sdp"
+                android:background="@color/gray_stroke"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvProduct"
@@ -86,7 +142,7 @@
                 tools:itemCount="6"
                 tools:listitem="@layout/item_product_list" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

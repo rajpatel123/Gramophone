@@ -27,9 +27,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.forEach
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.FirebaseApp
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
@@ -42,12 +41,18 @@ class HomeActivity :
 
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
+    private lateinit var marketFragment: MarketFragment
+    private lateinit var communityFragment: CommunityFragment
+    private lateinit var profileFragment: ProfileFragment
+    private lateinit var tradeFragment: TradeFragment
+    private lateinit var activeFragment: Fragment
     var drawer: DrawerLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
         setUpFirebaseConfig()
+        homeViewModel.getProfile()
     }
 
     private fun setUpFirebaseConfig() {
@@ -81,14 +86,18 @@ class HomeActivity :
                     "remoteConfig initAssetList: cancelled "
                 )
             }
-
     }
 
-    private lateinit var marketFragment: MarketFragment
-    private lateinit var communityFragment: CommunityFragment
-    private lateinit var profileFragment: ProfileFragment
-    private lateinit var tradeFragment: TradeFragment
-    private lateinit var activeFragment: Fragment
+    override fun setImageNameMobile(name: String, mobile: String, profileImage: String) {
+        viewDataBinding.navigationlayout.tvName.text = name
+        viewDataBinding.navigationlayout.tvContact.text = mobile
+        Glide.with(this)
+            .load(profileImage)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
+            .fitCenter()
+            .into(viewDataBinding.navigationlayout.ivProfile)
+    }
 
     private fun setupUi() {
         marketFragment = MarketFragment()
@@ -97,10 +106,18 @@ class HomeActivity :
         tradeFragment = TradeFragment()
         activeFragment = marketFragment
 
-        supportFragmentManager.beginTransaction().add(R.id.fragment_container, tradeFragment, "trade_fragment").hide(tradeFragment).commit()
-        supportFragmentManager.beginTransaction().add(R.id.fragment_container, profileFragment, "profile_fragment").hide(profileFragment).commit()
-        supportFragmentManager.beginTransaction().add(R.id.fragment_container,communityFragment, "community_fragment").hide(communityFragment).commit()
-        supportFragmentManager.beginTransaction().add(R.id.fragment_container,marketFragment, "market_fragment").commit()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, tradeFragment, TradeFragment::class.java.simpleName)
+            .hide(tradeFragment).commit()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, profileFragment, ProfileFragment::class.java.simpleName)
+            .hide(profileFragment).commit()
+        supportFragmentManager.beginTransaction().add(R.id.fragment_container,
+            communityFragment,
+            CommunityFragment::class.java.simpleName).hide(communityFragment).commit()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, marketFragment, MarketFragment::class.java.simpleName)
+            .commit()
 
         setUpNavigationDrawer()
         viewDataBinding.navView.itemIconTintList = null
@@ -115,25 +132,29 @@ class HomeActivity :
             when (it.itemId) {
                 R.id.navigation_home -> {
                     updateMenuItemVisibility(true)
-                    supportFragmentManager.beginTransaction().hide(activeFragment).show(marketFragment).commit()
+                    supportFragmentManager.beginTransaction().hide(activeFragment)
+                        .show(marketFragment).commit()
                     activeFragment = marketFragment
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_community -> {
                     updateMenuItemVisibility(false)
-                    supportFragmentManager.beginTransaction().hide(activeFragment).show(communityFragment).commit()
+                    supportFragmentManager.beginTransaction().hide(activeFragment)
+                        .show(communityFragment).commit()
                     activeFragment = communityFragment
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_profile -> {
                     updateMenuItemVisibility(false)
-                    supportFragmentManager.beginTransaction().hide(activeFragment).show(profileFragment).commit()
+                    supportFragmentManager.beginTransaction().hide(activeFragment)
+                        .show(profileFragment).commit()
                     activeFragment = profileFragment
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_trade -> {
                     updateMenuItemVisibility(false)
-                    supportFragmentManager.beginTransaction().hide(activeFragment).show(tradeFragment).commit()
+                    supportFragmentManager.beginTransaction().hide(activeFragment)
+                        .show(tradeFragment).commit()
                     activeFragment = tradeFragment
                     return@setOnItemSelectedListener true
                 }
@@ -148,12 +169,11 @@ class HomeActivity :
         supportActionBar?.setDisplayShowTitleEnabled(false)
         title = "Gram"
 
-
         viewDataBinding.toolbar.myToolbar.navigationIcon =
-            ResourcesCompat.getDrawable(getResources(), R.drawable.ic_burger_menu, null)
+            ResourcesCompat.getDrawable(resources, R.drawable.ic_burger_menu, null)
         viewDataBinding.toolbar.myToolbar.title = "  " + resources.getString(R.string.app_name)
         viewDataBinding.toolbar.myToolbar.logo =
-            ResourcesCompat.getDrawable(getResources(), R.drawable.ic_gramophone_leaf, null)
+            ResourcesCompat.getDrawable(resources, R.drawable.ic_gramophone_leaf, null)
         //Logo,title
         val actionbar = supportActionBar
         actionbar?.let {
@@ -183,7 +203,7 @@ class HomeActivity :
         }
     }
 
-    public fun updateMenuItemVisibility(showItems: Boolean) {
+    private fun updateMenuItemVisibility(showItems: Boolean) {
         viewDataBinding.toolbar.myToolbar.menu.forEach {
             if (showItems) {
                 it.isVisible = true
@@ -206,11 +226,8 @@ class HomeActivity :
         return true
     }
 
-
     override fun onResume() {
         super.onResume()
-
-
     }
 
     override fun getLayoutID(): Int {

@@ -23,12 +23,14 @@ import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
+import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import agstack.gramophone.utils.Constants
+import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -172,6 +174,8 @@ interface GramAppService {
     @GET("api/v5/category/banner-data")
     suspend fun getBanners(): Response<BannerResponse>
 
+    suspend fun getLocationAddress(@Url url:String): Response<JSONObject>
+
     @GET("api/v5/category/product-app-category")
     suspend fun getCategories(): Response<CategoryResponse>
 
@@ -186,4 +190,10 @@ interface GramAppService {
 
     @GET("api/v5/category/product-app-category/{category_id}")
     suspend fun getSubCategory(@Path("category_id") categoryId: String): Response<SubCategoryResponse>
+
+    @GET("api/v5/customer/profile-data")
+    suspend fun getProfile(): Response<ProfileResponse>
+
+    @GET("api/v5/category/home-data")
+    suspend fun getHomeData(): Response<HomeDataResponse>
 }

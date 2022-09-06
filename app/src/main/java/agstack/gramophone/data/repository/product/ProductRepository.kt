@@ -46,6 +46,8 @@ interface ProductRepository {
 
     suspend fun getExpertAdvice(productData:ProductData):Response<SuccessStatusResponse>
 
+    suspend fun getBanners():Response<BannerResponse>
+
     suspend fun getCategories():Response<CategoryResponse>
 
     suspend fun getCompanies():Response<CompanyResponse>
@@ -55,4 +57,6 @@ interface ProductRepository {
     suspend fun getCrops():Response<CropResponse>
 
     suspend fun getSubCategories(categoryId: String):Response<SubCategoryResponse>
+
+    suspend fun getHomeData():Response<HomeDataResponse>
 }

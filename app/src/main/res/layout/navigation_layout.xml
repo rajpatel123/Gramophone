@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <import type="android.view.View" />
         <variable
@@ -51,9 +52,9 @@
                         android:layout_below="@+id/iv_profile"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:ellipsize="end"
-                        android:text="Thakur Baldev Singh"
                         android:textColor="@color/blakish"
-                        android:textSize="@dimen/_12ssp" />
+                        android:textSize="@dimen/_12ssp"
+                        android:text="Thakur Baldev Singh" />
 
                     <TextView
                         android:id="@+id/tv_contact"

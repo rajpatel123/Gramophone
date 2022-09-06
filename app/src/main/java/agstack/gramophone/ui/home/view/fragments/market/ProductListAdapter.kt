@@ -9,7 +9,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ProductListAdapter(list: ArrayList<ProductData>) :
+class ProductListAdapter(list: ArrayList<ProductData>,
+                         private val listener: (ProductData) -> Unit) :
     RecyclerView.Adapter<ProductListAdapter.CustomViewHolder>() {
     var productList = list
     lateinit var mContext: Context
@@ -28,13 +29,14 @@ class ProductListAdapter(list: ArrayList<ProductData>) :
         var productModel: ProductData = productList[i]
         holder.binding.setVariable(BR.model, productModel)
         val mBinding = holder.binding as ItemFeatureProductBinding
-        mBinding.tvProductDescription.text= "RICE"
+        mBinding.tvProductDescription.text = "RICE"
 
         /* if (productModel.icon != null)
              Glide.with(mContext).asBitmap().load(productModel.icon).into(mBinding.ivProductIcon)
  */
         mBinding.productDetailsContainer.setOnClickListener {
-            selectedProduct?.invoke(productModel)
+            /*selectedProduct?.invoke(productModel)*/
+            listener.invoke(productModel)
         }
 
 

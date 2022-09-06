@@ -6,10 +6,13 @@ import agstack.gramophone.ui.address.view.AddOrUpdateAddressActivity
 import agstack.gramophone.ui.userprofile.firm.AddFirmActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Constants.CAMERA_PERMISSION
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.widget.FilePicker
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -21,6 +24,7 @@ class UserProfileViewModel @Inject constructor(
     var pictureFilePath: String? = ""
     var isFarmerSelected = ObservableField<Boolean>(true)
     var isTraderSelected = ObservableField<Boolean>(true)
+    var profileImage = MutableLiveData<String>()
 
     fun profileImageSelect() {
 
@@ -29,6 +33,12 @@ class UserProfileViewModel @Inject constructor(
             getNavigator()?.openCameraToCapture()
         }
 
+    }
+
+    fun setProfilePic() {
+        profileImage.value = SharedPreferencesHelper.instance?.getString(
+            SharedPreferencesKeys.USER_IMAGE
+        )
     }
 
     fun onEditAddressClick() {
