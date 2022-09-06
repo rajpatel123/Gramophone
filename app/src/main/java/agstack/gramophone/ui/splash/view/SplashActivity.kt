@@ -4,19 +4,14 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivitySplashBinding
-import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.ui.splash.SplashNavigator
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
-import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Utils
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_splash.*
 
