@@ -127,6 +127,9 @@ interface GramAppService {
     @POST("api/v5/product/get-expert-advice")
     suspend fun getExpertAdvice(@Body productData: ProductData):Response<SuccessStatusResponse>
 
+    @POST("api/v5/general/help/{type}")
+    suspend fun gethelp(@Path("type") type: String,@Body productData: ProductData,@Body comments:String):Response<SuccessStatusResponse>
+
     @PUT("api/v5/product/update-product-favourite")
     suspend fun updateProductFavorite(@Body productData: ProductData):Response<SuccessStatusResponse>
 

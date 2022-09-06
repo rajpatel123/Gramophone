@@ -372,6 +372,9 @@
     <string name="tab_saved_post">Saved Post</string>
     <string name="starts_from_99">Starts from ₹ 99</string>
 
+    <string name="allsymbol">\u002A</string>
+    <string name="save_rupees">Save ₹</string>
+
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>
         <item>Recent Reviews</item>
