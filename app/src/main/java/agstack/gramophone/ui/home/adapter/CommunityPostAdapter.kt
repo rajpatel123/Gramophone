@@ -24,13 +24,13 @@ import kotlin.collections.ArrayList
 class CommunityPostAdapter(private val dataList: ArrayList<Data>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val viewPageStates = HashMap<Int, Int>()
-
+  private lateinit var context: Context
     var clickEvent: ((LikedUsers,Int) -> Unit)? = null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
-        val inflater = LayoutInflater.from(parent.context)
+        context=parent.context
+        val inflater = LayoutInflater.from(context)
 
         return when (viewType) {
             VIEW_TYPE_TEXT ->

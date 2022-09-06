@@ -50,7 +50,9 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
     }
 
     override fun moveTOHome() {
-        openAndFinishActivity(HomeActivity::class.java,null)
+        val data =
+
+        //openAndFinishActivity(HomeActivity::class.java,null)
 
     }
 }

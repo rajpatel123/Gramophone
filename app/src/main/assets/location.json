@@ -1,0 +1,434 @@
+{
+  "plus_code" : {
+    "compound_code" : "JC4J+PQ7 Ghaziabad, Uttar Pradesh, India",
+    "global_code" : "7JWVJC4J+PQ7"
+  },
+  "results" : [
+    {
+      "address_components" : [
+        {
+          "long_name" : "27",
+          "short_name" : "27",
+          "types" : [ "premise" ]
+        },
+        {
+          "long_name" : "Lohia Nagar",
+          "short_name" : "Lohia Nagar",
+          "types" : [ "political", "sublocality", "sublocality_level_1" ]
+        },
+        {
+          "long_name" : "Ghaziabad",
+          "short_name" : "Ghaziabad",
+          "types" : [ "locality", "political" ]
+        },
+        {
+          "long_name" : "Gautam Buddh Nagar",
+          "short_name" : "Gautam Buddh Nagar",
+          "types" : [ "administrative_area_level_2", "political" ]
+        },
+        {
+          "long_name" : "Uttar Pradesh",
+          "short_name" : "UP",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "India",
+          "short_name" : "IN",
+          "types" : [ "country", "political" ]
+        },
+        {
+          "long_name" : "201009",
+          "short_name" : "201009",
+          "types" : [ "postal_code" ]
+        }
+      ],
+      "formatted_address" : "27, Lohia Nagar, Ghaziabad, Uttar Pradesh 201009, India",
+      "geometry" : {
+        "location" : {
+          "lat" : 28.6066364,
+          "lng" : 77.4322056
+        },
+        "location_type" : "ROOFTOP",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 28.6079853802915,
+            "lng" : 77.43355458029151
+          },
+          "southwest" : {
+            "lat" : 28.6052874197085,
+            "lng" : 77.43085661970851
+          }
+        }
+      },
+      "place_id" : "ChIJZRmcqFHuDDkRu5_0HYgUWmE",
+      "plus_code" : {
+        "compound_code" : "JC4J+MV Ghaziabad, Uttar Pradesh, India",
+        "global_code" : "7JWVJC4J+MV"
+      },
+      "types" : [ "street_address" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "JC4J+PQ",
+          "short_name" : "JC4J+PQ",
+          "types" : [ "plus_code" ]
+        },
+        {
+          "long_name" : "Ghaziabad",
+          "short_name" : "Ghaziabad",
+          "types" : [ "locality", "political" ]
+        },
+        {
+          "long_name" : "Ghaziabad",
+          "short_name" : "Ghaziabad",
+          "types" : [ "administrative_area_level_2", "political" ]
+        },
+        {
+          "long_name" : "Uttar Pradesh",
+          "short_name" : "UP",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "India",
+          "short_name" : "IN",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "JC4J+PQ Ghaziabad, Uttar Pradesh, India",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 28.606875,
+            "lng" : 77.432
+          },
+          "southwest" : {
+            "lat" : 28.60675,
+            "lng" : 77.43187499999999
+          }
+        },
+        "location" : {
+          "lat" : 28.606798,
+          "lng" : 77.4319371
+        },
+        "location_type" : "GEOMETRIC_CENTER",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 28.6081614802915,
+            "lng" : 77.4332864802915
+          },
+          "southwest" : {
+            "lat" : 28.6054635197085,
+            "lng" : 77.43058851970849
+          }
+        }
+      },
+      "place_id" : "GhIJOEcdHVebPEARdpuB26RbU0A",
+      "plus_code" : {
+        "compound_code" : "JC4J+PQ Ghaziabad, Uttar Pradesh, India",
+        "global_code" : "7JWVJC4J+PQ"
+      },
+      "types" : [ "plus_code" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "Haibatpur",
+          "short_name" : "Haibatpur",
+          "types" : [ "political", "sublocality", "sublocality_level_1" ]
+        },
+        {
+          "long_name" : "Ghaziabad",
+          "short_name" : "Ghaziabad",
+          "types" : [ "locality", "political" ]
+        },
+        {
+          "long_name" : "Gautam Buddh Nagar",
+          "short_name" : "Gautam Buddh Nagar",
+          "types" : [ "administrative_area_level_2", "political" ]
+        },
+        {
+          "long_name" : "Uttar Pradesh",
+          "short_name" : "UP",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "India",
+          "short_name" : "IN",
+          "types" : [ "country", "political" ]
+        },
+        {
+          "long_name" : "201009",
+          "short_name" : "201009",
+          "types" : [ "postal_code" ]
+        }
+      ],
+      "formatted_address" : "Haibatpur, Ghaziabad, Uttar Pradesh 201009, India",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 28.616858,
+            "lng" : 77.43758799999999
+          },
+          "southwest" : {
+            "lat" : 28.60521,
+            "lng" : 77.42665289999999
+          }
+        },
+        "location" : {
+          "lat" : 28.6111863,
+          "lng" : 77.43272619999999
+        },
+        "location_type" : "APPROXIMATE",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 28.616858,
+            "lng" : 77.43758799999999
+          },
+          "southwest" : {
+            "lat" : 28.60521,
+            "lng" : 77.42665289999999
+          }
+        }
+      },
+      "place_id" : "ChIJ53kJRk7uDDkRfIeH3fdb6sg",
+      "types" : [ "political", "sublocality", "sublocality_level_1" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "201009",
+          "short_name" : "201009",
+          "types" : [ "postal_code" ]
+        },
+        {
+          "long_name" : "Uttar Pradesh",
+          "short_name" : "UP",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "India",
+          "short_name" : "IN",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Uttar Pradesh 201009, India",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 28.689332,
+            "lng" : 77.52407839999999
+          },
+          "southwest" : {
+            "lat" : 28.5732096,
+            "lng" : 77.3896007
+          }
+        },
+        "location" : {
+          "lat" : 28.615871,
+          "lng" : 77.44151180000001
+        },
+        "location_type" : "APPROXIMATE",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 28.689332,
+            "lng" : 77.52407839999999
+          },
+          "southwest" : {
+            "lat" : 28.5732096,
+            "lng" : 77.3896007
+          }
+        }
+      },
+      "place_id" : "ChIJV-eRPT_uDDkRkJHvFCdlnrs",
+      "types" : [ "postal_code" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "Ghaziabad",
+          "short_name" : "Ghaziabad",
+          "types" : [ "locality", "political" ]
+        },
+        {
+          "long_name" : "Ghaziabad",
+          "short_name" : "Ghaziabad",
+          "types" : [ "administrative_area_level_2", "political" ]
+        },
+        {
+          "long_name" : "Uttar Pradesh",
+          "short_name" : "UP",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "India",
+          "short_name" : "IN",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Ghaziabad, Uttar Pradesh, India",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 28.7969614,
+            "lng" : 77.5562668
+          },
+          "southwest" : {
+            "lat" : 28.6023449,
+            "lng" : 77.23378989999999
+          }
+        },
+        "location" : {
+          "lat" : 28.6691565,
+          "lng" : 77.45375779999999
+        },
+        "location_type" : "APPROXIMATE",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 28.7969614,
+            "lng" : 77.5562668
+          },
+          "southwest" : {
+            "lat" : 28.6023449,
+            "lng" : 77.23378989999999
+          }
+        }
+      },
+      "place_id" : "ChIJ3w_FQbvxDDkRuph3atJv8OY",
+      "types" : [ "locality", "political" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "Gautam Buddh Nagar",
+          "short_name" : "Gautam Buddh Nagar",
+          "types" : [ "administrative_area_level_2", "political" ]
+        },
+        {
+          "long_name" : "Uttar Pradesh",
+          "short_name" : "UP",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "India",
+          "short_name" : "IN",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Gautam Buddh Nagar, Uttar Pradesh, India",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 28.65431,
+            "lng" : 77.73837
+          },
+          "southwest" : {
+            "lat" : 28.08489,
+            "lng" : 77.2992701
+          }
+        },
+        "location" : {
+          "lat" : 28.338333,
+          "lng" : 77.6077865
+        },
+        "location_type" : "APPROXIMATE",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 28.65431,
+            "lng" : 77.73837
+          },
+          "southwest" : {
+            "lat" : 28.08489,
+            "lng" : 77.2992701
+          }
+        }
+      },
+      "place_id" : "ChIJZc0VBFPkDDkRaCE3BhJhWPQ",
+      "types" : [ "administrative_area_level_2", "political" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "Uttar Pradesh",
+          "short_name" : "UP",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "India",
+          "short_name" : "IN",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Uttar Pradesh, India",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 30.411635,
+            "lng" : 84.6743269
+          },
+          "southwest" : {
+            "lat" : 23.871712,
+            "lng" : 77.0924369
+          }
+        },
+        "location" : {
+          "lat" : 26.8467088,
+          "lng" : 80.9461592
+        },
+        "location_type" : "APPROXIMATE",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 30.411635,
+            "lng" : 84.6743269
+          },
+          "southwest" : {
+            "lat" : 23.871712,
+            "lng" : 77.0924369
+          }
+        }
+      },
+      "place_id" : "ChIJ0wlKe59OmTkRnSQXNm1HpfY",
+      "types" : [ "administrative_area_level_1", "political" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "India",
+          "short_name" : "IN",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "India",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 35.513327,
+            "lng" : 97.39535869999999
+          },
+          "southwest" : {
+            "lat" : 6.4626999,
+            "lng" : 68.1097
+          }
+        },
+        "location" : {
+          "lat" : 20.593684,
+          "lng" : 78.96288
+        },
+        "location_type" : "APPROXIMATE",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 35.513327,
+            "lng" : 97.39535869999999
+          },
+          "southwest" : {
+            "lat" : 6.4626999,
+            "lng" : 68.1097
+          }
+        }
+      },
+      "place_id" : "ChIJkbeSa_BfYzARphNChaFPjNc",
+      "types" : [ "country", "political" ]
+    }
+  ],
+  "status" : "OK"
+}
