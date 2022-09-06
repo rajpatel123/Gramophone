@@ -83,10 +83,12 @@ class MarketFragmentViewModel
                 )
                 //set received productList in Adapter
 
-                getNavigator()?.setFeaturedProductsAdapter(ProductListAdapter(productList)) {
+                getNavigator()?.setFeaturedProductsAdapter(ProductListAdapter(productList) {
+
+                }) {
                     getNavigator()?.startProductDetailsActivity(it)
                 }
-                getBanners()
+                getCategories()
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -126,8 +128,6 @@ class MarketFragmentViewModel
                     referralBanner.value.toString())
                 getNavigator()?.setExclusiveBannerAdapter(ExclusiveBannerAdapter(bannerResponse.gpApiResponseData?.homeGramophoneExclusive!!)) {
                 }
-
-                getCategories()
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -180,7 +180,9 @@ class MarketFragmentViewModel
                         cropList.subList(0, 9)
                     else cropList
 
-                    getNavigator()?.setCropAdapter(ShopByCropsAdapter(tempCropList)) {
+                    getNavigator()?.setCropAdapter(ShopByCropsAdapter(tempCropList) {
+
+                    }) {
                         getNavigator()?.openSubCategoryActivity(Bundle().apply {
                             putString(Constants.CROP_ID,
                                 it)
@@ -213,7 +215,9 @@ class MarketFragmentViewModel
                         storeList.subList(0, 4)
                     else storeList
 
-                    getNavigator()?.setStoreAdapter(ShopByStoresAdapter(tempStoreList)) {
+                    getNavigator()?.setStoreAdapter(ShopByStoresAdapter(tempStoreList) {
+
+                    }) {
                         getNavigator()?.openSubCategoryActivity(Bundle().apply {
                             putString(Constants.STORE_ID,
                                 it)
@@ -245,7 +249,9 @@ class MarketFragmentViewModel
                     val tempCompanyList: List<CompanyData> = if (companyList.size >= 6)
                         companyList.subList(0, 6)
                     else companyList
-                    getNavigator()?.setCompanyAdapter(ShopByCompanyAdapter(tempCompanyList)) {
+                    getNavigator()?.setCompanyAdapter(ShopByCompanyAdapter(tempCompanyList) {
+
+                    }) {
                         /*getNavigator()?.openSubCategoryActivity(Bundle().apply {
                             putString(Constants.COMPANIES_ID,
                                 it)

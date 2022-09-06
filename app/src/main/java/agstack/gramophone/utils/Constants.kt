@@ -106,6 +106,7 @@ object Constants {
     const val Product_Id_Key = "product_id"
 
     //Product
+    const val PRODUCT = "product"
     const val ORDER_ID = "order_id"
     const val CATEGORY_ID = "category_id"
     const val COMPANY_ID = "company_id"

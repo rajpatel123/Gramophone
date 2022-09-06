@@ -115,6 +115,11 @@ class MarketFragment :
     }
 
     private fun setUpUI() {
+        binding?.swipeRefresh?.setColorSchemeResources(R.color.blue)
+        binding?.swipeRefresh?.setOnRefreshListener {
+            marketFragmentViewModel.getHomeData()
+            binding?.swipeRefresh?.isRefreshing = false
+        }
         binding?.viewAllFeaturedProduct?.setOnClickListener {
             openActivity(FeaturedProductActivity::class.java, null)
         }
@@ -206,7 +211,10 @@ class MarketFragment :
         binding?.rvShopByStores?.adapter = adapter
     }
 
-    override fun setExclusiveBannerAdapter(adapter: ExclusiveBannerAdapter, onItemClick: (String) -> Unit, ) {
+    override fun setExclusiveBannerAdapter(
+        adapter: ExclusiveBannerAdapter,
+        onItemClick: (String) -> Unit,
+    ) {
         adapter.itemClicked = onItemClick
         binding?.rvExclusive?.adapter = adapter
     }

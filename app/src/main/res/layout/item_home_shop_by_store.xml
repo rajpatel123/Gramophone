@@ -37,7 +37,7 @@
             tools:listitem="@layout/item_shop_by_store" />
 
         <FrameLayout
-            android:id="@+id/viewAllCrops"
+            android:id="@+id/viewAllStores"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
