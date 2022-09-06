@@ -488,7 +488,6 @@ class ProductDetailsViewModel @Inject constructor(
             getNavigator()?.dismissExpertBottomSheet()
 
         }, {
-
             //Call ExpertAdviceAPI
             Log.d("Click", "yesPleaseClicked")
             expertAdviceJob.cancelIfActive()
