@@ -96,7 +96,7 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/ivStateImage"
-                            state_image="@{viewModel.stateImageUrl}"
+                            app:state_image="@{viewModel.stateImageUrl}"
                             android:layout_width="@dimen/_50sdp"
                             android:layout_height="@dimen/_50sdp"
                             android:layout_marginStart="@dimen/_14sdp"

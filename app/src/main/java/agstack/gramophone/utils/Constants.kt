@@ -13,7 +13,6 @@ object Constants {
     val BLOCK_USER: String="block"
     val REPORT_POST: String="report"
     val DELAY: Long=3_000
-    val DELAY: Long = 3_000
     val INDEX: String = "pageIndex"
     val FROM_EDIT_PROFILE = "FROM_EDIT_PROFILE"
     val REMAINING_TIME: String = "remaining_time"

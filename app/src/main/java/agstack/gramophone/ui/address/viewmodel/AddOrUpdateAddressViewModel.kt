@@ -6,6 +6,7 @@ import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.address.AddressNavigator
 import agstack.gramophone.ui.address.model.*
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
+import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
 import agstack.gramophone.ui.address.view.StateListActivity
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.utils.ApiResponse
@@ -27,7 +28,6 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
@@ -286,37 +286,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
             val latitude: Double = gps.getLatitude()
             val longitude: Double = gps.getLongitude()
 
-            val geocoder: Geocoder
-            val addresses: List<Address>
-
-
-            addresses = getNavigator()?.getGeoCoder()?.getFromLocation(
-                latitude,
-                longitude,
-                1
-            )!! // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-            var addressRequestModel:AddressRequestWithLatLongModel
-            if (addresses != null && addresses.size > 0) {
-                val city = addresses[0].locality
-                val state = addresses[0].adminArea
-                val postalCode = addresses[0].postalCode
-
-                 addressRequestModel =
-                    AddressRequestWithLatLongModel(
-                        latitude.toString(),
-                        longitude.toString(),
-                        state,
-                        city,
-                        "",
-                        "",
-                        pincode = postalCode
-                    )
-                Log.d("AddressPayload", Gson().toJson(addressRequestModel))
-                getAddressByLocationFromApi(latitude,longitude)
-              //  getAddressByLatLng(addressRequestModel = addressRequestModel)
-            }else{
-                getAddressByLocationFromApi(latitude,longitude)
-            }
+            getAddressByLocationFromApi(latitude,longitude)
 
         } else {
             // Can't get location.
@@ -339,7 +309,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                             "AIzaSyAgy7OYQrHaPSXndFDMjXU2pMcpk48uyt0"
                         )
                     if (addressResponse.isSuccessful) {
-                        parseAddressDetail(latitude, longitude, ))
+                        parseAddressDetail(latitude, longitude,addressResponse.body())
                     }
                 }
              } else
@@ -353,35 +323,35 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
     }
 
-    private fun parseAddressDetail(latitude: Double, longitude: Double, locationObj: JSONObject?) {
+    private fun parseAddressDetail(latitude: Double, longitude: Double, locationObj: GoogleAddressResponseModel?) {
         val addressData = HashMap<String, String>()
-        val locationArray = locationObj?.getJSONArray("results")
-        val item = locationArray?.getJSONObject(0)
-        val address_components = item?.getJSONArray("address_components")
 
-        for (j in 0 until address_components?.length()!!) {
-            val addressObj = address_components.getJSONObject(j)
-            val itemTypeArray = addressObj.getJSONArray("types")
-            for (k in 0 until itemTypeArray.length()) {
-                val itemType = itemTypeArray.optString(k)
+        val item = locationObj?.results!![0]
+        val address_components = item?.address_components
+
+        for (j in 0 until address_components?.size!!) {
+            val addressObj = address_components[j]
+            val itemTypeArray = addressObj.types
+            for (k in 0 until itemTypeArray.size) {
+                val itemType = itemTypeArray[k]
                 when (itemType) {
                     "sublocality_level_1" -> {
-                        addressData.put("village", addressObj.optString("long_name"))
+                        addressData.put("village", addressObj.long_name)
                     }
                     "postal_code" -> {
-                        addressData.put("pincode", addressObj.optString("long_name"))
+                        addressData.put("pincode", addressObj.long_name)
                     }
 
                     "locality" -> {
-                        addressData.put("tehsil", addressObj.optString("long_name"))
+                        addressData.put("tehsil", addressObj.long_name)
                     }
 
                     "administrative_area_level_2" -> {
-                        addressData.put("dist", addressObj.optString("long_name"))
+                        addressData.put("dist", addressObj.long_name)
                     }
 
                     "administrative_area_level_1" -> {
-                        addressData.put("state", addressObj.optString("long_name"))
+                        addressData.put("state", addressObj.long_name)
                     }
                 }
 
