@@ -89,6 +89,8 @@ object Constants {
     const val AUTHORIZATION = "Authorization"
     const val STATE_NAME = "state_name"
     const val OTP_REFERENCE = "otp_ref"
+    const val ALL_STRING = "all"
+    const val STATE = "state"
     const val DISTRICT = "district"
     const val TEHSIL = "tehsil"
     const val VILLAGE = "village"
@@ -99,7 +101,6 @@ object Constants {
 
     //MyFarm
     const val Unit = "unit"
-    const val STATE = "state"
     const val STATE_IMAGE_URL = "image"
     const val STATE_LIST = "state_list"
 

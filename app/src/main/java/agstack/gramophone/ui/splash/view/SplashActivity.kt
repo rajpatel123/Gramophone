@@ -44,49 +44,7 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
     }
 
     override fun moveToLogIn() {
-        val data = Utils.getJsonFromAssets(this,"location.json")
-        val addressData = HashMap<String,String>()
-        val  locationObj = JSONObject(data)
-        val locationArray = locationObj.getJSONArray("results")
-            val item = locationArray.getJSONObject(0)
-            val address_components = item.getJSONArray("address_components")
-
-            for (j in 0 until address_components.length()) {
-                val addressObj = address_components.getJSONObject(j)
-                val itemTypeArray = addressObj.getJSONArray("types")
-                for (k in 0 until itemTypeArray.length()) {
-                    val itemType = itemTypeArray.optString(k)
-                    when(itemType){
-                        "sublocality_level_1"->{
-                            addressData.put("village",addressObj.optString("long_name"))
-                        }
-                        "postal_code"->{
-                            addressData.put("pincode",addressObj.optString("long_name"))
-                        }
-
-                        "locality"->{
-                            addressData.put("tehsil",addressObj.optString("long_name"))
-                        }
-
-                        "administrative_area_level_2"->{
-                            addressData.put("dist",addressObj.optString("long_name"))
-                        }
-
-                        "administrative_area_level_1"->{
-                            addressData.put("state",addressObj.optString("long_name"))
-                        }
-                    }
-
-                }
-            }
-
-            // Your code here
-
-
-
-
-        Log.d("Data",""+addressData.toString())
-       // openAndFinishActivity(LanguageActivity::class.java,null)
+       openAndFinishActivity(LanguageActivity::class.java,null)
 
     }
 

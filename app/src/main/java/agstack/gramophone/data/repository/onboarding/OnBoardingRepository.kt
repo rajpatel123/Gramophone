@@ -8,6 +8,7 @@ import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
+import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
@@ -47,10 +48,10 @@ interface OnBoardingRepository {
 
     suspend fun logoutUser(): Response<LogoutResponseModel>
 
-    suspend fun updateAddressByLatLong(addressRequestModel: AddressRequestWithLatLongModel): Response<AddressDataByLatLongResponseModel>
+    suspend fun getAddressByLatLong(addressRequestModel: AddressRequestWithLatLongModel): Response<StateResponseModel>
 
     suspend fun getBanners(): Response<BannerResponse>
 
     suspend fun getProfile(): Response<ProfileResponse>
-    suspend fun getLocationAddress(lat: String, key: String): Response<JSONObject>
+    suspend fun getLocationAddress(lat: String, key: String): Response<GoogleAddressResponseModel>
 }
