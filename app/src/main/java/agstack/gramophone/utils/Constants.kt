@@ -13,42 +13,51 @@ object Constants {
     val BLOCK_USER: String="block"
     val REPORT_POST: String="report"
     val DELAY: Long=3_000
+    val DELAY: Long = 3_000
     val INDEX: String = "pageIndex"
-    val FROM_EDIT_PROFILE="FROM_EDIT_PROFILE"
-    val REMAINING_TIME: String="remaining_time"
-    val RESEND_OTP_TIME: Long=30000
-    val CHANGE_LANGUAGE:String = "change_language"
-    val CHANGE_STATE:String ="change"
-    val BUNDLE: String="bundle"
-    val Product_Base_Name="PRODUCT BASE NAME"
-    val PRODUCT_RATING_DATA_KEY="PRODUCT RATING DATA"
-    val RATING_SELECTED="RATING_SELECTED"
-    val OFFERSDATA="OFFERSDATA"
-    val SHOP_BY_TYPE="SHOP_BY_TYPE"
-    val SHOP_BY_CROP="SHOP_BY_CROP"
-    val SHOP_BY_STORE="SHOP_BY_STORE"
-    val SHOP_BY_COMPANY="SHOP_BY_COMPANY"
-    val HOME_BANNER_1="home_banner_1"
-    val HOME_SHOP_BY_CATEGORY="shop_by_category"
-    val HOME_FEATURED_PRODUCTS="featured_products"
-    val HOME_SHOP_BY_CROP="shop_by_crop"
-    val HOME_SHOP_BY_STORE="shop_by_store"
-    val HOME_SHOP_BY_COMPANY="shop_by_company"
-    val HOME_BANNER_EXCLUSIVE="gramophone_exclusive"
-    val HOME_BANNER_REFERRAL="home_referral_banner"
+    val FROM_EDIT_PROFILE = "FROM_EDIT_PROFILE"
+    val REMAINING_TIME: String = "remaining_time"
+    val RESEND_OTP_TIME: Long = 30000
+    val CHANGE_LANGUAGE: String = "change_language"
+    val CHANGE_STATE: String = "change"
+    val BUNDLE: String = "bundle"
+    val Product_Base_Name = "PRODUCT BASE NAME"
+    val PRODUCT_RATING_DATA_KEY = "PRODUCT RATING DATA"
+    val RATING_SELECTED = "RATING_SELECTED"
+    val OFFERSDATA = "OFFERSDATA"
+    val SHOP_BY_TYPE = "SHOP_BY_TYPE"
+    val SHOP_BY_CROP = "SHOP_BY_CROP"
+    val SHOP_BY_STORE = "SHOP_BY_STORE"
+    val SHOP_BY_COMPANY = "SHOP_BY_COMPANY"
+    val HOME_BANNER_1 = "home_banner_1"
+    val HOME_SHOP_BY_CATEGORY = "shop_by_category"
+    val HOME_FEATURED_PRODUCTS = "featured_products"
+    val HOME_SHOP_BY_CROP = "shop_by_crop"
+    val HOME_SHOP_BY_STORE = "shop_by_store"
+    val HOME_SHOP_BY_COMPANY = "shop_by_company"
+    val HOME_BANNER_EXCLUSIVE = "gramophone_exclusive"
+    val HOME_BANNER_REFERRAL = "home_referral_banner"
 
+    val HOME_BANNER_VIEW_TYPE = 0
+    val HOME_BANNER_EXCLUSIVE_VIEW_TYPE = 1
+    val HOME_BANNER_REFERRAL_VIEW_TYPE = 2
+    val HOME_SHOP_BY_CATEGORY_VIEW_TYPE = 3
+    val HOME_FEATURED_PRODUCTS_VIEW_TYPE = 4
+    val HOME_SHOP_BY_CROP_VIEW_TYPE = 5
+    val HOME_SHOP_BY_STORE_VIEW_TYPE = 6
+    val HOME_SHOP_BY_COMPANY_VIEW_TYPE = 7
 
 
     val CAMERA_PERMISSION = Manifest.permission.CAMERA
-   val  READ_EXTERNAL_STORAGE =  Manifest.permission.CAMERA
+    val READ_EXTERNAL_STORAGE = Manifest.permission.CAMERA
     val REQUEST_CAMERA = 1012
     val REQUEST_GALLERY = 1013
 
     //sortBy options
     val TOP = "top"
     val RECENT = "recent"
-    val TOP_REVIEWS ="Top Reviews"
-    val RECENT_REVIEWS= "Recent Reviews"
+    val TOP_REVIEWS = "Top Reviews"
+    val RECENT_REVIEWS = "Recent Reviews"
     const val PAST = "past"
     const val HELP_PHONE_NUMBER: String = "customer_support_no"
     const val LANG: String = "lang"
@@ -61,7 +70,7 @@ object Constants {
     const val MIN_DISTANCE_CHANGE_FOR_UPDATES: Float = 10f
 
     // The minimum time between updates in milliseconds
-    const val MIN_TIME_BW_UPDATES = (1000 * 60 * 1 ).toLong()
+    const val MIN_TIME_BW_UPDATES = (1000 * 60 * 1).toLong()
 
     /**
      * For MyNotificationOpenedHandler
@@ -125,6 +134,7 @@ object Constants {
     const val LOCATION_ACCESS_DIALOG = "location_access_dialog"
 
     const val postShareRequestKey = 7001
+
     /**
      * For Broadcast
      */

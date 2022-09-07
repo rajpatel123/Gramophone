@@ -47,6 +47,4 @@ interface MarketFragmentNavigator : BaseNavigator {
         adapter: ExclusiveBannerAdapter,
         onItemClick: (String) -> Unit,
     )
-
-    fun setExclusiveAndReferralImage(exclusiveUrl: String, referralUrl: String)
 }
