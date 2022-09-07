@@ -228,7 +228,6 @@
     <string name="onlyGenuineBuyerCanRate">Only genuine buyer can rate this product</string>
     <string name="gramophone_allows_disclaimer">Gramophone only allows certified buyers to rate the product for your better shopping experience.</string>
 
-    <string name="no_internet">"No internet connection "</string>
     <string name="sku">SKU:&#160;</string>
     <string name="offers_applied">&#160;Offers applied</string>
     <string name="rupee_symbol">₹&#160;</string>
@@ -297,7 +296,6 @@
     <string name="turn_on_location">Please turn on location</string>
     <string name="opt_out">Opt-Out Now</string>
     <string name="opt_in_now">Opt-In Now</string>
-    <string name="seconds">Sec</string>
     <string name="bottomsheet_tag">bottomSheet</string>
     <string name="payment_mode">Payment Mode</string>
     <string name="pay_using_gram_cash">Pay Using Gram Cash</string>
@@ -392,6 +390,8 @@
 
     <string name="allsymbol">\u002A</string>
     <string name="save_rupees">Save ₹</string>
+    <string name="update">Update</string>
+    <string name="enter_6_digit_code">Enter 6 digit code we have sent on</string>
 </resources>
 
 

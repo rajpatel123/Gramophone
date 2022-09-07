@@ -388,5 +388,7 @@
 
     <string name="allsymbol">\u002A</string>
     <string name="save_rupees">Save ₹</string>
+    <string name="update">Update</string>
+    <string name="enter_6_digit_code">Enter 6 digit code we have sent on</string>
 
 </resources>

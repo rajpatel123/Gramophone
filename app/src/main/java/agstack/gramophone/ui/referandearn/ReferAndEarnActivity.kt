@@ -29,8 +29,6 @@ class ReferAndEarnActivity :
     }
 
     private fun generateQRCode() {
-        var parameterizedUri: Uri? = null
-        parameterizedUri = ShareSheetPresenter.GENERIC_URI
         shareSheetPresenter = this?.let { ShareSheetPresenter(this,it) }
         shareSheetPresenter!!.shareDynamicLink()
     }

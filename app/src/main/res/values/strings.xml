@@ -399,4 +399,6 @@
     <string name="download_to_gallery">Downloaded to Gallery</string>
     <string name="home_share_subject">Get best quality agriculture products from Gramophone App</string>
     <string name="about_referral_point_balance">About Referral Points balance</string>
+    <string name="update">Update</string>
+    <string name="enter_6_digit_code">Enter 6 digit code we have sent on</string>
 </resources>

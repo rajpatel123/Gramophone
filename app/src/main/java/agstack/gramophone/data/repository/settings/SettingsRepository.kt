@@ -13,4 +13,5 @@ interface SettingsRepository {
     suspend fun getBlockedUsersList(): Response<BlockedUsersListResponseModel>
     suspend fun unBlockUser(customerId: Int): Response<BlockedUsersListResponseModel>
 
+
 }
