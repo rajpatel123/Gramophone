@@ -219,7 +219,6 @@
                         app:track="@drawable/custom_switch"
                         android:onCheckedChanged="@{ ()-> viewModel.onAppTourCheckChanged(swAppTour) }"
                         app:srcCompat="@drawable/ic_arrow_right_black" />
-
                 </RelativeLayout>
 
                 <View
