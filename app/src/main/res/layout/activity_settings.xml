@@ -215,6 +215,8 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:checked="@={viewModel.swAppTourChecked}"
+                        android:thumb="@drawable/custom_swtch_selector"
+                        app:track="@drawable/custom_switch"
                         android:onCheckedChanged="@{ ()-> viewModel.onAppTourCheckChanged(swAppTour) }"
                         app:srcCompat="@drawable/ic_arrow_right_black" />
 
