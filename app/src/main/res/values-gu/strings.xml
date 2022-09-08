@@ -391,6 +391,7 @@
     <string name="save_rupees">Save ₹</string>
     <string name="update">Update</string>
     <string name="enter_6_digit_code">Enter 6 digit code we have sent on</string>
+    <string name="please_select_atleast_one_role">Please select atleast one role</string>
 
 </resources>
 

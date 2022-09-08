@@ -3,17 +3,14 @@ package agstack.gramophone.ui.userprofile
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
-import agstack.gramophone.data.repository.settings.SettingsRepository
 import agstack.gramophone.ui.address.view.AddOrUpdateAddressActivity
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.profile.model.GpApiResponseProfileData
-import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.userprofile.firm.AddFirmActivity
+import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Constants.CAMERA_PERMISSION
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
-import agstack.gramophone.widget.FilePicker
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
@@ -29,10 +26,11 @@ import javax.inject.Inject
 class UserProfileViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository
 ) : BaseViewModel<UserProfileNavigator>() {
-    var isFarmerSelected = ObservableField<Boolean>(true)
-    var isTraderSelected = ObservableField<Boolean>(true)
+    var isFarmerSelected = ObservableField<Boolean>(false)
+    var isTraderSelected = ObservableField<Boolean>(false)
     var profileImage = MutableLiveData<String>()
     private var userProfileJob: Job? = null
+    private var updateProfileJob : Job?=null
     var progressLoader = ObservableField<Boolean>(false)
     var userProfileData = ObservableField<GpApiResponseProfileData>()
 
@@ -57,15 +55,18 @@ class UserProfileViewModel @Inject constructor(
         })
     }
 
-    fun onEditProfileClick(){
+    fun onEditProfileClick() {
         getNavigator()?.openActivity(EditProfileActivity::class.java, Bundle().apply {
-            putParcelable(Constants.USER_PROFILE_DATA,userProfileData.get())
-           //Add user Details
+            putParcelable(Constants.USER_PROFILE_DATA, userProfileData.get())
+            //Add user Details
         })
     }
 
-    fun onAddFirmClick(){
-        getNavigator()?.openActivity(AddFirmActivity::class.java)
+    fun onAddFirmClick() {
+        getNavigator()?.openActivity(AddFirmActivity::class.java, Bundle().apply {
+            putParcelable(Constants.USER_PROFILE_DATA, userProfileData.get())
+            //Add user Details
+        })
     }
 
     fun getUsersData() {
@@ -78,8 +79,11 @@ class UserProfileViewModel @Inject constructor(
 
             if (userProfileResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
                 progressLoader.set(false)
-                val userProfileResponseData: GpApiResponseProfileData? = userProfileResponse.body()?.gp_api_response_data
+                val userProfileResponseData: GpApiResponseProfileData? =
+                    userProfileResponse.body()?.gp_api_response_data
                 userProfileData.set(userProfileResponseData)
+                isFarmerSelected.set(userProfileResponseData?.is_farmer)
+                isTraderSelected.set(userProfileResponseData?.is_trader)
 
 
                 getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)
@@ -105,11 +109,64 @@ class UserProfileViewModel @Inject constructor(
         }
     }
 
-    fun onFarmerLayoutSelected(){
-        isFarmerSelected.set(!(isFarmerSelected.get()!!))
+    fun onFarmerLayoutSelected() {
+
+        if (isFarmerSelected.get() == true) {
+            if (isTraderSelected.get() == true) {
+                isFarmerSelected.set(false)
+                updateProfile(false)
+            }else{
+                getNavigator()?.showToast(getNavigator()?.getMessage(R.string.please_select_atleast_one_role))
+            }
+
+        }else{
+            isFarmerSelected.set(true)
+            updateProfile(true)
+        }
+
     }
 
-    fun onTraderLayoutSelected(){
-        isTraderSelected.set(!(isTraderSelected.get()!!))
+    fun onTraderLayoutSelected() {
+
+        if (isTraderSelected.get() == true) {
+            if (isFarmerSelected.get() == true) {
+                isTraderSelected.set(false)
+                updateProfile(null,false)
+            }else{
+                getNavigator()?.showToast(getNavigator()?.getMessage(R.string.please_select_atleast_one_role))
+            }
+
+        }else{
+            isTraderSelected.set(true)
+            updateProfile(null,true)
+        }
+
+    }
+
+    fun updateProfile(is_farmer :Boolean?=null,is_trader:Boolean?=null,firm_name:String?=null){
+        updateProfileJob.cancelIfActive()
+        updateProfileJob = checkNetworkThenRun {
+            progressLoader.set(true)
+
+           var  updateProfileModel=UpdateProfileModel()
+            updateProfileModel.firm_name= firm_name
+            updateProfileModel.is_farmer= is_farmer
+            updateProfileModel.is_trader = is_trader
+            val userProfileResponse =
+                onBoardingRepository.updateProfile(updateProfileModel)
+            progressLoader.set(false)
+            if (userProfileResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+
+             // Refresh the page
+                 getNavigator()?.refreshPage()
+
+
+
+                getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)
+            } else {
+                progressLoader.set(false)
+                getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)
+            }
+        }
     }
 }

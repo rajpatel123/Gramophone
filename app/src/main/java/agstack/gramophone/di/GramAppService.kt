@@ -28,6 +28,7 @@ import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
+import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import agstack.gramophone.utils.Constants
@@ -195,6 +196,10 @@ interface GramAppService {
 
     @GET("api/v5/customer/profile-data")
     suspend fun getProfile(): Response<ProfileResponse>
+
+
+    @PUT("api/v5/customer/profile-data")
+    suspend fun updateProfile(@Body updateProfileModel: UpdateProfileModel):Response<SuccessStatusResponse>
 
     @GET("api/v5/category/home-data")
     suspend fun getHomeData(): Response<HomeDataResponse>
