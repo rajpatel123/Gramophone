@@ -9,6 +9,7 @@ import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
+import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
@@ -100,9 +101,9 @@ class OnBoardingRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun updateAddressByLatLong(addressRequestModel: AddressRequestWithLatLongModel):Response<AddressDataByLatLongResponseModel> = withContext(
+    override suspend fun getAddressByLatLong(addressRequestModel: AddressRequestWithLatLongModel):Response<StateResponseModel> = withContext(
         Dispatchers.IO){
-        val addressData = gramAppService.updateAddressByLatLong(addressRequestModel)
+        val addressData = gramAppService.getAddressByLatLong(addressRequestModel)
         addressData
     }
 
@@ -113,9 +114,9 @@ class OnBoardingRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun getLocationAddress(url:String): Response<JSONObject>  = withContext(
+    override suspend fun getLocationAddress(lat: String, key: String): Response<GoogleAddressResponseModel>  = withContext(
         Dispatchers.IO) {
-        val bannerResponse = gramAppService.getLocationAddress(url)
+        val bannerResponse = gramAppService.getLocationAddress(lat,key)
         bannerResponse
     }
 

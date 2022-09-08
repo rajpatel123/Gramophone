@@ -1,8 +1,10 @@
 package agstack.gramophone.ui.home.adapter
 
 import agstack.gramophone.R
+import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActivity
 import agstack.gramophone.ui.home.view.fragments.community.model.PagerItem
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +40,6 @@ class BannerViewPagerAdapter(list: List<PagerItem>?, private val mContext: Conte
 
         val data = mPagerList[position]
 
-        holder.pagerText.text ="Viewpager Item Number "+ data.itemText
         Glide.with(rootView.context)
             .load(data.itemImageUrl)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -46,6 +47,10 @@ class BannerViewPagerAdapter(list: List<PagerItem>?, private val mContext: Conte
             .fitCenter()
             .into(holder.imageView)
         container.addView(rootView)
+
+        rootView.setOnClickListener {
+            container.context.startActivity(Intent(container.context,LikedPostUserListActivity::class.java))
+        }
 
         return rootView
     }
@@ -71,11 +76,9 @@ class BannerViewPagerAdapter(list: List<PagerItem>?, private val mContext: Conte
      */
     internal inner class ViewHolder(rootView: View) {
 
-        var pagerText: TextView
         var imageView:ImageView
 
         init {
-            pagerText = rootView.findViewById(R.id.tvPager)
             imageView= rootView.findViewById(R.id.imageViewViewpager)
         }
     }

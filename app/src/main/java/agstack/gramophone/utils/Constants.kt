@@ -6,7 +6,13 @@ import android.content.Context
 
 
 object Constants {
-    val DELAY: Long = 3_000
+    val PIN_POST: String="pinpost"
+    val EDIT_POST: String="edit_post"
+    val COPY_POST: String="copy_post"
+    val DELETE_POST: String="delete_post"
+    val BLOCK_USER: String="block"
+    val REPORT_POST: String="report"
+    val DELAY: Long=3_000
     val INDEX: String = "pageIndex"
     val FROM_EDIT_PROFILE = "FROM_EDIT_PROFILE"
     val REMAINING_TIME: String = "remaining_time"
@@ -91,6 +97,8 @@ object Constants {
     const val AUTHORIZATION = "Authorization"
     const val STATE_NAME = "state_name"
     const val OTP_REFERENCE = "otp_ref"
+    const val ALL_STRING = "all"
+    const val STATE = "state"
     const val DISTRICT = "district"
     const val TEHSIL = "tehsil"
     const val VILLAGE = "village"
@@ -101,7 +109,6 @@ object Constants {
 
     //MyFarm
     const val Unit = "unit"
-    const val STATE = "state"
     const val STATE_IMAGE_URL = "image"
     const val STATE_LIST = "state_list"
 

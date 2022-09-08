@@ -9,6 +9,7 @@ import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
+import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
 import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
@@ -166,12 +167,13 @@ interface GramAppService {
 
 
     @POST("api/v5/general/address-fetch")
-    suspend fun updateAddressByLatLong(@Body addressRequestModel: AddressRequestWithLatLongModel): Response<AddressDataByLatLongResponseModel>
+    suspend fun getAddressByLatLong(@Body addressRequestModel: AddressRequestWithLatLongModel): Response<StateResponseModel>
 
     @GET("api/v5/category/banner-data")
     suspend fun getBanners(): Response<BannerResponse>
 
-    suspend fun getLocationAddress(@Url url:String): Response<JSONObject>
+    @GET("https://maps.googleapis.com/maps/api/geocode/json")
+    suspend fun getLocationAddress(@Query("latlng") latlng: String, @Query("key") key: String): Response<GoogleAddressResponseModel>
 
     @GET("api/v5/category/product-app-category")
     suspend fun getCategories(): Response<CategoryResponse>
