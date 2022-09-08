@@ -1,5 +1,6 @@
 package agstack.gramophone.data.repository.onboarding
 
+import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.data.model.UpdateLanguageRequestModel
 import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.di.GramAppService
@@ -17,6 +18,7 @@ import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
+import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import kotlinx.coroutines.Dispatchers
@@ -123,6 +125,13 @@ class OnBoardingRepositoryImpl @Inject constructor(
     override suspend fun getProfile(): Response<ProfileResponse>  = withContext(
         Dispatchers.IO) {
         val profileResponse = gramAppService.getProfile()
+        profileResponse
+    }
+
+
+    override suspend fun updateProfile(updateProfileModel: UpdateProfileModel): Response<SuccessStatusResponse> = withContext(
+        Dispatchers.IO) {
+        val profileResponse = gramAppService.updateProfile(updateProfileModel)
         profileResponse
     }
 }

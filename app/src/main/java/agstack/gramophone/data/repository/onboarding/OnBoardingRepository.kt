@@ -1,5 +1,6 @@
 package agstack.gramophone.data.repository.onboarding
 
+import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.data.model.UpdateLanguageRequestModel
 import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.ui.address.model.AddressRequestModel
@@ -16,6 +17,7 @@ import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
+import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import org.json.JSONObject
@@ -53,4 +55,5 @@ interface OnBoardingRepository {
     suspend fun getLocationAddress(url:String): Response<JSONObject>
 
     suspend fun getProfile(): Response<ProfileResponse>
+    suspend fun updateProfile(updateProfileModel: UpdateProfileModel):Response<SuccessStatusResponse>
 }

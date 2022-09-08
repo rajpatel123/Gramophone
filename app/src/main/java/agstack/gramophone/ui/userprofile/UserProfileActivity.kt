@@ -64,6 +64,11 @@ class UserProfileActivity :
         }
     }
 
+
+    override fun refreshPage() {
+        userProfileViewModel.getUsersData()
+    }
+
     private fun setImage(imageUri: Uri) {
 
         Glide.with(this)
