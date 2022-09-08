@@ -195,4 +195,8 @@ interface GramAppService {
 
     @GET("api/v5/category/home-data")
     suspend fun getHomeData(): Response<HomeDataResponse>
+
+
+
+
 }

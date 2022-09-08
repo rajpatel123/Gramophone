@@ -1,6 +1,7 @@
-package agstack.gramophone.di
+package agstack.gramophone.di.community
 
 import agstack.gramophone.BuildConfig
+import agstack.gramophone.di.GramAppService
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
@@ -18,7 +19,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiModule {
+object ApiCommunityModule {
 
     @Provides
     @Singleton
@@ -41,7 +42,7 @@ object ApiModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL_SOCIAL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
@@ -49,8 +50,8 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideMovieAppService(retrofit: Retrofit): GramAppService {
-        return retrofit.create(GramAppService::class.java)
+    fun provideMovieAppService(retrofit: Retrofit): GramAppCommunityService {
+        return retrofit.create(GramAppCommunityService::class.java)
     }
 
     private fun getHeaderInterceptor(): Interceptor {
