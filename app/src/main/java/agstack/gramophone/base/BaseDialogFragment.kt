@@ -7,33 +7,57 @@ import agstack.gramophone.utils.LocaleManagerClass
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
+import android.graphics.Color
+import android.graphics.Rect
+import android.graphics.drawable.ColorDrawable
 import android.location.Geocoder
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.annotation.CallSuper
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.viewbinding.ViewBinding
 import java.util.*
 
-abstract class BaseDialogFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewModel<N>> : DialogFragment(),
-    BaseNavigator {
-    protected var binding: B? = null
-
-    protected var mViewModel :V?=null
-    private var mContext :Context?=null
-    private var mActivity : Activity?=null
+abstract class BaseDialogFragment<B : ViewDataBinding, N : BaseNavigator, V : BaseViewModel<N>> :
+    DialogFragment(),BaseNavigator
+{
+    protected lateinit var binding: B
+    private var mActivity :Activity ?=null
+    protected var mViewModel: V? = null
+    private var mContext: Context? = null
 
 
     abstract fun getLayoutID(): Int
     abstract fun getBindingVariable(): Int
     abstract fun getViewModel(): V
+
     override fun onAttach(activity: Activity) {
         super.onAttach(activity)
         this.mActivity = activity
     }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setWidthPercent(95)
+    }
+
+    private fun setWidthPercent(percentage: Int) {
+        val percent = percentage.toFloat() / 100
+        val dm = Resources.getSystem().displayMetrics
+        val rect = dm.run { Rect(0, 0, widthPixels, heightPixels) }
+        val percentWidth = rect.width() * percent
+        val percentHeight = rect.height() * percent / 2
+        dialog?.window?.setLayout(percentWidth.toInt(), percentHeight.toInt())
+
+
+    }
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -45,13 +69,20 @@ abstract class BaseDialogFragment<B : ViewBinding, N : BaseNavigator, V : BaseVi
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = onCreateBinding(inflater, container, savedInstanceState)
-        this.binding = binding
+        this.binding = DataBindingUtil.inflate<B>(
+           inflater,
+            getLayoutID(),
+            container,
+            false
+        )
+
 
         this.mViewModel = getViewModel()
+        this.binding.setVariable(getBindingVariable(), mViewModel)
         mViewModel?.setNavigator(this as N?)
 
-
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE);
 
         return binding.root
     }
@@ -59,14 +90,10 @@ abstract class BaseDialogFragment<B : ViewBinding, N : BaseNavigator, V : BaseVi
     @CallSuper
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        binding.unbind()
     }
 
-    abstract fun onCreateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): B
+
 
     override fun isNetworkAvailable(): Boolean {
         //  val info = ConnectivityManager?.OnNetworkActiveListener {  }
@@ -81,29 +108,35 @@ abstract class BaseDialogFragment<B : ViewBinding, N : BaseNavigator, V : BaseVi
         }
     }
 
-    override fun <T> openAndFinishActivity(cls :Class<T>,extras: Bundle?){
-        Intent(context,cls).apply {
-
-            if(extras!=null)
-                putExtras(extras)
-            startActivity(this)
-
-        }
-    }
-
-    override fun <T: Activity> openActivityWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?) {
+    override fun <T> openAndFinishActivity(cls: Class<T>, extras: Bundle?) {
         Intent(context, cls).apply {
 
             if (extras != null)
                 putExtras(extras)
             startActivity(this)
-            requireActivity().overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+
+        }
+    }
+
+    override fun <T : Activity> openActivityWithBottomToTopAnimation(
+        cls: Class<T>,
+        extras: Bundle?
+    ) {
+        Intent(context, cls).apply {
+
+            if (extras != null)
+                putExtras(extras)
+            startActivity(this)
+            requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
         }
     }
 
 
-    override fun <T> openAndFinishActivityWithClearTopNewTaskClearTaskFlags(cls: Class<T>, extras: Bundle?) {
+    override fun <T> openAndFinishActivityWithClearTopNewTaskClearTaskFlags(
+        cls: Class<T>,
+        extras: Bundle?
+    ) {
         Intent(context, cls).apply {
 
             if (extras != null)
@@ -114,7 +147,7 @@ abstract class BaseDialogFragment<B : ViewBinding, N : BaseNavigator, V : BaseVi
         }
     }
 
-    override fun requestPermission(permission: String) :Boolean{
+    override fun requestPermission(permission: String): Boolean {
         TODO("Not yet implemented")
     }
 
@@ -146,7 +179,6 @@ abstract class BaseDialogFragment<B : ViewBinding, N : BaseNavigator, V : BaseVi
     override fun hideProgressBar() {
 
     }
-
 
 
     override fun proceedCall(helpLineNo: String) {

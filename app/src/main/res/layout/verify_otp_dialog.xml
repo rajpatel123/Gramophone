@@ -14,6 +14,8 @@
 
 
     <LinearLayout
+        android:background="@drawable/otp_medium_bg"
+        android:padding="@dimen/_15sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_20sdp"
@@ -26,7 +28,7 @@
             style="@style/heading_title_bold_large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/verify_number"
+            android:text="@string/verify_otp"
             android:textColor="@color/brand_color" />
 
         <TextView
@@ -54,7 +56,6 @@
                 tools:text="+91 82858484848"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_10ssp"
                 android:textStyle="bold" />
@@ -102,7 +103,7 @@
             app:itemWidth="45dp"
             app:lineColor="@color/colorTransparent"
             app:viewType="rectangle" />
-<!--
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -120,7 +121,6 @@
                 android:id="@+id/tvResendOtp"
                 style="@style/small"
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/manrope_medium"
                 android:text="@={viewModel.resendOTPType}"
@@ -214,7 +214,43 @@
                     android:textColor="@{viewModel.timeOver? @color/brand_color:@color/gray}"
                     android:textSize="@dimen/_10ssp" />
             </LinearLayout>
-        </LinearLayout>-->
+        </LinearLayout>
+
+        <View
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_2sdp"
+            android:background="@color/viewcolor"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp">
+
+
+            <TextView
+                android:id="@+id/tv_verify"
+                android:onClick="@{ ()-> viewModel.onVerifyClick() }"
+                android:textColor="@color/brand_color"
+                style="@style/TextSize14Sp"
+                android:text="@string/verify"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:onClick="@{ ()-> viewModel.onCancelClick() }"
+                style="@style/TextSize14Sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_toLeftOf="@id/tv_verify"
+                android:text="@string/cancel"
+                android:textColor="@color/gray"></TextView>
+        </RelativeLayout>
     </LinearLayout>
 
 
