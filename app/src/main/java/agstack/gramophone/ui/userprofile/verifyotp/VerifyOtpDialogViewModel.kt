@@ -24,7 +24,6 @@ class VerifyOtpDialogViewModel @Inject constructor(
     var timeOver = ObservableField<Boolean>()
     var progressLoader = ObservableField<Boolean>(false)
 
-
     fun sendOTP(){
         val sendOtpRequestModel = SendOtpRequestModel()
 
