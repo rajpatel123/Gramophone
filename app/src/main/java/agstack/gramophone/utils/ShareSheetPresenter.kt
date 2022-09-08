@@ -6,12 +6,12 @@ import android.net.Uri
 
 class ShareSheetPresenter(
     private val presentingActivity: androidx.fragment.app.FragmentActivity,
-        private val genericUriHandler: GenericUriHandler
+        private val genericUriHandler: GenericUriHandler?=null
 ) {
 
 
     fun shareDynamicLink() {
-        genericUriHandler.processGenericUri(GENERIC_URI)
+        genericUriHandler?.processGenericUri(GENERIC_URI)
     }
 
     fun shareDeepLinkWithExtraTextWithOption(

@@ -98,14 +98,14 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
                 val shareMessage = resources.getString(R.string.welcome_msg)
                 //  val extraText = shareMessage + "\n" + genericUri.toString()
                 val extraText = shareMessage
-                shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(extraText, getString(R.string.home_share_subject), target)
+                shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(extraText, getString(R.string.home_share_subject),null, target)
             }
 
             IntentKeys.FacebookShareKey->{
                 val shareMessage = resources.getString(R.string.welcome_msg)
                 //  val extraText = shareMessage + "\n" + genericUri.toString()
                 val extraText = shareMessage
-                shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(extraText, getString(R.string.home_share_subject), target)
+                shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(extraText, getString(R.string.home_share_subject),null, target)
             }
 
         }
