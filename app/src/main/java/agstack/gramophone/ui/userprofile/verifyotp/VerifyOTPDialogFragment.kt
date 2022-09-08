@@ -30,7 +30,6 @@ class VerifyOTPDialogFragment: BaseDialogFragment<VerifyOtpDialogBinding, Verify
 
     }
 
-
     override fun getLayoutID(): Int = R.layout.verify_otp_dialog
 
     override fun getBindingVariable(): Int = BR.viewModel
