@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import java.util.logging.Handler
 
 class StateListAdapter(private val stateList: List<State>) :
     RecyclerView.Adapter<StateListAdapter.ViewHolder>() {
@@ -36,24 +37,26 @@ class StateListAdapter(private val stateList: List<State>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.binding.model = mStateList[position]
         var state: State = mStateList[position]!!
-        holder.binding.setVariable(BR.model, state)
-        val mBinding = holder.binding as ItemStateListBinding
-        onStateSelection?.onStateSelect(state)
+//        holder.binding.setVariable(BR.model, state)
+        //val mBinding = holder.binding as ItemStateListBinding
+        //onStateSelection?.onStateSelect(state)
 
         if (state.selected) {
-            mBinding.ivStateImage.borderColor = ContextCompat.getColor(context, R.color.green_dark)
+            holder.binding.ivStateImage.borderColor = ContextCompat.getColor(context, R.color.green_dark)
         } else {
-            mBinding.ivStateImage.borderColor = ContextCompat.getColor(context, R.color.white)
+            holder.binding.ivStateImage.borderColor = ContextCompat.getColor(context, R.color.white)
         }
-        mBinding.llLanguageLinearLayout.setOnClickListener {
+        holder.binding.llLanguageLinearLayout.setOnClickListener {
             mStateList[lastSelectPosition]?.selected = false
             lastSelectPosition = position
             state.selected = true
             notifyDataSetChanged()
             selectedState?.invoke(state)
-            onStateSelection?.onStateSelect(state)
+//            onStateSelection?.onStateSelect(state)
         }
+
 
     }
 
