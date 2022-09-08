@@ -3,7 +3,6 @@ package agstack.gramophone.ui.userprofile.firm
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
-import agstack.gramophone.data.repository.settings.SettingsRepository
 import agstack.gramophone.ui.profile.model.GpApiResponseProfileData
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.utils.Constants
@@ -19,6 +18,7 @@ import javax.inject.Inject
 class AddFirmViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository
 ) : BaseViewModel<AddFirmNavigator>() {
+    lateinit var UserProfileData :GpApiResponseProfileData
     private var updateProfileJob: Job? = null
     var progressLoader = ObservableField<Boolean>(false)
 
@@ -30,14 +30,16 @@ class AddFirmViewModel @Inject constructor(
         updateProfileJob = checkNetworkThenRun {
             progressLoader.set(true)
             var updateProfileModel = UpdateProfileModel()
+            updateProfileModel.is_trader = UserProfileData.is_trader
+            updateProfileModel.is_farmer=UserProfileData.is_farmer
             updateProfileModel.firm_name = firmName.get()
             val userProfileResponse =
                 onBoardingRepository.updateProfile(updateProfileModel)
             progressLoader.set(false)
             if (userProfileResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
 
-
                 getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)
+                getNavigator()?.finishActivity()
             } else {
 
                 getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)
@@ -61,6 +63,7 @@ class AddFirmViewModel @Inject constructor(
     }
 
     fun setUserData(userData: GpApiResponseProfileData) {
+        UserProfileData= userData
         firmName.set(userData.firm_name)
     }
 

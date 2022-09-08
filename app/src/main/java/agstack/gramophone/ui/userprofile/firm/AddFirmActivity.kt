@@ -44,6 +44,8 @@ class AddFirmActivity :
     override fun getViewModel(): AddFirmViewModel {
         return editProfileViewModel
     }
-
+    override fun finishActivity() {
+        finish()
+    }
 
 }
