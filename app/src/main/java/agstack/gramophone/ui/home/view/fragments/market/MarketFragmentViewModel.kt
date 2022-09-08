@@ -37,18 +37,26 @@ class MarketFragmentViewModel
         exclusiveBannerSize.value = 0
     }
 
-    fun getHomeData() {
+    fun getBanners(isLoadingAllApi: Boolean) {
         viewModelScope.launch {
             try {
-                val response = productRepository.getHomeData()
-                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
-                    getNavigator()?.setHomeAdapter(HomeAdapter(response.body()?.gp_api_response_data?.home_screen_sequence!!,
-                        allBannerResponse, categoryResponse, productList,
-                        cropResponse,
-                        storeResponse, companyResponse)) {
-
+                var bannerResponse = SharedPreferencesHelper.instance?.getParcelable(
+                    SharedPreferencesKeys.BANNER_DATA, BannerResponse::class.java
+                )
+                allBannerResponse = bannerResponse
+                if (bannerResponse?.gpApiStatus != Constants.GP_API_STATUS) {
+                    val response = productRepository.getBanners()
+                    if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS) {
+                        bannerResponse = response.body()
+                        allBannerResponse = bannerResponse
+                        SharedPreferencesHelper.instance?.putParcelable(
+                            SharedPreferencesKeys.BANNER_DATA,
+                            bannerResponse!!
+                        )
                     }
-
+                }
+                if (isLoadingAllApi) {
+                    getFeaturedProducts(HashMap<Any, Any>())
                 }
             } catch (ex: Exception) {
                 when (ex) {
@@ -97,35 +105,6 @@ class MarketFragmentViewModel
             }
         }
 
-    }
-
-    fun getBanners() {
-        viewModelScope.launch {
-            try {
-                var bannerResponse = SharedPreferencesHelper.instance?.getParcelable(
-                    SharedPreferencesKeys.BANNER_DATA, BannerResponse::class.java
-                )
-                allBannerResponse = bannerResponse
-                if (bannerResponse?.gpApiStatus != Constants.GP_API_STATUS) {
-                    val response = productRepository.getBanners()
-                    if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS) {
-                        bannerResponse = response.body()
-                        SharedPreferencesHelper.instance?.putParcelable(
-                            SharedPreferencesKeys.BANNER_DATA,
-                            bannerResponse!!
-                        )
-                    }
-                }
-
-
-
-            } catch (ex: Exception) {
-                when (ex) {
-                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
-                }
-            }
-        }
     }
 
     fun getCategories() {
@@ -249,6 +228,28 @@ class MarketFragmentViewModel
                         })*/
                     }
                     getHomeData()
+                }
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
+
+    fun getHomeData() {
+        viewModelScope.launch {
+            try {
+                val response = productRepository.getHomeData()
+                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
+                    getNavigator()?.setHomeAdapter(HomeAdapter(response.body()?.gp_api_response_data?.home_screen_sequence!!,
+                        allBannerResponse, categoryResponse, productList,
+                        cropResponse,
+                        storeResponse, companyResponse)) {
+
+                    }
+
                 }
             } catch (ex: Exception) {
                 when (ex) {

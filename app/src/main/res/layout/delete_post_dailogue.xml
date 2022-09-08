@@ -1,71 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/_200sdp"
-    android:orientation="horizontal">
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
 
+        <import type="android.view.View" />
 
-    <TextView
-        android:id="@+id/tv_del"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="@dimen/_32sdp"
-        android:layout_marginTop="@dimen/_32sdp"
-        android:text="Delete Post"
-        android:textColor="#0638A0"
-        android:textSize="@dimen/_20ssp"
-        android:textStyle="bold" />
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel" />
+    </data>
 
-    <TextView
-        android:id="@+id/tv_dailogue_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="@dimen/_32sdp"
-        android:layout_marginTop="@dimen/_64sdp"
-        android:layout_marginRight="@dimen/_32sdp"
-        android:textColor="#10203E"
-        android:text="Are you sure you want to Delete this  Post? This action can not be undone."
-        android:textSize="@dimen/_16ssp" />
-
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_115sdp"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/menu_dialog_shape"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            >
 
-    <TextView
-        android:id="@+id/tv_cancel_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_180sdp"
-        android:layout_marginTop="@dimen/_158sdp"
-        android:text="Cancel"
-        android:textStyle="bold"
-        android:textColor="#606774"
-        android:textSize="@dimen/_17ssp" />
+            <TextView
+                android:id="@+id/tv_del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/manrope_bold"
+                android:text="Delete Post"
+                android:textColor="@color/brand_color"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tv_Del_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_22sdp"
-        android:layout_marginTop="@dimen/_158sdp"
-        android:layout_toRightOf="@+id/tv_cancel_box"
-        android:text="Delete"
-        android:textStyle="bold"
-        android:textColor="#0638A0"
-        android:textSize="@dimen/_17ssp" />
+            <TextView
+                android:id="@+id/tv_dailogue_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/_16sdp"
+                android:layout_marginRight="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/manrope_regular"
+                android:text="Are you sure you want to Delete this  Post? This action can not be undone."
+                android:textColor="#10203E"
+                android:textSize="@dimen/_12ssp" />
+
+            <View
+                android:id="@+id/separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@color/grey" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/separator"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <TextView
+                    android:id="@+id/tv_cancel_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_18sdp"
+                    android:layout_toStartOf="@+id/tvReport"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:onClick="@{()->viewModel.onCancel()}"
+                    android:text="Cancel"
+                    android:textColor="#606774"
+                    android:textSize="@dimen/_14ssp"
+                    />
+
+                <TextView
+                    android:id="@+id/tvReport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:onClick="@{()->viewModel.onReport()}"
+                    android:text="@string/delete"
+                    android:textColor="@color/brand_color"
+                    android:textSize="@dimen/_14ssp" />
+            </RelativeLayout>
 
 
 
+        </LinearLayout>
 
+    </LinearLayout>
 
-</RelativeLayout>
-
+</layout>
 
 
 

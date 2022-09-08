@@ -20,8 +20,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -69,17 +67,6 @@ class MarketFragment :
             }
     }
 
-    override fun setExclusiveAndReferralImage(bannerUrl: String, referralUrl: String) {
-        Glide.with(requireContext())
-            .load(bannerUrl)
-            .transition(DrawableTransitionOptions.withCrossFade())
-            .into(binding?.ivExclusiveBanner!!)
-        /*Glide.with(requireContext())
-            .load(referralUrl)
-            .transition(DrawableTransitionOptions.withCrossFade())
-            .into(binding?.ivReferralBanner!!)*/
-    }
-
     /**
      * Create Binding
      */
@@ -106,14 +93,7 @@ class MarketFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpUI()
-        marketFragmentViewModel.getBanners()
-        marketFragmentViewModel.getFeaturedProducts(HashMap<Any, Any>())
-
-        /*marketFragmentViewModel.getCategories()
-        marketFragmentViewModel.getCompanies()
-        marketFragmentViewModel.getStores()
-        marketFragmentViewModel.getCrops()*/
-
+        marketFragmentViewModel.getBanners(true)
     }
 
     private fun setUpUI() {
@@ -233,7 +213,7 @@ class MarketFragment :
 
     override fun onResume() {
         super.onResume()
-        marketFragmentViewModel.getBanners()
+        marketFragmentViewModel.getBanners(false)
     }
 
     override fun getLayoutID(): Int {
