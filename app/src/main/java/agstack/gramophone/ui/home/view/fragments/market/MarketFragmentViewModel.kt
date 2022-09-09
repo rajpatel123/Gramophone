@@ -72,6 +72,7 @@ class MarketFragmentViewModel
             try {
                 //To get Product Data
                 //homeRepository.getProducts(hashMap)
+                if (productList.isNotEmpty()) productList.clear()
                 val productImagesList = ArrayList<String>()
                 productImagesList.add("https://s3.ap-south-1.amazonaws.com/gramophone-webapps-dev/product_erp_images/1647503375.jpg")
                 productImagesList.add("https://s3.ap-south-1.amazonaws.com/gramophone-webapps-dev/product_erp_images/1647503375.jpg")
@@ -90,7 +91,6 @@ class MarketFragmentViewModel
                     ProductData(700322)
                 )
                 //set received productList in Adapter
-
                 getNavigator()?.setFeaturedProductsAdapter(ProductListAdapter(productList) {
 
                 }) {
@@ -112,7 +112,9 @@ class MarketFragmentViewModel
             try {
                 val response = productRepository.getCategories()
                 categoryResponse = response.body()
-                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
+                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS &&
+                    response.body()?.gp_api_response_data?.product_app_categories_list != null
+                ) {
                     getNavigator()?.setCategoryAdapter(ShopByCategoryAdapter(response.body()?.gp_api_response_data?.product_app_categories_list) {
                         getNavigator()?.openSubCategoryActivity(Bundle().apply {
                             putString(Constants.CATEGORY_ID,
@@ -124,8 +126,8 @@ class MarketFragmentViewModel
                                 it)
                         })
                     }
-                    getCrops()
                 }
+                getCrops()
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -159,8 +161,8 @@ class MarketFragmentViewModel
                         })
 
                     }
-                    getStores()
                 }
+                getStores()
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -194,8 +196,8 @@ class MarketFragmentViewModel
                         })
 
                     }
-                    getCompanies()
                 }
+                getCompanies()
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -227,8 +229,8 @@ class MarketFragmentViewModel
                                 it)
                         })*/
                     }
-                    getHomeData()
                 }
+                getHomeData()
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -247,9 +249,7 @@ class MarketFragmentViewModel
                         allBannerResponse, categoryResponse, productList,
                         cropResponse,
                         storeResponse, companyResponse)) {
-
                     }
-
                 }
             } catch (ex: Exception) {
                 when (ex) {

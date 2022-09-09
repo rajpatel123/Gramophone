@@ -3,15 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <LinearLayout
+        android:id="@+id/llFeatureProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_8sdp"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/_16sdp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvFeatured"
@@ -20,7 +19,7 @@
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_16sdp"
             android:fontFamily="@font/manrope_bold"
-            android:text="@string/feature_product"
+            android:text="@string/featured_products"
             android:textColor="@color/blakish"
             android:textSize="@dimen/_14ssp"
             android:textStyle="normal" />
@@ -64,4 +63,11 @@
         </FrameLayout>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_8sdp"
+        android:layout_below="@+id/llFeatureProduct"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@color/gray_stroke" />
 </RelativeLayout>

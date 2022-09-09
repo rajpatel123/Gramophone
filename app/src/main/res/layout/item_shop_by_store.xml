@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_156sdp"
                 android:layout_gravity="center_horizontal"
-                android:scaleType="fitXY"
+                android:scaleType="center"
                 app:product_image='@{model.storeImage ?? ""}'
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerTopOnly20"
                 app:strokeColor="@color/gray_stroke"

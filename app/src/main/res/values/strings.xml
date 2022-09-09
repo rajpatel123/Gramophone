@@ -25,7 +25,6 @@
     <string name="i_m_a_farmer">I\'m a Farmer</string>
     <string name="image">image</string>
     <string name="shop_by_category">Shop by Category</string>
-    <string name="feature_product">Feature Product</string>
     <string name="view_all">View All</string>
     <string name="mandi_rates">Mandi Rates</string>
     <string name="shop_by_crops">Shop by Crops</string>
@@ -163,6 +162,7 @@
     <string name="save_extra_rupees">Save extra ₹</string>
     <string name="using">&#160;using&#160;</string>
     <string name="gram_cash">&#160;Gram Cash</string>
+    <string name="gram_cash_without_extra_space">Gram Cash</string>
     <string name="items_in_your_cart">Items in your cart (</string>
     <string name="close_parenthesis">)</string>
     <string name="details">Details</string>
@@ -272,7 +272,8 @@
     <string name="please_enter_6_digit_otp">Please enter 6 digit OTP</string>
     <string name="enter_10_digit_mob">Enter 10 digit mobile number</string>
 
-    <string name="weather">Weather - Indore</string>
+    <string name="weather">Weather</string>
+    <string name="weather_city">Weather - Indore</string>
     <string name="powered_by">Powered by</string>
     <string name="accuweather">AccuWeather</string>
     <string name="forecast_for_the_next_days">Forecast for the next few days</string>
@@ -396,4 +397,14 @@
     <string name="download_to_gallery">Downloaded to Gallery</string>
     <string name="home_share_subject">Get best quality agriculture products from Gramophone App</string>
     <string name="about_referral_point_balance">About Referral Points balance</string>
+    <string name="watch_app_demo">Watch App Demo</string>
+    <string name="dummy_mobile_no">+91 0000000000</string>
+    <string name="username">Username</string>
+    <string name="for_you">FOR YOU</string>
+    <string name="articles">Articles</string>
+    <string name="mandi_bhav">Mandi Bhav</string>
+    <string name="logout">Logout</string>
+    <string name="my_crop_farms">My Crops &amp; Farms</string>
+    <string name="manage_all_your_crops_and_farms">Manage all your crops and farms</string>
+    <string name="new_text">New</string>
 </resources>

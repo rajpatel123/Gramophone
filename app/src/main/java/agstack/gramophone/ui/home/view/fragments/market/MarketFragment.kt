@@ -99,7 +99,7 @@ class MarketFragment :
     private fun setUpUI() {
         binding?.swipeRefresh?.setColorSchemeResources(R.color.blue)
         binding?.swipeRefresh?.setOnRefreshListener {
-            marketFragmentViewModel.getHomeData()
+            marketFragmentViewModel.getBanners(true)
             binding?.swipeRefresh?.isRefreshing = false
         }
         binding?.viewAllFeaturedProduct?.setOnClickListener {

@@ -7,9 +7,9 @@
     android:background="@color/white">
 
     <LinearLayout
+        android:id="@+id/llExclusive"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_8sdp"
         android:orientation="vertical"
         android:paddingBottom="@dimen/_16sdp">
 
@@ -47,4 +47,10 @@
             tools:listitem="@layout/item_exclusive_banner" />
 
     </LinearLayout>
+
+    <View
+        android:layout_below="@+id/llExclusive"
+        android:layout_width="match_parent"
+        android:background="@color/gray_stroke"
+        android:layout_height="@dimen/_8sdp"/>
 </RelativeLayout>

@@ -184,10 +184,10 @@
                             android:textSize="11sp" />
 
                         <pl.droidsonroids.gif.GifImageView
-                            android:layout_centerVertical="true"
                             android:id="@+id/ivGramCash"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:layout_centerVertical="true"
                             android:layout_marginStart="4dp"
                             android:layout_toEndOf="@+id/tvAvailableGramCash"
                             android:contentDescription="@string/image"
