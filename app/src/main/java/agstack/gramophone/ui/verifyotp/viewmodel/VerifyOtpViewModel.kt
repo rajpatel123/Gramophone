@@ -7,7 +7,6 @@ import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.address.view.StateListActivity
 import agstack.gramophone.ui.home.view.HomeActivity
-import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.view.LoginActivity
@@ -15,12 +14,8 @@ import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
-import agstack.gramophone.utils.ApiResponse
-import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.*
 import agstack.gramophone.utils.Constants.REMAINING_TIME
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
-import android.Manifest
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -197,16 +192,20 @@ class VerifyOtpViewModel @Inject constructor(
             if (getNavigator()?.isNetworkAvailable() == true) {
                 val response = onBoardingRepository.resendOTP(sendOtpRequestModel)
 
-                val sendOtpResponseModel = handleResendOTPResponse(response).data
+                if (response.isSuccessful){
+                    val sendOtpResponseModel = handleResendOTPResponse(response).data
 
-                if (Constants.GP_API_STATUS.equals(sendOtpResponseModel?.gp_api_status)) {
-                    otp.set("")
-                    timeOver.set(false)
+                    if (Constants.GP_API_STATUS.equals(sendOtpResponseModel?.gp_api_status)) {
+                        otp.set("")
+                        timeOver.set(false)
 
-                    getNavigator()?.showTimer(Constants.RESEND_OTP_TIME)
-                    getNavigator()?.showToast(sendOtpResponseModel?.gp_api_message)
-                } else {
-                    getNavigator()?.showToast(sendOtpResponseModel?.gp_api_message)
+                        getNavigator()?.showTimer(Constants.RESEND_OTP_TIME)
+                        getNavigator()?.showToast(sendOtpResponseModel?.gp_api_message)
+                    } else {
+                        getNavigator()?.showToast(sendOtpResponseModel?.gp_api_message)
+                    }
+                }else{
+                    getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                 }
 
             } else

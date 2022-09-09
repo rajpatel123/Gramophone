@@ -4,9 +4,7 @@ import agstack.gramophone.R
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -18,15 +16,14 @@ import android.widget.Toast
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import okhttp3.ResponseBody
+import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.OutputStream
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
-
-import java.io.OutputStream
-import java.net.URL
 import java.util.*
 
 
@@ -145,5 +142,10 @@ object Utility {
             e.printStackTrace()
         }
         return dateString
+    }
+
+    fun getErrorMessage(data: ResponseBody?): String? {
+        val errorBody = data?.string()?.let { JSONObject(it) }
+        return errorBody?.optString(Constants.GP_API_MESSAGE)
     }
 }

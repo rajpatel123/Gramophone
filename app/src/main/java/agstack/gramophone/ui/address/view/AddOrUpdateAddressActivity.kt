@@ -11,15 +11,10 @@ import agstack.gramophone.ui.address.model.AddressDataModel
 import agstack.gramophone.ui.address.viewmodel.AddOrUpdateAddressViewModel
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.utils.Constants
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
-import android.location.Address
-import android.location.Geocoder
-import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
-import android.provider.Settings
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -27,6 +22,7 @@ import com.google.android.gms.location.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_or_update_address.*
 import java.util.*
+
 
 @AndroidEntryPoint
 class AddOrUpdateAddressActivity :
@@ -69,6 +65,28 @@ class AddOrUpdateAddressActivity :
         districtSpinner.setOnClickListener {
             districtSpinner.threshold = 1
         }
+
+
+            districtSpinner.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                }
+                override fun afterTextChanged(s: Editable) {
+                    districtSpinner.threshold = 1
+                    addOrUpdateAddressViewModel.tehsilName.set("")
+                    addOrUpdateAddressViewModel.villageName.set("")
+                    addOrUpdateAddressViewModel.pinCode.set("")
+                    tehsilSpinner.setAdapter(null)
+                    villageNameSpinner.setAdapter(null)
+                    pincodeSpinner.setAdapter(null)
+                }
+            })
     }
 
     override fun updateTehsil(
@@ -80,6 +98,25 @@ class AddOrUpdateAddressActivity :
         tehsilSpinner.setOnClickListener {
             tehsilSpinner.threshold = 1
         }
+
+        tehsilSpinner.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            }
+            override fun afterTextChanged(s: Editable) {
+                tehsilSpinner.threshold = 1
+                addOrUpdateAddressViewModel.villageName.set("")
+                addOrUpdateAddressViewModel.pinCode.set("")
+                villageNameSpinner.setAdapter(null)
+                pincodeSpinner.setAdapter(null)
+            }
+        })
     }
 
     override fun updateVillage(
@@ -91,6 +128,23 @@ class AddOrUpdateAddressActivity :
         villageNameSpinner.setOnClickListener {
             villageNameSpinner.threshold = 1
         }
+
+        villageNameSpinner.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            }
+            override fun afterTextChanged(s: Editable) {
+                villageNameSpinner.threshold = 1
+                addOrUpdateAddressViewModel.pinCode.set("")
+                pincodeSpinner.setAdapter(null)
+            }
+        })
     }
 
     override fun updatePinCode(
@@ -102,6 +156,20 @@ class AddOrUpdateAddressActivity :
         pincodeSpinner.setOnClickListener {
             pincodeSpinner.threshold = 1
         }
+        pincodeSpinner.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            }
+            override fun afterTextChanged(s: Editable) {
+                pincodeSpinner.threshold = 1
+            }
+        })
     }
 
 
