@@ -7,11 +7,10 @@
     android:background="@color/white">
 
     <LinearLayout
-        android:id="@+id/llExclusive"
+        android:id="@+id/itemView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/_16sdp">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
@@ -46,11 +45,12 @@
             tools:itemCount="4"
             tools:listitem="@layout/item_exclusive_banner" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:background="@color/gray_stroke" />
+
     </LinearLayout>
 
-    <View
-        android:layout_below="@+id/llExclusive"
-        android:layout_width="match_parent"
-        android:background="@color/gray_stroke"
-        android:layout_height="@dimen/_8sdp"/>
 </RelativeLayout>

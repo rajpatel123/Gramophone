@@ -4,13 +4,13 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentMarketBinding
+import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.home.adapter.*
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.shop.ShopByActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
-import agstack.gramophone.ui.home.view.fragments.market.model.Banner
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -46,6 +46,7 @@ class MarketFragment :
     private val marketFragmentViewModel: MarketFragmentViewModel by viewModels()
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    var homeAdapter: HomeAdapter? = null
 
     companion object {
         /**
@@ -93,13 +94,24 @@ class MarketFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpUI()
-        marketFragmentViewModel.getBanners(true)
+        callApi()
+    }
+
+    private fun callApi() {
+        marketFragmentViewModel.getHomeData()
+        marketFragmentViewModel.getBanners()
+        marketFragmentViewModel.getFeaturedProducts()
+        marketFragmentViewModel.getCategories()
+        marketFragmentViewModel.getCrops()
+        marketFragmentViewModel.getStores()
+        marketFragmentViewModel.getCompanies()
+        marketFragmentViewModel.getCartProducts()
     }
 
     private fun setUpUI() {
         binding?.swipeRefresh?.setColorSchemeResources(R.color.blue)
         binding?.swipeRefresh?.setOnRefreshListener {
-            marketFragmentViewModel.getBanners(true)
+            callApi()
             binding?.swipeRefresh?.isRefreshing = false
         }
         binding?.viewAllFeaturedProduct?.setOnClickListener {
@@ -129,15 +141,6 @@ class MarketFragment :
         binding?.rvMandiRates?.setHasFixedSize(true)
         binding?.rvMandiRates?.adapter = MandiRatesAdapter()
 
-        binding?.rvRecentlyViewed?.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        binding?.rvRecentlyViewed?.setHasFixedSize(true)
-        binding?.rvRecentlyViewed?.adapter = RecentlyViewedAdapter()
-
-        binding?.rvCart?.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        binding?.rvCart?.setHasFixedSize(true)
-        binding?.rvCart?.adapter = RecentlyViewedAdapter()
 
         binding?.rvArticles?.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -150,8 +153,23 @@ class MarketFragment :
     }
 
     override fun setHomeAdapter(adapter: HomeAdapter, onItemClick: (String) -> Unit) {
+        homeAdapter = adapter
         adapter.onItemClicked = onItemClick
-        binding?.rvHome?.adapter = adapter
+        binding?.rvHome?.adapter = homeAdapter
+    }
+
+    override fun notifyHomeAdapter(
+        allBannerResponse: BannerResponse?,
+        categoryResponse: CategoryResponse?,
+        productList: ArrayList<ProductData>,
+        cropResponse: CropResponse?,
+        storeResponse: StoreResponse?,
+        companyResponse: CompanyResponse?,
+        cartList: List<CartItem>?
+    ) {
+        homeAdapter?.notifyAdapterOnDataChange(allBannerResponse, categoryResponse, productList,
+            cropResponse,
+            storeResponse, companyResponse, cartList)
     }
 
     override fun setViewPagerAdapter(bannerList: List<Banner>?) {
@@ -213,7 +231,7 @@ class MarketFragment :
 
     override fun onResume() {
         super.onResume()
-        marketFragmentViewModel.getBanners(false)
+        marketFragmentViewModel.getBanners()
     }
 
     override fun getLayoutID(): Int {

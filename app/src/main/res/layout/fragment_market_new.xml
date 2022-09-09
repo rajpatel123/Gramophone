@@ -402,13 +402,13 @@
                 </LinearLayout>
 
                 <ImageView
-                    state_image="@{viewModel.referralBanner}"
                     android:id="@+id/ivReferralBanner"
+                    state_image="@{viewModel.referralBanner}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:scaleType="fitXY"
-                    android:contentDescription="@string/image" />
+                    android:contentDescription="@string/image"
+                    android:scaleType="fitXY" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -417,7 +417,7 @@
                     android:fontFamily="@font/manrope_bold"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="@dimen/_16sdp"
-                    android:text="@string/products_in_your_cart_3"
+                    tools:text="Products in your cart (3)"
                     android:textColor="@color/blakish"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="normal" />

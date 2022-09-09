@@ -1,7 +1,10 @@
 package agstack.gramophone.ui.home.adapter
 
 
+import agstack.gramophone.R
 import agstack.gramophone.databinding.*
+import agstack.gramophone.ui.cart.model.CartItem
+import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
@@ -10,6 +13,7 @@ import agstack.gramophone.ui.home.shopbydetail.ShopByDetailActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.ProductListAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
+import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.utils.Constants
 import android.content.Context
 import android.content.Intent
@@ -23,15 +27,32 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 class HomeAdapter(
     private val homeScreenSequenceList: List<String>,
-    private val allBannerResponse: BannerResponse?,
-    private val categoryResponse: CategoryResponse?,
-    private val productList: ArrayList<ProductData>,
-    private val cropResponse: CropResponse?,
-    private val storeResponse: StoreResponse?,
-    private val companyResponse: CompanyResponse?,
+    private var allBannerResponse: BannerResponse?,
+    private var categoryResponse: CategoryResponse?,
+    private var productList: ArrayList<ProductData>,
+    private var cropResponse: CropResponse?,
+    private var storeResponse: StoreResponse?,
+    private var companyResponse: CompanyResponse?,
+    private var cartList: List<CartItem>?,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onItemClicked: ((id: String) -> Unit)? = null
+
+    fun notifyAdapterOnDataChange(
+        allBannerResponse: BannerResponse?, categoryResponse: CategoryResponse?,
+        productList: ArrayList<ProductData>, cropResponse: CropResponse?,
+        storeResponse: StoreResponse?, companyResponse: CompanyResponse?,
+        cartList: List<CartItem>?,
+    ) {
+        this.allBannerResponse = allBannerResponse
+        this.categoryResponse = categoryResponse
+        this.productList = productList
+        this.cropResponse = cropResponse
+        this.storeResponse = storeResponse
+        this.companyResponse = companyResponse
+        this.cartList = cartList
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when (viewType) {
@@ -72,6 +93,10 @@ class HomeAdapter(
                 return PromiseBannerViewHolder(ItemHomePromiseBannerBinding.inflate(LayoutInflater.from(
                     viewGroup.context)))
             }
+            Constants.HOME_CART_VIEW_TYPE -> {
+                return CartViewHolder(ItemHomeCartBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
+            }
         }
         return Banner1ViewHolder(
             ItemHomeBannerBinding.inflate(LayoutInflater.from(viewGroup.context))
@@ -82,23 +107,23 @@ class HomeAdapter(
         when (holder) {
             is Banner1ViewHolder -> {
                 if (allBannerResponse?.gpApiResponseData?.homeBanner1 != null
-                    && allBannerResponse.gpApiResponseData?.homeBanner1?.isNotEmpty() == true
+                    && allBannerResponse!!.gpApiResponseData?.homeBanner1?.isNotEmpty() == true
                 ) {
-                    holder.itemView.visibility = View.VISIBLE
+                    holder.binding.itemView.visibility = View.VISIBLE
                     holder.binding.viewPager.adapter =
-                        ViewPagerAdapter(allBannerResponse.gpApiResponseData?.homeBanner1!!)
+                        ViewPagerAdapter(allBannerResponse!!.gpApiResponseData?.homeBanner1!!)
                     holder.binding.dotsIndicator.attachTo(holder.binding.viewPager)
                 } else {
-                    holder.itemView.visibility = View.GONE
+                    holder.binding.itemView.visibility = View.GONE
                 }
             }
             is ShopByCategoryViewHolder -> {
                 if (categoryResponse?.gp_api_response_data?.product_app_categories_list != null
-                    && categoryResponse.gp_api_response_data.product_app_categories_list.isNotEmpty()
+                    && categoryResponse!!.gp_api_response_data.product_app_categories_list.isNotEmpty()
                 ) {
-                    holder.itemView.visibility = View.VISIBLE
+                    holder.binding.itemView.visibility = View.VISIBLE
                     val categoryAdapter =
-                        ShopByCategoryAdapter(categoryResponse.gp_api_response_data.product_app_categories_list) {
+                        ShopByCategoryAdapter(categoryResponse!!.gp_api_response_data.product_app_categories_list) {
                             openActivity(holder.itemView.context,
                                 SubCategoryActivity::class.java,
                                 Bundle().apply {
@@ -109,30 +134,37 @@ class HomeAdapter(
                         }
                     holder.binding.rvShopByCat.adapter = categoryAdapter
                 } else {
-                    holder.itemView.visibility = View.GONE
+                    holder.binding.itemView.visibility = View.GONE
                 }
             }
             is FeaturedProductsViewHolder -> {
-                val featuredAdapter = ProductListAdapter(productList) {
-                    openActivity(holder.itemView.context,
-                        ProductDetailsActivity::class.java,
-                        Bundle().apply {
-                            putParcelable(Constants.PRODUCT,
-                                it)
-                        })
-                }
-                holder.binding.rvFeatureProduct.adapter = featuredAdapter
-                holder.binding.viewAllFeaturedProduct.setOnClickListener {
-                    openActivity(holder.itemView.context, FeaturedProductActivity::class.java, null)
+                if (!productList.isNullOrEmpty()) {
+                    holder.binding.itemView.visibility = View.VISIBLE
+                    val featuredAdapter = ProductListAdapter(productList) {
+                        openActivity(holder.itemView.context,
+                            ProductDetailsActivity::class.java,
+                            Bundle().apply {
+                                putParcelable(Constants.PRODUCT,
+                                    it)
+                            })
+                    }
+                    holder.binding.rvFeatureProduct.adapter = featuredAdapter
+                    holder.binding.viewAllFeaturedProduct.setOnClickListener {
+                        openActivity(holder.itemView.context,
+                            FeaturedProductActivity::class.java,
+                            null)
+                    }
+                } else {
+                    holder.binding.itemView.visibility = View.GONE
                 }
             }
             is ShopByCropViewHolder -> {
                 val cropList = ArrayList<CropData>()
                 if (cropResponse?.gpApiResponseData?.cropsList != null
-                    && cropResponse.gpApiResponseData?.cropsList?.isNotEmpty() == true
+                    && cropResponse!!.gpApiResponseData?.cropsList?.isNotEmpty() == true
                 ) {
-                    holder.itemView.visibility = View.VISIBLE
-                    cropList.addAll(cropResponse.gpApiResponseData?.cropsList!!)
+                    holder.binding.itemView.visibility = View.VISIBLE
+                    cropList.addAll(cropResponse!!.gpApiResponseData?.cropsList!!)
 
                     val tempCropList: List<CropData> = if (cropList.size >= 9)
                         cropList.subList(0, 9)
@@ -155,16 +187,16 @@ class HomeAdapter(
                             })
                     }
                 } else {
-                    holder.itemView.visibility = View.GONE
+                    holder.binding.itemView.visibility = View.GONE
                 }
             }
             is ShopByStoreViewHolder -> {
                 val storeList = ArrayList<StoreData>()
                 if (storeResponse?.gpApiResponseData?.storeList != null
-                    && storeResponse.gpApiResponseData?.storeList?.isNotEmpty() == true
+                    && storeResponse!!.gpApiResponseData?.storeList?.isNotEmpty() == true
                 ) {
-                    holder.itemView.visibility = View.VISIBLE
-                    storeList.addAll(storeResponse.gpApiResponseData?.storeList!!)
+                    holder.binding.itemView.visibility = View.VISIBLE
+                    storeList.addAll(storeResponse!!.gpApiResponseData?.storeList!!)
 
                     val tempStoreList: List<StoreData> = if (storeList.size >= 4)
                         storeList.subList(0, 4)
@@ -186,16 +218,16 @@ class HomeAdapter(
                             })
                     }
                 } else {
-                    holder.itemView.visibility = View.GONE
+                    holder.binding.itemView.visibility = View.GONE
                 }
             }
             is ShopByCompanyViewHolder -> {
                 val companyList = ArrayList<CompanyData>()
                 if (companyResponse?.gpApiResponseData?.companiesList != null
-                    && companyResponse.gpApiResponseData?.companiesList?.isNotEmpty() == true
+                    && companyResponse!!.gpApiResponseData?.companiesList?.isNotEmpty() == true
                 ) {
-                    holder.itemView.visibility = View.VISIBLE
-                    companyList.addAll(companyResponse.gpApiResponseData?.companiesList!!)
+                    holder.binding.itemView.visibility = View.VISIBLE
+                    companyList.addAll(companyResponse!!.gpApiResponseData?.companiesList!!)
 
                     val tempCompanyList: List<CompanyData> = if (companyList.size >= 6)
                         companyList.subList(0, 6)
@@ -216,16 +248,16 @@ class HomeAdapter(
                             })
                     }
                 } else {
-                    holder.itemView.visibility = View.GONE
+                    holder.binding.itemView.visibility = View.GONE
                 }
             }
             is ExclusiveBannerViewHolder -> {
                 if (allBannerResponse?.gpApiResponseData?.homeGramophoneExclusive != null
-                    && allBannerResponse.gpApiResponseData?.homeGramophoneExclusive?.isNotEmpty() == true
+                    && allBannerResponse!!.gpApiResponseData?.homeGramophoneExclusive?.isNotEmpty() == true
                 ) {
-                    holder.itemView.visibility = View.VISIBLE
+                    holder.binding.itemView.visibility = View.VISIBLE
                     val exclusiveBanner =
-                        allBannerResponse.gpApiResponseData?.homeGramophoneExclusive
+                        allBannerResponse!!.gpApiResponseData?.homeGramophoneExclusive
                     val tempBanner: List<Banner>
                     if (exclusiveBanner?.size!! > 0) {
                         if (exclusiveBanner.size % 2 == 0) {
@@ -245,15 +277,15 @@ class HomeAdapter(
                         holder.binding.rvExclusive.adapter = exclusiveBannerAdapter
                     }
                 } else {
-                    holder.itemView.visibility = View.GONE
+                    holder.binding.itemView.visibility = View.GONE
                 }
             }
             is ReferralBannerViewHolder -> {
                 if (allBannerResponse?.gpApiResponseData?.homeReferralBanner != null
-                    && allBannerResponse.gpApiResponseData?.homeReferralBanner?.isNotEmpty() == true
+                    && allBannerResponse!!.gpApiResponseData?.homeReferralBanner?.isNotEmpty() == true
                 ) {
-                    holder.itemView.visibility = View.VISIBLE
-                    val referralBanner = allBannerResponse.gpApiResponseData?.homeReferralBanner!!
+                    holder.binding.itemView.visibility = View.VISIBLE
+                    val referralBanner = allBannerResponse!!.gpApiResponseData?.homeReferralBanner!!
                     /*val referralBannerAdapter = ReferralBannerAdapter(referralBanner) {
                     *//* Do anything on banner click *//*
                 }
@@ -263,11 +295,32 @@ class HomeAdapter(
                         ViewPagerAdapter(referralBanner)
                     holder.binding.rlDotsIndicator.visibility = View.GONE
                 } else {
-                    holder.itemView.visibility = View.GONE
+                    holder.binding.itemView.visibility = View.GONE
                 }
             }
             is PromiseBannerViewHolder -> {
                 // do nothing for this view holder
+            }
+            is CartViewHolder -> {
+                if (!cartList.isNullOrEmpty()) {
+                    holder.binding.itemView.visibility = View.VISIBLE
+                    holder.binding.tvCartItemCount.text =
+                        holder.itemView.context.getString(R.string.products_in_your_cart).plus(" (")
+                            .plus(cartList?.size).plus(")")
+                    holder.binding.rvCart.adapter = RecentlyViewedAdapter(cartList) {
+                        openActivity(holder.itemView.context,
+                            ProductDetailsActivity::class.java,
+                            Bundle().apply {
+                                putParcelable(Constants.PRODUCT,
+                                    ProductData(it.toInt()))
+                            })
+                    }
+                    holder.binding.frameCheckout.setOnClickListener {
+                        openActivity(holder.itemView.context, CartActivity::class.java, null)
+                    }
+                } else {
+                    holder.binding.itemView.visibility = View.GONE
+                }
             }
         }
     }
@@ -300,6 +353,9 @@ class HomeAdapter(
             }
             Constants.HOME_GRAMOPHONE_PROMISE -> {
                 return Constants.HOME_GRAMOPHONE_PROMISE_VIEW_TYPE
+            }
+            Constants.HOME_CART -> {
+                return Constants.HOME_CART_VIEW_TYPE
             }
         }
         return super.getItemViewType(position)
@@ -342,5 +398,8 @@ class HomeAdapter(
         RecyclerView.ViewHolder(binding.root)
 
     inner class PromiseBannerViewHolder(var binding: ItemHomePromiseBannerBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    inner class CartViewHolder(var binding: ItemHomeCartBinding) :
         RecyclerView.ViewHolder(binding.root)
 }

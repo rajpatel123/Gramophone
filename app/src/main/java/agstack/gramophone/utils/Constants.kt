@@ -31,6 +31,7 @@ object Constants {
     val HOME_BANNER_EXCLUSIVE = "gramophone_exclusive"
     val HOME_BANNER_REFERRAL = "home_referral_banner"
     val HOME_GRAMOPHONE_PROMISE = "gramophone_promise"
+    val HOME_CART = "products_in_your_cart"
 
     val HOME_BANNER_VIEW_TYPE = 0
     val HOME_BANNER_EXCLUSIVE_VIEW_TYPE = 1
@@ -41,6 +42,7 @@ object Constants {
     val HOME_SHOP_BY_STORE_VIEW_TYPE = 6
     val HOME_SHOP_BY_COMPANY_VIEW_TYPE = 7
     val HOME_GRAMOPHONE_PROMISE_VIEW_TYPE = 8
+    val HOME_CART_VIEW_TYPE = 9
 
 
     val CAMERA_PERMISSION = Manifest.permission.CAMERA

@@ -428,7 +428,7 @@
                             android:fontFamily="@font/manrope_bold"
                             android:paddingStart="@dimen/_16sdp"
                             android:paddingEnd="@dimen/_16sdp"
-                            android:text="@string/products_in_your_cart_3"
+                            tools:text="Products in your cart (3)"
                             android:textColor="@color/blakish"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal" />

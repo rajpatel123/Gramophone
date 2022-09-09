@@ -32,7 +32,7 @@
     <string name="gramophone_exclusive">Gramophone Exclusive</string>
     <string name="recently_viewed">Recently Viewed</string>
     <string name="pickup_where_you_left">Pickup where you left</string>
-    <string name="products_in_your_cart_3">Products in your cart (3)</string>
+    <string name="products_in_your_cart">Products in your cart</string>
     <string name="new_articles">New Articles</string>
     <string name="popular_products_in_indore">Popular Products in Indore</string>
     <string name="home">Home</string>
@@ -407,4 +407,5 @@
     <string name="my_crop_farms">My Crops &amp; Farms</string>
     <string name="manage_all_your_crops_and_farms">Manage all your crops and farms</string>
     <string name="new_text">New</string>
+    <string name="_900">₹ 900</string>
 </resources>

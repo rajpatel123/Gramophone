@@ -7,7 +7,7 @@
     android:background="@color/white">
 
     <LinearLayout
-        android:id="@+id/llFeatureProduct"
+        android:id="@+id/itemView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -62,12 +62,11 @@
 
         </FrameLayout>
 
-    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:background="@color/gray_stroke" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_8sdp"
-        android:layout_below="@+id/llFeatureProduct"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:background="@color/gray_stroke" />
+    </LinearLayout>
 </RelativeLayout>

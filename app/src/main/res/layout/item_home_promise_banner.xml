@@ -7,10 +7,12 @@
     android:background="@color/white">
 
     <LinearLayout
+        android:id="@+id/itemView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_gramophone_promise_bg"
         android:orientation="vertical"
+        android:paddingBottom="@dimen/_60sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,12 +127,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_wheat_bg" />
-
-        <View
-            android:layout_marginTop="@dimen/_16sdp"
-            android:layout_width="match_parent"
-            android:background="@color/gray_stroke"
-            android:layout_height="@dimen/_8sdp"/>
 
     </LinearLayout>
 
