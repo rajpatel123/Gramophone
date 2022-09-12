@@ -18,6 +18,8 @@ import android.widget.Toast
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import okhttp3.ResponseBody
+import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -145,5 +147,10 @@ object Utility {
             e.printStackTrace()
         }
         return dateString
+    }
+
+    fun getErrorMessage(data: ResponseBody?): String? {
+        val errorBody = data?.string()?.let { JSONObject(it) }
+        return errorBody?.optString(Constants.GP_API_MESSAGE)
     }
 }
