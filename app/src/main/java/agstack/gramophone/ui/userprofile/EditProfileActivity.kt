@@ -47,9 +47,21 @@ class EditProfileActivity :
         return editProfileViewModel
     }
 
-    override fun showVerifyOTPFragment(otp_reference_id:Int) {
-        VerifyOTPDialogFragment.newInstance(viewDataBinding.etMobile.text.toString(),otp_reference_id)
+
+    override fun showVerifyOTPFragment(otp_reference_id: Int, onUpdateSuccess: (String) -> Unit) {
+        val newInstance = VerifyOTPDialogFragment.newInstance(
+            viewDataBinding.etMobile.text.toString(),
+            otp_reference_id
+        )
+        newInstance.setOnSuccessListener { onUpdateSuccess }
+
+        newInstance
             .show(supportFragmentManager, VerifyOTPDialogFragment.TAG)
+    }
+
+
+    override fun finishActivity() {
+        finish()
     }
 
 }

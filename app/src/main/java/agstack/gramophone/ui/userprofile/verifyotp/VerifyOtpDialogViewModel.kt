@@ -49,41 +49,6 @@ class VerifyOtpDialogViewModel @Inject constructor(
 
     }
 
-/*    fun sendOTP(mobileNo :String) {
-        val sendOTPRequestModel = VerifyOTPRequestModel()
-
-        sendOTPRequestModel.mobile_no = mobileNo
-
-        sendOTPJob.cancelIfActive()
-        sendOTPJob = checkNetworkThenRun {
-            progressLoader.set(true)
-
-            val sendOTPResponse =
-                onBoardingRepository.sendOTPMobile(sendOTPRequestModel)
-
-            val body = sendOTPResponse.body()
-
-            if (body?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
-                progressLoader.set(false)
-                getNavigator()?.showToast(body?.gp_api_message)
-
-                otp_reference_id = body?.gp_api_response_data?.otp_reference_id
-
-
-                val text: String =
-                    java.lang.String.format(getNavigator()?.getMessage(R.string.resend_otp)!!, type)
-                resendOTPType.set(text)
-                getNavigator()?.showTimer(Constants.RESEND_OTP_TIME)
-
-            } else {
-                progressLoader.set(false)
-                getNavigator()?.showToast(body?.gp_api_message)
-
-            }
-        }
-
-    }*/
-
 
     fun onResendClicked(v: View) {
         when (v.id) {
@@ -155,7 +120,7 @@ class VerifyOtpDialogViewModel @Inject constructor(
                 if (body?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
                     progressLoader.set(false)
                     getNavigator()?.showToast(body?.gp_api_message)
-                    getNavigator()?.dismissDialogFragment()
+                    getNavigator()?.dismissDialogFragment(Constants.GP_API_STATUS)
 
                 } else {
                     progressLoader.set(false)
@@ -173,7 +138,7 @@ class VerifyOtpDialogViewModel @Inject constructor(
     }
 
     fun onCancelClick() {
-        getNavigator()?.dismissDialogFragment()
+        getNavigator()?.dismissDialogFragment(null)
 
     }
 

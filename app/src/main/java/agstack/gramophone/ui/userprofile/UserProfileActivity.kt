@@ -46,7 +46,7 @@ class UserProfileActivity :
         window.statusBarColor = ContextCompat.getColor(this, R.color.order_delivered_text)
 
         userProfileViewModel.setProfilePic()
-        userProfileViewModel.getUsersData()
+
         cropImage = registerForActivityResult(CropImageContract()) { result ->
             if (result.isSuccessful) {
                 // use the returned uri
@@ -64,6 +64,10 @@ class UserProfileActivity :
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        userProfileViewModel.getUsersData()
+    }
 
     override fun refreshPage() {
         userProfileViewModel.getUsersData()

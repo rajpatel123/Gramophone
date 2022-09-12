@@ -4,11 +4,15 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.profile.model.GpApiResponseProfileData
+import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.ui.userprofile.verifyotp.model.VerifyOTPRequestModel
+import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import agstack.gramophone.utils.Constants
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -23,14 +27,40 @@ class EditProfileViewModel @Inject constructor(
     var lastName = ObservableField<String>()
     var mobileNo = ObservableField<String>()
     private var sendOTPJob: Job? = null
-    var OTP = ObservableField<String>()
     var userDatafromIntent = ObservableField<GpApiResponseProfileData>()
     var otp_reference_id: Int? = null
     var progressLoader = ObservableField<Boolean>(false)
+    private var updateProfileJob: Job? = null
 
     fun updateProfile() {
+        updateProfileJob.cancelIfActive()
+        updateProfileJob = checkNetworkThenRun {
+            progressLoader.set(true)
+            var updateProfileModel = UpdateProfileModel()
+            updateProfileModel.first_name = firstName.get()
+            updateProfileModel.last_name = lastName.get()
+            val userProfileResponse = onBoardingRepository.updateProfile(updateProfileModel)
+            progressLoader.set(false)
 
+            if (userProfileResponse?.code() == 200) {
+                if (userProfileResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
 
+                    getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)
+                    getNavigator()?.finishActivity()
+                } else {
+
+                    getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)
+                }
+            }else if (userProfileResponse?.code() == 422) {
+
+                val arrayTutorialType = object : TypeToken<ValidateOtpResponseModel>() {}.type
+                var errorResponse: ValidateOtpResponseModel =
+                    Gson().fromJson(userProfileResponse.errorBody()?.string(), arrayTutorialType)
+                getNavigator()?.showToast(errorResponse.gp_api_message)
+
+            }
+
+        }
     }
 
     fun sendOTP(mobileNo: String) {
@@ -42,22 +72,36 @@ class EditProfileViewModel @Inject constructor(
         sendOTPJob = checkNetworkThenRun {
             progressLoader.set(true)
 
-            val sendOTPResponse =
-                onBoardingRepository.sendOTPMobile(sendOTPRequestModel)
-
-            val body = sendOTPResponse.body()
-
-            if (body?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
-                progressLoader.set(false)
-                getNavigator()?.showToast(body?.gp_api_message)
-                otp_reference_id = body?.gp_api_response_data?.otp_reference_id
-
-                getNavigator()?.showVerifyOTPFragment(otp_reference_id!!)
+            val sendOTPResponse = onBoardingRepository.sendOTPMobile(sendOTPRequestModel)
 
 
-            } else {
-                progressLoader.set(false)
-                getNavigator()?.showToast(body?.gp_api_message)
+            if (sendOTPResponse?.code() == 200) {
+                val body = sendOTPResponse.body()
+
+                if (body?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+                    progressLoader.set(false)
+                    getNavigator()?.showToast(body?.gp_api_message)
+                    otp_reference_id = body?.gp_api_response_data?.otp_reference_id
+
+                    getNavigator()?.showVerifyOTPFragment(otp_reference_id!!) {
+
+                        //Success CallBack
+                    /*    Log.d("SuccessHoGAyi", it)*/
+
+                    }
+
+
+                } else {
+                    progressLoader.set(false)
+                    getNavigator()?.showToast(body?.gp_api_message)
+
+                }
+            } else if (sendOTPResponse?.code() == 422) {
+
+                val arrayTutorialType = object : TypeToken<ValidateOtpResponseModel>() {}.type
+                var errorResponse: ValidateOtpResponseModel =
+                    Gson().fromJson(sendOTPResponse.errorBody()?.string(), arrayTutorialType)
+                getNavigator()?.showToast(errorResponse.gp_api_message)
 
             }
         }

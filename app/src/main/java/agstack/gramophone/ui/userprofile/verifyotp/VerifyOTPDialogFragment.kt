@@ -4,6 +4,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseDialogFragment
 import agstack.gramophone.databinding.VerifyOtpDialogBinding
+import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
@@ -17,6 +18,7 @@ class VerifyOTPDialogFragment :
     VerifyOtpDialogNavigator {
 
     private val verifyOtpDialogViewModel: VerifyOtpDialogViewModel by viewModels()
+    var update: ((String) -> Unit?)? = null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -85,9 +87,14 @@ class VerifyOTPDialogFragment :
         }.start()
     }
 
-    override fun dismissDialogFragment() {
+    override fun dismissDialogFragment(status:String?) {
         dismiss()
+        if(status==Constants.GP_API_STATUS){
+            update?.invoke(Constants.GP_API_STATUS)
+        }
     }
-
+    fun setOnSuccessListener(update: (String) -> Unit) {
+        this.update = update
+    }
 
 }

@@ -4,5 +4,6 @@ import agstack.gramophone.base.BaseNavigator
 
 interface VerifyOtpDialogNavigator :BaseNavigator {
      fun showTimer(duration: Long)
-    fun dismissDialogFragment()
+     fun dismissDialogFragment(status: String?=null)
+
 }
