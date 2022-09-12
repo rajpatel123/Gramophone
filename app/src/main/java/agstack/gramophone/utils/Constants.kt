@@ -6,6 +6,7 @@ import android.content.Context
 
 
 object Constants {
+    val UNAUTHORIZED: Int=401
     val GP_API_MESSAGE: String="gp_api_message"
     val PIN_POST: String="pinpost"
     val EDIT_POST: String="edit_post"

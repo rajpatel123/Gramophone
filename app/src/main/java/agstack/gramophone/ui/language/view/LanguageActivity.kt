@@ -12,7 +12,6 @@ import agstack.gramophone.ui.language.model.DeviceDetails
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.languagelist.Language
 import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
-import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.LocaleManagerClass
 import android.content.res.Resources
 import android.os.Build
@@ -20,7 +19,6 @@ import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_language.*
 

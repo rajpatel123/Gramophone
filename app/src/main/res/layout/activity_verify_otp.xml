@@ -341,7 +341,7 @@
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
-            android:onClick="@{ ()-> viewModel.submitOtp(verifyOtpBtn) }"
+            android:onClick="@{ ()-> viewModel.submitOtp() }"
             android:padding="@dimen/_13sdp"
             android:text="@string/_continue"
             android:textColor="@color/white"
