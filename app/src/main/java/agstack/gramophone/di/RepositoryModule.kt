@@ -1,6 +1,8 @@
 package agstack.gramophone.di
 
 
+import agstack.gramophone.data.repository.community.CommunityRepository
+import agstack.gramophone.data.repository.community.CommunityRepositoryImpl
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepositoryImpl
 import agstack.gramophone.data.repository.product.ProductRepository
@@ -30,4 +32,8 @@ interface RepositoryModule {
 
     @Binds
     fun bindWeatherRepository(impl: WeatherRepositoryImpl): WeatherRepository
+
+
+    @Binds
+    fun bindCommunityRepository(impl: CommunityRepositoryImpl): CommunityRepository
 }
