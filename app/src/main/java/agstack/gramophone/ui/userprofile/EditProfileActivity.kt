@@ -16,7 +16,7 @@ class EditProfileActivity :
     BaseActivityWrapper<EditProfileActivityBinding, EditProfileNavigator, EditProfileViewModel>(),
     EditProfileNavigator {
 
-    var userData: GpApiResponseProfileData? =null
+    var userData: GpApiResponseProfileData? = null
     private val editProfileViewModel: EditProfileViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,8 +27,9 @@ class EditProfileActivity :
 
     private fun getBundleData() {
 
-        userData= intent.extras?.getParcelable<GpApiResponseProfileData>(Constants.USER_PROFILE_DATA)
-        if(userData!=null){
+        userData =
+            intent.extras?.getParcelable<GpApiResponseProfileData>(Constants.USER_PROFILE_DATA)
+        if (userData != null) {
             mViewModel?.setUserData(userData!!)
 
         }
@@ -46,8 +47,9 @@ class EditProfileActivity :
         return editProfileViewModel
     }
 
-    override fun showVerifyOTPFragment() {
-        VerifyOTPDialogFragment.newInstance(userData?.mobile_no!!).show(supportFragmentManager, VerifyOTPDialogFragment.TAG)
+    override fun showVerifyOTPFragment(otp_reference_id:Int) {
+        VerifyOTPDialogFragment.newInstance(viewDataBinding.etMobile.text.toString(),otp_reference_id)
+            .show(supportFragmentManager, VerifyOTPDialogFragment.TAG)
     }
 
 }

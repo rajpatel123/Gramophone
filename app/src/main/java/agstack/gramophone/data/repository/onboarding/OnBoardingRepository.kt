@@ -18,7 +18,9 @@ import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
+import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
+import agstack.gramophone.ui.userprofile.verifyotp.model.VerifyOTPRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import org.json.JSONObject
@@ -57,4 +59,8 @@ interface OnBoardingRepository {
     suspend fun getProfile(): Response<ProfileResponse>
     suspend fun getLocationAddress(lat: String, key: String): Response<GoogleAddressResponseModel>
     suspend fun updateProfile(updateProfileModel: UpdateProfileModel):Response<SuccessStatusResponse>
+    suspend fun sendOTPMobile(sendOtpRequestModel: VerifyOTPRequestModel): Response<SendOtpResponseModel>
+    suspend fun resendOTPMobile(resendOtpRequestModel: SendOtpRequestModel): Response<SendOtpResponseModel>
+    suspend fun validateOtpMobile(validateOtpRequestModel: ValidateOtpMobileRequestModel): Response<SuccessStatusResponse>
+
 }

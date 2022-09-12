@@ -18,6 +18,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Toast
 import androidx.annotation.CallSuper
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -160,10 +161,12 @@ abstract class BaseDialogFragment<B : ViewDataBinding, N : BaseNavigator, V : Ba
     }
 
     override fun showToast(stringResourceId: Int) {
-        TODO("Not yet implemented")
+        Toast.makeText(mContext, stringResourceId, Toast.LENGTH_LONG).show()
     }
 
     override fun showToast(message: String?) {
+        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show()
+
 
     }
 
