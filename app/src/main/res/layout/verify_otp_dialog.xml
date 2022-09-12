@@ -79,6 +79,7 @@
 
         <com.chaos.view.PinView
             android:id="@+id/firstPinView"
+            android:text="@={viewModel.otp}"
             style="@style/PinWidget.PinView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -230,14 +231,15 @@
 
             <TextView
                 android:id="@+id/tv_verify"
-                android:onClick="@{ ()-> viewModel.onVerifyClick() }"
-                android:textColor="@color/brand_color"
                 style="@style/TextSize14Sp"
-                android:text="@string/verify"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></TextView>
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:enabled="@{viewModel.isVerifyEnable? true:false}"
+                android:onClick="@{ ()-> viewModel.onVerifyClick() }"
+                android:text="@string/verify"
+                android:textColor="@color/brand_color"></TextView>
 
 
             <TextView

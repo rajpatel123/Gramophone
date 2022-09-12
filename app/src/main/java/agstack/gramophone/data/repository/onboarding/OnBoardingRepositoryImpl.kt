@@ -19,7 +19,9 @@ import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
+import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
+import agstack.gramophone.ui.userprofile.verifyotp.model.VerifyOTPRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import kotlinx.coroutines.Dispatchers
@@ -134,5 +136,23 @@ class OnBoardingRepositoryImpl @Inject constructor(
         Dispatchers.IO) {
         val profileResponse = gramAppService.updateProfile(updateProfileModel)
         profileResponse
+    }
+
+    override suspend fun sendOTPMobile(verifyOtpRequestModel:VerifyOTPRequestModel): Response<SendOtpResponseModel> = withContext(
+        Dispatchers.IO) {
+        val sendOTP = gramAppService.sendOTPMobile(verifyOtpRequestModel)
+        sendOTP
+    }
+
+    override suspend fun resendOTPMobile(resendOtpRequestModel: SendOtpRequestModel): Response<SendOtpResponseModel> = withContext(
+        Dispatchers.IO) {
+        val resendOTP = gramAppService.resendOTPMobile(resendOtpRequestModel)
+        resendOTP
+    }
+
+    override suspend fun validateOtpMobile(validateOtpRequestModel: ValidateOtpMobileRequestModel): Response<SuccessStatusResponse> = withContext(
+        Dispatchers.IO) {
+        val validateOTPMobile = gramAppService.validateOTPMobile(validateOtpRequestModel)
+        validateOTPMobile
     }
 }

@@ -9,6 +9,7 @@ import agstack.gramophone.ui.userprofile.firm.AddFirmActivity
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Constants.CAMERA_PERMISSION
+import agstack.gramophone.utils.FileUploadRequestBody
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
@@ -19,6 +20,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import java.io.File
 import javax.inject.Inject
 
 
@@ -143,10 +146,19 @@ class UserProfileViewModel @Inject constructor(
 
     }
 
-    fun updateProfile(is_farmer :Boolean?=null,is_trader:Boolean?=null,firm_name:String?=null){
+    fun updateProfile(is_farmer :Boolean?=null,is_trader:Boolean?=null,firm_name:String?=null,profileImage: File?=null){
         updateProfileJob.cancelIfActive()
         updateProfileJob = checkNetworkThenRun {
             progressLoader.set(true)
+            if(profileImage!=null){
+
+                profileImage.let {
+                    val imageUpoadRequestBody = FileUploadRequestBody(profileImage)
+                    val content = MultipartBody.Part.createFormData("image", profileImage.name, imageUpoadRequestBody)
+
+
+                }
+            }else{
 
            var  updateProfileModel=UpdateProfileModel()
             updateProfileModel.firm_name= firm_name
@@ -167,6 +179,6 @@ class UserProfileViewModel @Inject constructor(
                 progressLoader.set(false)
                 getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)
             }
-        }
+        }}
     }
 }

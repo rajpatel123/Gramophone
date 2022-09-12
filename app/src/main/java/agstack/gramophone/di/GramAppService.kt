@@ -25,12 +25,15 @@ import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
+import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
+import agstack.gramophone.ui.userprofile.verifyotp.model.VerifyOTPRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
+import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import org.json.JSONObject
 import retrofit2.Response
@@ -203,6 +206,21 @@ interface GramAppService {
 
     @GET("api/v5/category/home-data")
     suspend fun getHomeData(): Response<HomeDataResponse>
+
+
+    @POST("api/v5/customer/send-otp-mobile")
+    @JvmSuppressWildcards
+    suspend fun sendOTPMobile(@Body sendOtpRequestModel: VerifyOTPRequestModel): Response<SendOtpResponseModel>
+
+
+    @PUT("api/v5/customer/resend-otp-mobile")
+    @JvmSuppressWildcards
+    suspend fun resendOTPMobile(@Body resendOtpRequestModel: SendOtpRequestModel): Response<SendOtpResponseModel>
+
+    @POST("api/v5/customer/validate-otp-mobile")
+    @JvmSuppressWildcards
+    suspend fun validateOTPMobile(@Body validateOtpRequestModel: ValidateOtpMobileRequestModel): Response<SuccessStatusResponse>
+
 
 
 }
