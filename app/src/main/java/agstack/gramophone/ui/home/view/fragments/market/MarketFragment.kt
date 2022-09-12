@@ -5,6 +5,8 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentMarketBinding
 import agstack.gramophone.ui.cart.model.CartItem
+import agstack.gramophone.ui.dialog.AppTourDialog
+import agstack.gramophone.ui.dialog.LocationAccessDialog
 import agstack.gramophone.ui.home.adapter.*
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
@@ -16,6 +18,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -95,6 +98,7 @@ class MarketFragment :
         super.onViewCreated(view, savedInstanceState)
         setUpUI()
         callApi()
+        AppTourDialog().show(childFragmentManager, null)
     }
 
     private fun callApi() {
@@ -165,7 +169,7 @@ class MarketFragment :
         cropResponse: CropResponse?,
         storeResponse: StoreResponse?,
         companyResponse: CompanyResponse?,
-        cartList: List<CartItem>?
+        cartList: List<CartItem>?,
     ) {
         homeAdapter?.notifyAdapterOnDataChange(allBannerResponse, categoryResponse, productList,
             cropResponse,

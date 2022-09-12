@@ -90,7 +90,8 @@ class HomeActivity :
 
     override fun setImageNameMobile(name: String, mobile: String, profileImage: String) {
         viewDataBinding.navigationlayout.tvName.text = name
-        viewDataBinding.navigationlayout.tvContact.text = getString(R.string.dialing_code).plus(mobile)
+        viewDataBinding.navigationlayout.tvContact.text =
+            getString(R.string.dialing_code).plus(mobile)
         Glide.with(this)
             .load(profileImage)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
