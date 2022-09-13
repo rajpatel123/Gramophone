@@ -118,7 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/manrope_regular"
-                    android:text="@{viewModel.userProfileData.username}"
+                    android:text="@{viewModel.userHandle}"
                     android:textColor="@color/gray"
                     tools:text="Uday Shetty" />
 

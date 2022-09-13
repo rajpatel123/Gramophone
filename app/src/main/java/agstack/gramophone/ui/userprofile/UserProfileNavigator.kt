@@ -7,4 +7,5 @@ interface UserProfileNavigator: BaseNavigator {
     fun showImageSelect(file: FilePicker, onCamera: () -> Unit, onGallery: () -> Unit)
     fun openCameraToCapture()
     fun refreshPage()
+
 }
