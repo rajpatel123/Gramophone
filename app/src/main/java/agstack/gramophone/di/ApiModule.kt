@@ -83,7 +83,7 @@ object ApiModule {
         }
     }
 
-    @Provides
+ /*   @Provides
     @Singleton
     @Named("community")
     fun provideCommunityOkHttpClient(logging: HttpLoggingInterceptor): OkHttpClient {
@@ -110,7 +110,7 @@ object ApiModule {
     @Singleton
     fun provideCommunityService(@Named("community") retrofit: Retrofit): CommunityAppService {
         return retrofit.create(CommunityAppService::class.java)
-    }
+    }*/
 
 
 }

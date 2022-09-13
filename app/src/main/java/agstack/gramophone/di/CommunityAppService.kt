@@ -40,22 +40,13 @@ import retrofit2.http.*
 interface CommunityAppService {
 
 /*
-    @GET("api/v5/category/home-data")
-    suspend fun getHomeData(): Response<HomeDataResponse>*/
+    @Multipart
+    @PUT("profiles")
+    fun uploadDocument(
 
+        @Part content: MultipartBody.Part,
 
-  /* https://promotions-api-qa.gramophone.in/api/v1/all-offer-list
- {
-"limit":16,
-"requested_source":"b2c",
-"customer_id": 2,
-"business_type": "customer",
-"sort":["end_date","desc"],
-"search1":"buy 8 akabar",
-"language":"en"
-}
+        ): Single<Response<ResponseUploadDocument>>*/
 
-[24/08/2022 6:28 PM] Piyush Mittal: all offer api...
-*/
 
 }
