@@ -52,7 +52,7 @@ class HomeActivity :
         super.onCreate(savedInstanceState)
         setupUi()
         setUpFirebaseConfig()
-        homeViewModel.getProfile()
+
     }
 
     private fun setUpFirebaseConfig() {
@@ -121,13 +121,7 @@ class HomeActivity :
 
         setUpNavigationDrawer()
         viewDataBinding.navView.itemIconTintList = null
-        /*val navController = findNavController(R.id.nav_host)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        *//*val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home, R.id.navigation_community, R.id.navigation_profile, R.id.navigation_trade))
-        setupActionBarWithNavController(navController, appBarConfiguration)*//*
-        viewDataBinding.navView.setupWithNavController(navController)*/
+
         viewDataBinding.navView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_home -> {
@@ -228,6 +222,7 @@ class HomeActivity :
 
     override fun onResume() {
         super.onResume()
+        mViewModel?.getProfile()
     }
 
     override fun getLayoutID(): Int {
