@@ -1,6 +1,8 @@
 package agstack.gramophone.ui.home.view.fragments.community.viewmodel
 
+import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.data.repository.community.CommunityRepository
 import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
 import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActivity
@@ -10,18 +12,20 @@ import agstack.gramophone.ui.home.view.fragments.community.model.PagerItem
 import agstack.gramophone.ui.postdetails.view.PostDetailsActivity
 import agstack.gramophone.utils.Constants
 import android.app.AlertDialog
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 
 @HiltViewModel
 class CommunityViewModel @Inject constructor(
-
+    private val communityRepository: CommunityRepository
 ) : BaseViewModel<CommunityFragmentNavigator>() {
     private val _dataList = MutableLiveData<List<Data>>()
     private val userList = MutableLiveData<List<LikedUsers>>()
@@ -34,7 +38,7 @@ class CommunityViewModel @Inject constructor(
 
     fun loadData() {
         viewModelScope.launch(Dispatchers.Default) {
-
+            getPost()
             val finalList = ArrayList<Data>()
 
             for (i in 1..40) {
@@ -151,12 +155,33 @@ class CommunityViewModel @Inject constructor(
         mAlertDialog?.dismiss()
     }
 
-    fun onReport(){
+    fun onReport() {
         mAlertDialog?.dismiss()
     }
 
-    fun onBlock(){
+    fun onBlock() {
         mAlertDialog?.dismiss()
     }
+
+
+    private suspend fun getPost() {
+
+        getNavigator()?.onLoading()
+        try {
+            if (getNavigator()?.isNetworkAvailable() == true) {
+                val response = communityRepository.getCommunityPost()
+                if (response.isSuccessful) {
+                    Log.d("Raj", "Community integrated")
+                }
+            } else
+                getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+        } catch (ex: Exception) {
+            when (ex) {
+                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+            }
+        }
+    }
+
 
 }

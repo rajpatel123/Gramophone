@@ -17,6 +17,11 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import java.io.*
+import okhttp3.ResponseBody
+import org.json.JSONObject
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -151,5 +156,10 @@ object Utility {
         return Uri.parse(path)
 
 
+    }
+
+    fun getErrorMessage(data: ResponseBody?): String? {
+        val errorBody = data?.string()?.let { JSONObject(it) }
+        return errorBody?.optString(Constants.GP_API_MESSAGE)
     }
 }
