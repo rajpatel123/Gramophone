@@ -27,7 +27,6 @@ import retrofit2.Response
 import java.io.File
 import javax.inject.Inject
 
-
 @HiltViewModel
 class UserProfileViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository,
