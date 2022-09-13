@@ -52,8 +52,8 @@ class StateListAdapter(private val stateList: List<State>) :
             mStateList[lastSelectPosition]?.selected = false
             lastSelectPosition = position
             state.selected = true
-            notifyDataSetChanged()
             selectedState?.invoke(state)
+            notifyDataSetChanged()
 //            onStateSelection?.onStateSelect(state)
         }
 
