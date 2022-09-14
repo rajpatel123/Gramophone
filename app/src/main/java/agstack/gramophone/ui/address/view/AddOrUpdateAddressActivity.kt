@@ -13,6 +13,7 @@ import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
@@ -85,6 +86,15 @@ class AddOrUpdateAddressActivity :
                     tehsilSpinner.setAdapter(null)
                     villageNameSpinner.setAdapter(null)
                     pincodeSpinner.setAdapter(null)
+
+                    if (TextUtils.isEmpty(s)){
+                        addOrUpdateAddressViewModel.getDistrict(
+                            "district",
+                            addOrUpdateAddressViewModel.stateNameStr.get()!!,
+                            "",
+                            ""
+                        )
+                    }
                 }
             })
     }

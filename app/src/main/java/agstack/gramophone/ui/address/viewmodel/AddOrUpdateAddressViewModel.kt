@@ -72,6 +72,15 @@ class AddOrUpdateAddressViewModel @Inject constructor(
             return
         }
 
+        if (TextUtils.isEmpty(pinCode.get())) {
+            getNavigator()?.onError(getNavigator()?.getMessage(R.string.tehsil_required))
+            return
+        }
+        if (!TextUtils.isEmpty(pinCode.get()) && pinCode.get()?.length!=6) {
+            getNavigator()?.onError(getNavigator()?.getMessage(R.string.pincode_required))
+            return
+        }
+
         val updateAddressRequestModel = UpdateAddressRequestModel(
             address.get(),
             districtName.get(),

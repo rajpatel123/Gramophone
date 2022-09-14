@@ -223,6 +223,12 @@ class VerifyOtpViewModel @Inject constructor(
                 } else if (response.code() == Constants.UNAUTHORIZED) {
                     getNavigator()?.getInitModel()?.let { refreshToken(it, isValidate = false) }
                 } else {
+                    val text: String =
+                        java.lang.String.format(
+                            getNavigator()?.getMessage(R.string.resend_otp)!!,
+                            type.uppercase()
+                        )
+                    resendOTPType.set(text)
                     getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                 }
 
