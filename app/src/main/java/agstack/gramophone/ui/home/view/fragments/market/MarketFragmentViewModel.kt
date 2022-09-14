@@ -28,17 +28,17 @@ class MarketFragmentViewModel
     var companyResponse: CompanyResponse? = null
     var allBannerResponse: BannerResponse? = null
     var categoryResponse: CategoryResponse? = null
-    var exclusiveBanner = MutableLiveData<String>()
-    var referralBanner = MutableLiveData<String>()
-    var exclusiveBannerSize = MutableLiveData<Int>()
     var cartList: List<CartItem>? = arrayListOf()
 
-    init {
-        exclusiveBanner.value = ""
-        exclusiveBannerSize.value = 0
-    }
-
     fun getHomeData() {
+        productList.clear()
+        cropResponse = null
+        storeResponse = null
+        companyResponse = null
+        allBannerResponse = null
+        categoryResponse = null
+        cartList = null
+
         viewModelScope.launch {
             try {
                 val response = productRepository.getHomeData()

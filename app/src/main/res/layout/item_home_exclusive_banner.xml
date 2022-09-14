@@ -30,8 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="360dp"
             android:layout_marginTop="@dimen/_16sdp"
-            android:contentDescription="@string/image"
-            android:scaleType="fitXY" />
+            android:contentDescription="@string/image" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvExclusive"

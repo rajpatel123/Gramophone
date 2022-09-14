@@ -338,13 +338,12 @@
 
                 <ImageView
                     android:id="@+id/ivExclusiveBanner"
-                    state_image="@{viewModel.exclusiveBanner}"
                     android:layout_width="match_parent"
                     android:layout_height="360dp"
                     android:layout_marginTop="@dimen/_16sdp"
                     android:contentDescription="@string/image"
                     android:scaleType="fitXY"
-                    android:visibility="@{(viewModel.exclusiveBannerSize%2==0) ? View.VISIBLE : View.GONE}" />
+                    />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvExclusive"
@@ -403,7 +402,6 @@
 
                 <ImageView
                     android:id="@+id/ivReferralBanner"
-                    state_image="@{viewModel.referralBanner}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"

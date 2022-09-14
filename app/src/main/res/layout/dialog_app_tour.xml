@@ -15,21 +15,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ivCircle"
+            <LinearLayout
+                android:id="@+id/llCircle"
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
                 android:layout_alignParentStart="true"
                 android:layout_centerHorizontal="true"
-                android:alpha="0.4"
-                android:contentDescription="@string/image"
-                android:src="@color/white" />
+                android:background="@drawable/circle_solid_white"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/_16sdp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_burger_menu" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:src="@drawable/ic_union" />
+
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ivCircle"
+                android:layout_below="@+id/llCircle"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="-6dp"
                 android:contentDescription="@string/image"
                 android:src="@drawable/ic_triangle_upward"
                 app:tint="@color/white" />
@@ -89,7 +104,7 @@
                 android:layout_marginEnd="16dp">
 
                 <TextView
-                    android:id="@+id/tvSkipTour"
+                    android:id="@+id/tvSkip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -190,7 +205,7 @@
                     android:layout_marginEnd="16dp">
 
                     <TextView
-                        android:id="@+id/tvSkipTour2"
+                        android:id="@+id/tvSkip2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -232,20 +247,34 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="-6dp"
                     android:contentDescription="@string/image"
                     android:src="@drawable/ic_triangle_downward"
                     app:tint="@color/white" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <LinearLayout
                     android:id="@+id/ivCircleYoutube"
                     android:layout_width="@dimen/_70sdp"
                     android:layout_height="@dimen/_70sdp"
                     android:layout_below="@id/arrow"
                     android:layout_alignParentStart="true"
                     android:layout_centerHorizontal="true"
-                    android:alpha="0.4"
-                    android:contentDescription="@string/image"
-                    android:src="@color/white" />
+                    android:background="@drawable/circle_solid_white"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_menu_home_active" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home"
+                        android:textColor="@color/orange" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -253,10 +282,10 @@
 
         <LinearLayout
             android:id="@+id/llOthers"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -313,7 +342,7 @@
                     android:layout_marginEnd="16dp">
 
                     <TextView
-                        android:id="@+id/tvSkipCommunity"
+                        android:id="@+id/tvSkip3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -363,6 +392,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="-6dp"
                         android:contentDescription="@string/image"
                         android:src="@drawable/ic_triangle_downward"
                         app:tint="@color/white" />
@@ -387,66 +417,108 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="-6dp"
                         android:contentDescription="@string/image"
                         android:src="@drawable/ic_triangle_downward"
                         app:tint="@color/white" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <LinearLayout
                         android:layout_width="@dimen/_70sdp"
                         android:layout_height="@dimen/_70sdp"
-                        android:alpha="0.4"
-                        android:contentDescription="@string/image"
-                        android:src="@color/white" />
+                        android:background="@drawable/circle_solid_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_menu_community_inactive" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/community"
+                            android:textColor="@color/gray_strike_through" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:visibility="invisible"
                     android:id="@+id/llProfile"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="-6dp"
                         android:contentDescription="@string/image"
                         android:src="@drawable/ic_triangle_downward"
                         app:tint="@color/white" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <LinearLayout
                         android:layout_width="@dimen/_70sdp"
                         android:layout_height="@dimen/_70sdp"
-                        android:alpha="0.4"
-                        android:contentDescription="@string/image"
-                        android:src="@color/white" />
+                        android:background="@drawable/circle_solid_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_menu_profile_inactive" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/my_profile"
+                            android:textColor="@color/gray_strike_through" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:visibility="invisible"
                     android:id="@+id/llTrade"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="-6dp"
                         android:contentDescription="@string/image"
                         android:src="@drawable/ic_triangle_downward"
                         app:tint="@color/white" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <LinearLayout
                         android:layout_width="@dimen/_70sdp"
                         android:layout_height="@dimen/_70sdp"
-                        android:alpha="0.4"
-                        android:contentDescription="@string/image"
-                        android:src="@color/white" />
+                        android:background="@drawable/circle_solid_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_menu_trade_inactive" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/trade"
+                            android:textColor="@color/gray_strike_through" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

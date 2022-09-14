@@ -2,14 +2,12 @@ package agstack.gramophone.ui.dialog
 
 import agstack.gramophone.R
 import agstack.gramophone.databinding.DialogAppTourBinding
-import agstack.gramophone.databinding.DialogLocationAccessBinding
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
 
@@ -59,6 +57,10 @@ class AppTourDialog : DialogFragment() {
     }
 
     private fun setupUi() {
+        binding?.tvSkip?.setOnClickListener { dismiss() }
+        binding?.tvSkip2?.setOnClickListener { dismiss() }
+        binding?.tvSkip3?.setOnClickListener { dismiss() }
+
         binding?.tvNextMenu?.setOnClickListener {
             binding?.llMenu?.visibility = View.GONE
             binding?.llHome?.visibility = View.VISIBLE

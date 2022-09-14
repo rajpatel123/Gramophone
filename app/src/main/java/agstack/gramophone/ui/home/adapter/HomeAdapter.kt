@@ -13,7 +13,6 @@ import agstack.gramophone.ui.home.shopbydetail.ShopByDetailActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.ProductListAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
-import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.utils.Constants
 import android.content.Context
 import android.content.Intent
@@ -23,7 +22,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 class HomeAdapter(
     private val homeScreenSequenceList: List<String>,
@@ -267,8 +265,7 @@ class HomeAdapter(
                             holder.binding.ivExclusiveBanner.visibility = View.VISIBLE
                             tempBanner = exclusiveBanner.subList(1, exclusiveBanner.size)
                             Glide.with(holder.itemView.context)
-                                .load(exclusiveBanner[0])
-                                .transition(DrawableTransitionOptions.withCrossFade())
+                                .load(exclusiveBanner[0].bannerImage)
                                 .into(holder.binding.ivExclusiveBanner)
                         }
                         val exclusiveBannerAdapter = ExclusiveBannerAdapter(tempBanner) {
@@ -359,6 +356,10 @@ class HomeAdapter(
             }
         }
         return super.getItemViewType(position)
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 
     override fun getItemCount(): Int {
