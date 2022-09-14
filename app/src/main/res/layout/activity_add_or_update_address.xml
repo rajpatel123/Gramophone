@@ -105,8 +105,7 @@
                             android:visibility="@{viewModel.isImageAvailable? View.VISIBLE:View.INVISIBLE}"
                             app:civ_border_color="@color/white"
                             app:civ_border_width="2dp"
-                            app:srcCompat="@drawable/state_img"
-                            app:state_image="@{viewModel.stateImageUrl}" />
+                            tools:srcCompat="@drawable/state_img" />
 
                         <TextView
                             android:id="@+id/tvStateName"

@@ -19,6 +19,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_or_update_address.*
@@ -182,6 +183,9 @@ class AddOrUpdateAddressActivity :
         })
     }
 
+    override fun setStateImage(imageUrl: String) {
+        Glide.with(this).load(imageUrl).into(ivStateImage)
+    }
 
     override fun goToApp() {
         //add check here , if intent from Edit Profile then just finish this activity else

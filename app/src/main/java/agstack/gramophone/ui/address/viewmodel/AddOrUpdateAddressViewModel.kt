@@ -283,7 +283,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
         } else {
             isImageAvailable.set(true)
             stateImageUrl.set(image)
-
+            getNavigator()?.setStateImage(stateImageUrl.get().toString())
         }
     }
 
@@ -509,7 +509,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
         if (address?.state_top_list?.size!! >0){
             isImageAvailable.set(true)
             stateImageUrl.set(address?.state_top_list?.get(0).image)
-
+            getNavigator()?.setStateImage(stateImageUrl.get().toString())
         }else{
             isImageAvailable.set(false)
             stateNameInitial.set(stateNameStr.get()?.subSequence(0, 1).toString())

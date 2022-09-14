@@ -21,6 +21,6 @@ interface AddressNavigator : BaseNavigator{
     fun closePincodeDropDown()
     fun getGPSTracker(): GPSTracker
     fun onBackPressClick()
-
+    fun setStateImage(imageUrl: String)
 
 }
