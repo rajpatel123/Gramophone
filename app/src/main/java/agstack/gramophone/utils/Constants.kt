@@ -46,6 +46,8 @@ object Constants {
     val HOME_SHOP_BY_CROP_VIEW_TYPE = 5
     val HOME_SHOP_BY_STORE_VIEW_TYPE = 6
     val HOME_SHOP_BY_COMPANY_VIEW_TYPE = 7
+    val GramCashResponse = "GramCashResponse"
+    val ReferralPointBalanceData ="ReferralPointBalanceData"
 
 
     val CAMERA_PERMISSION = Manifest.permission.CAMERA

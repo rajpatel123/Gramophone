@@ -1,6 +1,7 @@
 package agstack.gramophone.data.repository.settings
 
 import agstack.gramophone.di.GramAppService
+import agstack.gramophone.ui.referandearn.model.GramCashResponseModel
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +30,12 @@ class SettingsRepositoryImpl @Inject constructor(
     Dispatchers.IO) {
         val blockedUsers = gramAppService.unBlockUser(customerId)
         blockedUsers
+    }
+
+    override suspend fun getGramCash(): Response<GramCashResponseModel> = withContext(
+        Dispatchers.IO) {
+       val gramCashResponse = gramAppService.getGramCash()
+        gramCashResponse
     }
 
 

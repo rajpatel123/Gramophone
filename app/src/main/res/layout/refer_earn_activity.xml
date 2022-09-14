@@ -82,7 +82,8 @@
                             android:paddingTop="@dimen/_3sdp"
                             android:paddingRight="@dimen/_8sdp"
                             android:paddingBottom="@dimen/_3sdp"
-                            android:text="100"
+                            tools:text="100"
+                            android:text="@{viewModel.gramCashResponseData.gramcashTotal.toString()}"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12ssp" />
 

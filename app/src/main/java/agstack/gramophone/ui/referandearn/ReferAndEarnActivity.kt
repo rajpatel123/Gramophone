@@ -26,6 +26,7 @@ class ReferAndEarnActivity :
         super.onCreate(savedInstanceState)
         setUpToolBar(true, resources.getString(R.string.refer_n_earn), R.drawable.ic_arrow_left)
         generateQRCode()
+        mViewModel?.getGramCash()
     }
 
     private fun generateQRCode() {
