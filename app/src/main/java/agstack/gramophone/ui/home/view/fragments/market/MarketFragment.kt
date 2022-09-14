@@ -14,7 +14,6 @@ import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

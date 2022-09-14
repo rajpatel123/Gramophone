@@ -96,8 +96,8 @@ class HomeAdapter(
                     viewGroup.context)))
             }
         }
-        return Banner1ViewHolder(
-            ItemHomeBannerBinding.inflate(LayoutInflater.from(viewGroup.context))
+        return EmptyViewHolder(
+            ItemHomeEmptyBinding.inflate(LayoutInflater.from(viewGroup.context))
         )
     }
 
@@ -355,11 +355,43 @@ class HomeAdapter(
                 return Constants.HOME_CART_VIEW_TYPE
             }
         }
-        return super.getItemViewType(position)
+        return Constants.HOME_EMPTY_VIEW_TYPE
     }
 
     override fun getItemId(position: Int): Long {
-        return position.toLong()
+        when (homeScreenSequenceList[position]) {
+            Constants.HOME_BANNER_1 -> {
+                return Constants.HOME_BANNER_VIEW_TYPE.toLong()
+            }
+            Constants.HOME_BANNER_EXCLUSIVE -> {
+                return Constants.HOME_BANNER_EXCLUSIVE_VIEW_TYPE.toLong()
+            }
+            Constants.HOME_BANNER_REFERRAL -> {
+                return Constants.HOME_BANNER_REFERRAL_VIEW_TYPE.toLong()
+            }
+            Constants.HOME_SHOP_BY_CATEGORY -> {
+                return Constants.HOME_SHOP_BY_CATEGORY_VIEW_TYPE.toLong()
+            }
+            Constants.HOME_FEATURED_PRODUCTS -> {
+                return Constants.HOME_FEATURED_PRODUCTS_VIEW_TYPE.toLong()
+            }
+            Constants.HOME_SHOP_BY_CROP -> {
+                return Constants.HOME_SHOP_BY_CROP_VIEW_TYPE.toLong()
+            }
+            Constants.HOME_SHOP_BY_STORE -> {
+                return Constants.HOME_SHOP_BY_STORE_VIEW_TYPE.toLong()
+            }
+            Constants.HOME_SHOP_BY_COMPANY -> {
+                return Constants.HOME_SHOP_BY_COMPANY_VIEW_TYPE.toLong()
+            }
+            Constants.HOME_GRAMOPHONE_PROMISE -> {
+                return Constants.HOME_GRAMOPHONE_PROMISE_VIEW_TYPE.toLong()
+            }
+            Constants.HOME_CART -> {
+                return Constants.HOME_CART_VIEW_TYPE.toLong()
+            }
+        }
+        return Constants.HOME_EMPTY_VIEW_TYPE.toLong()
     }
 
     override fun getItemCount(): Int {
@@ -373,6 +405,9 @@ class HomeAdapter(
             context.startActivity(this)
         }
     }
+
+    inner class EmptyViewHolder(var binding: ItemHomeEmptyBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     inner class Banner1ViewHolder(var binding: ItemHomeBannerBinding) :
         RecyclerView.ViewHolder(binding.root)
