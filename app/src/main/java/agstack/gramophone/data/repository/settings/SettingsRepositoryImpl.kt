@@ -2,6 +2,7 @@ package agstack.gramophone.data.repository.settings
 
 import agstack.gramophone.di.GramAppService
 import agstack.gramophone.ui.referandearn.model.GramCashResponseModel
+import agstack.gramophone.ui.referandearn.transaction.model.GramCashTxnResponseModel
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
 import kotlinx.coroutines.Dispatchers
@@ -39,6 +40,11 @@ class SettingsRepositoryImpl @Inject constructor(
     }
 
 
+    override suspend fun getGramCashTxn(type: String): Response<GramCashTxnResponseModel>  = withContext(
+        Dispatchers.IO) {
+        val gramCashResponse = gramAppService.getGramCashTxn(type)
+        gramCashResponse
+    }
 
 
 }

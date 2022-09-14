@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+    </data>
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:weightSum="4"
     android:orientation="horizontal">
 
     <ImageView
+        android:layout_marginTop="@dimen/_5sdp"
         android:layout_weight=".5"
         android:id="@+id/iv_bullet"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="@dimen/_10sdp"
+        android:layout_gravity="top"
+        android:foregroundGravity="top"
         app:srcCompat="@drawable/ic_dot_grey" />
 
     <TextView
@@ -25,8 +33,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/manrope_regular"
         android:gravity="left"
-        android:text="AnswerAnswerAnswerAnswerAnswer"
-        android:textColor="@color/gray"
+        android:text="AnswerAnswerAnswerAnswerAnswerAnswerAnswerAnswerAnswerAnsweAnswerAnswerAnswerAnswerAnsweAnswerAnswerAnswerAnswerAnsweAnswerAnswerAnswerAnswerAnsweAnswerAnswerAnswerAnswerAnsweAnswerAnswerAnswerAnswerAnsweAnswerAnswerAnswerAnswerAnsweAnswerAnswerAnswerAnswerAnsweAnswerAnswerAnswerAnswerAnswe"
+        android:textColor="@color/blakish"
         android:textSize="@dimen/_14ssp"
         android:textStyle="normal"
         app:layout_constraintLeft_toRightOf="@id/iv_bullet"
@@ -35,3 +43,5 @@
 
 
 </LinearLayout>
+
+</layout>

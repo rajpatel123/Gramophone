@@ -60,6 +60,7 @@ object Constants {
     val RECENT = "recent"
     val TOP_REVIEWS = "Top Reviews"
     val RECENT_REVIEWS = "Recent Reviews"
+    val REFERRAL = "referral"
     const val PAST = "past"
     const val HELP_PHONE_NUMBER: String = "customer_support_no"
     const val LANG: String = "lang"

@@ -68,6 +68,7 @@ class ReferandEarnViewModel @Inject constructor(
         getGramCashJob.cancelIfActive()
         getGramCashJob = checkNetworkThenRun {
             progressLoader.set(true)
+            try{
 
             val gramCashResponsefromAPI = settingsRepository.getGramCash()
 
@@ -81,7 +82,9 @@ class ReferandEarnViewModel @Inject constructor(
                 progressLoader.set(false)
                 getNavigator()?.showToast(gramCashResponsefromAPI.body()?.gpApiMessage)
             }
-        }
+        }catch (e:Exception){
+            Log.d("Exception",e.toString())
+        }}
     }
 
     private fun checkNetworkThenRun(runCode: (suspend () -> Unit)): Job {

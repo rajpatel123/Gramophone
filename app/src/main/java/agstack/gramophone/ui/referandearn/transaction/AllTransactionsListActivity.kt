@@ -18,6 +18,7 @@ class AllTransactionsListActivity : BaseActivityWrapper<ActivityTransactionsList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpToolBar(true, getString(R.string.all_transactions), R.drawable.ic_arrow_left)
+        mViewModel?.getGramCashTransactionData()
     }
 
     override fun getLayoutID(): Int {

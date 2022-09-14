@@ -27,6 +27,7 @@ import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import agstack.gramophone.ui.referandearn.model.GramCashResponseModel
+import agstack.gramophone.ui.referandearn.transaction.model.GramCashTxnResponseModel
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
@@ -224,6 +225,11 @@ interface GramAppService {
     @GET("api/v5/gramcash/gramcash")
     @JvmSuppressWildcards
     suspend fun getGramCash(): Response<GramCashResponseModel>
+
+
+    @GET("api/v5/gramcash/gramcash-txn/{type}")
+    @JvmSuppressWildcards
+    suspend fun getGramCashTxn(@Path("type") type: String): Response<GramCashTxnResponseModel>
 
 
 

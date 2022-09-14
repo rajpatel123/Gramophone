@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="model"
             type="agstack.gramophone.ui.referandearn.model.ReferralPointsItem">
@@ -24,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@dimen/_10sdp"
+            android:padding="@dimen/_15sdp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -43,6 +45,7 @@
 
 
 
+
         </LinearLayout>
 
 
@@ -51,34 +54,21 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="@dimen/_10sdp"
             android:orientation="horizontal"
+            android:padding="@dimen/_5sdp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/lltop">
 
-            <TextView
-                android:id="@+id/tv_answer"
-                style="@style/TextSize14Sp"
-                android:layout_width="0dp"
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_answer_list"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:text="@{model.answer.get(0)}"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="normal"
-                android:fontFamily="@font/manrope_regular"
-                tools:text="Answer" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/bullet_item" />
 
         </LinearLayout>
-
-        <View
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            app:layout_constraintTop_toBottomOf="@+id/ll_Answer"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_2sdp"
-            android:background="@color/viewcolor"></View>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,7 +50,9 @@
             android:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvRecent"
+            android:id="@+id/rvAll"
+            app:recentSize="@{viewModel.allListSize}"
+            app:selectedTab="@{viewModel.selectedTab}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tab_separator"
@@ -65,7 +67,9 @@
             app:selectedTab="@{viewModel.selectedTab}"-->
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPast"
+            android:id="@+id/rvReferral"
+            app:selectedTab="@{viewModel.selectedTab}"
+            app:pastSize="@{viewModel.referralsListSize}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tab_separator"
@@ -116,6 +120,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="@{viewModel.progress == true ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{viewModel.progressLoader == true ? View.VISIBLE : View.GONE}" />
     </RelativeLayout>
 </layout>

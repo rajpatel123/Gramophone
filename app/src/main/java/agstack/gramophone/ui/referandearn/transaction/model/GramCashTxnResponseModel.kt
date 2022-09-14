@@ -1,17 +1,17 @@
-package agstack.gramophone.ui.referandearn.model
+package agstack.gramophone.ui.referandearn.transaction.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class GramCashResponseModel(
+data class GramCashTxnResponseModel(
 
 	@field:SerializedName("gp_api_error_data")
 	val gpApiErrorData: GpApiErrorData? = null,
 
 	@field:SerializedName("gp_api_response_data")
-	val gpApiResponseData: GpApiResponseData? = null,
+	val gpApiResponseData: List<GpApiResponseDataItem?>? = null,
 
 	@field:SerializedName("gp_api_status")
 	val gpApiStatus: String? = null,

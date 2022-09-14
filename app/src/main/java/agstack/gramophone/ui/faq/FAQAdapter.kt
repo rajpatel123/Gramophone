@@ -18,7 +18,6 @@ class FAQAdapter(faqList: ArrayList<FAQModel>) :
     lateinit var mContext: Context
 
 
-
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int

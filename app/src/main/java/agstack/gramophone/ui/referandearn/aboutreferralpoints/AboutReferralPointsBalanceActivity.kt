@@ -4,6 +4,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.AboutReferralPointsActivityBinding
+import agstack.gramophone.ui.referandearn.aboutreferralpoints.adapter.AboutReferalPointsAdapter
 import agstack.gramophone.ui.referandearn.model.ReferralPointsItem
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
@@ -24,7 +25,7 @@ class AboutReferralPointsBalanceActivity :
         val bundle = getBundle()
         bundle?.let {
             if (bundle.getParcelableArrayList<ReferralPointsItem>(Constants.ReferralPointBalanceData) != null) {
-                mViewModel?.ReferralPointsBalanceDataFromBundle?.set(bundle.getParcelable(Constants.ReferralPointBalanceData))
+                mViewModel?.ReferralPointsBalanceDataFromBundle?.set(bundle.getParcelableArrayList(Constants.ReferralPointBalanceData))
                mViewModel?.setAdapter()
             }
         }
@@ -43,6 +44,11 @@ class AboutReferralPointsBalanceActivity :
 
     override fun getViewModel(): AboutReferralPointsBalanceViewModel {
         return aboutreferralpointsViewModel
+    }
+
+
+    override fun setAboutReferalPointsAdapter(aboutReferalPointsAdapter: AboutReferalPointsAdapter) {
+        viewDataBinding.rvAboutreferalpoints.adapter = aboutReferalPointsAdapter
     }
 
 }
