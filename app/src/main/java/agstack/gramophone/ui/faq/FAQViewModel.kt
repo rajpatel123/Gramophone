@@ -3,17 +3,22 @@ package agstack.gramophone.ui.faq
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.settings.SettingsRepository
 import agstack.gramophone.ui.faq.model.FAQModel
+import agstack.gramophone.ui.referandearn.model.GramcashFaqItem
 import agstack.gramophone.ui.referandearn.transaction.AllTransactionsListActivity
+import androidx.databinding.ObservableField
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @HiltViewModel
 class FAQViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) : BaseViewModel<FAQNavigator>() {
     var faqData = ArrayList<FAQModel>()
+    var FAQList = ObservableField<ArrayList<GramcashFaqItem>>()
     fun getFAQData() {
-        faqData.add(
+      /*  faqData.add(
             FAQModel(
                 1,
                 "What is Gramophone Referral Scheme?",
@@ -59,10 +64,10 @@ class FAQViewModel @Inject constructor(
                 "You can connect farmer of any state of India with gramophone. But you or the farmer joining through you will be able to get our services in the same areas where we are working. If you and the farmer connected through you are from the state under the jurisdiction of Bhai Gramophone, then both of you can buy from the referral village cash point obtained through referral.\n"
             )
         )
+*/
 
 
-
-        getNavigator()?.setFAQAdapter(FAQAdapter(faqData))
+        getNavigator()?.setFAQAdapter(FAQAdapter(FAQList.get()!!))
     }
 
 

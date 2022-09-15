@@ -2,14 +2,14 @@ package agstack.gramophone.ui.faq
 
 import agstack.gramophone.BR
 import agstack.gramophone.databinding.ItemFaqBinding
-import agstack.gramophone.ui.faq.model.FAQModel
+import agstack.gramophone.ui.referandearn.model.GramcashFaqItem
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 
-class FAQAdapter(faqList: ArrayList<FAQModel>) :
+class FAQAdapter(faqList: ArrayList<GramcashFaqItem>) :
     RecyclerView.Adapter<FAQAdapter.CustomViewHolder>() {
 
     val mfaqList = faqList
@@ -28,7 +28,7 @@ class FAQAdapter(faqList: ArrayList<FAQModel>) :
 
     override fun onBindViewHolder(holder: FAQAdapter.CustomViewHolder, position: Int) {
 
-        var model: FAQModel = mfaqList[position]!!
+        var model: GramcashFaqItem = mfaqList[position]!!
         holder.binding.setVariable(BR.model, model)
         val mBinding = holder.binding as ItemFaqBinding
 

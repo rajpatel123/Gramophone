@@ -4,6 +4,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.databinding.BulletItemBinding
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
@@ -29,7 +30,13 @@ class AnswerListAdapter(arrayList: ArrayList<String>) :
         var model: String = mAnswerList[position]!!
         holder.binding.setVariable(BR.model, model)
         val mBinding = holder.binding as BulletItemBinding
+
         mBinding.tvAnswer.setText(model)
+        if(mAnswerList.size==1){
+            mBinding.ivBullet.visibility= View.GONE
+        }else{
+            mBinding.ivBullet.visibility= View.VISIBLE
+        }
 
 
 

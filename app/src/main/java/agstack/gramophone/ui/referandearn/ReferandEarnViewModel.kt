@@ -18,6 +18,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import agstack.gramophone.ui.referandearn.model.GpApiResponseData
+import agstack.gramophone.ui.referandearn.model.GramcashFaqItem
+import agstack.gramophone.ui.referralrules.ReferralRulesActivity
 
 @HiltViewModel
 class ReferandEarnViewModel @Inject constructor(
@@ -36,7 +38,16 @@ class ReferandEarnViewModel @Inject constructor(
     }
 
     fun onFAQClicked() {
-        getNavigator()?.openActivity(FAQActivity::class.java)
+        getNavigator()?.openActivity(FAQActivity::class.java,Bundle().apply {
+            putParcelableArrayList(Constants.GramCashFAQList,gramCashResponseData.get()?.gramcashFaq as ArrayList<GramcashFaqItem>)
+        })
+    }
+
+    fun onReferralRulesClicked(){
+        getNavigator()?.openActivity(ReferralRulesActivity::class.java,Bundle().apply {
+            putStringArrayList(Constants.GramCashReferralRulesList,gramCashResponseData.get()?.referralRules as ArrayList<String>)
+        })
+
     }
 
     fun generateQrCode(extraText: String) {

@@ -181,7 +181,7 @@
                     android:layout_marginBottom="@dimen/_35sdp"
                     android:fontFamily="@font/manrope_regular"
                     android:gravity="center_horizontal"
-                    android:onClick="@{()->viewModel.onFAQClicked()}"
+                    android:onClick="@{()->viewModel.onReferralRulesClicked()}"
                     android:text="@string/referral_rules"
                     android:textColor="@color/orange"
                     android:textSize="@dimen/_13ssp"

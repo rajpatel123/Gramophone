@@ -11,5 +11,6 @@ data class GramcashFaqItem(
 	val question: String? = null,
 
 	@field:SerializedName("answer")
-	val answer: List<String?>? = null
+	val answer: List<String?>? = null,
+	var isExpanded :Boolean = false
 ) : Parcelable

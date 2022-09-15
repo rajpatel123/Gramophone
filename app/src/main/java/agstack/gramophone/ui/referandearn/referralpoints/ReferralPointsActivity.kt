@@ -24,6 +24,7 @@ class ReferralPointsActivity :
         bundle?.let {
             if (bundle.getParcelable<GpApiResponseData>(Constants.GramCashResponse) != null) {
                 mViewModel?.gramCashResponseDataFromBundle?.set(bundle.getParcelable(Constants.GramCashResponse))
+                mViewModel?.setMyReferralsListAdapter()
             }
         }
     }
@@ -42,6 +43,10 @@ class ReferralPointsActivity :
 
     override fun getViewModel(): ReferralPointsViewModel {
         return referralpointsViewModel
+    }
+
+    override fun setMyReferralsAdapter(myReferralsAdapter: MyReferralsAdapter) {
+        viewDataBinding.rvMyreferrals.adapter = myReferralsAdapter
     }
 
 }

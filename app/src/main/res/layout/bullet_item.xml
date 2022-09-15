@@ -20,7 +20,7 @@
         android:layout_weight=".5"
         android:id="@+id/iv_bullet"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_10sdp"
+        android:layout_height="@dimen/_5sdp"
         android:layout_gravity="top"
         android:foregroundGravity="top"
         app:srcCompat="@drawable/ic_dot_grey" />
@@ -35,7 +35,7 @@
         android:gravity="left"
         android:text="AnswerAnswerAnswerAnswerAnswerAnswerAnswerAnswerAnswerAnsweAnswerAnswerAnswerAnswerAnsweAnswerAnswerAnswerAnswerAnsweAnswerAnswerAnswerAnswerAnsweAnswerAnswerAnswerAnswerAnsweAnswerAnswerAnswerAnswerAnsweAnswerAnswerAnswerAnswerAnsweAnswerAnswerAnswerAnswerAnsweAnswerAnswerAnswerAnswerAnswe"
         android:textColor="@color/blakish"
-        android:textSize="@dimen/_14ssp"
+        android:textSize="@dimen/_11ssp"
         android:textStyle="normal"
         app:layout_constraintLeft_toRightOf="@id/iv_bullet"
         app:layout_constraintRight_toRightOf="parent"
