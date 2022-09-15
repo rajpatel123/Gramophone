@@ -33,7 +33,6 @@ class OrderDetailsViewModel @Inject constructor(
     var username = MutableLiveData<String>()
     var address = MutableLiveData<String>()
     var mobile = MutableLiveData<String>()
-
     init {
         progress.value = false
         orderId.value = ""
