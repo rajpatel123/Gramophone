@@ -227,7 +227,7 @@
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.resendOTPType}"
                     android:textColor="@color/blakish"
-                    android:textSize="@dimen/_14ssp"
+                    android:textSize="@dimen/_12ssp"
                     tools:text="Resend OTP" />
 
                 <TextView
@@ -238,7 +238,7 @@
                     android:fontFamily="@font/manrope_medium"
                     android:text="@={viewModel.resendOTPType}"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/_10ssp"
+                    android:textSize="@dimen/_12ssp"
                     tools:text="@string/resend"
                     tools:visibility="gone" />
 

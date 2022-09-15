@@ -16,18 +16,19 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_state_list.*
 
 @AndroidEntryPoint
 class StateListActivity :
     BaseActivityWrapper<ActivityStateListBinding, StateNavigator, StateSelectionViewModel>(),
-    StateNavigator {
+    StateNavigator, StateListAdapter.SetImage {
 
     private val stateSelectionViewModel: StateSelectionViewModel by viewModels()
 
@@ -59,6 +60,7 @@ class StateListActivity :
                 openAndFinishActivity(AddOrUpdateAddressActivity::class.java,null)
             }else{
                 setupUI()
+                fetchStateList()
             }
 
 
@@ -66,6 +68,7 @@ class StateListActivity :
     override fun fetchStateList() {
         stateSelectionViewModel.fetchStateList()
     }
+
 
 
     private fun setupUI() {
@@ -97,6 +100,7 @@ class StateListActivity :
         stateListAdapter: StateListAdapter,
         onStateSelected: (State) -> Unit
     ) {
+        stateListAdapter.setImageListener(this)
         stateListAdapter.selectedState = onStateSelected
         rvStates.adapter = stateListAdapter
     }
@@ -127,5 +131,7 @@ class StateListActivity :
         Toast.makeText(this@StateListActivity, message, Toast.LENGTH_LONG).show()
     }
 
-
+    override fun onImageSet(imageUrl: String, iv: ImageView) {
+        Glide.with(this).load(imageUrl).into(iv)
+    }
 }

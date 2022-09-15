@@ -19,7 +19,7 @@ object Constants {
     val INDEX: String = "pageIndex"
     val FROM_EDIT_PROFILE = "FROM_EDIT_PROFILE"
     val REMAINING_TIME: String = "remaining_time"
-    val RESEND_OTP_TIME: Long = 5000
+    val RESEND_OTP_TIME: Long = 30000
     val CHANGE_LANGUAGE: String = "change_language"
     val CHANGE_STATE: String = "change"
     val BUNDLE: String = "bundle"
