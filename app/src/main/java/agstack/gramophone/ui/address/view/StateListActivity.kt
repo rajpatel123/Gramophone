@@ -59,7 +59,6 @@ class StateListActivity :
                 openAndFinishActivity(AddOrUpdateAddressActivity::class.java,null)
             }else{
                 setupUI()
-                fetchStateList()
             }
 
 
@@ -112,7 +111,7 @@ class StateListActivity :
     override fun onRemoveSelection() {
         tvOthers.visibility = VISIBLE
         rlStateSelected.visibility = GONE
-        tvSelectedState.text = ""
+        //tvSelectedState.text = ""
         stateSelectionViewModel.resetStateSelection()
     }
 

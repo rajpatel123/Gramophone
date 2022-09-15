@@ -193,12 +193,7 @@ class VerifyOtpViewModel @Inject constructor(
         sendOtpRequestModel.retryType = type
         sendOtpRequestModel.otp_reference_id = otpReference.get()?.toInt()
         sendOTPCall(sendOtpRequestModel)
-        val text: String =
-            java.lang.String.format(
-                getNavigator()?.getMessage(R.string.resend_otp)!!,
-                type.uppercase()
-            )
-        resendOTPType.set(text)
+
     }
 
     private suspend fun sendOTPCall(sendOtpRequestModel: SendOtpRequestModel) {
@@ -212,6 +207,12 @@ class VerifyOtpViewModel @Inject constructor(
                 if (response.isSuccessful) {
                     val sendOtpResponseModel = response.body()
                     if (Constants.GP_API_STATUS.equals(sendOtpResponseModel?.gp_api_status)) {
+                        val text: String =
+                            java.lang.String.format(
+                                getNavigator()?.getMessage(R.string.resend_otp)!!,
+                                type.uppercase()
+                            )
+                        resendOTPType.set(text)
                         otp.set("")
                         timeOver.set(false)
 
@@ -225,7 +226,7 @@ class VerifyOtpViewModel @Inject constructor(
                 } else {
                     val text: String =
                         java.lang.String.format(
-                            getNavigator()?.getMessage(R.string.resend_otp)!!,
+                            getNavigator()?.getMessage(R.string.resend)!!,
                             type.uppercase()
                         )
                     resendOTPType.set(text)

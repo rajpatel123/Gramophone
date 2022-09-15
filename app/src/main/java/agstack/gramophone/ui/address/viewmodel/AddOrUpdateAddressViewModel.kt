@@ -7,6 +7,7 @@ import agstack.gramophone.ui.address.AddressNavigator
 import agstack.gramophone.ui.address.model.*
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
+import agstack.gramophone.ui.address.view.AddOrUpdateAddressActivity
 import agstack.gramophone.ui.address.view.StateListActivity
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.utils.ApiResponse
@@ -18,6 +19,7 @@ import agstack.gramophone.utils.Constants.TEHSIL
 import agstack.gramophone.utils.Constants.VILLAGE
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import android.Manifest
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
@@ -528,7 +530,11 @@ class AddOrUpdateAddressViewModel @Inject constructor(
     }
 
 
-
-
-
+    fun checkPermissionAndUpdateUi() {
+            if (getNavigator()?.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) == true){
+                getNavigator()?.updateUi()
+            }else{
+                getNavigator()?.requestForLocation()
+            }
+        }
 }

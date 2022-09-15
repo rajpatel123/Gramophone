@@ -225,9 +225,10 @@
                     style="@style/small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/blakish"
                     android:text="@={viewModel.resendOTPType}"
-                    />
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_14ssp"
+                    tools:text="Resend OTP" />
 
                 <TextView
                     android:id="@+id/tvResendOtp"

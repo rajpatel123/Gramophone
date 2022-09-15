@@ -11,6 +11,7 @@ import agstack.gramophone.ui.address.model.AddressDataModel
 import agstack.gramophone.ui.address.viewmodel.AddOrUpdateAddressViewModel
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.utils.Constants
+import android.Manifest
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -19,6 +20,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -187,6 +189,36 @@ class AddOrUpdateAddressActivity :
         Glide.with(this).load(imageUrl).into(ivStateImage)
     }
 
+    override fun requestForLocation() {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),1)
+    }
+
+    override fun updateUi() {
+        if (intent?.extras?.containsKey(Constants.STATE) == true) {
+            addOrUpdateAddressViewModel.setStatesName(
+                intent?.extras?.get(Constants.STATE) as String,
+                intent?.extras?.get(Constants.STATE_IMAGE_URL) as String
+            )
+            addOrUpdateAddressViewModel.getDistrict(
+                "district",
+                intent?.extras?.get(Constants.STATE) as String,
+                "",
+                ""
+            )
+        } else {
+            addOrUpdateAddressViewModel.getAddressByLocation()
+        }
+
+        if (intent?.extras?.containsKey(Constants.FROM_EDIT_PROFILE) == true) {
+            viewDataBinding.ivBack.visibility = View.VISIBLE
+            viewDataBinding.saveBtn.visibility=View.VISIBLE
+
+        } else {
+            viewDataBinding.ivBack.visibility = View.GONE
+            viewDataBinding.saveBtn.visibility=View.GONE
+        }
+    }
+
     override fun goToApp() {
         //add check here , if intent from Edit Profile then just finish this activity else
 
@@ -243,29 +275,7 @@ class AddOrUpdateAddressActivity :
 
     override fun onResume() {
         super.onResume()
-        if (intent?.extras?.containsKey(Constants.STATE) == true) {
-            addOrUpdateAddressViewModel.setStatesName(
-                intent?.extras?.get(Constants.STATE) as String,
-                intent?.extras?.get(Constants.STATE_IMAGE_URL) as String
-            )
-            addOrUpdateAddressViewModel.getDistrict(
-                "district",
-                intent?.extras?.get(Constants.STATE) as String,
-                "",
-                ""
-            )
-        } else {
-            addOrUpdateAddressViewModel.getAddressByLocation()
-        }
-
-        if (intent?.extras?.containsKey(Constants.FROM_EDIT_PROFILE) == true) {
-            viewDataBinding.ivBack.visibility = View.VISIBLE
-            viewDataBinding.saveBtn.visibility=View.VISIBLE
-
-        } else {
-            viewDataBinding.ivBack.visibility = View.GONE
-            viewDataBinding.saveBtn.visibility=View.GONE
-        }
+        addOrUpdateAddressViewModel.checkPermissionAndUpdateUi()
     }
 
     override fun onBackPressClick() {

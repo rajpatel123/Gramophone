@@ -22,5 +22,7 @@ interface AddressNavigator : BaseNavigator{
     fun getGPSTracker(): GPSTracker
     fun onBackPressClick()
     fun setStateImage(imageUrl: String)
+    fun requestForLocation()
+    fun updateUi()
 
 }
