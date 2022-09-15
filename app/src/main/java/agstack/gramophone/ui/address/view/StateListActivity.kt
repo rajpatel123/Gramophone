@@ -100,6 +100,7 @@ class StateListActivity :
         stateListAdapter: StateListAdapter,
         onStateSelected: (State) -> Unit
     ) {
+        stateListAdapter.context=this
         stateListAdapter.setImageListener(this)
         stateListAdapter.selectedState = onStateSelected
         rvStates.adapter = stateListAdapter

@@ -32,7 +32,7 @@ class StateListAdapter(private val stateList: List<State>) :
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
-        context = viewGroup.context
+       // context = viewGroup.context
         return ViewHolder(
             ItemStateListBinding.inflate(LayoutInflater.from(viewGroup.context))
         )
