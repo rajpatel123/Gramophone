@@ -393,5 +393,8 @@
     <string name="please_select_atleast_one_role">Please select atleast one role</string>
     <string name="verify">Verify</string>
     <string name="enter_different_mobile_no">Mobile number entered is same as existing number</string>
+    <string name="gram_cash_expire_on">Expire on</string>
+    <string name="was_earned_on">"Was earned on "</string>
+    <string name="no_referral_transactions">No Referral Transactions Done</string>
 
 </resources>

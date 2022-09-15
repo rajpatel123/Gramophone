@@ -9,7 +9,7 @@
 
         <variable
             name="model"
-            type="agstack.gramophone.ui.order.model.Data" />
+            type="agstack.gramophone.ui.referandearn.transaction.model.GramcashTxnItem" />
     </data>
 
     <RelativeLayout
@@ -23,19 +23,51 @@
         <FrameLayout
             android:id="@+id/frame_product"
             android:layout_width="@dimen/_44sdp"
-            android:layout_height="@dimen/_44sdp"
+            android:layout_height="wrap_content"
             android:background="@drawable/rounded_corner_8_solid_white_stroke_gray">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:contentDescription="@string/image"
-                android:padding="@dimen/_4sdp"
-                app:srcCompat="@drawable/ic_person_standing"
-               />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <!-- app:product_image="@{model.product_image}" -->
+                <TextView
+                    android:id="@+id/tv_month"
+                    style="@style/TextSize14Sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textAllCaps="true"
+                    tools:text="Jan"></TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_corner_8_skybluefill"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        style="@style/TextSize14Sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/brand_color"
+                        tools:text="19"></TextView>
+
+                    <TextView
+                        android:id="@+id/tv_year"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_2sdp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_9ssp"
+                        tools:text="2021"></TextView>
+                </LinearLayout>
+
+            </LinearLayout>
 
         </FrameLayout>
 
@@ -49,13 +81,23 @@
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
-            tools:text="Earned"
-            android:text="@string/earned"
+            android:text="@{model.transactionType}"
             android:textColor="@color/blakish"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:text="Earned" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_toRightOf="@+id/tv_earned_expired"
+            android:gravity="center_vertical"
+            android:visibility="@{model.pending?View.VISIBLE:View.GONE}"
+            app:srcCompat="@drawable/ic_lock" />
 
         <TextView
-            android:id="@+id/tv_earned_how"
+            android:id="@+id/tv_description"
             android:layout_width="205dp"
             android:layout_height="16dp"
             android:layout_below="@+id/tv_earned_expired"
@@ -65,27 +107,37 @@
             android:fontFamily="@font/manrope_regular"
             android:gravity="center_vertical"
             android:lineSpacingExtra="-2sp"
-            android:textColor="@color/gray_strike_through"
-            android:textSize="13sp"
-            tools:text="05-Jul-2022 / 3 Items" />
+            android:text="@{model.description}"
+            android:textColor="@color/gray"
+            android:textSize="13sp" />
 
         <TextView
-            android:id="@+id/tv_total_amount"
+            android:id="@+id/date_text"
+            android:layout_width="205dp"
+            android:layout_height="16dp"
+            android:layout_below="@+id/tv_description"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_toEndOf="@+id/frame_product"
+            android:fontFamily="@font/manrope_regular"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="-2sp"
+            android:textColor="@color/gray"
+            android:textSize="13sp"
+            tools:text="By Refree Registration" />
+
+        <TextView
+            android:id="@+id/tv_amountTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/_3sdp"
             android:fontFamily="@font/manrope_bold"
             android:lineSpacingExtra="-1sp"
-
             android:textColor="@color/red"
             android:textSize="18sp"
-            tools:text="₹4320"
-            tools:ignore="RelativeOverlap" />
-        <!-- android:text="@{@string/rupee_symbol.concat(model.price)}"-->
-
-
-
+            tools:ignore="RelativeOverlap"
+            tools:text="₹4320" />
 
 
     </RelativeLayout>

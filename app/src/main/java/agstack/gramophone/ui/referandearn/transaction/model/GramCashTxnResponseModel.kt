@@ -10,8 +10,9 @@ data class GramCashTxnResponseModel(
 	@field:SerializedName("gp_api_error_data")
 	val gpApiErrorData: GpApiErrorData? = null,
 
+
 	@field:SerializedName("gp_api_response_data")
-	val gpApiResponseData: List<GpApiResponseDataItem?>? = null,
+	val gpApiResponseData: GpApiResponseData? = null,
 
 	@field:SerializedName("gp_api_status")
 	val gpApiStatus: String? = null,

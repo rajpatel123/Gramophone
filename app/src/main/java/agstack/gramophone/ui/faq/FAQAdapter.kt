@@ -1,12 +1,10 @@
 package agstack.gramophone.ui.faq
 
 import agstack.gramophone.BR
-import agstack.gramophone.R
 import agstack.gramophone.databinding.ItemFaqBinding
 import agstack.gramophone.ui.faq.model.FAQModel
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 

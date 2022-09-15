@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class GpApiResponseDataItem(
+data class GramcashTxnItem(
 
 	@field:SerializedName("transaction_date")
 	val transactionDate: String? = null,

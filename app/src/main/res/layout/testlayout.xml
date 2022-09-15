@@ -1,37 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:weightSum="4"
-    android:orientation="horizontal">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:layout_weight=".5"
-        android:id="@+id/iv_bullet"
-        android:layout_width="0dp"
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.referandearn.transaction.model.GramcashTxnItem" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/item_transaction"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_dot_grey" />
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingTop="@dimen/_24sdp"
+        android:paddingEnd="@dimen/_12sdp">
 
-    <TextView
-        android:layout_weight="3.5"
-        android:id="@+id/tv_answer"
-        style="@style/TextSize14Sp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/manrope_regular"
-        android:gravity="left"
-        android:text="AnswerAnswerAnswerAnswerAnswer"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/_14ssp"
-        android:textStyle="normal"
-        app:layout_constraintLeft_toRightOf="@id/iv_bullet"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <FrameLayout
+            android:id="@+id/frame_product"
+            android:layout_width="@dimen/_44sdp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner_8_solid_white_stroke_gray">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_month"
+                    style="@style/TextSize14Sp"
+                    android:textAllCaps="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    tools:text="Jan"></TextView>
+
+            <LinearLayout
+                android:background="@drawable/rounded_corner_8_skybluefill"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    style="@style/TextSize14Sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/brand_color"
+                    tools:text="19"></TextView>
+
+                <TextView
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:id="@+id/tv_year"
+                   android:textSize="@dimen/_9ssp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/gray"
+                    tools:text="2021"></TextView>
+            </LinearLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_earned_expired"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_toEndOf="@+id/frame_product"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="1sp"
+            android:text="@string/earned"
+            android:textColor="@color/blakish"
+            android:textSize="16sp"
+            tools:text="Earned" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_toRightOf="@+id/tv_earned_expired"
+            android:gravity="center_vertical"
+            app:srcCompat="@drawable/ic_lock" />
+
+        <TextView
+            android:id="@+id/tv_earned_how"
+            android:layout_width="205dp"
+            android:layout_height="16dp"
+            android:layout_below="@+id/tv_earned_expired"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_toEndOf="@+id/frame_product"
+            android:fontFamily="@font/manrope_regular"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="-2sp"
+            android:textColor="@color/gray_strike_through"
+            android:textSize="13sp"
+            tools:text="05-Jul-2022 / 3 Items" />
+
+        <TextView
+            android:id="@+id/tv_total_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:lineSpacingExtra="-1sp"
+
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            tools:ignore="RelativeOverlap"
+            tools:text="₹4320" />
+        <!-- android:text="@{@string/rupee_symbol.concat(model.price)}"-->
 
 
-</LinearLayout>
+    </RelativeLayout>
+</layout>

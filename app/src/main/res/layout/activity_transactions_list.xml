@@ -57,14 +57,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tab_separator"
             android:orientation="vertical"
-            android:visibility="gone"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="2"
             tools:listitem="@layout/item_transaction"
             tools:visibility="visible" />
 
-        <!-- app:recentSize="@{viewModel.recentOrderSize}"
-            app:selectedTab="@{viewModel.selectedTab}"-->
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvReferral"
@@ -74,13 +72,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tab_separator"
             android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="2"
             tools:listitem="@layout/item_transaction"
             tools:visibility="visible" />
 
-        <!-- app:pastSize="@{viewModel.pastOrderSize}"
-            app:selectedTab="@{viewModel.selectedTab}"-->
 
         <LinearLayout
             android:layout_width="match_parent"
