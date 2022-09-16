@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,6 +30,7 @@ class AddFirmViewModel @Inject constructor(
         updateProfileJob.cancelIfActive()
         updateProfileJob = checkNetworkThenRun {
             progressLoader.set(true)
+            try {
             var updateProfileModel = UpdateProfileModel()
             updateProfileModel.is_trader = UserProfileData.is_trader
             updateProfileModel.is_farmer=UserProfileData.is_farmer
@@ -43,6 +45,12 @@ class AddFirmViewModel @Inject constructor(
             } else {
 
                 getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)
+            }
+        }catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                }
             }
         }
     }

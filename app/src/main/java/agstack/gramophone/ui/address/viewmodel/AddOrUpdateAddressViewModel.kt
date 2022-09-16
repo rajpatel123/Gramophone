@@ -10,6 +10,7 @@ import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressRespon
 import agstack.gramophone.ui.address.view.AddOrUpdateAddressActivity
 import agstack.gramophone.ui.address.view.StateListActivity
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
+import agstack.gramophone.ui.profile.model.UserAddress
 import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Constants.ALL_STRING
@@ -50,6 +51,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
     var pinCode = ObservableField<String>()
     var address = ObservableField<String>()
     var loading = ObservableField<Boolean>()
+    var fetchedAddressfromAPI = ObservableField<GpApiResponseData>()
 
 
     fun changeState() {
@@ -417,6 +419,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
     private fun updateAddressByLatLong(address: agstack.gramophone.ui.address.model.GpApiResponseData?) {
         val dataList = ArrayList<AddressDataModel>()
+        fetchedAddressfromAPI.set(address)
 
         when (address?.type) {
             ALL_STRING -> {
@@ -508,6 +511,9 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
         }
 
+
+
+
         if (address?.state_top_list?.size!! >0){
             isImageAvailable.set(true)
             stateImageUrl.set(address?.state_top_list?.get(0).image)
@@ -537,4 +543,19 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                 getNavigator()?.requestForLocation()
             }
         }
+
+    fun setAddressdata(userAddress: UserAddress) {
+        Log.d("fetched address",userAddress?.district!!)
+        if (userAddress?.state != null) stateNameStr.set(userAddress.state)
+        if (userAddress?.district != null) districtName.set(userAddress.district)
+        if (userAddress?.tehsil != null) tehsilName.set(userAddress.tehsil)
+        if (userAddress?.village != null) villageName.set(userAddress.village)
+        if (userAddress?.pincode != null) pinCode.set(userAddress.pincode)
+
+
+
+
+    }
+
+
 }

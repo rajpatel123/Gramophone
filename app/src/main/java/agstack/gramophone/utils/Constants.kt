@@ -6,6 +6,7 @@ import android.content.Context
 
 
 object Constants {
+    val ADDRESSOBJECT: String = "address"
     val REFERRAL_CODE: String="referralCOde"
     val UNAUTHORIZED: Int=401
     val GP_API_MESSAGE: String="gp_api_message"

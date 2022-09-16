@@ -93,6 +93,9 @@ class VerifyOTPDialogFragment :
             update?.invoke(Constants.GP_API_STATUS)
         }
     }
+
+
+
     fun setOnSuccessListener(update: (String) -> Unit) {
         this.update = update
     }

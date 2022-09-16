@@ -59,6 +59,7 @@ class UserProfileViewModel @Inject constructor(
     fun onEditAddressClick() {
         getNavigator()?.openActivity(AddOrUpdateAddressActivity::class.java, Bundle().apply {
             putBoolean(Constants.FROM_EDIT_PROFILE, true)
+            putParcelable(Constants.ADDRESSOBJECT ,userProfileData.get()?.address_data )
         })
     }
 
