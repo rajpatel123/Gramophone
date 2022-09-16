@@ -7,6 +7,7 @@ import agstack.gramophone.ui.address.model.State
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -18,19 +19,20 @@ class StateListAdapter(private val stateList: List<State>) :
     var selectedState: ((State) -> Unit)? = null
     var lastSelectPosition: Int = 0
     var mStateList = stateList
-    var onStateSelection: OnStateSelection? = null
+    var setImage: SetImage? = null
     lateinit var context: Context
 
-    interface OnStateSelection {
-        fun onStateSelect(state: State)
+
+    interface SetImage {
+        fun onImageSet(imageUrl: String,iv: ImageView)
     }
 
-    fun setLanguageSelectedListener(onLanguageSelection: OnStateSelection) {
-        this.onStateSelection = onLanguageSelection
+    fun setImageListener(setImage: SetImage) {
+        this.setImage = setImage
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
-        context = viewGroup.context
+       // context = viewGroup.context
         return ViewHolder(
             ItemStateListBinding.inflate(LayoutInflater.from(viewGroup.context))
         )
@@ -48,12 +50,13 @@ class StateListAdapter(private val stateList: List<State>) :
         } else {
             holder.binding.ivStateImage.borderColor = ContextCompat.getColor(context, R.color.white)
         }
+        setImage?.onImageSet(state.image!!,holder.binding.ivStateImage)
         holder.binding.llLanguageLinearLayout.setOnClickListener {
             mStateList[lastSelectPosition]?.selected = false
             lastSelectPosition = position
             state.selected = true
-            notifyDataSetChanged()
             selectedState?.invoke(state)
+            notifyDataSetChanged()
 //            onStateSelection?.onStateSelect(state)
         }
 

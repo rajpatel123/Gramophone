@@ -11,7 +11,7 @@ import retrofit2.http.Part
 
 interface CommunityApiService {
 
-    @GET("api/v2/posts/get-trending-post")
+    @GET("/api/v2/posts/1.2/all")
     suspend fun getCommunityPost(): Response<String>
 
 

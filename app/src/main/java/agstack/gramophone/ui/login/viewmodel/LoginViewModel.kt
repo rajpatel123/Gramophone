@@ -192,6 +192,7 @@ class LoginViewModel @Inject constructor(
                         LoginActivity::class.java,
                         Bundle().apply {
                             putString(Constants.MOBILE_NO, mobileNo.get())
+                            putString(Constants.REFERRAL_CODE, referralCodeValue)
                         })
                 } else {
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
@@ -224,8 +225,16 @@ class LoginViewModel @Inject constructor(
         ) {
             mobileNo.set(getNavigator()?.getMobileBundle()?.getString(Constants.MOBILE_NO))
         } else {
-
             getNavigator()?.showMobileNumberHint()
+        }
+
+        if (!getNavigator()?.getBundle()?.getString(Constants.REFERRAL_CODE).isNullOrEmpty()) {
+            referralCode.set(
+                getNavigator()?.getMessage(R.string.referral_code) + getNavigator()?.getBundle()?.getString(Constants.REFERRAL_CODE) + getNavigator()?.getMessage(
+                    R.string.applied
+                ))
+            referralCodeValue=getNavigator()?.getBundle()?.getString(Constants.REFERRAL_CODE)
+            isReferralCodeApplied.set(true)
         }
     }
 

@@ -52,4 +52,6 @@ interface BaseNavigator {
     fun proceedOnLocationSetting()
 
     fun getGeoCoder(): Geocoder?
+
+    fun checkPermission(permission: String): Boolean
 }
