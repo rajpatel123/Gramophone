@@ -17,7 +17,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".ui.referralrules.ReferralRulesActivity">
-
         <include
             android:id="@+id/myToolbar"
             layout="@layout/layout_toolbar"
