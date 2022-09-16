@@ -225,9 +225,10 @@
                     style="@style/small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/blakish"
                     android:text="@={viewModel.resendOTPType}"
-                    />
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="Resend OTP" />
 
                 <TextView
                     android:id="@+id/tvResendOtp"
@@ -237,7 +238,7 @@
                     android:fontFamily="@font/manrope_medium"
                     android:text="@={viewModel.resendOTPType}"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/_10ssp"
+                    android:textSize="@dimen/_12ssp"
                     tools:text="@string/resend"
                     tools:visibility="gone" />
 
@@ -341,7 +342,7 @@
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
-            android:onClick="@{ ()-> viewModel.submitOtp(verifyOtpBtn) }"
+            android:onClick="@{ ()-> viewModel.submitOtp() }"
             android:padding="@dimen/_13sdp"
             android:text="@string/_continue"
             android:textColor="@color/white"
