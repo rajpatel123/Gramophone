@@ -51,8 +51,13 @@ class ReferandEarnViewModel @Inject constructor(
     }
 
     fun generateQrCode(extraText: String) {
+        var contentText = extraText
 
-        QR_BitmapfromURL= generateQR(extraText, 512)
+        if(gramCashResponseData.get()?.referral_code!=null){
+            contentText = gramCashResponseData.get()?.referral_code!!
+        }
+
+        QR_BitmapfromURL= generateQR(contentText, 512)
         getNavigator()?.setQRCodeImage(QR_BitmapfromURL)
 
 
@@ -67,12 +72,12 @@ class ReferandEarnViewModel @Inject constructor(
 
     fun onShareClick(){
         currentShareOption = IntentKeys.OtherShareKey
-        getNavigator()?.share(currentShareOption)
+        getNavigator()?.share(currentShareOption,gramCashResponseData.get()?.share_message)
     }
 
     fun onWhatsappShareClick(){
         currentShareOption = IntentKeys.WhatsAppShareKey
-        getNavigator()?.share(currentShareOption)
+        getNavigator()?.share(currentShareOption,gramCashResponseData.get()?.share_message)
     }
 
     fun getGramCash() {
@@ -87,6 +92,7 @@ class ReferandEarnViewModel @Inject constructor(
                 progressLoader.set(false)
                 val gramCashResponse: GpApiResponseData? = gramCashResponsefromAPI.body()?.gpApiResponseData
                 gramCashResponseData.set(gramCashResponse)
+               generateQrCode(gramCashResponsefromAPI.body()?.gpApiResponseData?.referral_code!!)
 
                 getNavigator()?.showToast(gramCashResponsefromAPI.body()?.gpApiMessage)
             } else {

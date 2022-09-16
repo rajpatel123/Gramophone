@@ -38,5 +38,12 @@ data class GpApiResponseData(
 	val myReferrals: List<MyReferralsItem?>? = null,
 
 	@field:SerializedName("gramcash_available")
-	val gramcashAvailable: Int? = null
+	val gramcashAvailable: Int? = null,
+
+	@field:SerializedName("referral_code")
+	val referral_code: String? = null,
+	@field:SerializedName("share_message")
+	val share_message: String? = null,
+
+
 ) : Parcelable

@@ -20,17 +20,18 @@ class ReferAndEarnActivity :
 
     private val referandEarnViewModel: ReferandEarnViewModel by viewModels()
     private var shareSheetPresenter: ShareSheetPresenter? = null
-    var qrBitmap: Bitmap?=null
+    var qrBitmap: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpToolBar(true, resources.getString(R.string.refer_n_earn), R.drawable.ic_arrow_left)
-        generateQRCode()
         mViewModel?.getGramCash()
+        generateQRCode()
+
     }
 
     private fun generateQRCode() {
-        shareSheetPresenter = this?.let { ShareSheetPresenter(this,it) }
+        shareSheetPresenter = this?.let { ShareSheetPresenter(this, it) }
         shareSheetPresenter!!.shareDynamicLink()
     }
 
@@ -54,25 +55,29 @@ class ReferAndEarnActivity :
     }
 
     override fun processGenericUri(genericUri: Uri) {
-        //temporarily share message = "Welcome to Gramophone"
-        mViewModel?.generateQrCode(genericUri.toString())
 
-
-
-    }
-
-    override fun share(currentShareOption:String){
-        val shareMessage = resources.getString(R.string.welcome_msg)
-      //  val extraText = shareMessage + "\n" + genericUri.toString()
-        val extraText = shareMessage
-
-        var QRCodeURI :Uri? = Utility.bitmapToUri(this,qrBitmap)
-        shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(extraText, getString(R.string.home_share_subject),QRCodeURI ,currentShareOption)
+        // mViewModel?.generateQrCode(genericUri.toString())
 
 
     }
 
+    override fun share(currentShareOption: String, shareText: String?) {
+        var shareMessage = resources.getString(R.string.welcome_msg)
+        shareText?.let {
+            shareMessage = shareText
+        }
 
+
+        var QRCodeURI: Uri? = Utility.bitmapToUri(this, qrBitmap)
+        shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(
+            shareMessage,
+            getString(R.string.home_share_subject),
+            QRCodeURI,
+            currentShareOption
+        )
+
+
+    }
 
 
     override fun convertedReferralLayoutsBitmap() {

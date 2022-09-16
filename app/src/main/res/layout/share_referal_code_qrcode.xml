@@ -126,6 +126,7 @@
                         android:textSize="@dimen/_20ssp"
                         android:textStyle="bold"
                         android:visibility="visible"
+                        android:text="@{rvm.gramCashResponseData.referral_code}"
                         tools:ignore="" />
 
                     <RelativeLayout
@@ -136,6 +137,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:onClick="@{()->rvm.onShareClick()}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal">

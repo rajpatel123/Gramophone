@@ -6,5 +6,5 @@ import android.graphics.Bitmap
 interface ReferandEarnNavigator :BaseNavigator {
      fun setQRCodeImage(bitmap: Bitmap?)
      fun convertedReferralLayoutsBitmap()
-     fun share(currentShareOption: String)
+     fun share(currentShareOption: String,shareText:String?)
 }

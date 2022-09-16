@@ -25,7 +25,6 @@ class ShareSheetPresenter(
             val intent = Intent(Intent.ACTION_SEND)
             intent.putExtra(Intent.EXTRA_TEXT, extraText)
             intent.putExtra(Intent.EXTRA_SUBJECT, extraSubject)
-           // intent.putExtra(IntentKeys.ShareImageKey, extraImage.toString());
 
 
 

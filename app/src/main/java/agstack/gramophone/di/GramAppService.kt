@@ -227,7 +227,7 @@ interface GramAppService {
     suspend fun getGramCash(): Response<GramCashResponseModel>
 
 
-    @GET("api/v5/gramcash/gramcash-txn/{type}")
+    @POST("api/v5/gramcash/gramcash-txn/{type}")
     @JvmSuppressWildcards
     suspend fun getGramCashTxn(@Path("type") type: String): Response<GramCashTxnResponseModel>
 
