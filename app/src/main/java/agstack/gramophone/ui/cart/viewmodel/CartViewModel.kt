@@ -43,7 +43,7 @@ class CartViewModel @Inject constructor(
         totalAmount.value = 0
         progress.value = false
         showGramCashCoinView.value = true
-        showCartView.value = true
+        showCartView.value = false
     }
 
     private fun calculateAmount(cartItems: List<CartItem>) {
@@ -137,7 +137,6 @@ class CartViewModel @Inject constructor(
                             })
                     } else {
                         showCartView.value = false
-                        getNavigator()?.showToast(response.message())
                     }
                     progress.value = false
                 } else {
