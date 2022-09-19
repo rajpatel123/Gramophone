@@ -5,7 +5,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityLikedpostUserListBinding
 import agstack.gramophone.ui.home.adapter.LikedUsersAdapter
-import agstack.gramophone.ui.home.view.fragments.community.model.LikedUsers
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedUsers
 import agstack.gramophone.ui.home.view.fragments.community.viewmodel.LikedUserViewModel
 import android.os.Bundle
 import androidx.activity.viewModels

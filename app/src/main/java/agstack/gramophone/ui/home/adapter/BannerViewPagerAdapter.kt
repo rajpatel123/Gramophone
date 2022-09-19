@@ -2,14 +2,13 @@ package agstack.gramophone.ui.home.adapter
 
 import agstack.gramophone.R
 import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActivity
-import agstack.gramophone.ui.home.view.fragments.community.model.PagerItem
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.PagerItem
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy

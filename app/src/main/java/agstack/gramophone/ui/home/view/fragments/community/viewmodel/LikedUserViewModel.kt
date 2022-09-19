@@ -4,7 +4,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.ui.home.adapter.LikedUsersAdapter
 import agstack.gramophone.ui.home.view.fragments.community.LikedUserNavigator
-import agstack.gramophone.ui.home.view.fragments.community.model.LikedUsers
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedUsers
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,11 +23,13 @@ class LikedUserViewModel @Inject constructor(
             for (i in 1..20) {
 
 
-                finalList.add(LikedUsers(
+                finalList.add(
+                    LikedUsers(
                     name="Testname"+i,
                     image = R.drawable.dummy_profile,
                     location = "Gurgaon"
-                ))
+                )
+                )
             }
             getNavigator()?.setUpToolBar(finalList.size)
             getNavigator()?.updateUserList(LikedUsersAdapter(finalList)){

@@ -6,7 +6,7 @@
 
         <variable
             name="model"
-            type="agstack.gramophone.ui.home.view.fragments.community.model.LikedUsers" />
+            type="agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedUsers" />
     </data>
 
     <RelativeLayout

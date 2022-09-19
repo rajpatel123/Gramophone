@@ -2,7 +2,7 @@ package agstack.gramophone.ui.home.adapter
 
 import agstack.gramophone.BR
 import agstack.gramophone.databinding.*
-import agstack.gramophone.ui.home.view.fragments.community.model.Data
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.Data
 import agstack.gramophone.utils.Constants.BLOCK_USER
 import agstack.gramophone.utils.Constants.COPY_POST
 import agstack.gramophone.utils.Constants.DELETE_POST

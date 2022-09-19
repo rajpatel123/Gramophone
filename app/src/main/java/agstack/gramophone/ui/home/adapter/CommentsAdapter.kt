@@ -1,7 +1,7 @@
 package agstack.gramophone.ui.home.adapter
 
 import agstack.gramophone.databinding.ItemCommentsBinding
-import agstack.gramophone.ui.home.view.fragments.community.model.Data
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.Data
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

@@ -3,15 +3,10 @@ package agstack.gramophone.ui.home.adapter
 
 import agstack.gramophone.BR
 import agstack.gramophone.databinding.ItemFollowBinding
-import agstack.gramophone.databinding.ItemLanguageBinding
-import agstack.gramophone.ui.home.view.fragments.community.model.Data
-import agstack.gramophone.ui.home.view.fragments.community.model.LikedUsers
-import agstack.gramophone.ui.language.model.languagelist.Language
-import android.content.Context
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedUsers
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import okhttp3.internal.immutableListOf
 
 
 class LikedUsersAdapter(private val dataList: ArrayList<LikedUsers>) :

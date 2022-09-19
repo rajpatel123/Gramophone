@@ -3,13 +3,11 @@ package agstack.gramophone.ui.dialog
 import agstack.gramophone.databinding.PostCommentDialogBinding
 import agstack.gramophone.ui.home.adapter.CommentsAdapter
 import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
-import agstack.gramophone.ui.home.view.fragments.community.model.Data
-import agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.Data
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 

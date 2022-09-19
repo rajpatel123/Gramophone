@@ -6,9 +6,9 @@ import agstack.gramophone.data.repository.community.CommunityRepository
 import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
 import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActivity
-import agstack.gramophone.ui.home.view.fragments.community.model.Data
-import agstack.gramophone.ui.home.view.fragments.community.model.LikedUsers
-import agstack.gramophone.ui.home.view.fragments.community.model.PagerItem
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.Data
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedUsers
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.PagerItem
 import agstack.gramophone.ui.postdetails.view.PostDetailsActivity
 import agstack.gramophone.utils.Constants
 import android.app.AlertDialog

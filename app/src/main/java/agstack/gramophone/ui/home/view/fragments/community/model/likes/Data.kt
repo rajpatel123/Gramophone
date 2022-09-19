@@ -1,4 +1,4 @@
-package agstack.gramophone.ui.home.view.fragments.community.model
+package agstack.gramophone.ui.home.view.fragments.community.model.likes
 
 import okhttp3.internal.immutableListOf
 
