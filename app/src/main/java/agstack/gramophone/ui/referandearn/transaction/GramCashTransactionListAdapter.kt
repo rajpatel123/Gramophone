@@ -2,7 +2,10 @@ package agstack.gramophone.ui.referandearn.transaction
 
 import agstack.gramophone.BR
 import agstack.gramophone.R
+import agstack.gramophone.databinding.ItemProgressBinding
 import agstack.gramophone.databinding.ItemTransactionBinding
+import agstack.gramophone.databinding.RatingReviewItemBinding
+import agstack.gramophone.ui.home.product.activity.RatingAndReviewsAdapter
 import agstack.gramophone.ui.referandearn.transaction.model.GramcashTxnItem
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,24 +14,34 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
-class GramCashTransactionListAdapter(transactionList: ArrayList<GramcashTxnItem>) :
-    RecyclerView.Adapter<GramCashTransactionListAdapter.CustomViewHolder>() {
+class GramCashTransactionListAdapter(transactionList: ArrayList<GramcashTxnItem?>?) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var mTransactionList = transactionList
     lateinit var mContext: Context
+    val LOADING_VIEW = 1
+    val ITEM_VIEW = 0
 
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         mContext = viewGroup.context
-        return CustomViewHolder(
+
+       if (viewType == ITEM_VIEW) {
+            return CustomViewHolder(
             ItemTransactionBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
         )
+        } else {
+            return LoadingViewHolder(
+                ItemProgressBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
+            )
+        }
+
 
     }
 
-    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is GramCashTransactionListAdapter.CustomViewHolder) {
 
-
-        val model: GramcashTxnItem = mTransactionList[position]
+        val model: GramcashTxnItem = mTransactionList?.get(position)!!
         val mBinding = holder.binding as ItemTransactionBinding
       mBinding.setVariable(BR.model, model)
 
@@ -99,14 +112,42 @@ class GramCashTransactionListAdapter(transactionList: ArrayList<GramcashTxnItem>
                 )
             }
 
-        }
+        }}
 
     }
 
     override fun getItemCount(): Int {
-        return mTransactionList.size
+        return mTransactionList?.size!!
+    }
+
+    fun showLoadingItem() {
+        val lastItem = itemCount - 1;
+        if (mTransactionList?.get(lastItem) != null) {
+            mTransactionList?.add(null)
+            notifyItemInserted(lastItem + 1)
+        }
+
+    }
+
+    fun hideLoadingItem() {
+        val lastItem = itemCount - 1;
+        mTransactionList?.remove(null)
+        notifyItemRemoved(lastItem)
+
+
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        if (mTransactionList?.get(position) == null) return LOADING_VIEW else return ITEM_VIEW
     }
 
     inner class CustomViewHolder(var binding: ItemTransactionBinding) :
         RecyclerView.ViewHolder(binding.root)
-}
+
+
+
+        inner class LoadingViewHolder(val binding: ItemProgressBinding) :
+            RecyclerView.ViewHolder(binding.root)
+
+
+    }
