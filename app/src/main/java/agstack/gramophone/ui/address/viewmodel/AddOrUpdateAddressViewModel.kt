@@ -28,6 +28,7 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNullOrBlank
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -537,11 +538,16 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
 
     fun checkPermissionAndUpdateUi() {
-            if (getNavigator()?.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) == true){
-                getNavigator()?.updateUi()
-            }else{
-                getNavigator()?.requestForLocation()
-            }
+           if (stateNameStr.get().isNotNullOrBlank()){
+               getNavigator()?.updateUi()
+           }else{
+               if (getNavigator()?.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) == true){
+                   getNavigator()?.updateUi()
+               }else{
+                   getNavigator()?.requestForLocation()
+               }
+           }
+
         }
 
     fun setAddressdata(userAddress: UserAddress) {

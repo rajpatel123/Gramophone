@@ -43,6 +43,7 @@ class AddOrUpdateAddressActivity :
                 intent?.extras?.get(Constants.STATE_IMAGE_URL) as String
             )
         }
+        watchSpinners()
     }
 
     override fun getLayoutID(): Int {
@@ -59,58 +60,36 @@ class AddOrUpdateAddressActivity :
     }
 
 
-    //Can be improved
-    override fun updateDistrict(
-        adapter: AddressDataListAdapter,
-        onSelect: (AddressDataModel) -> Unit
-    ) {
-        adapter.selectedItem = onSelect
-        districtSpinner.setAdapter(adapter)
-        districtSpinner.setOnClickListener {
-            districtSpinner.threshold = 1
-        }
+    fun watchSpinners(){
+        districtSpinner.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            }
+            override fun afterTextChanged(s: Editable) {
+                districtSpinner.threshold = 1
+                addOrUpdateAddressViewModel.tehsilName.set("")
+                addOrUpdateAddressViewModel.villageName.set("")
+                addOrUpdateAddressViewModel.pinCode.set("")
+                tehsilSpinner.setAdapter(null)
+                villageNameSpinner.setAdapter(null)
+                pincodeSpinner.setAdapter(null)
 
-
-            districtSpinner.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
+                if (TextUtils.isEmpty(s)){
+                    addOrUpdateAddressViewModel.getDistrict(
+                        "district",
+                        addOrUpdateAddressViewModel.stateNameStr.get()!!,
+                        "",
+                        ""
+                    )
                 }
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                }
-                override fun afterTextChanged(s: Editable) {
-                    districtSpinner.threshold = 1
-                    addOrUpdateAddressViewModel.tehsilName.set("")
-                    addOrUpdateAddressViewModel.villageName.set("")
-                    addOrUpdateAddressViewModel.pinCode.set("")
-                    tehsilSpinner.setAdapter(null)
-                    villageNameSpinner.setAdapter(null)
-                    pincodeSpinner.setAdapter(null)
-
-                    if (TextUtils.isEmpty(s)){
-                        addOrUpdateAddressViewModel.getDistrict(
-                            "district",
-                            addOrUpdateAddressViewModel.stateNameStr.get()!!,
-                            "",
-                            ""
-                        )
-                    }
-                }
-            })
-    }
-
-    override fun updateTehsil(
-        adapter: AddressDataListAdapter,
-        onSelect: (AddressDataModel) -> Unit
-    ) {
-        adapter.selectedItem = onSelect
-        tehsilSpinner.setAdapter(adapter)
-        tehsilSpinner.setOnClickListener {
-            tehsilSpinner.threshold = 1
-        }
+            }
+        })
 
         tehsilSpinner.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
@@ -130,18 +109,6 @@ class AddOrUpdateAddressActivity :
                 pincodeSpinner.setAdapter(null)
             }
         })
-    }
-
-    override fun updateVillage(
-        adapter: AddressDataListAdapter,
-        onSelect: (AddressDataModel) -> Unit
-    ) {
-        adapter.selectedItem = onSelect
-        villageNameSpinner.setAdapter(adapter)
-        villageNameSpinner.setOnClickListener {
-            villageNameSpinner.threshold = 1
-        }
-
         villageNameSpinner.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence,
@@ -158,17 +125,6 @@ class AddOrUpdateAddressActivity :
                 pincodeSpinner.setAdapter(null)
             }
         })
-    }
-
-    override fun updatePinCode(
-        adapter: AddressDataListAdapter,
-        onSelect: (AddressDataModel) -> Unit
-    ) {
-        adapter.selectedItem = onSelect
-        pincodeSpinner.setAdapter(adapter)
-        pincodeSpinner.setOnClickListener {
-            pincodeSpinner.threshold = 1
-        }
         pincodeSpinner.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence,
@@ -183,6 +139,56 @@ class AddOrUpdateAddressActivity :
                 pincodeSpinner.threshold = 1
             }
         })
+
+    }
+
+
+    //Can be improved
+    override fun updateDistrict(
+        adapter: AddressDataListAdapter,
+        onSelect: (AddressDataModel) -> Unit
+    ) {
+        adapter.selectedItem = onSelect
+        districtSpinner.setAdapter(adapter)
+        districtSpinner.setOnClickListener {
+            districtSpinner.threshold = 1
+        }
+
+    }
+
+    override fun updateTehsil(
+        adapter: AddressDataListAdapter,
+        onSelect: (AddressDataModel) -> Unit
+    ) {
+        adapter.selectedItem = onSelect
+        tehsilSpinner.setAdapter(adapter)
+        tehsilSpinner.setOnClickListener {
+            tehsilSpinner.threshold = 1
+        }
+
+    }
+
+    override fun updateVillage(
+        adapter: AddressDataListAdapter,
+        onSelect: (AddressDataModel) -> Unit
+    ) {
+        adapter.selectedItem = onSelect
+        villageNameSpinner.setAdapter(adapter)
+        villageNameSpinner.setOnClickListener {
+            villageNameSpinner.threshold = 1
+        }
+
+    }
+
+    override fun updatePinCode(
+        adapter: AddressDataListAdapter,
+        onSelect: (AddressDataModel) -> Unit
+    ) {
+        adapter.selectedItem = onSelect
+        pincodeSpinner.setAdapter(adapter)
+        pincodeSpinner.setOnClickListener {
+            pincodeSpinner.threshold = 1
+        }
     }
 
     override fun setStateImage(imageUrl: String) {
