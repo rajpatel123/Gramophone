@@ -7,7 +7,6 @@ import agstack.gramophone.ui.address.model.AddressRequestModel
 import agstack.gramophone.ui.address.model.AddressResponseModel
 import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
-import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
 import agstack.gramophone.ui.cart.model.AddToCartRequest
@@ -25,13 +24,18 @@ import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
+import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
 import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
+import agstack.gramophone.ui.referandearn.model.GramCashResponseModel
+import agstack.gramophone.ui.referandearn.transaction.TransactionRequestModel
+import agstack.gramophone.ui.referandearn.transaction.model.GramCashTxnResponseModel
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
+import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
+import agstack.gramophone.ui.userprofile.verifyotp.model.VerifyOTPRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import agstack.gramophone.utils.Constants
-import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -130,6 +134,9 @@ interface GramAppService {
     @POST("api/v5/product/get-expert-advice")
     suspend fun getExpertAdvice(@Body productData: ProductData):Response<SuccessStatusResponse>
 
+    @POST("api/v5/general/help/{type}")
+    suspend fun getHelp(@Path("type") type: String,@Body productData: ProductData):Response<SuccessStatusResponse>
+
     @PUT("api/v5/product/update-product-favourite")
     suspend fun updateProductFavorite(@Body productData: ProductData):Response<SuccessStatusResponse>
 
@@ -193,8 +200,41 @@ interface GramAppService {
     @GET("api/v5/customer/profile-data")
     suspend fun getProfile(): Response<ProfileResponse>
 
+
+    @PUT("api/v5/customer/profile-data")
+    suspend fun updateProfile(@Body updateProfileModel: UpdateProfileModel):Response<SuccessStatusResponse>
+
     @GET("api/v5/category/home-data")
     suspend fun getHomeData(): Response<HomeDataResponse>
+
+
+    @POST("api/v5/customer/send-otp-mobile")
+    @JvmSuppressWildcards
+    suspend fun sendOTPMobile(@Body sendOtpRequestModel: VerifyOTPRequestModel): Response<SendOtpResponseModel>
+
+
+    @PUT("api/v5/customer/resend-otp-mobile")
+    @JvmSuppressWildcards
+    suspend fun resendOTPMobile(@Body resendOtpRequestModel: SendOtpRequestModel): Response<SendOtpResponseModel>
+
+    @POST("api/v5/customer/validate-otp-mobile")
+    @JvmSuppressWildcards
+    suspend fun validateOTPMobile(@Body validateOtpRequestModel: ValidateOtpMobileRequestModel): Response<SuccessStatusResponse>
+
+
+
+    @GET("api/v5/gramcash/gramcash")
+    @JvmSuppressWildcards
+    suspend fun getGramCash(): Response<GramCashResponseModel>
+
+
+    @POST("api/v5/gramcash/gramcash-txn/{type}")
+    @JvmSuppressWildcards
+    suspend fun getGramCashTxn(@Path("type") type: String,
+                               @Body requestModel: TransactionRequestModel): Response<GramCashTxnResponseModel>
+
+
+
 
 
 

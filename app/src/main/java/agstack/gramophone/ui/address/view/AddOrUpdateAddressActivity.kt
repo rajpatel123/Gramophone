@@ -216,8 +216,17 @@ class AddOrUpdateAddressActivity :
         }
 
         if (intent?.extras?.containsKey(Constants.FROM_EDIT_PROFILE) == true) {
+
             viewDataBinding.ivBack.visibility = View.VISIBLE
             viewDataBinding.saveBtn.visibility=View.VISIBLE
+            if(intent?.extras?.containsKey(Constants.ADDRESSOBJECT)==true){
+                val addressReceivedfromBundle =
+                    intent?.getParcelableExtra<agstack.gramophone.ui.profile.model.UserAddress>(
+                        Constants.ADDRESSOBJECT
+                    )
+                mViewModel?.setAddressdata(addressReceivedfromBundle!!)
+            }
+
 
         } else {
             viewDataBinding.ivBack.visibility = View.GONE

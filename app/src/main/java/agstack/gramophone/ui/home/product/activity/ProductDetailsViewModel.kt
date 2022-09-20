@@ -43,6 +43,7 @@ class ProductDetailsViewModel @Inject constructor(
     private var addToCartJob: Job? = null
     private var expertAdviceJob: Job? = null
     private var updateProductFavoriteJob: Job? = null
+    private var contactForPriceJob :Job?=null
     var progressLoader = ObservableField<Boolean>(false)
 
     //Values selected by User
@@ -50,7 +51,7 @@ class ProductDetailsViewModel @Inject constructor(
 
     var ratingSelected = ObservableField<Double>(0.0)
     var isHeartSelected = ObservableField<Boolean>(false)
-    var selectedSkuListItem = ProductSkuListItem()
+    var selectedSkuListItem = ObservableField<ProductSkuListItem>()
     var selectedOfferItem = PromotionListItem()
     var addToCartEnabled = ObservableField<Boolean>(true)
     fun onHeartIconClicked() {
@@ -95,7 +96,7 @@ class ProductDetailsViewModel @Inject constructor(
                 (bundle?.getParcelable<ProductData>("product") as ProductData).product_id.toString()
             )
 
-            productId = (bundle?.getParcelable<ProductData>("product") as ProductData).product_id
+            productId = (bundle?.getParcelable<ProductData>("product") as ProductData).product_id!!
 
             productDetailstoBeFetched.product_id = productId
 
@@ -148,11 +149,11 @@ class ProductDetailsViewModel @Inject constructor(
                                 )
                             ) {
                                 Log.d("productSKUItemSelected", it.productId.toString())
-                                selectedSkuListItem = it
+                                selectedSkuListItem.set(it)
                                 productDetailstoBeFetched.product_id =
-                                    selectedSkuListItem.productId!!.toInt()
+                                    selectedSkuListItem.get()?.productId!!.toInt()
 
-                                setPercentage_mrpVisibility(selectedSkuListItem, selectedOfferItem)
+                                setPercentage_mrpVisibility(selectedSkuListItem.get()!!, selectedOfferItem)
 
                             }
 
@@ -160,11 +161,11 @@ class ProductDetailsViewModel @Inject constructor(
                             for (item in mSKUList) {
                                 item?.selected = item?.productId!!.equals(productIdDefault)
                                 if (item?.selected == true) {
-                                    selectedSkuListItem = item
+                                    selectedSkuListItem.set(item)
                                     productDetailstoBeFetched.product_id =
-                                        selectedSkuListItem.productId!!.toInt()
+                                        selectedSkuListItem.get()?.productId!!.toInt()
                                     setPercentage_mrpVisibility(
-                                        selectedSkuListItem,
+                                        selectedSkuListItem.get()!!,
                                         selectedOfferItem
                                     )
 
@@ -363,7 +364,7 @@ class ProductDetailsViewModel @Inject constructor(
                                 //When RadioButton is clicked
                                 selectedOfferItem = it
 
-                                setPercentage_mrpVisibility(selectedSkuListItem, selectedOfferItem)
+                                setPercentage_mrpVisibility(selectedSkuListItem.get()!!, selectedOfferItem)
 
                             },
                             {
@@ -459,7 +460,7 @@ class ProductDetailsViewModel @Inject constructor(
             addToCartJob = checkNetworkThenRun {
                 progressLoader.set(true)
                 var producttoBeAdded = ProductData()
-                producttoBeAdded.product_id = selectedSkuListItem.productId!!.toInt()
+                producttoBeAdded.product_id = selectedSkuListItem.get()?.productId!!.toInt()
                 producttoBeAdded.quantity = qtySelected.get()
                 producttoBeAdded.promotion_id = selectedOfferItem.promotion_id
                 val addTocartResponse =
@@ -488,7 +489,6 @@ class ProductDetailsViewModel @Inject constructor(
             getNavigator()?.dismissExpertBottomSheet()
 
         }, {
-
             //Call ExpertAdviceAPI
             Log.d("Click", "yesPleaseClicked")
             expertAdviceJob.cancelIfActive()
@@ -496,8 +496,10 @@ class ProductDetailsViewModel @Inject constructor(
                 progressLoader.set(true)
                 var producttoBeAdded = ProductData()
                 producttoBeAdded.product_id = productId
+
                 val expertAdviceResponse =
-                    productRepository.getExpertAdvice(producttoBeAdded)
+                    productRepository.getHelp(Constants.EXPERT_ADVICE, producttoBeAdded)
+
                 getNavigator()?.dismissExpertBottomSheet()
                 progressLoader.set(false)
 
@@ -515,7 +517,28 @@ class ProductDetailsViewModel @Inject constructor(
     }
 
     fun ContactForPriceClicked() {
-        getNavigator()?.showContactForPriceBottomSheetDialog(ContactForPriceBottomSheetDialog())
+
+        contactForPriceJob.cancelIfActive()
+        contactForPriceJob = checkNetworkThenRun {
+            progressLoader.set(true)
+            var producttoBeAdded = ProductData()
+            producttoBeAdded.product_id = productId
+
+            val expertAdviceResponse =
+                productRepository.getHelp(Constants.CONTACTFORPRICE, producttoBeAdded)
+
+            progressLoader.set(false)
+
+            if (expertAdviceResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+
+                getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
+                getNavigator()?.showContactForPriceBottomSheetDialog(ContactForPriceBottomSheetDialog())
+            } else {
+                getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
+            }
+        }
+
+
     }
 
 }

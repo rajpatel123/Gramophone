@@ -19,12 +19,16 @@ import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
+import agstack.gramophone.ui.userprofile.model.TestUserModel
+import agstack.gramophone.ui.userprofile.model.UserModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
 import org.json.JSONObject
 import retrofit2.Response
+import retrofit2.http.Part
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -44,6 +48,13 @@ class CommunityRepositoryImpl @Inject constructor(
         Dispatchers.IO) {
         val appData = communityApiService.getCommunityPost()
         appData
+    }
+
+
+    override suspend fun updateUserProfileImage(@Part postImage: MultipartBody.Part): Response<TestUserModel> = withContext(
+        Dispatchers.IO) {
+        val userData = communityApiService.updateUserProfileImage(postImage)
+        userData
     }
 
 

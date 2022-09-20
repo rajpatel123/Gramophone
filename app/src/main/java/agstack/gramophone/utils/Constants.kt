@@ -6,6 +6,7 @@ import android.content.Context
 
 
 object Constants {
+    val ADDRESSOBJECT: String = "address"
     val REFERRAL_CODE: String="referralCOde"
     val UNAUTHORIZED: Int=401
     val GP_API_MESSAGE: String="gp_api_message"
@@ -48,6 +49,10 @@ object Constants {
     val HOME_SHOP_BY_CROP_VIEW_TYPE = 5
     val HOME_SHOP_BY_STORE_VIEW_TYPE = 6
     val HOME_SHOP_BY_COMPANY_VIEW_TYPE = 7
+    val GramCashResponse = "GramCashResponse"
+    val ReferralPointBalanceData ="ReferralPointBalanceData"
+    val GramCashFAQList = "GramCashFAQList"
+    val GramCashReferralRulesList = "GramCashReferralRulesList"
 
 
     val CAMERA_PERMISSION = Manifest.permission.CAMERA
@@ -60,12 +65,14 @@ object Constants {
     val RECENT = "recent"
     val TOP_REVIEWS = "Top Reviews"
     val RECENT_REVIEWS = "Recent Reviews"
+    val REFERRAL = "referral"
     const val PAST = "past"
     const val HELP_PHONE_NUMBER: String = "customer_support_no"
     const val LANG: String = "lang"
     const val PAGE_URL: String = "url"
     const val PAGE_TITLE: String = "title"
 
+val SHAREIMAGEURIStRING = "imageuriString"
 
     val NORMAL: Int = 0
     val ALL: Int = 1
@@ -108,6 +115,7 @@ object Constants {
     const val PINCODE = "pincode"
     const val SMS = "sms"
     const val VOICE = "voice"
+    const val USER_PROFILE_DATA = "USERPROFILEDATA"
 
 
     //MyFarm
@@ -124,6 +132,11 @@ object Constants {
     const val PRODUCTREVIEWDATA = "PRODUCTREVIEWDATA"
     const val PRODUCTID = "PRODUCTID"
     const val Product_Id_Key = "product_id"
+    const val EXPERT_ADVICE = "expert-advice"
+    const val HELP = "help"
+    const val FEEDBACK = "feedback"
+    const val CONTACTFORPRICE = "contact-for-price"
+
 
     //Product
     const val PRODUCT = "product"

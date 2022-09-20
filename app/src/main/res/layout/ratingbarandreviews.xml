@@ -122,6 +122,7 @@
                         style="?android:attr/progressBarStyleHorizontal"
                         progressAdapter="@{rvm.productReviewsData.rating.ratingCount.jsonMember3}"
                         android:layout_width="fill_parent"
+                        android:background="@drawable/progress_bar_background"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_8sdp"
                         android:indeterminate="false"
