@@ -34,6 +34,8 @@ class ReferandEarnViewModel @Inject constructor(
     fun showReferralPointsActivity() {
         getNavigator()?.openActivity(ReferralPointsActivity::class.java, Bundle().apply {
             putParcelable(Constants.GramCashResponse,gramCashResponseData.get())
+            putString(Constants.SHAREIMAGEURIStRING,getNavigator()?.getQRCodeURI())
+
         })
     }
 

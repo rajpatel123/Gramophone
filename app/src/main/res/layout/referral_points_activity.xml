@@ -27,7 +27,6 @@
             android:id="@+id/nestedscroll"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/layout_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/myToolbar">
@@ -306,6 +305,7 @@
                         android:paddingRight="@dimen/_16sdp"
                         android:paddingBottom="@dimen/_8sdp"
                         android:text="@string/refer_a_friend"
+                        android:onClick="@{()->viewModel.onReferFriendClicked()}"
                         android:textColor="@color/white" />
                 </LinearLayout>
 

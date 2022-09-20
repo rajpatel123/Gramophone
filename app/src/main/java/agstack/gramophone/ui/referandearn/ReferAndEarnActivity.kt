@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.view.drawToBitmap
+import com.google.zxing.qrcode.encoder.QRCode
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,6 +22,7 @@ class ReferAndEarnActivity :
     private val referandEarnViewModel: ReferandEarnViewModel by viewModels()
     private var shareSheetPresenter: ShareSheetPresenter? = null
     var qrBitmap: Bitmap? = null
+    var QRCodeURI: Uri? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +37,14 @@ class ReferAndEarnActivity :
         shareSheetPresenter!!.shareDynamicLink()
     }
 
+    override fun getQRCodeURI(): String? {
+        return QRCodeURI.toString()
+    }
+
 
     override fun setQRCodeImage(bitmap: Bitmap?) {
         qrBitmap = bitmap
+        QRCodeURI  = Utility.bitmapToUri(this, qrBitmap)
         viewDataBinding?.shareyourreferal.referralCodeImageView?.setImageBitmap(bitmap)
 
     }
@@ -75,6 +82,8 @@ class ReferAndEarnActivity :
             QRCodeURI,
             currentShareOption
         )
+
+       // var datainBundle
 
 
     }

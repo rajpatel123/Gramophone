@@ -89,11 +89,11 @@
             android:paddingStart="40dp"
             android:paddingEnd="40dp"
             android:visibility="gone"
+            app:pastSize="@{viewModel.allListSize}"
+            app:recentSize="@{viewModel.referralsListSize}"
+            app:selectedTab="@{viewModel.selectedTab}"
            >
 
-            <!-- app:pastSize="@{viewModel.pastOrderSize}"
-            app:recentSize="@{viewModel.recentOrderSize}"
-            app:selectedTab="@{viewModel.selectedTab}"-->
 
 
 

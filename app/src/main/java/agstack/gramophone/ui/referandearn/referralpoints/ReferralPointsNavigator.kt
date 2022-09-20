@@ -4,4 +4,5 @@ import agstack.gramophone.base.BaseNavigator
 
 interface ReferralPointsNavigator :BaseNavigator {
      fun setMyReferralsAdapter(myReferralsAdapter: MyReferralsAdapter)
+    fun openShareIntent()
 }

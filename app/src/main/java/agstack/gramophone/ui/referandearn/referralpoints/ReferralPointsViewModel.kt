@@ -47,4 +47,10 @@ class ReferralPointsViewModel @Inject constructor(
             getNavigator()?.setMyReferralsAdapter(MyReferralsAdapter(myReferrals as ArrayList<MyReferralsItem>))
         }
     }
+
+
+    fun onReferFriendClicked(){
+        getNavigator()?.openShareIntent()
+
+    }
 }

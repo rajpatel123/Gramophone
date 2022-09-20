@@ -72,6 +72,7 @@ object Constants {
     const val PAGE_URL: String = "url"
     const val PAGE_TITLE: String = "title"
 
+val SHAREIMAGEURIStRING = "imageuriString"
 
     val NORMAL: Int = 0
     val ALL: Int = 1

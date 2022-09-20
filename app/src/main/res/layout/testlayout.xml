@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,326 +7,116 @@
 
         <variable
             name="viewModel"
-            type="agstack.gramophone.ui.referandearn.referralpoints.ReferralPointsViewModel" />
+            type="agstack.gramophone.ui.referandearn.transaction.AllTransactionsListViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".ui.home.product.activity.ProductDetailsActivity">
+        android:layout_height="match_parent">
 
         <include
             android:id="@+id/myToolbar"
             layout="@layout/layout_toolbar" />
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nestedscroll"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            style="@style/TabIndicatorStyle"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/layout_bottom"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/myToolbar">
+            android:layout_height="@dimen/_44sdp"
+            android:layout_below="@+id/myToolbar"
+            android:layout_gravity="center_horizontal"
+            app:tabIndicatorColor="@color/orange">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all" />
 
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabPast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/referrals" />
 
-                <RelativeLayout
-                    android:id="@+id/rl_blue"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_92sdp"
-                    android:background="@drawable/ic_bg_rp"
-                    android:orientation="horizontal"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+        </com.google.android.material.tabs.TabLayout>
 
+        <View
+            android:id="@+id/tab_separator"
+            android:layout_width="match_parent"
+            android:layout_height="14dp"
+            android:layout_below="@+id/tabLayout"
+            android:background="#F2F4F7"
+            android:visibility="visible" />
 
-                    <ImageView
-                        android:layout_width="@dimen/_40sdp"
-                        android:layout_height="@dimen/_40sdp"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/_24sdp"
-                        app:srcCompat="@drawable/ic_coin" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginRight="@dimen/_24sdp"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-
-                        <TextView
-                            android:id="@+id/tv_referral_points"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/manrope_bold"
-                            android:text="@{viewModel.gramCashResponseDataFromBundle.gramcashTotal.toString()}"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_24ssp" />
-
-                        <TextView
-                            android:id="@+id/tv_referral_points_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/manrope_regular"
-                            android:text="@string/referral_points"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_14ssp" />
-
-                    </LinearLayout>
-                </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAll"
+            app:recentSize="@{viewModel.allListSize}"
+            app:selectedTab="@{viewModel.selectedTab}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tab_separator"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_transaction"
+            tools:visibility="visible" />
 
 
-                <RelativeLayout
-                    android:id="@+id/rl_available_pending"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/rl_blue">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentStart="true"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            style="@style/TextSize14Sp"
-                            android:layout_marginTop="@dimen/_15sdp"
-                            android:layout_marginLeft="@dimen/_15sdp"
-                            android:text="@string/available"
-                            android:textColor="@color/green"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            style="@style/TextSize18Sp"
-                            android:layout_gravity="start"
-                            android:layout_marginLeft="@dimen/_15sdp"
-                            android:text="@{viewModel.gramCashResponseDataFromBundle.gramcashAvailable.toString()}"
-                            tools:text="200"
-                            android:textColor="@color/blakish"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true"
-                        android:orientation="vertical" >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvReferral"
+            app:selectedTab="@{viewModel.selectedTab}"
+            app:pastSize="@{viewModel.referralsListSize}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tab_separator"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_transaction"
+            tools:visibility="visible" />
 
 
-                        <TextView
-                            style="@style/TextSize14Sp"
-                            android:layout_marginTop="@dimen/_15sdp"
-                            android:layout_marginEnd="@dimen/_15sdp"
-                            android:text="@string/pending"
-                            android:textColor="@color/orange"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            style="@style/TextSize18Sp"
-                            android:layout_gravity="end"
-                            android:layout_marginEnd="@dimen/_15sdp"
-                            tools:text="200"
-                            android:text="@{viewModel.gramCashResponseDataFromBundle.gramcashPending.toString()}"
-                            android:textColor="@color/blakish"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-
-                <View
-                    android:id="@+id/view"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:layout_marginTop="@dimen/_14sdp"
-                    android:background="@color/gray_stroke"
-                    app:layout_constraintTop_toBottomOf="@id/rl_available_pending" />
-
-                <TextView
-                    android:id="@+id/tv_knowmore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_14sdp"
-                    android:layout_marginBottom="@dimen/_14sdp"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:fontFamily="@font/manrope_bold"
-                    android:onClick="@{()->viewModel.knowMoreReferralPointBalanceClick()}"
-                    android:text="@string/know_more_about_referral_point"
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/_12ssp"
-                    android:textStyle="normal"
-                    app:drawableEndCompat="@drawable/ic_arrow_right"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/view" />
-
-
-                <View
-                    android:id="@+id/v1"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_14sdp"
-                    android:background="@color/gray_stroke"
-                    app:layout_constraintTop_toBottomOf="@id/tv_knowmore" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_viewreferral_trans"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_16sdp"
-                    android:onClick="@{()->viewModel.viewAllReferralTransactionClick()}"
-                    app:layout_constraintTop_toBottomOf="@id/v1">
-
-
-                    <ImageView
-                        android:id="@+id/iv_ref_trans"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_gravity="center_vertical"
-                        app:srcCompat="@drawable/ic_rupee_circle" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/_20sdp"
-                        android:layout_toRightOf="@+id/iv_ref_trans"
-                        android:fontFamily="@font/manrope_bold"
-                        android:gravity="center"
-                        android:text="@string/view_all_referral_transactions"
-                        android:textColor="@color/brand_color"></TextView>
-
-                    <ImageView
-                        android:id="@+id/iv_arrow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true"
-                        app:srcCompat="@drawable/ic_arrow_right_black" />
-                </RelativeLayout>
-
-                <View
-                    android:id="@+id/v2"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_14sdp"
-                    android:background="@color/gray_stroke"
-                    app:layout_constraintTop_toBottomOf="@id/rl_viewreferral_trans" />
-
-                <TextView
-                    android:id="@+id/myref_label"
-                    style="@style/TextSize18Sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/_16sdp"
-                    android:text="@string/my_referrals"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/v2" />
-
-                <LinearLayout
-                    android:id="@+id/no_referral_layout"
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="@dimen/_20sdp"
-                    app:layout_constraintTop_toBottomOf="@id/myref_label">
-
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_person_standing" />
-
-
-                    <TextView
-                        android:id="@+id/tv_heading"
-                        style="@style/TextSize14Sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_23sdp"
-                        android:layout_marginTop="@dimen/_21sdp"
-                        android:layout_marginRight="@dimen/_23sdp"
-                        android:gravity="center_horizontal"
-                        android:text="@string/you_have_no_referral"
-                        android:textColor="@color/blakish"
-                        android:textSize="@dimen/_16ssp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tv_subheading"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_23sdp"
-                        android:layout_marginTop="@dimen/_11sdp"
-                        android:layout_marginRight="@dimen/_23sdp"
-                        android:fontFamily="@font/manrope_regular"
-                        android:gravity="center_horizontal"
-                        android:text="@string/share_earn_referral_msg"
-                        android:textColor="@color/blakish"
-                        android:textSize="@dimen/_14ssp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_heading" />
-
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:layout_marginBottom="@dimen/_32sdp"
-                        android:background="@drawable/rounded_corner_12_solid_orange"
-                        android:paddingLeft="@dimen/_16sdp"
-                        android:paddingTop="@dimen/_8sdp"
-                        android:paddingRight="@dimen/_16sdp"
-                        android:paddingBottom="@dimen/_8sdp"
-                        android:text="@string/refer_a_friend"
-                        android:textColor="@color/white" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_bottom"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/myref_label">
-
-
-                </LinearLayout>
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        </androidx.core.widget.NestedScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tab_separator"
+            android:layout_centerInParent="true"
+            android:background="@color/gray_empty_bg"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            app:pastSize="@{viewModel.allListSize}"
+            app:recentSize="@{viewModel.referralsListSize}"
+            app:selectedTab="@{viewModel.selectedTab}"
+            android:visibility="gone"
+            >
 
 
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/manrope_bold"
+                android:text="@string/no_transactions"
+                android:textColor="@color/brand_color"
+                android:textSize="18sp" />
+
+
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="@{viewModel.progressLoader == true ? View.VISIBLE : View.GONE}" />
+    </RelativeLayout>
 </layout>

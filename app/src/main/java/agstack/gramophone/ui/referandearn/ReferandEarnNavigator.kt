@@ -7,4 +7,5 @@ interface ReferandEarnNavigator :BaseNavigator {
      fun setQRCodeImage(bitmap: Bitmap?)
      fun convertedReferralLayoutsBitmap()
      fun share(currentShareOption: String,shareText:String?)
+     fun getQRCodeURI(): String?
 }
