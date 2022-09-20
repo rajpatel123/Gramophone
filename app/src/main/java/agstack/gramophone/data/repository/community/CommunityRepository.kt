@@ -9,6 +9,8 @@ import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
+import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityHomeResponseModel
+import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityRequestModel
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
@@ -25,6 +27,5 @@ import javax.inject.Singleton
 
 @Singleton
 interface CommunityRepository {
-    suspend fun getCommunityPost(): Response<String>
-    suspend fun getCommunityDilip(): Response<String>
+    suspend fun getCommunityPost(sort: CommunityRequestModel): Response<CommunityHomeResponseModel>
 }

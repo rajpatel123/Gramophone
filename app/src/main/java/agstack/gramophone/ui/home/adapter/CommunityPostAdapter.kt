@@ -20,7 +20,7 @@ import java.util.*
 /**
  * [RecyclerView.Adapter] holding [NestedRecyclerFragment] view pager logic
  */
-class CommunityPostAdapter(private val dataList: ArrayList<Data>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CommunityPostAdapter(private val dataList: List<agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val viewPageStates = HashMap<Int, Int>()
     private lateinit var context: Context
@@ -78,30 +78,30 @@ class CommunityPostAdapter(private val dataList: ArrayList<Data>) : RecyclerView
     }
 
     private fun configureTextPollItem(holder: TextPollHolder, position: Int) {
-        val data = dataList[position]
+        val data = dataList?.get(position)
         holder.itemPollBinding.setVariable(BR.model, data)
         val mBinding = holder.itemPollBinding
     }
 
     private fun configureTextImageItem(holder: TextImageHolder, position: Int) {
-        val data = dataList[position]
+        val data = dataList?.get(position)
         holder.itemBannerImageBinding.setVariable(BR.model, data)
         val mBinding = holder.itemBannerImageBinding
 
         holder.itemBannerImageBinding.tvDesc.setOnClickListener {
-            onItemDetailClicked?.invoke(data.textItem!!)
+            onItemDetailClicked?.invoke(data?._id!!)
         }
 
         holder.itemBannerImageBinding.ivMenu.setOnClickListener {
-            dataList[lastSelectPosition].isSelected=false
+            dataList?.get(lastSelectPosition).isSelected=false
             lastSelectPosition = position
             data.isSelected = true
             notifyDataSetChanged()
-            onTripleDotMenuClicked?.invoke(data.textItem!!)
+            onTripleDotMenuClicked?.invoke(data?._id!!)
         }
 
         holder.itemBannerImageBinding.cvImageBanner.setOnClickListener {
-            onItemDetailClicked?.invoke(data.textItem!!)
+            onItemDetailClicked?.invoke(data?._id!!)
         }
 
         holder.itemBannerImageBinding.rlLikes.setOnClickListener {
@@ -145,29 +145,29 @@ class CommunityPostAdapter(private val dataList: ArrayList<Data>) : RecyclerView
     }
 
     private fun configureTextItem(holder: TextItemHolder, position: Int) {
-        val data = dataList[position]
+        val data = dataList?.get(position)
         holder.itemPostBinding.setVariable(BR.model, data)
         val mBinding = holder.itemPostBinding
 
         holder.itemPostBinding.tvDesc.setOnClickListener {
-            onItemDetailClicked?.invoke(data.textItem!!)
+            onItemDetailClicked?.invoke(data?._id!!)
         }
 
         holder.itemPostBinding.ivMenu.setOnClickListener {
-            dataList[lastSelectPosition].isSelected=false
+            dataList?.get(lastSelectPosition).isSelected=false
 
             lastSelectPosition = position
             data.isSelected = true
             notifyDataSetChanged()
-            onTripleDotMenuClicked?.invoke(data.textItem!!)
+            onTripleDotMenuClicked?.invoke(data?._id!!)
 
         }
 
         holder.itemPostBinding.rlLikes.setOnClickListener {
-            onItemLikesClicked?.invoke(data.textItem!!)
+            onItemLikesClicked?.invoke(data?._id!!)
         }
         holder.itemPostBinding.rlComments.setOnClickListener {
-            onItemCommentsClicked?.invoke(data.textItem!!)
+            onItemCommentsClicked?.invoke(data?._id!!)
         }
         holder.itemPostBinding.ivWhatsapp.setOnClickListener {
             onShareOrBookMarkClicked?.invoke(IntentKeys.WhatsAppShareKey)
@@ -178,7 +178,7 @@ class CommunityPostAdapter(private val dataList: ArrayList<Data>) : RecyclerView
         }
 
         holder.itemPostBinding.ivBookmark.setOnClickListener {
-            onShareOrBookMarkClicked?.invoke(data.textItem!!)
+            onShareOrBookMarkClicked?.invoke(data?._id!!)
         }
 
         holder.itemPostBinding.llEdit.setOnClickListener {
@@ -203,20 +203,20 @@ class CommunityPostAdapter(private val dataList: ArrayList<Data>) : RecyclerView
     }
 
     private fun configurePagerHolder(holder: PagerItemHolder, position: Int) {
-        val data = dataList[position]
-        val adapter = BannerViewPagerAdapter(data.pagerItemList, context)
-
-        holder.bindingBannerImageBinding.bannerPager.adapter = adapter
-        holder.bindingBannerImageBinding?.dotsIndicator?.attachTo(holder.bindingBannerImageBinding?.bannerPager!!)
-        if (viewPageStates.containsKey(position)) {
-            viewPageStates[position]?.let {
-                holder.bindingBannerImageBinding.bannerPager.currentItem = it
-            }
-        }
+//        val data = dataList?.get(position)
+//        val adapter = BannerViewPagerAdapter(data.pagerItemList, context)
+//
+//        holder.bindingBannerImageBinding.bannerPager.adapter = adapter
+//        holder.bindingBannerImageBinding?.dotsIndicator?.attachTo(holder.bindingBannerImageBinding?.bannerPager!!)
+//        if (viewPageStates.containsKey(position)) {
+//            viewPageStates[position]?.let {
+//                holder.bindingBannerImageBinding.bannerPager.currentItem = it
+//            }
+//        }
     }
 
     private fun configureVideoHolder(holder: VideoHolder, position: Int) {
-        val data = dataList[position]
+        val data = dataList?.get(position)
         holder.itemPostVideoBinding.setVariable(BR.model, data)
         val mBinding = holder.itemPostVideoBinding
     }
@@ -231,17 +231,16 @@ class CommunityPostAdapter(private val dataList: ArrayList<Data>) : RecyclerView
         }
     }
 
-    override fun getItemViewType(position: Int): Int = dataList[position].viewType
+    override fun getItemViewType(position: Int): Int = dataList?.get(position).postType
 
-    override fun getItemCount(): Int = dataList.size
+    override fun getItemCount(): Int = dataList?.size!!
 
     companion object {
-        internal const val VIEW_TYPE_TEXT = 51
-        internal const val VIEW_TYPE_PAGER = 52
-        internal const val VIEW_TYPE_IMAGE_TEXT = 53
-        internal const val VIEW_TYPE_POLL = 54
-        internal const val VIEW_TYPE_VIDEO = 56
-        internal const val VIEW_TYPE_QUIZ = 55
+        internal const val VIEW_TYPE_POST = "POST"
+        internal const val VIEW_TYPE_BANNER = "BANNER"
+        internal const val FEATURED_PRODUCTS = "FEATURED_PRODUCTS"
+        internal const val VIEW_TYPE_QUIZ = "QUIZ"
+
     }
 }
 

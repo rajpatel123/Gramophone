@@ -9,10 +9,11 @@ import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActi
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.Data
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedUsers
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.PagerItem
+import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityRequestModel
 import agstack.gramophone.ui.postdetails.view.PostDetailsActivity
 import agstack.gramophone.utils.Constants
 import android.app.AlertDialog
-import android.util.Log
+import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -32,11 +33,13 @@ class CommunityViewModel @Inject constructor(
     val dataList: LiveData<List<Data>>
         get() = _dataList
     lateinit var mAlertDialog: AlertDialog
+    var sorting  = ObservableField<String>()
 
     val likedUserList: LiveData<List<LikedUsers>>
         get() = userList
 
     fun loadData() {
+        sorting.set("trending")
         viewModelScope.launch(Dispatchers.Default) {
             getPost()
             val finalList = ArrayList<Data>()
@@ -86,50 +89,7 @@ class CommunityViewModel @Inject constructor(
                 finalList.add(data)
             }
 
-            getNavigator()?.updatePostList(CommunityPostAdapter(finalList),
-                {//postDetail click
-                    getNavigator()?.openActivity(PostDetailsActivity::class.java, null)
-                },
-                {//likes click
-                    getNavigator()?.openActivity(LikedPostUserListActivity::class.java, null)
-                },
-                {//comments click
-                    getNavigator()?.openCommentDialog()
-                },
-                {//whatsapp/facebook/bookmark click
-                    getNavigator()?.sharePost(it)
-                },
-                {//pop menu
 
-                },
-                {
-                    when (it) {
-                        Constants.PIN_POST -> {
-
-                        }
-
-                        Constants.DELETE_POST -> {
-                            getNavigator()?.deletePostDialog()
-                        }
-
-                        Constants.REPORT_POST -> {
-                            getNavigator()?.reportPostDialog()
-                        }
-
-                        Constants.BLOCK_USER -> {
-                            getNavigator()?.blockUserDialog()
-                        }
-
-                        Constants.COPY_POST -> {
-
-                        }
-                        Constants.EDIT_POST -> {
-
-                        }
-                    }
-
-                }
-            )
         }
     }
 
@@ -169,9 +129,53 @@ class CommunityViewModel @Inject constructor(
         getNavigator()?.onLoading()
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
-                val response = communityRepository.getCommunityPost()
+                val response = communityRepository.getCommunityPost(CommunityRequestModel(sorting.get()))
                 if (response.isSuccessful) {
-                    Log.d("Raj", "Community integrated")
+                    val data =  response.body()?.data
+                    getNavigator()?.updatePostList(CommunityPostAdapter(data),
+                        {//postDetail click
+                            getNavigator()?.openActivity(PostDetailsActivity::class.java, null)
+                        },
+                        {//likes click
+                            getNavigator()?.openActivity(LikedPostUserListActivity::class.java, null)
+                        },
+                        {//comments click
+                            getNavigator()?.openCommentDialog()
+                        },
+                        {//whatsapp/facebook/bookmark click
+                            getNavigator()?.sharePost(it)
+                        },
+                        {//pop menu
+
+                        },
+                        {
+                            when (it) {
+                                Constants.PIN_POST -> {
+
+                                }
+
+                                Constants.DELETE_POST -> {
+                                    getNavigator()?.deletePostDialog()
+                                }
+
+                                Constants.REPORT_POST -> {
+                                    getNavigator()?.reportPostDialog()
+                                }
+
+                                Constants.BLOCK_USER -> {
+                                    getNavigator()?.blockUserDialog()
+                                }
+
+                                Constants.COPY_POST -> {
+
+                                }
+                                Constants.EDIT_POST -> {
+
+                                }
+                            }
+
+                        }
+                    )
                 }
             } else
                 getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
