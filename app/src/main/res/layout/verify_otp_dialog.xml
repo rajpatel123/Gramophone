@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.userprofile.verifyotp.VerifyOtpDialogViewModel" />
+    </data>
+
+
+    <LinearLayout
+        android:background="@drawable/otp_medium_bg"
+        android:padding="@dimen/_15sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_separator">
+
+        <TextView
+            style="@style/heading_title_bold_large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/verify_otp"
+            android:textColor="@color/brand_color" />
+
+        <TextView
+            android:id="@+id/tvOTPmessageWithNumber"
+            style="@style/small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="@string/enter_6_digit_code"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_10ssp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:orientation="horizontal"
+
+            >
+
+            <TextView
+                android:id="@+id/tvMobileNumber"
+                style="@style/small"
+                tools:text="+91 82858484848"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_10ssp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_22sdp">
+
+            <TextView
+                style="@style/small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/enter_otp"
+                android:textColor="@color/blakish" />
+
+        </RelativeLayout>
+
+        <com.chaos.view.PinView
+            android:id="@+id/firstPinView"
+            android:text="@={viewModel.otp}"
+            style="@style/PinWidget.PinView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:cursorVisible="true"
+            android:fontFamily="@font/manrope_bold"
+            android:hint="Hint."
+            android:inputType="number"
+            android:itemBackground="@color/mute_grey"
+            android:state_selected="true"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:cursorColor="@color/brand_color"
+            app:cursorWidth="2dp"
+            app:hideLineWhenFilled="false"
+            app:itemCount="6"
+            app:itemHeight="50dp"
+            app:itemRadius="6dp"
+            app:itemSpacing="@dimen/_2sdp"
+            app:itemWidth="45dp"
+            app:lineColor="@color/colorTransparent"
+            app:viewType="rectangle" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp">
+
+            <TextView
+                android:id="@+id/tvResend"
+                style="@style/small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.resendOTPType}"
+                android:textColor="@color/blakish" />
+
+            <TextView
+                android:id="@+id/tvResendOtp"
+                style="@style/small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_medium"
+                android:text="@={viewModel.resendOTPType}"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_10ssp"
+                tools:text="@string/resend" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvTime"
+                android:text="@={viewModel.remainigTimeForOTP}"
+                style="@style/small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_toEndOf="@+id/tvResend"
+               tools:text="2:02 seconds"
+                android:textColor="@color/brand_color"
+                android:textSize="@dimen/_10ssp"
+                />
+
+
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/llSMS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/otp_medium_bg"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_5sdp">
+
+                <ImageView
+                    android:id="@+id/ivSMS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    app:srcCompat="@drawable/ic_sms" />
+
+                <TextView
+                    android:id="@+id/tvSMS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="@{viewModel.timeOver? true:false}"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:onClick="@{ ()-> viewModel.onResendClicked(tvSMS) }"
+                    android:text="@string/sms"
+                    android:textColor="@{viewModel.timeOver? @color/brand_color:@color/gray}"
+                    android:textSize="@dimen/_10ssp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llCall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/otp_medium_bg"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_5sdp">
+
+                <ImageView
+                    android:id="@+id/ivCall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    app:srcCompat="@drawable/ic_call_enabled" />
+
+                <TextView
+                    android:id="@+id/tvCall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="@{viewModel.timeOver? true:false}"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:onClick="@{ ()-> viewModel.onResendClicked(tvCall) }"
+                    android:text="@string/call"
+                    android:textColor="@{viewModel.timeOver? @color/brand_color:@color/gray}"
+                    android:textSize="@dimen/_10ssp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_2sdp"
+            android:background="@color/viewcolor"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp">
+
+
+            <TextView
+                android:id="@+id/tv_verify"
+                style="@style/TextSize14Sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:enabled="@{viewModel.isVerifyEnable? true:false}"
+                android:onClick="@{ ()-> viewModel.onVerifyClick() }"
+                android:text="@string/verify"
+                android:textColor="@color/brand_color"></TextView>
+
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:onClick="@{ ()-> viewModel.onCancelClick() }"
+                style="@style/TextSize14Sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_toLeftOf="@id/tv_verify"
+                android:text="@string/cancel"
+                android:textColor="@color/gray"></TextView>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</layout>

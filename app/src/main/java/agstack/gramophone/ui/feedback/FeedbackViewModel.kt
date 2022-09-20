@@ -20,27 +20,28 @@ class FeedbackViewModel @Inject constructor(
 
     private var feedbackJob: Job? = null
     var progressLoader = ObservableField<Boolean>(false)
+var feedbackText = ObservableField<String>("")
 
     fun onSendClick() {
-        if (getNavigator()?.getFeedbackText() != null) {
+        if (feedbackText.get()!!.length >0) {
 
-            Log.d("Click", "feebacksendClicked")
             feedbackJob.cancelIfActive()
             feedbackJob = checkNetworkThenRun {
                 progressLoader.set(true)
                 var producttoBeAdded = ProductData()
-                /* producttoBeAdded.product_id = productId
-                  val expertAdviceResponse =
-                      repository.getExpertAdvice(producttoBeAdded)
-                  progressLoader.set(false)
+                producttoBeAdded.product_id=null
+                producttoBeAdded.comments = feedbackText.get()
 
-                  if (expertAdviceResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+                val expertAdviceResponse =
+                    repository.getHelp(Constants.FEEDBACK, producttoBeAdded)
+                progressLoader.set(false)
 
-                      getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
-                  } else {
-                      getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
-                  }*/
+                if (expertAdviceResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
 
+                    getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
+                } else {
+                    getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
+                }
 
                 getNavigator()?.finishActivity()
             }

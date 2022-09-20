@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class ProductData(
     @SerializedName("product_id")
-    var product_id: Int = 0,
+    var product_id: Int? = 0,
     @SerializedName("rating")
     var rating: Double? = null,
 
@@ -20,7 +20,9 @@ data class ProductData(
     @SerializedName("promotion_id")
     var promotion_id: Int? = null,
     @SerializedName("is_favourite")
-    var is_favourite  : Boolean? = null
+    var is_favourite  : Boolean? = null,
+    @SerializedName("comments")
+    var comments  : String? = null
 
 
     ) : Parcelable

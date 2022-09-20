@@ -68,8 +68,6 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
         this.mViewModel = getViewModel()
         mViewModel?.setNavigator(this as N?)
 
-
-
         return binding.root
     }
 
