@@ -43,7 +43,7 @@ class CommentBottomSheetDialog : BottomSheetDialogFragment() {
         val finalList = ArrayList<Data>()
 
         for (i in 1..40) {
-            finalList.add(Data(viewType = CommunityPostAdapter.VIEW_TYPE_TEXT,textItem = "List Item: $i"))
+            finalList.add(Data(textItem = "List Item: $i"))
         }
 
         binding?.rvCommentsDialog?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)

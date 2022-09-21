@@ -13,6 +13,7 @@ import android.text.SpannableString
 import android.text.style.BulletSpan
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
@@ -24,12 +25,14 @@ import java.io.IOException
 import java.io.OutputStream
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.Duration
 import java.util.*
 
 
 object Utility {
     private const val MONTH_DATE_YEAR_FORMAT = "MMM dd, yyyy" /*"Jun 21, 2022"*/
     private const val DATE_MONTH_YEAR_FORMAT = "dd-MMM-yyyy"  /*05-Jul-2022*/
+
 
     fun List<String>.toBulletedList(): CharSequence {
         return SpannableString(this.joinToString("\n")).apply {
@@ -148,4 +151,6 @@ object Utility {
         val errorBody = data?.string()?.let { JSONObject(it) }
         return errorBody?.optString(Constants.GP_API_MESSAGE)
     }
+
+
 }

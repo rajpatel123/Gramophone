@@ -18,16 +18,19 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amnix.xtension.extensions.runOnUIThread
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_community.*
 
 
 @AndroidEntryPoint
-class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragmentNavigator,CommunityViewModel>() , CommunityFragmentNavigator{
+class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragmentNavigator,CommunityViewModel>() , CommunityFragmentNavigator,
+    CommunityPostAdapter.SetImage {
 
     private var shareSheetPresenter: ShareSheetPresenter? = null
     private lateinit var bottomSheet: CommentBottomSheetDialog
@@ -76,6 +79,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
             communityPostAdapter.onShareOrBookMarkClicked=onWhatsAppClicked
             communityPostAdapter.onTripleDotMenuClicked=onTripleDotMenuClicked
             communityPostAdapter.onMenuOptionClicked=onMenuOptionClicked
+            communityPostAdapter.setImage = this
             rvPost.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             rvPost.setHasFixedSize(false)
             rvPost.adapter = communityPostAdapter
@@ -155,6 +159,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background);
 
 
+    }
+
+    override fun onImageSet(imageUrl: String, iv: ImageView) {
+        activity?.let { Glide.with(it).load(imageUrl).into(iv) }
     }
 
 

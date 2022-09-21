@@ -26,5 +26,6 @@ data class Data(
     val updatedAt: Long,
     val updatedBy: String,
     val urlPreviewMeta: UrlPreviewMeta,
-    val whatsAppShare: Int
+    val whatsAppShare: Int,
+    var isSelected: Boolean
 )

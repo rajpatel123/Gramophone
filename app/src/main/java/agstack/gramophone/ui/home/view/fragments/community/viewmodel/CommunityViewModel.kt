@@ -4,18 +4,15 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.community.CommunityRepository
 import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
+import agstack.gramophone.ui.home.adapter.LikedUsersAdapter
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
 import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActivity
-import agstack.gramophone.ui.home.view.fragments.community.model.likes.Data
-import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedUsers
-import agstack.gramophone.ui.home.view.fragments.community.model.likes.PagerItem
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityRequestModel
+import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.LikedUsersRequestModel
 import agstack.gramophone.ui.postdetails.view.PostDetailsActivity
 import agstack.gramophone.utils.Constants
 import android.app.AlertDialog
 import androidx.databinding.ObservableField
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -28,80 +25,18 @@ import javax.inject.Inject
 class CommunityViewModel @Inject constructor(
     private val communityRepository: CommunityRepository
 ) : BaseViewModel<CommunityFragmentNavigator>() {
-    private val _dataList = MutableLiveData<List<Data>>()
-    private val userList = MutableLiveData<List<LikedUsers>>()
-    val dataList: LiveData<List<Data>>
-        get() = _dataList
     lateinit var mAlertDialog: AlertDialog
     var sorting  = ObservableField<String>()
-
-    val likedUserList: LiveData<List<LikedUsers>>
-        get() = userList
+    var limit    = ObservableField<Int>()
 
     fun loadData() {
         sorting.set("trending")
+        limit.set(100)
         viewModelScope.launch(Dispatchers.Default) {
-            getPost()
-            val finalList = ArrayList<Data>()
-
-            for (i in 1..40) {
-
-                val data = if (i % 5 == 0) {
-                    val pagerItemList = ArrayList<PagerItem>()
-                    for (j in 1..10) {
-                        pagerItemList.add(
-                            PagerItem(
-                                itemText = j.toString(),
-                                itemImageUrl = imageUrls()[j]
-                            )
-                        )
-                    }
-                    Data(
-                        viewType = CommunityPostAdapter.VIEW_TYPE_PAGER,
-                        pagerItemList = pagerItemList
-                    )
-                } else {
-
-                    if (i == 9) {
-                        Data(
-                            viewType = CommunityPostAdapter.VIEW_TYPE_IMAGE_TEXT,
-                            textItem = "List Item: $i"
-                        )
-                    } else if (i == 14) {
-                        Data(
-                            viewType = CommunityPostAdapter.VIEW_TYPE_POLL,
-                            textItem = "List Item: $i"
-                        )
-                    } else if (i == 11) {
-                        Data(
-                            viewType = CommunityPostAdapter.VIEW_TYPE_VIDEO,
-                            textItem = "List Item: $i"
-                        )
-                    } else {
-                        Data(
-                            viewType = CommunityPostAdapter.VIEW_TYPE_TEXT,
-                            textItem = "List Item: $i"
-                        )
-                    }
-
-                }
-
-                finalList.add(data)
-            }
-
-
+        getPost()
         }
     }
 
-    private fun imageUrls(): Array<String> =
-        arrayOf(
-            "https://picsum.photos/300/200?image=60", "https://picsum.photos/300/200?image=8",
-            "https://picsum.photos/300/200?image=34", "https://picsum.photos/300/200?image=54",
-            "https://picsum.photos/300/200?image=62", "https://picsum.photos/300/200?image=12",
-            "https://picsum.photos/300/200?image=15", "https://picsum.photos/300/200?image=27",
-            "https://picsum.photos/300/200?image=35", "https://picsum.photos/300/200?image=69",
-            "https://picsum.photos/300/200?image=3", "https://picsum.photos/300/200?image=5"
-        )
 
     fun setDialog(mAlertDialog: AlertDialog?) {
         this.mAlertDialog = mAlertDialog!!
@@ -124,12 +59,13 @@ class CommunityViewModel @Inject constructor(
     }
 
 
+
     private suspend fun getPost() {
 
         getNavigator()?.onLoading()
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
-                val response = communityRepository.getCommunityPost(CommunityRequestModel(sorting.get()))
+                val response = communityRepository.getCommunityPost(CommunityRequestModel(sorting.get(),limit.get()))
                 if (response.isSuccessful) {
                     val data =  response.body()?.data
                     getNavigator()?.updatePostList(CommunityPostAdapter(data),
