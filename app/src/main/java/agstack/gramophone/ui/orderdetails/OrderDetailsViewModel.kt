@@ -21,7 +21,6 @@ import javax.inject.Inject
 class OrderDetailsViewModel @Inject constructor(
     private val productRepository: ProductRepository,
 ) : BaseViewModel<OrderDetailsNavigator>() {
-
     var progress = MutableLiveData<Boolean>()
     var orderId = MutableLiveData<String>()
     var orderDate = MutableLiveData<String>()
@@ -33,7 +32,6 @@ class OrderDetailsViewModel @Inject constructor(
     var username = MutableLiveData<String>()
     var address = MutableLiveData<String>()
     var mobile = MutableLiveData<String>()
-
     init {
         progress.value = false
         orderId.value = ""

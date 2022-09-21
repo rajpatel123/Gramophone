@@ -4,6 +4,9 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.AboutReferralPointsActivityBinding
+import agstack.gramophone.ui.referandearn.aboutreferralpoints.adapter.AboutReferalPointsAdapter
+import agstack.gramophone.ui.referandearn.model.ReferralPointsItem
+import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,6 +22,17 @@ class AboutReferralPointsBalanceActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpToolBar(true, resources.getString(R.string.about_referral_point_balance), R.drawable.ic_arrow_left)
+        val bundle = getBundle()
+        bundle?.let {
+            if (bundle.getParcelableArrayList<ReferralPointsItem>(Constants.ReferralPointBalanceData) != null) {
+                mViewModel?.ReferralPointsBalanceDataFromBundle?.set(bundle.getParcelableArrayList(Constants.ReferralPointBalanceData))
+               mViewModel?.setAdapter()
+            }
+        }
+    }
+
+    fun getBundle(): Bundle? {
+        return intent.extras
     }
     override fun getLayoutID(): Int {
         return R.layout.about_referral_points_activity
@@ -30,6 +44,11 @@ class AboutReferralPointsBalanceActivity :
 
     override fun getViewModel(): AboutReferralPointsBalanceViewModel {
         return aboutreferralpointsViewModel
+    }
+
+
+    override fun setAboutReferalPointsAdapter(aboutReferalPointsAdapter: AboutReferalPointsAdapter) {
+        viewDataBinding.rvAboutreferalpoints.adapter = aboutReferalPointsAdapter
     }
 
 }

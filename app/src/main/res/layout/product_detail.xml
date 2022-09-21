@@ -199,8 +199,7 @@
                             android:text="@{viewModel.selectedSkuListItem.mrpPrice}"
                             android:textColor="@color/oldmrpcolor"
                             android:textSize="@dimen/_12ssp" />
-                        <!-- android:visibility="@{Double.valueOf(viewModel.selectedSkuListItem.mrpPrice)>Double.valueOf(viewModel.selectedSkuListItem.salesPrice)?View.VISIBLE:View.INVISIBLE}"
-                        isMRPVisible="@{viewModel.selectedSkuListItem}"-->
+
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_percentageOffOnSelectedSKU"
@@ -357,7 +356,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/iv_availableoffers"
-                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_available_offers" />

@@ -38,13 +38,14 @@
 
         <EditText
             android:id="@+id/et_feeback"
-            android:background="@drawable/transparent_background"
             style="@style/TextSize16Sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_18sdp"
+            android:background="@drawable/transparent_background"
             android:fontFamily="@font/manrope_regular"
             android:hint="@string/whatcanweimprove"
+            android:text="@={viewModel.feedbackText}"
             app:layout_constraintTop_toBottomOf="@id/ll_top" />
 
 
