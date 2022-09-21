@@ -1,16 +1,21 @@
 package agstack.gramophone.ui.verifyotp.view
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityVerifyOtpBinding
 import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
+import agstack.gramophone.ui.language.model.DeviceDetails
+import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
 import agstack.gramophone.ui.verifyotp.viewmodel.VerifyOtpViewModel
 import agstack.gramophone.utils.Constants
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
@@ -26,7 +31,22 @@ class VerifyOtpActivity :
     BaseActivityWrapper<ActivityVerifyOtpBinding, VerifyOTPNavigator, VerifyOtpViewModel>(),
     VerifyOTPNavigator, LanguageBottomSheetFragment.LanguageUpdateListener {
     private val verifyOtpViewModel: VerifyOtpViewModel by viewModels()
+    val initiateAppDataRequestModel: InitiateAppDataRequestModel
+        get() {
+            val android_id = Settings.Secure.getString(this.contentResolver,
+                Settings.Secure.ANDROID_ID)
 
+            var deviceDetails = DeviceDetails(
+                BuildConfig.VERSION_CODE.toString(),
+                BuildConfig.VERSION_NAME,
+                android_id,
+                Build.MODEL,
+                Build.VERSION.SDK_INT.toString()
+            )
+            var registerDeviceRequestModel = InitiateAppDataRequestModel(deviceDetails,getLanguage(),)
+            return registerDeviceRequestModel
+
+        }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         verifyOtpViewModel.timeOver.set(true)
@@ -35,6 +55,7 @@ class VerifyOtpActivity :
 
     private fun updateUI() {
         verifyOtpViewModel.updateMessage()
+
     }
 
     override fun getMobileBundle(): Bundle? = intent?.getBundleExtra(Constants.BUNDLE)
@@ -46,6 +67,8 @@ class VerifyOtpActivity :
         tvResend.visibility = View.INVISIBLE
         tvResendOtp.visibility = VISIBLE
     }
+
+    override fun getInitModel(): InitiateAppDataRequestModel = initiateAppDataRequestModel
 
 
     override fun onBackPressed() {

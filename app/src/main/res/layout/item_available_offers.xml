@@ -95,7 +95,7 @@
                         android:hint="Offer valid on SKU 500"
                         android:maxLength="20"
                         android:maxLines="1"
-                        android:text="@{model.applicable_on_sku}"
+                        android:text="@{@string/allsymbol.concat(model.applicable_on_sku)}"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/_11ssp" />
 
@@ -148,7 +148,8 @@
                     android:layout_marginBottom="@dimen/_2sdp"
                     android:fontFamily="@font/manrope_bold"
                     android:gravity="center"
-                    android:text="Save Rs 100"
+                    android:hint="Save Rs 100"
+                    android:text="@{@string/save_rupees.concat(model.amount_saved.toString())}"
                     android:textColor="@color/green"
                     android:textSize="@dimen/_11ssp" />
 
@@ -159,7 +160,7 @@
                     android:layout_marginTop="@dimen/_2sdp"
                     android:layout_marginRight="@dimen/_9sdp"
                     android:layout_marginBottom="@dimen/_2sdp"
-                    android:background="@color/mute_grey" />
+                    android:background="@color/gray" />
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -7,13 +7,18 @@ import agstack.gramophone.utils.LocaleManagerClass
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CallSuper
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import java.util.*
@@ -35,6 +40,18 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
         this.mActivity = activity
     }
 
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                Log.i("Permission: ", "Granted")
+            } else {
+                Log.i("Permission: ", "Denied")
+            }
+        }
+
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         this.mContext = context
@@ -50,8 +67,6 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
 
         this.mViewModel = getViewModel()
         mViewModel?.setNavigator(this as N?)
-
-
 
         return binding.root
     }
@@ -169,4 +184,33 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     override fun getGeoCoder(): Geocoder {
         return Geocoder(activity, Locale.getDefault())
     }
+
+    override fun checkPermission(permission: String): Boolean {
+        when {
+            ContextCompat.checkSelfPermission(
+                requireActivity(),
+                permission
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                return true
+            }
+
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                requireActivity(),
+                permission
+            ) -> {
+                requestPermissionLauncher.launch(
+                    permission
+                )
+                return false
+            }
+
+            else -> {
+                requestPermissionLauncher.launch(
+                    permission
+                )
+                return false
+            }
+        }
+    }
+
 }

@@ -54,10 +54,10 @@
                 android:scaleType="centerInside"
                 android:shadowColor="@color/grey"
                 android:shadowRadius="10"
-                app:product_image="@{viewModel.profileImage}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/view"
                 app:layout_constraintVertical_chainStyle="packed"
+                app:product_image="@{viewModel.profileImage}"
                 app:srcCompat="@drawable/ic_profile_default" />
 
 
@@ -92,6 +92,7 @@
                 app:layout_constraintTop_toTopOf="@id/view"
                 app:layout_constraintVertical_chainStyle="packed" />
 
+
             <LinearLayout
                 android:id="@+id/ll_name_address_followers"
                 android:layout_width="match_parent"
@@ -108,14 +109,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@{viewModel.userProfileData.customer_name}"
                     tools:text="Uday Shetty" />
 
                 <TextView
-                    android:id="@+id/tv_userId"
+                    android:id="@+id/tv_defaultUsername"
                     style="@style/TextSize14Sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/manrope_regular"
+                    android:text="@{viewModel.userHandle}"
                     android:textColor="@color/gray"
                     tools:text="Uday Shetty" />
 
@@ -139,16 +142,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_2sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_toLeftOf="@+id/tv_editaddress"
                         android:layout_toRightOf="@+id/iv_location"
                         android:layout_weight="2"
                         android:fontFamily="@font/manrope_regular"
                         android:hint="Sawer, Madhya pradesh"
                         android:maxLines="3"
-                        android:paddingRight="@dimen/_5sdp"
+                        android:text="@{ viewModel.userProfileData.address_data.address +`, ` +viewModel.userProfileData.address_data.village+`, ` +viewModel.userProfileData.address_data.tehsil+`, ` +viewModel.userProfileData.address_data.district+`, ` +viewModel.userProfileData.address_data.state+`, ` +viewModel.userProfileData.address_data.pincode}"
                         android:textColor="@color/gray"
                         tools:text="Sawer, Madhya pradesh" />
 
+                    <!-- android:text="@{viewModel.userProfileData.address_data.address.concat(viewModel.userProfileData.address_data.village)}"
+                       -->
+
                     <TextView
+                        android:id="@+id/tv_editaddress"
                         style="@style/TextSize14Sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -178,6 +187,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/manrope_regular"
                         android:hint="98260-01714"
+                        android:text="@{viewModel.userProfileData.mobile_no}"
                         android:textColor="@color/gray"
                         tools:text="98260-01714" />
                 </LinearLayout>
@@ -255,9 +265,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginLeft="@dimen/_32sdp"
-                    android:layout_marginRight="@dimen/_32sdp">
+                    android:layout_marginRight="@dimen/_32sdp"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/tv_selectrole_label"
                         style="@style/TextSize14Sp"
@@ -284,13 +295,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:background="@{viewModel.isFarmerSelected ? @drawable/selected_product_background: @drawable/deselected_product_background}"
+                        android:onClick="@{()->viewModel.onFarmerLayoutSelected()}"
                         android:orientation="horizontal"
                         android:padding="@dimen/_10sdp"
 
                         >
 
                         <ImageView
-
                             android:layout_width="@dimen/_16sdp"
                             android:layout_height="@dimen/_16sdp"
                             android:visibility="@{viewModel.isFarmerSelected? View.VISIBLE:View.GONE}"
@@ -299,9 +310,10 @@
 
                         <com.google.android.material.radiobutton.MaterialRadioButton
                             android:id="@+id/radioBtnFarmer"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_16sdp"
                             android:checked="@{viewModel.isFarmerSelected}"
+                            android:clickable="false"
                             android:visibility="@{viewModel.isFarmerSelected? View.GONE:View.VISIBLE}" />
 
 
@@ -309,7 +321,7 @@
                             android:layout_width="@dimen/_16sdp"
                             android:layout_height="@dimen/_16sdp"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/_8sdp"
+                            android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_marginRight="@dimen/_8sdp"
                             android:src="@drawable/tractornew" />
 
@@ -328,7 +340,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_16sdp"
                         android:background="@{viewModel.isTraderSelected ? @drawable/selected_product_background: @drawable/deselected_product_background}"
+                        android:onClick="@{()->viewModel.onTraderLayoutSelected()}"
                         android:orientation="horizontal"
                         android:padding="@dimen/_10sdp"
 
@@ -343,9 +357,10 @@
 
                         <com.google.android.material.radiobutton.MaterialRadioButton
                             android:id="@+id/radioBtnTrader"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_16sdp"
                             android:checked="@{viewModel.isTraderSelected}"
+                            android:clickable="false"
                             android:visibility="@{viewModel.isTraderSelected? View.GONE:View.VISIBLE}" />
 
 
@@ -368,24 +383,27 @@
                             android:textColor="@color/blakish" />
                     </LinearLayout>
 
-                    <View
-                        android:id="@+id/v1"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_2sdp"
-                        android:layout_marginTop="@dimen/_32sdp"
-                        android:background="@color/gray" />
-
 
                     <RelativeLayout
+                        android:id="@+id/rlFirm"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_16sdp">
+                        android:visibility="@{viewModel.isTraderSelected() == true ? View.VISIBLE : View.GONE}">
+
+                        <View
+                            android:id="@+id/v1"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_2sdp"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginBottom="@dimen/_32sdp"
+                            android:background="@color/gray" />
 
 
                         <ImageView
                             android:id="@+id/ic_firm"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_below="@id/v1"
                             android:layout_alignParentStart="true"
                             android:layout_gravity="start"
                             app:srcCompat="@drawable/ic_market" />
@@ -395,6 +413,7 @@
                             style="@style/TextSize14Sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_below="@id/v1"
                             android:layout_marginLeft="@dimen/_18sdp"
                             android:layout_toRightOf="@+id/ic_firm"
                             android:fontFamily="@font/manrope_regular"
@@ -408,19 +427,28 @@
                             style="@style/TextSize14Sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_below="@id/v1"
                             android:layout_alignParentEnd="true"
-
                             android:fontFamily="@font/manrope_bold"
                             android:onClick="@{()->viewModel.onAddFirmClick()}"
                             android:text="@string/edit"
                             android:textColor="@color/red" />
+
+                        <View
+                            android:id="@+id/v2"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_2sdp"
+                            android:layout_below="@+id/tv_addfirm"
+                            android:layout_marginTop="@dimen/_32sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:background="@color/gray" />
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:layout_marginTop="@dimen/_16sdp">
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:visibility="gone">
 
 
                         <ImageView
@@ -456,17 +484,18 @@
                     </RelativeLayout>
 
 
-                    <View
-                        android:id="@+id/v2"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_2sdp"
-                        android:layout_marginTop="@dimen/_32sdp"
-                        android:layout_marginBottom="@dimen/_10sdp"
-                        android:background="@color/gray" />
-
                 </LinearLayout>
 
             </LinearLayout>
+
+            <ProgressBar
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:visibility="@{viewModel.progressLoader? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

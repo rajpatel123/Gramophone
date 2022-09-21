@@ -531,7 +531,6 @@
                             android:text="@string/includes_gst_and_other_taxes"
                             android:textColor="@color/gray_strike_through"
                             android:textSize="11sp" />
-
                     </LinearLayout>
 
                     <TextView

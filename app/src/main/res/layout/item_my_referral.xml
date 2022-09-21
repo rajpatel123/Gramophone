@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.referandearn.model.MyReferralsItem" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/item_transaction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingTop="@dimen/_24sdp"
+        android:paddingEnd="@dimen/_12sdp">
+
+        <FrameLayout
+            android:id="@+id/frame_product"
+            android:layout_width="@dimen/_44sdp"
+            android:layout_height="@dimen/_44sdp"
+        >
+            <ImageView
+                android:id="@+id/iv_profileImage"
+                app:srcCompat = "@drawable/ic_person_standing"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:padding="@dimen/_4sdp"
+                 />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_mobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_toEndOf="@+id/frame_product"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="1sp"
+            android:text="@{model.mobileNo}"
+            android:textColor="@color/blakish"
+            android:textSize="16sp"
+            tools:text="+91 99260 04941" />
+
+
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="205dp"
+            android:layout_height="16dp"
+            android:layout_below="@id/tv_mobile"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_toEndOf="@+id/frame_product"
+            android:fontFamily="@font/manrope_regular"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="-2sp"
+            android:text="@{model.username}"
+            android:textColor="@color/gray"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/date_text"
+            android:layout_width="205dp"
+            android:layout_height="16dp"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_toEndOf="@+id/frame_product"
+            android:fontFamily="@font/manrope_regular"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="-2sp"
+            android:textColor="@color/gray"
+            android:textSize="13sp"
+            app:formatDate="@{model.createdAt}"
+            tools:text="Registered on Date" />
+
+
+
+    </RelativeLayout>
+</layout>

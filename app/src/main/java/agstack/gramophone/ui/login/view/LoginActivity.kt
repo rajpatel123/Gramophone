@@ -33,10 +33,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 
 @AndroidEntryPoint
-class LoginActivity :
-    BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, LoginViewModel>(),
-    LoginNavigator,
-    LanguageBottomSheetFragment.LanguageUpdateListener {
+class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, LoginViewModel>(), LoginNavigator,LanguageBottomSheetFragment.LanguageUpdateListener {
     val REQUEST_CODE = 0x0000c0de
     var qrLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

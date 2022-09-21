@@ -4,6 +4,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.UserProfileActivityBinding
+import agstack.gramophone.ui.userprofile.model.PostImageModel
 import agstack.gramophone.utils.ImagePicker
 import agstack.gramophone.widget.FilePicker
 import android.app.Activity
@@ -40,12 +41,14 @@ class UserProfileActivity :
     private val userProfileViewModel: UserProfileViewModel by viewModels()
     private var cropImage: ActivityResultLauncher<CropImageContractOptions>? = null;
     private val filename = "image"
+    var postImageModel = PostImageModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.statusBarColor = ContextCompat.getColor(this, R.color.order_delivered_text)
 
         userProfileViewModel.setProfilePic()
+
         cropImage = registerForActivityResult(CropImageContract()) { result ->
             if (result.isSuccessful) {
                 // use the returned uri
@@ -61,6 +64,15 @@ class UserProfileActivity :
             } else {
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        userProfileViewModel.getUsersData()
+    }
+
+    override fun refreshPage() {
+        userProfileViewModel.getUsersData()
     }
 
     private fun setImage(imageUri: Uri) {
@@ -100,7 +112,8 @@ class UserProfileActivity :
         } catch (e: Exception) {externalCacheDir
             e.printStackTrace()
         }
-        //f is the value
+        postImageModel?.postImage = f
+        mViewModel?.updateProfile(null,null,null,f)
     }
 
 
@@ -170,6 +183,8 @@ class UserProfileActivity :
             }
         }
     }
+
+
 
 
 }

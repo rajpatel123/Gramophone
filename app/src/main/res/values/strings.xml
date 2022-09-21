@@ -119,6 +119,7 @@
     <string name="state_required">Please select state</string>
     <string name="district_required">Please enter your district name.</string>
     <string name="tehsil_required">Please enter your tehsil name.</string>
+    <string name="pincode_required">Please enter a valid 6 disit pincode.</string>
     <string name="village_required">Please enter your village name</string>
     <string name="address_required">Please enter your address</string>
 
@@ -376,6 +377,9 @@
     <string name="sort_by">Sort by</string>
     <string name="filter">Filter</string>
 
+    <string name="allsymbol">\u002A</string>
+    <string name="save_rupees">Save ₹</string>
+
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>
         <item>Recent Reviews</item>
@@ -418,4 +422,18 @@
     <string name="app_tour_title_youtube">App demo</string>
     <string name="app_tour_title_trade">Vyapar</string>
     <string name="app_tour_done">DONE</string>
+    <string name="update">Update</string>
+    <string name="enter_6_digit_code">Enter 6 digit code we have sent on</string>
+    <string name="likes">Likes(%d)</string>
+    <string name="comments">Comments(%d)</string>
+    <string name="pin_post">Pin Post</string>
+    <string name="delete">Delete</string>
+    <string name="report">Report</string>
+    <string name="block_user">Block User</string>
+    <string name="please_select_atleast_one_role">Please select atleast one role</string>
+    <string name="verify">Verify</string>
+    <string name="enter_different_mobile_no">Mobile number entered is same as existing number</string>
+    <string name="gram_cash_expire_on">Expire on</string>
+    <string name="was_earned_on">"Was earned on "</string>
+    <string name="no_referral_transactions">No Referral Transactions Done</string>
 </resources>

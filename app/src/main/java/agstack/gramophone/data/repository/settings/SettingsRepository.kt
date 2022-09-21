@@ -1,9 +1,11 @@
 package agstack.gramophone.data.repository.settings
 
-import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
-import agstack.gramophone.ui.login.viewmodel.LoginViewModel
+import agstack.gramophone.ui.referandearn.model.GramCashResponseModel
+import agstack.gramophone.ui.referandearn.transaction.TransactionRequestModel
+import agstack.gramophone.ui.referandearn.transaction.model.GramCashTxnResponseModel
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
+import agstack.gramophone.utils.FileUploadRequestBody
 import retrofit2.Response
 import javax.inject.Singleton
 
@@ -12,5 +14,9 @@ interface SettingsRepository {
     suspend fun optInOutForWhatsappUpdates(s: String): Response<WhatsAppOptInResponseModel>
     suspend fun getBlockedUsersList(): Response<BlockedUsersListResponseModel>
     suspend fun unBlockUser(customerId: Int): Response<BlockedUsersListResponseModel>
+
+    suspend fun getGramCash():Response<GramCashResponseModel>
+    suspend fun getGramCashTxn(type:String,requestBody: TransactionRequestModel):Response<GramCashTxnResponseModel>
+
 
 }

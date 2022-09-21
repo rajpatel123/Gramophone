@@ -37,8 +37,15 @@
         android:theme="@style/SplashTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.home.view.fragments.community.LikedpostUserListActivity"
-            android:exported="false" />
+            android:name=".ui.postdetails.view.PostDetailsActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".ui.home.view.fragments.community.LikedPostUserListActivity"
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".ui.settings.view.BlockedUsersActivity"
             android:exported="false"
@@ -100,7 +107,10 @@
             android:name=".ui.home.view.HomeActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.profile.view.ProfileActivity" />
-        <activity android:name=".ui.home.product.activity.ProductDetailsActivity" />
+        <activity
+            android:name=".ui.home.product.activity.ProductDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.cart.view.CartActivity" />
         <activity android:name=".ui.order.view.OrderListActivity" />
         <activity android:name=".ui.checkout.CheckoutStatusActivity" />
@@ -112,10 +122,40 @@
         <activity android:name=".ui.userprofile.EditProfileActivity" />
         <activity android:name=".ui.referandearn.ReferAndEarnActivity" />
         <activity android:name=".ui.referandearn.referralpoints.ReferralPointsActivity" />
+        <activity android:name=".ui.home.product.activity.productreview.AddEditProductReviewActivity" />
+        <activity
+            android:name=".ui.userprofile.UserProfileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.userprofile.EditProfileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.referandearn.ReferAndEarnActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.referandearn.referralpoints.ReferralPointsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <activity android:name=".ui.referandearn.aboutreferralpoints.AboutReferralPointsBalanceActivity" />
         <activity android:name=".ui.referandearn.transaction.AllTransactionsListActivity" />
         <activity android:name=".ui.faq.FAQActivity" />
+        <activity
+            android:name=".ui.referandearn.aboutreferralpoints.AboutReferralPointsBalanceActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.referandearn.transaction.AllTransactionsListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.faq.FAQActivity" />
+        <activity
+            android:name=".ui.referralrules.ReferralRulesActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <activity android:name=".ui.userprofile.firm.AddFirmActivity" />
         <activity android:name=".ui.weather.WeatherActivity" />
@@ -126,6 +166,16 @@
         <activity android:name=".ui.home.stage.CropStageActivity" />
         <activity android:name=".ui.home.stagedetail.CropStageDetailActivity" />
         <activity android:name=".ui.home.cropdetail.CropDetailActivity" />
+        <activity android:name=".ui.userprofile.firm.AddFirmActivity" />
+        <activity android:name=".ui.weather.WeatherActivity" />
+        <activity android:name=".ui.home.subcategory.SubCategoryActivity" />
+        <activity android:name=".ui.home.featured.FeaturedProductActivity" />
+        <activity android:name=".ui.home.shop.ShopByActivity" />
+        <activity android:name=".ui.home.shopbydetail.ShopByDetailActivity" />
+        <activity android:name=".ui.home.stage.CropStageActivity" />
+        <activity android:name=".ui.home.stagedetail.CropStageDetailActivity" />
+        <activity android:name=".ui.home.cropdetail.CropDetailActivity" />
+
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"

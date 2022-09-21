@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
     <data>
 
         <import type="android.view.View" />
@@ -84,6 +85,7 @@
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="2"
+            app:flow_verticalGap="@dimen/_5sdp"
             app:layout_constraintTop_toBottomOf="@+id/hsvTabBar"
             tools:listitem="@layout/item_post"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"

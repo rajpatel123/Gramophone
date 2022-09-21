@@ -105,8 +105,7 @@ class CartViewModel @Inject constructor(
                         totalAmount.value = response.body()?.gp_api_response_data?.total
                         calculateAmount(response.body()?.gp_api_response_data?.cart_items!!)
 
-                        getNavigator()?.setCartAdapter(
-                            CartAdapter(response.body()?.gp_api_response_data?.cart_items!!),
+                        getNavigator()?.setCartAdapter(CartAdapter(response.body()?.gp_api_response_data?.cart_items!!),
                             {
                                 //on cartItem clicked for details page
                                 getNavigator()?.openProductDetailsActivity(ProductData(it.toInt()))
