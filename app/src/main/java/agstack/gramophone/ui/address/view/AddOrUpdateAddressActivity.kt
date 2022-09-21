@@ -107,6 +107,15 @@ class AddOrUpdateAddressActivity :
                 addOrUpdateAddressViewModel.pinCode.set("")
                 villageNameSpinner.setAdapter(null)
                 pincodeSpinner.setAdapter(null)
+
+                if (TextUtils.isEmpty(s)){
+                    addOrUpdateAddressViewModel.getTehsil(
+                        "tehsil",
+                        addOrUpdateAddressViewModel.stateNameStr.get()!!,
+                        addOrUpdateAddressViewModel.districtName.get()!!,
+                        ""
+                    )
+                }
             }
         })
         villageNameSpinner.addTextChangedListener(object : TextWatcher {
@@ -123,6 +132,16 @@ class AddOrUpdateAddressActivity :
                 villageNameSpinner.threshold = 1
                 addOrUpdateAddressViewModel.pinCode.set("")
                 pincodeSpinner.setAdapter(null)
+
+                if (TextUtils.isEmpty(s)){
+                    addOrUpdateAddressViewModel.getVillage(
+                        "village",
+                        addOrUpdateAddressViewModel.stateNameStr.get()!!,
+                        addOrUpdateAddressViewModel.districtName.get()!!,
+                        addOrUpdateAddressViewModel.tehsilName.get()!!,
+                        ""
+                        )
+                }
             }
         })
         pincodeSpinner.addTextChangedListener(object : TextWatcher {
@@ -137,6 +156,17 @@ class AddOrUpdateAddressActivity :
             }
             override fun afterTextChanged(s: Editable) {
                 pincodeSpinner.threshold = 1
+
+                if (TextUtils.isEmpty(s)){
+                    addOrUpdateAddressViewModel.getPinCode(
+                        "pincode",
+                        addOrUpdateAddressViewModel.stateNameStr.get()!!,
+                        addOrUpdateAddressViewModel.districtName.get()!!,
+                        addOrUpdateAddressViewModel.tehsilName.get()!!,
+                        addOrUpdateAddressViewModel.villageName.get()!!,
+
+                        )
+                }
             }
         })
 
