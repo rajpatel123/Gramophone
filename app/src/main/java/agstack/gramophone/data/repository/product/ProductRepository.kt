@@ -59,4 +59,6 @@ interface ProductRepository {
     suspend fun getSubCategories(categoryId: String):Response<SubCategoryResponse>
 
     suspend fun getHomeData():Response<HomeDataResponse>
+
+    suspend fun getAllProducts():Response<AllProductsResponse>
 }

@@ -234,6 +234,22 @@ class MarketFragmentViewModel
         }
     }
 
+    fun getAllProducts() {
+        viewModelScope.launch {
+            try {
+                val response = productRepository.getAllProducts()
+                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                ) {
+                }
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
+
     private fun notifyAdapter() {
         getNavigator()?.notifyHomeAdapter(
             allBannerResponse, categoryResponse, productList,
