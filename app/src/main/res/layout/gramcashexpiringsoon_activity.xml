@@ -19,24 +19,105 @@
             android:id="@+id/myToolbar"
             layout="@layout/layout_toolbar" />
 
-
-        <View
-            android:id="@+id/tab_separator"
+        <LinearLayout
+            android:id="@+id/expireContainer"
             android:layout_width="match_parent"
-            android:layout_height="14dp"
-            android:layout_below="@+id/myToolbar"
-            android:background="@color/viewcolor" />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/myToolbar"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/expire_bg_gramcash_rect"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="8dp">
+
+                <TextView
+                    android:id="@+id/expireDays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/expiring_in30days"
+                    android:textColor="@color/colorexpire"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/expirePoints"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="@{viewModel.Gramcashexpiring_soon_amount}"
+                    android:textColor="@color/blakish"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBorder"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    style="@style/TextSize13Sp"
+                    android:text="@string/transaction_by_expiry_date"
+                    android:textColor="@color/blakish"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="start|bottom"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="-12dp"
+                    android:src="@drawable/ic_dropdown_icon" />
+            </LinearLayout>
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvexpire_soon"
+            android:layout_marginBottom="?actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tab_separator"
+            android:layout_above="@id/tv_redeemNow"
+            android:layout_below="@+id/expireContainer"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="2"
             tools:listitem="@layout/item_transaction"
             tools:visibility="visible" />
+
+
+        <TextView
+            android:id="@+id/tv_redeemNow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/orange"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:padding="@dimen/_13sdp"
+            android:text="@string/redeem_now"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp" />
 
 
         <ProgressBar

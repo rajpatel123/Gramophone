@@ -428,4 +428,7 @@
     <string name="gramcash_points">Locked Gram Cash Points:</string>
     <string name="pending_balance_gc_description">How many Gram Cash Points do you have currently in a locked state? when the farmers referred by you will successfully install the Gramophone app and make the first purchase, then you will get these locked Referral Gram Cash Points.</string>
     <string name="points_expiring">Points Expiring</string>
+    <string name="redeem_now">Redeem Now</string>
+    <string name="expiring_in30days">Expiring in 30 days</string>
+    <string name="transaction_by_expiry_date">Transactions by Expiry Date</string>
 </resources>

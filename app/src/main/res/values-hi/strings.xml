@@ -412,6 +412,9 @@
     <string name="gramcash_points">Locked Gram Cash Points:</string>
     <string name="pending_balance_gc_description">आपके पास वर्तमान में कितने ग्राम कैश पॉइंट लॉक अवस्था में हैं, आपके द्वारा रेफर किये गए किसान मित्र जब ग्रामोफ़ोन एप सफलतापूर्वक इंस्टॉल करेंगे और पहली खरीदी करेंगे तब आपको ये लॉक रेफरल ग्राम कैश पॉइंट उपलब्ध हो जाएंगे। </string>
     <string name="points_expiring">Points Expiring</string>
+    <string name="redeem_now">Redeem Now</string>
+    <string name="expiring_in30days">Expiring in 30 days</string>
+    <string name="transaction_by_expiry_date">Transactions by Expiry Date</string>
 </resources>
 
 

@@ -9,6 +9,7 @@ import agstack.gramophone.ui.referandearn.model.GpApiResponseData
 import agstack.gramophone.ui.referandearn.model.GramcashFaqItem
 import agstack.gramophone.ui.referandearn.transaction.AllTransactionsListActivity
 import agstack.gramophone.utils.Constants
+import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -81,7 +82,9 @@ class GramCashViewModel @Inject constructor(
     }
 
     fun OnClickGCexpiringin30days(){
-        getNavigator()?.openActivity(GCExpiringSoonActivity::class.java)
+        getNavigator()?.openActivity(GCExpiringSoonActivity::class.java, Bundle().apply {
+            putString(Constants.GC_Expiring_soon,gramCashResponseData.get()?.gramcashExpiringSoon.toString())
+        })
     }
 
 }
