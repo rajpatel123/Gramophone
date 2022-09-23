@@ -88,9 +88,10 @@ class HomeActivity :
             }
     }
 
-    override fun setImageNameMobile(name: String, mobile: String, profileImage: String) {
+    override fun setImageNameMobile(name: String, mobile: String, profileImage: String,gramCash:String?) {
         viewDataBinding.navigationlayout.tvName.text = name
         viewDataBinding.navigationlayout.tvContact.text = mobile
+        viewDataBinding.navigationlayout.tvGc.text = gramCash
         Glide.with(this)
             .load(profileImage)
             .diskCacheStrategy(DiskCacheStrategy.NONE)

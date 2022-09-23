@@ -6,6 +6,7 @@ import android.content.Context
 
 
 object Constants {
+
     val ADDRESSOBJECT: String = "address"
     val REFERRAL_CODE: String="referralCOde"
     val UNAUTHORIZED: Int=401
@@ -66,6 +67,8 @@ object Constants {
     val TOP_REVIEWS = "Top Reviews"
     val RECENT_REVIEWS = "Recent Reviews"
     val REFERRAL = "referral"
+    val EXPIRE = "expire"
+    val GC_Expiring_soon: String?="gramcash_expiring_soon"
     const val PAST = "past"
     const val HELP_PHONE_NUMBER: String = "customer_support_no"
     const val LANG: String = "lang"

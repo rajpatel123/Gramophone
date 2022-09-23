@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class GpApiResponseData(
 
 	@field:SerializedName("gramcash_rules")
-	val gramcashRules: List<GramcashRulesItem?>? = null,
+	val gramcashRules: List<GramcashFaqItem?>? = null,
 
 	@field:SerializedName("gramcash_total")
 	val gramcashTotal: Int? = null,

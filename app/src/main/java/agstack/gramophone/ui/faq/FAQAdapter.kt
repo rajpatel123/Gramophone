@@ -32,7 +32,7 @@ class FAQAdapter(faqList: ArrayList<GramcashFaqItem>) :
         holder.binding.setVariable(BR.model, model)
         val mBinding = holder.binding as ItemFaqBinding
 
-        mBinding.ivArrow.setOnClickListener {
+        mBinding.lltop.setOnClickListener {
 
             model.isExpanded = !(model.isExpanded)
 
