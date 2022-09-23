@@ -25,11 +25,12 @@
             android:layout_width="@dimen/_44sdp"
             android:layout_height="@dimen/_44sdp"
         >
+
             <ImageView
                 android:id="@+id/iv_profileImage"
                 app:srcCompat = "@drawable/ic_person_standing"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
                 android:layout_gravity="center"
                 android:padding="@dimen/_4sdp"
                  />

@@ -5,6 +5,7 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.feedback.FeedbackActivity
+import agstack.gramophone.ui.gramcash.GramCashActivity
 import agstack.gramophone.ui.offerslist.OffersListActivity
 import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
@@ -37,6 +38,7 @@ class HomeViewModel @Inject constructor(
     var profileName = MutableLiveData<String>()
     var profileMobile = MutableLiveData<String>()
     var profileImage = MutableLiveData<String>()
+    var profileGramCash = MutableLiveData<String>()
 
     fun logout(v: View) {
         logoutUser()
@@ -53,10 +55,12 @@ class HomeViewModel @Inject constructor(
                         val name = response.body()?.gp_api_response_data?.customer_name
                         val mobile = response.body()?.gp_api_response_data?.mobile_no
                         val image = response.body()?.gp_api_response_data?.profile_image
+                        val gramcash = response.body()?.gp_api_response_data?.gramcashpoints
                         profileName.value = name!!
                         profileMobile.value = mobile!!
                         profileImage.value = image!!
-                        getNavigator()?.setImageNameMobile(name, mobile, image)
+                        profileGramCash.value = gramcash?.toString()
+                        getNavigator()?.setImageNameMobile(name, mobile, image,gramcash?.toString())
                         SharedPreferencesHelper.instance?.putString(
                             SharedPreferencesKeys.USERNAME,
                             name
@@ -176,5 +180,9 @@ class HomeViewModel @Inject constructor(
 
     fun ReferandEarnClicked() {
         getNavigator()?.openActivity(ReferAndEarnActivity::class.java, null)
+    }
+
+    fun GramCashClicked(){
+        getNavigator()?.openActivity(GramCashActivity::class.java , null)
     }
 }

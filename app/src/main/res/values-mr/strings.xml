@@ -396,5 +396,22 @@
     <string name="gram_cash_expire_on">Expire on</string>
     <string name="was_earned_on">"Was earned on "</string>
     <string name="no_referral_transactions">No Referral Transactions Done</string>
+    <string name="totalbalance">Total Balance</string>
+    <string name="about_gram_cash_balance">About Gram Cash Balance</string>
+    <string name="redeem">Redeem</string>
+    <string name="gramcashexpiringin30days">Gram Cash Expiring in 30 days -</string>
+    <string name="view_all_transactions">View All Transactions</string>
+    <string name="gram_cash_rules">Gram Cash Rules</string>
+    <string name="about_gram_cash_bal">ग्राम कॅश पॉईंट्सशी संबंधित माहिती</string>
+    <string name="total_gramcash_balance">एकूण ग्राम कॅश पॉईंट</string>
+    <string name="total_balance_gc_description">ततुम्ही आजपर्यंत किती ग्राम कॅश पॉइंट मिळवले आहेत?</string>
+    <string name="available_gram_cash_points">Available Gram Cash points:</string>
+    <string name="available_balance_gc_description">How many Gram Cash Points are available with you at present which you can use to purchase agricultural products from Market Section.</string>
+    <string name="gramcash_points">Locked Gram Cash Points:</string>
+    <string name="pending_balance_gc_description">तुमच्याकडे सध्या लॉक अवस्थेत किती ग्राम कॅश पॉइंट आहेत? जेव्हा तुम्ही नमूद केलेले शेतकरी ग्रामोफोन अ‍ॅप यशस्वीरित्या इंस्टॉल करतील आणि पहिली खरेदी करतील, तेव्हा तुम्हाला हे लॉक केलेले रेफरल ग्राम कॅश पॉइंट्स मिळतील.</string>
+    <string name="points_expiring">Points Expiring</string>
+    <string name="redeem_now">Redeem Now</string>
+    <string name="expiring_in30days">Expiring in 30 days</string>
+    <string name="transaction_by_expiry_date">Transactions by Expiry Date</string>
 
 </resources>

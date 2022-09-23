@@ -52,9 +52,9 @@
                         android:layout_below="@+id/iv_profile"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:ellipsize="end"
+                        android:text="Thakur Baldev Singh"
                         android:textColor="@color/blakish"
-                        android:textSize="@dimen/_12ssp"
-                        android:text="Thakur Baldev Singh" />
+                        android:textSize="@dimen/_12ssp" />
 
                     <TextView
                         android:id="@+id/tv_contact"
@@ -69,6 +69,7 @@
                 </RelativeLayout>
 
                 <androidx.cardview.widget.CardView
+                    android:onClick="@{()->navvm.GramCashClicked()}"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_56sdp"
                     android:layout_marginStart="@dimen/_16sdp"
@@ -111,6 +112,7 @@
                                 android:textSize="@dimen/_10sdp" />
 
                             <TextView
+                                android:id="@+id/tv_gc"
                                 style="@style/heading_title_bold_large"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

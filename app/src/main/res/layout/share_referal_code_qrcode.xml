@@ -42,12 +42,10 @@
                     android:layout_marginTop="@dimen/_16sdp"
                     android:layout_marginRight="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_16sdp"
-                    android:fontFamily="@font/manrope_medium"
+                    style="@style/TextSize9Sp"
                     android:text="@string/share_your_referral_qr_code"
                     android:textAllCaps="true"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/_11ssp"
-                    android:textStyle="normal" />
+                    />
 
             </LinearLayout>
 
@@ -94,10 +92,10 @@
                         <ImageView
                             android:id="@+id/downloadQrCodeButton"
                             android:onClick="@{()->rvm.onDownloadQRClick()}"
-                            android:layout_width="31dp"
-                            android:layout_height="31dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/ic_download_qr" />
+                            android:src="@drawable/ic_download_new" />
                     </androidx.cardview.widget.CardView>
 
 
@@ -117,10 +115,10 @@
                         android:id="@+id/referralCodeButton"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_56sdp"
-                        android:background="@color/state_bg"
+                       android:background="@drawable/rounded_corner_4_solid_greenish"
                         android:fontFamily="sans-serif"
                         android:gravity="center"
-                        android:hint="ALUPPT2"
+                        tools:text="ALUPPT2"
                         android:textAlignment="gravity"
                         android:textAllCaps="false"
                         android:textColor="@color/blakish"
@@ -128,7 +126,8 @@
                         android:textStyle="bold"
                         android:visibility="visible"
                         android:text="@{rvm.gramCashResponseData.referral_code}"
-                        tools:ignore="" />
+                      />
+
 
                     <RelativeLayout
                         android:id="@+id/shareReferralButton"
