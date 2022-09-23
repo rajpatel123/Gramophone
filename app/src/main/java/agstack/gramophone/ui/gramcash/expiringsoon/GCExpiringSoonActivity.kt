@@ -5,6 +5,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.GramcashexpiringsoonActivityBinding
+import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.referandearn.model.GpApiResponseData
 import agstack.gramophone.ui.referandearn.transaction.GramCashTransactionListAdapter
 import agstack.gramophone.utils.Constants
@@ -84,5 +85,8 @@ class GCExpiringSoonActivity :
         viewDataBinding.rvexpireSoon.adapter?.notifyDataSetChanged()
     }
 
+    override fun openHomeActivity() {
+        openAndFinishActivityWithClearTopNewTaskClearTaskFlags(HomeActivity::class.java, null)
+    }
 
 }

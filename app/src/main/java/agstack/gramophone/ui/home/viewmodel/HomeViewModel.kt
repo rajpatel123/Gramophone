@@ -38,6 +38,7 @@ class HomeViewModel @Inject constructor(
     var profileName = MutableLiveData<String>()
     var profileMobile = MutableLiveData<String>()
     var profileImage = MutableLiveData<String>()
+    var profileGramCash = MutableLiveData<String>()
 
     fun logout(v: View) {
         logoutUser()
@@ -54,10 +55,12 @@ class HomeViewModel @Inject constructor(
                         val name = response.body()?.gp_api_response_data?.customer_name
                         val mobile = response.body()?.gp_api_response_data?.mobile_no
                         val image = response.body()?.gp_api_response_data?.profile_image
+                        val gramcash = response.body()?.gp_api_response_data?.gramcashpoints
                         profileName.value = name!!
                         profileMobile.value = mobile!!
                         profileImage.value = image!!
-                        getNavigator()?.setImageNameMobile(name, mobile, image)
+                        profileGramCash.value = gramcash?.toString()
+                        getNavigator()?.setImageNameMobile(name, mobile, image,gramcash?.toString())
                         SharedPreferencesHelper.instance?.putString(
                             SharedPreferencesKeys.USERNAME,
                             name

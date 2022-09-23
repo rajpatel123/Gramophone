@@ -109,4 +109,9 @@ class GCExpiringSoonViewModel @Inject constructor(
 
         }
     }
+
+
+    fun onRedeemNowClicked(){
+        getNavigator()?.openHomeActivity()
+    }
 }

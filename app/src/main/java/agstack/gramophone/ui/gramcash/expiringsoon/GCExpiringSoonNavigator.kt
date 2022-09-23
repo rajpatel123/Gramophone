@@ -7,4 +7,5 @@ interface GCExpiringSoonNavigator :BaseNavigator {
      fun setExpireTxnListAdapter(gramCashTransactionListAdapter: GramCashTransactionListAdapter)
     fun showLoaderFooter()
     fun onListUpdated()
+    fun openHomeActivity()
 }

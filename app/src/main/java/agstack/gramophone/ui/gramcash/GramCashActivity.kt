@@ -5,6 +5,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.GramCashActivityBinding
 import agstack.gramophone.ui.faq.FAQAdapter
+import agstack.gramophone.ui.home.view.HomeActivity
 import android.app.Dialog
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
@@ -74,5 +75,6 @@ class GramCashActivity :
 
 
     }
+
 
 }

@@ -5,6 +5,8 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.settings.SettingsRepository
 import agstack.gramophone.ui.faq.FAQAdapter
 import agstack.gramophone.ui.gramcash.expiringsoon.GCExpiringSoonActivity
+import agstack.gramophone.ui.home.view.HomeActivity
+import agstack.gramophone.ui.referandearn.ReferAndEarnActivity
 import agstack.gramophone.ui.referandearn.model.GpApiResponseData
 import agstack.gramophone.ui.referandearn.model.GramcashFaqItem
 import agstack.gramophone.ui.referandearn.transaction.AllTransactionsListActivity
@@ -85,6 +87,16 @@ class GramCashViewModel @Inject constructor(
         getNavigator()?.openActivity(GCExpiringSoonActivity::class.java, Bundle().apply {
             putString(Constants.GC_Expiring_soon,gramCashResponseData.get()?.gramcashExpiringSoon.toString())
         })
+    }
+
+    fun onRedeemNowClicked(){
+
+        getNavigator()?.openAndFinishActivityWithClearTopNewTaskClearTaskFlags(HomeActivity::class.java, null)
+    }
+
+    fun onInviteNowClicked(){
+        getNavigator()?.openAndFinishActivity(ReferAndEarnActivity::class.java)
+
     }
 
 }
