@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner_top">
+
+        <TextView
+            android:id="@+id/tv_contactforPriceTitle"
+            style="@style/TextSize16Sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_17sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:text="@string/contactforprice"
+            app:layout_constraintBottom_toTopOf="@+id/v1_separator"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ic_cross"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_marginRight="@dimen/_17sdp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_cross" />
+
+
+        <View
+            android:id="@+id/v1_separator"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:background="@color/viewcolor"
+            app:layout_constraintTop_toBottomOf="@+id/tv_contactforPriceTitle" />
+
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/iv_giffy"
+            android:layout_width="@dimen/_122sdp"
+            android:layout_height="@dimen/_122sdp"
+            android:src="@drawable/tick"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v1_separator" />
+
+
+        <TextView
+            android:id="@+id/tv_heading"
+            style="@style/TextSize18Sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_32sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_32sdp"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center"
+            android:text="@string/thanksforyourinterest"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_giffy" />
+
+        <TextView
+            android:id="@+id/tv_GenuineSubHeadeing"
+            style="@style/TextSize14Sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_32sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_32sdp"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/manrope_regular"
+            android:gravity="center"
+            android:text="@string/executivewillcontactmessage"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_heading" />
+
+
+        <View
+            app:layout_constraintTop_toBottomOf="@+id/tv_GenuineSubHeadeing"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="@dimen/_50sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

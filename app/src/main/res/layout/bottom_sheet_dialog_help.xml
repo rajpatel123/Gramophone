@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="22dp"
+                android:fontFamily="@font/manrope_bold"
+                android:lineSpacingExtra="0sp"
+                android:text="@string/get_help"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:translationY="-0.24sp" />
+
+            <ImageView
+                android:id="@+id/ivCloseDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:contentDescription="@string/image"
+                android:clickable="true"
+                android:padding="@dimen/_2sdp"
+                android:src="@drawable/ic_cross"
+                android:focusable="true" />
+        </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="18dp"
+                android:background="@color/gray_stroke" />
+
+            <pl.droidsonroids.gif.GifImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:contentDescription="@string/image"
+                android:src="@drawable/call" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/manrope_extrabold"
+            android:lineSpacingExtra="-1sp"
+            android:text="@string/get_help_call"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/manrope_regular"
+            android:lineSpacingExtra="0sp"
+            android:text="@string/talk_to_customer_care"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_10ssp"
+            android:translationY="-0.24sp" />
+
+        <TextView
+            android:id="@+id/callMeNow"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="28dp"
+            android:background="@color/brand_color"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center"
+            android:lineSpacingExtra="-1sp"
+            android:text="@string/call_now"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</layout>

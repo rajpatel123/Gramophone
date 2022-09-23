@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.referandearn.transaction.AllTransactionsListViewModel" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/myToolbar"
+            layout="@layout/layout_toolbar" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            style="@style/TabIndicatorStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_44sdp"
+            android:layout_below="@+id/myToolbar"
+            android:layout_gravity="center_horizontal"
+            app:tabIndicatorColor="@color/orange">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabPast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/referrals" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <View
+            android:id="@+id/tab_separator"
+            android:layout_width="match_parent"
+            android:layout_height="14dp"
+            android:layout_below="@+id/tabLayout"
+            android:background="#F2F4F7"
+            android:visibility="visible" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAll"
+            app:recentSize="@{viewModel.allListSize}"
+            app:selectedTab="@{viewModel.selectedTab}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tab_separator"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_transaction"
+            tools:visibility="visible" />
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvReferral"
+            app:selectedTab="@{viewModel.selectedTab}"
+            app:pastSize="@{viewModel.referralsListSize}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tab_separator"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_transaction"
+            tools:visibility="visible" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tab_separator"
+            android:layout_centerInParent="true"
+            android:background="@color/gray_empty_bg"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            app:pastSize="@{viewModel.allListSize}"
+            app:recentSize="@{viewModel.referralsListSize}"
+            app:selectedTab="@{viewModel.selectedTab}"
+            android:visibility="gone"
+            >
+
+
+
+
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/manrope_bold"
+                android:text="@string/no_transactions"
+                android:textColor="@color/brand_color"
+                android:textSize="18sp" />
+
+
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="@{viewModel.progressLoader == true ? View.VISIBLE : View.GONE}" />
+    </RelativeLayout>
+</layout>

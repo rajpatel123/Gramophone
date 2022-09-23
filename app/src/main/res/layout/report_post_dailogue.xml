@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/menu_dialog_shape"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            >
+
+            <TextView
+                android:id="@+id/tv_del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="Report Comment/Post"
+                android:textColor="@color/brand_color"
+                android:textSize="@dimen/_14ssp"
+                 />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/radioBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_regular"
+                    android:text="Unwanted commercial content or spam"
+                    android:textSize="@dimen/_10ssp" />
+
+
+                <RadioButton
+                    android:id="@+id/sec_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pornography or sexually explicit material"
+                    android:fontFamily="@font/manrope_regular"
+
+                    android:textSize="@dimen/_10ssp" />
+
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hate speech or graphic violence"
+                    android:fontFamily="@font/manrope_regular"
+
+                    android:textSize="@dimen/_10ssp" />
+
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Harassment or bullying"
+                    android:fontFamily="@font/manrope_regular"
+
+                    android:textSize="@dimen/_10ssp" />
+            </RadioGroup>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/grey" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <TextView
+                    android:id="@+id/tv_cancel_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_18sdp"
+                    android:layout_toStartOf="@+id/tvReport"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:onClick="@{()->viewModel.onCancel()}"
+                    android:text="Cancel"
+                    android:textColor="#606774"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    android:id="@+id/tvReport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:onClick="@{()->viewModel.onReport()}"
+                    android:text="Report"
+                    android:textColor="@color/brand_color"
+                    android:textSize="@dimen/_14ssp" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

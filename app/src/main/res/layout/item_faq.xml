@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.referandearn.model.GramcashFaqItem">
+
+
+        </variable>
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:id="@+id/lltop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/_10sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/TextSize14Sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="@{model.question}"
+                android:textColor="@color/blakish"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="normal"
+                tools:text="Question" />
+
+
+            <ImageView
+                android:id="@+id/iv_arrow"
+                android:layout_width="@dimen/_5sdp"
+                android:layout_height="@dimen/_5sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".5"
+                app:srcCompat="@drawable/ic_arrow_down" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llExpandArea"
+            android:visibility="@{model.expanded? View.VISIBLE:View.GONE}"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lltop">
+
+            <TextView
+                android:id="@+id/tv_answer"
+                style="@style/TextSize14Sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="@{model.answer.get(0)}"
+                android:textColor="@color/blakish"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="normal"
+                android:fontFamily="@font/manrope_regular"
+                tools:text="Answer" />
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

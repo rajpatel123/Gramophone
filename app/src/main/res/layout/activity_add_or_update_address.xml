@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.address.viewmodel.AddOrUpdateAddressViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical"
+                tools:context=".ui.address.view.AddOrUpdateAddressActivity">
+
+
+
+                <ProgressBar
+                    android:id="@+id/stateProgressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/zxing_viewfinder_laser"
+                    android:elevation="@dimen/_1sdp"
+                    android:visibility="@{viewModel.loading? View.VISIBLE:View.GONE}" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/state_bg"
+                    android:minHeight="@dimen/_170sdp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_back"
+                        android:onClick="@{()->viewModel.onBackPressedClick()}"
+                        android:src="@drawable/ic_action_navigation_arrow_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/tvCompleteAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="80dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:gravity="center"
+                        android:text="@string/complete_address"
+                        android:textColor="@color/brand_color"
+                        android:textSize="@dimen/_16ssp"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvTips"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:gravity="center"
+                        android:text="@string/get_apporopriate_solution"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintTop_toBottomOf="@+id/tvCompleteAddress"
+                        tools:layout_editor_absoluteX="0dp" />
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_24sdp"
+                    android:layout_marginTop="@dimen/_150sdp"
+                    android:layout_marginEnd="@dimen/_24sdp"
+                    android:background="@color/white"
+                    android:padding="@dimen/_10sdp"
+                    app:cardCornerRadius="@dimen/_10sdp">
+
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/ivStateImage"
+                            android:layout_width="@dimen/_50sdp"
+                            android:layout_height="@dimen/_50sdp"
+                            android:layout_marginStart="@dimen/_14sdp"
+                            android:layout_marginTop="@dimen/_14sdp"
+                            android:layout_marginEnd="@dimen/_14sdp"
+                            android:layout_marginBottom="@dimen/_14sdp"
+                            android:visibility="@{viewModel.isImageAvailable? View.VISIBLE:View.INVISIBLE}"
+                            app:civ_border_color="@color/white"
+                            app:civ_border_width="2dp"
+                            tools:srcCompat="@drawable/state_img" />
+
+                        <TextView
+                            android:id="@+id/tvStateName"
+                            android:layout_width="@dimen/_50sdp"
+                            android:layout_height="@dimen/_50sdp"
+                            android:layout_marginStart="@dimen/_14sdp"
+                            android:layout_marginTop="@dimen/_14sdp"
+                            android:layout_marginEnd="@dimen/_14sdp"
+                            android:layout_marginBottom="@dimen/_14sdp"
+                            android:background="@drawable/state_initial_bg"
+                            android:fontFamily="@font/manrope_bold"
+                            android:gravity="center"
+                            android:text="@{viewModel.stateNameInitial}"
+                            android:textColor="@color/brand_color"
+                            android:textSize="@dimen/_18ssp"
+                            android:visibility="@{viewModel.isImageAvailable? View.GONE:View.VISIBLE}"
+                            tools:text="A" />
+
+                        <TextView
+                            android:id="@+id/etStateName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16ssp"
+                            android:layout_toEndOf="@+id/ivStateImage"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@{viewModel.stateNameStr}"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_16ssp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/etStateName"
+                            android:layout_marginTop="@dimen/_5ssp"
+                            android:layout_toEndOf="@+id/ivStateImage"
+                            android:fontFamily="@font/manrope_bold"
+                            android:onClick="@{ ()-> viewModel.changeState() }"
+                            android:text="@string/change"
+
+                            android:textColor="@color/green"
+                            android:textSize="@dimen/_12ssp" />
+
+                    </RelativeLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_250sdp"
+                    android:layout_marginBottom="@dimen/_55sdp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:text="@string/_district"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        app:boxCornerRadiusBottomEnd="@dimen/_8sdp">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/EditTextInputLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:boxStrokeWidth="0dp"
+                            app:endIconMode="none">
+
+                            <!--add all properties in stle and apply here -->
+                            <AutoCompleteTextView
+                                android:id="@+id/districtSpinner"
+                                style="@style/AutoCompleteTextViewLayoutStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:completionThreshold="1"
+                                android:imeOptions="actionNext"
+                                android:paddingBottom="@dimen/_15sdp"
+                                android:text="@={viewModel.districtName}" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top|end"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:fontFamily="@font/manrope_medium"
+                            android:text="*"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/_15ssp" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:text="@string/_tahsil"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_20sdp">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/EditTextInputLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            app:boxStrokeWidth="0dp"
+                            app:endIconMode="none">
+
+                            <!--add all properties in stle and apply here -->
+                            <AutoCompleteTextView
+                                android:id="@+id/tehsilSpinner"
+                                style="@style/AutoCompleteTextViewLayoutStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:completionThreshold="1"
+                                android:imeOptions="actionNext"
+                                android:paddingBottom="@dimen/_15sdp"
+                                android:text="@={viewModel.tehsilName}" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top|end"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:fontFamily="@font/manrope_medium"
+                            android:text="*"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/_15ssp" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:text="@string/_village"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/EditTextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        app:boxStrokeWidth="0dp"
+                        app:endIconMode="none">
+
+                        <!--add all properties in stle and apply here -->
+                        <AutoCompleteTextView
+                            android:id="@+id/villageNameSpinner"
+                            style="@style/AutoCompleteTextViewLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:completionThreshold="1"
+                            android:imeOptions="actionNext"
+                            android:paddingBottom="@dimen/_15sdp"
+                            android:text="@={viewModel.villageName}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:text="@string/address"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <EditText
+                        android:id="@+id/etAddress"
+                        style="@style/small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:layout_toEndOf="@+id/countryCode"
+                        android:background="@drawable/rounded_corner"
+                        android:backgroundTint="@color/mute_grey"
+                        android:imeOptions="actionNext"
+                        android:letterSpacing=".05"
+                        android:minHeight="@dimen/_50sdp"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:singleLine="true"
+                        android:text="@={viewModel.address}"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:text="@string/pincode"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/EditTextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        app:boxStrokeWidth="0dp"
+
+                        app:endIconMode="none">
+
+                        <!--add all properties in stle and apply here -->
+                        <AutoCompleteTextView
+                            android:id="@+id/pincodeSpinner"
+                            style="@style/AutoCompleteTextViewLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:completionThreshold="1"
+                            android:imeOptions="actionDone"
+                            android:inputType="number"
+                            android:maxLength="6"
+                            android:paddingBottom="@dimen/_15sdp"
+                            android:text="@={viewModel.pinCode}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/submitBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/brand_color"
+            android:gravity="center"
+            android:onClick="@{ ()-> viewModel.submitAddress() }"
+            android:padding="@dimen/_13sdp"
+            android:text="@string/go_to_app"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp" />
+
+        <TextView
+            android:id="@+id/saveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/brand_color"
+            android:gravity="center"
+            android:onClick="@{ ()-> viewModel.submitAddress() }"
+            android:padding="@dimen/_13sdp"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp" />
+    </RelativeLayout>
+</layout>

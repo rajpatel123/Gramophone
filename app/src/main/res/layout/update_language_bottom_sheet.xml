@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="22dp"
+                android:fontFamily="@font/manrope_bold"
+                android:lineSpacingExtra="0sp"
+                android:text="@string/select_language"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:translationY="-0.24sp" />
+
+            <ImageView
+                android:id="@+id/ivCloseDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:contentDescription="@string/image"
+                android:clickable="true"
+                android:padding="@dimen/_2sdp"
+                android:src="@drawable/ic_cross" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="18dp"
+            android:background="@color/gray_stroke" />
+
+
+
+
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_margin="@dimen/_10sdp"
+                android:id="@+id/rvLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:spanCount="2"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:listitem="@layout/item_language"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tvContinue"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="28dp"
+            android:background="@color/brand_color"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center"
+            android:lineSpacingExtra="-1sp"
+            android:text="@string/_continue"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</layout>

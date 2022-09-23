@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llIndicator"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/_10sdp"
+    android:minWidth="@dimen/_40sdp"
+    android:padding="@dimen/_5sdp"
+    android:background="@drawable/brand_color_indicator_bg"
+
+    android:orientation="horizontal">
+
+</LinearLayout>

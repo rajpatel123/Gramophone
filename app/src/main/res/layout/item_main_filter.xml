@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/selected_main_filter"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_weight="1"
+        android:fontFamily="@font/manrope_medium"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="0sp"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:text="Subcategory"
+        android:textColor="@color/blakish"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvAppliedFilterCount"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_40sdp"
+        android:fontFamily="@font/manrope_medium"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="-2sp"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:text="2"
+        android:textColor="@color/blakish"
+        android:textSize="13sp"
+        android:translationY="-0.27sp" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="2dp"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@color/orange" />
+
+</LinearLayout>

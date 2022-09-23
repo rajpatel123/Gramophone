@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.language.viewmodel.LanguageViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.settings.view.LanguageUpdateActivity">
+
+        <include
+            android:id="@+id/myToolbar"
+            layout="@layout/layout_toolbar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvLanguage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/myToolbar"
+
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:listitem="@layout/item_language" />
+
+        <TextView
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/orange"
+            android:gravity="center"
+            android:fontFamily="@font/manrope_bold"
+            android:onClick="@{ ()-> viewModel.onLanguageUpdate(btnSave) }"
+            android:padding="@dimen/_13sdp"
+            android:text="@string/save_language"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+</layout>

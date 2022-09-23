@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_32sdp"
+        android:layout_marginEnd="@dimen/_32sdp"
+        android:background="@drawable/rounded_corner_top">
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/iv_giffy"
+            android:layout_width="@dimen/_122sdp"
+            android:layout_height="@dimen/_122sdp"
+            android:layout_marginTop="@dimen/_35sdp"
+            android:src="@drawable/ic_customer_support"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_GenuineHeading"
+            style="@style/TextSize18Sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="@dimen/_20sdp"
+
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/manrope_medium"
+            android:gravity="center"
+            android:text="@string/thanksforyourinterest"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_giffy" />
+
+        <TextView
+            android:id="@+id/tv_GenuineSubHeadeing"
+            style="@style/TextSize14Sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/manrope_medium"
+            android:gravity="center"
+
+            android:text="@string/gramophone_confirmcall_disclaimer"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_GenuineHeading" />
+
+
+        <LinearLayout
+            android:id="@+id/layout_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_21sdp"
+            android:layout_marginBottom="@dimen/_21sdp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_GenuineSubHeadeing">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:backgroundTint="@color/white"
+                android:text="@string/notnow"
+                android:textAllCaps="true"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_14ssp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_ok"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:backgroundTint="@color/orange"
+                android:text="@string/yesplease"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp" />
+
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
