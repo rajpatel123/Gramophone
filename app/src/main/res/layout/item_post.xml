@@ -194,7 +194,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/ic_like" />
+                    />
 
                 <TextView
                     android:id="@+id/tvLikes"
@@ -261,6 +261,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_6sdp"
                     app:srcCompat="@drawable/ic_bookmark" />
             </RelativeLayout>
@@ -307,7 +309,6 @@
                     android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/manrope_bold"
                     android:maxLength="20"
-                    android:text="@{model.lastComment.postId}"
                     android:textColor="@color/blue"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold" />

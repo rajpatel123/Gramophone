@@ -4,7 +4,7 @@ data class Data(
     val __v: Int,
     val _id: String,
     val author: Author,
-    val bookMarked: Boolean,
+    var bookMarked: Boolean,
     val commentsCount: Int,
     val complainCount: Int,
     val createdDate: Long,
@@ -15,8 +15,8 @@ data class Data(
     val images: List<Image>,
     val lastComment: LastComment,
     val lastLike: LastLike,
-    val liked: Boolean,
-    val likesCount: Int,
+    var liked: Boolean,
+    var likesCount: Int,
     val otherShare: Int,
     val pinned: Boolean,
     val postType: String,
@@ -27,5 +27,7 @@ data class Data(
     val updatedBy: String,
     val urlPreviewMeta: UrlPreviewMeta,
     val whatsAppShare: Int,
-    var isSelected: Boolean
+    var isSelected: Boolean,
+    var position:Int?
+
 )

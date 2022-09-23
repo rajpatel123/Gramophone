@@ -1,15 +1,15 @@
 package agstack.gramophone.ui.home.adapter
 
 import agstack.gramophone.BR
+import agstack.gramophone.R
 import agstack.gramophone.databinding.*
+import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
 import agstack.gramophone.utils.Constants.BLOCK_USER
 import agstack.gramophone.utils.Constants.COPY_POST
 import agstack.gramophone.utils.Constants.DELETE_POST
 import agstack.gramophone.utils.Constants.EDIT_POST
 import agstack.gramophone.utils.Constants.REPORT_POST
 import agstack.gramophone.utils.IntentKeys
-import agstack.gramophone.utils.IntentKeys.Companion.FacebookShareKey
-import agstack.gramophone.utils.Utility
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View.*
@@ -29,9 +29,11 @@ class CommunityPostAdapter(private val dataList: List<agstack.gramophone.ui.home
     var onItemDetailClicked: ((postId: String) -> Unit)? = null
     var onItemLikesClicked: ((postId: String) -> Unit)? = null
     var onItemCommentsClicked: ((postId: String) -> Unit)? = null
-    var onShareOrBookMarkClicked: ((type: String) -> Unit)? = null
+    var onShareClicked: ((type: String) -> Unit)? = null
     var onTripleDotMenuClicked: ((type: String) -> Unit)? = null
     var onMenuOptionClicked: ((type: String) -> Unit)? = null
+    var onLikeClicked: ((post: Data) -> Unit)? = null
+    var onBookMarkClicked: ((post: Data) -> Unit)? = null
     lateinit var setImage: SetImage
     var lastSelectPosition: Int = 0
 
@@ -50,103 +52,13 @@ class CommunityPostAdapter(private val dataList: List<agstack.gramophone.ui.home
 
         val textHolder = holder as TextItemHolder
         configureItem(textHolder, position)
-//            VIEW_TYPE_TEXT -> {
-//                val textHolder = holder as TextItemHolder
-//                configureTextItem(textHolder, position)
-//            }
-//            VIEW_TYPE_IMAGE_TEXT -> {
-//                val textHolder = holder as TextImageHolder
-//                configureTextImageItem(textHolder, position)
-//            }
-//
-//            VIEW_TYPE_POLL -> {
-//                val textHolder = holder as TextPollHolder
-//                configureTextPollItem(textHolder, position)
-//            }
-//            VIEW_TYPE_PAGER -> {
-//                val pagerHolder = holder as PagerItemHolder
-//                configurePagerHolder(pagerHolder, position)
-//            }
-//
-//            VIEW_TYPE_VIDEO -> {
-//                val pagerHolder = holder as VideoHolder
-//                configureVideoHolder(pagerHolder, position)
-//            }
-
-
     }
-
-//    private fun configureTextPollItem(holder: TextPollHolder, position: Int) {
-//        val data = dataList?.get(position)
-//        holder.itemPollBinding.setVariable(BR.model, data)
-//        val mBinding = holder.itemPollBinding
-//    }
-
-//    private fun configureTextImageItem(holder: TextImageHolder, position: Int) {
-//        val data = dataList?.get(position)
-//        holder.itemBannerImageBinding.setVariable(BR.model, data)
-//        val mBinding = holder.itemBannerImageBinding
-//
-//        holder.itemBannerImageBinding.tvDesc.setOnClickListener {
-//            onItemDetailClicked?.invoke(data?._id!!)
-//        }
-//
-//        holder.itemBannerImageBinding.ivMenu.setOnClickListener {
-//            dataList?.get(lastSelectPosition)?.isSelected = false
-//            lastSelectPosition = position
-//            data?.isSelected = true
-//            notifyDataSetChanged()
-//            onTripleDotMenuClicked?.invoke(data?._id!!)
-//        }
-//
-//        holder.itemBannerImageBinding.cvImageBanner.setOnClickListener {
-//            onItemDetailClicked?.invoke(data?._id!!)
-//        }
-//
-//        holder.itemBannerImageBinding.rlLikes.setOnClickListener {
-//            onItemLikesClicked?.invoke(data?._id!!)
-//        }
-//        holder.itemBannerImageBinding.rlComments.setOnClickListener {
-//            onItemCommentsClicked?.invoke(data?._id!!)
-//        }
-//        holder.itemBannerImageBinding.ivWhatsapp.setOnClickListener {
-//            onShareOrBookMarkClicked?.invoke(IntentKeys.WhatsAppShareKey)
-//        }
-//
-//        holder.itemBannerImageBinding.ivFacebook.setOnClickListener {
-//            onShareOrBookMarkClicked?.invoke(FacebookShareKey)
-//        }
-//
-//        holder.itemBannerImageBinding.ivBookmark.setOnClickListener {
-//            onShareOrBookMarkClicked?.invoke("bookmark")
-//        }
-//
-//
-//        holder.itemBannerImageBinding.llEdit.setOnClickListener {
-//            onMenuOptionClicked?.invoke(EDIT_POST)
-//        }
-//
-//        holder.itemBannerImageBinding.llDelete.setOnClickListener {
-//            onMenuOptionClicked?.invoke(DELETE_POST)
-//        }
-//
-//        holder.itemBannerImageBinding.llReport.setOnClickListener {
-//            onMenuOptionClicked?.invoke(REPORT_POST)
-//        }
-//
-//        holder.itemBannerImageBinding.llBlock.setOnClickListener {
-//            onMenuOptionClicked?.invoke(BLOCK_USER)
-//        }
-//
-//        holder.itemBannerImageBinding.llCopy.setOnClickListener {
-//            onMenuOptionClicked?.invoke(COPY_POST)
-//        }
-//    }
 
     private fun configureItem(holder: TextItemHolder, position: Int) {
         val data = dataList?.get(position)
         holder.itemPostBinding.setVariable(BR.model, data)
         val mBinding = holder.itemPostBinding
+        data?.position = position
 
         holder.itemPostBinding.tvDesc.setOnClickListener {
             onItemDetailClicked?.invoke(data?._id!!)
@@ -157,47 +69,72 @@ class CommunityPostAdapter(private val dataList: List<agstack.gramophone.ui.home
         }
 
         if (data?.images?.size!! >0) {
-            setImage.onImageSet(data?.images[0].url,holder.itemPostBinding.postImage)
-            holder.itemPostBinding.imageContainer.visibility=VISIBLE
-            holder.itemPostBinding.postImage.minimumHeight=800
-        }else{
-            holder.itemPostBinding.imageContainer.visibility= INVISIBLE
-            holder.itemPostBinding.postImage.minimumHeight=10
+            setImage.onImageSet(data?.images[0].url, holder.itemPostBinding.postImage)
+            holder.itemPostBinding.imageContainer.visibility = VISIBLE
+            holder.itemPostBinding.postImage.minimumHeight = 800
+        } else {
+            holder.itemPostBinding.imageContainer.visibility = INVISIBLE
+            holder.itemPostBinding.postImage.minimumHeight = 10
 
         }
 
 
-        if (data?.lastComment!=null && data?.lastComment.image!=null) {
-            setImage.onImageSet(data?.lastComment.image,holder.itemPostBinding.ivCommentUsersProfile)
+        if (data?.lastComment != null) {
+            if (data.lastComment.author.size > 0 && data?.lastComment.author[0].photoUrl != null) {
+                setImage.onImageSet(
+                    data?.lastComment.author[0].photoUrl,
+                    holder.itemPostBinding.ivCommentUsersProfile
+                )
+            }
+
+            if (data.lastComment.author.size > 0) {
+                holder.itemPostBinding.tvName1.setText("" + data.lastComment.author[0].username)
+            }
+
         }
 
+            if (data.liked) {
+                holder.itemPostBinding.ivLike.setImageResource(R.drawable.ic_liked)
+            } else {
+                holder.itemPostBinding.ivLike.setImageResource(R.drawable.ic_like)
+            }
 
-        holder.itemPostBinding.ivMenu.setOnClickListener {
-            dataList?.get(lastSelectPosition)?.isSelected = false
+            if (data.bookMarked) {
+                holder.itemPostBinding.ivBookmark.setImageResource(R.drawable.ic_bookmarked)
+            } else {
+                holder.itemPostBinding.ivBookmark.setImageResource(R.drawable.ic_bookmark)
+            }
 
-            lastSelectPosition = position
-            data?.isSelected = true
-            notifyDataSetChanged()
-            onTripleDotMenuClicked?.invoke(data?._id!!)
+            holder.itemPostBinding.ivMenu.setOnClickListener {
+                dataList?.get(lastSelectPosition)?.isSelected = false
 
-        }
+                lastSelectPosition = position
+                data?.isSelected = true
+                notifyDataSetChanged()
+                onTripleDotMenuClicked?.invoke(data?._id!!)
 
-        holder.itemPostBinding.rlLikes.setOnClickListener {
-            onItemLikesClicked?.invoke(data?._id!!)
-        }
-        holder.itemPostBinding.rlComments.setOnClickListener {
-            onItemCommentsClicked?.invoke(data?._id!!)
-        }
-        holder.itemPostBinding.llComment.setOnClickListener {
-            onItemCommentsClicked?.invoke(data?._id!!)
-        }
-        holder.itemPostBinding.ivWhatsapp.setOnClickListener {
-            onShareOrBookMarkClicked?.invoke(IntentKeys.WhatsAppShareKey)
+            }
+
+            holder.itemPostBinding.ivLike.setOnClickListener {
+                onLikeClicked?.invoke(data)
+            }
+
+            holder.itemPostBinding.tvLikes.setOnClickListener {
+                onItemLikesClicked?.invoke(data?._id!!)
+            }
+            holder.itemPostBinding.rlComments.setOnClickListener {
+                onItemCommentsClicked?.invoke(data?._id!!)
+            }
+            holder.itemPostBinding.llComment.setOnClickListener {
+                onItemCommentsClicked?.invoke(data?._id!!)
+            }
+            holder.itemPostBinding.ivWhatsapp.setOnClickListener {
+                onShareClicked?.invoke(IntentKeys.WhatsAppShareKey)
         }
 
 
         holder.itemPostBinding.ivBookmark.setOnClickListener {
-            onShareOrBookMarkClicked?.invoke(data?._id!!)
+            onBookMarkClicked?.invoke(data)
         }
 
         holder.itemPostBinding.llEdit.setOnClickListener {
@@ -234,15 +171,20 @@ class CommunityPostAdapter(private val dataList: List<agstack.gramophone.ui.home
 //        }
     }
 
-    private fun configureVideoHolder(holder: VideoHolder, position: Int) {
-        val data = dataList?.get(position)
-        holder.itemPostVideoBinding.setVariable(BR.model, data)
-        val mBinding = holder.itemPostVideoBinding
-    }
 
-    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
-        if (holder is PagerItemHolder) {
-            viewPageStates.put(
+        fun getItem(position: Int): Data? {
+            return dataList?.get(position) ?: null
+        }
+
+        private fun configureVideoHolder(holder: VideoHolder, position: Int) {
+            val data = dataList?.get(position)
+            holder.itemPostVideoBinding.setVariable(BR.model, data)
+            val mBinding = holder.itemPostVideoBinding
+        }
+
+        override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+            if (holder is PagerItemHolder) {
+                viewPageStates.put(
                 holder.absoluteAdapterPosition,
                 holder.bindingBannerImageBinding.bannerPager.currentItem
             )
@@ -251,7 +193,7 @@ class CommunityPostAdapter(private val dataList: List<agstack.gramophone.ui.home
     }
 
 
-    override fun getItemCount(): Int = dataList?.size!!
+        override fun getItemCount(): Int = dataList?.size!!
 
     companion object {
         internal const val VIEW_TYPE_POST = "POST"

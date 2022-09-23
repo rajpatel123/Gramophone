@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
     <data>
 
         <import type="android.view.View" />
 
         <variable
             name="model"
-            type="agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedUsers" />
+            type="agstack.gramophone.ui.home.view.fragments.community.model.likes.DataX" />
     </data>
 
     <RelativeLayout
@@ -17,43 +17,6 @@
         android:layout_height="85dp"
         android:background="@drawable/circle_solid_white">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_70sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:text="@{model.name}"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tv_address_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_70sdp"
-            android:layout_marginTop="@dimen/_35sdp"
-            android:text="@{model.location}"
-            android:textSize="@dimen/_13ssp"/>
-
-        <TextView
-            android:id="@+id/tv_follow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/_24sdp"
-            android:layout_marginRight="@dimen/_16sdp"
-            android:background="@drawable/following_bg"
-            android:paddingStart="@dimen/_6sdp"
-            android:paddingTop="@dimen/_3sdp"
-            android:paddingEnd="@dimen/_6sdp"
-            android:paddingBottom="@dimen/_3sdp"
-            android:text="Following"
-            android:textColor="@color/gjg"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold" />
-
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="@dimen/_44sdp"
@@ -62,8 +25,51 @@
             android:layout_marginTop="@dimen/_3sdp"
             android:layout_marginEnd="@dimen/_3sdp"
             android:layout_marginBottom="@dimen/_3sdp"
-            app:srcCompat="@drawable/dummy_profile"
-             />
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/dummy_profile" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_toEndOf="@+id/imageView"
+            android:text="@{model.author.username}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            tools:text="Raj patel" />
+
+        <TextView
+            android:id="@+id/tv_address_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_below="@+id/name"
+            android:layout_toEndOf="@+id/imageView"
+            android:text="@{model.author.location_name}"
+            android:textSize="@dimen/_10ssp"
+            tools:text="Utter Pradesh" />
+
+        <TextView
+            android:id="@+id/tv_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:background="@drawable/following_bg"
+            android:paddingStart="@dimen/_6sdp"
+            android:layout_centerVertical="true"
+            android:paddingTop="@dimen/_3sdp"
+            android:paddingEnd="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_3sdp"
+            android:text="Following"
+            android:textColor="@color/gjg"
+            android:textSize="@dimen/_10ssp"
+            android:textStyle="bold" />
+
+
 
 
 

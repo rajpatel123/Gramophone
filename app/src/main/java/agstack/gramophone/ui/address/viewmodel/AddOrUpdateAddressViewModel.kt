@@ -10,15 +10,12 @@ import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressRespon
 import agstack.gramophone.ui.address.view.AddOrUpdateAddressActivity
 import agstack.gramophone.ui.address.view.StateListActivity
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
-import agstack.gramophone.utils.ApiResponse
-import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.*
 import agstack.gramophone.utils.Constants.ALL_STRING
 import agstack.gramophone.utils.Constants.DISTRICT
 import agstack.gramophone.utils.Constants.PINCODE
 import agstack.gramophone.utils.Constants.TEHSIL
 import agstack.gramophone.utils.Constants.VILLAGE
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
 import android.Manifest
 import android.location.Address
 import android.location.Geocoder
@@ -114,7 +111,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                     )
                     getNavigator()?.goToApp()
                 } else {
-                    getNavigator()?.onError(updateAddress?.gp_api_message)
+                    getNavigator()?.onError(Utility.getErrorMessage(response.errorBody()))
 
                 }
 

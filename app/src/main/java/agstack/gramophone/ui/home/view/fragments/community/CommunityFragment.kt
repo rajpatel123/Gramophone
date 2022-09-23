@@ -8,6 +8,7 @@ import agstack.gramophone.ui.dialog.CommentBottomSheetDialog
 import agstack.gramophone.ui.home.adapter.CommentsAdapter
 import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
+import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
 import agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.IntentKeys
@@ -69,16 +70,20 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         onItemCommentsClicked: (postId: String) -> Unit,
         onWhatsAppClicked: (postId: String) -> Unit,
         onTripleDotMenuClicked: (postId: String) -> Unit,
-        onMenuOptionClicked: (postId: String) -> Unit
+        onMenuOptionClicked: (postId: String) -> Unit,
+        onLikeClicked: (post: Data) -> Unit,
+        onBookMarkClicked: (post: Data) -> Unit
 
     ) {
         runOnUIThread {//will be removed while api integrations
             communityPostAdapter.onItemCommentsClicked=onItemCommentsClicked
             communityPostAdapter.onItemLikesClicked=onItemLikesClicked
             communityPostAdapter.onItemDetailClicked=onItemDetailClicked
-            communityPostAdapter.onShareOrBookMarkClicked=onWhatsAppClicked
+            communityPostAdapter.onShareClicked=onWhatsAppClicked
             communityPostAdapter.onTripleDotMenuClicked=onTripleDotMenuClicked
             communityPostAdapter.onMenuOptionClicked=onMenuOptionClicked
+            communityPostAdapter.onLikeClicked=onLikeClicked
+            communityPostAdapter.onBookMarkClicked=onBookMarkClicked
             communityPostAdapter.setImage = this
             rvPost.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             rvPost.setHasFixedSize(false)

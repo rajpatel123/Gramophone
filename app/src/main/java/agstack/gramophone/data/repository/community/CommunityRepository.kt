@@ -9,7 +9,10 @@ import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.BookmarkPostResponse
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikePostResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedusersResponseModel
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityHomeResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityRequestModel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.LikedUsersRequestModel
@@ -30,5 +33,7 @@ import javax.inject.Singleton
 @Singleton
 interface CommunityRepository {
     suspend fun getCommunityPost(sort: CommunityRequestModel): Response<CommunityHomeResponseModel>
-    suspend fun getLikedUsers(sort: LikedUsersRequestModel): Response<LikedusersResponseModel>
+    suspend fun getLikedUsers(sort: PostRequestModel): Response<LikedusersResponseModel>
+    suspend fun likePost(post: PostRequestModel): Response<LikePostResponseModel>
+    suspend fun bookmarkPost(post: PostRequestModel): Response<BookmarkPostResponse>
 }
