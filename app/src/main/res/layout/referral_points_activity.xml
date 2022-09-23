@@ -99,26 +99,26 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentStart="true"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <TextView
                             style="@style/TextSize14Sp"
-                            android:layout_marginTop="@dimen/_15sdp"
-                            android:layout_marginLeft="@dimen/_15sdp"
-                            android:text="@string/available"
-                            android:textColor="@color/green"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:text="@string/available"
+                            android:textColor="@color/green" />
 
                         <TextView
-                            style="@style/TextSize18Sp"
+                            style="@style/TextSize22Sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginLeft="@dimen/_15sdp"
                             android:text="@{viewModel.gramCashResponseDataFromBundle.gramcashAvailable.toString()}"
-                            tools:text="200"
                             android:textColor="@color/blakish"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            tools:text="200" />
 
                     </LinearLayout>
 
@@ -126,27 +126,27 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
 
                         <TextView
                             style="@style/TextSize14Sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginEnd="@dimen/_15sdp"
                             android:text="@string/pending"
-                            android:textColor="@color/orange"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:textColor="@color/orange" />
 
                         <TextView
-                            style="@style/TextSize18Sp"
+                            style="@style/TextSize22Sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="end"
                             android:layout_marginEnd="@dimen/_15sdp"
-                            tools:text="200"
                             android:text="@{viewModel.gramCashResponseDataFromBundle.gramcashPending.toString()}"
                             android:textColor="@color/blakish"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            tools:text="200" />
                     </LinearLayout>
 
                 </RelativeLayout>
@@ -233,25 +233,41 @@
                     android:background="@color/gray_stroke"
                     app:layout_constraintTop_toBottomOf="@id/rl_viewreferral_trans" />
 
-                <TextView
-                    android:id="@+id/myref_label"
-                    style="@style/TextSize18Sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:id="@+id/myref_heading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
-                    android:text="@string/my_referrals"
+                    android:orientation="horizontal"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/v2" />
+                    app:layout_constraintTop_toBottomOf="@id/v2">
+
+                    <TextView
+                        android:id="@+id/myref_label"
+                        style="@style/TextSize18Sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/my_referrals" />
+
+                    <TextView
+                        style="@style/TextSize18Sp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@{@string/open_parenthesis.concat(String.valueOf(viewModel.myReferralsListSize)).concat(@string/close_parenthesis)}"
+                        android:visibility="@{viewModel.myReferralsListSize==0?View.GONE:View.VISIBLE}" />
+                </LinearLayout>
+
 
                 <LinearLayout
-                    android:visibility="@{viewModel.myReferralsListSize==0?View.VISIBLE:View.GONE}"
                     android:id="@+id/no_referral_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginBottom="@dimen/_20sdp"
-                    tools:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@id/myref_label">
+                    android:orientation="vertical"
+                    android:visibility="@{viewModel.myReferralsListSize==0?View.VISIBLE:View.GONE}"
+                    app:layout_constraintTop_toBottomOf="@id/myref_heading"
+                    tools:visibility="gone">
 
 
                     <ImageView
@@ -301,25 +317,25 @@
                         android:layout_marginTop="@dimen/_16sdp"
                         android:layout_marginBottom="@dimen/_32sdp"
                         android:background="@drawable/rounded_corner_12_solid_orange"
+                        android:onClick="@{()->viewModel.onReferFriendClicked()}"
                         android:paddingLeft="@dimen/_16sdp"
                         android:paddingTop="@dimen/_8sdp"
                         android:paddingRight="@dimen/_16sdp"
                         android:paddingBottom="@dimen/_8sdp"
                         android:text="@string/refer_a_friend"
-                        android:onClick="@{()->viewModel.onReferFriendClicked()}"
                         android:textColor="@color/white" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/layout_bottom"
-                    android:visibility="@{viewModel.myReferralsListSize==0?View.GONE:View.VISIBLE}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="horizontal"
+                    android:visibility="@{viewModel.myReferralsListSize==0?View.GONE:View.VISIBLE}"
                     android:weightSum="2"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/myref_label">
+                    app:layout_constraintTop_toBottomOf="@+id/myref_heading">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_myreferrals"
@@ -339,8 +355,6 @@
 
 
         </androidx.core.widget.NestedScrollView>
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

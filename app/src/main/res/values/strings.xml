@@ -166,6 +166,7 @@
     <string name="gram_cash">&#160;Gram Cash</string>
     <string name="items_in_your_cart">Items in your cart (</string>
     <string name="close_parenthesis">)</string>
+    <string name="open_parenthesis">(</string>
     <string name="details">Details</string>
     <string name="hash_sign">#</string>
     <string name="slash_sign">&#160;/&#160;</string>
@@ -326,7 +327,7 @@
     <string name="save_continue"><![CDATA[Save & Continue]]></string>
     <string name="enter_firm_name">Enter Firm Name</string>
     <string name="add_firm">Add Firm</string>
-    <string name="check_referral_points">Check your referral points</string>
+    <string name="check_referral_points">Check your referral and points</string>
     <string name="share_earn">Share Gramophone App and earn upto \u20B9 150!</string>
     <string name="share_earn_message2">Share gramophone app with your farmer friends, they download the app then you can earn up to Rs. 150!</string>
     <string name="share_your_referral_qr_code">SHARE YOUR REFERRAL CODE AND QR CODE</string>
@@ -399,7 +400,7 @@
     <string name="aaa">All Tran_1111</string>
     <string name="download_to_gallery">Downloaded to Gallery</string>
     <string name="home_share_subject">Get best quality agriculture products from Gramophone App</string>
-    <string name="about_referral_point_balance">About Referral Points balance</string>
+    <string name="about_referral_point_balance">About Referral Points Balance</string>
     <string name="update">Update</string>
     <string name="enter_6_digit_code">Enter 6 digit code we have sent on</string>
     <string name="likes">Likes(%d)</string>
