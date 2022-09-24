@@ -31,15 +31,21 @@ class SubCategoryActivity :
 
     //initialise ViewModel
     private val subCategoryViewModel: SubCategoryViewModel by viewModels()
+    var soryBy: String = Constants.RELAVENT_CODE
+    var subCategoryIdsArray = arrayOf<Int>()
+    var brandIdsArray = arrayOf<Int>()
+    var cropIdsArray = arrayOf<Int>()
+    var technicalIdsArray = arrayOf<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupUi()
         subCategoryViewModel.getBundleData()
         subCategoryViewModel.getBanners()
-        setupUi()
     }
 
     private fun setupUi() {
+        disableSortAndFilter()
         viewDataBinding.tvSortBy.setOnClickListener(this)
         viewDataBinding.tvFilter.setOnClickListener(this)
         viewDataBinding.toolbar.setNavigationOnClickListener { finish() }
@@ -58,20 +64,32 @@ class SubCategoryActivity :
         })
 
         viewDataBinding.dotsIndicator.setOnClickListener { }
-        subCategoryViewModel.setAdapter()
     }
 
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.tvSortBy -> {
-                val bottomSheet = BottomSheetSortByDialog()
+                val bottomSheet = BottomSheetSortByDialog(subCategoryViewModel.sortDataList) {
+                    soryBy = it
+                }
+                bottomSheet.isCancelable = false
                 bottomSheet.show(
                     supportFragmentManager,
                     "bottomSheet"
                 )
             }
             R.id.tvFilter -> {
-                val bottomSheet = BottomSheetFilterDialog()
+                val bottomSheet = BottomSheetFilterDialog(subCategoryViewModel.mainFilterList,
+                    subCategoryViewModel.subCategoryList,
+                    subCategoryViewModel.brandsList,
+                    subCategoryViewModel.cropsList,
+                    subCategoryViewModel.technicalDataList) { subCategoryIds, brandIds, cropIds, technicalIds ->
+                    subCategoryIdsArray = subCategoryIds
+                    brandIdsArray = brandIds
+                    cropIdsArray = cropIds
+                    technicalIdsArray = technicalIds
+                }
+                bottomSheet.isCancelable = false
                 bottomSheet.show(
                     supportFragmentManager,
                     "bottomSheet"
@@ -86,6 +104,16 @@ class SubCategoryActivity :
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun disableSortAndFilter() {
+        viewDataBinding.tvSortBy.isEnabled = false
+        viewDataBinding.tvFilter.isEnabled = false
+    }
+
+    override fun enableSortAndFilter() {
+        viewDataBinding.tvSortBy.isEnabled = true
+        viewDataBinding.tvFilter.isEnabled = true
+    }
+
     override fun setViewPagerAdapter(bannerList: List<agstack.gramophone.ui.home.view.fragments.market.model.Banner>?) {
         val adapter = ViewPagerAdapter(bannerList!!)
         viewDataBinding.viewPager.adapter = adapter
@@ -94,26 +122,27 @@ class SubCategoryActivity :
 
     override fun setSubCategoryAdapter(
         subCategoryAdapter: ShopByCategoryAdapter,
-        onItemClick: (String) -> Unit,
     ) {
-        subCategoryAdapter.itemClicked = onItemClick
         viewDataBinding.rvSubCategory.adapter = subCategoryAdapter
     }
 
-    override fun setProductListAdapter(productListAdapter: ProductListAdapter, onAddToCartClick: (productId: String) -> Unit,) {
+    override fun setProductListAdapter(
+        productListAdapter: ProductListAdapter,
+        onAddToCartClick: (productId: String) -> Unit,
+    ) {
         productListAdapter.onAddToCartClick = onAddToCartClick
         viewDataBinding.rvProducts.adapter = productListAdapter
     }
 
     override fun openAddToCartDialog(
         mSKUList: ArrayList<ProductSkuListItem?>,
-        mSkuOfferList: ArrayList<PromotionListItem?>
+        mSkuOfferList: ArrayList<PromotionListItem?>,
     ) {
         val bottomSheet = AddToCartBottomSheetDialog()
         bottomSheet.mSKUList = mSKUList
         bottomSheet.mSkuOfferList = mSkuOfferList
         bottomSheet.show(
-           supportFragmentManager,
+            supportFragmentManager,
             Constants.BOTTOM_SHEET
         )
     }

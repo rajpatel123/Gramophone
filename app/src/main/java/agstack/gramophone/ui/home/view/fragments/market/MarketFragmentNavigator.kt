@@ -18,14 +18,11 @@ interface MarketFragmentNavigator : BaseNavigator {
         onItemClick: (String) -> Unit,
     )
 
-    fun notifyHomeAdapter(allBannerResponse: BannerResponse?, categoryResponse: CategoryResponse?,
-                          productList: ArrayList<ProductData>, cropResponse: CropResponse?,
-                          storeResponse: StoreResponse?, companyResponse: CompanyResponse?,
-                          cartList: List<CartItem>?)
-
-    fun setCategoryAdapter(
-        adapter: ShopByCategoryAdapter,
-        onCategoryClick: (String) -> Unit,
+    fun notifyHomeAdapter(
+        allBannerResponse: BannerResponse?, categoryResponse: CategoryResponse?,
+        productList: ArrayList<ProductData>, cropResponse: CropResponse?,
+        storeResponse: StoreResponse?, companyResponse: CompanyResponse?,
+        cartList: List<CartItem>?,
     )
 
     fun setFeaturedProductsAdapter(

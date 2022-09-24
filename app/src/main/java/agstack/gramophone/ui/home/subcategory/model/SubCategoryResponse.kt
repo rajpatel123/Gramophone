@@ -28,14 +28,17 @@ data class GpApiTrace(
 data class Brands(
     val brand_id: Int,
     val brand_name: String,
+    var isChecked: Boolean = false
 )
 
 data class Crops(
     val crop_id: Int,
     val crop_name: String,
+    var isChecked: Boolean = false
 )
 
 data class TechnicalData(
     val technical_code: Int,
     val technical_name: String,
+    var isChecked: Boolean = false
 )

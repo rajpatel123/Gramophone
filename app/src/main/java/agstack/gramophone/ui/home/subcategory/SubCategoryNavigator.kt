@@ -15,14 +15,18 @@ interface SubCategoryNavigator : BaseNavigator {
 
     fun setSubCategoryAdapter(
         subCategoryAdapter: ShopByCategoryAdapter,
-        onItemClick: (String) -> Unit,
     )
 
     fun setProductListAdapter(
-        productListAdapter: ProductListAdapter, onAddToCartClick: ((productId: String) -> Unit))
+        productListAdapter: ProductListAdapter, onAddToCartClick: ((productId: String) -> Unit),
+    )
 
     fun openAddToCartDialog(
         mSKUList: ArrayList<ProductSkuListItem?>,
-        mSkuOfferList: ArrayList<PromotionListItem?>
+        mSkuOfferList: ArrayList<PromotionListItem?>,
     )
+
+    fun disableSortAndFilter()
+
+    fun enableSortAndFilter()
 }

@@ -190,14 +190,6 @@ class MarketFragment :
         }
     }
 
-    override fun setCategoryAdapter(
-        adapter: ShopByCategoryAdapter,
-        onCategoryClick: (String) -> Unit,
-    ) {
-        adapter.itemClicked = onCategoryClick
-        binding?.rvShopByCat?.adapter = adapter
-    }
-
     override fun setCropAdapter(adapter: ShopByCropsAdapter, onItemClick: (String) -> Unit) {
         adapter.onItemClicked = onItemClick
         binding?.rvShopByCrops?.adapter = adapter

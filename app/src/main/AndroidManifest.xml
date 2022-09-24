@@ -118,11 +118,6 @@
         <activity android:name=".ui.orderdetails.OrderDetailsActivity" />
         <activity android:name=".ui.home.product.activity.ProductAllReviewsActivity" />
         <activity android:name=".ui.home.product.activity.productreview.AddEditProductReviewActivity" />
-        <activity android:name=".ui.userprofile.UserProfileActivity" />
-        <activity android:name=".ui.userprofile.EditProfileActivity" />
-        <activity android:name=".ui.referandearn.ReferAndEarnActivity" />
-        <activity android:name=".ui.referandearn.referralpoints.ReferralPointsActivity" />
-        <activity android:name=".ui.home.product.activity.productreview.AddEditProductReviewActivity" />
         <activity
             android:name=".ui.userprofile.UserProfileActivity"
             android:exported="false"
@@ -140,9 +135,6 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.referandearn.aboutreferralpoints.AboutReferralPointsBalanceActivity" />
-        <activity android:name=".ui.referandearn.transaction.AllTransactionsListActivity" />
-        <activity android:name=".ui.faq.FAQActivity" />
         <activity
             android:name=".ui.referandearn.aboutreferralpoints.AboutReferralPointsBalanceActivity"
             android:exported="false"
@@ -157,15 +149,6 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.userprofile.firm.AddFirmActivity" />
-        <activity android:name=".ui.weather.WeatherActivity" />
-        <activity android:name=".ui.home.subcategory.SubCategoryActivity" />
-        <activity android:name=".ui.home.featured.FeaturedProductActivity" />
-        <activity android:name=".ui.home.shop.ShopByActivity" />
-        <activity android:name=".ui.home.shopbydetail.ShopByDetailActivity" />
-        <activity android:name=".ui.home.stage.CropStageActivity" />
-        <activity android:name=".ui.home.stagedetail.CropStageDetailActivity" />
-        <activity android:name=".ui.home.cropdetail.CropDetailActivity" />
         <activity android:name=".ui.userprofile.firm.AddFirmActivity" />
         <activity android:name=".ui.weather.WeatherActivity" />
         <activity android:name=".ui.home.subcategory.SubCategoryActivity" />
