@@ -6,10 +6,10 @@ import agstack.gramophone.ui.home.view.fragments.community.model.likes.Likeduser
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityHomeResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityRequestModel
+import agstack.gramophone.ui.postdetails.model.PostDetailResponseModel
+import agstack.gramophone.ui.postdetails.model.comments.CommentsResponseModel
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.POST
-import retrofit2.http.PUT
+import retrofit2.http.*
 
 interface CommunityApiService {
 
@@ -25,4 +25,10 @@ interface CommunityApiService {
 
     @PUT("/api/v2/posts/update-bookmark")
     suspend fun bookmarkPost(@Body likedUsersRequestModel: PostRequestModel?): Response<BookmarkPostResponse>
+
+    @GET("/api/v2/posts/{id}")
+    suspend fun getPostDetails(@Path("id") id: String): Response<PostDetailResponseModel>
+
+    @POST("/api/v2/comments/get-comments")
+    suspend fun getPostComments(@Body post: PostRequestModel): Response<CommentsResponseModel>
 }

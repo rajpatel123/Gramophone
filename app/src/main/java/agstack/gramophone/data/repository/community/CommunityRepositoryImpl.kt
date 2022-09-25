@@ -7,7 +7,8 @@ import agstack.gramophone.ui.home.view.fragments.community.model.likes.Likeduser
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityHomeResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityRequestModel
-import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.LikedUsersRequestModel
+import agstack.gramophone.ui.postdetails.model.PostDetailResponseModel
+import agstack.gramophone.ui.postdetails.model.comments.CommentsResponseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -50,6 +51,23 @@ class CommunityRepositoryImpl @Inject constructor(
             Dispatchers.IO
         ) {
             val appData = communityApiService.bookmarkPost(postResponseModel)
+            appData
+        }
+
+
+    override suspend fun getPostDetails(id: String): Response<PostDetailResponseModel> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val appData = communityApiService.getPostDetails(id)
+            appData
+        }
+
+    override suspend fun getPostComments(id: PostRequestModel): Response<CommentsResponseModel> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val appData = communityApiService.getPostComments(id)
             appData
         }
 

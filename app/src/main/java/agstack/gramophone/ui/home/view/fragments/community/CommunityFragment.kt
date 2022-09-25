@@ -3,21 +3,23 @@ package agstack.gramophone.ui.home.view.fragments.community
 import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseFragment
-import agstack.gramophone.databinding.*
+import agstack.gramophone.databinding.BlockUserDailogueBinding
+import agstack.gramophone.databinding.DeletePostDailogueBinding
+import agstack.gramophone.databinding.FragmentCommunityBinding
+import agstack.gramophone.databinding.ReportPostDailogueBinding
 import agstack.gramophone.ui.dialog.CommentBottomSheetDialog
-import agstack.gramophone.ui.home.adapter.CommentsAdapter
 import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
 import agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.IntentKeys
-import agstack.gramophone.utils.IntentKeys.Companion.WhatsAppShareKey
 import agstack.gramophone.utils.ShareSheetPresenter
 import android.app.AlertDialog
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.viewModels
@@ -25,6 +27,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amnix.xtension.extensions.runOnUIThread
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_community.*
 
@@ -59,7 +63,16 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     override fun onResume() {
         super.onResume()
-        communityViewModel.loadData()
+        communityViewModel.loadData("latest")
+        tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                progress.visibility= VISIBLE
+                communityViewModel.filterPost(tab)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
     }
 
 
@@ -88,6 +101,16 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
             rvPost.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             rvPost.setHasFixedSize(false)
             rvPost.adapter = communityPostAdapter
+            if (communityPostAdapter.dataList?.size!! >0){
+                tvNoPost.visibility=GONE
+                rvPost.visibility= VISIBLE
+            }else{
+                tvNoPost.visibility= VISIBLE
+                rvPost.visibility= GONE
+            }
+            progress.visibility= GONE
+
+
         }
     }
 

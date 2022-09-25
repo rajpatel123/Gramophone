@@ -2,7 +2,6 @@ package agstack.gramophone.ui.dialog
 
 import agstack.gramophone.databinding.PostCommentDialogBinding
 import agstack.gramophone.ui.home.adapter.CommentsAdapter
-import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.Data
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -48,7 +47,7 @@ class CommentBottomSheetDialog : BottomSheetDialogFragment() {
 
         binding?.rvCommentsDialog?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         binding?.rvCommentsDialog?.setHasFixedSize(false)
-        binding?.rvCommentsDialog?.adapter = CommentsAdapter(finalList)
+        //binding?.rvCommentsDialog?.adapter = CommentsAdapter(finalList)
     }
 
 

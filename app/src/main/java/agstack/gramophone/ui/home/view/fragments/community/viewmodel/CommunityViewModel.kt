@@ -11,10 +11,12 @@ import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
 import agstack.gramophone.ui.postdetails.view.PostDetailsActivity
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.Constants.POST_ID
 import android.app.AlertDialog
 import android.os.Bundle
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,14 +29,43 @@ class CommunityViewModel @Inject constructor(
     private val communityRepository: CommunityRepository
 ) : BaseViewModel<CommunityFragmentNavigator>() {
     lateinit var mAlertDialog: AlertDialog
-    var sorting  = ObservableField<String>()
-    var limit    = ObservableField<Int>()
+    var sorting = ObservableField<String>()
+    var showProgress = ObservableField<Boolean>()
+    var limit = ObservableField<Int>()
     lateinit var communityPostAdapter: CommunityPostAdapter
-    fun loadData() {
-        sorting.set("trending")
-        limit.set(100)
+
+    fun filterPost(v: TabLayout.Tab) {
+        showProgress.set(true)
+        when (v.text) {
+            Constants.POST_LATEST -> {
+                sorting.set("latest")
+            }
+            Constants.POST_TRENDING -> {
+                sorting.set("trending")
+            }
+            Constants.POST_FOLLOWING -> {
+                sorting.set("following")
+            }
+            Constants.POST_EXPERT -> {
+                sorting.set("expert")
+            }
+            Constants.POST_SELF -> {
+                sorting.set("self")
+
+            }
+            Constants.POST_BOOKMARK -> {
+                sorting.set("bookmark")
+            }
+        }
+
+        loadData(sorting.get()!!)
+    }
+
+
+    fun loadData(sorting: String) {
+        limit.set(5)
         viewModelScope.launch(Dispatchers.Default) {
-        getPost()
+            getPost(sorting)
         }
     }
 
@@ -61,19 +92,27 @@ class CommunityViewModel @Inject constructor(
 
 
 
-    private suspend fun getPost() {
+    private suspend fun getPost(sorting: String) {
 
         getNavigator()?.onLoading()
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
-                val response = communityRepository.getCommunityPost(CommunityRequestModel(sorting.get(),limit.get()))
+                val response = communityRepository.getCommunityPost(CommunityRequestModel(sorting,limit.get()))
                 if (response.isSuccessful) {
                     val data = response.body()?.data
-                     communityPostAdapter =  CommunityPostAdapter(data)
+
+                    if (data?.size!! >0){
+
+                    }
+                    communityPostAdapter =  CommunityPostAdapter(data)
 
                     getNavigator()?.updatePostList(communityPostAdapter,
                         {//postDetail click
-                            getNavigator()?.openActivity(PostDetailsActivity::class.java, null)
+                            getNavigator()?.openActivity(
+                                PostDetailsActivity::class.java,
+                                Bundle().apply {
+                                    putString(POST_ID, it)
+                                })
                         },
                         {//likes click
                             getNavigator()?.openActivity(
@@ -132,7 +171,12 @@ class CommunityViewModel @Inject constructor(
                 }
             } else
                 getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+
+
+            showProgress.set(false)
+
         } catch (ex: Exception) {
+            showProgress.set(false)
             when (ex) {
                 is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
                 else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)

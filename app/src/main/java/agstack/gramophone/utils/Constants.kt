@@ -6,6 +6,14 @@ import android.content.Context
 
 
 object Constants {
+
+
+    val POST_LATEST: String = "Latest"
+    val POST_TRENDING: String = "Trending"
+    val POST_FOLLOWING: String = "Following"
+    val POST_EXPERT: String = "Expert"
+    val POST_SELF: String = "My Post"
+    val POST_BOOKMARK: String = "Saved Post"
     val POST_ID: String = "postId"
     val REFERRAL_CODE: String="referralCOde"
     val UNAUTHORIZED: Int=401

@@ -11,6 +11,7 @@ import agstack.gramophone.utils.Constants.EDIT_POST
 import agstack.gramophone.utils.Constants.REPORT_POST
 import agstack.gramophone.utils.IntentKeys
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View.*
 import android.view.ViewGroup
@@ -22,7 +23,7 @@ import java.util.*
 /**
  * [RecyclerView.Adapter] holding [NestedRecyclerFragment] view pager logic
  */
-class CommunityPostAdapter(private val dataList: List<agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val viewPageStates = HashMap<Int, Int>()
     private lateinit var context: Context
@@ -93,16 +94,18 @@ class CommunityPostAdapter(private val dataList: List<agstack.gramophone.ui.home
 
         }
 
-            if (data.liked) {
-                holder.itemPostBinding.ivLike.setImageResource(R.drawable.ic_liked)
-            } else {
-                holder.itemPostBinding.ivLike.setImageResource(R.drawable.ic_like)
-            }
 
-            if (data.bookMarked) {
-                holder.itemPostBinding.ivBookmark.setImageResource(R.drawable.ic_bookmarked)
-            } else {
-                holder.itemPostBinding.ivBookmark.setImageResource(R.drawable.ic_bookmark)
+        Log.d("Raj", ""+data?.liked)
+        if (data.liked) {
+            holder.itemPostBinding.ivLike.setImageResource(R.drawable.ic_liked)
+        } else {
+            holder.itemPostBinding.ivLike.setImageResource(R.drawable.ic_like)
+        }
+
+        if (data.bookMarked) {
+            holder.itemPostBinding.ivBookmark.setImageResource(R.drawable.ic_bookmarked)
+        } else {
+            holder.itemPostBinding.ivBookmark.setImageResource(R.drawable.ic_bookmark)
             }
 
             holder.itemPostBinding.ivMenu.setOnClickListener {
@@ -115,6 +118,10 @@ class CommunityPostAdapter(private val dataList: List<agstack.gramophone.ui.home
 
             }
 
+
+        holder.itemPostBinding.postImage.setOnClickListener {
+            onItemDetailClicked?.invoke(data._id)
+        }
             holder.itemPostBinding.ivLike.setOnClickListener {
                 onLikeClicked?.invoke(data)
             }
