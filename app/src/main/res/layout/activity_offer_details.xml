@@ -59,7 +59,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/manrope_bold"
-                                android:text="@{viewModel.MOffersItem.title}"
+                                android:text="@{viewModel.MOffersItem.productName}"
                                 tools:hint="50% Off on Pesticide" />
 
                             <TextView
@@ -68,9 +68,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/manrope_medium"
-                                android:text="@{@string/valid_till.concat(viewModel.MOffersItem.valid_till)}"
+                                app:formatDateValidTil="@{viewModel.MOffersItem.createdAt}"
                                 android:textColor="@color/gray_strike_through"
                                 tools:hint="Valid till March 31,2022" />
+
+                            <!-- android:text="@{@string/valid_till.concat(viewModel.MOffersItem.valid_till)}"-->
 
                             <TextView
                                 android:id="@+id/tv_condition"
@@ -78,7 +80,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/manrope_bold"
-                                android:text="@{@string/on.concat(viewModel.MOffersItem.product_name).concat(@string/space).concat(viewModel.MOffersItem.applicable_on_sku)}"
+                                android:text="@{@string/on.concat(viewModel.MOffersItem.productName).concat(@string/space).concat(viewModel.MOffersItem.productsku)}"
                                 android:textColor="@color/gray_strike_through"
                                 android:textSize="@dimen/_10ssp"
                                 app:layout_constraintLeft_toLeftOf="parent"

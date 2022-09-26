@@ -56,6 +56,7 @@ class HomeViewModel @Inject constructor(
                         val mobile = response.body()?.gp_api_response_data?.mobile_no
                         val image = response.body()?.gp_api_response_data?.profile_image
                         val gramcash = response.body()?.gp_api_response_data?.gramcashpoints
+                        val customer_id = response.body()?.gp_api_response_data?.customer_id
                         profileName.value = name!!
                         profileMobile.value = mobile!!
                         profileImage.value = image!!
@@ -72,6 +73,11 @@ class HomeViewModel @Inject constructor(
                         SharedPreferencesHelper.instance?.putString(
                             SharedPreferencesKeys.USER_IMAGE,
                             image
+                        )
+
+                        SharedPreferencesHelper.instance?.putString(
+                            SharedPreferencesKeys.CUSTOMER_ID,
+                            customer_id
                         )
                     } else {
                         getNavigator()?.onError(response.message())
