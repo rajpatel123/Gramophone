@@ -6,5 +6,6 @@ data class OfferListRequestModel (
     var requested_source: String? = null,
     var customer_id: String? = null,
     var business_type: String? = null,
-    var language: String?=null
+    var language: String?=null,
+    var search:String?=null
 )

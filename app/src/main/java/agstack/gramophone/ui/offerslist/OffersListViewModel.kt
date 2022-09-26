@@ -12,6 +12,7 @@ import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.ui.offerslist.model.OfferListRequestModel
 import agstack.gramophone.ui.referandearn.transaction.TransactionRequestModel
 import agstack.gramophone.ui.referandearn.transaction.model.GramcashTxnItem
+import agstack.gramophone.ui.userprofile.model.Data
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
@@ -39,6 +40,8 @@ class OffersListViewModel @Inject constructor(
     var progressLoader = ObservableField<Boolean>(false)
     var isLastPage = false
     var offerListRequestModel = OfferListRequestModel()
+    var searchedString: String? = ""
+    var noResultFound = ObservableField<Boolean>(false)
 
     fun getAllOffersData() {
 
@@ -97,10 +100,62 @@ class OffersListViewModel @Inject constructor(
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
+
+       if (query != null)
+            getFilteredListFromAPI(query, 1)
+        else
+            getFilteredListFromAPI("", 1)
+
+
+
         return true
     }
 
+    private fun getFilteredListFromAPI(query: String, currentPage: Int){
+
+        searchedString = query
+
+        offersJob.cancelIfActive()
+        getNavigator()?.showLoaderFooter()
+        var filteredOfferList: ArrayList<DataItem?> = ArrayList()
+        offersJob = viewModelScope.launch {
+
+
+            offerListRequestModel.search = searchedString
+            val offersListResponse = promotionsRepository.getAllOffersList(offerListRequestModel)
+
+            if (offersListResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
+
+                filteredOfferList.addAll(offersListResponse.body()?.gpApiResponseData?.data as ArrayList<DataItem>)
+
+
+
+            allOfferslist.clear()
+            allOfferslist.addAll(filteredOfferList)
+                val lastpage = offersListResponse.body()?.gpApiResponseData?.lastPage
+                if (currentPage == lastpage) {
+                    isLastPage = true
+
+                }
+                getNavigator()?.onListUpdated()
+          /*  if(allOfferslist.size==0){
+                noResultFound.set(true)
+                noResultFound.notifyChange()
+
+            }else{
+                noResultFound.set(false )
+                noResultFound.notifyChange()
+            }
+            getNavigator()?.onListUpdated()*/
+            }
+        }
+
+    }
+
     override fun onQueryTextChange(newText: String?): Boolean {
+        if(newText==null){
+            getFilteredListFromAPI("", 1)
+        }
         return true
     }
 
