@@ -23,5 +23,7 @@ data class Data(
     val updatedAt: Long,
     val updatedBy: String,
     val urlPreviewMeta: UrlPreviewMeta,
-    val whatsAppShare: Int
+    val whatsAppShare: Int,
+    val bookMarked: Boolean,
+    val link_url: String
 )

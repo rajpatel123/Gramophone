@@ -6,9 +6,8 @@ import agstack.gramophone.data.repository.community.CommunityRepository
 import agstack.gramophone.ui.home.adapter.CommentsAdapter
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
 import agstack.gramophone.ui.postdetails.PostDetailNavigator
-import agstack.gramophone.ui.postdetails.model.LastComment
+import agstack.gramophone.ui.postdetails.model.Data
 import agstack.gramophone.utils.Utility
-import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +20,7 @@ class PostDetailViewModel @Inject constructor(
  private val  communityRepository: CommunityRepository
 ) : BaseViewModel<PostDetailNavigator>() {
 
+ private var data: Data? = null
  var authorName = ObservableField<String>()
  var authorLocation = ObservableField<String>()
  var postDate = ObservableField<String>()
@@ -28,18 +28,18 @@ class PostDetailViewModel @Inject constructor(
  var likeCount = ObservableField<Int>()
  var commentCount = ObservableField<Int>()
  var imageAvailable = ObservableField<Boolean>()
- fun getPostDetails(postId:String) {
 
+ fun getPostDetails(postId:String) {
  viewModelScope.launch {
   getNavigator()?.onLoading()
   try {
    if (getNavigator()?.isNetworkAvailable() == true) {
     val response = communityRepository.getPostDetails(postId)
     if (response.isSuccessful) {
-     val data = response.body()?.data
+     data = response.body()?.data
      authorName.set(data?.author?.username)
-    // authorLocation.set(data?.author)
-     postDesc.set(""+data?.description)
+     // authorLocation.set(data?.author)
+     postDesc.set("" + data?.description)
      likeCount.set(data?.likesCount)
      commentCount.set(data?.commentsCount)
      if (data?.liked == true) {
@@ -47,8 +47,8 @@ class PostDetailViewModel @Inject constructor(
      } else {
       getNavigator()?.setLikeImage(R.drawable.ic_like)
      }
-     if (data?.images?.size!! >0) {
-      getNavigator()?.onImageSet(data?.images[0].url)
+     if (data?.images?.size!! > 0 && data?.images!![0].url != null) {
+      getNavigator()?.onImageSet(data?.images!![0].url)
       imageAvailable.set(true)
      } else {
       imageAvailable.set(false)
@@ -96,6 +96,60 @@ class PostDetailViewModel @Inject constructor(
    }
   }
  }
+ }
+
+ fun bookmarkPost() {
+  viewModelScope.launch {
+   var bookmark = "bookmark"
+   if (data?.bookMarked == true) {
+    bookmark = "unbookmark"
+   } else {
+    bookmark = "bookmark"
+   }
+   try {
+    if (getNavigator()?.isNetworkAvailable() == true) {
+     val response = communityRepository.bookmarkPost(PostRequestModel(data?._id!!, bookmark))
+     if (response.isSuccessful) {
+      getPostDetails(data?._id!!)
+     }
+    } else
+     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+   } catch (ex: Exception) {
+    when (ex) {
+     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+     else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+    }
+   }
+
+
+  }
+ }
+
+ fun likePost() {
+  viewModelScope.launch {
+
+   try {
+    if (getNavigator()?.isNetworkAvailable() == true) {
+     val response = communityRepository.likePost(PostRequestModel(data!!._id, ""))
+     if (response.isSuccessful) {
+      getPostDetails(data?._id!!)
+     }
+    } else
+     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+   } catch (ex: Exception) {
+    when (ex) {
+     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+     else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+    }
+   }
+
+
+  }
+
+ }
+
+ fun shareOnWhatsApp(){
+getNavigator()?.sharePost(data?.link_url!!)
  }
 
 }

@@ -7,7 +7,7 @@ interface PostDetailNavigator :BaseNavigator {
     fun updatePostList(
         comments: CommentsAdapter,
         postDetailClicked: (commentId: String) -> Unit)
-
+    fun sharePost(link: String)
      fun onImageSet(url: String)
      fun setLikeImage(icLiked: Int)
 }

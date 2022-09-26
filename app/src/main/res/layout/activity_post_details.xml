@@ -213,6 +213,7 @@
                                 android:id="@+id/ivLike"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:onClick="@{()->viewModel.likePost()}"
                                 android:layout_centerVertical="true" />
 
                             <TextView
@@ -269,6 +270,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerHorizontal="true"
                                     android:minHeight="@dimen/_25sdp"
+                                    android:onClick="@{()->viewModel.shareOnWhatsApp()}"
                                     app:srcCompat="@drawable/ic_whatsapp" />
                             </RelativeLayout>
 
@@ -281,6 +283,7 @@
                                 android:layout_marginEnd="@dimen/_6sdp"
                                 android:paddingStart="@dimen/_10sdp"
                                 android:paddingEnd="@dimen/_10sdp"
+                                android:onClick="@{()->viewModel.bookmarkPost()}"
                                 app:srcCompat="@drawable/ic_bookmark" />
                         </RelativeLayout>
 

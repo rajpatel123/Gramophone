@@ -12,7 +12,7 @@ interface CommunityFragmentNavigator: BaseNavigator {
         onItemCommentsClicked: (postId: String) -> Unit,
         onWhatsAppClicked: (postId: String) -> Unit,
         onTripleDotMenuClicked: (postId:String) -> Unit,
-        onMenuOptionClicked: (postId:String) -> Unit,
+        onMenuOptionClicked: (post:Data) -> Unit,
         onLikeClicked: (post: Data) -> Unit,
         onBookMarkClicked: (post: Data) -> Unit
     )

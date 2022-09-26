@@ -32,7 +32,7 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
     var onItemCommentsClicked: ((postId: String) -> Unit)? = null
     var onShareClicked: ((type: String) -> Unit)? = null
     var onTripleDotMenuClicked: ((type: String) -> Unit)? = null
-    var onMenuOptionClicked: ((type: String) -> Unit)? = null
+    var onMenuOptionClicked: ((type: Data) -> Unit)? = null
     var onLikeClicked: ((post: Data) -> Unit)? = null
     var onBookMarkClicked: ((post: Data) -> Unit)? = null
     lateinit var setImage: SetImage
@@ -110,7 +110,6 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
 
             holder.itemPostBinding.ivMenu.setOnClickListener {
                 dataList?.get(lastSelectPosition)?.isSelected = false
-
                 lastSelectPosition = position
                 data?.isSelected = true
                 notifyDataSetChanged()
@@ -136,7 +135,7 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
                 onItemCommentsClicked?.invoke(data?._id!!)
             }
             holder.itemPostBinding.ivWhatsapp.setOnClickListener {
-                onShareClicked?.invoke(IntentKeys.WhatsAppShareKey)
+                onShareClicked?.invoke(data.link_url)
         }
 
 
@@ -146,6 +145,13 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
 
         holder.itemPostBinding.llEdit.setOnClickListener {
             onMenuOptionClicked?.invoke(EDIT_POST)
+        }
+        holder.itemPostBinding.llPinPost.setOnClickListener {
+            if (data.pinned){
+                onMenuOptionClicked?.invoke("unpin")
+            }else{
+                onMenuOptionClicked?.invoke("pin")
+            }
         }
 
         holder.itemPostBinding.llDelete.setOnClickListener {

@@ -8,19 +8,20 @@ import agstack.gramophone.ui.home.adapter.CommentsAdapter
 import agstack.gramophone.ui.postdetails.PostDetailNavigator
 import agstack.gramophone.ui.postdetails.viewmodel.PostDetailViewModel
 import agstack.gramophone.utils.Constants
-import androidx.appcompat.app.AppCompatActivity
+import agstack.gramophone.utils.IntentKeys
+import agstack.gramophone.utils.ShareSheetPresenter
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_post_details.*
-import kotlinx.android.synthetic.main.fragment_community.*
 
 @AndroidEntryPoint
 class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostDetailNavigator,PostDetailViewModel>(),PostDetailNavigator {
 
-    private val postDetailViewModel : PostDetailViewModel by viewModels()
+    private val postDetailViewModel: PostDetailViewModel by viewModels()
+    private var shareSheetPresenter: ShareSheetPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +32,8 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
             "",
             R.drawable.ic_arrow_left
         )
+
+        shareSheetPresenter = this?.let { ShareSheetPresenter(this) }
     }
 
 
@@ -57,5 +60,17 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
         ivLike.setImageResource(icLiked)
     }
 
+    override fun sharePost(link: String) {
+
+        val shareMessage = resources.getString(R.string.welcome_msg)
+        //  val extraText = shareMessage + "\n" + genericUri.toString()
+        val extraText = shareMessage
+        shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(
+            extraText,
+            getString(R.string.home_share_subject),
+            IntentKeys.WhatsAppShareKey
+        )
+
+    }
 
 }

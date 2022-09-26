@@ -101,9 +101,6 @@ class CommunityViewModel @Inject constructor(
                 if (response.isSuccessful) {
                     val data = response.body()?.data
 
-                    if (data?.size!! >0){
-
-                    }
                     communityPostAdapter =  CommunityPostAdapter(data)
 
                     getNavigator()?.updatePostList(communityPostAdapter,
@@ -133,7 +130,7 @@ class CommunityViewModel @Inject constructor(
                         {
                             when (it) {
                                 Constants.PIN_POST -> {
-
+                                 updatePinPost(it)
                                 }
 
                                 Constants.DELETE_POST -> {
@@ -181,6 +178,36 @@ class CommunityViewModel @Inject constructor(
                 is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
                 else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
             }
+        }
+    }
+
+    private fun updatePinPost(it: String) {
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    val response = communityRepository.bookmarkPost(PostRequestModel(postData._id,bookmark))
+                    if (response.isSuccessful) {
+                        val data = response.body()?.data
+                        var post = communityPostAdapter.getItem(postData.position!!)
+                        if (it.equals("pin")){
+                            post?.bookMarked = true
+                        }else{
+                            post?.bookMarked = false
+                        }
+                        communityPostAdapter.notifyItemChanged(postData.position!!)
+
+
+                    }
+                } else
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                }
+            }
+
+
         }
     }
 

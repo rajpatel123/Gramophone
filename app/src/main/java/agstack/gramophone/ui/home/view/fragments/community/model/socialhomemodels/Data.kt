@@ -28,6 +28,7 @@ data class Data(
     val urlPreviewMeta: UrlPreviewMeta,
     val whatsAppShare: Int,
     var isSelected: Boolean,
-    var position:Int?
+    var position:Int?,
+    var link_url:String
 
 )

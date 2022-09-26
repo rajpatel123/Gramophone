@@ -83,7 +83,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         onItemCommentsClicked: (postId: String) -> Unit,
         onWhatsAppClicked: (postId: String) -> Unit,
         onTripleDotMenuClicked: (postId: String) -> Unit,
-        onMenuOptionClicked: (postId: String) -> Unit,
+        onMenuOptionClicked: (post: Data) -> Unit,
         onLikeClicked: (post: Data) -> Unit,
         onBookMarkClicked: (post: Data) -> Unit
 
@@ -123,24 +123,17 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         )
     }
 
-    override fun sharePost(target: String) {
+    override fun sharePost(link: String) {
 
-        when(target){
-            IntentKeys.WhatsAppShareKey->{
-                val shareMessage = resources.getString(R.string.welcome_msg)
-                //  val extraText = shareMessage + "\n" + genericUri.toString()
-                val extraText = shareMessage
-                shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(extraText, getString(R.string.home_share_subject), target)
-            }
+        val shareMessage = resources.getString(R.string.welcome_msg)
+        //  val extraText = shareMessage + "\n" + genericUri.toString()
+        val extraText = shareMessage
+        shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(
+            extraText,
+            getString(R.string.home_share_subject),
+            IntentKeys.WhatsAppShareKey
+        )
 
-            IntentKeys.FacebookShareKey->{
-                val shareMessage = resources.getString(R.string.welcome_msg)
-                //  val extraText = shareMessage + "\n" + genericUri.toString()
-                val extraText = shareMessage
-                shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(extraText, getString(R.string.home_share_subject), target)
-            }
-
-        }
     }
 
     override fun deletePostDialog() {
