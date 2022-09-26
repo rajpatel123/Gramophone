@@ -34,4 +34,10 @@ interface CommunityApiService {
 
     @POST("/api/v2/comments/get-comments")
     suspend fun getPostComments(@Body post: PostRequestModel): Response<CommentsResponseModel>
+
+    @DELETE("/api/v2/posts/delete-post")
+    suspend fun deletePost(@Body post: PostRequestModel): Response<CommentsResponseModel>
+
+    @DELETE("/api/v2/comments/delete-comment")
+    suspend fun deletePostComment(@Body post: PostRequestModel): Response<CommentsResponseModel>
 }

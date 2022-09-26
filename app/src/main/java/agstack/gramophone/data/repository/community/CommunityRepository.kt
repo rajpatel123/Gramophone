@@ -47,4 +47,8 @@ interface CommunityRepository {
     suspend fun getPostDetails(post: String): Response<PostDetailResponseModel>
 
     suspend fun getPostComments(post: PostRequestModel): Response<CommentsResponseModel>
+
+    suspend fun deletePost(post: PostRequestModel): Response<CommentsResponseModel>
+
+    suspend fun deletePostComment(post: PostRequestModel): Response<CommentsResponseModel>
 }

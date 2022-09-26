@@ -47,6 +47,12 @@ class PostDetailViewModel @Inject constructor(
      } else {
       getNavigator()?.setLikeImage(R.drawable.ic_like)
      }
+
+     if (data?.bookMarked == true) {
+      getNavigator()?.setBookMarkImage(R.drawable.ic_bookmarked)
+     } else {
+      getNavigator()?.setBookMarkImage(R.drawable.ic_bookmark)
+     }
      if (data?.images?.size!! > 0 && data?.images!![0].url != null) {
       getNavigator()?.onImageSet(data?.images!![0].url)
       imageAvailable.set(true)
@@ -111,6 +117,8 @@ class PostDetailViewModel @Inject constructor(
      val response = communityRepository.bookmarkPost(PostRequestModel(data?._id!!, bookmark))
      if (response.isSuccessful) {
       getPostDetails(data?._id!!)
+     }else{
+      getNavigator()?.onError(Utility.getErrorMessage(response.errorBody()))
      }
     } else
      getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
@@ -133,6 +141,8 @@ class PostDetailViewModel @Inject constructor(
      val response = communityRepository.likePost(PostRequestModel(data!!._id, ""))
      if (response.isSuccessful) {
       getPostDetails(data?._id!!)
+     }else{
+      getNavigator()?.onError(Utility.getErrorMessage(response.errorBody()))
      }
     } else
      getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)

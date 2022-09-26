@@ -97,16 +97,8 @@
             android:layout_marginLeft="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_8ssp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:text="3:40 PM "
+            android:text="@{model.commentDuration}"
             android:textColor="@color/gray"
             android:textSize="@dimen/_15sdp" />
-
-        <ImageView
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_15ssp"
-            android:layout_below="@+id/rel_expert"
-            android:layout_marginLeft="@dimen/_110sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:src="@drawable/horizontal_dot" />
     </RelativeLayout>
 </layout>

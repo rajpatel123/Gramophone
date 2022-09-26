@@ -60,6 +60,10 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
         ivLike.setImageResource(icLiked)
     }
 
+    override fun setBookMarkImage(icLiked: Int) {
+        ivBookmark.setImageResource(icLiked)
+    }
+
     override fun sharePost(link: String) {
 
         val shareMessage = resources.getString(R.string.welcome_msg)

@@ -8,5 +8,6 @@ data class Data(
     val image: Any,
     val postId: String,
     val tags: List<Any>,
-    val text: String
+    val text: String,
+    val commentDuration: String
 )

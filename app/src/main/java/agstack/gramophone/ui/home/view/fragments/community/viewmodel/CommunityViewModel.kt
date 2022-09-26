@@ -81,6 +81,11 @@ class CommunityViewModel @Inject constructor(
 
     fun onDelete(){
         mAlertDialog?.dismiss()
+        deletePost()
+    }
+
+    private fun deletePost() {
+
     }
 
     fun onReport() {

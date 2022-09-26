@@ -10,4 +10,5 @@ interface PostDetailNavigator :BaseNavigator {
     fun sharePost(link: String)
      fun onImageSet(url: String)
      fun setLikeImage(icLiked: Int)
+     fun setBookMarkImage(bookmark: Int)
 }

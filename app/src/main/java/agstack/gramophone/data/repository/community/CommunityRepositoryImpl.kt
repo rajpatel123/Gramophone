@@ -79,5 +79,21 @@ class CommunityRepositoryImpl @Inject constructor(
             appData
         }
 
+    override suspend fun deletePost(id: PostRequestModel): Response<CommentsResponseModel> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val appData = communityApiService.deletePost(id)
+            appData
+        }
+
+    override suspend fun deletePostComment(id: PostRequestModel): Response<CommentsResponseModel> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val appData = communityApiService.deletePostComment(id)
+            appData
+        }
+
 
 }
