@@ -26,6 +26,9 @@ interface CommunityApiService {
     @PUT("/api/v2/posts/update-bookmark")
     suspend fun bookmarkPost(@Body likedUsersRequestModel: PostRequestModel?): Response<BookmarkPostResponse>
 
+    @PUT("/api/v2/posts/update-pin")
+    suspend fun pinPost(@Body likedUsersRequestModel: PostRequestModel?): Response<BookmarkPostResponse>
+
     @GET("/api/v2/posts/{id}")
     suspend fun getPostDetails(@Path("id") id: String): Response<PostDetailResponseModel>
 

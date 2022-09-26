@@ -18,7 +18,7 @@ data class Data(
     var liked: Boolean,
     var likesCount: Int,
     val otherShare: Int,
-    val pinned: Boolean,
+    var pinned: Boolean,
     val postType: String,
     val showingDate: Any,
     val status: Int,
@@ -29,6 +29,7 @@ data class Data(
     val whatsAppShare: Int,
     var isSelected: Boolean,
     var position:Int?,
-    var link_url:String
+    var link_url:String,
+    var menu: String
 
 )

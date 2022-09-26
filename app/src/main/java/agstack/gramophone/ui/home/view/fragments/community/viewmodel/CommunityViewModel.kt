@@ -28,6 +28,7 @@ import javax.inject.Inject
 class CommunityViewModel @Inject constructor(
     private val communityRepository: CommunityRepository
 ) : BaseViewModel<CommunityFragmentNavigator>() {
+    private lateinit var menuClickedData: Data
     lateinit var mAlertDialog: AlertDialog
     var sorting = ObservableField<String>()
     var showProgress = ObservableField<Boolean>()
@@ -128,20 +129,24 @@ class CommunityViewModel @Inject constructor(
 
                         },
                         {
-                            when (it) {
+                            when (it.menu) {
                                 Constants.PIN_POST -> {
-                                 updatePinPost(it)
+                                    updatePinPost(it)
                                 }
 
                                 Constants.DELETE_POST -> {
+                                    menuClickedData = it
                                     getNavigator()?.deletePostDialog()
                                 }
 
                                 Constants.REPORT_POST -> {
+                                    menuClickedData = it
+
                                     getNavigator()?.reportPostDialog()
                                 }
 
                                 Constants.BLOCK_USER -> {
+                                    menuClickedData = it
                                     getNavigator()?.blockUserDialog()
                                 }
 
@@ -149,7 +154,7 @@ class CommunityViewModel @Inject constructor(
 
                                 }
                                 Constants.EDIT_POST -> {
-
+                               //TODO will be done once cretae post implemented
                                 }
                             }
 
@@ -181,20 +186,27 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
-    private fun updatePinPost(it: String) {
+    private fun updatePinPost(it: Data) {
         viewModelScope.launch {
+            var status = "pin"
+            if (it.pinned) {
+                status = "unpin"
+            } else {
+                status = "pin"
+            }
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
-                    val response = communityRepository.bookmarkPost(PostRequestModel(postData._id,bookmark))
+                    val response =
+                        communityRepository.pinPost(PostRequestModel(it._id, status))
                     if (response.isSuccessful) {
                         val data = response.body()?.data
-                        var post = communityPostAdapter.getItem(postData.position!!)
-                        if (it.equals("pin")){
-                            post?.bookMarked = true
-                        }else{
-                            post?.bookMarked = false
+                        var post = communityPostAdapter.getItem(it.position!!)
+                        if (it.equals("pin")) {
+                            post?.pinned = true
+                        } else {
+                            post?.pinned = false
                         }
-                        communityPostAdapter.notifyItemChanged(postData.position!!)
+                        communityPostAdapter.notifyItemChanged(it.position!!)
 
 
                     }
@@ -269,6 +281,5 @@ class CommunityViewModel @Inject constructor(
         }
 
     }
-
 
 }

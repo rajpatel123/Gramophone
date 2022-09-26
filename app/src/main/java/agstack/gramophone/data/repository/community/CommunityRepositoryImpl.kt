@@ -54,6 +54,14 @@ class CommunityRepositoryImpl @Inject constructor(
             appData
         }
 
+    override suspend fun pinPost(postResponseModel: PostRequestModel): Response<BookmarkPostResponse> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val appData = communityApiService.bookmarkPost(postResponseModel)
+            appData
+        }
+
 
     override suspend fun getPostDetails(id: String): Response<PostDetailResponseModel> =
         withContext(

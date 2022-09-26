@@ -42,6 +42,8 @@ interface CommunityRepository {
 
     suspend fun bookmarkPost(post: PostRequestModel): Response<BookmarkPostResponse>
 
+    suspend fun pinPost(post: PostRequestModel): Response<BookmarkPostResponse>
+
     suspend fun getPostDetails(post: String): Response<PostDetailResponseModel>
 
     suspend fun getPostComments(post: PostRequestModel): Response<CommentsResponseModel>

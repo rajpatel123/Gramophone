@@ -8,6 +8,7 @@ import agstack.gramophone.utils.Constants.BLOCK_USER
 import agstack.gramophone.utils.Constants.COPY_POST
 import agstack.gramophone.utils.Constants.DELETE_POST
 import agstack.gramophone.utils.Constants.EDIT_POST
+import agstack.gramophone.utils.Constants.PIN_POST
 import agstack.gramophone.utils.Constants.REPORT_POST
 import agstack.gramophone.utils.IntentKeys
 import android.content.Context
@@ -144,30 +145,33 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
         }
 
         holder.itemPostBinding.llEdit.setOnClickListener {
-            onMenuOptionClicked?.invoke(EDIT_POST)
+            data.menu= EDIT_POST
+            onMenuOptionClicked?.invoke(data)
         }
         holder.itemPostBinding.llPinPost.setOnClickListener {
-            if (data.pinned){
-                onMenuOptionClicked?.invoke("unpin")
-            }else{
-                onMenuOptionClicked?.invoke("pin")
-            }
+            data.menu= PIN_POST
+            onMenuOptionClicked?.invoke(data)
+
         }
 
         holder.itemPostBinding.llDelete.setOnClickListener {
-            onMenuOptionClicked?.invoke(DELETE_POST)
+            data.menu= DELETE_POST
+            onMenuOptionClicked?.invoke(data)
         }
 
         holder.itemPostBinding.llReport.setOnClickListener {
-            onMenuOptionClicked?.invoke(REPORT_POST)
+            data.menu= REPORT_POST
+            onMenuOptionClicked?.invoke(data)
         }
 
         holder.itemPostBinding.llBlock.setOnClickListener {
-            onMenuOptionClicked?.invoke(BLOCK_USER)
+            data.menu= BLOCK_USER
+            onMenuOptionClicked?.invoke(data)
         }
 
         holder.itemPostBinding.llCopy.setOnClickListener {
-            onMenuOptionClicked?.invoke(COPY_POST)
+            data.menu= COPY_POST
+            onMenuOptionClicked?.invoke(data)
         }
     }
 
