@@ -14,5 +14,7 @@ data class GpApiResponseProfileData(
     val is_farmer: Boolean? = null,
     val is_trader: Boolean? = null,
     val profile_image: String? = null,
-    val username: String? = null
+    val username: String? = null,
+    val gramcashpoints:Int?=null,
+    val customer_id:String ?=null
 ): Parcelable

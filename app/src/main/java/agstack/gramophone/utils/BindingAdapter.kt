@@ -3,6 +3,7 @@ package agstack.gramophone.utils
 import agstack.gramophone.R
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
+import agstack.gramophone.ui.referandearn.model.GramcashFaqItem
 import android.net.Uri
 import android.os.Build
 import android.text.Html
@@ -76,6 +77,18 @@ class BindingAdapter {
             val percentage = numarator / denominator
             val formatted_percentage = String.format("%.02f", percentage);
             textView.setText(formatted_percentage + " % Off")
+        }
+
+        //arrowImage
+        @BindingAdapter("arrowImage")
+        @JvmStatic
+        fun arrowImage(imageView: ImageView, model: GramcashFaqItem) {
+
+            if (model.isExpanded) {
+                Glide.with(imageView).load(R.drawable.ic_arrow_up).into(imageView)
+            } else {
+                Glide.with(imageView).load(R.drawable.ic_arrow_down).into(imageView)
+            }
         }
 
         @BindingAdapter("htmlText")
@@ -153,7 +166,27 @@ class BindingAdapter {
 
                 d = input.parse(date)
                 val formatted = output.format(d)
-                view.setText(formatted)
+                view.setText("Registered on "+formatted)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+
+
+        }
+
+
+        @BindingAdapter("formatDateValidTil")
+        @JvmStatic
+        fun formatDateValidTil(view: TextView, date: String) {
+            val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
+            val output = SimpleDateFormat("MMM dd,yyyy", Locale.US)
+
+            var d: Date? = null
+            try {
+
+                d = input.parse(date)
+                val formatted = output.format(d)
+                view.setText("Valid Till "+formatted)
             } catch (e: ParseException) {
                 e.printStackTrace()
             }

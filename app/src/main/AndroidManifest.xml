@@ -159,6 +159,9 @@
         <activity android:name=".ui.home.stagedetail.CropStageDetailActivity" />
         <activity android:name=".ui.home.cropdetail.CropDetailActivity" />
 
+        <activity android:name=".ui.gramcash.GramCashActivity"/>
+        <activity android:name=".ui.gramcash.expiringsoon.GCExpiringSoonActivity"/>
+
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"

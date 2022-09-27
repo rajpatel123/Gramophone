@@ -21,7 +21,7 @@ class AboutReferralPointsBalanceActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setUpToolBar(true, resources.getString(R.string.about_referral_point_balance), R.drawable.ic_arrow_left)
+        setUpToolBar(true, resources.getString(R.string.about_referral_point_balance), R.drawable.ic_cross)
         val bundle = getBundle()
         bundle?.let {
             if (bundle.getParcelableArrayList<ReferralPointsItem>(Constants.ReferralPointBalanceData) != null) {

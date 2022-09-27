@@ -45,58 +45,73 @@
                         android:background="@drawable/ic_offer_cards">
 
                         <LinearLayout
-                            android:id="@+id/ll_details"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_48sdp"
-                            android:orientation="vertical"
+                            android:orientation="horizontal"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:weightSum="4">
 
-                            <TextView
-                                android:id="@+id/tv_title"
-                                style="@style/TextSize16Sp"
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:id="@+id/ll_details"
+                                android:layout_width="0dp"
+                                android:layout_weight="3"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/manrope_bold"
-                                android:hint="50% Off on Pesticide"
-                                android:text="@{viewModel.MOffersItem.title}" />
+                                android:layout_marginLeft="@dimen/_48sdp"
+                                android:orientation="vertical"
+                                >
 
-                            <TextView
-                                android:id="@+id/tv_valid_till"
-                                style="@style/TextSize14Sp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/manrope_bold"
-                                android:hint="50% Off on Pesticide"
-                                android:text="@{viewModel.MOffersItem.title}"
-                                android:textColor="@color/gray_strike_through" />
+                                <TextView
+                                    android:id="@+id/tv_title"
+                                    style="@style/TextSize16Sp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:hint="50% Off on Pesticide"
+                                    android:text="@{viewModel.MOffersItem.productName}" />
+
+                                <TextView
+                                    android:id="@+id/tv_valid_till"
+                                    style="@style/TextSize14Sp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:hint="Valid Till March 31,2022"
+                                    app:formatDateValidTil="@{viewModel.MOffersItem.createdAt}"
+                                    android:textColor="@color/gray_strike_through" />
 
 
-                            <TextView
-                                android:id="@+id/tv_condition"
-                                style="@style/TextSize14Sp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/manrope_bold"
-                                android:hint="50% Off on Pesticide"
-                                android:text="@{viewModel.MOffersItem.title}"
-                                android:textColor="@color/gray_strike_through"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tv_valid_till" />
+                                <TextView
+                                    android:id="@+id/tv_condition"
+                                    style="@style/TextSize14Sp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:hint="On UPL_PHOSKILL 1 Ltr."
+                                    android:text="@{@string/on.concat(viewModel.MOffersItem.productName).concat(@string/space).concat(viewModel.MOffersItem.productsku)}"
+                                    android:textColor="@color/gray_strike_through"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/tv_valid_till" />
+                            </LinearLayout>
+
+
+                            <ImageView
+                                android:id="@+id/imageView2"
+                                loadUri="@{viewModel.MOffersItem.image}"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="@dimen/_2sdp"
+                                android:layout_marginRight="@dimen/_11sdp"
+                                android:layout_height="match_parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toRightOf="@id/ll_details"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"></ImageView>
+
                         </LinearLayout>
 
 
-                        <ImageView
-                            android:id="@+id/imageView2"
-                            loadUri="@{viewModel.MOffersItem.image}"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toRightOf="@id/ll_details"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"></ImageView>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
 
@@ -138,9 +153,8 @@
                         style="@style/TextSize16Sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.MOffersItem.t_c}" />
+                        app:htmlText="@{viewModel.MOffersItem.termsConditions}"/>
 
-                    <!--htmlText="@{viewModel.MOffersItem.t_c}"-->
 
 
 

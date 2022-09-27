@@ -6,6 +6,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.OfferDetailsActivityBinding
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
+import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -24,7 +25,12 @@ class OfferDetailActivity :
         val bundle = getBundle()
         bundle?.let {
             if (bundle.getParcelable<PromotionListItem>(Constants.OFFERSDATA) != null) {
-                mViewModel?.mOffersItem?.set(bundle.getParcelable<PromotionListItem>(Constants.OFFERSDATA))
+                //Check when flowing from Product Details as Model is changed , PromotionListItem->DataItem
+               // mViewModel?.mOffersItem?.set(bundle.getParcelable<PromotionListItem>(Constants.OFFERSDATA))
+            }
+
+            if (bundle.getParcelable<DataItem>(Constants.OFFERSDATA_OFFERSLIST) != null) {
+                mViewModel?.mOffersItem?.set(bundle.getParcelable<DataItem>(Constants.OFFERSDATA_OFFERSLIST))
             }
         }
     }
@@ -34,7 +40,7 @@ class OfferDetailActivity :
     }
 
     private fun setupUi() {
-        setUpToolBar(true, resources.getString(R.string.offer_detail), R.drawable.ic_cross)
+        setUpToolBar(true, resources.getString(R.string.offer_detail), R.drawable.ic_arrow_left)
     }
 
     override fun getLayoutID(): Int {

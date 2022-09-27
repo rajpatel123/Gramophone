@@ -399,6 +399,24 @@
     <string name="no_referral_transactions">No Referral Transactions Done</string>
     <string name="percent_off">% off</string>
     <string name="all_products">All Products</string>
+    <string name="totalbalance">Total Balance</string>
+    <string name="about_gram_cash_balance">About Gram Cash Balance</string>
+    <string name="redeem">Redeem</string>
+    <string name="gramcashexpiringin30days">Gram Cash Expiring in 30 days -</string>
+    <string name="view_all_transactions">View All Transactions</string>
+    <string name="gram_cash_rules">Gram Cash Rules</string>
+    <string name="about_gram_cash_bal">About Gram Cash Balance</string>
+    <string name="total_gramcash_balance">Total Gram Cash Points:</string>
+    <string name="total_balance_gc_description">How many Gram Cash Points have you earned till date that are active</string>
+    <string name="available_gram_cash_points">Available Gram Cash points:</string>
+    <string name="available_balance_gc_description">How many Gram Cash Points are available with you at present which you can use to purchase agricultural products from Market Section.</string>
+    <string name="gramcash_points">Locked Gram Cash Points:</string>
+    <string name="pending_balance_gc_description">How many Gram Cash Points do you have currently in a locked state? when the farmers referred by you will successfully install the Gramophone app and make the first purchase, then you will get these locked Referral Gram Cash Points.</string>
+    <string name="points_expiring">Points Expiring</string>
+    <string name="redeem_now">Redeem Now</string>
+    <string name="expiring_in30days">Expiring in 30 days</string>
+    <string name="transaction_by_expiry_date">Transactions by Expiry Date</string>
+
 </resources>
 
 

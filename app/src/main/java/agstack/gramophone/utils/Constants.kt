@@ -6,6 +6,7 @@ import android.content.Context
 
 
 object Constants {
+
     val ADDRESSOBJECT: String = "address"
     val REFERRAL_CODE: String="referralCOde"
     val UNAUTHORIZED: Int=401
@@ -28,6 +29,7 @@ object Constants {
     val PRODUCT_RATING_DATA_KEY = "PRODUCT RATING DATA"
     val RATING_SELECTED = "RATING_SELECTED"
     val OFFERSDATA = "OFFERSDATA"
+    val OFFERSDATA_OFFERSLIST = "OFFERSDATA_OFFERSLIST"
     val SHOP_BY_TYPE = "SHOP_BY_TYPE"
     val SHOP_BY_CROP = "SHOP_BY_CROP"
     val SHOP_BY_STORE = "SHOP_BY_STORE"
@@ -71,6 +73,8 @@ object Constants {
     val TOP_REVIEWS = "Top Reviews"
     val RECENT_REVIEWS = "Recent Reviews"
     val REFERRAL = "referral"
+    val EXPIRE = "expire"
+    val GC_Expiring_soon: String?="gramcash_expiring_soon"
     val SUB_CATEGORY = "Subcategory"
     val BRAND = "Brand"
     val CROP = "Crop"

@@ -76,8 +76,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/rounded_corner_12_solid_orange"
-                            android:minEms="3"
                             android:gravity="center_horizontal"
+                            android:minEms="3"
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingTop="@dimen/_3sdp"
                             android:paddingRight="@dimen/_8sdp"
@@ -147,7 +147,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_minus45sdp"
+                    android:layout_marginTop="@dimen/_minus60sdp"
                     android:scaleType="fitXY"
                     app:layout_constraintTop_toBottomOf="@id/iv_top"
                     app:srcCompat="@drawable/ic_referearn_pointslist" />
@@ -158,7 +158,7 @@
                     layout="@layout/share_referal_code_qrcode"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/_minus20sdp"
+                    android:layout_marginTop="@dimen/_minus45sdp"
                     bind:rvm="@{viewModel}" />
 
                 <TextView
@@ -205,44 +205,84 @@
             app:layout_constraintRight_toRightOf="parent">
 
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/shareall"
+            <!-- <androidx.appcompat.widget.AppCompatButton
+                 android:id="@+id/shareall"
+                 android:layout_width="0dp"
+                 android:layout_height="@dimen/_48sdp"
+                 android:layout_gravity="center_horizontal"
+                 android:layout_marginRight="10dp"
+                 android:layout_weight="1"
+                 android:background="@drawable/rounded_corner_12_solid_orange"
+                 android:drawableStart="@drawable/ic_share_white"
+                 android:elevation="@dimen/_24sdp"
+                 android:gravity="center"
+                 android:onClick="@{()->viewModel.onShareClick()}"
+                 android:paddingHorizontal="@dimen/_30sdp"
+                 android:text="@string/share"
+                 android:textAllCaps="false"
+                 android:textColor="@color/white"
+                 android:textSize="@dimen/_14ssp"
+                 android:textStyle="normal"
+                 android:visibility="visible" />-->
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_48sdp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="@dimen/_12sdp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corner_12_solid_orange"
-                android:drawableStart="@drawable/ic_share_white"
-                android:elevation="@dimen/_24sdp"
-                android:gravity="center"
                 android:onClick="@{()->viewModel.onShareClick()}"
-                android:paddingHorizontal="@dimen/_40sdp"
-                android:text="@string/share"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="normal"
-                android:visibility="visible" />
+                android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/shareWhatsapp"
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/_30sdp"
+                    app:srcCompat="@drawable/ic_share_white">
+
+                </ImageView>
+
+                <TextView
+                    style="@style/TextSize16Sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:text="@string/share"
+                    android:textColor="@color/white" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_48sdp"
-                android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corner_4_whatsapp_solid_green"
-                android:drawableStart="@drawable/ic_whatsapp_white"
-                android:elevation="@dimen/_24sdp"
-                android:gravity="center"
                 android:onClick="@{()->viewModel.onWhatsappShareClick()}"
-                android:paddingHorizontal="@dimen/_28sdp"
-                android:text="@string/whatsapp"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="normal"
-                android:visibility="visible" />
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    app:srcCompat="@drawable/ic_whatsapp_white">
+
+                </ImageView>
+
+                <TextView
+                    style="@style/TextSize16Sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:text="@string/whatsapp"
+                    android:textColor="@color/white" />
+
+
+            </LinearLayout>
         </LinearLayout>
 
 
