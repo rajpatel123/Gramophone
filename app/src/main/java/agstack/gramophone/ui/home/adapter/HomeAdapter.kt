@@ -11,7 +11,6 @@ import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.shop.ShopByActivity
 import agstack.gramophone.ui.home.shopbydetail.ShopByDetailActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
-import agstack.gramophone.ui.home.view.fragments.market.ProductListAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.utils.Constants
 import android.content.Context
@@ -27,7 +26,7 @@ class HomeAdapter(
     private val homeScreenSequenceList: List<String>,
     private var allBannerResponse: BannerResponse?,
     private var categoryResponse: CategoryResponse?,
-    private var productList: ArrayList<ProductData>,
+    private var allProductsResponse: AllProductsResponse?,
     private var cropResponse: CropResponse?,
     private var storeResponse: StoreResponse?,
     private var companyResponse: CompanyResponse?,
@@ -38,13 +37,13 @@ class HomeAdapter(
 
     fun notifyAdapterOnDataChange(
         allBannerResponse: BannerResponse?, categoryResponse: CategoryResponse?,
-        productList: ArrayList<ProductData>, cropResponse: CropResponse?,
+        allProductsResponse: AllProductsResponse?, cropResponse: CropResponse?,
         storeResponse: StoreResponse?, companyResponse: CompanyResponse?,
         cartList: List<CartItem>?,
     ) {
         this.allBannerResponse = allBannerResponse
         this.categoryResponse = categoryResponse
-        this.productList = productList
+        this.allProductsResponse = allProductsResponse
         this.cropResponse = cropResponse
         this.storeResponse = storeResponse
         this.companyResponse = companyResponse
@@ -136,14 +135,26 @@ class HomeAdapter(
                 }
             }
             is FeaturedProductsViewHolder -> {
-                if (!productList.isNullOrEmpty()) {
+                val productList = ArrayList<Data>()
+                if (allProductsResponse?.gp_api_response_data?.data != null
+                    && allProductsResponse!!.gp_api_response_data.data.isNotEmpty()
+                ) {
                     holder.binding.itemView.visibility = View.VISIBLE
-                    val featuredAdapter = ProductListAdapter(productList) {
+
+                    productList.addAll(allProductsResponse?.gp_api_response_data?.data!!)
+
+                    val tempProductList: List<Data> = if (productList.size >= 4)
+                        productList.subList(0, 4)
+                    else productList
+
+                    val featuredAdapter = FeaturedProductListAdapter(tempProductList) {
+                        val productData = ProductData()
+                        productData.product_id = it
                         openActivity(holder.itemView.context,
                             ProductDetailsActivity::class.java,
                             Bundle().apply {
                                 putParcelable(Constants.PRODUCT,
-                                    it)
+                                    productData)
                             })
                     }
                     holder.binding.rvFeatureProduct.adapter = featuredAdapter

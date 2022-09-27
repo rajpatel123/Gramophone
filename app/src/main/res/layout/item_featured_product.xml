@@ -8,18 +8,21 @@
 
         <variable
             name="model"
-            type="agstack.gramophone.ui.cart.model.CartItem" />
+            type="agstack.gramophone.ui.home.view.fragments.market.model.Data" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/productDetailsContainer"
-            android:layout_width="@dimen/_140sdp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_corner_12_solid_white_stroke_gray"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -38,7 +41,9 @@
                 android:paddingTop="4dp"
                 android:paddingEnd="6dp"
                 android:paddingBottom="4dp"
-                android:text="@string/_0_off"
+                tools:text="20% Off"
+                app:mrp_price="@{model.mrp_price}"
+                app:sales_price="@{model.sales_price}"
                 android:textColor="@color/order_approved_text"
                 android:textSize="11sp" />
 
@@ -46,9 +51,10 @@
                 android:id="@+id/iv_productimage"
                 android:layout_width="@dimen/_110sdp"
                 android:layout_height="@dimen/_110sdp"
+                android:contentDescription="@string/image"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/dummy_feature_product"
-                app:product_image="@{model.product_image}" />
+                app:product_image='@{model.product_image ?? ""}'
+                tools:src="@drawable/dummy_neem_cake" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -74,20 +80,20 @@
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_12sdp"
                     android:paddingBottom="5dp"
-                    android:text="@{model.product_name}"
+                    android:text='@{model.product_app_name ?? ""}'
+                    tools:text="fungicides Crystal Bavistin 50% WP Fun gicide Carbe ..."
                     android:textColor="@color/blakish"
-                    android:textSize="13sp"
-                    tools:text="@string/product_fungicide" />
+                    android:textSize="@dimen/_11ssp" />
 
                 <RatingBar
+                    android:visibility="gone"
                     style="@style/CustomRatingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:numStars="5"
                     android:rating="3"
-                    android:stepSize="1"
-                    android:visibility="gone" />
+                    android:stepSize="1" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -103,10 +109,10 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="3"
-                        android:text="@{(@string/rupee).concat(@string/space).concat(model.selling_price)}"
+                        tools:text="₹ 900"
+                        app:reformatFloatPriceToInt="@{model.sales_price}"
                         android:textColor="@color/blakish"
-                        android:textSize="16sp"
-                        tools:text="@string/_900" />
+                        android:textSize="16sp" />
 
                     <TextView
                         style="@style/regular"
@@ -115,11 +121,11 @@
                         android:layout_marginStart="@dimen/_4sdp"
                         android:background="@drawable/strike_through_mutegrey"
                         android:ellipsize="end"
+                        app:reformatFloatPriceToInt="@{model.mrp_price}"
                         android:maxLines="3"
-                        tools:text="@string/dummy_price"
-                        android:text="@{(@string/rupee).concat(@string/space).concat(model.selling_price)}"
+                        tools:text="₹ 1800"
                         android:textColor="@color/gray_strike_through"
-                        android:textSize="13sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 

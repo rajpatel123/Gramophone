@@ -11,6 +11,7 @@ import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatL
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
 import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
+import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
@@ -18,6 +19,7 @@ import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
+import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.OrderListResponse
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
@@ -150,8 +152,11 @@ interface GramAppService {
     @HTTP(method = "DELETE", path = "api/v5/cart/remove-from-cart", hasBody = true)
     suspend fun removeCartItem(@Field("product_id") productId : Int): Response<SuccessStatusResponse>
 
-    @GET("api/v5/order/get-order/{type}")
-    suspend fun getOrderData(@Path("type") type: String): Response<OrderListResponse>
+    @POST("api/v5/order/get-order/{type}")
+    suspend fun getOrderData(
+        @Path("type") type: String,
+        @Body pageLimitRequest: PageLimitRequest,
+    ): Response<OrderListResponse>
 
     @POST("api/v5/order/get-order-detail")
     suspend fun getOrderDetails(@Body orderDetailRequest : OrderDetailRequest): Response<OrderDetailResponse>
@@ -233,13 +238,13 @@ interface GramAppService {
     suspend fun getGramCashTxn(@Path("type") type: String,
                                @Body requestModel: TransactionRequestModel): Response<GramCashTxnResponseModel>
 
+    @POST("api/v5/category/product-app-category-data")
+    suspend fun getAllProducts(
+        @Body filterRequest: FilterRequest,
+    ): Response<AllProductsResponse>
 
-
-
-
-
-
-
-    @GET("api/v5/product/product-data")
-    suspend fun getAllProducts(): Response<AllProductsResponse>
+    @POST("api/v5/category/product-featured-data")
+    suspend fun getFeaturedProduct(
+        @Body pageLimitRequest: PageLimitRequest,
+    ): Response<AllProductsResponse>
 }

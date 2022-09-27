@@ -3,9 +3,10 @@ package agstack.gramophone.ui.home.subcategory
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.ui.cart.view.CartActivity
+import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.dialog.filter.MainFilterData
 import agstack.gramophone.ui.dialog.sortby.SortByData
-import agstack.gramophone.ui.home.adapter.ProductListAdapter
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.subcategory.model.Brands
 import agstack.gramophone.ui.home.subcategory.model.Crops
@@ -18,7 +19,6 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
@@ -94,10 +94,7 @@ class SubCategoryViewModel @Inject constructor(
                     getNavigator()?.setViewPagerAdapter(bannerResponse.gpApiResponseData?.homeBanner1)
                 }
             } catch (ex: Exception) {
-                when (ex) {
-                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
-                }
+                // do nothing
             }
         }
     }
@@ -136,31 +133,67 @@ class SubCategoryViewModel @Inject constructor(
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }
-                viewModelScope.launch {
-                    progress.value = true
-                    delay(1500)
-                    setAdapter()
-                    progress.value = false
-                }
-
+                getAllProducts(Constants.RELAVENT_CODE,
+                    ArrayList(),
+                    ArrayList(),
+                    ArrayList(),
+                    ArrayList(),
+                    "10",
+                    "1")
             } catch (ex: Exception) {
                 progress.value = false
-                when (ex) {
-                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
-                }
+                // do nothing
             }
         }
     }
 
-    fun setAdapter() {
-        getNavigator()?.setProductListAdapter(ProductListAdapter()) {
-            fetchProductDetail()
+    fun getAllProducts(
+        sortBy: String,
+        subCategoryIds: ArrayList<String>,
+        brandIds: ArrayList<String>,
+        cropIds: ArrayList<String>,
+        technicalIds: ArrayList<String>,
+        limit: String,
+        page: String,
+    ) {
+        val filterRequest = FilterRequest(categoryId,
+            sortBy,
+            limit,
+            page,
+            if (subCategoryIds.isNullOrEmpty()) null else subCategoryIds,
+            if (brandIds.isNullOrEmpty()) null else brandIds,
+            if (cropIds.isNullOrEmpty()) null else cropIds,
+            if (technicalIds.isNullOrEmpty()) null else technicalIds)
+
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.value = true
+                    val response = productRepository.getAllProducts(filterRequest)
+                    progress.value = false
+
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                        && response.body()?.gp_api_response_data != null
+                    ) {
+                        getNavigator()?.setProductListAdapter(ProductListAdapter(response.body()?.gp_api_response_data?.data),
+                            {
+                                fetchProductDetail(it)
+                            }, {
+                                getNavigator()?.openProductDetailsActivity(ProductData(it))
+                            })
+                    }
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
+                progress.value = false
+                // do nothing
+            }
         }
     }
 
-    private fun fetchProductDetail() {
-        val product = ProductData(700322)
+    private fun fetchProductDetail(productId: Int) {
+        val product = ProductData(productId)
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -172,16 +205,11 @@ class SubCategoryViewModel @Inject constructor(
                     if (productAPIResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
                         productData.set(productAPIResponse.body()?.gpApiResponseData!!)
                         productData.let {
-                            val productResponseData = productData.get()
-
                             //set skuList
                             mSKUList =
                                 productData.get()?.productSkuList as ArrayList<ProductSkuListItem?>
-
-
                         }
                         loadOffersData(product)
-
                     } else {
                         getNavigator()?.showToast(productAPIResponse.body()?.gpApiMessage)
                     }
@@ -192,7 +220,6 @@ class SubCategoryViewModel @Inject constructor(
         }
     }
 
-    var selectedOfferItem = PromotionListItem()
     private fun loadOffersData(productDetailstoBeFetched: ProductData, quantity: Int? = 0) {
         viewModelScope.launch {
             try {
@@ -202,7 +229,7 @@ class SubCategoryViewModel @Inject constructor(
                         productDetailstoBeFetched.quantity = quantity
                     }
                     val offersOnProductResponse =
-                        productRepository.getOffersOnProductData(ProductData(700322))
+                        productRepository.getOffersOnProductData(productDetailstoBeFetched)
                     progress.value = false
                     if (offersOnProductResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
                         //setOffer List
@@ -211,19 +238,9 @@ class SubCategoryViewModel @Inject constructor(
                                 ArrayList(offersOnProductResponse.body()?.gpApiResponseData?.offersProductList!!)
                             prodOfferList.let {
                                 mSkuOfferList = ArrayList(prodOfferList)
-                                getNavigator()?.openAddToCartDialog(mSKUList, mSkuOfferList)
-                                selectedOfferItem.let {
-                                    if (mSkuOfferList.contains(selectedOfferItem)) {
-                                        for (item in mSkuOfferList) {
-                                            if (item!!.equals(selectedOfferItem)) {
-                                                item.selected = true
-                                            }
-                                            /*getNavigator()?.refreshOfferAdapter()*/
-                                        }
-                                    } else {
-                                        //do nothing as a new list is loaded with selected = false
-                                    }
-                                }
+                                getNavigator()?.openAddToCartDialog(mSKUList,
+                                    mSkuOfferList,
+                                    productDetailstoBeFetched)
                             }
                         }
                     }
@@ -232,5 +249,31 @@ class SubCategoryViewModel @Inject constructor(
                 progress.value = false
             }
         }
+    }
+
+    fun onAddToCartClicked(producttoBeAdded: ProductData) {
+
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.value = true
+
+                    val addTocartResponse =
+                        productRepository.addToCart(producttoBeAdded)
+                    progress.value = false
+                    if (addTocartResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+
+                        getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+
+                    } else {
+                        getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+                    }
+                }
+            } catch (e: Exception) {
+                progress.value = false
+            }
+        }
+
+
     }
 }

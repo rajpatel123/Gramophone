@@ -4,13 +4,16 @@ package agstack.gramophone.data.repository.product
 import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
+import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.order.model.OrderListResponse
+import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
 import retrofit2.Response
+import retrofit2.http.Query
 import javax.inject.Singleton
 
 
@@ -19,48 +22,55 @@ interface ProductRepository {
 
     suspend fun getProductData(productMap: ProductData): Response<ProductDataResponse>
 
-    suspend fun getProductReviewsData(sortBy:String?,page:String?,productMap: ProductData):Response<ProductReviewDataResponse>
-    suspend fun addProductReviewsData(productData:ProductData):Response<ProductReviewDataResponse>
+    suspend fun getProductReviewsData(
+        sortBy: String?,
+        page: String?,
+        productMap: ProductData,
+    ): Response<ProductReviewDataResponse>
 
-    suspend fun updateProductReviewsData(productData:ProductData):Response<ProductReviewDataResponse>
+    suspend fun addProductReviewsData(productData: ProductData): Response<ProductReviewDataResponse>
 
-    suspend fun getRelatedProductsData(productMap: ProductData):Response<RelatedProductResponseData>
+    suspend fun updateProductReviewsData(productData: ProductData): Response<ProductReviewDataResponse>
 
-    suspend fun getOffersOnProductData(productMap: ProductData):Response<OffersProductResponseData>
+    suspend fun getRelatedProductsData(productMap: ProductData): Response<RelatedProductResponseData>
+
+    suspend fun getOffersOnProductData(productMap: ProductData): Response<OffersProductResponseData>
 
     suspend fun addToCart(addToCartRequest: AddToCartRequest): Response<SuccessStatusResponse>
 
-    suspend fun addToCart(productData:ProductData):Response<CartDataResponse>
+    suspend fun addToCart(productData: ProductData): Response<CartDataResponse>
 
-    suspend fun updateProductFavorite(productData:ProductData):Response<SuccessStatusResponse>
+    suspend fun updateProductFavorite(productData: ProductData): Response<SuccessStatusResponse>
 
     suspend fun getCartData(): Response<CartDataResponse>
 
     suspend fun removeCartItem(productId: Int): Response<SuccessStatusResponse>
 
-    suspend fun getOrderData(type: String): Response<OrderListResponse>
+    suspend fun getOrderData(type: String, limit: String, page: String): Response<OrderListResponse>
 
     suspend fun getOrderDetails(orderDetailRequest: OrderDetailRequest): Response<OrderDetailResponse>
 
     suspend fun placeOrder(): Response<PlaceOrderResponse>
 
-    suspend fun getExpertAdvice(productData:ProductData):Response<SuccessStatusResponse>
+    suspend fun getExpertAdvice(productData: ProductData): Response<SuccessStatusResponse>
 
-    suspend fun getHelp(type :String,productData:ProductData):Response<SuccessStatusResponse>
+    suspend fun getHelp(type: String, productData: ProductData): Response<SuccessStatusResponse>
 
-    suspend fun getBanners():Response<BannerResponse>
+    suspend fun getBanners(): Response<BannerResponse>
 
-    suspend fun getCategories():Response<CategoryResponse>
+    suspend fun getCategories(): Response<CategoryResponse>
 
-    suspend fun getCompanies():Response<CompanyResponse>
+    suspend fun getCompanies(): Response<CompanyResponse>
 
-    suspend fun getStores():Response<StoreResponse>
+    suspend fun getStores(): Response<StoreResponse>
 
-    suspend fun getCrops():Response<CropResponse>
+    suspend fun getCrops(): Response<CropResponse>
 
-    suspend fun getSubCategories(categoryId: String):Response<SubCategoryResponse>
+    suspend fun getSubCategories(categoryId: String): Response<SubCategoryResponse>
 
-    suspend fun getHomeData():Response<HomeDataResponse>
+    suspend fun getHomeData(): Response<HomeDataResponse>
 
-    suspend fun getAllProducts():Response<AllProductsResponse>
+    suspend fun getAllProducts(filterRequest: FilterRequest): Response<AllProductsResponse>
+
+    suspend fun getFeaturedProducts(pageLimitRequest: PageLimitRequest): Response<AllProductsResponse>
 }

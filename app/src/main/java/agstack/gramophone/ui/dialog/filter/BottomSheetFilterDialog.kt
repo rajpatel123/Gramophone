@@ -20,7 +20,7 @@ class BottomSheetFilterDialog(
     private val brandsList: List<Brands>?,
     private val cropsList: List<Crops>?,
     private val technicalDataList: List<TechnicalData>?,
-    private val listener: (Array<Int>, Array<Int>, Array<Int>, Array<Int>) -> Unit,
+    private val listener: (ArrayList<String>, ArrayList<String>, ArrayList<String>, ArrayList<String>) -> Unit,
 ) : BottomSheetDialogFragment() {
     var binding: BottomSheetDialogFilterBinding? = null
     private var mainFilterAdapter: MainFilterAdapter? = null
@@ -79,10 +79,10 @@ class BottomSheetFilterDialog(
             dismiss()
         }
         binding?.tvApply?.setOnClickListener {
-            val subCategoryIds = arrayOf<Int>()
-            val brandIds = arrayOf<Int>()
-            val cropIds = arrayOf<Int>()
-            val technicalIds = arrayOf<Int>()
+            val subCategoryIds = ArrayList<String>()
+            val brandIds = ArrayList<String>()
+            val cropIds = ArrayList<String>()
+            val technicalIds = ArrayList<String>()
             if (!mainFilterList.isNullOrEmpty()) {
                 for (i in mainFilterList!!.indices) {
                     mainFilterList!![i].isSelected = i == 0
@@ -91,25 +91,25 @@ class BottomSheetFilterDialog(
             if (!subCategoryList.isNullOrEmpty()) {
                 for (i in subCategoryList.indices) {
                     if (subCategoryList[i].isChecked)
-                        subCategoryIds[i] = subCategoryList[i].category_id
+                        subCategoryIds.add(subCategoryList[i].category_id.toString())
                 }
             }
             if (!brandsList.isNullOrEmpty()) {
                 for (i in brandsList.indices) {
                     if (brandsList[i].isChecked)
-                        brandIds[i] = brandsList[i].brand_id
+                        brandIds.add(brandsList[i].brand_id.toString())
                 }
             }
             if (!cropsList.isNullOrEmpty()) {
                 for (i in cropsList.indices) {
                     if (cropsList[i].isChecked)
-                        cropIds[i] = cropsList[i].crop_id
+                        cropIds.add(cropsList[i].crop_id.toString())
                 }
             }
             if (!technicalDataList.isNullOrEmpty()) {
                 for (i in technicalDataList.indices) {
                     if (technicalDataList[i].isChecked)
-                        technicalIds[i] = technicalDataList[i].technical_code
+                        technicalIds.add(technicalDataList[i].technical_code.toString())
                 }
             }
             listener.invoke(subCategoryIds, brandIds, cropIds, technicalIds)

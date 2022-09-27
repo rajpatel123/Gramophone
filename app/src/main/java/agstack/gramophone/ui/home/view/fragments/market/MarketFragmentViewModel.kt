@@ -6,10 +6,10 @@ import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.home.adapter.HomeAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
+import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -22,7 +22,7 @@ class MarketFragmentViewModel
     private val productRepository: ProductRepository,
 ) : BaseViewModel<MarketFragmentNavigator>() {
 
-    var productList = ArrayList<ProductData>()
+    var allProductsResponse: AllProductsResponse? = null
     var cropResponse: CropResponse? = null
     var storeResponse: StoreResponse? = null
     var companyResponse: CompanyResponse? = null
@@ -31,7 +31,7 @@ class MarketFragmentViewModel
     var cartList: List<CartItem>? = arrayListOf()
 
     fun getHomeData() {
-        productList.clear()
+        allProductsResponse = null
         cropResponse = null
         storeResponse = null
         companyResponse = null
@@ -44,7 +44,7 @@ class MarketFragmentViewModel
                 val response = productRepository.getHomeData()
                 if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
                     getNavigator()?.setHomeAdapter(HomeAdapter(response.body()?.gp_api_response_data?.home_screen_sequence!!,
-                        allBannerResponse, categoryResponse, productList,
+                        allBannerResponse, categoryResponse, allProductsResponse,
                         cropResponse,
                         storeResponse, companyResponse, cartList)) {
                     }
@@ -89,26 +89,8 @@ class MarketFragmentViewModel
     fun getFeaturedProducts() {
         viewModelScope.launch {
             try {
-                //To get Product Data
-                //homeRepository.getProducts(hashMap)
-                if (productList.isNotEmpty()) productList.clear()
-                val productImagesList = ArrayList<String>()
-                productImagesList.add("https://s3.ap-south-1.amazonaws.com/gramophone-webapps-dev/product_erp_images/1647503375.jpg")
-                productImagesList.add("https://s3.ap-south-1.amazonaws.com/gramophone-webapps-dev/product_erp_images/1647503375.jpg")
-                productImagesList.add("https://s3.ap-south-1.amazonaws.com/gramophone-webapps-dev/product_erp_images/1647503375.jpg")
-                productImagesList.add("https://s3.ap-south-1.amazonaws.com/gramophone-webapps-dev/product_erp_images/1647503375.jpg")
-                productList.add(
-                    ProductData(700322)
-                )
-                productList.add(
-                    ProductData(700322)
-                )
-                productList.add(
-                    ProductData(700322)
-                )
-                productList.add(
-                    ProductData(700322)
-                )
+                val response = productRepository.getFeaturedProducts(PageLimitRequest("10", "1"))
+                allProductsResponse = response.body()
                 notifyAdapter()
             } catch (ex: Exception) {
                 when (ex) {
@@ -117,7 +99,6 @@ class MarketFragmentViewModel
                 }
             }
         }
-
     }
 
     fun getCategories() {
@@ -234,25 +215,9 @@ class MarketFragmentViewModel
         }
     }
 
-    fun getAllProducts() {
-        viewModelScope.launch {
-            try {
-                val response = productRepository.getAllProducts()
-                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
-                ) {
-                }
-            } catch (ex: Exception) {
-                when (ex) {
-                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
-                }
-            }
-        }
-    }
-
     private fun notifyAdapter() {
         getNavigator()?.notifyHomeAdapter(
-            allBannerResponse, categoryResponse, productList,
+            allBannerResponse, categoryResponse, allProductsResponse,
             cropResponse,
             storeResponse, companyResponse, cartList)
     }

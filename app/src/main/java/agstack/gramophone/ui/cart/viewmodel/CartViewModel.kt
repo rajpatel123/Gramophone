@@ -49,13 +49,24 @@ class CartViewModel @Inject constructor(
     private fun calculateAmount(cartItems: List<CartItem>) {
         var subTotal = 0
         for (cartItem in cartItems) {
-            subTotal += cartItem.price.toFloat().toInt() * cartItem.quantity.toInt()
+            subTotal += cartItem.selling_price.toFloat().toInt() * cartItem.quantity.toInt()
         }
         amount.value = subTotal
     }
 
     fun onCheckedChange(button: CompoundButton, check: Boolean) {
         showGramCashCoinView.value = check
+        if (check) {
+            val total = totalAmount.value
+            val gramCashCoin = gramCash.value
+            val amount = total!! - gramCashCoin!!
+            totalAmount.value = amount
+        } else {
+            val total = totalAmount.value
+            val gramCashCoin = gramCash.value
+            val amount = total!! + gramCashCoin!!
+            totalAmount.value = amount
+        }
     }
 
     fun onClickPlaceOrder() {
@@ -102,8 +113,12 @@ class CartViewModel @Inject constructor(
                         itemCount.value = response.body()?.gp_api_response_data?.cart_items?.size
                         discount.value = response.body()?.gp_api_response_data?.total_discount
                         gramCash.value = response.body()?.gp_api_response_data?.gramcash_coins
-                        totalAmount.value = response.body()?.gp_api_response_data?.total
-                        calculateAmount(response.body()?.gp_api_response_data?.cart_items!!)
+
+                        val total = response.body()?.gp_api_response_data?.total
+                        val gramCashCoin = response.body()?.gp_api_response_data?.gramcash_coins
+
+                        val amount = total!! - gramCashCoin!!
+                        totalAmount.value = amount
 
                         getNavigator()?.setCartAdapter(CartAdapter(response.body()?.gp_api_response_data?.cart_items!!),
                             {
@@ -121,8 +136,6 @@ class CartViewModel @Inject constructor(
                                 promotionListItem.applicable_on_sku = it.valid_on_sku
                                 promotionListItem.valid_till = it.valid_till
                                 promotionListItem.product_name = it.product_name
-                                promotionListItem.tnc = it.tnc
-                                promotionListItem.redemption = it.redemption
                                 getNavigator()?.openActivity(
                                     OfferDetailActivity::class.java,
                                     Bundle().apply {

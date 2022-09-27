@@ -5,8 +5,10 @@ import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.di.GramAppService
 import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
+import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
+import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.OrderListResponse
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
@@ -19,7 +21,7 @@ import javax.inject.Singleton
 
 @Singleton
 class ProductRepositoryImpl @Inject constructor(
-    private val gramoAppService: GramAppService
+    private val gramoAppService: GramAppService,
 ) : ProductRepository {
 
     override suspend fun getProductData(productMap: ProductData): Response<ProductDataResponse> =
@@ -34,7 +36,7 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun getProductReviewsData(
         sortBy: String?,
         page: String?,
-        productMap: ProductData
+        productMap: ProductData,
     ): Response<ProductReviewDataResponse> = withContext(
         Dispatchers.IO
     ) {
@@ -121,10 +123,10 @@ class ProductRepositoryImpl @Inject constructor(
             removedResponse
         }
 
-    override suspend fun getOrderData(type: String): Response<OrderListResponse> = withContext(
+    override suspend fun getOrderData(type: String, limit: String, page: String): Response<OrderListResponse> = withContext(
         Dispatchers.IO
     ) {
-        val orderData = gramoAppService.getOrderData(type)
+        val orderData = gramoAppService.getOrderData(type, PageLimitRequest(limit, page))
         orderData
     }
 
@@ -195,15 +197,27 @@ class ProductRepositoryImpl @Inject constructor(
 
     override suspend fun getHelp(
         type: String,
-        productData: ProductData
+        productData: ProductData,
     ): Response<SuccessStatusResponse> = withContext(
         Dispatchers.IO
     ) {
-        val response = gramoAppService.getHelp(type,productData)
+        val response = gramoAppService.getHelp(type, productData)
         response
     }
 
-    override suspend fun getAllProducts(): Response<AllProductsResponse> {
-        TODO("Not yet implemented")
+    override suspend fun getAllProducts(
+        filterRequest: FilterRequest,
+    ): Response<AllProductsResponse> = withContext(
+        Dispatchers.IO
+    ) {
+        val response = gramoAppService.getAllProducts(filterRequest)
+        response
+    }
+
+    override suspend fun getFeaturedProducts(pageLimitRequest: PageLimitRequest): Response<AllProductsResponse> = withContext(
+        Dispatchers.IO
+    ) {
+        val response = gramoAppService.getFeaturedProduct(pageLimitRequest)
+        response
     }
 }

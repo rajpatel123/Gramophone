@@ -29,6 +29,7 @@ class FeaturedProductActivity :
     }
 
     private fun setupUi() {
+        viewDataBinding.llSortFilter.visibility = View.GONE
         viewDataBinding.toolbar.setNavigationOnClickListener {
             finish()
         }

@@ -96,7 +96,7 @@ class ProductAllReviewsActivity :
 
     override fun setSortBySpinnerAdapter(
         simpleListViewAdapter: SimpleListViewAdapter,
-        onItemClick: (String) -> Unit
+        onItemClick: (String) -> Unit,
     ) {
         simpleListViewAdapter.OnItemSelectedListener(onItemClick)
         viewDataBinding.autocompleteSortBy.setAdapter(simpleListViewAdapter)

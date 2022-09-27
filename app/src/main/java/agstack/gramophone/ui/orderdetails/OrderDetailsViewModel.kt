@@ -103,8 +103,7 @@ class OrderDetailsViewModel @Inject constructor(
                                 promotionListItem.applicable_on_sku = it.valid_on_sku
                                 promotionListItem.valid_till = it.valid_till
                                 promotionListItem.product_name = it.product_name
-                                promotionListItem.tnc = it.tnc
-                                promotionListItem.redemption = it.redemption
+
                                 getNavigator()?.openActivity(
                                     OfferDetailActivity::class.java,
                                     Bundle().apply {
