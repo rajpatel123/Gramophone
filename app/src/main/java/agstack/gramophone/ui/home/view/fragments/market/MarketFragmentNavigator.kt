@@ -1,9 +1,9 @@
 package agstack.gramophone.ui.home.view.fragments.market
 
 import agstack.gramophone.base.BaseNavigator
+import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.home.adapter.*
-import agstack.gramophone.ui.home.view.fragments.market.model.Banner
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.home.view.fragments.market.model.*
 import android.os.Bundle
 
 interface MarketFragmentNavigator : BaseNavigator {
@@ -18,14 +18,11 @@ interface MarketFragmentNavigator : BaseNavigator {
         onItemClick: (String) -> Unit,
     )
 
-    fun setCategoryAdapter(
-        adapter: ShopByCategoryAdapter,
-        onCategoryClick: (String) -> Unit,
-    )
-
-    fun setFeaturedProductsAdapter(
-        adapter: ProductListAdapter,
-        onProductListItemClick: (ProductData) -> Unit,
+    fun notifyHomeAdapter(
+        allBannerResponse: BannerResponse?, categoryResponse: CategoryResponse?,
+        allProductsResponse: AllProductsResponse?, cropResponse: CropResponse?,
+        storeResponse: StoreResponse?, companyResponse: CompanyResponse?,
+        cartList: List<CartItem>?,
     )
 
     fun setCompanyAdapter(

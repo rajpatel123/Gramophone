@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductDetailsViewModel @Inject constructor(
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
 ) : BaseViewModel<ProductDetailsNavigator>() {
     val productDetailstoBeFetched = ProductData()
     var mSKUList = ArrayList<ProductSkuListItem?>()
@@ -43,7 +43,7 @@ class ProductDetailsViewModel @Inject constructor(
     private var addToCartJob: Job? = null
     private var expertAdviceJob: Job? = null
     private var updateProductFavoriteJob: Job? = null
-    private var contactForPriceJob :Job?=null
+    private var contactForPriceJob: Job? = null
     var progressLoader = ObservableField<Boolean>(false)
 
     //Values selected by User
@@ -146,14 +146,15 @@ class ProductDetailsViewModel @Inject constructor(
                             getNavigator()?.setProductSKUAdapter(
                                 ProductSKUAdapter(
                                     mSKUList
-                                )
+                                ) {}
                             ) {
                                 Log.d("productSKUItemSelected", it.productId.toString())
                                 selectedSkuListItem.set(it)
                                 productDetailstoBeFetched.product_id =
                                     selectedSkuListItem.get()?.productId!!.toInt()
 
-                                setPercentage_mrpVisibility(selectedSkuListItem.get()!!, selectedOfferItem)
+                                setPercentage_mrpVisibility(selectedSkuListItem.get()!!,
+                                    selectedOfferItem)
 
                             }
 
@@ -191,7 +192,7 @@ class ProductDetailsViewModel @Inject constructor(
 
     private fun setPercentage_mrpVisibility(
         model: ProductSkuListItem,
-        offerModel: PromotionListItem? = null
+        offerModel: PromotionListItem? = null,
     ) {
         var isOffersLayoutVisible = true
         var priceDiff: Float = 0.0f
@@ -359,12 +360,13 @@ class ProductDetailsViewModel @Inject constructor(
                             }
                         }
                         getNavigator()?.setProductSKUOfferAdapter(
-                            ProductSKUOfferAdapter(mSkuOfferList),
+                            ProductSKUOfferAdapter(mSkuOfferList, {}, {}),
                             {
                                 //When RadioButton is clicked
                                 selectedOfferItem = it
 
-                                setPercentage_mrpVisibility(selectedSkuListItem.get()!!, selectedOfferItem)
+                                setPercentage_mrpVisibility(selectedSkuListItem.get()!!,
+                                    selectedOfferItem)
 
                             },
                             {
@@ -532,7 +534,8 @@ class ProductDetailsViewModel @Inject constructor(
             if (expertAdviceResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
 
                 getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
-                getNavigator()?.showContactForPriceBottomSheetDialog(ContactForPriceBottomSheetDialog())
+                getNavigator()?.showContactForPriceBottomSheetDialog(
+                    ContactForPriceBottomSheetDialog())
             } else {
                 getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
             }

@@ -14,6 +14,7 @@ import agstack.gramophone.ui.checkout.CheckoutStatusActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -78,7 +79,7 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
 
     override fun openProductDetailsActivity(productData: ProductData) {
         val bundle = Bundle()
-        bundle.putParcelable("product", productData)
+        bundle.putParcelable(Constants.PRODUCT, productData)
         openActivity(ProductDetailsActivity::class.java, bundle)
     }
 

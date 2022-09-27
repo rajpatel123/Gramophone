@@ -1,7 +1,5 @@
 package agstack.gramophone.ui.home.view.fragments.market.model
 
-import agstack.gramophone.ui.cart.model.Redemption
-import agstack.gramophone.ui.cart.model.Tnc
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
@@ -42,11 +40,5 @@ data class PromotionListItem(
 
     @field:SerializedName("valid_till")
     var valid_till: String? = "",
-
-    @field:SerializedName("tnc")
-    var tnc: Tnc? = null,
-
-    @field:SerializedName("redemption")
-    var redemption: Redemption? = null,
 
     ) : Parcelable

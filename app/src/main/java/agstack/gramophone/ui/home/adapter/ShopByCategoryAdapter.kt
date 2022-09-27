@@ -7,10 +7,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ShopByCategoryAdapter(private var categoryList: List<CategoryData>?,
-                            private val listener: (String) -> Unit) :
+class ShopByCategoryAdapter(
+    private var categoryList: List<CategoryData>?,
+    private val listener: (String) -> Unit,
+) :
     RecyclerView.Adapter<ShopByCategoryAdapter.DeveloperViewHolder>() {
-    var itemClicked: ((String) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): DeveloperViewHolder {
         return DeveloperViewHolder(
@@ -21,7 +22,6 @@ class ShopByCategoryAdapter(private var categoryList: List<CategoryData>?,
     override fun onBindViewHolder(holder: DeveloperViewHolder, i: Int) {
         holder.binding.model = categoryList?.get(i)
         holder.itemView.setOnClickListener {
-            /*itemClicked?.invoke(categoryList?.get(i)?.category_id?.toString()!!)*/
             listener.invoke(categoryList?.get(i)?.category_id?.toString()!!)
         }
     }

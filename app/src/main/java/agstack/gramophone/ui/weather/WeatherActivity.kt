@@ -27,7 +27,7 @@ class WeatherActivity :
     }
 
     private fun setupUi() {
-        setUpToolBar(true, getString(R.string.weather), R.drawable.ic_arrow_left)
+        setUpToolBar(true, getString(R.string.weather_city), R.drawable.ic_arrow_left)
         viewDataBinding.tvChangeLoc.setOnClickListener(this)
         weatherViewModel.getWeatherData()
     }

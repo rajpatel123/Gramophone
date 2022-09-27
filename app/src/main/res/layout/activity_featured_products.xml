@@ -74,6 +74,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
+                android:id="@+id/llSortFilter"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:baselineAligned="false"

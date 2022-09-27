@@ -173,10 +173,10 @@
                         android:layout_toEndOf="@+id/chkPayUsingGramCash">
 
                         <TextView
-                            android:layout_centerVertical="true"
                             android:id="@+id/tvAvailableGramCash"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:fontFamily="@font/manrope_medium"
                             android:lineSpacingExtra="1sp"
                             android:text="@string/available_gram_cash_balance"
@@ -184,20 +184,20 @@
                             android:textSize="11sp" />
 
                         <pl.droidsonroids.gif.GifImageView
-                            android:layout_centerVertical="true"
                             android:id="@+id/ivGramCash"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:layout_centerVertical="true"
                             android:layout_marginStart="4dp"
                             android:layout_toEndOf="@+id/tvAvailableGramCash"
                             android:contentDescription="@string/image"
                             android:src="@drawable/ic_gram_coinn" />
 
                         <TextView
-                            android:layout_centerVertical="true"
                             android:id="@+id/tvGramCash"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:layout_marginStart="4dp"
                             android:layout_toEndOf="@+id/ivGramCash"
                             android:fontFamily="@font/manrope_bold"
@@ -536,7 +536,8 @@
             android:layout_height="62dp"
             android:layout_alignParentBottom="true"
             android:paddingStart="16dp"
-            android:paddingEnd="16dp">
+            android:paddingEnd="16dp"
+            android:visibility="@{viewModel.showCartView == true ? View.VISIBLE : View.GONE}">
 
             <LinearLayout
                 android:id="@+id/llPriceBreakUp"
