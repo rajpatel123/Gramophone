@@ -36,7 +36,6 @@ class BannerViewPagerAdapter(private  val list: ArrayList<agstack.gramophone.ui.
 
         val data = list[position]
 
-        Log.d("Raj", ""+data.bannerImage)
         Glide.with(rootView.context)
             .load(data.bannerImage)
             .into(holder.imageView)
