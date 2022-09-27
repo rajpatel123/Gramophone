@@ -16,7 +16,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class OffersListAdapter(offersList: ArrayList<DataItem?>?) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var mOffersList = offersList
     lateinit var mContext: Context
     var selectedOffer: ((DataItem) -> Unit)? = null
@@ -24,17 +24,24 @@ class OffersListAdapter(offersList: ArrayList<DataItem?>?) :
     val ITEM_VIEW = 0
 
 
-
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int):RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         mContext = viewGroup.context
 
         if (viewType == ITEM_VIEW) {
             return CustomViewHolder(
-                OffersListItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+                OffersListItemBinding.inflate(
+                    LayoutInflater.from(viewGroup.context),
+                    viewGroup,
+                    false
+                )
             )
         } else {
             return LoadingViewHolder(
-                ItemProgressBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
+                ItemProgressBinding.inflate(
+                    LayoutInflater.from(viewGroup.context),
+                    viewGroup,
+                    false
+                )
             )
         }
 
@@ -44,37 +51,43 @@ class OffersListAdapter(offersList: ArrayList<DataItem?>?) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is OffersListAdapter.CustomViewHolder) {
 
-        val model: DataItem? = mOffersList?.get(position)
-        holder.binding.setVariable(BR.model, model)
-        val mBinding = holder.binding as OffersListItemBinding
+            val model: DataItem? = mOffersList?.get(position)
+            holder.binding.setVariable(BR.model, model)
+            val mBinding = holder.binding as OffersListItemBinding
 
-        mBinding.icOfferDetails.setOnClickListener {
-            selectedOffer?.invoke(model!!)
+            mBinding.icOfferDetails.setOnClickListener {
+                selectedOffer?.invoke(model!!)
 
-        }}
+            }
+        }
 
 
     }
 
     override fun getItemCount(): Int {
-      return mOffersList?.size!!
+        return mOffersList?.size!!
 
     }
 
 
     fun showLoadingItem() {
         val lastItem = itemCount - 1;
-        if (mOffersList?.get(lastItem) != null) {
-            mOffersList?.add(null)
-            notifyItemInserted(lastItem + 1)
+        mOffersList?.let {
+            if (mOffersList!!.size > 0)
+                if (mOffersList?.get(lastItem) != null) {
+                    mOffersList?.add(null)
+                    notifyItemInserted(lastItem + 1)
+                }
         }
 
     }
 
     fun hideLoadingItem() {
-        val lastItem = itemCount - 1;
-        mOffersList?.remove(null)
-        notifyItemRemoved(lastItem)
+        if (mOffersList!!.size > 0) {
+            val lastItem = itemCount - 1;
+            mOffersList?.remove(null)
+            notifyItemRemoved(lastItem)
+        }
 
 
     }
@@ -85,8 +98,6 @@ class OffersListAdapter(offersList: ArrayList<DataItem?>?) :
 
     inner class CustomViewHolder(var binding: OffersListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
-
-
 
 
     inner class LoadingViewHolder(val binding: ItemProgressBinding) :
