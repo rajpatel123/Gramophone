@@ -100,18 +100,19 @@ class OffersListViewModel @Inject constructor(
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-
+        getFilteredListFromAPI(query, 1)
+/*
        if (query != null)
             getFilteredListFromAPI(query, 1)
         else
-            getFilteredListFromAPI("", 1)
+            getFilteredListFromAPI("", 1)*/
 
 
 
         return true
     }
 
-    private fun getFilteredListFromAPI(query: String, currentPage: Int){
+    private fun getFilteredListFromAPI(query: String?, currentPage: Int) {
 
         searchedString = query
 
@@ -130,31 +131,33 @@ class OffersListViewModel @Inject constructor(
 
 
 
-            allOfferslist.clear()
-            allOfferslist.addAll(filteredOfferList)
+                allOfferslist.clear()
+                allOfferslist.addAll(filteredOfferList)
                 val lastpage = offersListResponse.body()?.gpApiResponseData?.lastPage
                 if (currentPage == lastpage) {
                     isLastPage = true
 
                 }
                 getNavigator()?.onListUpdated()
-          /*  if(allOfferslist.size==0){
-                noResultFound.set(true)
-                noResultFound.notifyChange()
 
-            }else{
-                noResultFound.set(false )
-                noResultFound.notifyChange()
-            }
-            getNavigator()?.onListUpdated()*/
             }
         }
 
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        if(newText==null){
-            getFilteredListFromAPI("", 1)
+        /*   if(newText==null||newText.equals("")){
+               getFilteredListFromAPI("", 1)
+           }*/
+
+        newText?.let {
+            if (newText?.length >= 3) {
+                onQueryTextSubmit(newText)
+                return true
+            } else if (newText.length == 0) {
+                onSearchViewClosed()
+                return true
+            }
         }
         return true
     }
@@ -164,6 +167,7 @@ class OffersListViewModel @Inject constructor(
     }
 
     override fun onSearchViewClosed() {
+        getFilteredListFromAPI("", 1)
 
     }
 
