@@ -8,5 +8,7 @@ data class LastComment(
     val postId: String,
     val tags: List<Any>,
     val text: String,
-    val author: List<Authors>
+    val author: List<Authors>,
+    val commentDuration: String
+
 )

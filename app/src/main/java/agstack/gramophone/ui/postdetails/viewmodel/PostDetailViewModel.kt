@@ -39,7 +39,9 @@ class PostDetailViewModel @Inject constructor(
      data = response.body()?.data
      authorName.set(data?.author?.username)
      // authorLocation.set(data?.author)
-     postDesc.set("" + data?.description)
+     if (data?.description != null)
+      postDesc.set(data?.description.toString())
+
      likeCount.set(data?.likesCount)
      commentCount.set(data?.commentsCount)
      if (data?.liked == true) {

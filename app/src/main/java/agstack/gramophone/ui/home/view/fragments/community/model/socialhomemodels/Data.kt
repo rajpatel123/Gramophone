@@ -7,7 +7,7 @@ data class Data(
     var bookMarked: Boolean,
     val commentsCount: Int,
     val complainCount: Int,
-    val createdDate: Long,
+    val createdDate: String,
     val description: String,
     val facebookShare: Int,
     val hasComplain: Boolean,

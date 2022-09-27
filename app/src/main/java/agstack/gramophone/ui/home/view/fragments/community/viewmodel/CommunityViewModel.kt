@@ -64,7 +64,7 @@ class CommunityViewModel @Inject constructor(
 
 
     fun loadData(sorting: String) {
-        limit.set(5)
+        limit.set(105)
         viewModelScope.launch(Dispatchers.Default) {
             getPost(sorting)
         }

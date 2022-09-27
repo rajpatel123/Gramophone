@@ -1,12 +1,14 @@
 package agstack.gramophone.ui.postdetails.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Data(
     val __v: Int,
     val _id: String,
     val author: Author,
     val commentsCount: Int,
     val complainCount: Int,
-    val createdDate: Long,
+    val createdDate: String,
     val description: Any,
     val facebookShare: Int,
     val imagePath: Any,
@@ -25,5 +27,6 @@ data class Data(
     val urlPreviewMeta: UrlPreviewMeta,
     val whatsAppShare: Int,
     val bookMarked: Boolean,
+    @SerializedName("linkUrl")
     val link_url: String
 )

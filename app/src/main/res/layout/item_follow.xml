@@ -17,15 +17,15 @@
         android:layout_height="85dp"
         android:background="@drawable/circle_solid_white">
 
-        <ImageView
+        <agstack.gramophone.widget.CircularImageView
             android:id="@+id/imageView"
             android:layout_width="@dimen/_44sdp"
             android:layout_height="@dimen/_44sdp"
+            android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/_3sdp"
             android:layout_marginTop="@dimen/_3sdp"
             android:layout_marginEnd="@dimen/_3sdp"
             android:layout_marginBottom="@dimen/_3sdp"
-            android:layout_centerVertical="true"
             app:srcCompat="@drawable/dummy_profile" />
 
         <TextView
@@ -57,14 +57,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/_16sdp"
             android:background="@drawable/following_bg"
             android:paddingStart="@dimen/_6sdp"
-            android:layout_centerVertical="true"
             android:paddingTop="@dimen/_3sdp"
             android:paddingEnd="@dimen/_6sdp"
             android:paddingBottom="@dimen/_3sdp"
-            android:text="Following"
+            android:text="Follow"
             android:textColor="@color/gjg"
             android:textSize="@dimen/_10ssp"
             android:textStyle="bold" />

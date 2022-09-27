@@ -4,15 +4,15 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.databinding.*
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
+import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.utils.Constants.BLOCK_USER
-import agstack.gramophone.utils.Constants.COPY_POST
 import agstack.gramophone.utils.Constants.DELETE_POST
 import agstack.gramophone.utils.Constants.EDIT_POST
 import agstack.gramophone.utils.Constants.PIN_POST
 import agstack.gramophone.utils.Constants.REPORT_POST
-import agstack.gramophone.utils.IntentKeys
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View.*
 import android.view.ViewGroup
@@ -53,7 +53,26 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         val textHolder = holder as TextItemHolder
+
+
+        if (position >1 && (position==2 || position%5==0)){
+            var bannerResponse = SharedPreferencesHelper.instance?.getParcelable(
+                SharedPreferencesKeys.BANNER_DATA, BannerResponse::class.java
+            )
+            if (bannerResponse?.gpApiResponseData?.communityBanner!=null && bannerResponse?.gpApiResponseData?.communityBanner!!.size>0 ){
+                holder.itemPostBinding.rlBanner.visibility= VISIBLE
+                holder.itemPostBinding.rlPosts.visibility= GONE
+                configurePagerHolder(textHolder,position,bannerResponse)
+                return
+            }
+        }
+
+
+
+
         configureItem(textHolder, position)
+        holder.itemPostBinding.rlBanner.visibility= GONE
+        holder.itemPostBinding.rlPosts.visibility= VISIBLE
     }
 
     private fun configureItem(holder: TextItemHolder, position: Int) {
@@ -81,7 +100,7 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
         }
 
 
-        if (data?.lastComment != null) {
+        if (data?.lastComment != null && data.lastComment.author.size>0) {
             if (data.lastComment.author.size > 0 && data?.lastComment.author[0].photoUrl != null) {
                 setImage.onImageSet(
                     data?.lastComment.author[0].photoUrl,
@@ -92,31 +111,39 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
             if (data.lastComment.author.size > 0) {
                 holder.itemPostBinding.tvName1.setText("" + data.lastComment.author[0].username)
             }
+            holder.itemPostBinding.llChat.visibility= VISIBLE
 
+        }else{
+          holder.itemPostBinding.llChat.visibility=GONE
         }
 
-
-        Log.d("Raj", ""+data?.liked)
         if (data.liked) {
             holder.itemPostBinding.ivLike.setImageResource(R.drawable.ic_liked)
         } else {
             holder.itemPostBinding.ivLike.setImageResource(R.drawable.ic_like)
         }
 
+        if ("admin".equals(data?.author.communityUserType)) {
+            holder.itemPostBinding.rlAdminTag.visibility = VISIBLE
+            holder.itemPostBinding.llAdminMenu.visibility = VISIBLE
+            holder.itemPostBinding.llUserMenu.visibility = GONE
+        } else {
+            holder.itemPostBinding.rlAdminTag.visibility = GONE
+            holder.itemPostBinding.llUserMenu.visibility = VISIBLE
+            holder.itemPostBinding.rlAdminTag.visibility = GONE
+
+        }
+
         if (data.bookMarked) {
             holder.itemPostBinding.ivBookmark.setImageResource(R.drawable.ic_bookmarked)
         } else {
             holder.itemPostBinding.ivBookmark.setImageResource(R.drawable.ic_bookmark)
-            }
+        }
 
-            holder.itemPostBinding.ivMenu.setOnClickListener {
-                dataList?.get(lastSelectPosition)?.isSelected = false
-                lastSelectPosition = position
-                data?.isSelected = true
-                notifyDataSetChanged()
-                onTripleDotMenuClicked?.invoke(data?._id!!)
+        holder.itemPostBinding.ivMenu.setOnClickListener {
+            showHideMenu(data,show=true,position)
 
-            }
+        }
 
 
         holder.itemPostBinding.postImage.setOnClickListener {
@@ -130,10 +157,11 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
                 onItemLikesClicked?.invoke(data?._id!!)
             }
             holder.itemPostBinding.rlComments.setOnClickListener {
-                onItemCommentsClicked?.invoke(data?._id!!)
+                //onItemCommentsClicked?.invoke(data?._id!!)
             }
             holder.itemPostBinding.llComment.setOnClickListener {
-                onItemCommentsClicked?.invoke(data?._id!!)
+                //TODO will uncomment after fixing issue
+                //onItemCommentsClicked?.invoke(data?._id!!)
             }
             holder.itemPostBinding.ivWhatsapp.setOnClickListener {
                 onShareClicked?.invoke(data.link_url)
@@ -145,47 +173,62 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
         }
 
         holder.itemPostBinding.llEdit.setOnClickListener {
+            showHideMenu(data,show=false,position)
             data.menu= EDIT_POST
             onMenuOptionClicked?.invoke(data)
         }
         holder.itemPostBinding.llPinPost.setOnClickListener {
+            showHideMenu(data,show=false,position)
             data.menu= PIN_POST
             onMenuOptionClicked?.invoke(data)
 
         }
 
         holder.itemPostBinding.llDelete.setOnClickListener {
+            showHideMenu(data,show=false,position)
             data.menu= DELETE_POST
             onMenuOptionClicked?.invoke(data)
         }
 
         holder.itemPostBinding.llReport.setOnClickListener {
+            showHideMenu(data,show=false,position)
             data.menu= REPORT_POST
             onMenuOptionClicked?.invoke(data)
         }
 
         holder.itemPostBinding.llBlock.setOnClickListener {
+            showHideMenu(data,show=false,position)
             data.menu= BLOCK_USER
             onMenuOptionClicked?.invoke(data)
         }
 
-        holder.itemPostBinding.llCopy.setOnClickListener {
-            data.menu= COPY_POST
-            onMenuOptionClicked?.invoke(data)
-        }
+
     }
 
-    private fun configurePagerHolder(holder: PagerItemHolder, position: Int) {
-//        val data = dataList?.get(position)
-//        val adapter = BannerViewPagerAdapter(data.pagerItemList, context)
-//
-//        holder.bindingBannerImageBinding.bannerPager.adapter = adapter
-//        holder.bindingBannerImageBinding?.dotsIndicator?.attachTo(holder.bindingBannerImageBinding?.bannerPager!!)
-//        if (viewPageStates.containsKey(position)) {
-//            viewPageStates[position]?.let {
-//                holder.bindingBannerImageBinding.bannerPager.currentItem = it
-//            }
-//        }
+    private fun showHideMenu(data: Data, show: Boolean, position: Int) {
+        dataList?.get(lastSelectPosition)?.isSelected = false
+        lastSelectPosition = position
+        data?.isSelected = show
+        notifyDataSetChanged()
+        onTripleDotMenuClicked?.invoke(data?._id!!)
+    }
+
+    private fun configurePagerHolder(
+        holder: TextItemHolder,
+        position: Int,
+        bannerResponse: BannerResponse?
+    ) {
+
+        val data = dataList?.get(position)
+        val adapter = BannerViewPagerAdapter(bannerResponse?.gpApiResponseData?.homeBanner1!!, context)
+
+        holder.itemPostBinding.bannerPager.adapter = adapter
+        holder.itemPostBinding?.dotsIndicator?.attachTo(holder.itemPostBinding?.bannerPager!!)
+        if (viewPageStates.containsKey(position)) {
+            viewPageStates[position]?.let {
+                holder.itemPostBinding.bannerPager.currentItem = it
+            }
+        }
     }
 
 

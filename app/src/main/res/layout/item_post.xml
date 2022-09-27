@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
 
         <import type="android.view.View" />
@@ -8,11 +9,59 @@
             name="model"
             type="agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data" />
     </data>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/rlBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <agstack.gramophone.ui.home.view.fragments.community.SquareViewPager
+                    android:id="@+id/bannerPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    />
+
+                <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+                    android:id="@+id/dots_indicator"
+                    app:dotsColor="@color/blue"
+                    app:dotsSize="12dp"
+                    app:dotsSpacing="5dp"
+                    app:dotsStrokeColor="@color/gray_stroke"
+                    app:progressMode="false"
+                    app:stiffness="300"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginBottom="@dimen/_16sdp" />
+
+
+            </FrameLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_below="@+id/frameLayout"
+                android:background="@color/grey" />
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlPosts"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -58,11 +107,12 @@
             android:layout_below="@+id/tvCity"
             android:layout_toEndOf="@+id/ivProfileImage"
             android:fontFamily="@font/manrope_medium"
-            android:text="15 Aug 2022"
+            android:text="@{model.createdDate}"
             android:textColor="@color/grey"
             android:textSize="@dimen/_10ssp" />
 
         <RelativeLayout
+            android:id="@+id/rlAdminTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
@@ -100,6 +150,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_11sdp"
             android:layout_toStartOf="@+id/ivMenu"
+            android:visibility="@{model.pinned?View.VISIBLE:View.GONE}"
             app:srcCompat="@drawable/ic_pin" />
 
         <ImageView
@@ -286,7 +337,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:visibility="@{model.lastComment!=null? View.VISIBLE:View.GONE}"
+            android:visibility="gone"
             android:layout_marginBottom="@dimen/_10sdp">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -319,11 +370,10 @@
                     android:fontFamily="@font/manrope_bold"
                     android:maxLength="20"
                     android:textColor="@color/blue"
-                    android:textSize="@dimen/_14ssp"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/_12ssp" />
 
                 <TextView
-
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_2sdp"
@@ -357,7 +407,7 @@
                 android:layout_marginLeft="@dimen/_40sdp"
                 android:layout_marginTop="@dimen/_8ssp"
                 android:layout_marginBottom="@dimen/_10sdp"
-                android:text="3:40 PM "
+                android:text="@{model.lastComment.commentDuration}"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_15sdp" />
 
@@ -367,6 +417,7 @@
                 android:layout_below="@+id/rel_expert"
                 android:layout_marginLeft="@dimen/_110sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:visibility="gone"
                 android:src="@drawable/horizontal_dot" />
 
         </RelativeLayout>
@@ -419,140 +470,135 @@
             android:background="@color/white"
             android:elevation="@dimen/_2sdp"
             android:minWidth="@dimen/_140sdp"
-            android:minHeight="@dimen/_140sdp"
+
             android:orientation="vertical"
             android:padding="@dimen/_12sdp"
             android:visibility="@{model.selected? View.VISIBLE:View.GONE}"
             tools:visibility="gone">
 
             <LinearLayout
-                android:id="@+id/llCopy"
-                android:layout_width="wrap_content"
+                android:id="@+id/llAdminMenu"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <ImageView
+                <LinearLayout
+                    android:id="@+id/llEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_copy" />
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <TextView
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_post_edit" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/edit" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llPinPost"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:fontFamily="@font/manrope_regular"
-                    android:text="@string/copy" />
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_pin_post" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/pin_post" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:gravity="center_vertical"
+
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_delete" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/delete" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/llEdit"
-
-                android:layout_width="wrap_content"
+                android:id="@+id/llUserMenu"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <ImageView
+                <LinearLayout
+                    android:id="@+id/llReport"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_post_edit" />
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <TextView
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_info" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/report" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llBlock"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:fontFamily="@font/manrope_regular"
-                    android:text="@string/edit" />
-            </LinearLayout>
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/llPinPost"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_block" />
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_pin_post" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:fontFamily="@font/manrope_regular"
-                    android:text="@string/pin_post" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center_vertical"
-
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_delete" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:fontFamily="@font/manrope_regular"
-                    android:text="@string/delete" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llReport"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_info" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:fontFamily="@font/manrope_regular"
-                    android:text="@string/report" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llBlock"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_block" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:fontFamily="@font/manrope_regular"
-                    android:text="@string/block_user" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/block_user" />
+                </LinearLayout>
             </LinearLayout>
 
 
@@ -560,5 +606,7 @@
 
 
     </RelativeLayout>
+    </LinearLayout>
+
 </layout>
 
