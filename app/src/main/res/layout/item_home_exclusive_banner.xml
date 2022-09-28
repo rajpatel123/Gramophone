@@ -7,11 +7,10 @@
     android:background="@color/white">
 
     <LinearLayout
+        android:id="@+id/itemView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_8sdp"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/_16sdp">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
@@ -31,8 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="360dp"
             android:layout_marginTop="@dimen/_16sdp"
-            android:contentDescription="@string/image"
-            android:scaleType="fitXY" />
+            android:contentDescription="@string/image" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvExclusive"
@@ -46,5 +44,12 @@
             tools:itemCount="4"
             tools:listitem="@layout/item_exclusive_banner" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:background="@color/gray_stroke" />
+
     </LinearLayout>
+
 </RelativeLayout>

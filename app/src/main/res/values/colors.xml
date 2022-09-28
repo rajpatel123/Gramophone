@@ -27,6 +27,7 @@
     <color name="gray_empty_bg">#F5F5F5</color>
     <color name="grey_weight">#8010203E</color>
     <color name="green">#79BD2E</color>
+    <color name="green_dicount_bg">#E2F5CE</color>
     <color name="whatsappgreen">#44BC37</color>
     <color name="green_medium">#62A41C</color>
     <color name="green_dark">#468600</color>
@@ -77,6 +78,7 @@
     <color name="selected_main_filter">#FAFCFF</color>
     <color name="gray_light">#77EDEFF3</color>
     <color name="tab_color">#FC8587</color>
+    <color name="wert">#3F51B5</color>
     <color name="colorexpire">#F8111B</color>
     <color name="colorBorder">#F7F7F7</color>
 </resources>

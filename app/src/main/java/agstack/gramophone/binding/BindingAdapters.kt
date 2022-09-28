@@ -20,6 +20,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import kotlin.math.roundToInt
 
 
 @BindingAdapter("product_image")
@@ -207,6 +208,51 @@ fun setQuantity(textView: TextView, quantity: String) {
         textView.text = quantity
     }
 }
+
+@BindingAdapter("reformatPrice")
+fun setReformattedPrice(textView: TextView, price: String) {
+    if (price.isNullOrEmpty()) {
+        textView.text = "₹"
+    } else {
+        val ac = price.replace(".00", "")
+        textView.text = "₹ " + ac
+    }
+}
+
+@BindingAdapter("reformatFloatPriceToInt")
+fun setReformattedIntPrice(textView: TextView, price: Float) {
+    try {
+        if (price.isNaN() || price.isInfinite()) {
+            textView.text = "₹ 0"
+        } else {
+            textView.text = "₹ " + price.roundToInt().toString()
+        }
+    } catch (e: Exception) {
+        textView.text = "₹ 0"
+    }
+}
+
+@BindingAdapter(value = ["mrp_price", "sales_price"], requireAll = true)
+fun calculateDiscount(
+    textView: TextView, mrp_price: Float, sales_price: Float,
+) {
+    try {
+        if (mrp_price.isNaN() || sales_price.isNaN()) {
+            textView.visibility = View.INVISIBLE
+        } else {
+            val discount = ((mrp_price - sales_price) / mrp_price) * 100
+            if (discount.isNaN() || discount.isInfinite()) {
+                textView.visibility = View.INVISIBLE
+            } else {
+                textView.visibility = View.VISIBLE
+                textView.text = discount.roundToInt().toString() + textView.context.getString(R.string.percent_off)
+            }
+        }
+    } catch (e: Exception) {
+        textView.visibility = View.INVISIBLE
+    }
+}
+
 
 
 

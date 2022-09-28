@@ -8,12 +8,15 @@ import agstack.gramophone.databinding.ActivityCategoryDetailBinding
 import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.dialog.filter.BottomSheetFilterDialog
 import agstack.gramophone.ui.dialog.sortby.BottomSheetSortByDialog
-import agstack.gramophone.ui.home.adapter.ProductListAdapter
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.adapter.ViewPagerAdapter
+import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
+import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.EndlessRecyclerScrollListener
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -31,15 +34,22 @@ class SubCategoryActivity :
 
     //initialise ViewModel
     private val subCategoryViewModel: SubCategoryViewModel by viewModels()
+    var sortBy: String = Constants.RELAVENT_CODE
+    var subCategoryIdsArray = ArrayList<String>()
+    var brandIdsArray = ArrayList<String>()
+    var cropIdsArray = ArrayList<String>()
+    var technicalIdsArray = ArrayList<String>()
+    private lateinit var listener: EndlessRecyclerScrollListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupUi()
         subCategoryViewModel.getBundleData()
         subCategoryViewModel.getBanners()
-        setupUi()
     }
 
     private fun setupUi() {
+        disableSortAndFilter()
         viewDataBinding.tvSortBy.setOnClickListener(this)
         viewDataBinding.tvFilter.setOnClickListener(this)
         viewDataBinding.toolbar.setNavigationOnClickListener { finish() }
@@ -58,20 +68,34 @@ class SubCategoryActivity :
         })
 
         viewDataBinding.dotsIndicator.setOnClickListener { }
-        subCategoryViewModel.setAdapter()
     }
 
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.tvSortBy -> {
-                val bottomSheet = BottomSheetSortByDialog()
+                val bottomSheet = BottomSheetSortByDialog(subCategoryViewModel.sortDataList) {
+                    sortBy = it
+                }
+                bottomSheet.isCancelable = false
                 bottomSheet.show(
                     supportFragmentManager,
                     "bottomSheet"
                 )
             }
             R.id.tvFilter -> {
-                val bottomSheet = BottomSheetFilterDialog()
+                val bottomSheet = BottomSheetFilterDialog(subCategoryViewModel.mainFilterList,
+                    subCategoryViewModel.subCategoryList,
+                    subCategoryViewModel.brandsList,
+                    subCategoryViewModel.cropsList,
+                    subCategoryViewModel.technicalDataList) { subCategoryIds, brandIds, cropIds, technicalIds ->
+                    subCategoryIdsArray = subCategoryIds
+                    brandIdsArray = brandIds
+                    cropIdsArray = cropIds
+                    technicalIdsArray = technicalIds
+
+                    subCategoryViewModel.getAllProducts(sortBy, subCategoryIds, brandIds, cropIds, technicalIds, "10", "1")
+                }
+                bottomSheet.isCancelable = false
                 bottomSheet.show(
                     supportFragmentManager,
                     "bottomSheet"
@@ -86,6 +110,16 @@ class SubCategoryActivity :
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun disableSortAndFilter() {
+        viewDataBinding.tvSortBy.isEnabled = false
+        viewDataBinding.tvFilter.isEnabled = false
+    }
+
+    override fun enableSortAndFilter() {
+        viewDataBinding.tvSortBy.isEnabled = true
+        viewDataBinding.tvFilter.isEnabled = true
+    }
+
     override fun setViewPagerAdapter(bannerList: List<agstack.gramophone.ui.home.view.fragments.market.model.Banner>?) {
         val adapter = ViewPagerAdapter(bannerList!!)
         viewDataBinding.viewPager.adapter = adapter
@@ -94,28 +128,48 @@ class SubCategoryActivity :
 
     override fun setSubCategoryAdapter(
         subCategoryAdapter: ShopByCategoryAdapter,
-        onItemClick: (String) -> Unit,
     ) {
-        subCategoryAdapter.itemClicked = onItemClick
         viewDataBinding.rvSubCategory.adapter = subCategoryAdapter
     }
 
-    override fun setProductListAdapter(productListAdapter: ProductListAdapter, onAddToCartClick: (productId: String) -> Unit,) {
+    override fun setProductListAdapter(
+        productListAdapter: ProductListAdapter,
+        onAddToCartClick: (productId: Int) -> Unit,
+        onProductDetailClick: (productId: Int) -> Unit,
+    ) {
         productListAdapter.onAddToCartClick = onAddToCartClick
+        productListAdapter.onProductDetailClick = onProductDetailClick
         viewDataBinding.rvProducts.adapter = productListAdapter
     }
 
     override fun openAddToCartDialog(
         mSKUList: ArrayList<ProductSkuListItem?>,
-        mSkuOfferList: ArrayList<PromotionListItem?>
+        mSkuOfferList: ArrayList<PromotionListItem?>,
+        productData: ProductData,
     ) {
-        val bottomSheet = AddToCartBottomSheetDialog()
+        val bottomSheet = AddToCartBottomSheetDialog({
+            openActivity(
+                OfferDetailActivity::class.java,
+                Bundle().apply {
+                    putParcelable(Constants.OFFERSDATA, it)
+
+                })
+        },{
+            subCategoryViewModel.onAddToCartClicked(it)
+        })
         bottomSheet.mSKUList = mSKUList
+        bottomSheet.productData = productData
         bottomSheet.mSkuOfferList = mSkuOfferList
         bottomSheet.show(
-           supportFragmentManager,
+            supportFragmentManager,
             Constants.BOTTOM_SHEET
         )
+    }
+
+    override fun openProductDetailsActivity(productData: ProductData) {
+        val bundle = Bundle()
+        bundle.putParcelable(Constants.PRODUCT, productData)
+        openActivity(ProductDetailsActivity::class.java, bundle)
     }
 
     override fun getBundle(): Bundle? {

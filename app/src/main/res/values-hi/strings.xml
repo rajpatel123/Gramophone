@@ -398,6 +398,8 @@
     <string name="gram_cash_expire_on">Expire on</string>
     <string name="was_earned_on">"Was earned on "</string>
     <string name="no_referral_transactions">No Referral Transactions Done</string>
+    <string name="percent_off">% off</string>
+    <string name="all_products">All Products</string>
     <string name="totalbalance">Total Balance</string>
     <string name="about_gram_cash_balance">About Gram Cash Balance</string>
     <string name="redeem">Redeem</string>

@@ -3,21 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <LinearLayout
+        android:id="@+id/itemView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_8sdp"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/_16sdp">
+        android:orientation="vertical">
 
         <TextView
-            android:layout_marginTop="@dimen/_16sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:fontFamily="@font/manrope_bold"
             android:text="@string/shop_by_store"
             android:textColor="@color/blakish"
@@ -41,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:background="@drawable/rounded_corner_32"
             android:backgroundTint="@color/pink"
             android:paddingStart="16dp"
@@ -62,5 +61,12 @@
 
         </FrameLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:background="@color/gray_stroke" />
+
     </LinearLayout>
+
 </RelativeLayout>
