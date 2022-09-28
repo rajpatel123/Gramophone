@@ -14,6 +14,7 @@ import agstack.gramophone.ui.home.view.fragments.market.model.ProductDetailsItem
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.NonNullObservableField
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
@@ -51,7 +52,7 @@ class ProductDetailsViewModel @Inject constructor(
     var qtySelected = ObservableField<Int>(1)
 
     var ratingSelected = ObservableField<Double>(0.0)
-    var isHeartSelected = ObservableField<Boolean>(false)
+    var isHeartSelected = NonNullObservableField<Boolean>(false)
     var selectedSkuListItem = ObservableField<ProductSkuListItem>()
     var selectedOfferItem = PromotionListItem()
     var addToCartEnabled = ObservableField<Boolean>(true)
@@ -117,7 +118,7 @@ class ProductDetailsViewModel @Inject constructor(
                     productData.let {
                         val productResponseData = productData.get()
                         getNavigator()?.setToolbarTitle(productResponseData?.productBaseName!!)
-                        isHeartSelected.set(productResponseData?.isUserFavourite)
+                        isHeartSelected.set(productResponseData?.isUserFavourite!!)
                         productResponseData?.productImages?.let {
                             getNavigator()?.setProductImagesViewPagerAdapter(
                                 ProductImagesAdapter(
