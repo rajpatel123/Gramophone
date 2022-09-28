@@ -107,6 +107,7 @@ class ProductDetailsViewModel @Inject constructor(
             loadProductDataJob = viewModelScope.launch {
 
                 //Start Loader
+
                 progressLoader.set(true)
                 val productAPIResponse = productRepository
                     .getProductData(productDetailstoBeFetched)

@@ -11,7 +11,7 @@ data class GpApiResponseDataProduct (
     @field:SerializedName("related_product")
     val relatedProduct: List<RelatedProductItem?>? = null,
 
-    @field:SerializedName("is_user_favourite")
+    @field:SerializedName("is_customer_favourite")
     val isUserFavourite: Boolean? = null,
 
     @field:SerializedName("product_featured_flag")
