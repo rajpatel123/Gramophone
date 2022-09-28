@@ -5,6 +5,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityCategoryDetailBinding
+import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.dialog.filter.BottomSheetFilterDialog
 import agstack.gramophone.ui.dialog.sortby.BottomSheetSortByDialog
@@ -19,6 +20,7 @@ import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.EndlessRecyclerScrollListener
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -52,6 +54,10 @@ class SubCategoryActivity :
         disableSortAndFilter()
         viewDataBinding.tvSortBy.setOnClickListener(this)
         viewDataBinding.tvFilter.setOnClickListener(this)
+        viewDataBinding.toolbar.inflateMenu(R.menu.menu_search_and_cart)
+        viewDataBinding.toolbar.setOnMenuItemClickListener { menuItem ->
+            onOptionsItemSelected(menuItem)
+        }
         viewDataBinding.toolbar.setNavigationOnClickListener { finish() }
         viewDataBinding.appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
             //Check if the view is collapsed
@@ -75,6 +81,13 @@ class SubCategoryActivity :
             R.id.tvSortBy -> {
                 val bottomSheet = BottomSheetSortByDialog(subCategoryViewModel.sortDataList) {
                     sortBy = it
+                    subCategoryViewModel.getAllProducts(sortBy,
+                        ArrayList(),
+                        ArrayList(),
+                        ArrayList(),
+                        ArrayList(),
+                        "10",
+                        "1")
                 }
                 bottomSheet.isCancelable = false
                 bottomSheet.show(
@@ -104,10 +117,14 @@ class SubCategoryActivity :
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_home, menu);
-        return super.onCreateOptionsMenu(menu)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_cart -> {
+                openActivity(CartActivity::class.java)
+            }
+
+        }
+        return true
     }
 
     override fun disableSortAndFilter() {

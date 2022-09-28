@@ -33,6 +33,7 @@ class SubCategoryViewModel @Inject constructor(
     var mSKUList = ArrayList<ProductSkuListItem?>()
     var mSkuOfferList = ArrayList<PromotionListItem?>()
     var showSubCategoryView = MutableLiveData<Boolean>()
+    var categoryName = MutableLiveData<String>()
     var mainFilterList: ArrayList<MainFilterData>? = null
     var sortDataList: ArrayList<SortByData>? = null
     var subCategoryList: List<CategoryData>? = null
@@ -44,6 +45,7 @@ class SubCategoryViewModel @Inject constructor(
 
     init {
         progress.value = false
+        categoryName.value = ""
         showSubCategoryView.value = false
     }
 
@@ -53,6 +55,9 @@ class SubCategoryViewModel @Inject constructor(
         if (bundle?.containsKey(Constants.CATEGORY_ID)!! && bundle.getString(Constants.CATEGORY_ID) != null) {
             categoryId = bundle.get(Constants.CATEGORY_ID) as String
             getSubCategoryData()
+        }
+        if (bundle?.containsKey(Constants.CATEGORY_NAME)!! && bundle.getString(Constants.CATEGORY_NAME) != null) {
+            categoryName.value = bundle.get(Constants.CATEGORY_NAME) as String
         }
     }
 
@@ -122,7 +127,7 @@ class SubCategoryViewModel @Inject constructor(
                         ) {
                             showSubCategoryView.value = true
                             getNavigator()?.setSubCategoryAdapter(ShopByCategoryAdapter(
-                                subCategoryList) {
+                                subCategoryList) {id, name ->
                                 /*getNavigator()?.openCheckoutStatusActivity(Bundle().apply {
                                 putString(Constants.ORDER_ID,
                                     response.body()?.gp_api_response_data?.order_ref_id.toString())

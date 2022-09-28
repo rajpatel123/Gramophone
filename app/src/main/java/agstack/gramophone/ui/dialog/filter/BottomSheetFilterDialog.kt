@@ -55,9 +55,14 @@ class BottomSheetFilterDialog(
         }
         binding?.tvReset?.setOnClickListener {
             if (!mainFilterList.isNullOrEmpty()) {
-                for (item in mainFilterList!!) {
-                    item.isSelected = false
-                    item.count = 0
+                for ((index, item) in mainFilterList!!.withIndex()) {
+                    if (index == 0) {
+                        item.isSelected = true
+                        item.count = 0
+                    } else {
+                        item.isSelected = false
+                        item.count = 0
+                    }
                 }
             }
             if (!subCategoryList.isNullOrEmpty())

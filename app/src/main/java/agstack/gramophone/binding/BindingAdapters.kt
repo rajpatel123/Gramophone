@@ -225,7 +225,9 @@ fun setReformattedIntPrice(textView: TextView, price: Float) {
         if (price.isNaN() || price.isInfinite()) {
             textView.text = "₹ 0"
         } else {
-            textView.text = "₹ " + price.roundToInt().toString()
+            if (price.toString().contains(".0") || price.toString().contains(".00"))
+                textView.text = "₹ " + price.roundToInt().toString()
+            else textView.text = "₹ " + price.toString()
         }
     } catch (e: Exception) {
         textView.text = "₹ 0"
@@ -244,12 +246,35 @@ fun calculateDiscount(
             if (discount.isNaN() || discount.isInfinite()) {
                 textView.visibility = View.INVISIBLE
             } else {
-                textView.visibility = View.VISIBLE
-                textView.text = discount.roundToInt().toString() + textView.context.getString(R.string.percent_off)
+                if (discount.roundToInt() == 0) {
+                    textView.visibility = View.GONE
+                } else {
+                    textView.visibility = View.VISIBLE
+                    textView.text = discount.roundToInt()
+                        .toString() + textView.context.getString(R.string.percent_off)
+                }
             }
         }
     } catch (e: Exception) {
         textView.visibility = View.INVISIBLE
+    }
+}
+
+@BindingAdapter(value = ["mrp_price_equal", "to_sales_price"], requireAll = true)
+fun mrpPriceVisibility(
+    textView: TextView, mrp_price: Float, sales_price: Float,
+) {
+    try {
+        if (mrp_price == sales_price) {
+            textView.visibility = View.GONE
+        } else {
+            textView.visibility = View.VISIBLE
+            if (sales_price.toString().contains(".0") || sales_price.toString().contains(".00"))
+                textView.text = "₹ " + sales_price.roundToInt().toString()
+            else textView.text = "₹ " + sales_price.toString()
+        }
+    } catch (e: Exception) {
+        textView.visibility = View.GONE
     }
 }
 

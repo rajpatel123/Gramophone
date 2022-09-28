@@ -28,6 +28,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/tvFilterName"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_weight="1"
