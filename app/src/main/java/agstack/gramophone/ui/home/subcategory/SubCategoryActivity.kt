@@ -82,10 +82,10 @@ class SubCategoryActivity :
                 val bottomSheet = BottomSheetSortByDialog(subCategoryViewModel.sortDataList) {
                     sortBy = it
                     subCategoryViewModel.getAllProducts(sortBy,
-                        ArrayList(),
-                        ArrayList(),
-                        ArrayList(),
-                        ArrayList(),
+                        subCategoryIdsArray,
+                        brandIdsArray,
+                        cropIdsArray,
+                        technicalIdsArray,
                         "10",
                         "1")
                 }
