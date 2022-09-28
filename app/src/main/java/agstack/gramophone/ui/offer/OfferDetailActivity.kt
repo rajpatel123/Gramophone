@@ -13,7 +13,7 @@ import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OfferDetailActivity :
+public class OfferDetailActivity :
     BaseActivityWrapper<OfferDetailsActivityBinding, OfferDetailNavigator, OfferDetailViewModel>(),
     OfferDetailNavigator {
 

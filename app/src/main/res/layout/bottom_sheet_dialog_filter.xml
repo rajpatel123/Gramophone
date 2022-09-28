@@ -22,7 +22,7 @@
                 android:lineSpacingExtra="0sp"
                 android:text="Filters"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:translationY="-0.24sp" />
 
             <ImageView
@@ -55,10 +55,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvMainFilter"
                 android:layout_width="@dimen/_120sdp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/mute_grey"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/_50sdp"
+                android:paddingBottom="@dimen/_130sdp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="4"
                 tools:listitem="@layout/item_main_filter" />
@@ -68,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/_50sdp"
+                android:paddingBottom="@dimen/_130sdp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="10"
                 tools:listitem="@layout/item_sub_filter" />
@@ -83,7 +83,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
-                android:gravity="center">
+                android:gravity="center"
+                android:paddingStart="@dimen/_6sdp"
+                android:paddingEnd="@dimen/_6sdp">
 
                 <TextView
                     android:id="@+id/tvReset"

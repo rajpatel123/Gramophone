@@ -29,6 +29,7 @@ class BottomSheetSortByDialog(
     private fun setupUi() {
         binding?.rvSortBy?.adapter = SortByAdapter(requireContext(), sortDataList) {
             listener.invoke(it)
+            dismiss()
         }
         binding?.ivCloseDialog?.setOnClickListener {
             dismiss()
