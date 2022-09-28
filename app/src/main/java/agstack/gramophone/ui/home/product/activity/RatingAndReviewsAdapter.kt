@@ -50,7 +50,7 @@ class RatingAndReviewsAdapter(reviewList: ArrayList<ReviewListItem?>?, limit: In
     }
 
     override fun getItemCount(): Int {
-        if (listSizeLimit != null) {
+        if (listSizeLimit != null && listSizeLimit<=mReviewList?.size!!) {
             return listSizeLimit
         } else {
             return mReviewList?.size!!
