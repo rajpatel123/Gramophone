@@ -81,8 +81,11 @@ class OffersListViewModel @Inject constructor(
                                 })
                         }
                     }
+                    if(promotionList?.size==0){
 
-                    getNavigator()?.showToast(offersListResponse.body()?.gpApiMessage)
+                    }
+
+                   // getNavigator()?.showToast(offersListResponse.body()?.gpApiMessage)
 
                 } else {
 
@@ -101,13 +104,6 @@ class OffersListViewModel @Inject constructor(
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         getFilteredListFromAPI(query, 1)
-/*
-       if (query != null)
-            getFilteredListFromAPI(query, 1)
-        else
-            getFilteredListFromAPI("", 1)*/
-
-
 
         return true
     }
@@ -146,9 +142,6 @@ class OffersListViewModel @Inject constructor(
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        /*   if(newText==null||newText.equals("")){
-               getFilteredListFromAPI("", 1)
-           }*/
 
         newText?.let {
             if (newText?.length >= 3) {
