@@ -10,6 +10,7 @@ import agstack.gramophone.ui.home.product.fragment.ContactForPriceBottomSheetDia
 import agstack.gramophone.ui.home.product.fragment.ExpertAdviceBottomSheetFragment
 import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductDetailsItem
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.utils.Constants
@@ -35,7 +36,7 @@ class ProductDetailsViewModel @Inject constructor(
     var productReviewsData = ObservableField<GpApiResponseData?>()
     var relatedProductData = ObservableField<GpApiResponseDataRelatedProduct?>()
     var productId: Int = 0
-    lateinit var mProductDetailsKeyValues: MutableList<KeyPointsItem?>
+    lateinit var mProductDetailsList: MutableList<ProductDetailsItem?>
     private var loadProductDataJob: Job? = null
     private var loadRelatedProductDataJob: Job? = null
     private var loadProductReviewsDataJob: Job? = null
@@ -126,18 +127,35 @@ class ProductDetailsViewModel @Inject constructor(
                             )
                         }
 
-                        mProductDetailsKeyValues =
-                            (productResponseData?.productDetails?.keyPoints!!).toMutableList()
+                        productResponseData?.productDetails?.let {
+                        //product Details could be null
+                            mProductDetailsList = (productResponseData?.productDetails!!).toMutableList()
+                            var detailTypeKeyValueList = HashMap<String, ArrayList<KeyPointsItem>>()
+
+                            var keyArrayList = ArrayList<String>()
+                            for (value in mProductDetailsList) {
+                                keyArrayList.add(value?.productDetailType!!)
+                            }
+                            keyArrayList = keyArrayList.distinct() as ArrayList<String>
+
+                            for (keyValue in keyArrayList) {
+                                var keyValueArrayList = ArrayList<KeyPointsItem>()
+                                for (value in mProductDetailsList) {
+                                    if (keyValue.equals(value?.productDetailType)) {
+                                        keyValueArrayList.add(KeyPointsItem(value?.productDetailKey, value?.productDetailValue))
+                                    }
+                                }
+                                detailTypeKeyValueList.put(keyValue, keyValueArrayList)
+
+                            }
+
+
+
 
                         //set ProductDetails Adapter
                         getNavigator()?.setProductDetailsAdapter(
-                            ProductDetailsAdapter(
-                                ArrayList(
-                                    mProductDetailsKeyValues
-                                )
-                            )
-                        )
-
+                            ProductDetailsAdapter(detailTypeKeyValueList))
+                        }
 
                         //set skuList
                         mSKUList = ArrayList(productData?.get()?.productSkuList)
@@ -158,7 +176,7 @@ class ProductDetailsViewModel @Inject constructor(
 
                             }
 
-                            val productIdDefault = productResponseData.productIdDefault
+                            val productIdDefault = productResponseData?.productIdDefault
                             for (item in mSKUList) {
                                 item?.selected = item?.productId!!.equals(productIdDefault)
                                 if (item?.selected == true) {

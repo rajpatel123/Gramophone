@@ -38,8 +38,11 @@ data class GpApiResponseDataProduct (
     @field:SerializedName("currency")
     val currency: String? = null,
 
+   /* @field:SerializedName("product_details")
+    val productDetails: ProductDetails? = null,*/
+
     @field:SerializedName("product_details")
-    val productDetails: ProductDetails? = null,
+    val productDetails: List<ProductDetailsItem?>? = null,
 
     @field:SerializedName("product_id_default")
     val productIdDefault: String? = null,
