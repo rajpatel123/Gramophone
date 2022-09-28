@@ -91,7 +91,8 @@
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="1sp"
-                app:reformatFloatPriceToInt="@{model.mrp_price}"
+                app:mrp_price_equal="@{model.mrp_price}"
+                app:to_sales_price="@{model.sales_price}"
                 android:textColor="@color/gray_strike_through"
                 android:textSize="13sp"
                 tools:text="@string/_1_290" />

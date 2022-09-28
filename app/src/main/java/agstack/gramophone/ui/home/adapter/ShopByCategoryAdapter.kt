@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ShopByCategoryAdapter(
     private var categoryList: List<CategoryData>?,
-    private val listener: (String) -> Unit,
+    private val listener: (String, String) -> Unit,
 ) :
     RecyclerView.Adapter<ShopByCategoryAdapter.DeveloperViewHolder>() {
 
@@ -22,7 +22,7 @@ class ShopByCategoryAdapter(
     override fun onBindViewHolder(holder: DeveloperViewHolder, i: Int) {
         holder.binding.model = categoryList?.get(i)
         holder.itemView.setOnClickListener {
-            listener.invoke(categoryList?.get(i)?.category_id?.toString()!!)
+            listener.invoke(categoryList?.get(i)?.category_id?.toString()!!, categoryList?.get(i)?.category_name!!)
         }
     }
 
