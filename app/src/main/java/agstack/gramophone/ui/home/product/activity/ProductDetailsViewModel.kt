@@ -47,7 +47,6 @@ class ProductDetailsViewModel @Inject constructor(
     private var updateProductFavoriteJob: Job? = null
     private var contactForPriceJob: Job? = null
     var progressLoader = ObservableField<Boolean>(false)
-
     //Values selected by User
     var qtySelected = ObservableField<Int>(1)
 
