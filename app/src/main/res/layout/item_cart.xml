@@ -23,7 +23,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="16dp"
             android:contentDescription="@string/image"
-            app:product_image="@{model.product_image}"
+            app:product_image='@{model.product_image ?? ""}'
             tools:src="@drawable/dummy_neem_cake" />
 
         <TextView

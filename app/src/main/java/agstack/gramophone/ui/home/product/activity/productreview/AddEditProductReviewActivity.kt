@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import androidx.activity.viewModels
+import com.amnix.xtension.extensions.enableIf
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -37,6 +38,10 @@ class AddEditProductReviewActivity :
 
     }
 
+
+    override fun enableSubmitButton(enableSubmit: Boolean) {
+        viewDataBinding.btnSubmit.enableIf(enableSubmit)
+    }
     override fun getBundle(): Bundle? {
         return intent.extras
     }
