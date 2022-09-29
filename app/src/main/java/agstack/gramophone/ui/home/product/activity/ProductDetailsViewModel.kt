@@ -54,7 +54,7 @@ class ProductDetailsViewModel @Inject constructor(
     var isHeartSelected = NonNullObservableField<Boolean>(false)
     var selectedSkuListItem = ObservableField<ProductSkuListItem>()
     var selectedOfferItem = PromotionListItem()
-    var addToCartEnabled = ObservableField<Boolean>(true)
+    var addToCartEnabled = NonNullObservableField<Boolean>(true)
     fun onHeartIconClicked() {
         isHeartSelected.set(!isHeartSelected.get()!!)
         updateProductFavoriteJob.cancelIfActive()
