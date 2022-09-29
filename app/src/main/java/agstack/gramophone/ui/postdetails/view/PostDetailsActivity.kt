@@ -8,8 +8,9 @@ import agstack.gramophone.ui.home.adapter.CommentsAdapter
 import agstack.gramophone.ui.postdetails.PostDetailNavigator
 import agstack.gramophone.ui.postdetails.viewmodel.PostDetailViewModel
 import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.IntentKeys
 import agstack.gramophone.utils.ShareSheetPresenter
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -66,14 +67,15 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
 
     override fun sharePost(link: String) {
 
-        val shareMessage = resources.getString(R.string.welcome_msg)
-        //  val extraText = shareMessage + "\n" + genericUri.toString()
-        val extraText = shareMessage
-        shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(
-            extraText,
-            getString(R.string.home_share_subject),
-            IntentKeys.WhatsAppShareKey
-        )
+        val whatsappIntent = Intent(Intent.ACTION_SEND)
+        whatsappIntent.type = "text/plain"
+        whatsappIntent.setPackage("com.whatsapp")
+        whatsappIntent.putExtra(Intent.EXTRA_TEXT, link)
+        try {
+            startActivity(whatsappIntent)
+        } catch (ex: ActivityNotFoundException) {
+            showToast("Whatsapp have not been installed.")
+        }
 
     }
 

@@ -12,12 +12,14 @@ import agstack.gramophone.utils.Constants.PIN_POST
 import agstack.gramophone.utils.Constants.REPORT_POST
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.SharedPreferencesKeys.UUIdKey
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View.*
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.item_tags.view.*
 import java.util.*
 
 
@@ -29,6 +31,7 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
     private val viewPageStates = HashMap<Int, Int>()
     private lateinit var context: Context
     var onItemDetailClicked: ((postId: String) -> Unit)? = null
+    var onFollowClicked: ((postId: Data) -> Unit)? = null
     var onItemLikesClicked: ((postId: String) -> Unit)? = null
     var onItemCommentsClicked: ((postId: String) -> Unit)? = null
     var onShareClicked: ((type: String) -> Unit)? = null
@@ -39,15 +42,15 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
     lateinit var setImage: SetImage
     var lastSelectPosition: Int = 0
 
+    lateinit var inflater: LayoutInflater
     interface SetImage {
         fun onImageSet(imageUrl: String, iv: ImageView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         this.context = parent.context
+        inflater = LayoutInflater.from(context)
         return TextItemHolder(ItemPostBinding.inflate(LayoutInflater.from(context)))
-
-
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -100,7 +103,15 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
         }
 
 
-        if (data?.lastComment != null && data.lastComment.author.size>0) {
+        if (data?.tags != null && data?.tags.size > 0) {
+            data.tags.forEach {
+                val view = inflater.inflate(R.layout.item_tags, null)
+                view.tvTag.setText(it.tag)
+                holder.itemPostBinding.llTVTag.addView(view)
+            }
+        }
+
+        if (data?.lastComment != null && data.lastComment.author.size > 0) {
             if (data.lastComment.author.size > 0 && data?.lastComment.author[0].photoUrl != null) {
                 setImage.onImageSet(
                     data?.lastComment.author[0].photoUrl,
@@ -111,10 +122,10 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
             if (data.lastComment.author.size > 0) {
                 holder.itemPostBinding.tvName1.setText("" + data.lastComment.author[0].username)
             }
-            holder.itemPostBinding.llChat.visibility= VISIBLE
+            holder.itemPostBinding.llChat.visibility = VISIBLE
 
-        }else{
-          holder.itemPostBinding.llChat.visibility=GONE
+        } else {
+            holder.itemPostBinding.llChat.visibility = GONE
         }
 
         if (data.liked) {
@@ -123,15 +134,30 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
             holder.itemPostBinding.ivLike.setImageResource(R.drawable.ic_like)
         }
 
-        if ("admin".equals(data?.author.communityUserType)) {
-            holder.itemPostBinding.rlAdminTag.visibility = VISIBLE
-            holder.itemPostBinding.llAdminMenu.visibility = VISIBLE
-            holder.itemPostBinding.llUserMenu.visibility = GONE
-        } else {
-            holder.itemPostBinding.rlAdminTag.visibility = GONE
-            holder.itemPostBinding.llUserMenu.visibility = VISIBLE
-            holder.itemPostBinding.rlAdminTag.visibility = GONE
+        if (data.author.uuid.equals(
+                SharedPreferencesHelper.instance?.getString(UUIdKey)
+            )
+        ) {
+            holder.itemPostBinding.llEdit.visibility = VISIBLE
+            holder.itemPostBinding.llPinPost.visibility = VISIBLE
+            holder.itemPostBinding.llDelete.visibility = VISIBLE
+            holder.itemPostBinding.llReport.visibility = GONE
+            holder.itemPostBinding.llBlock.visibility = GONE
 
+        } else {
+            holder.itemPostBinding.llReport.visibility = VISIBLE
+            holder.itemPostBinding.llBlock.visibility = VISIBLE
+            holder.itemPostBinding.llDelete.visibility = GONE
+            holder.itemPostBinding.llEdit.visibility = GONE
+            holder.itemPostBinding.llBlock.visibility = VISIBLE
+
+        }
+
+        if (data.pinned  && SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.IS_ADMIN).equals("admin")) {
+            holder.itemPostBinding.llPinPost.visibility = VISIBLE
+        } else {
+            holder.itemPostBinding.llPinPost.visibility = GONE
         }
 
         if (data.bookMarked) {
@@ -141,7 +167,12 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
         }
 
         holder.itemPostBinding.ivMenu.setOnClickListener {
-            showHideMenu(data,show=true,position)
+            showHideMenu(data, show = true, position)
+
+        }
+
+        holder.itemPostBinding.tvFollow.setOnClickListener {
+            onFollowClicked?.invoke(data)
 
         }
 
@@ -149,22 +180,22 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
         holder.itemPostBinding.postImage.setOnClickListener {
             onItemDetailClicked?.invoke(data._id)
         }
-            holder.itemPostBinding.ivLike.setOnClickListener {
-                onLikeClicked?.invoke(data)
-            }
+        holder.itemPostBinding.ivLike.setOnClickListener {
+            onLikeClicked?.invoke(data)
+        }
 
-            holder.itemPostBinding.tvLikes.setOnClickListener {
-                onItemLikesClicked?.invoke(data?._id!!)
-            }
-            holder.itemPostBinding.rlComments.setOnClickListener {
-                //onItemCommentsClicked?.invoke(data?._id!!)
-            }
-            holder.itemPostBinding.llComment.setOnClickListener {
-                //TODO will uncomment after fixing issue
-                //onItemCommentsClicked?.invoke(data?._id!!)
+        holder.itemPostBinding.tvLikes.setOnClickListener {
+            onItemLikesClicked?.invoke(data?._id!!)
+        }
+        holder.itemPostBinding.rlComments.setOnClickListener {
+            //onItemCommentsClicked?.invoke(data?._id!!)
+        }
+        holder.itemPostBinding.llComment.setOnClickListener {
+            //TODO will uncomment after fixing issue
+            //onItemCommentsClicked?.invoke(data?._id!!)
             }
             holder.itemPostBinding.ivWhatsapp.setOnClickListener {
-                onShareClicked?.invoke(data.link_url)
+                onShareClicked?.invoke(data.linkUrl)
         }
 
 
@@ -220,7 +251,8 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
     ) {
 
         val data = dataList?.get(position)
-        val adapter = BannerViewPagerAdapter(bannerResponse?.gpApiResponseData?.homeBanner1!!, context)
+        val adapter =
+            BannerViewPagerAdapter(bannerResponse?.gpApiResponseData?.communityBanner!!, context)
 
         holder.itemPostBinding.bannerPager.adapter = adapter
         holder.itemPostBinding?.dotsIndicator?.attachTo(holder.itemPostBinding?.bannerPager!!)

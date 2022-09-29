@@ -14,7 +14,8 @@ interface CommunityFragmentNavigator: BaseNavigator {
         onTripleDotMenuClicked: (postId:String) -> Unit,
         onMenuOptionClicked: (post:Data) -> Unit,
         onLikeClicked: (post: Data) -> Unit,
-        onBookMarkClicked: (post: Data) -> Unit
+        onBookMarkClicked: (post: Data) -> Unit,
+        onFollowClicked: (post: Data) -> Unit
     )
 
     fun openCommentDialog()
@@ -22,4 +23,5 @@ interface CommunityFragmentNavigator: BaseNavigator {
     fun deletePostDialog()
     fun reportPostDialog()
     fun blockUserDialog()
+    fun getReportReason(): String
 }

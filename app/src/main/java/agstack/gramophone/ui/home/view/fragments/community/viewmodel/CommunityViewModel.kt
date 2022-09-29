@@ -7,17 +7,19 @@ import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
 import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActivity
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
-import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityRequestModel
-import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
+import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.*
 import agstack.gramophone.ui.postdetails.view.PostDetailsActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Constants.POST_ID
+import agstack.gramophone.utils.Utility
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.android.synthetic.main.report_post_dailogue.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -31,9 +33,15 @@ class CommunityViewModel @Inject constructor(
     private lateinit var menuClickedData: Data
     lateinit var mAlertDialog: AlertDialog
     var sorting = ObservableField<String>()
+
+    var hateStr = ObservableField<String>()
+    var harasgStr = ObservableField<String>()
+    var unWanted = ObservableField<String>()
+    var securitStr = ObservableField<String>()
     var showProgress = ObservableField<Boolean>()
     var limit = ObservableField<Int>()
     lateinit var communityPostAdapter: CommunityPostAdapter
+    lateinit var reportReason: String
 
     fun filterPost(v: TabLayout.Tab) {
         showProgress.set(true)
@@ -64,7 +72,7 @@ class CommunityViewModel @Inject constructor(
 
 
     fun loadData(sorting: String) {
-        limit.set(105)
+        limit.set(50)
         viewModelScope.launch(Dispatchers.Default) {
             getPost(sorting)
         }
@@ -85,15 +93,99 @@ class CommunityViewModel @Inject constructor(
     }
 
     private fun deletePost() {
+        showProgress.set(true)
+            viewModelScope.launch {
 
-    }
+                try {
+                    if (getNavigator()?.isNetworkAvailable() == true) {
+
+                        val response = communityRepository.deletePost(menuClickedData._id)
+                        showProgress.set(false)
+                        if (response.isSuccessful) {
+                            getPost(sorting = sorting.get().toString())
+                        }else{
+                            getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+                        }
+                    } else
+                        getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+                } catch (ex: Exception) {
+                    showProgress.set(false)
+                    when (ex) {
+                        is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                        else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                    }
+                }
+
+
+            }
+        }
+
+
 
     fun onReport() {
         mAlertDialog?.dismiss()
+        if (!TextUtils.isEmpty(reportReason)) {
+            reportPost()
+        }else{
+            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.select_report_reason))
+        }
+
+    }
+
+    private fun reportPost() {
+        viewModelScope.launch {
+            showProgress.set(true)
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    val response = communityRepository.reportPost(ReportUserRequestModel(reportReason,menuClickedData._id))
+                    showProgress.set(false)
+                    if (response.isSuccessful) {
+                        getPost(sorting = sorting.get().toString())
+                    }else{
+                        getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+                    }
+                } else
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+            } catch (ex: Exception) {
+                showProgress.set(false)
+                when (ex) {
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                }
+            }
+
+
+        }
     }
 
     fun onBlock() {
+        blockUser()
         mAlertDialog?.dismiss()
+    }
+
+
+    private fun blockUser() {
+        viewModelScope.launch {
+
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    val response = communityRepository.blockUser(BlockUserRequestModel("block",menuClickedData.author._id,menuClickedData._id))
+                    if (response.isSuccessful) {
+                        getPost(sorting = sorting.get().toString())
+                    }else{
+                        getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+                    }
+                } else
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                }
+            }
+
+
+        }
     }
 
 
@@ -146,7 +238,6 @@ class CommunityViewModel @Inject constructor(
 
                                 Constants.REPORT_POST -> {
                                     menuClickedData = it
-
                                     getNavigator()?.reportPostDialog()
                                 }
 
@@ -173,6 +264,9 @@ class CommunityViewModel @Inject constructor(
                             }else{
                                 bookmarkPost(it,"bookmark")
                             }
+                        },
+                        {
+                           followPost(it)
                         }
                     )
                 }
@@ -191,6 +285,45 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
+    private fun followPost(it: Data) {
+        showProgress.set(true)
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    val response =
+                        communityRepository.followPost(FollowRequestModel(it.author.uuid))
+                    if (response.isSuccessful) {
+                        showProgress.set(false)
+
+                        var post = communityPostAdapter.getItem(it.position!!)
+                        if (response.body()?.data?.following == true) {
+                            post?.following = true
+                        } else {
+                            post?.following = false
+                        }
+                        communityPostAdapter.notifyItemChanged(it.position!!)
+
+
+                    } else {
+                        showProgress.set(false)
+
+                        getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+                    }
+                } else
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+            } catch (ex: Exception) {
+                showProgress.set(false)
+                when (ex) {
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                }
+            }
+
+
+        }
+
+    }
+
     private fun updatePinPost(it: Data) {
         viewModelScope.launch {
             var status = "pin"
@@ -204,7 +337,6 @@ class CommunityViewModel @Inject constructor(
                     val response =
                         communityRepository.pinPost(PostRequestModel(it._id, status))
                     if (response.isSuccessful) {
-                        val data = response.body()?.data
                         var post = communityPostAdapter.getItem(it.position!!)
                         if (it.equals("pin")) {
                             post?.pinned = true
@@ -214,6 +346,8 @@ class CommunityViewModel @Inject constructor(
                         communityPostAdapter.notifyItemChanged(it.position!!)
 
 
+                    } else {
+                        getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                     }
                 } else
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
@@ -285,6 +419,26 @@ class CommunityViewModel @Inject constructor(
 
         }
 
+    }
+
+    fun getReason(checkedId: Int) {
+        when (checkedId) {
+            R.id.rbHate -> {
+                reportReason = hateStr.get().toString()
+            }
+            R.id.rbHarash -> {
+                reportReason = harasgStr.get().toString()
+
+            }
+            R.id.rbSecurity -> {
+                reportReason = securitStr.get().toString()
+
+            }
+            R.id.rbUnwanted -> {
+                reportReason = unWanted.get().toString()
+
+            }
+        }
     }
 
 }

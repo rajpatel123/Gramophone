@@ -61,7 +61,7 @@
         android:id="@+id/rlPosts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -97,6 +97,7 @@
             android:layout_toEndOf="@+id/ivProfileImage"
             android:fontFamily="@font/manrope_medium"
             android:text="+ Add Address"
+            android:visibility="invisible"
             android:textColor="@color/red"
             android:textSize="@dimen/_10ssp" />
 
@@ -109,7 +110,35 @@
             android:fontFamily="@font/manrope_medium"
             android:text="@{model.createdDate}"
             android:textColor="@color/grey"
-            android:textSize="@dimen/_10ssp" />
+            android:textSize="@dimen/_10ssp"
+            tools:text="Datefhjd" />
+
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_below="@+id/tvCity"
+           android:layout_centerVertical="true"
+           android:gravity="center_vertical"
+           android:layout_marginStart="@dimen/_10sdp"
+           android:layout_toEndOf="@+id/tvDate">
+           <View
+               android:id="@+id/view"
+               android:layout_width="@dimen/_8sdp"
+               android:layout_height="@dimen/_8sdp"
+               android:background="@drawable/circle_solid_gray" />
+
+           <TextView
+               android:id="@+id/tvFollow"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:fontFamily="@font/manrope_bold"
+               android:text="@{model.following?@string/following:@string/follow}"
+               android:textColor="@{model.following?@color/grey:@color/red}"
+               android:textSize="@dimen/_10ssp"
+               android:layout_marginStart="@dimen/_5sdp"
+               tools:text="Datefhjd" />
+       </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/rlAdminTag"
@@ -167,13 +196,11 @@
 
 
         <LinearLayout
+            android:id="@+id/llDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/llDetails"
             android:layout_below="@+id/tvDate"
-
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvDesc"
@@ -192,20 +219,18 @@
                 android:id="@+id/imageContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="@dimen/_10sdp"
                 android:layout_below="@+id/tvDate"
                 android:layout_marginStart="@dimen/_12sdp"
-                android:visibility="visible"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_12sdp"
-                >
+                android:visibility="gone"
+                app:cardCornerRadius="@dimen/_10sdp">
 
                 <ImageView
                     android:id="@+id/postImage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    />
+                    android:scaleType="fitXY" />
             </androidx.cardview.widget.CardView>
         </LinearLayout>
 
@@ -216,28 +241,23 @@
             android:layout_below="@+id/llDetails"
             android:minHeight="@dimen/_26sdp" />
 
-        <TextView
-            android:id="@+id/tvTag"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:id="@+id/llTVTag"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_below="@+id/tvSpace"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_14sdp"
-            android:background="@drawable/following_bg"
-            android:fontFamily="@font/manrope_medium"
-            android:paddingStart="@dimen/_7sdp"
-            android:paddingTop="@dimen/_2sdp"
-            android:paddingEnd="@dimen/_7sdp"
-            android:paddingBottom="@dimen/_3sdp"
-            android:text="Tomato"
-            android:textColor="@color/blakish"
-            android:textSize="@dimen/_10ssp" />
+            >
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/llActions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvTag"
+            android:layout_below="@+id/llTVTag"
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_12sdp"
             android:layout_marginEnd="@dimen/_12sdp"
@@ -287,7 +307,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/_2sdp"
                     android:layout_toEndOf="@+id/ivComment"
-                    android:text="@{String.format(@string/comment,model.likesCount)}"
+                    android:text="@{String.format(@string/comment,model.commentsCount)}"
                 />
             </RelativeLayout>
 
@@ -481,7 +501,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:id="@+id/llEdit"
@@ -523,7 +543,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:fontFamily="@font/manrope_regular"
-                        android:text="@string/pin_post" />
+                        android:text="@{model.pinned?@string/unpin_post:@string/pin_post}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -554,14 +574,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:id="@+id/llReport"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 

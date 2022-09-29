@@ -29,7 +29,8 @@ data class Data(
     val whatsAppShare: Int,
     var isSelected: Boolean,
     var position:Int?,
-    var link_url:String,
-    var menu: String
+    var linkUrl:String,
+    var menu: String,
+    var following:Boolean
 
 )

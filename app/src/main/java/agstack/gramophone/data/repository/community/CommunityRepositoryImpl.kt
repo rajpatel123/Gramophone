@@ -5,8 +5,9 @@ import agstack.gramophone.ui.home.view.fragments.community.model.likes.BookmarkP
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikePostResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedusersResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
-import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityHomeResponseModel
-import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityRequestModel
+import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.*
+import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.block.BlockResponseModel
+import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.follow.FollowResponseModel
 import agstack.gramophone.ui.postdetails.model.PostDetailResponseModel
 import agstack.gramophone.ui.postdetails.model.comments.CommentsResponseModel
 import kotlinx.coroutines.Dispatchers
@@ -54,11 +55,11 @@ class CommunityRepositoryImpl @Inject constructor(
             appData
         }
 
-    override suspend fun pinPost(postResponseModel: PostRequestModel): Response<BookmarkPostResponse> =
+    override suspend fun pinPost(postResponseModel: PostRequestModel): Response<BlockResponseModel> =
         withContext(
             Dispatchers.IO
         ) {
-            val appData = communityApiService.bookmarkPost(postResponseModel)
+            val appData = communityApiService.pinPost(postResponseModel)
             appData
         }
 
@@ -79,7 +80,7 @@ class CommunityRepositoryImpl @Inject constructor(
             appData
         }
 
-    override suspend fun deletePost(id: PostRequestModel): Response<CommentsResponseModel> =
+    override suspend fun deletePost(id: String): Response<CommentsResponseModel> =
         withContext(
             Dispatchers.IO
         ) {
@@ -92,6 +93,31 @@ class CommunityRepositoryImpl @Inject constructor(
             Dispatchers.IO
         ) {
             val appData = communityApiService.deletePostComment(id)
+            appData
+        }
+
+
+    override suspend fun reportPost(post: ReportUserRequestModel): Response<CommentsResponseModel> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val appData = communityApiService.reportPost(post)
+            appData
+        }
+
+    override suspend fun blockUser(post: BlockUserRequestModel): Response<BlockResponseModel> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val appData = communityApiService.blockUser(post)
+            appData
+        }
+
+    override suspend fun followPost(post: FollowRequestModel): Response<FollowResponseModel> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val appData = communityApiService.followPost(post)
             appData
         }
 

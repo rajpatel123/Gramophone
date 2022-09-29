@@ -10,10 +10,10 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.SpannableString
+import android.text.TextUtils
 import android.text.style.BulletSpan
 import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
@@ -25,7 +25,6 @@ import java.io.IOException
 import java.io.OutputStream
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.Duration
 import java.util.*
 
 
@@ -149,7 +148,12 @@ object Utility {
 
     fun getErrorMessage(data: ResponseBody?): String? {
         val errorBody = data?.string()?.let { JSONObject(it) }
-        return errorBody?.optString(Constants.GP_API_MESSAGE)
+        var messgae: String = ""
+        messgae = errorBody?.optString(Constants.GP_API_MESSAGE).toString()
+        if (TextUtils.isEmpty(messgae)) {
+            messgae = errorBody?.optString(Constants.MESSAGE).toString()
+        }
+        return messgae
     }
 
 

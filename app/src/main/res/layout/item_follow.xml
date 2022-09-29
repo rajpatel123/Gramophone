@@ -64,7 +64,7 @@
             android:paddingTop="@dimen/_3sdp"
             android:paddingEnd="@dimen/_6sdp"
             android:paddingBottom="@dimen/_3sdp"
-            android:text="Follow"
+            android:text="@{model.following?@string/following:@string/follow}"
             android:textColor="@color/gjg"
             android:textSize="@dimen/_10ssp"
             android:textStyle="bold" />

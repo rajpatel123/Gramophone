@@ -4,10 +4,14 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.community.CommunityRepository
 import agstack.gramophone.ui.home.adapter.CommentsAdapter
+import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActivity
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
+import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.FollowRequestModel
 import agstack.gramophone.ui.postdetails.PostDetailNavigator
 import agstack.gramophone.ui.postdetails.model.Data
+import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Utility
+import android.os.Bundle
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -74,7 +78,6 @@ class PostDetailViewModel @Inject constructor(
   }
  }
  }
-
  fun getPostComments(postId:String) {
 
  viewModelScope.launch {
@@ -160,8 +163,17 @@ class PostDetailViewModel @Inject constructor(
 
  }
 
- fun shareOnWhatsApp(){
-getNavigator()?.sharePost(data?.link_url!!)
+
+ fun openLikedUserList(){
+  getNavigator()?.openActivity(LikedPostUserListActivity::class.java, Bundle().apply {
+   putString(Constants.POST_ID, data?._id)
+  })
  }
+
+ fun shareOnWhatsApp(){
+getNavigator()?.sharePost(data?.linkUrl!!)
+ }
+
+
 
 }

@@ -213,8 +213,8 @@
                                 android:id="@+id/ivLike"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:onClick="@{()->viewModel.likePost()}"
-                                android:layout_centerVertical="true" />
+                                android:layout_centerVertical="true"
+                                android:onClick="@{()->viewModel.likePost()}" />
 
                             <TextView
                                 android:id="@+id/tvLikes"
@@ -223,6 +223,7 @@
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="@dimen/_2sdp"
                                 android:layout_toEndOf="@+id/ivLike"
+                                android:onClick="@{()->viewModel.openLikedUserList()}"
                                 android:text="@{String.format(@string/liked,viewModel.likeCount)}" />
                         </RelativeLayout>
 
@@ -281,44 +282,15 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="@dimen/_6sdp"
+                                android:onClick="@{()->viewModel.bookmarkPost()}"
                                 android:paddingStart="@dimen/_10sdp"
                                 android:paddingEnd="@dimen/_10sdp"
-                                android:onClick="@{()->viewModel.bookmarkPost()}"
                                 app:srcCompat="@drawable/ic_bookmark" />
                         </RelativeLayout>
 
                     </LinearLayout>
 
 
-                    <RelativeLayout
-                        android:id="@+id/llComment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/llActions"
-                        android:layout_marginStart="@dimen/_12sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:minHeight="@dimen/_30sdp">
-
-                        <ImageView
-                            android:id="@+id/ivCommentBottom"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/ic_comment"
-                            app:tint="@color/grey" />
-
-                        <TextView
-                            android:id="@+id/tvCommentBottom"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/_2sdp"
-                            android:layout_toEndOf="@+id/ivCommentBottom"
-                            android:text="Write a comment..."
-                            android:textColor="@color/grey" />
-
-                    </RelativeLayout>
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -327,6 +299,7 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/bottomCommentBar"
                     android:layout_below="@+id/postDetails"
+                    android:layout_marginTop="@dimen/_10sdp"
                     tools:listitem="@layout/item_comments" />
             </LinearLayout>
 

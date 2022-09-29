@@ -18,6 +18,7 @@ object Constants {
     val REFERRAL_CODE: String="referralCOde"
     val UNAUTHORIZED: Int=401
     val GP_API_MESSAGE: String="gp_api_message"
+    val MESSAGE: String="message"
     val PIN_POST: String="pinpost"
     val EDIT_POST: String="edit_post"
     val COPY_POST: String="copy_post"

@@ -13,9 +13,9 @@ import agstack.gramophone.ui.home.view.fragments.community.model.likes.BookmarkP
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikePostResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedusersResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
-import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityHomeResponseModel
-import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityRequestModel
-import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.LikedUsersRequestModel
+import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.*
+import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.block.BlockResponseModel
+import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.follow.FollowResponseModel
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
@@ -42,13 +42,19 @@ interface CommunityRepository {
 
     suspend fun bookmarkPost(post: PostRequestModel): Response<BookmarkPostResponse>
 
-    suspend fun pinPost(post: PostRequestModel): Response<BookmarkPostResponse>
+    suspend fun pinPost(post: PostRequestModel): Response<BlockResponseModel>
 
     suspend fun getPostDetails(post: String): Response<PostDetailResponseModel>
 
     suspend fun getPostComments(post: PostRequestModel): Response<CommentsResponseModel>
 
-    suspend fun deletePost(post: PostRequestModel): Response<CommentsResponseModel>
+    suspend fun deletePost(post: String): Response<CommentsResponseModel>
 
     suspend fun deletePostComment(post: PostRequestModel): Response<CommentsResponseModel>
+
+    suspend fun reportPost(post: ReportUserRequestModel): Response<CommentsResponseModel>
+
+    suspend fun blockUser(post: BlockUserRequestModel): Response<BlockResponseModel>
+
+    suspend fun followPost(post: FollowRequestModel): Response<FollowResponseModel>
 }

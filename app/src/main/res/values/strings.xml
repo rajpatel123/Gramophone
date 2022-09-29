@@ -308,6 +308,7 @@
     <string name="edit">Edit</string>
     <string name="followers">Followers</string>
     <string name="following">Following</string>
+    <string name="follow">Follow</string>
     <string name="selectyourrole">Select your role</string>
     <string name="selectrolecontent">This will help us understand you so that we can serve you better</string>
     <string name="farmer">Farmer</string>
@@ -402,9 +403,15 @@
     <string name="comments">Comments(%d)</string>
     <string name="comment">Comments %d</string>
     <string name="pin_post">Pin Post</string>
+    <string name="unpin_post">Unpin Post</string>
     <string name="delete">Delete</string>
     <string name="report">Report</string>
     <string name="block_user">Block User</string>
     <string name="no_likes">No one likes this post</string>
     <string name="no_post">No Post available</string>
+    <string name="select_report_reason">Please select reason</string>
+    <string name="unwanted">Unwanted commercial content or spam</string>
+    <string name="security">Pornography or sexually explicit material</string>
+    <string name="hate">Hate speech or graphic violence</string>
+    <string name="harash">Harassment or bullying</string>
 </resources>

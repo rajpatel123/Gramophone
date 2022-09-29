@@ -27,6 +27,5 @@ data class Data(
     val urlPreviewMeta: UrlPreviewMeta,
     val whatsAppShare: Int,
     val bookMarked: Boolean,
-    @SerializedName("linkUrl")
-    val link_url: String
+    val linkUrl: String
 )

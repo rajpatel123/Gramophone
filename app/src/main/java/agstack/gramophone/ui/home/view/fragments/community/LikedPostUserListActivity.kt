@@ -40,6 +40,7 @@ class LikedPostUserListActivity :
     ) {
 
         likedUsersAdapter.setImage=this
+        likedUsersAdapter.followClicked=onLanguageClicked
         rvUserList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvUserList.setHasFixedSize(true)
         rvUserList.adapter = likedUsersAdapter

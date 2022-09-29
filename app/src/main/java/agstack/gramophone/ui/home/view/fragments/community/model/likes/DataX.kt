@@ -4,5 +4,6 @@ data class DataX(
     val _id: String,
     val author: Author,
     val createdDate: Long,
-    val postId: String
+    val postId: String,
+    val following: Boolean
 )
