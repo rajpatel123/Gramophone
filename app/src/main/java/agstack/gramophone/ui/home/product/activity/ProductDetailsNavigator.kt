@@ -22,7 +22,7 @@ interface ProductDetailsNavigator: BaseNavigator {
      fun setRatingAndReviewsAdapter(ratingAndReviewsAdapter: RatingAndReviewsAdapter)
      fun openViewAllReviewRatingsActivity(productId: Int, productReviewsData: GpApiResponseData?)
     fun openProductDetailsActivity(productData: ProductData)
-    fun showGenuineCustomerRatingDialog(genuineCustomerRatingAlertFragment: GenuineCustomerRatingAlertFragment, onAddToCartClick: () -> Unit)
+    fun showGenuineCustomerRatingDialog(genuineCustomerRatingAlertFragment: GenuineCustomerRatingAlertFragment,addtocartEnabled:Boolean, onAddToCartClick: () -> Unit)
     fun showExpertAdviceDialog(expertAdviceBottomSheetFragment: ExpertAdviceBottomSheetFragment, onOkayClick: () -> Unit,onCancelClick: () -> Unit)
     fun dismissExpertBottomSheet()
     fun refreshSKUAdapter()

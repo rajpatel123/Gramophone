@@ -143,7 +143,6 @@ class ProductDetailsViewModel @Inject constructor(
                             if (keyArrayList.size > 1) {
 
                                 val hset: HashSet<String> = HashSet<String>(keyArrayList)
-                               // keyArrayList = keyArrayList.distinct() as ArrayList<String>
                                 keyArrayList = ArrayList<String>(hset)
                             }
 
@@ -468,7 +467,9 @@ class ProductDetailsViewModel @Inject constructor(
 
             // else if not genuine customer
 
-            getNavigator()?.showGenuineCustomerRatingDialog(GenuineCustomerRatingAlertFragment()) {
+
+
+            getNavigator()?.showGenuineCustomerRatingDialog(GenuineCustomerRatingAlertFragment.newInstance(addToCartEnabled.get()!!),addToCartEnabled.get()!!) {
                 //callback comes here when on add to cart is clicked
                 Log.d("Click", "Add to cart Clicked")
                 addToCartJob.cancelIfActive()
