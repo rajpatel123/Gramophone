@@ -10,7 +10,6 @@ import agstack.gramophone.ui.home.product.fragment.ContactForPriceBottomSheetDia
 import agstack.gramophone.ui.home.product.fragment.ExpertAdviceBottomSheetFragment
 import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductDetailsItem
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.utils.Constants
@@ -130,6 +129,8 @@ class ProductDetailsViewModel @Inject constructor(
 
                         productResponseData?.productDetails?.let {
                             //product Details could be null
+
+
                             mProductDetailsList =
                                 (productResponseData?.productDetails!!).toMutableList()
                             var detailTypeKeyValueList = HashMap<String, ArrayList<KeyPointsItem>>()
@@ -140,7 +141,10 @@ class ProductDetailsViewModel @Inject constructor(
                             }
 
                             if (keyArrayList.size > 1) {
-                                keyArrayList = keyArrayList.distinct() as ArrayList<String>
+
+                                val hset: HashSet<String> = HashSet<String>(keyArrayList)
+                               // keyArrayList = keyArrayList.distinct() as ArrayList<String>
+                                keyArrayList = ArrayList<String>(hset)
                             }
 
 
@@ -479,6 +483,7 @@ class ProductDetailsViewModel @Inject constructor(
                     if (addTocartResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
                         progressLoader.set(false)
                         getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+                        onAddToCartClicked()
                     } else {
                         progressLoader.set(false)
                         getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
