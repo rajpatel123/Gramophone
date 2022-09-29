@@ -47,6 +47,7 @@ class ProductDetailsViewModel @Inject constructor(
     private var updateProductFavoriteJob: Job? = null
     private var contactForPriceJob: Job? = null
     var progressLoader = ObservableField<Boolean>(false)
+
     //Values selected by User
     var qtySelected = ObservableField<Int>(1)
 
@@ -94,10 +95,10 @@ class ProductDetailsViewModel @Inject constructor(
         if (bundle?.getParcelable<ProductData>("product") != null) {
             Log.d(
                 "ProductName",
-                (bundle?.getParcelable<ProductData>("product") as ProductData).product_id.toString()
+                (bundle.getParcelable<ProductData>("product") as ProductData).product_id.toString()
             )
 
-            productId = (bundle?.getParcelable<ProductData>("product") as ProductData).product_id!!
+            productId = (bundle.getParcelable<ProductData>("product") as ProductData).product_id!!
 
             productDetailstoBeFetched.product_id = productId
 
@@ -128,21 +129,31 @@ class ProductDetailsViewModel @Inject constructor(
                         }
 
                         productResponseData?.productDetails?.let {
-                        //product Details could be null
-                            mProductDetailsList = (productResponseData?.productDetails!!).toMutableList()
+                            //product Details could be null
+                            mProductDetailsList =
+                                (productResponseData?.productDetails!!).toMutableList()
                             var detailTypeKeyValueList = HashMap<String, ArrayList<KeyPointsItem>>()
 
                             var keyArrayList = ArrayList<String>()
                             for (value in mProductDetailsList) {
                                 keyArrayList.add(value?.productDetailType!!)
                             }
-                            keyArrayList = keyArrayList.distinct() as ArrayList<String>
+
+                            if (keyArrayList.size > 1) {
+                                keyArrayList = keyArrayList.distinct() as ArrayList<String>
+                            }
+
 
                             for (keyValue in keyArrayList) {
                                 var keyValueArrayList = ArrayList<KeyPointsItem>()
                                 for (value in mProductDetailsList) {
                                     if (keyValue.equals(value?.productDetailType)) {
-                                        keyValueArrayList.add(KeyPointsItem(value?.productDetailKey, value?.productDetailValue))
+                                        keyValueArrayList.add(
+                                            KeyPointsItem(
+                                                value?.productDetailKey,
+                                                value?.productDetailValue
+                                            )
+                                        )
                                     }
                                 }
                                 detailTypeKeyValueList.put(keyValue, keyValueArrayList)
@@ -150,11 +161,10 @@ class ProductDetailsViewModel @Inject constructor(
                             }
 
 
-
-
-                        //set ProductDetails Adapter
-                        getNavigator()?.setProductDetailsAdapter(
-                            ProductDetailsAdapter(detailTypeKeyValueList))
+                            //set ProductDetails Adapter
+                            getNavigator()?.setProductDetailsAdapter(
+                                ProductDetailsAdapter(detailTypeKeyValueList)
+                            )
                         }
 
                         //set skuList
@@ -164,15 +174,19 @@ class ProductDetailsViewModel @Inject constructor(
                             getNavigator()?.setProductSKUAdapter(
                                 ProductSKUAdapter(
                                     mSKUList
-                                ) {}
+                                ) {
+
+                                }
                             ) {
                                 Log.d("productSKUItemSelected", it.productId.toString())
                                 selectedSkuListItem.set(it)
                                 productDetailstoBeFetched.product_id =
                                     selectedSkuListItem.get()?.productId!!.toInt()
 
-                                setPercentage_mrpVisibility(selectedSkuListItem.get()!!,
-                                    selectedOfferItem)
+                                setPercentage_mrpVisibility(
+                                    selectedSkuListItem.get()!!,
+                                    selectedOfferItem
+                                )
 
                             }
 
@@ -181,6 +195,9 @@ class ProductDetailsViewModel @Inject constructor(
                                 item?.selected = item?.productId!!.equals(productIdDefault)
                                 if (item?.selected == true) {
                                     selectedSkuListItem.set(item)
+
+                                    mSKUList
+
                                     productDetailstoBeFetched.product_id =
                                         selectedSkuListItem.get()?.productId!!.toInt()
                                     setPercentage_mrpVisibility(
@@ -383,8 +400,10 @@ class ProductDetailsViewModel @Inject constructor(
                                 //When RadioButton is clicked
                                 selectedOfferItem = it
 
-                                setPercentage_mrpVisibility(selectedSkuListItem.get()!!,
-                                    selectedOfferItem)
+                                setPercentage_mrpVisibility(
+                                    selectedSkuListItem.get()!!,
+                                    selectedOfferItem
+                                )
 
                             },
                             {
@@ -428,7 +447,7 @@ class ProductDetailsViewModel @Inject constructor(
 
         //If Genuine Customer
 
-        if (!productReviewsData.get()?.selfRating?.is_certified_buyer!!) {
+        if (productReviewsData.get()?.selfRating?.is_certified_buyer!!) {
             getNavigator()?.openActivityWithBottomToTopAnimation(
                 AddEditProductReviewActivity::class.java,
                 Bundle().apply {
@@ -553,7 +572,8 @@ class ProductDetailsViewModel @Inject constructor(
 
                 getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
                 getNavigator()?.showContactForPriceBottomSheetDialog(
-                    ContactForPriceBottomSheetDialog())
+                    ContactForPriceBottomSheetDialog()
+                )
             } else {
                 getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
             }

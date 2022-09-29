@@ -48,7 +48,7 @@
                 android:layout_height="@dimen/_110sdp"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/dummy_feature_product"
-                app:product_image="@{model.product_image}" />
+                app:product_image='@{model.product_image ?? ""}' />
 
             <LinearLayout
                 android:layout_width="match_parent"

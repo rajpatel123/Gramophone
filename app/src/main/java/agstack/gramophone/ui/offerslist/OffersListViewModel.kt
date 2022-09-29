@@ -81,8 +81,11 @@ class OffersListViewModel @Inject constructor(
                                 })
                         }
                     }
-                    if(promotionList?.size==0){
+                    if(allOfferslist?.size==0){
+                        getNavigator()?.ShowNoListView(true)
 
+                    }else{
+                        getNavigator()?.ShowNoListView(false)
                     }
 
                    // getNavigator()?.showToast(offersListResponse.body()?.gpApiMessage)
