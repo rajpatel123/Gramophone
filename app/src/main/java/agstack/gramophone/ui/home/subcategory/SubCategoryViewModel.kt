@@ -134,6 +134,11 @@ class SubCategoryViewModel @Inject constructor(
                             })*/
                             })
                         }
+                    } else {
+                        brandsList = ArrayList()
+                        cropsList = ArrayList()
+                        technicalDataList = ArrayList()
+                        getNavigator()?.disableSortAndFilter()
                     }
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
@@ -147,7 +152,10 @@ class SubCategoryViewModel @Inject constructor(
                     "1")
             } catch (ex: Exception) {
                 progress.value = false
-                // do nothing
+                brandsList = ArrayList()
+                cropsList = ArrayList()
+                technicalDataList = ArrayList()
+                getNavigator()?.disableSortAndFilter()
             }
         }
     }
