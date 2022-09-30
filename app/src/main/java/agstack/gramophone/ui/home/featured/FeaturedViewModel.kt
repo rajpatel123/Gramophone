@@ -40,8 +40,7 @@ class FeaturedViewModel @Inject constructor(
                         getNavigator()?.setProductListAdapter(ProductListAdapter(
                             response.body()?.gp_api_response_data?.data),
                             {
-                                //fetchProductDetail(it)
-                                getNavigator()?.showToast("In process")
+//                                fetchProductDetail(it)
                             }, {
                                 getNavigator()?.openProductDetailsActivity(ProductData(it))
                             })

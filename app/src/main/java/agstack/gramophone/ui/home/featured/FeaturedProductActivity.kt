@@ -36,6 +36,11 @@ class FeaturedProductActivity :
 
     private fun setupUi() {
         viewDataBinding.llSortFilter.visibility = View.GONE
+        viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
+        viewDataBinding.swipeRefresh.setOnRefreshListener {
+            featuredViewModel.getFeaturedProducts()
+            viewDataBinding.swipeRefresh.isRefreshing = false
+        }
         viewDataBinding.toolbar.setNavigationOnClickListener {
             finish()
         }

@@ -4,12 +4,9 @@ import agstack.gramophone.R
 import agstack.gramophone.databinding.BottomSheetAddToCartBinding
 import agstack.gramophone.ui.home.product.activity.ProductSKUAdapter
 import agstack.gramophone.ui.home.product.activity.ProductSKUOfferAdapter
-import agstack.gramophone.ui.home.shopbydetail.ShopByDetailActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
-import agstack.gramophone.ui.offer.OfferDetailActivity
-import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,18 +14,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ObservableField
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.android.synthetic.main.bottom_sheet_add_to_cart.*
+import java.lang.Exception
+import kotlin.math.roundToInt
 
 
-class AddToCartBottomSheetDialog(val selectedPromotion: ((PromotionListItem) -> Unit)?,
-                                 val onAddToCart: ((ProductData) -> Unit)?) :
+class AddToCartBottomSheetDialog(
+    private val selectedPromotion: ((PromotionListItem) -> Unit)?,
+    private val onAddToCart: ((ProductData) -> Unit)?,
+) :
     BottomSheetDialogFragment() {
+    var binding: BottomSheetAddToCartBinding? = null
     lateinit var mSKUList: ArrayList<ProductSkuListItem?>
     lateinit var mSkuOfferList: ArrayList<PromotionListItem?>
     lateinit var productData: ProductData
-    var binding: BottomSheetAddToCartBinding? = null
     var selectedSkuListItem = ObservableField<ProductSkuListItem>()
     val productDetailstoBeFetched = ProductData()
-    var addToCartEnabled = ObservableField<Boolean>(true)
     var selectedOfferItem = PromotionListItem()
     var quantity = 1
 
@@ -44,7 +45,10 @@ class AddToCartBottomSheetDialog(val selectedPromotion: ((PromotionListItem) -> 
     }
 
     private fun setupUi() {
-        selectedSkuListItem.set(mSKUList[0])
+        if (!mSKUList.isNullOrEmpty()) {
+            selectedSkuListItem.set(mSKUList[0])
+            mSKUList[0]?.selected = true
+        }
         setPercentage_mrpVisibility(selectedSkuListItem.get()!!, selectedOfferItem)
 
         binding?.rvProductSku?.adapter = ProductSKUAdapter(mSKUList) {
@@ -81,70 +85,92 @@ class AddToCartBottomSheetDialog(val selectedPromotion: ((PromotionListItem) -> 
         model: ProductSkuListItem,
         offerModel: PromotionListItem? = null,
     ) {
-        var isOffersLayoutVisible = true
-        var priceDiff: Float = 0.0f
-        var finalSalePrice: Double = 0.0
-        var finaldiscount = "0"
-        var isMRPVisibile = false
-        var isContactforPriceVisible = false
-        if (model.mrpPrice == null || model.salesPrice == null) {
-
+        var isOffersLayoutVisible: Boolean
+        var finalSalePrice = 0.0
+        var finalDiscount = "0"
+        var isMRPVisible = false
+        var isDiscountPercentVisible = false
+        var isContactForPriceVisible: Boolean
+        var modelMrpPrice = 0f
+        var modelSalesPrice = 0f
+        if (model.mrpPrice.isNullOrEmpty() && model.salesPrice.isNullOrEmpty()) {
+            modelMrpPrice = 0f
+            modelSalesPrice = 0f
             isOffersLayoutVisible = false
-            isContactforPriceVisible = true
-            addToCartEnabled.set(false)
+            isContactForPriceVisible = true
+            binding?.relativeAddToCart?.isEnabled = false
         } else {
-            isContactforPriceVisible = false
-            addToCartEnabled.set(true)
+            isOffersLayoutVisible = true
+            isContactForPriceVisible = false
+            binding?.relativeAddToCart?.isEnabled = true
+            var proceedForCalculation: Boolean
 
-            if (offerModel == null || offerModel?.amount_saved == 0.0) {
-                priceDiff = (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat())
-            } else if (offerModel != null && offerModel.amount_saved!! > 0.0) {
-                priceDiff =
-                    (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat()) - offerModel.amount_saved.toFloat()
-            }
-
-            val numarator = (priceDiff * 100)
-            val denominator = model.salesPrice!!.toFloat()
-            val percentage = numarator / denominator
-            val formatted_percentage = String.format("%.0f", percentage);
-            finaldiscount = (formatted_percentage + " % off")
-            isMRPVisibile = priceDiff > 0
-
-
-            offerModel?.let {
-                if (offerModel.amount_saved!! > 0) {
-                    finalSalePrice = model.salesPrice.toDouble() - offerModel?.amount_saved!!
+            if (model.salesPrice.isNullOrEmpty() && !model.mrpPrice.isNullOrEmpty()) {
+                    modelSalesPrice = model.mrpPrice.toFloat()
+                    modelMrpPrice = model.mrpPrice.toFloat()
+                proceedForCalculation = true
+            } else if (model.mrpPrice.isNullOrEmpty() && !model.salesPrice.isNullOrEmpty()){
+                modelSalesPrice = model.salesPrice.toFloat()
+                modelMrpPrice = model.salesPrice.toFloat()
+                proceedForCalculation = true
+            } else {
+                try {
+                    modelSalesPrice = model.salesPrice!!.toFloat()
+                    modelMrpPrice = model.mrpPrice!!.toFloat()
+                    proceedForCalculation = true
+                } catch (e: Exception) {
+                    proceedForCalculation = false
+                    isOffersLayoutVisible = false
+                    isContactForPriceVisible = true
+                    binding?.relativeAddToCart?.isEnabled = false
                 }
             }
-            if (offerModel == null || offerModel?.amount_saved == 0.0) {
-                finalSalePrice = model.salesPrice.toDouble()
-            }
-            // set offer detailsLayout visibility
-            isOffersLayoutVisible = !model.mrpPrice.equals(null)
 
+            if (proceedForCalculation) {
+                isMRPVisible = modelMrpPrice > modelSalesPrice
+                val discountPercent =
+                    ((modelMrpPrice - modelSalesPrice) / modelMrpPrice) * 100
+                finalDiscount = (String.format("%.0f", discountPercent) + " % off")
+                isDiscountPercentVisible =
+                    !(discountPercent.toString().contains("0.0") || discountPercent.toString()
+                        .contains(".00"))
+
+                offerModel?.let {
+                    if (offerModel.amount_saved!! > 0) {
+                        finalSalePrice = modelSalesPrice.toDouble() - offerModel.amount_saved
+                    }
+                }
+                if (offerModel == null || offerModel.amount_saved == 0.0) {
+                    finalSalePrice = modelSalesPrice.toDouble()
+                }
+            }
         }
-        binding?.tvProductMRP?.text = model.mrpPrice.toString()
+        binding?.tvProductMRP?.text = getString(R.string.rupee) + modelMrpPrice.toString()
+        binding?.tvDiscountPercent?.text = finalDiscount
         setPercentageOffMrpVisibility(
             finalSalePrice.toString(),
-            finaldiscount,
-            isMRPVisibile, isOffersLayoutVisible, isContactforPriceVisible
+            isDiscountPercentVisible,
+            isMRPVisible, isOffersLayoutVisible, isContactForPriceVisible
         )
     }
 
-    fun setPercentageOffMrpVisibility(
+    private fun setPercentageOffMrpVisibility(
         salesPrice: String,
-        discountPercentage: String,
+        isDiscountPercentVisible: Boolean,
         isMRPVisible: Boolean,
         isOffersLayoutVisible: Boolean,
         isContactForPriceVisible: Boolean,
     ) {
         binding?.tvProductSP?.text = getString(R.string.rupee) + salesPrice
-        binding?.tvPercentageOffOnSelectedSKU?.text = discountPercentage
         if (isMRPVisible)
             binding?.tvProductMRP?.visibility = View.VISIBLE
         else
             binding?.tvProductMRP?.visibility = View.GONE
 
+        if (isDiscountPercentVisible)
+            binding?.tvDiscountPercent?.visibility = View.VISIBLE
+        else
+            binding?.tvDiscountPercent?.visibility = View.GONE
 
         if (isContactForPriceVisible) {
             binding?.tvContactForPrice?.visibility = View.VISIBLE
@@ -166,6 +192,5 @@ class AddToCartBottomSheetDialog(val selectedPromotion: ((PromotionListItem) -> 
             binding?.v2Separator?.visibility = View.VISIBLE
             binding?.rlAvailableOffers?.visibility = View.VISIBLE
         }
-
     }
 }
