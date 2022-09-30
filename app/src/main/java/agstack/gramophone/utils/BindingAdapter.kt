@@ -178,7 +178,7 @@ class BindingAdapter {
         @BindingAdapter("formatDateValidTil")
         @JvmStatic
         fun formatDateValidTil(view: TextView, date: String) {
-            val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
+            val input = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
             val output = SimpleDateFormat("MMM dd,yyyy", Locale.US)
 
             var d: Date? = null

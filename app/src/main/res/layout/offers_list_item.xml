@@ -2,6 +2,7 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:card_view="http://schemas.android.com/tools">
 
     <data>
@@ -13,13 +14,18 @@
             type="agstack.gramophone.ui.offerslist.model.DataItem" />
     </data>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/viewcolor">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_100sdp"
         android:layout_marginLeft="@dimen/_13sdp"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_13sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:background="@drawable/ic_offer_cards">
 
         <LinearLayout
@@ -35,7 +41,7 @@
             <LinearLayout
                 android:id="@+id/ll_details"
                 android:layout_width="0dp"
-                android:layout_weight="3"
+                android:layout_weight="2.8"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_48sdp"
                 android:orientation="vertical"
@@ -43,11 +49,13 @@
 
                 <TextView
                     android:id="@+id/tv_title"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     style="@style/TextSize16Sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/manrope_bold"
-                    android:hint="50% Off on Pesticide"
+                    tools:text="50% Off on Pesticide"
                     android:text="@{model.name}" />
 
                 <TextView
@@ -56,8 +64,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/manrope_bold"
-                    android:hint="Valid till date"
-                    app:formatDateValidTil="@{model.createdAt}"
+                    android:visibility="@{model.endDate!=null?View.VISIBLE:View.GONE}"
+                    app:formatDateValidTil='@{model.endDate ?? ""}'
                     android:textColor="@color/gray_strike_through" />
 
                 <ImageView
@@ -104,5 +112,7 @@
 
         <!-- "-->
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 
 </layout>
