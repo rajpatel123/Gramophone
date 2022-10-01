@@ -284,7 +284,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/_2sdp"
                     android:layout_toEndOf="@+id/ivLike"
-                    android:text="@{String.format(@string/liked,model.likesCount)}" />
+                     />
             </RelativeLayout>
 
             <RelativeLayout
@@ -307,7 +307,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/_2sdp"
                     android:layout_toEndOf="@+id/ivComment"
-                    android:text="@{String.format(@string/comment,model.commentsCount)}"
+
                 />
             </RelativeLayout>
 

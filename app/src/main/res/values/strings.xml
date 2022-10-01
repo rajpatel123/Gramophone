@@ -399,8 +399,10 @@
     <string name="home_share_subject">Get best quality agriculture products from Gramophone App</string>
     <string name="about_referral_point_balance">About Referral Points balance</string>
     <string name="likes">Likes(%d)</string>
+    <string name="like">Likes</string>
     <string name="liked">Likes %d</string>
     <string name="comments">Comments(%d)</string>
+    <string name="comment_count">Comments</string>
     <string name="comment">Comments %d</string>
     <string name="pin_post">Pin Post</string>
     <string name="unpin_post">Unpin Post</string>

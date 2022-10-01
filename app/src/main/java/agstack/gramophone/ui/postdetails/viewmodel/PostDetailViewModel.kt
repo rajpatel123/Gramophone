@@ -29,8 +29,8 @@ class PostDetailViewModel @Inject constructor(
  var authorLocation = ObservableField<String>()
  var postDate = ObservableField<String>()
  var postDesc = ObservableField<String>()
- var likeCount = ObservableField<Int>()
- var commentCount = ObservableField<Int>()
+ var likeCount = ObservableField<String>()
+ var commentCount = ObservableField<String>()
  var imageAvailable = ObservableField<Boolean>()
 
  fun getPostDetails(postId:String) {
@@ -46,8 +46,8 @@ class PostDetailViewModel @Inject constructor(
      if (data?.description != null)
       postDesc.set(data?.description.toString())
 
-     likeCount.set(data?.likesCount)
-     commentCount.set(data?.commentsCount)
+     likeCount.set(data?.likesCount.toString() +" "+getNavigator()?.getMessage(R.string.like))
+     commentCount.set(data?.commentsCount.toString()+" "+getNavigator()?.getMessage(R.string.comment_count))
      if (data?.liked == true) {
       getNavigator()?.setLikeImage(R.drawable.ic_liked)
      } else {

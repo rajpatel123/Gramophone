@@ -10,6 +10,7 @@ import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostReque
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.*
 import agstack.gramophone.ui.postdetails.view.PostDetailsActivity
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.Constants.POST_BOOKMARK
 import agstack.gramophone.utils.Constants.POST_ID
 import agstack.gramophone.utils.Utility
 import android.app.AlertDialog
@@ -376,7 +377,11 @@ class CommunityViewModel @Inject constructor(
                         }else{
                             post?.bookMarked = false
                         }
-                        communityPostAdapter.notifyItemChanged(postData.position!!)
+                        if (sorting.get().equals("bookmark")){
+                            getPost(sorting.get().toString())
+                        }else{
+                            communityPostAdapter.notifyItemChanged(postData.position!!)
+                        }
 
 
                     }

@@ -224,7 +224,7 @@
                                 android:layout_marginStart="@dimen/_2sdp"
                                 android:layout_toEndOf="@+id/ivLike"
                                 android:onClick="@{()->viewModel.openLikedUserList()}"
-                                android:text="@{String.format(@string/liked,viewModel.likeCount)}" />
+                                android:text="@{viewModel.likeCount}" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -247,7 +247,7 @@
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="@dimen/_2sdp"
                                 android:layout_toEndOf="@+id/ivComment"
-                                android:text="@{String.format(@string/comment,viewModel.commentCount)}" />
+                                android:text="@{viewModel.commentCount}" />
                         </RelativeLayout>
 
                         <RelativeLayout

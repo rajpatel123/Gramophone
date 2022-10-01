@@ -103,7 +103,10 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
         }
 
 
+        holder.itemPostBinding.tvLikes.text=data.likesCount.toString()+" "+context.getString(R.string.like)
+        holder.itemPostBinding.tvComment.text=data.commentsCount.toString()+" "+context.getString(R.string.comment_count)
         if (data?.tags != null && data?.tags.size > 0) {
+            holder.itemPostBinding.llTVTag.removeAllViews()
             data.tags.forEach {
                 val view = inflater.inflate(R.layout.item_tags, null)
                 view.tvTag.setText(it.tag)
