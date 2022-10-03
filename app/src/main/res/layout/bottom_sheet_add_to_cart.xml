@@ -9,13 +9,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16sdp">
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp">
 
         <LinearLayout
             android:id="@+id/ll_price_discount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_centerVertical="true"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -39,8 +41,6 @@
                 android:text="@string/_1_290"
                 android:textColor="@color/oldmrpcolor"
                 android:textSize="@dimen/_12ssp" />
-            <!-- android:visibility="@{Double.valueOf(viewModel.selectedSkuListItem.mrpPrice)>Double.valueOf(viewModel.selectedSkuListItem.salesPrice)?View.VISIBLE:View.INVISIBLE}"
-            isMRPVisible="@{viewModel.selectedSkuListItem}"-->
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvDiscountPercent"
@@ -53,44 +53,67 @@
                 android:textColor="@color/green"
                 android:textSize="@dimen/_14ssp" />
 
-            <!-- percentageOffSKUItem="@{viewModel.selectedSkuListItem}"-->
-
-
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_qty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_alignParentEnd="true"
             android:background="@drawable/rounded_corner_4_solid_stroke_gray"
             android:foregroundGravity="center"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/tvMinus"
-                android:layout_width="@dimen/_32sdp"
-                android:layout_height="@dimen/_32sdp"
-                android:background="@drawable/ic_minus_frame" />
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner_4_solid_stroke_gray_front_corner">
+
+                <ImageView
+                    android:id="@+id/ivSubtract"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:contentDescription="@string/image"
+                    android:focusable="true"
+                    android:src="@drawable/ic_minus" />
+
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/tvQTY"
-                android:layout_width="@dimen/_32sdp"
-                android:layout_height="@dimen/_32sdp"
-                android:fontFamily="@font/manrope_medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/manrope_bold"
                 android:gravity="center"
-                android:text="@string/_01"
-                android:textColor="@color/blakish"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="normal" />
+                android:maxLength="3"
+                android:text="@string/_01_quantity"
+                android:textColor="@color/gray"
+                android:textSize="14sp" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/tvPlus"
-                android:layout_width="@dimen/_32sdp"
-                android:layout_height="@dimen/_32sdp"
-                android:background="@drawable/ic_plus_frame" />
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner_4_solid_stroke_gray_end_corner">
+
+                <ImageView
+                    android:id="@+id/ivAdd"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:contentDescription="@string/image"
+                    android:focusable="true"
+                    android:src="@drawable/ic_plus" />
+
+            </FrameLayout>
 
         </LinearLayout>
 
@@ -99,12 +122,11 @@
             style="@style/TextSize16Sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
             android:background="@drawable/deselected_product_background"
             android:paddingLeft="@dimen/_16sdp"
-            android:paddingTop="@dimen/_8sdp"
+            android:paddingTop="@dimen/_6sdp"
             android:paddingRight="@dimen/_16sdp"
-            android:paddingBottom="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_6sdp"
             android:text="@string/contactforprice"
             android:textColor="@color/order_delivered_text"
             android:visibility="gone" />
@@ -116,7 +138,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_minus16sdp"
         android:fontFamily="@font/manrope_medium"
         android:text="@string/inclusiveoftaxes"
         android:textSize="@dimen/_9ssp">
@@ -126,10 +147,11 @@
     <View
         android:id="@+id/v1_separator"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_2sdp"
+        android:layout_height="@dimen/_1sdp"
         android:layout_marginLeft="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_18sdp"
+        android:layout_marginTop="@dimen/_16sdp"
         android:layout_marginRight="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
         android:background="#F2F4F7" />
 
     <TextView
@@ -164,7 +186,8 @@
         android:id="@+id/rl_available_offers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16sdp">
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_16sdp">
 
         <ImageView
             android:id="@+id/iv_availableoffers"
@@ -172,7 +195,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginEnd="@dimen/_14sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             app:srcCompat="@drawable/ic_available_offers" />
 
         <TextView

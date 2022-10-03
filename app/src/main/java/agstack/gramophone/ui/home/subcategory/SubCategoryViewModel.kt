@@ -3,14 +3,12 @@ package agstack.gramophone.ui.home.subcategory
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
-import agstack.gramophone.ui.cart.view.CartActivity
+import agstack.gramophone.data.repository.promotions.PromotionsRepository
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.dialog.filter.MainFilterData
 import agstack.gramophone.ui.dialog.sortby.SortByData
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
-import agstack.gramophone.ui.home.subcategory.model.Brands
-import agstack.gramophone.ui.home.subcategory.model.Crops
-import agstack.gramophone.ui.home.subcategory.model.TechnicalData
+import agstack.gramophone.ui.home.subcategory.model.*
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
@@ -18,15 +16,17 @@ import agstack.gramophone.utils.SharedPreferencesKeys
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNull
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.io.IOException
 import javax.inject.Inject
 
 
 @HiltViewModel
 class SubCategoryViewModel @Inject constructor(
     private val productRepository: ProductRepository,
+    private val promotionsRepository: PromotionsRepository,
 ) : BaseViewModel<SubCategoryNavigator>() {
 
     var productData = ObservableField<GpApiResponseDataProduct?>()
@@ -127,7 +127,7 @@ class SubCategoryViewModel @Inject constructor(
                         ) {
                             showSubCategoryView.value = true
                             getNavigator()?.setSubCategoryAdapter(ShopByCategoryAdapter(
-                                subCategoryList) {id, name ->
+                                subCategoryList) { id, name ->
                                 /*getNavigator()?.openCheckoutStatusActivity(Bundle().apply {
                                 putString(Constants.ORDER_ID,
                                     response.body()?.gp_api_response_data?.order_ref_id.toString())
@@ -211,20 +211,20 @@ class SubCategoryViewModel @Inject constructor(
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
-                    val productAPIResponse = productRepository
+                    val productDetailResponse = productRepository
                         .getProductData(product)
                     //stop loader
                     progress.value = false
-                    if (productAPIResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
-                        productData.set(productAPIResponse.body()?.gpApiResponseData!!)
+                    if (productDetailResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
+                        productData.set(productDetailResponse.body()?.gpApiResponseData!!)
                         productData.let {
                             //set skuList
                             mSKUList =
                                 productData.get()?.productSkuList as ArrayList<ProductSkuListItem?>
+                            loadOffersData(productId, productData.get()?.productBaseName!!)
                         }
-                        loadOffersData(product)
                     } else {
-                        getNavigator()?.showToast(productAPIResponse.body()?.gpApiMessage)
+                        getNavigator()?.showToast(productDetailResponse.body()?.gpApiMessage)
                     }
                 }
             } catch (e: Exception) {
@@ -233,30 +233,31 @@ class SubCategoryViewModel @Inject constructor(
         }
     }
 
-    private fun loadOffersData(productDetailstoBeFetched: ProductData, quantity: Int? = 0) {
+    private fun loadOffersData(productId: Int, productBaseName: String) {
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
-                    if (quantity!! > 0) {
-                        productDetailstoBeFetched.quantity = quantity
-                    }
-                    val offersOnProductResponse =
-                        productRepository.getOffersOnProductData(productDetailstoBeFetched)
+                    val productData = ProductData()
+                    productData.product_id = productId
+                    productData.product_base_name = productBaseName
+                    productData.quantity = 1
+
+                    var offerList = ArrayList<Offer>()
+
+                    val offersResponse =
+                        productRepository.getApplicableOffersOnProduct(ApplicableOfferRequest("BASF | XELORA"))
                     progress.value = false
-                    if (offersOnProductResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
-                        //setOffer List
-                        offersOnProductResponse.body()?.gpApiResponseData?.offersProductList.let {
-                            val prodOfferList =
-                                ArrayList(offersOnProductResponse.body()?.gpApiResponseData?.offersProductList!!)
-                            prodOfferList.let {
-                                mSkuOfferList = ArrayList(prodOfferList)
-                                getNavigator()?.openAddToCartDialog(mSKUList,
-                                    mSkuOfferList,
-                                    productDetailstoBeFetched)
-                            }
-                        }
+                    if (offersResponse.isSuccessful && offersResponse.body()?.gp_api_response_data.isNotNull()
+                        && offersResponse.body()?.gp_api_response_data?.offers.isNotNullOrEmpty()
+                    ) {
+                        offerList =
+                            offersResponse.body()?.gp_api_response_data?.offers as ArrayList<Offer>
                     }
+
+                    getNavigator()?.openAddToCartDialog(mSKUList,
+                        offerList,
+                        productData)
                 }
             } catch (e: Exception) {
                 progress.value = false
@@ -264,7 +265,44 @@ class SubCategoryViewModel @Inject constructor(
         }
     }
 
-    fun onAddToCartClicked(producttoBeAdded: ProductData) {
+    fun applyOfferOnProduct(offerForProduct: OfferForProduct) {
+        val products = ArrayList<OfferForProduct>()
+        products.add(offerForProduct)
+        val checkOfferRequest = CheckOfferRequest(
+            "krishi app",
+            "customer",
+            SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!,
+            "app",
+            products,
+            "app"
+        )
+
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+
+                    val checkOfferResponse =
+                        promotionsRepository.checkOfferOnProduct(checkOfferRequest)
+                    val errorMsg: String
+                    val isShowErrorMsg: Boolean
+                    val gpiApiOfferResponse: GpApiOfferResponse?
+                    if (checkOfferResponse.body()?.gp_api_status.equals(Constants.GP_API_STATUS)) {
+                        isShowErrorMsg = false
+                        errorMsg = ""
+                        gpiApiOfferResponse = checkOfferResponse.body()?.gp_api_response_data!!
+                    } else {
+                        isShowErrorMsg = true
+                        errorMsg = checkOfferResponse.body()?.gp_api_message!!
+                        gpiApiOfferResponse = null
+                    }
+                    getNavigator()?.updateAddToCartDialog(isShowErrorMsg, errorMsg, gpiApiOfferResponse!!)
+                }
+            } catch (e: Exception) {
+            }
+        }
+    }
+
+    fun onAddToCartClicked(productToBeAdded: ProductData) {
 
         viewModelScope.launch {
             try {
@@ -272,7 +310,7 @@ class SubCategoryViewModel @Inject constructor(
                     progress.value = true
 
                     val addTocartResponse =
-                        productRepository.addToCart(producttoBeAdded)
+                        productRepository.addToCart(productToBeAdded)
                     progress.value = false
                     if (addTocartResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
 
@@ -286,7 +324,5 @@ class SubCategoryViewModel @Inject constructor(
                 progress.value = false
             }
         }
-
-
     }
 }

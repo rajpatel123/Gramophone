@@ -12,6 +12,8 @@ import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressRespon
 import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
+import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferRequest
+import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
@@ -247,4 +249,9 @@ interface GramAppService {
     suspend fun getFeaturedProduct(
         @Body pageLimitRequest: PageLimitRequest,
     ): Response<AllProductsResponse>
+
+    @POST("api/v5/product/offer-applicable-on-products")
+    suspend fun getApplicableOffersOnProduct(
+        @Body applicableOfferRequest: ApplicableOfferRequest,
+    ): Response<ApplicableOfferResponse>
 }

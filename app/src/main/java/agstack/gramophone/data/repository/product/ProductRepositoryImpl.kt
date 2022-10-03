@@ -6,6 +6,8 @@ import agstack.gramophone.di.GramAppService
 import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
+import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferRequest
+import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.order.model.PageLimitRequest
@@ -218,6 +220,13 @@ class ProductRepositoryImpl @Inject constructor(
         Dispatchers.IO
     ) {
         val response = gramoAppService.getFeaturedProduct(pageLimitRequest)
+        response
+    }
+
+    override suspend fun getApplicableOffersOnProduct(applicableOfferRequest: ApplicableOfferRequest): Response<ApplicableOfferResponse> = withContext(
+        Dispatchers.IO
+    ) {
+        val response = gramoAppService.getApplicableOffersOnProduct(applicableOfferRequest)
         response
     }
 }

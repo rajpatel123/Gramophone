@@ -62,11 +62,11 @@
             android:fontFamily="@font/manrope_regular"
             android:gravity="center_vertical"
             android:lineSpacingExtra="-2sp"
-            app:orderDate="@{model.order_date}"
-            app:quantity="@{model.quantity}"
-            app:items="@{@string/items}"
             android:textColor="@color/gray_strike_through"
             android:textSize="13sp"
+            app:items="@{@string/items}"
+            app:orderDate="@{model.order_date}"
+            app:quantity="@{model.quantity}"
             tools:text="05-Jul-2022 / 3 Items" />
 
         <TextView
