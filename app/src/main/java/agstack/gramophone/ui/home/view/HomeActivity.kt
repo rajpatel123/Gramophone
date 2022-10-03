@@ -138,7 +138,7 @@ class HomeActivity :
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_community -> {
-                    updateMenuItemVisibility(false)
+                    updateMenuItemVisibility(true)
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(communityFragment).commit()
                     activeFragment = communityFragment
@@ -162,6 +162,7 @@ class HomeActivity :
             false
         }
     }
+
 
 
     private fun setUpNavigationDrawer() {
@@ -249,5 +250,10 @@ class HomeActivity :
 
     override fun shareApp(intent: Intent) {
         startActivity(Intent.createChooser(intent, getMessage(R.string.share_app_link)));
+    }
+
+    fun setToolbarTitle(title:String){
+        viewDataBinding.toolbar.myToolbar.title = title
+
     }
 }

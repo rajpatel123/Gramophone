@@ -14,10 +14,14 @@ import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.SharedPreferencesKeys.UUIdKey
 import android.content.Context
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View.*
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_tags.view.*
 import java.util.*
@@ -92,15 +96,29 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
             setImage.onImageSet(data.author.photoUrl,holder.itemPostBinding.ivProfileImage)
         }
 
+        val paramsImageContainer: FrameLayout.LayoutParams = holder.itemPostBinding.postImage.getLayoutParams() as FrameLayout.LayoutParams
         if (data?.images?.size!! >0) {
             setImage.onImageSet(data?.images[0].url, holder.itemPostBinding.postImage)
             holder.itemPostBinding.imageContainer.visibility = VISIBLE
-            holder.itemPostBinding.postImage.minimumHeight = 800
+            paramsImageContainer.height = 800
+            holder.itemPostBinding.postImage.setLayoutParams(paramsImageContainer)
+           // holder.itemPostBinding.postImage.minimumHeight = 600
         } else {
             holder.itemPostBinding.imageContainer.visibility = INVISIBLE
-            holder.itemPostBinding.postImage.minimumHeight = 10
+            paramsImageContainer.height = 0
+            holder.itemPostBinding.postImage.setLayoutParams(paramsImageContainer)
 
         }
+
+        val params: LinearLayout.LayoutParams = holder.itemPostBinding.tvDesc.getLayoutParams() as LinearLayout.LayoutParams
+        if (!TextUtils.isEmpty(data?.description)) {
+            params.height = WRAP_CONTENT
+            holder.itemPostBinding.tvDesc.setLayoutParams(params)
+        } else {
+            params.height = 0
+            holder.itemPostBinding.tvDesc.setLayoutParams(params)
+        }
+
 
 
         holder.itemPostBinding.tvLikes.text=data.likesCount.toString()+" "+context.getString(R.string.like)

@@ -109,7 +109,7 @@
             android:layout_toEndOf="@+id/ivProfileImage"
             android:fontFamily="@font/manrope_medium"
             android:text="@{model.createdDate}"
-            android:textColor="@color/grey"
+            android:textColor="@color/gray"
             android:textSize="@dimen/_10ssp"
             tools:text="Datefhjd" />
 
@@ -134,7 +134,7 @@
                android:layout_height="wrap_content"
                android:fontFamily="@font/manrope_bold"
                android:text="@{model.following?@string/following:@string/follow}"
-               android:textColor="@{model.following?@color/grey:@color/red}"
+               android:textColor="@{model.following?@color/gray:@color/red}"
                android:textSize="@dimen/_10ssp"
                android:layout_marginStart="@dimen/_5sdp"
                tools:text="Datefhjd" />
@@ -208,7 +208,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvDate"
                 android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_12sdp"
                 android:fontFamily="@font/manrope_bold"
                 android:text="@{model.description}"
@@ -221,7 +221,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvDate"
                 android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_12sdp"
                 android:visibility="gone"
                 app:cardCornerRadius="@dimen/_10sdp">
@@ -284,7 +284,9 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/_2sdp"
                     android:layout_toEndOf="@+id/ivLike"
-                     />
+                    android:textColor="@color/gray"
+
+                    />
             </RelativeLayout>
 
             <RelativeLayout
@@ -306,9 +308,12 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/_2sdp"
+                    android:textColor="@color/gray"
+
+
                     android:layout_toEndOf="@+id/ivComment"
 
-                />
+                    />
             </RelativeLayout>
 
             <RelativeLayout
@@ -320,7 +325,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
                     android:layout_toStartOf="@+id/ivBookmark"
                     android:background="@drawable/rounded_corner_stroke"
                     android:paddingStart="@dimen/_16sdp"
@@ -458,7 +463,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 app:srcCompat="@drawable/ic_comment"
-                app:tint="@color/grey" />
+                app:tint="@color/gray" />
 
             <TextView
                 android:id="@+id/tvCommentBottom"
@@ -468,7 +473,7 @@
                 android:layout_marginStart="@dimen/_2sdp"
                 android:layout_toEndOf="@+id/ivCommentBottom"
                 android:text="Write a comment..."
-                android:textColor="@color/grey" />
+                android:textColor="@color/gray" />
 
         </RelativeLayout>
 

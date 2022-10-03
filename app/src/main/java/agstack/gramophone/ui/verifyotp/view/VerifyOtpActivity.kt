@@ -9,21 +9,26 @@ import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
 import agstack.gramophone.ui.language.model.DeviceDetails
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.login.view.LoginActivity
+import agstack.gramophone.ui.login.view.SmsBroadcastReceiver
 import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
 import agstack.gramophone.ui.verifyotp.viewmodel.VerifyOtpViewModel
 import agstack.gramophone.utils.Constants
+import android.app.Activity
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import com.google.android.gms.auth.api.phone.SmsRetriever
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_verify_otp.*
-import java.util.concurrent.TimeUnit
+import java.util.regex.Pattern
 
 
 @AndroidEntryPoint
@@ -33,8 +38,10 @@ class VerifyOtpActivity :
     private val verifyOtpViewModel: VerifyOtpViewModel by viewModels()
     val initiateAppDataRequestModel: InitiateAppDataRequestModel
         get() {
-            val android_id = Settings.Secure.getString(this.contentResolver,
-                Settings.Secure.ANDROID_ID)
+            val android_id = Settings.Secure.getString(
+                this.contentResolver,
+                Settings.Secure.ANDROID_ID
+            )
 
             var deviceDetails = DeviceDetails(
                 BuildConfig.VERSION_CODE.toString(),
@@ -43,14 +50,71 @@ class VerifyOtpActivity :
                 Build.MODEL,
                 Build.VERSION.SDK_INT.toString()
             )
-            var registerDeviceRequestModel = InitiateAppDataRequestModel(deviceDetails,getLanguage(),)
+            var registerDeviceRequestModel = InitiateAppDataRequestModel(
+                deviceDetails,
+                getLanguage()
+            )
             return registerDeviceRequestModel
 
         }
+
+    var oTPReaderLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                val message = data?.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
+                getOtpFromMessage(message!!)
+            }
+
+        }
+    private var intentFilter: IntentFilter? = null
+    private val REQ_USER_CONSENT = 200
+    var smsBroadcastReceiver: SmsBroadcastReceiver? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         verifyOtpViewModel.timeOver.set(true)
+        startSmartUserConsent()
         updateUI()
+    }
+
+
+    private fun startSmartUserConsent() {
+        val client = SmsRetriever.getClient(this)
+        client.startSmsUserConsent(null)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        registerBroadcastReceiver()
+    }
+
+
+    private fun registerBroadcastReceiver() {
+        smsBroadcastReceiver = SmsBroadcastReceiver()
+        smsBroadcastReceiver!!.smsBroadcastReceiverListener =
+            object : SmsBroadcastReceiver.SmsBroadcastReceiverListener {
+                override fun onSuccess(intent: Intent?) {
+                    oTPReaderLauncher.launch(intent)
+                }
+
+                override fun onFailure() {}
+            }
+        val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
+        registerReceiver(smsBroadcastReceiver, intentFilter)
+    }
+
+    private fun getOtpFromMessage(message: String) {
+        val otpPattern = Pattern.compile("(|^)\\d{6}")
+        val matcher = otpPattern.matcher(message)
+        if (matcher.find()) {
+            verifyOtpViewModel.otp.set(matcher.group(0))
+            verifyOtpViewModel.submitOtp()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        unregisterReceiver(smsBroadcastReceiver)
     }
 
     private fun updateUI() {
@@ -122,7 +186,6 @@ class VerifyOtpActivity :
             getMessage(R.string.bottomsheet_tag)
         )
     }
-
 
 
     override fun onLanguageUpdate() {

@@ -9,11 +9,13 @@ import agstack.gramophone.databinding.FragmentCommunityBinding
 import agstack.gramophone.databinding.ReportPostDailogueBinding
 import agstack.gramophone.ui.dialog.CommentBottomSheetDialog
 import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
+import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
 import agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.ShareSheetPresenter
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -33,7 +35,6 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_community.*
-import kotlinx.android.synthetic.main.report_post_dailogue.*
 
 
 @AndroidEntryPoint
@@ -46,13 +47,23 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     private val communityViewModel: CommunityViewModel by viewModels()
     private var recyclerView: RecyclerView? = null
 
+    private lateinit var mActivity: HomeActivity
+
+    override fun onAttach(activity: Activity) {
+        super.onAttach(activity = activity)
+        mActivity = activity as HomeActivity
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         shareSheetPresenter = this?.let { ShareSheetPresenter(requireActivity()) }
 
-
     }
 
+    override fun onStart() {
+        super.onStart()
+        mActivity.setToolbarTitle(getMessage(R.string.community))
+    }
 
     override fun getLayoutID(): Int = R.layout.fragment_community
 
