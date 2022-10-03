@@ -10,7 +10,6 @@ import agstack.gramophone.ui.home.product.fragment.ContactForPriceBottomSheetDia
 import agstack.gramophone.ui.home.product.fragment.ExpertAdviceBottomSheetFragment
 import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductDetailsItem
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.utils.Constants
@@ -95,10 +94,10 @@ class ProductDetailsViewModel @Inject constructor(
         if (bundle?.getParcelable<ProductData>("product") != null) {
             Log.d(
                 "ProductName",
-                (bundle?.getParcelable<ProductData>("product") as ProductData).product_id.toString()
+                (bundle.getParcelable<ProductData>("product") as ProductData).product_id.toString()
             )
 
-            productId = (bundle?.getParcelable<ProductData>("product") as ProductData).product_id!!
+            productId = (bundle.getParcelable<ProductData>("product") as ProductData).product_id!!
 
             productDetailstoBeFetched.product_id = productId
 
@@ -129,21 +128,35 @@ class ProductDetailsViewModel @Inject constructor(
                         }
 
                         productResponseData?.productDetails?.let {
-                        //product Details could be null
-                            mProductDetailsList = (productResponseData?.productDetails!!).toMutableList()
+                            //product Details could be null
+
+
+                            mProductDetailsList =
+                                (productResponseData?.productDetails!!).toMutableList()
                             var detailTypeKeyValueList = HashMap<String, ArrayList<KeyPointsItem>>()
 
                             var keyArrayList = ArrayList<String>()
                             for (value in mProductDetailsList) {
                                 keyArrayList.add(value?.productDetailType!!)
                             }
-                            keyArrayList = keyArrayList.distinct() as ArrayList<String>
+
+                            if (keyArrayList.size > 1) {
+
+                                val hset: HashSet<String> = HashSet<String>(keyArrayList)
+                                keyArrayList = ArrayList<String>(hset)
+                            }
+
 
                             for (keyValue in keyArrayList) {
                                 var keyValueArrayList = ArrayList<KeyPointsItem>()
                                 for (value in mProductDetailsList) {
                                     if (keyValue.equals(value?.productDetailType)) {
-                                        keyValueArrayList.add(KeyPointsItem(value?.productDetailKey, value?.productDetailValue))
+                                        keyValueArrayList.add(
+                                            KeyPointsItem(
+                                                value?.productDetailKey,
+                                                value?.productDetailValue
+                                            )
+                                        )
                                     }
                                 }
                                 detailTypeKeyValueList.put(keyValue, keyValueArrayList)
@@ -151,11 +164,10 @@ class ProductDetailsViewModel @Inject constructor(
                             }
 
 
-
-
-                        //set ProductDetails Adapter
-                        getNavigator()?.setProductDetailsAdapter(
-                            ProductDetailsAdapter(detailTypeKeyValueList))
+                            //set ProductDetails Adapter
+                            getNavigator()?.setProductDetailsAdapter(
+                                ProductDetailsAdapter(detailTypeKeyValueList)
+                            )
                         }
 
                         //set skuList
@@ -165,15 +177,19 @@ class ProductDetailsViewModel @Inject constructor(
                             getNavigator()?.setProductSKUAdapter(
                                 ProductSKUAdapter(
                                     mSKUList
-                                ) {}
+                                ) {
+
+                                }
                             ) {
                                 Log.d("productSKUItemSelected", it.productId.toString())
                                 selectedSkuListItem.set(it)
                                 productDetailstoBeFetched.product_id =
                                     selectedSkuListItem.get()?.productId!!.toInt()
 
-                                setPercentage_mrpVisibility(selectedSkuListItem.get()!!,
-                                    selectedOfferItem)
+                                setPercentage_mrpVisibility(
+                                    selectedSkuListItem.get()!!,
+                                    selectedOfferItem
+                                )
 
                             }
 
@@ -182,6 +198,9 @@ class ProductDetailsViewModel @Inject constructor(
                                 item?.selected = item?.productId!!.equals(productIdDefault)
                                 if (item?.selected == true) {
                                     selectedSkuListItem.set(item)
+
+                                    mSKUList
+
                                     productDetailstoBeFetched.product_id =
                                         selectedSkuListItem.get()?.productId!!.toInt()
                                     setPercentage_mrpVisibility(
@@ -384,8 +403,10 @@ class ProductDetailsViewModel @Inject constructor(
                                 //When RadioButton is clicked
                                 selectedOfferItem = it
 
-                                setPercentage_mrpVisibility(selectedSkuListItem.get()!!,
-                                    selectedOfferItem)
+                                setPercentage_mrpVisibility(
+                                    selectedSkuListItem.get()!!,
+                                    selectedOfferItem
+                                )
 
                             },
                             {
@@ -429,7 +450,7 @@ class ProductDetailsViewModel @Inject constructor(
 
         //If Genuine Customer
 
-        if (!productReviewsData.get()?.selfRating?.is_certified_buyer!!) {
+        if (productReviewsData.get()?.selfRating?.is_certified_buyer!!) {
             getNavigator()?.openActivityWithBottomToTopAnimation(
                 AddEditProductReviewActivity::class.java,
                 Bundle().apply {
@@ -446,7 +467,9 @@ class ProductDetailsViewModel @Inject constructor(
 
             // else if not genuine customer
 
-            getNavigator()?.showGenuineCustomerRatingDialog(GenuineCustomerRatingAlertFragment()) {
+
+
+            getNavigator()?.showGenuineCustomerRatingDialog(GenuineCustomerRatingAlertFragment.newInstance(addToCartEnabled.get()!!),addToCartEnabled.get()!!) {
                 //callback comes here when on add to cart is clicked
                 Log.d("Click", "Add to cart Clicked")
                 addToCartJob.cancelIfActive()
@@ -461,6 +484,7 @@ class ProductDetailsViewModel @Inject constructor(
                     if (addTocartResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
                         progressLoader.set(false)
                         getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+                        onAddToCartClicked()
                     } else {
                         progressLoader.set(false)
                         getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
@@ -554,7 +578,8 @@ class ProductDetailsViewModel @Inject constructor(
 
                 getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
                 getNavigator()?.showContactForPriceBottomSheetDialog(
-                    ContactForPriceBottomSheetDialog())
+                    ContactForPriceBottomSheetDialog()
+                )
             } else {
                 getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
             }

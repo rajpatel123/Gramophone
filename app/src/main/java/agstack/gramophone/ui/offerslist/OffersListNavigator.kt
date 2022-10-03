@@ -10,4 +10,5 @@ interface OffersListNavigator :BaseNavigator {
      fun getLanguageCode(): String?
     fun showLoaderFooter()
     fun onListUpdated()
+    fun ShowNoListView(showNoItemView: Boolean)
 }

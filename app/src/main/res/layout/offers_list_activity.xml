@@ -34,9 +34,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <include
-                android:id="@+id/myToolbar"
-                layout="@layout/layout_toolbar" />
+                <include
+                    android:id="@+id/myToolbar"
+                    layout="@layout/layout_toolbar" />
 
                 <com.miguelcatalan.materialsearchview.MaterialSearchView
                     android:id="@+id/search_view"
@@ -53,30 +53,29 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_offers_list"
-            android:layout_marginBottom="?actionBarSize"
-            app:layout_constraintTop_toBottomOf="@id/ll_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.allOfferslist.size()>0?View.VISIBLE:View.GONE}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            android:layout_marginBottom="?actionBarSize"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+            app:layout_constraintTop_toBottomOf="@id/ll_top" />
 
 
         <LinearLayout
+            android:id="@+id/ll_noOffers"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_top"
             android:layout_centerInParent="true"
             android:background="@color/gray_empty_bg"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingStart="40dp"
             android:paddingEnd="40dp"
-            android:visibility="@{viewModel.allOfferslist.size()>0?View.GONE:View.VISIBLE}"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/ll_top"
 
 
             >
-
-
 
 
             <TextView
@@ -88,7 +87,6 @@
                 android:text="@string/no_offers_found"
                 android:textColor="@color/brand_color"
                 android:textSize="18sp" />
-
 
 
         </LinearLayout>

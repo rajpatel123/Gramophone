@@ -13,6 +13,7 @@ import agstack.gramophone.utils.EndlessRecyclerScrollListener
 import agstack.gramophone.utils.LocaleManagerClass
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,7 +61,6 @@ class OffersListActivity :
     }
 
 
-
     override fun setOffersListAdapter(
         offersListAdapter: OffersListAdapter,
         onOfferSelected: (DataItem) -> Unit
@@ -95,6 +95,16 @@ class OffersListActivity :
     }
 
     override fun getLanguageCode(): String? = LocaleManagerClass.getLangCodeAsPerAppLocale(this)
+
+    override fun ShowNoListView(showNoItemView: Boolean) {
+        if (showNoItemView) {
+            viewDataBinding.llNoOffers.visibility = View.VISIBLE
+            viewDataBinding.rvOffersList.visibility = View.GONE
+        } else {
+            viewDataBinding.llNoOffers.visibility = View.GONE
+            viewDataBinding.rvOffersList.visibility = View.VISIBLE
+        }
+    }
 
 
 }
