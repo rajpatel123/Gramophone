@@ -1,7 +1,8 @@
 package agstack.gramophone.data.repository.promotions
 
 import agstack.gramophone.di.PromotionsApiService
-import agstack.gramophone.ui.offerslist.model.GpApiResponseData
+import agstack.gramophone.ui.home.subcategory.model.CheckOfferRequest
+import agstack.gramophone.ui.home.subcategory.model.CheckOfferResponse
 import agstack.gramophone.ui.offerslist.model.OfferListRequestModel
 import agstack.gramophone.ui.offerslist.model.PromotionsAllOfferResponse
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +22,12 @@ class PromotionsRepositoryImpl @Inject constructor(
         Dispatchers.IO) {
         val offersData = promotionsApiService.getAllOffersList(offerListRequestModel)
       offersData
+    }
+
+    override suspend fun checkOfferOnProduct(checkOfferRequest: CheckOfferRequest): Response<CheckOfferResponse> = withContext(
+        Dispatchers.IO) {
+        val offersData = promotionsApiService.checkOfferOnProduct(checkOfferRequest)
+        offersData
     }
 
 }

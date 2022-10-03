@@ -397,7 +397,7 @@ class ProductDetailsViewModel @Inject constructor(
                             }
                         }
                         getNavigator()?.setProductSKUOfferAdapter(
-                            ProductSKUOfferAdapter(mSkuOfferList, {}, {}),
+                            ProductSKUOfferAdapter(mSkuOfferList, 0f, {}, {}),
                             {
                                 //When RadioButton is clicked
                                 selectedOfferItem = it

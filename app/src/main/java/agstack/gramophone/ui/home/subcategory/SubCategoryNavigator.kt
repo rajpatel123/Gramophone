@@ -2,10 +2,12 @@ package agstack.gramophone.ui.home.subcategory
 
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
+import agstack.gramophone.ui.home.subcategory.model.CheckOfferResponse
+import agstack.gramophone.ui.home.subcategory.model.GpApiOfferResponse
+import agstack.gramophone.ui.home.subcategory.model.Offer
 import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
-import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import android.os.Bundle
 
 interface SubCategoryNavigator : BaseNavigator {
@@ -18,16 +20,24 @@ interface SubCategoryNavigator : BaseNavigator {
     )
 
     fun setProductListAdapter(
-        productListAdapter: ProductListAdapter, onAddToCartClick: ((productId: Int) -> Unit), onProductDetailClick: ((productId: Int) -> Unit),
+        productListAdapter: ProductListAdapter,
+        onAddToCartClick: ((productId: Int) -> Unit),
+        onProductDetailClick: ((productId: Int) -> Unit),
     )
 
     fun openAddToCartDialog(
         mSKUList: ArrayList<ProductSkuListItem?>,
-        mSkuOfferList: ArrayList<PromotionListItem?>,
+        mSkuOfferList: ArrayList<Offer>,
         productData: ProductData,
     )
 
     fun openProductDetailsActivity(productData: ProductData)
+
+    fun updateAddToCartDialog(
+        isShowError: Boolean,
+        errorMsg: String,
+        appliedOfferResponse: GpApiOfferResponse,
+    )
 
     fun disableSortAndFilter()
 
