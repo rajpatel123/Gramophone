@@ -6,9 +6,13 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityFeaturedProductsBinding
 import agstack.gramophone.ui.cart.view.CartActivity
+import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.subcategory.ProductListAdapter
+import agstack.gramophone.ui.home.subcategory.model.GpApiOfferResponse
+import agstack.gramophone.ui.home.subcategory.model.Offer
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.Menu
@@ -16,6 +20,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import com.amnix.xtension.extensions.isNotNull
 import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
@@ -85,6 +90,37 @@ class FeaturedProductActivity :
         val bundle = Bundle()
         bundle.putParcelable(Constants.PRODUCT, productData)
         openActivity(ProductDetailsActivity::class.java, bundle)
+    }
+
+    var bottomSheet: AddToCartBottomSheetDialog? = null
+    override fun openAddToCartDialog(
+        mSKUList: ArrayList<ProductSkuListItem?>,
+        mSkuOfferList: ArrayList<Offer>,
+        productData: ProductData,
+    ) {
+        bottomSheet = AddToCartBottomSheetDialog({
+            //Offer detail activity from here
+        }, {
+            featuredViewModel.applyOfferOnProduct(it)
+        }, {
+            featuredViewModel.onAddToCartClicked(it)
+        })
+        bottomSheet?.mSKUList = mSKUList
+        bottomSheet?.productData = productData
+        bottomSheet?.mSkuOfferList = mSkuOfferList
+        bottomSheet?.show(
+            supportFragmentManager,
+            Constants.BOTTOM_SHEET
+        )
+    }
+
+    override fun updateAddToCartDialog(
+        isShowError: Boolean,
+        errorMsg: String,
+        appliedOfferResponse: GpApiOfferResponse,
+    ) {
+        if (bottomSheet.isNotNull())
+            bottomSheet?.updateDialog(isShowError, errorMsg, appliedOfferResponse)
     }
 
     override fun getLayoutID(): Int {

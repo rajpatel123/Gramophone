@@ -31,7 +31,6 @@ class SubCategoryViewModel @Inject constructor(
 
     var productData = ObservableField<GpApiResponseDataProduct?>()
     var mSKUList = ArrayList<ProductSkuListItem?>()
-    var mSkuOfferList = ArrayList<PromotionListItem?>()
     var showSubCategoryView = MutableLiveData<Boolean>()
     var categoryName = MutableLiveData<String>()
     var mainFilterList: ArrayList<MainFilterData>? = null
@@ -289,7 +288,7 @@ class SubCategoryViewModel @Inject constructor(
                     if (checkOfferResponse.body()?.gp_api_status.equals(Constants.GP_API_STATUS)) {
                         isShowErrorMsg = false
                         errorMsg = ""
-                        gpiApiOfferResponse = checkOfferResponse.body()?.gp_api_response_data!!
+                        gpiApiOfferResponse = checkOfferResponse.body()?.gp_api_response_data!! as GpApiOfferResponse
                     } else {
                         isShowErrorMsg = true
                         errorMsg = checkOfferResponse.body()?.gp_api_message!!
