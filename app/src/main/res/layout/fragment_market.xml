@@ -90,7 +90,7 @@
                             android:layout_marginStart="@dimen/_16sdp"
                             android:layout_marginTop="@dimen/_30sdp"
                             android:fontFamily="@font/manrope_bold"
-                            android:text="@string/feature_product"
+                            android:text="@string/featured_products"
                             android:textColor="@color/blakish"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal" />
@@ -349,13 +349,11 @@
 
                         <ImageView
                             android:id="@+id/ivExclusiveBanner"
-                            state_image="@{viewModel.exclusiveBanner}"
                             android:layout_width="match_parent"
                             android:layout_height="360dp"
                             android:layout_marginTop="@dimen/_16sdp"
                             android:contentDescription="@string/image"
-                            android:scaleType="fitXY"
-                            android:visibility="@{(viewModel.exclusiveBannerSize%2==0) ? View.VISIBLE : View.GONE}" />
+                            android:scaleType="fitXY" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rvExclusive"
@@ -414,7 +412,6 @@
 
                         <ImageView
                             android:id="@+id/ivReferralBanner"
-                            state_image="@{viewModel.referralBanner}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_8sdp"
@@ -428,7 +425,7 @@
                             android:fontFamily="@font/manrope_bold"
                             android:paddingStart="@dimen/_16sdp"
                             android:paddingEnd="@dimen/_16sdp"
-                            android:text="@string/products_in_your_cart_3"
+                            tools:text="Products in your cart (3)"
                             android:textColor="@color/blakish"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal" />

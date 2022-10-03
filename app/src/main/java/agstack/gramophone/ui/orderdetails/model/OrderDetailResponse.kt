@@ -1,7 +1,5 @@
 package agstack.gramophone.ui.orderdetails.model
 
-import agstack.gramophone.ui.cart.model.Redemption
-import agstack.gramophone.ui.cart.model.Tnc
 
 data class OrderDetailResponse(
     val gp_api_error_data: GpApiErrorData,
@@ -48,8 +46,7 @@ data class OfferApplied(
     val discount: String,
     val offer_name: String,
     val pay_total: String,
-    val redemption: Redemption,
-    val tnc: Tnc,
+
     val valid_on_sku: String,
     val valid_till: String
 )

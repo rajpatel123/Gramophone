@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.view.drawToBitmap
+import com.google.zxing.qrcode.encoder.QRCode
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,18 +21,32 @@ class ReferAndEarnActivity :
 
     private val referandEarnViewModel: ReferandEarnViewModel by viewModels()
     private var shareSheetPresenter: ShareSheetPresenter? = null
+    var qrBitmap: Bitmap? = null
+    var QRCodeURI: Uri? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpToolBar(true, resources.getString(R.string.refer_n_earn), R.drawable.ic_arrow_left)
+        mViewModel?.getGramCash()
         generateQRCode()
+
     }
 
     private fun generateQRCode() {
-        var parameterizedUri: Uri? = null
-        parameterizedUri = ShareSheetPresenter.GENERIC_URI
-        shareSheetPresenter = this?.let { ShareSheetPresenter(this,it) }
+        shareSheetPresenter = this?.let { ShareSheetPresenter(this, it) }
         shareSheetPresenter!!.shareDynamicLink()
+    }
+
+    override fun getQRCodeURI(): String? {
+        return QRCodeURI.toString()
+    }
+
+
+    override fun setQRCodeImage(bitmap: Bitmap?) {
+        qrBitmap = bitmap
+        QRCodeURI  = Utility.bitmapToUri(this, qrBitmap)
+        viewDataBinding?.shareyourreferal.referralCodeImageView?.setImageBitmap(bitmap)
+
     }
 
     override fun getLayoutID(): Int {
@@ -47,30 +62,35 @@ class ReferAndEarnActivity :
     }
 
     override fun processGenericUri(genericUri: Uri) {
-        //temporarily share message = "Welcome to Gramophone"
-        mViewModel?.generateQrCode(genericUri.toString())
 
+        // mViewModel?.generateQrCode(genericUri.toString())
 
 
     }
 
-    override fun share(currentShareOption:String){
-        val shareMessage = resources.getString(R.string.welcome_msg)
-      //  val extraText = shareMessage + "\n" + genericUri.toString()
-        val extraText = shareMessage
-        shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(extraText, getString(R.string.home_share_subject), currentShareOption)
-    }
+    override fun share(currentShareOption: String, shareText: String?) {
+        var shareMessage = resources.getString(R.string.welcome_msg)
+        shareText?.let {
+            shareMessage = shareText
+        }
 
 
-    override fun setQRCodeImage(bitmap: Bitmap?) {
-        viewDataBinding?.shareyourreferal.referralCodeImageView?.setImageBitmap(bitmap)
-       // Utility.saveImage(this, bitmap)
+        var QRCodeURI: Uri? = Utility.bitmapToUri(this, qrBitmap)
+        shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(
+            shareMessage,
+            getString(R.string.home_share_subject),
+            QRCodeURI,
+            currentShareOption
+        )
+
+       // var datainBundle
+
+
     }
+
 
     override fun convertedReferralLayoutsBitmap() {
-        val view = viewDataBinding.shareyourreferal.referralCodeImageView
-        val bitmaptoShare = view.drawToBitmap()
-        Utility.saveImage(this, bitmaptoShare)
+        Utility.saveImage(this, mViewModel?.QR_BitmapfromURL)
 
 
     }

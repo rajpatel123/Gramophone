@@ -6,9 +6,16 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.OffersListActivityBinding
 import agstack.gramophone.ui.offerslist.adapter.OffersListAdapter
+import agstack.gramophone.ui.offerslist.model.DataItem
+import agstack.gramophone.ui.referandearn.transaction.GramCashTransactionListAdapter
+import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.EndlessRecyclerScrollListener
+import agstack.gramophone.utils.LocaleManagerClass
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -18,6 +25,7 @@ class OffersListActivity :
     OffersListNavigator {
 
     private val offersListViewModel: OffersListViewModel by viewModels()
+    private lateinit var listener: EndlessRecyclerScrollListener
 
     override fun getLayoutID(): Int {
         return R.layout.offers_list_activity
@@ -52,18 +60,51 @@ class OffersListActivity :
 
     }
 
-    override fun setOffersListAdapter(offersListAdapter: OffersListAdapter) {
+
+    override fun setOffersListAdapter(
+        offersListAdapter: OffersListAdapter,
+        onOfferSelected: (DataItem) -> Unit
+    ) {
         viewDataBinding.rvOffersList.adapter = offersListAdapter
+        offersListAdapter.selectedOffer = onOfferSelected
+        setScrollListenerOnAllOffersList()
     }
 
-    /*  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-          when (item.itemId) {
-              R.id.item_search -> {
+    private fun setScrollListenerOnAllOffersList() {
+        listener = object : EndlessRecyclerScrollListener(
+            viewDataBinding.rvOffersList.layoutManager as LinearLayoutManager,
+            { mViewModel?.loadMore(it) }) {
+            override fun isLastPage(): Boolean {
+                return mViewModel?.isLastPage ?: false
+            }
 
-              }
+        }
+        viewDataBinding.rvOffersList.addOnScrollListener(listener)
 
-          }
-          return true
-      }*/
+    }
+
+    override fun onListUpdated() {
+        listener.onListFetched()
+        (viewDataBinding.rvOffersList.adapter as OffersListAdapter).hideLoadingItem()
+        viewDataBinding.rvOffersList.adapter?.notifyDataSetChanged()
+    }
+
+    override fun showLoaderFooter() {
+        (viewDataBinding.rvOffersList.adapter as OffersListAdapter).showLoadingItem()
+        viewDataBinding.rvOffersList.adapter?.notifyDataSetChanged()
+    }
+
+    override fun getLanguageCode(): String? = LocaleManagerClass.getLangCodeAsPerAppLocale(this)
+
+    override fun ShowNoListView(showNoItemView: Boolean) {
+        if (showNoItemView) {
+            viewDataBinding.llNoOffers.visibility = View.VISIBLE
+            viewDataBinding.rvOffersList.visibility = View.GONE
+        } else {
+            viewDataBinding.llNoOffers.visibility = View.GONE
+            viewDataBinding.rvOffersList.visibility = View.VISIBLE
+        }
+    }
+
 
 }

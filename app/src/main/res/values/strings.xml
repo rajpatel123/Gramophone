@@ -25,7 +25,6 @@
     <string name="i_m_a_farmer">I\'m a Farmer</string>
     <string name="image">image</string>
     <string name="shop_by_category">Shop by Category</string>
-    <string name="feature_product">Feature Product</string>
     <string name="view_all">View All</string>
     <string name="mandi_rates">Mandi Rates</string>
     <string name="shop_by_crops">Shop by Crops</string>
@@ -33,7 +32,7 @@
     <string name="gramophone_exclusive">Gramophone Exclusive</string>
     <string name="recently_viewed">Recently Viewed</string>
     <string name="pickup_where_you_left">Pickup where you left</string>
-    <string name="products_in_your_cart_3">Products in your cart (3)</string>
+    <string name="products_in_your_cart">Products in your cart</string>
     <string name="new_articles">New Articles</string>
     <string name="popular_products_in_indore">Popular Products in Indore</string>
     <string name="home">Home</string>
@@ -164,8 +163,10 @@
     <string name="save_extra_rupees">Save extra ₹</string>
     <string name="using">&#160;using&#160;</string>
     <string name="gram_cash">&#160;Gram Cash</string>
+    <string name="gram_cash_without_extra_space">Gram Cash</string>
     <string name="items_in_your_cart">Items in your cart (</string>
     <string name="close_parenthesis">)</string>
+    <string name="open_parenthesis">(</string>
     <string name="details">Details</string>
     <string name="hash_sign">#</string>
     <string name="slash_sign">&#160;/&#160;</string>
@@ -273,7 +274,8 @@
     <string name="please_enter_6_digit_otp">Please enter 6 digit OTP</string>
     <string name="enter_10_digit_mob">Enter 10 digit mobile number</string>
 
-    <string name="weather">Weather - Indore</string>
+    <string name="weather">Weather</string>
+    <string name="weather_city">Weather - Indore</string>
     <string name="powered_by">Powered by</string>
     <string name="accuweather">AccuWeather</string>
     <string name="forecast_for_the_next_days">Forecast for the next few days</string>
@@ -327,7 +329,7 @@
     <string name="save_continue"><![CDATA[Save & Continue]]></string>
     <string name="enter_firm_name">Enter Firm Name</string>
     <string name="add_firm">Add Firm</string>
-    <string name="check_referral_points">Check your referral points</string>
+    <string name="check_referral_points">Check your referral and points</string>
     <string name="share_earn">Share Gramophone App and earn upto \u20B9 150!</string>
     <string name="share_earn_message2">Share gramophone app with your farmer friends, they download the app then you can earn up to Rs. 150!</string>
     <string name="share_your_referral_qr_code">SHARE YOUR REFERRAL CODE AND QR CODE</string>
@@ -375,7 +377,10 @@
     <string name="starts_from_99">Starts from ₹ 99</string>
     <string name="shop_by_sub_category">Shop by Sub Category</string>
     <string name="sort_by">Sort by</string>
-    <string name="filter">Filter</string>
+    <string name="filter">Filters</string>
+
+    <string name="allsymbol">\u002A</string>
+    <string name="save_rupees">Save ₹</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>
@@ -397,7 +402,30 @@
     <string name="aaa">All Tran_1111</string>
     <string name="download_to_gallery">Downloaded to Gallery</string>
     <string name="home_share_subject">Get best quality agriculture products from Gramophone App</string>
-    <string name="about_referral_point_balance">About Referral Points balance</string>
+    <string name="about_referral_point_balance">About Referral Points Balance</string>
+    <string name="watch_app_demo">Watch App Demo</string>
+    <string name="dummy_mobile_no">+91 0000000000</string>
+    <string name="username">Username</string>
+    <string name="for_you">FOR YOU</string>
+    <string name="articles">Articles</string>
+    <string name="mandi_bhav">Mandi Bhav</string>
+    <string name="logout">Logout</string>
+    <string name="my_crop_farms">My Crops &amp; Farms</string>
+    <string name="manage_all_your_crops_and_farms">Manage all your crops and farms</string>
+    <string name="new_text">New</string>
+    <string name="_900">₹ 900</string>
+    <string name="skip_tour">SKIP TOUR</string>
+    <string name="app_tour_descrition_menu">Direct access to most used App functionalities and features</string>
+    <string name="app_tour_descrition_youtube">Watch the video to learn how to user Gramophone App</string>
+    <string name="app_tour_descrition_community">Connect &amp; engage with farmers and Agri experts via social media posts</string>
+    <string name="app_tour_descrition_profile">Sell/Buy your crop easily by connecting with the right buyers/sellers</string>
+    <string name="app_tour_descrition_trade">Sell/Buy your crop easily by connecting with the right buyers/sellers</string>
+    <string name="app_tour_title_menu">Menu</string>
+    <string name="app_tour_title_youtube">App demo</string>
+    <string name="app_tour_title_trade">Vyapar</string>
+    <string name="app_tour_done">DONE</string>
+    <string name="update">Update</string>
+    <string name="enter_6_digit_code">Enter 6 digit code we have sent on</string>
     <string name="likes">Likes(%d)</string>
     <string name="like">Likes</string>
     <string name="liked">Likes %d</string>
@@ -416,4 +444,31 @@
     <string name="security">Pornography or sexually explicit material</string>
     <string name="hate">Hate speech or graphic violence</string>
     <string name="harash">Harassment or bullying</string>
+    <string name="please_select_atleast_one_role">Please select atleast one role</string>
+    <string name="verify">Verify</string>
+    <string name="enter_different_mobile_no">Mobile number entered is same as existing number</string>
+    <string name="gram_cash_expire_on">Expire on</string>
+    <string name="was_earned_on">"Was earned on "</string>
+    <string name="no_referral_transactions">No Referral Transactions Done</string>
+    <string name="reset">Reset</string>
+    <string name="percent_off">% off</string>
+    <string name="all_products">All Products</string>
+    <string name="totalbalance">Total Balance</string>
+    <string name="about_gram_cash_balance">About Gram Cash Balance</string>
+    <string name="redeem">Redeem</string>
+    <string name="gramcashexpiringin30days">Gram Cash Expiring in 30 days -</string>
+    <string name="view_all_transactions">View All Transactions</string>
+    <string name="gram_cash_rules">Gram Cash Rules</string>
+    <string name="about_gram_cash_bal">About Gram Cash Balance</string>
+    <string name="total_gramcash_balance">Total Gram Cash Points:</string>
+    <string name="total_balance_gc_description">How many Gram Cash Points have you earned till date that are active</string>
+    <string name="available_gram_cash_points">Available Gram Cash points:</string>
+    <string name="available_balance_gc_description">How many Gram Cash Points are available with you at present which you can use to purchase agricultural products from Market Section.</string>
+    <string name="gramcash_points">Locked Gram Cash Points:</string>
+    <string name="pending_balance_gc_description">How many Gram Cash Points do you have currently in a locked state? when the farmers referred by you will successfully install the Gramophone app and make the first purchase, then you will get these locked Referral Gram Cash Points.</string>
+    <string name="points_expiring">Points Expiring</string>
+    <string name="redeem_now">Redeem Now</string>
+    <string name="expiring_in30days">Expiring in 30 days</string>
+    <string name="transaction_by_expiry_date">Transactions by Expiry Date</string>
+    <string name="no_offers_found">No Offers Available</string>
 </resources>

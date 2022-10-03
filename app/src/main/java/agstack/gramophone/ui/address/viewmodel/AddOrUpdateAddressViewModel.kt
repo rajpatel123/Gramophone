@@ -11,6 +11,9 @@ import agstack.gramophone.ui.address.view.AddOrUpdateAddressActivity
 import agstack.gramophone.ui.address.view.StateListActivity
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.utils.*
+import agstack.gramophone.ui.profile.model.UserAddress
+import agstack.gramophone.utils.ApiResponse
+import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Constants.ALL_STRING
 import agstack.gramophone.utils.Constants.DISTRICT
 import agstack.gramophone.utils.Constants.PINCODE
@@ -24,6 +27,7 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNullOrBlank
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -47,6 +51,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
     var pinCode = ObservableField<String>()
     var address = ObservableField<String>()
     var loading = ObservableField<Boolean>()
+    var fetchedAddressfromAPI = ObservableField<GpApiResponseData>()
 
 
     fun changeState() {
@@ -414,6 +419,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
     private fun updateAddressByLatLong(address: agstack.gramophone.ui.address.model.GpApiResponseData?) {
         val dataList = ArrayList<AddressDataModel>()
+        fetchedAddressfromAPI.set(address)
 
         when (address?.type) {
             ALL_STRING -> {
@@ -528,10 +534,30 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
 
     fun checkPermissionAndUpdateUi() {
-            if (getNavigator()?.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) == true){
-                getNavigator()?.updateUi()
-            }else{
-                getNavigator()?.requestForLocation()
-            }
+           if (stateNameStr.get().isNotNullOrBlank()){
+               getNavigator()?.updateUi()
+           }else{
+               if (getNavigator()?.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) == true){
+                   getNavigator()?.updateUi()
+               }else{
+                   getNavigator()?.requestForLocation()
+               }
+           }
+
         }
+
+    fun setAddressdata(userAddress: UserAddress) {
+        Log.d("fetched address",userAddress?.district!!)
+        if (userAddress?.state != null) stateNameStr.set(userAddress.state)
+        if (userAddress?.district != null) districtName.set(userAddress.district)
+        if (userAddress?.tehsil != null) tehsilName.set(userAddress.tehsil)
+        if (userAddress?.village != null) villageName.set(userAddress.village)
+        if (userAddress?.pincode != null) pinCode.set(userAddress.pincode)
+
+
+
+
+    }
+
+
 }

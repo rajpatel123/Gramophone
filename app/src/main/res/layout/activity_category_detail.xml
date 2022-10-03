@@ -49,9 +49,10 @@
                         android:fontFamily="@font/manrope_bold"
                         android:gravity="center_vertical"
                         android:lineSpacingExtra="-3sp"
-                        android:text="@string/crop_nutritions"
+                        android:text='@{viewModel.categoryName ?? ""}'
                         android:textColor="@color/blakish"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        tools:text="@string/crop_nutritions" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="40dp"
@@ -70,10 +71,9 @@
                     app:contentInsetStart="0dp"
                     app:contentInsetStartWithNavigation="0dp"
                     app:layout_collapseMode="pin"
-                    app:menu="@menu/menu_home"
+                    app:layout_collapseParallaxMultiplier="0.7"
                     app:navigationIcon="@drawable/ic_arrow_left"
                     app:titleTextAppearance="@style/Toolbar.TitleText"
-                    app:layout_collapseParallaxMultiplier="0.7"
                     app:titleTextColor="@color/blakish">
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -128,6 +128,11 @@
 
                     </FrameLayout>
 
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray_stroke" />
+
                     <FrameLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -160,19 +165,30 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
-                    <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
-                        android:id="@+id/dots_indicator"
+                    <RelativeLayout
+                        android:id="@+id/rlDotsIndicator"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_16sdp"
                         android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="@dimen/_16sdp"
-                        app:dotsColor="@color/blue"
-                        app:dotsSize="12dp"
-                        app:dotsSpacing="5dp"
-                        app:dotsStrokeColor="@color/gray_stroke"
-                        app:progressMode="false"
-                        app:stiffness="300" />
+                        android:background="@drawable/rounded_corner_24_solid_white">
+
+                        <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+                            android:id="@+id/dots_indicator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            app:dotsColor="@color/blue"
+                            app:dotsSize="10dp"
+                            app:dotsSpacing="2dp"
+                            app:dotsStrokeColor="@color/gray_stroke"
+                            app:progressMode="false"
+                            app:stiffness="300" />
+
+                    </RelativeLayout>
+
+
                 </RelativeLayout>
 
                 <TextView
@@ -185,7 +201,8 @@
                     android:text="@string/shop_by_sub_category"
                     android:textColor="@color/blakish"
                     android:textSize="@dimen/_14ssp"
-                    android:textStyle="normal" />
+                    android:textStyle="normal"
+                    android:visibility="@{viewModel.showSubCategoryView == true ? View.VISIBLE : View.GONE}" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvSubCategory"
@@ -194,6 +211,7 @@
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_16sdp"
                     android:orientation="horizontal"
+                    android:visibility="@{viewModel.showSubCategoryView == true ? View.VISIBLE : View.GONE}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_category" />
 
@@ -202,6 +220,18 @@
                     android:layout_height="8dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/gray_stroke" />
+
+                <TextView
+                    android:id="@+id/tvProductList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@string/all_products"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="normal" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvProducts"

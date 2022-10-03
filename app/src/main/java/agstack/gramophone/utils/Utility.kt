@@ -17,6 +17,7 @@ import android.widget.Toast
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import java.io.*
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import java.io.File
@@ -144,6 +145,20 @@ object Utility {
             e.printStackTrace()
         }
         return dateString
+    }
+
+    fun bitmapToUri(inContext: Context,bitmap: Bitmap?): Uri? {
+        val bytes = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path: String = MediaStore.Images.Media.insertImage(
+            inContext.getContentResolver(),
+            bitmap,
+            "Title",
+            null
+        )
+        return Uri.parse(path)
+
+
     }
 
     fun getErrorMessage(data: ResponseBody?): String? {

@@ -20,6 +20,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import kotlin.math.roundToInt
 
 
 @BindingAdapter("product_image")
@@ -207,6 +208,76 @@ fun setQuantity(textView: TextView, quantity: String) {
         textView.text = quantity
     }
 }
+
+@BindingAdapter("reformatPrice")
+fun setReformattedPrice(textView: TextView, price: String) {
+    if (price.isNullOrEmpty()) {
+        textView.text = "₹"
+    } else {
+        val ac = price.replace(".00", "")
+        textView.text = "₹ " + ac
+    }
+}
+
+@BindingAdapter("reformatFloatPriceToInt")
+fun setReformattedIntPrice(textView: TextView, price: Float) {
+    try {
+        if (price.isNaN() || price.isInfinite()) {
+            textView.text = "₹ 0"
+        } else {
+            if (price.toString().contains(".0") || price.toString().contains(".00"))
+                textView.text = "₹ " + price.roundToInt().toString()
+            else textView.text = "₹ " + price.toString()
+        }
+    } catch (e: Exception) {
+        textView.text = "₹ 0"
+    }
+}
+
+@BindingAdapter(value = ["mrp_price", "sales_price"], requireAll = true)
+fun calculateDiscount(
+    textView: TextView, mrp_price: Float, sales_price: Float,
+) {
+    try {
+        if (mrp_price.isNaN() || sales_price.isNaN()) {
+            textView.visibility = View.INVISIBLE
+        } else {
+            val discount = ((mrp_price - sales_price) / mrp_price) * 100
+            if (discount.isNaN() || discount.isInfinite()) {
+                textView.visibility = View.INVISIBLE
+            } else {
+                if (discount.roundToInt() == 0) {
+                    textView.visibility = View.GONE
+                } else {
+                    textView.visibility = View.VISIBLE
+                    textView.text = discount.roundToInt()
+                        .toString() + textView.context.getString(R.string.percent_off)
+                }
+            }
+        }
+    } catch (e: Exception) {
+        textView.visibility = View.INVISIBLE
+    }
+}
+
+@BindingAdapter(value = ["mrp_price_equal", "to_sales_price"], requireAll = true)
+fun mrpPriceVisibility(
+    textView: TextView, mrp_price: Float, sales_price: Float,
+) {
+    try {
+        if (mrp_price == sales_price) {
+            textView.visibility = View.GONE
+        } else {
+            textView.visibility = View.VISIBLE
+            if (sales_price.toString().contains(".0") || sales_price.toString().contains(".00"))
+                textView.text = "₹ " + sales_price.roundToInt().toString()
+            else textView.text = "₹ " + sales_price.toString()
+        }
+    } catch (e: Exception) {
+        textView.visibility = View.GONE
+    }
+}
+
 
 
 

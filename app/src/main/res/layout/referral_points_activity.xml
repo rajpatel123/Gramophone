@@ -27,7 +27,6 @@
             android:id="@+id/nestedscroll"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/layout_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/myToolbar">
@@ -73,7 +72,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="@font/manrope_bold"
-                            android:text="---"
+                            android:text="@{viewModel.gramCashResponseDataFromBundle.gramcashTotal.toString()}"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_24ssp" />
 
@@ -100,25 +99,26 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentStart="true"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <TextView
                             style="@style/TextSize14Sp"
-                            android:layout_marginTop="@dimen/_15sdp"
-                            android:layout_marginLeft="@dimen/_15sdp"
-                            android:text="@string/available"
-                            android:textColor="@color/green"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:text="@string/available"
+                            android:textColor="@color/green" />
 
                         <TextView
-                            style="@style/TextSize18Sp"
+                            style="@style/TextSize22Sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginLeft="@dimen/_15sdp"
-                            android:text="200"
+                            android:text="@{viewModel.gramCashResponseDataFromBundle.gramcashAvailable.toString()}"
                             android:textColor="@color/blakish"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            tools:text="200" />
 
                     </LinearLayout>
 
@@ -126,26 +126,27 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
 
                         <TextView
                             style="@style/TextSize14Sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginEnd="@dimen/_15sdp"
                             android:text="@string/pending"
-                            android:textColor="@color/orange"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:textColor="@color/orange" />
 
                         <TextView
-                            style="@style/TextSize18Sp"
+                            style="@style/TextSize22Sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="end"
                             android:layout_marginEnd="@dimen/_15sdp"
-                            android:text="200"
+                            android:text="@{viewModel.gramCashResponseDataFromBundle.gramcashPending.toString()}"
                             android:textColor="@color/blakish"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            tools:text="200" />
                     </LinearLayout>
 
                 </RelativeLayout>
@@ -181,7 +182,7 @@
                 <View
                     android:id="@+id/v1"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_4sdp"
+                    android:layout_height="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_14sdp"
                     android:background="@color/gray_stroke"
                     app:layout_constraintTop_toBottomOf="@id/tv_knowmore" />
@@ -218,36 +219,55 @@
                     <ImageView
                         android:id="@+id/iv_arrow"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-
-                        app:srcCompat="@drawable/ic_arrow_right_black" />
+                        android:layout_marginEnd="1dp"
+                        app:srcCompat="@drawable/ic_arrow_right_blue" />
                 </RelativeLayout>
 
                 <View
                     android:id="@+id/v2"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_4sdp"
+                    android:layout_height="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_14sdp"
                     android:background="@color/gray_stroke"
                     app:layout_constraintTop_toBottomOf="@id/rl_viewreferral_trans" />
 
-                <TextView
-                    android:id="@+id/myref_label"
-                    style="@style/TextSize18Sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:id="@+id/myref_heading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
-                    android:text="@string/my_referrals"
+                    android:orientation="horizontal"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/v2" />
+                    app:layout_constraintTop_toBottomOf="@id/v2">
+
+                    <TextView
+                        android:id="@+id/myref_label"
+                        style="@style/TextSize18Sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/my_referrals" />
+
+                    <TextView
+                        style="@style/TextSize18Sp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@{@string/open_parenthesis.concat(String.valueOf(viewModel.myReferralsListSize)).concat(@string/close_parenthesis)}"
+                        android:visibility="@{viewModel.myReferralsListSize==0?View.GONE:View.VISIBLE}" />
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/no_referral_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_20sdp"
                     android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@id/myref_label">
+                    android:visibility="@{viewModel.myReferralsListSize==0?View.VISIBLE:View.GONE}"
+                    app:layout_constraintTop_toBottomOf="@id/myref_heading"
+                    tools:visibility="gone">
 
 
                     <ImageView
@@ -297,6 +317,7 @@
                         android:layout_marginTop="@dimen/_16sdp"
                         android:layout_marginBottom="@dimen/_32sdp"
                         android:background="@drawable/rounded_corner_12_solid_orange"
+                        android:onClick="@{()->viewModel.onReferFriendClicked()}"
                         android:paddingLeft="@dimen/_16sdp"
                         android:paddingTop="@dimen/_8sdp"
                         android:paddingRight="@dimen/_16sdp"
@@ -305,25 +326,36 @@
                         android:textColor="@color/white" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/layout_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:visibility="@{viewModel.myReferralsListSize==0?View.GONE:View.VISIBLE}"
+                    android:weightSum="2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/myref_heading">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_myreferrals"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="2"
+                        tools:listitem="@layout/item_my_referral"
+                        tools:visibility="visible" />
+
+
+                </LinearLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.core.widget.NestedScrollView>
 
-
-        <LinearLayout
-            android:id="@+id/layout_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nestedscroll">
-
-
-        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

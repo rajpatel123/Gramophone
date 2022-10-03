@@ -8,19 +8,25 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ProductSKUOfferAdapter(SKUOfferList: ArrayList<PromotionListItem?>) :
+class ProductSKUOfferAdapter(
+    SKUOfferList: ArrayList<PromotionListItem?>,
+    val selectedOfferProduct: ((PromotionListItem) -> Unit)?,
+    val onOfferDetailClicked: ((PromotionListItem) -> Unit)?,
+) :
     RecyclerView.Adapter<ProductSKUOfferAdapter.CustomViewHolder>() {
     var mSKUOfferList = SKUOfferList
     lateinit var mContext: Context
     var selectedProduct: ((PromotionListItem) -> Unit)? = null
-    var onViewAllClicked:((PromotionListItem)->Unit)?=null
+    var onViewAllClicked: ((PromotionListItem) -> Unit)? = null
     var lastSelectPosition: Int = 0
 
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         mContext = viewGroup.context
         return CustomViewHolder(
-            ItemAvailableOffersBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
+            ItemAvailableOffersBinding.inflate(LayoutInflater.from(viewGroup.context),
+                viewGroup,
+                false)
         )
     }
 
@@ -35,9 +41,11 @@ class ProductSKUOfferAdapter(SKUOfferList: ArrayList<PromotionListItem?>) :
             model.selected = true
             notifyDataSetChanged()
             selectedProduct?.invoke(model)
+            selectedOfferProduct?.invoke(model)
         }
-        mBinding.tvViewdetail.setOnClickListener{
+        mBinding.tvViewdetail.setOnClickListener {
             onViewAllClicked?.invoke(model)
+            onOfferDetailClicked?.invoke(model)
         }
 
 

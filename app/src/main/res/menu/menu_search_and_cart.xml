@@ -4,26 +4,18 @@
 
     <item
         android:id="@+id/item_search"
-        android:icon="@drawable/ic_search"
-        android:title="Search"
+        android:icon="@drawable/ic_search_black"
+        android:title=""
         android:orderInCategory="1"
         android:visible="true"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/item_favorite"
-        android:icon="@drawable/ic_favorite"
-        android:title="Favorite Item"
-        android:orderInCategory="1"
-        android:visible="true"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/item_cart"
-        android:icon="@drawable/ic_cart"
-        android:title="show cart"
+        android:icon="@drawable/ic_cart_black"
+        android:title=""
         android:orderInCategory="1"
         android:visible="true"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
 </menu>

@@ -45,8 +45,8 @@ class OrderListViewModel @Inject constructor(
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
 
-                    val recentOrderDataResponse = productRepository.getOrderData(Constants.RECENT)
-                    val pastOrderDataResponse = productRepository.getOrderData(Constants.PAST)
+                    val recentOrderDataResponse = productRepository.getOrderData(Constants.RECENT, "10", "1")
+                    val pastOrderDataResponse = productRepository.getOrderData(Constants.PAST, "10", "1")
 
                     if (recentOrderDataResponse.isSuccessful && recentOrderDataResponse.body()?.gp_api_status == Constants.GP_API_STATUS
                         && recentOrderDataResponse.body()?.gp_api_response_data?.order_list != null && recentOrderDataResponse.body()?.gp_api_response_data?.order_list?.data?.size!! > 0

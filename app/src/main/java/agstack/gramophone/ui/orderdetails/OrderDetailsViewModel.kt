@@ -21,7 +21,6 @@ import javax.inject.Inject
 class OrderDetailsViewModel @Inject constructor(
     private val productRepository: ProductRepository,
 ) : BaseViewModel<OrderDetailsNavigator>() {
-
     var progress = MutableLiveData<Boolean>()
     var orderId = MutableLiveData<String>()
     var orderDate = MutableLiveData<String>()
@@ -33,7 +32,6 @@ class OrderDetailsViewModel @Inject constructor(
     var username = MutableLiveData<String>()
     var address = MutableLiveData<String>()
     var mobile = MutableLiveData<String>()
-
     init {
         progress.value = false
         orderId.value = ""
@@ -105,8 +103,7 @@ class OrderDetailsViewModel @Inject constructor(
                                 promotionListItem.applicable_on_sku = it.valid_on_sku
                                 promotionListItem.valid_till = it.valid_till
                                 promotionListItem.product_name = it.product_name
-                                promotionListItem.tnc = it.tnc
-                                promotionListItem.redemption = it.redemption
+
                                 getNavigator()?.openActivity(
                                     OfferDetailActivity::class.java,
                                     Bundle().apply {
