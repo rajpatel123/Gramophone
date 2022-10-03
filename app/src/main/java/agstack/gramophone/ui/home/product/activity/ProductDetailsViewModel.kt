@@ -377,6 +377,7 @@ class ProductDetailsViewModel @Inject constructor(
                     Constants.GP_API_STATUS
                 )
             ) {
+
                 //setOffer List
                 offersOnProductResponse.body()?.gpApiResponseData?.offersProductList.let {
                     val prodOfferList =
