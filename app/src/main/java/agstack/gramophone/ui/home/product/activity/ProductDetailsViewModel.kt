@@ -365,7 +365,6 @@ class ProductDetailsViewModel @Inject constructor(
 
 
     }
-
     private fun loadOffersData(productDetailstoBeFetched: ProductData, quantity: Int? = 0) {
         loadProductOffersDataJob.cancelIfActive()
         loadProductOffersDataJob = checkNetworkThenRun {
