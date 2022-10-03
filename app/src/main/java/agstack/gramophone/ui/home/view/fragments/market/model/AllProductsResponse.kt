@@ -28,6 +28,7 @@ data class Data(
     val currency: String,
     val mrp_price: Float,
     val product_app_name: String,
+    val product_base_name: String,
     val product_id: Int,
     val product_image: String,
     val sales_price: Float,

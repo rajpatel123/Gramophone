@@ -12,18 +12,17 @@ import agstack.gramophone.ui.dialog.sortby.BottomSheetSortByDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.adapter.ViewPagerAdapter
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
+import agstack.gramophone.ui.home.subcategory.model.GpApiOfferResponse
+import agstack.gramophone.ui.home.subcategory.model.Offer
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
-import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
-import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.EndlessRecyclerScrollListener
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import com.amnix.xtension.extensions.isNotNull
 import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_category_detail.view.*
@@ -41,7 +40,6 @@ class SubCategoryActivity :
     var brandIdsArray = ArrayList<String>()
     var cropIdsArray = ArrayList<String>()
     var technicalIdsArray = ArrayList<String>()
-    private lateinit var listener: EndlessRecyclerScrollListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,7 +104,13 @@ class SubCategoryActivity :
                     cropIdsArray = cropIds
                     technicalIdsArray = technicalIds
 
-                    subCategoryViewModel.getAllProducts(sortBy, subCategoryIds, brandIds, cropIds, technicalIds, "10", "1")
+                    subCategoryViewModel.getAllProducts(sortBy,
+                        subCategoryIds,
+                        brandIds,
+                        cropIds,
+                        technicalIds,
+                        "10",
+                        "1")
                 }
                 bottomSheet.isCancelable = false
                 bottomSheet.show(
@@ -159,28 +163,35 @@ class SubCategoryActivity :
         viewDataBinding.rvProducts.adapter = productListAdapter
     }
 
+    var bottomSheet: AddToCartBottomSheetDialog? = null
     override fun openAddToCartDialog(
         mSKUList: ArrayList<ProductSkuListItem?>,
-        mSkuOfferList: ArrayList<PromotionListItem?>,
+        mSkuOfferList: ArrayList<Offer>,
         productData: ProductData,
     ) {
-        val bottomSheet = AddToCartBottomSheetDialog({
-            openActivity(
-                OfferDetailActivity::class.java,
-                Bundle().apply {
-                    putParcelable(Constants.OFFERSDATA, it)
-
-                })
-        },{
+        bottomSheet = AddToCartBottomSheetDialog({
+            //Offer detail activity from here
+        }, {
+            subCategoryViewModel.applyOfferOnProduct(it)
+        }, {
             subCategoryViewModel.onAddToCartClicked(it)
         })
-        bottomSheet.mSKUList = mSKUList
-        bottomSheet.productData = productData
-        bottomSheet.mSkuOfferList = mSkuOfferList
-        bottomSheet.show(
+        bottomSheet?.mSKUList = mSKUList
+        bottomSheet?.productData = productData
+        bottomSheet?.mSkuOfferList = mSkuOfferList
+        bottomSheet?.show(
             supportFragmentManager,
             Constants.BOTTOM_SHEET
         )
+    }
+
+    override fun updateAddToCartDialog(
+        isShowError: Boolean,
+        errorMsg: String,
+        appliedOfferResponse: GpApiOfferResponse,
+    ) {
+        if (bottomSheet.isNotNull())
+            bottomSheet?.updateDialog(isShowError, errorMsg, appliedOfferResponse)
     }
 
     override fun openProductDetailsActivity(productData: ProductData) {

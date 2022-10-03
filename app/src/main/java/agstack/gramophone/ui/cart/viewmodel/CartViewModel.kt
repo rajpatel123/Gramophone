@@ -27,7 +27,6 @@ class CartViewModel @Inject constructor(
 ) : BaseViewModel<CartNavigator>() {
 
     var itemCount = MutableLiveData<Int>()
-    var amount = MutableLiveData<Int>()
     var discount = MutableLiveData<Int>()
     var gramCash = MutableLiveData<Int>()
     var totalAmount = MutableLiveData<Int>()
@@ -37,21 +36,12 @@ class CartViewModel @Inject constructor(
 
     init {
         itemCount.value = 0
-        amount.value = 0
         discount.value = 0
         gramCash.value = 0
         totalAmount.value = 0
         progress.value = false
         showGramCashCoinView.value = true
         showCartView.value = false
-    }
-
-    private fun calculateAmount(cartItems: List<CartItem>) {
-        var subTotal = 0
-        for (cartItem in cartItems) {
-            subTotal += cartItem.selling_price.toFloat().toInt() * cartItem.quantity.toInt()
-        }
-        amount.value = subTotal
     }
 
     fun onCheckedChange(button: CompoundButton, check: Boolean) {

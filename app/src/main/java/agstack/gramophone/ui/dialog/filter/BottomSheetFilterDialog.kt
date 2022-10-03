@@ -37,7 +37,8 @@ class BottomSheetFilterDialog(
     }
 
     private fun setupUi() {
-        if (mainFilterList.isNull()) mainFilterList = ArrayList()
+        if (mainFilterList.isNullOrEmpty()) mainFilterList = ArrayList()
+        else mainFilterList!![0].isSelected = true
         mainFilterAdapter = MainFilterAdapter(mainFilterList!!) { mainFilterType, position ->
             setSubFilterAdapter(mainFilterType, position)
         }
@@ -81,6 +82,7 @@ class BottomSheetFilterDialog(
                 for (item in technicalDataList) {
                     item.isChecked = false
                 }
+            listener.invoke(ArrayList(), ArrayList(), ArrayList(), ArrayList())
             dismiss()
         }
         binding?.tvApply?.setOnClickListener {
