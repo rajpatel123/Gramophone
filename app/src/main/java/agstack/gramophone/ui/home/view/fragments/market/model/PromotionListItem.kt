@@ -42,3 +42,19 @@ data class PromotionListItem(
     var valid_till: String? = "",
 
     ) : Parcelable
+
+
+/* val applicable_on_sku: String? = null,
+    val benefitinrupes: Float,
+    val end_date: String,
+    val id: Int,
+    val image: String,
+    val product: Product,
+    val product_base_name: String,
+    val product_id: Int,
+    val promotion_id: Int,
+    val promotion_sub_type_id: Int,
+    val promotion_type_id: Int,
+    val t_c: String,
+    val title: String,
+    var selected: Boolean? = false,*/

@@ -94,7 +94,7 @@
                         android:layout_alignParentStart="true"
                         android:ellipsize="end"
                         android:fontFamily="@font/manrope_regular"
-                        android:hint="Offer valid on SKU 500"
+                        android:hint="*Offer valid on SKU 500"
                         android:maxLength="20"
                         android:maxLines="1"
                         android:text="@{@string/allsymbol.concat(model.applicable_on_sku)}"
@@ -108,7 +108,7 @@
                         android:layout_alignParentStart="true"
                         android:fontFamily="@font/manrope_regular"
                         android:hint="Valid till March 2023"
-                        android:text="Valid till March 2023"
+                        app:formatDateValidTil='@{model.valid_till ?? ""}'
                         android:textColor="@color/gray"
                         android:textSize="@dimen/_10ssp" />
 
@@ -149,7 +149,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/manrope_bold"
                     android:gravity="center"
-                    android:hint="Save Rs 100"
+                    android:hint="@string/save_rupees"
                     android:text="@{@string/save_rupees.concat(model.amount_saved.toString())}"
                     android:textColor="@color/green"
                     android:textSize="@dimen/_11ssp" />

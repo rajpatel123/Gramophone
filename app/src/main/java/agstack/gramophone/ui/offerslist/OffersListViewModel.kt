@@ -174,6 +174,7 @@ class OffersListViewModel @Inject constructor(
         offersJob.cancelIfActive()
         getNavigator()?.showLoaderFooter()
         offersJob = viewModelScope.launch {
+            offerListRequestModel.page = currentPage
 
 
             val offersListResponse =
