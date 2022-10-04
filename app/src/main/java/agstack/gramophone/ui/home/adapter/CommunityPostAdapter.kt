@@ -5,6 +5,8 @@ import agstack.gramophone.R
 import agstack.gramophone.databinding.*
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
+import agstack.gramophone.ui.profile.view.ProfileActivity
+import agstack.gramophone.ui.userprofile.UserProfileActivity
 import agstack.gramophone.utils.Constants.BLOCK_USER
 import agstack.gramophone.utils.Constants.DELETE_POST
 import agstack.gramophone.utils.Constants.EDIT_POST
@@ -14,6 +16,7 @@ import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.SharedPreferencesKeys.UUIdKey
 import android.content.Context
+import android.content.Intent
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View.*
@@ -164,8 +167,17 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
             holder.itemPostBinding.llDelete.visibility = VISIBLE
             holder.itemPostBinding.llReport.visibility = GONE
             holder.itemPostBinding.llBlock.visibility = GONE
+            if (data.author.address==null){
+               holder.itemPostBinding.tvCity.visibility= VISIBLE
+                holder.itemPostBinding.tvCity.setOnClickListener {
+                    context.startActivity(Intent(context, UserProfileActivity::class.java))
+                }
+            }
 
         } else {
+            if (data.author.address==null){
+                holder.itemPostBinding.tvCity.visibility= GONE
+            }
             holder.itemPostBinding.llReport.visibility = VISIBLE
             holder.itemPostBinding.llBlock.visibility = VISIBLE
             holder.itemPostBinding.llDelete.visibility = GONE

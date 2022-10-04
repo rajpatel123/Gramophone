@@ -60,10 +60,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        mActivity.setToolbarTitle(getMessage(R.string.community))
-    }
 
     override fun getLayoutID(): Int = R.layout.fragment_community
 

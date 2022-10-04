@@ -9,6 +9,8 @@ import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.follow.FollowResponseModel
 import agstack.gramophone.ui.postdetails.model.PostDetailResponseModel
 import agstack.gramophone.ui.postdetails.model.comments.CommentsResponseModel
+import agstack.gramophone.ui.userprofile.model.TestUserModel
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -49,4 +51,8 @@ interface CommunityApiService {
 
     @PUT("/api/v2/profiles/update-follow")
     suspend fun followPost(@Body post: FollowRequestModel): Response<FollowResponseModel>
+
+    @Multipart
+    @PUT("api/v2/profiles")
+    suspend fun updateUserProfileImage(@Part postImage: MultipartBody.Part):Response<TestUserModel>
 }

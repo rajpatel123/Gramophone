@@ -26,10 +26,13 @@ import agstack.gramophone.ui.postdetails.model.PostDetailResponseModel
 import agstack.gramophone.ui.postdetails.model.comments.CommentsResponseModel
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
+import agstack.gramophone.ui.userprofile.model.TestUserModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
+import okhttp3.MultipartBody
 import org.json.JSONObject
 import retrofit2.Response
+import retrofit2.http.Part
 import javax.inject.Singleton
 
 @Singleton
@@ -57,4 +60,6 @@ interface CommunityRepository {
     suspend fun blockUser(post: BlockUserRequestModel): Response<BlockResponseModel>
 
     suspend fun followPost(post: FollowRequestModel): Response<FollowResponseModel>
+
+    suspend fun updateUserProfileImage(@Part postImage: MultipartBody.Part): Response<TestUserModel>
 }
