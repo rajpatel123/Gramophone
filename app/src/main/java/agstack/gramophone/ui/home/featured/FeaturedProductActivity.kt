@@ -120,7 +120,7 @@ class FeaturedProductActivity :
         appliedOfferResponse: GpApiOfferResponse,
     ) {
         if (bottomSheet.isNotNull())
-            bottomSheet?.updateDialog(isShowError, errorMsg, appliedOfferResponse)
+            bottomSheet?.updateDialog(isShowError, errorMsg)
     }
 
     override fun getLayoutID(): Int {

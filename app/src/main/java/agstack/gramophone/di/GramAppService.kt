@@ -240,7 +240,7 @@ interface GramAppService {
     suspend fun getGramCashTxn(@Path("type") type: String,
                                @Body requestModel: TransactionRequestModel): Response<GramCashTxnResponseModel>
 
-    @POST("api/v5/category/product-app-category-data")
+    @POST("api/v5/category/product-filter-data")
     suspend fun getAllProducts(
         @Body filterRequest: FilterRequest,
     ): Response<AllProductsResponse>

@@ -8,6 +8,7 @@ import agstack.gramophone.ui.feedback.FeedbackActivity
 import agstack.gramophone.ui.gramcash.GramCashActivity
 import agstack.gramophone.ui.offerslist.OffersListActivity
 import agstack.gramophone.ui.order.view.OrderListActivity
+import agstack.gramophone.ui.profile.model.GpApiResponseProfileData
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.referandearn.ReferAndEarnActivity
 import agstack.gramophone.ui.settings.view.SettingsActivity
@@ -23,6 +24,8 @@ import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNull
+import com.amnix.xtension.extensions.isNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -35,10 +38,6 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModel<HomeActivityNavigator>() {
 
     var progressBar = ObservableField<Boolean>()
-    var profileName = MutableLiveData<String>()
-    var profileMobile = MutableLiveData<String>()
-    var profileImage = MutableLiveData<String>()
-    var profileGramCash = MutableLiveData<String>()
 
     fun logout(v: View) {
         logoutUser()
@@ -51,34 +50,48 @@ class HomeViewModel @Inject constructor(
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     val response = onBoardingRepository.getProfile()
                     progressBar.set(false)
-                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
-                        val name = response.body()?.gp_api_response_data?.customer_name
-                        val mobile = response.body()?.gp_api_response_data?.mobile_no
-                        val image = response.body()?.gp_api_response_data?.profile_image
-                        val gramcash = response.body()?.gp_api_response_data?.gramcashpoints
-                        val customer_id = response.body()?.gp_api_response_data?.customer_id
-                        profileName.value = name!!
-                        profileMobile.value = mobile!!
-                        profileImage.value = image!!
-                        profileGramCash.value = gramcash?.toString()
-                        getNavigator()?.setImageNameMobile(name, mobile, image,gramcash?.toString())
-                        SharedPreferencesHelper.instance?.putString(
-                            SharedPreferencesKeys.USERNAME,
-                            name
-                        )
-                        SharedPreferencesHelper.instance?.putString(
-                            SharedPreferencesKeys.USER_MOBILE,
-                            mobile
-                        )
-                        SharedPreferencesHelper.instance?.putString(
-                            SharedPreferencesKeys.USER_IMAGE,
-                            image
-                        )
+                    if (response.isNotNull() && response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
+                        if (response.body()
+                                .isNotNull() && response.body()?.gp_api_response_data.isNotNull()
+                        ) {
+                            val gpApiResponseData: GpApiResponseProfileData =
+                                response.body()?.gp_api_response_data!!
+                            if (gpApiResponseData.isNotNull()) {
+                                val name =
+                                    if (gpApiResponseData.customer_name.isNullOrEmpty()) "" else gpApiResponseData.customer_name
+                                val mobile =
+                                    if (gpApiResponseData.mobile_no.isNullOrEmpty()) "" else gpApiResponseData.mobile_no
+                                val image =
+                                    if (gpApiResponseData.profile_image.isNullOrEmpty()) "" else gpApiResponseData.profile_image
+                                val gramCash =
+                                    if (gpApiResponseData.gramcashpoints.isNull()) "" else gpApiResponseData.gramcashpoints.toString()
+                                val customerId =
+                                    if (gpApiResponseData.customer_id.isNullOrEmpty()) "" else gpApiResponseData.customer_id
 
-                        SharedPreferencesHelper.instance?.putString(
-                            SharedPreferencesKeys.CUSTOMER_ID,
-                            customer_id
-                        )
+                                getNavigator()?.setImageNameMobile(name,
+                                    mobile,
+                                    image,
+                                    gramCash)
+
+                                SharedPreferencesHelper.instance?.putString(
+                                    SharedPreferencesKeys.USERNAME,
+                                    name
+                                )
+                                SharedPreferencesHelper.instance?.putString(
+                                    SharedPreferencesKeys.USER_MOBILE,
+                                    mobile
+                                )
+                                SharedPreferencesHelper.instance?.putString(
+                                    SharedPreferencesKeys.USER_IMAGE,
+                                    image
+                                )
+
+                                SharedPreferencesHelper.instance?.putString(
+                                    SharedPreferencesKeys.CUSTOMER_ID,
+                                    customerId
+                                )
+                            }
+                        }
                     } else {
                         getNavigator()?.onError(response.message())
                     }
@@ -188,7 +201,7 @@ class HomeViewModel @Inject constructor(
         getNavigator()?.openActivity(ReferAndEarnActivity::class.java, null)
     }
 
-    fun GramCashClicked(){
-        getNavigator()?.openActivity(GramCashActivity::class.java , null)
+    fun GramCashClicked() {
+        getNavigator()?.openActivity(GramCashActivity::class.java, null)
     }
 }

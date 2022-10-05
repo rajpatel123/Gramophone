@@ -14,6 +14,7 @@ import agstack.gramophone.ui.home.adapter.ViewPagerAdapter
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.subcategory.model.GpApiOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.Offer
+import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.utils.Constants
@@ -52,6 +53,16 @@ class SubCategoryActivity :
         disableSortAndFilter()
         viewDataBinding.tvSortBy.setOnClickListener(this)
         viewDataBinding.tvFilter.setOnClickListener(this)
+
+
+        viewDataBinding.dotsIndicator.setOnClickListener { }
+    }
+
+    private fun setUpStoreCollapsing() {
+
+    }
+
+    private fun setUpCategoryCollapsing() {
         viewDataBinding.toolbar.inflateMenu(R.menu.menu_search_and_cart)
         viewDataBinding.toolbar.setOnMenuItemClickListener { menuItem ->
             onOptionsItemSelected(menuItem)
@@ -60,18 +71,16 @@ class SubCategoryActivity :
         viewDataBinding.appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
             //Check if the view is collapsed
             if (abs(verticalOffset) >= viewDataBinding.appbar.totalScrollRange) {
-                viewDataBinding.collapsingToolbar.title = getString(R.string.crop_nutritions)
-                viewDataBinding.collapsingToolbar.setCollapsedTitleTextColor(ContextCompat.getColor(
+                viewDataBinding.collapsingToolbarCategory.title = subCategoryViewModel.categoryName.value
+                viewDataBinding.collapsingToolbarCategory.setCollapsedTitleTextColor(ContextCompat.getColor(
                     this,
                     R.color.blakish))
-                viewDataBinding.collapsingToolbar.ivToolbar.visibility = View.VISIBLE
+                viewDataBinding.collapsingToolbarCategory.frameToolbarImage.visibility = View.VISIBLE
             } else {
-                viewDataBinding.collapsingToolbar.title = ""
-                viewDataBinding.collapsingToolbar.ivToolbar.visibility = View.GONE
+                viewDataBinding.collapsingToolbarCategory.title = ""
+                viewDataBinding.collapsingToolbarCategory.frameToolbarImage.visibility = View.GONE
             }
         })
-
-        viewDataBinding.dotsIndicator.setOnClickListener { }
     }
 
     override fun onClick(view: View?) {
@@ -131,6 +140,16 @@ class SubCategoryActivity :
         return true
     }
 
+    override fun showStoreCollapsing() {
+        viewDataBinding.collapsingToolbarStore.visibility = View.VISIBLE
+        viewDataBinding.collapsingToolbarCategory.visibility = View.GONE
+    }
+
+    override fun showCategoryCollapsing() {
+        viewDataBinding.collapsingToolbarStore.visibility = View.GONE
+        viewDataBinding.collapsingToolbarCategory.visibility = View.VISIBLE
+    }
+
     override fun disableSortAndFilter() {
         viewDataBinding.tvSortBy.isEnabled = false
         viewDataBinding.tvFilter.isEnabled = false
@@ -141,7 +160,7 @@ class SubCategoryActivity :
         viewDataBinding.tvFilter.isEnabled = true
     }
 
-    override fun setViewPagerAdapter(bannerList: List<agstack.gramophone.ui.home.view.fragments.market.model.Banner>?) {
+    override fun setViewPagerAdapter(bannerList: List<Banner>?) {
         val adapter = ViewPagerAdapter(bannerList!!)
         viewDataBinding.viewPager.adapter = adapter
         viewDataBinding.dotsIndicator.attachTo(viewDataBinding.viewPager)
@@ -188,10 +207,9 @@ class SubCategoryActivity :
     override fun updateAddToCartDialog(
         isShowError: Boolean,
         errorMsg: String,
-        appliedOfferResponse: GpApiOfferResponse,
     ) {
         if (bottomSheet.isNotNull())
-            bottomSheet?.updateDialog(isShowError, errorMsg, appliedOfferResponse)
+            bottomSheet?.updateDialog(isShowError, errorMsg)
     }
 
     override fun openProductDetailsActivity(productData: ProductData) {

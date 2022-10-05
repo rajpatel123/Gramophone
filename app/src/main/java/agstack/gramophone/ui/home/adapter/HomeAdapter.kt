@@ -120,12 +120,13 @@ class HomeAdapter(
                 ) {
                     holder.binding.itemView.visibility = View.VISIBLE
                     val categoryAdapter =
-                        ShopByCategoryAdapter(categoryResponse!!.gp_api_response_data.product_app_categories_list) { id, name ->
+                        ShopByCategoryAdapter(categoryResponse!!.gp_api_response_data.product_app_categories_list) { id, name, image ->
                             openActivity(holder.itemView.context,
                                 SubCategoryActivity::class.java,
                                 Bundle().apply {
                                     putString(Constants.CATEGORY_ID, id)
                                     putString(Constants.CATEGORY_NAME, name)
+                                    putString(Constants.CATEGORY_IMAGE, image)
                                 })
 
                         }

@@ -25,7 +25,49 @@
             app:liftOnScroll="true">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/collapsingToolbar"
+                android:id="@+id/collapsingToolbarStore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="@color/white"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/expandedImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_collapsing_stripe_bg"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.7" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginBottom="30dp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:lineSpacingExtra="-1sp"
+                    android:text="@string/pesticides"
+                    android:textColor="@color/blakish"
+                    android:textSize="18sp" />
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbarStore"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/white"
+                    android:isScrollContainer="true"
+                    app:contentInsetLeft="0dp"
+                    app:contentInsetStart="0dp"
+                    app:contentInsetStartWithNavigation="0dp"
+                    app:layout_collapseMode="pin"
+                    app:menu="@menu/menu_home"
+                    app:navigationIcon="@drawable/ic_arrow_left" />
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsingToolbarCategory"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
                 android:fitsSystemWindows="true"
@@ -37,28 +79,44 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/ic_stripe_bg"
                     android:fitsSystemWindows="true"
-                    android:gravity="bottom"
                     android:paddingStart="24dp"
-                    android:paddingEnd="24dp"
+                    android:paddingEnd="20dp"
                     app:layout_collapseMode="parallax">
 
-                    <TextView
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="28dp"
-                        android:fontFamily="@font/manrope_bold"
-                        android:gravity="center_vertical"
-                        android:lineSpacingExtra="-3sp"
-                        android:text='@{viewModel.categoryName ?? ""}'
-                        android:textColor="@color/blakish"
-                        android:textSize="20sp"
-                        tools:text="@string/crop_nutritions" />
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="@dimen/_16sdp">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_category_thumb" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text='@{viewModel.categoryName ?? ""}'
+                            android:textColor="@color/blakish"
+                            android:textSize="20sp"
+                            tools:text="@string/crop_nutritions" />
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:background="@drawable/circle_solid_white">
+
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:contentDescription="@string/image"
+                                android:padding="@dimen/_4sdp"
+                                android:src="@mipmap/leaf_logo"
+                                app:product_image='@{viewModel.categoryImage ?? ""}'
+                                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+
+                        </FrameLayout>
+
+                    </RelativeLayout>
 
                 </RelativeLayout>
 
@@ -76,15 +134,25 @@
                     app:titleTextAppearance="@style/Toolbar.TitleText"
                     app:titleTextColor="@color/blakish">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivToolbar"
+                    <FrameLayout
+                        android:id="@+id/frameToolbarImage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_marginEnd="@dimen/_4sdp"
-                        android:src="@drawable/ic_category_toolbar_thumb"
-                        android:visibility="visible" />
+                        android:background="@drawable/circle_solid_white"
+                        android:backgroundTint="@color/gray_stroke"
+                        android:visibility="visible">
 
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:contentDescription="@string/image"
+                            android:padding="@dimen/_2sdp"
+                            app:product_image='@{viewModel.categoryImage ?? ""}'
+                            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                            tools:src="@mipmap/leaf_logo" />
+                    </FrameLayout>
                 </androidx.appcompat.widget.Toolbar>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>

@@ -33,6 +33,7 @@ class SubCategoryViewModel @Inject constructor(
     var mSKUList = ArrayList<ProductSkuListItem?>()
     var showSubCategoryView = MutableLiveData<Boolean>()
     var categoryName = MutableLiveData<String>()
+    var categoryImage = MutableLiveData<String>()
     var mainFilterList: ArrayList<MainFilterData>? = null
     var sortDataList: ArrayList<SortByData>? = null
     var subCategoryList: List<CategoryData>? = null
@@ -48,15 +49,28 @@ class SubCategoryViewModel @Inject constructor(
         showSubCategoryView.value = false
     }
 
+    var shopId: String = ""
     fun getBundleData() {
         val bundle = getNavigator()?.getBundle()
         initializeSortData()
-        if (bundle?.containsKey(Constants.CATEGORY_ID)!! && bundle.getString(Constants.CATEGORY_ID) != null) {
-            categoryId = bundle.get(Constants.CATEGORY_ID) as String
-            getSubCategoryData()
-        }
-        if (bundle?.containsKey(Constants.CATEGORY_NAME)!! && bundle.getString(Constants.CATEGORY_NAME) != null) {
-            categoryName.value = bundle.get(Constants.CATEGORY_NAME) as String
+
+        if (bundle?.containsKey(Constants.SHOP_BY_TYPE)!! && bundle.getString(Constants.SHOP_BY_TYPE) != null) {
+            shopId = bundle.getInt(Constants.SHOP_BY_TYPE).toString()
+            getNavigator()?.showStoreCollapsing()
+        } else {
+            getNavigator()?.showCategoryCollapsing()
+            if (bundle?.containsKey(Constants.CATEGORY_ID)!! && bundle.getString(Constants.CATEGORY_ID) != null) {
+                categoryId = bundle.get(Constants.CATEGORY_ID) as String
+                getSubCategoryData()
+            }
+            if (bundle?.containsKey(Constants.CATEGORY_NAME)!! && bundle.getString(Constants.CATEGORY_NAME) != null) {
+                categoryName.value = bundle.get(Constants.CATEGORY_NAME) as String
+            }
+            if (bundle?.containsKey(Constants.CATEGORY_IMAGE)!! && bundle.getString(Constants.CATEGORY_IMAGE)
+                    .isNotNullOrEmpty()
+            ) {
+                categoryImage.value = bundle.get(Constants.CATEGORY_IMAGE) as String
+            }
         }
     }
 
@@ -126,7 +140,7 @@ class SubCategoryViewModel @Inject constructor(
                         ) {
                             showSubCategoryView.value = true
                             getNavigator()?.setSubCategoryAdapter(ShopByCategoryAdapter(
-                                subCategoryList) { id, name ->
+                                subCategoryList) { id, name, image ->
                                 /*getNavigator()?.openCheckoutStatusActivity(Bundle().apply {
                                 putString(Constants.ORDER_ID,
                                     response.body()?.gp_api_response_data?.order_ref_id.toString())
@@ -288,13 +302,14 @@ class SubCategoryViewModel @Inject constructor(
                     if (checkOfferResponse.body()?.gp_api_status.equals(Constants.GP_API_STATUS)) {
                         isShowErrorMsg = false
                         errorMsg = ""
-                        gpiApiOfferResponse = checkOfferResponse.body()?.gp_api_response_data!! as GpApiOfferResponse
+                        gpiApiOfferResponse =
+                            checkOfferResponse.body()?.gp_api_response_data!! as GpApiOfferResponse
                     } else {
                         isShowErrorMsg = true
                         errorMsg = checkOfferResponse.body()?.gp_api_message!!
                         gpiApiOfferResponse = null
                     }
-                    getNavigator()?.updateAddToCartDialog(isShowErrorMsg, errorMsg, gpiApiOfferResponse!!)
+                    getNavigator()?.updateAddToCartDialog(isShowErrorMsg, errorMsg)
                 }
             } catch (e: Exception) {
             }
