@@ -7,13 +7,11 @@ import agstack.gramophone.databinding.BlockUserDailogueBinding
 import agstack.gramophone.databinding.DeletePostDailogueBinding
 import agstack.gramophone.databinding.FragmentCommunityBinding
 import agstack.gramophone.databinding.ReportPostDailogueBinding
-import agstack.gramophone.ui.dialog.CommentBottomSheetDialog
 import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
 import agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel
-import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.ShareSheetPresenter
 import android.app.Activity
 import android.app.AlertDialog
@@ -43,7 +41,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     private lateinit var reportReason: CharSequence
     private var shareSheetPresenter: ShareSheetPresenter? = null
-    private lateinit var bottomSheet: CommentBottomSheetDialog
     private val communityViewModel: CommunityViewModel by viewModels()
     private var recyclerView: RecyclerView? = null
 
@@ -101,7 +98,8 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         onMenuOptionClicked: (post: Data) -> Unit,
         onLikeClicked: (post: Data) -> Unit,
         onBookMarkClicked: (post: Data) -> Unit,
-        onFollowClicked: (post: Data) -> Unit
+        onFollowClicked: (post: Data) -> Unit,
+        onProfileImageClicked: (post: Data) -> Unit
 
     ) {
         runOnUIThread {//will be removed while api integrations
@@ -114,6 +112,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
             communityPostAdapter.onLikeClicked=onLikeClicked
             communityPostAdapter.onBookMarkClicked=onBookMarkClicked
             communityPostAdapter.onFollowClicked=onFollowClicked
+            communityPostAdapter.onProfileImageClicked=onProfileImageClicked
             communityPostAdapter.setImage = this
             rvPost.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             rvPost.setHasFixedSize(false)
@@ -131,23 +130,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         }
     }
 
-
-    override fun openCommentDialog() {
-        bottomSheet = CommentBottomSheetDialog()
-        bottomSheet.show(
-            activity?.supportFragmentManager!!,
-            Constants.BOTTOM_SHEET
-        )
-    }
-
     override fun sharePost(link: String) {
-//        val extraText = link
-//        shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(
-//            extraText,
-//            getString(R.string.home_share_subject),
-//            IntentKeys.WhatsAppShareKey
-//        )
-
         val whatsappIntent = Intent(Intent.ACTION_SEND)
         whatsappIntent.type = "text/plain"
         whatsappIntent.setPackage("com.whatsapp")
@@ -220,6 +203,9 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     override fun getReportReason(): String {
         TODO("Not yet implemented")
+    }
+
+    override fun setProfileImage(url:String) {
     }
 
     override fun onImageSet(imageUrl: String, iv: ImageView) {

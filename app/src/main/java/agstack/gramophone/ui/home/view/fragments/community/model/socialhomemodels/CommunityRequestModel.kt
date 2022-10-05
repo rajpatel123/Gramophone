@@ -2,5 +2,5 @@ package agstack.gramophone.ui.home.view.fragments.community.model.socialhomemode
 
 data class CommunityRequestModel(
     val sort: String?,
-    val limit: Int?
+    val limit: Int?,
 )

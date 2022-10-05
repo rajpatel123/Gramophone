@@ -1,14 +1,5 @@
 package agstack.gramophone.data.repository.community
 
-import agstack.gramophone.data.model.UpdateLanguageRequestModel
-import agstack.gramophone.data.model.UpdateLanguageResponseModel
-import agstack.gramophone.ui.address.model.AddressRequestModel
-import agstack.gramophone.ui.address.model.AddressResponseModel
-import agstack.gramophone.ui.address.model.StateResponseModel
-import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
-import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
-import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
-import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.BookmarkPostResponse
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikePostResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedusersResponseModel
@@ -16,21 +7,12 @@ import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostReque
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.*
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.block.BlockResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.follow.FollowResponseModel
-import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
-import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
-import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
-import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
-import agstack.gramophone.ui.login.model.SendOtpRequestModel
-import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.postdetails.model.PostDetailResponseModel
-import agstack.gramophone.ui.postdetails.model.comments.CommentsResponseModel
-import agstack.gramophone.ui.profile.model.LogoutResponseModel
-import agstack.gramophone.ui.profile.model.ProfileResponse
+import agstack.gramophone.ui.comments.model.CommentsResponseModel
+import agstack.gramophone.ui.othersporfile.model.CommunityUserPostRequestModel
+import agstack.gramophone.ui.othersporfile.model.ProfileDataResponse
 import agstack.gramophone.ui.userprofile.model.TestUserModel
-import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
-import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import okhttp3.MultipartBody
-import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.Part
 import javax.inject.Singleton
@@ -38,6 +20,8 @@ import javax.inject.Singleton
 @Singleton
 interface CommunityRepository {
     suspend fun getCommunityPost(sort: CommunityRequestModel): Response<CommunityHomeResponseModel>
+
+    suspend fun getCommunityPost(sort: CommunityUserPostRequestModel): Response<CommunityHomeResponseModel>
 
     suspend fun getLikedUsers(sort: PostRequestModel): Response<LikedusersResponseModel>
 
@@ -62,4 +46,6 @@ interface CommunityRepository {
     suspend fun followPost(post: FollowRequestModel): Response<FollowResponseModel>
 
     suspend fun updateUserProfileImage(@Part postImage: MultipartBody.Part): Response<TestUserModel>
+
+    suspend fun getProfileData(uuid:String): Response<ProfileDataResponse>
 }

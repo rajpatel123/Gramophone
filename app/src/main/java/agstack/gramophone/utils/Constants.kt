@@ -15,6 +15,8 @@ object Constants {
     val POST_SELF: String = "My Post"
     val POST_BOOKMARK: String = "Saved Post"
     val POST_ID: String = "postId"
+    val AUTHER_ID: String = "auth_id"
+    val AUTHER_UUID: String = "auth_uuid"
 
     val ADDRESSOBJECT: String = "address"
     val REFERRAL_CODE: String="referralCOde"

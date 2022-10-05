@@ -1,4 +1,4 @@
-package agstack.gramophone.ui.postdetails.model.comments
+package agstack.gramophone.ui.comments.model
 
 data class Author(
     val __v: Int,

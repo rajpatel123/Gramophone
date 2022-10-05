@@ -46,6 +46,7 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
     var onMenuOptionClicked: ((type: Data) -> Unit)? = null
     var onLikeClicked: ((post: Data) -> Unit)? = null
     var onBookMarkClicked: ((post: Data) -> Unit)? = null
+    var onProfileImageClicked: ((post: Data) -> Unit)? = null
     lateinit var setImage: SetImage
     var lastSelectPosition: Int = 0
 
@@ -209,7 +210,6 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
 
         }
 
-
         holder.itemPostBinding.postImage.setOnClickListener {
             onItemDetailClicked?.invoke(data._id)
         }
@@ -217,15 +217,18 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
             onLikeClicked?.invoke(data)
         }
 
+        holder.itemPostBinding.ivProfileImage.setOnClickListener {
+            onProfileImageClicked?.invoke(data)
+        }
+
         holder.itemPostBinding.tvLikes.setOnClickListener {
             onItemLikesClicked?.invoke(data?._id!!)
         }
         holder.itemPostBinding.rlComments.setOnClickListener {
-            //onItemCommentsClicked?.invoke(data?._id!!)
+            onItemCommentsClicked?.invoke(data?._id!!)
         }
         holder.itemPostBinding.llComment.setOnClickListener {
-            //TODO will uncomment after fixing issue
-            //onItemCommentsClicked?.invoke(data?._id!!)
+            onItemCommentsClicked?.invoke(data?._id!!)
             }
             holder.itemPostBinding.ivWhatsapp.setOnClickListener {
                 onShareClicked?.invoke(data.linkUrl)

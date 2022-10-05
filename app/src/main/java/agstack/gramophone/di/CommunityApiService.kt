@@ -8,7 +8,9 @@ import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.block.BlockResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.follow.FollowResponseModel
 import agstack.gramophone.ui.postdetails.model.PostDetailResponseModel
-import agstack.gramophone.ui.postdetails.model.comments.CommentsResponseModel
+import agstack.gramophone.ui.comments.model.CommentsResponseModel
+import agstack.gramophone.ui.othersporfile.model.CommunityUserPostRequestModel
+import agstack.gramophone.ui.othersporfile.model.ProfileDataResponse
 import agstack.gramophone.ui.userprofile.model.TestUserModel
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -18,6 +20,9 @@ interface CommunityApiService {
 
     @POST("/api/v2/posts/all")
     suspend fun getCommunityPost(@Body sort: CommunityRequestModel?): Response<CommunityHomeResponseModel>
+
+    @POST("/api/v2/posts/all")
+    suspend fun getCommunityPost(@Body sort: CommunityUserPostRequestModel?): Response<CommunityHomeResponseModel>
 
     @POST("/api/v2/likes/get-likes")
     suspend fun getLikedUsers(@Body likedUsersRequestModel: PostRequestModel?): Response<LikedusersResponseModel>
@@ -55,4 +60,7 @@ interface CommunityApiService {
     @Multipart
     @PUT("api/v2/profiles")
     suspend fun updateUserProfileImage(@Part postImage: MultipartBody.Part):Response<TestUserModel>
+
+    @GET("/api/v2/profiles/{id}")
+    suspend fun getProfileData(@Path("id") id: String): Response<ProfileDataResponse>
 }

@@ -214,4 +214,8 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
         }
     }
 
+    override fun finishActivity() {
+        activity?.finish()
+    }
+
 }

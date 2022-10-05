@@ -15,13 +15,14 @@ interface CommunityFragmentNavigator: BaseNavigator {
         onMenuOptionClicked: (post:Data) -> Unit,
         onLikeClicked: (post: Data) -> Unit,
         onBookMarkClicked: (post: Data) -> Unit,
-        onFollowClicked: (post: Data) -> Unit
+        onFollowClicked: (post: Data) -> Unit,
+        onProfileImageClicked: (post: Data) -> Unit
     )
 
-    fun openCommentDialog()
     fun sharePost(it: String)
     fun deletePostDialog()
     fun reportPostDialog()
     fun blockUserDialog()
     fun getReportReason(): String
+    fun setProfileImage(url:String)
 }

@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="agstack.gramophone.ui.postdetails.model.comments.Data" />
+            type="agstack.gramophone.ui.comments.model.Data" />
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

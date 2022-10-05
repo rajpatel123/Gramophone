@@ -2,19 +2,17 @@ package agstack.gramophone.ui.home.adapter
 
 import agstack.gramophone.BR
 import agstack.gramophone.databinding.ItemCommentsBinding
-import agstack.gramophone.ui.apptour.adapter.DotIndicatorPager2Adapter
-import agstack.gramophone.ui.postdetails.model.LastComment
-import agstack.gramophone.ui.postdetails.model.comments.Data
+import agstack.gramophone.ui.comments.model.Data
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.activity_post_details.*
 
 class CommentsAdapter(val items: List<Data>?) :
     RecyclerView.Adapter<CommentsAdapter.CardViewHolder>() {
     lateinit var context: Context
+    var onItemCommentsClicked: ((commentId: String) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         context = parent.context
