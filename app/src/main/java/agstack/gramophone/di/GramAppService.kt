@@ -9,7 +9,6 @@ import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
-import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferRequest
@@ -21,8 +20,8 @@ import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
-import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.OrderListResponse
+import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
@@ -147,9 +146,6 @@ interface GramAppService {
 
     @PUT("api/v5/product/update-product-favourite")
     suspend fun updateProductFavorite(@Body productData: ProductData):Response<SuccessStatusResponse>
-
-    @POST("api/v5/cart/add-to-cart")
-    suspend fun addToCart(@Body addToCartRequest: AddToCartRequest): Response<SuccessStatusResponse>
 
     @GET("api/v5/cart/get-cart")
     suspend fun getCartData(): Response<CartDataResponse>
@@ -276,5 +272,8 @@ interface GramAppService {
     suspend fun getWeatherForecastSummaryDayWise(
         @Body weatherRequest: WeatherRequest,
     ): Response<WeatherForecastSummaryResponse>
+
+    @POST("api/v5/cart/update-to-cart")
+    suspend fun updateCartItem(@Body productData: ProductData): Response<SuccessStatusResponse>
 
 }

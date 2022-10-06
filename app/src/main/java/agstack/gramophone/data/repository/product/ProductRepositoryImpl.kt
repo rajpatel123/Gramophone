@@ -3,15 +3,14 @@ package agstack.gramophone.data.repository.product
 
 import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.di.GramAppService
-import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferRequest
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
-import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.OrderListResponse
+import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
@@ -102,14 +101,6 @@ class ProductRepositoryImpl @Inject constructor(
             response
         }
 
-    override suspend fun addToCart(addToCartRequest: AddToCartRequest): Response<SuccessStatusResponse> =
-        withContext(
-            Dispatchers.IO
-        ) {
-            val addToCartResponse = gramoAppService.addToCart(addToCartRequest)
-            addToCartResponse
-        }
-
     override suspend fun getCartData(): Response<CartDataResponse> = withContext(
         Dispatchers.IO
     ) {
@@ -122,6 +113,14 @@ class ProductRepositoryImpl @Inject constructor(
             Dispatchers.IO
         ) {
             val removedResponse = gramoAppService.removeCartItem(productId)
+            removedResponse
+        }
+
+    override suspend fun updateCartItem(productData: ProductData): Response<SuccessStatusResponse> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val removedResponse = gramoAppService.updateCartItem(productData)
             removedResponse
         }
 

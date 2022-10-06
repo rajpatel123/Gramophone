@@ -10,6 +10,7 @@ import agstack.gramophone.ui.dialog.sortby.SortByData
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.subcategory.model.*
 import agstack.gramophone.ui.home.view.fragments.market.model.*
+import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
@@ -290,7 +291,7 @@ class SubCategoryViewModel @Inject constructor(
                             //set skuList
                             mSKUList =
                                 productData.get()?.productSkuList as ArrayList<ProductSkuListItem?>
-                            loadOffersData(productId, productData.get()?.productBaseName!!)
+                            loadOffersData(productId)
                         }
                     } else {
                         getNavigator()?.showToast(productDetailResponse.body()?.gpApiMessage)
@@ -302,14 +303,13 @@ class SubCategoryViewModel @Inject constructor(
         }
     }
 
-    private fun loadOffersData(productId: Int, productBaseName: String) {
+    private fun loadOffersData(productId: Int) {
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
                     val productData = ProductData()
                     productData.product_id = productId
-                    productData.product_base_name = productBaseName
                     productData.quantity = 1
 
                     var offerList = ArrayList<Offer>()
@@ -372,25 +372,54 @@ class SubCategoryViewModel @Inject constructor(
         }
     }
 
-    fun onAddToCartClicked(productToBeAdded: ProductData) {
+    fun onAddToCartClicked(productData: ProductData) {
 
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
 
-                    val addTocartResponse =
-                        productRepository.addToCart(productToBeAdded)
+                    val response =
+                        productRepository.addToCart(productData)
                     progress.value = false
-                    if (addTocartResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+                    if (response.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
 
-                        getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+                        getNavigator()?.showToast(response.body()?.gp_api_message)
 
                     } else {
-                        getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+                        getNavigator()?.showToast(response.body()?.gp_api_message)
                     }
                 }
             } catch (e: Exception) {
+                progress.value = false
+            }
+        }
+    }
+
+    fun getFeaturedProducts() {
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.value = true
+                    val response =
+                        productRepository.getFeaturedProducts(PageLimitRequest("20", "1"))
+                    progress.value = false
+
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                        && response.body()?.gp_api_response_data != null
+                    ) {
+                        getNavigator()?.setProductListAdapter(ProductListAdapter(
+                            response.body()?.gp_api_response_data?.data),
+                            {
+                                fetchProductDetail(it)
+                            }, {
+                                getNavigator()?.openProductDetailsActivity(ProductData(it))
+                            })
+                    }
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
                 progress.value = false
             }
         }

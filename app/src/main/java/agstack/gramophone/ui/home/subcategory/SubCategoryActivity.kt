@@ -36,6 +36,7 @@ class SubCategoryActivity :
 
     //initialise ViewModel
     private val subCategoryViewModel: SubCategoryViewModel by viewModels()
+    var bottomSheet: AddToCartBottomSheetDialog? = null
     var sortBy: String = Constants.RELAVENT_CODE
     var subCategoryIdsArray = ArrayList<String>()
     var brandIdsArray = ArrayList<String>()
@@ -53,7 +54,6 @@ class SubCategoryActivity :
         disableSortAndFilter()
         viewDataBinding.tvSortBy.setOnClickListener(this)
         viewDataBinding.tvFilter.setOnClickListener(this)
-        viewDataBinding.dotsIndicator.setOnClickListener { }
 
         viewDataBinding.toolbar.inflateMenu(R.menu.menu_search_and_cart)
         viewDataBinding.toolbar.setOnMenuItemClickListener { menuItem ->
@@ -175,7 +175,6 @@ class SubCategoryActivity :
         viewDataBinding.rvProducts.adapter = productListAdapter
     }
 
-    var bottomSheet: AddToCartBottomSheetDialog? = null
     override fun openAddToCartDialog(
         mSKUList: ArrayList<ProductSkuListItem?>,
         mSkuOfferList: ArrayList<Offer>,

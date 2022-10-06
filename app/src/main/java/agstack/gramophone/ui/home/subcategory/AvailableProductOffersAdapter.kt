@@ -39,11 +39,11 @@ class AvailableProductOffersAdapter(
         holder.binding.setVariable(BR.model, model)
         val mBinding = holder.binding as ItemAvailableOffersOnParticularProductBinding
         var amountSaved = 0f
-        if (model.benefitinrupes.isNotNull()) {
-            amountSaved = model.benefitinrupes.toFloat()
+        if (model.amount_saved.isNotNull()) {
+            amountSaved = model.amount_saved.toFloat()
         }
 
-        if (model.benefitinrupes.isNotNull() && model.benefitinrupes > 0f && selectedSkuPrice > model.benefitinrupes.toFloat()) {
+        if (model.amount_saved.isNotNull() && model.amount_saved > 0f && selectedSkuPrice > model.amount_saved.toFloat()) {
             val payOnly = selectedSkuPrice - amountSaved
             val payOnlyString: String =
                 if (payOnly.toString().contains(".0") || payOnly.toString().contains(".00")) {

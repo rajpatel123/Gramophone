@@ -189,8 +189,8 @@ class AddToCartBottomSheetDialog(
 
             finalSalePrice = modelSalesPrice
             offerModel?.let {
-                if (offerModel.benefitinrupes.isNotNull() && offerModel.benefitinrupes > 0) {
-                    finalSalePrice = modelSalesPrice - offerModel.benefitinrupes
+                if (offerModel.amount_saved.isNotNull() && offerModel.amount_saved > 0) {
+                    finalSalePrice = modelSalesPrice - offerModel.amount_saved
                 }
             }
         }
