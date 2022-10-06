@@ -262,7 +262,7 @@ interface GramAppService {
     @GET("api/v5/category/stores/{store_id}")
     suspend fun getStoresFilterData(@Path("store_id") storeId: String): Response<SubCategoryResponse>
 
-    @POST("api/v5/weather/")
+    @POST("api/v5/weather")
     suspend fun getWeatherDetails(
         @Body weatherRequest: WeatherRequest,
     ): Response<WeatherResponse>
@@ -272,7 +272,7 @@ interface GramAppService {
         @Body weatherRequest: WeatherRequest,
     ): Response<WeatherForecastDetailResponse>
 
-    @POST("weather/forecast-summary")
+    @POST("api/v5/weather/forecast-summary")
     suspend fun getWeatherForecastSummaryDayWise(
         @Body weatherRequest: WeatherRequest,
     ): Response<WeatherForecastSummaryResponse>
