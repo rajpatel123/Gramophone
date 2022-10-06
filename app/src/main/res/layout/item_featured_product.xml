@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.home.view.fragments.market.model.Data" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/productDetailsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_corner_12_solid_white_stroke_gray"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/rounded_corner_6_light_green"
+                android:fontFamily="@font/manrope_bold"
+                android:paddingStart="6dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="6dp"
+                android:paddingBottom="4dp"
+                tools:text="20% Off"
+                app:mrp_price="@{model.mrp_price}"
+                app:sales_price="@{model.sales_price}"
+                android:textColor="@color/order_approved_text"
+                android:textSize="11sp" />
+
+            <ImageView
+                android:id="@+id/iv_productimage"
+                android:layout_width="@dimen/_110sdp"
+                android:layout_height="@dimen/_110sdp"
+                android:contentDescription="@string/image"
+                android:layout_gravity="center_horizontal"
+                app:product_image='@{model.product_image ?? ""}'
+                tools:src="@drawable/dummy_neem_cake" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/rounded_bottom_12_solid_gray"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvProductDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/manrope_medium"
+                    android:gravity="top"
+                    android:lineSpacingExtra="-2sp"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/_12sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_12sdp"
+                    android:paddingBottom="5dp"
+                    android:text='@{model.product_app_name ?? ""}'
+                    tools:text="fungicides Crystal Bavistin 50% WP Fun gicide Carbe ..."
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_11ssp" />
+
+                <RatingBar
+                    android:visibility="gone"
+                    style="@style/CustomRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:numStars="5"
+                    android:rating="3"
+                    android:stepSize="1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/_12sdp"
+                    android:paddingEnd="@dimen/_10sdp">
+
+                    <TextView
+                        style="@style/heading_title_bold_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        tools:text="₹ 900"
+                        app:reformatFloatPriceToInt="@{model.sales_price}"
+                        android:textColor="@color/blakish"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        style="@style/regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:background="@drawable/strike_through_mutegrey"
+                        android:ellipsize="end"
+                        app:reformatFloatPriceToInt="@{model.mrp_price}"
+                        android:maxLines="3"
+                        tools:text="₹ 1800"
+                        android:textColor="@color/gray_strike_through"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

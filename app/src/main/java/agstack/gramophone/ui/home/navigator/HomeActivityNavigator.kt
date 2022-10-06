@@ -8,4 +8,6 @@ interface HomeActivityNavigator :BaseNavigator {
     fun logout()
     fun shareApp(intent: Intent)
     fun closeDrawer()
+
+    fun setImageNameMobile(name: String, mobile: String, profileImage:String,gramCash:String?)
 }

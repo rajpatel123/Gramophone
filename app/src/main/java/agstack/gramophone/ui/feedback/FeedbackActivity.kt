@@ -41,9 +41,6 @@ class FeedbackActivity :
     private fun initViews() {
     }
 
-    override fun getFeedbackText(): String? {
-       return viewDataBinding.etFeeback?.toString()
-    }
 
     override fun finishActivity() {
         finish()

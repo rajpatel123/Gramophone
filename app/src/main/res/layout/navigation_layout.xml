@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="navvm"
             type="agstack.gramophone.ui.home.viewmodel.HomeViewModel" />
     </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{navvm.progressBar? View.VISIBLE:View.GONE}"
             android:layout_centerInParent="true"
-            />
+            android:visibility="@{navvm.progressBar? View.VISIBLE:View.GONE}" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -32,16 +36,15 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_profile_header_bg"
                     android:paddingStart="@dimen/_16sdp"
-                    android:paddingEnd="@dimen/_16sdp"
-                    >
+                    android:paddingEnd="@dimen/_16sdp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/iv_profile"
-                        android:layout_width="@dimen/_70sdp"
-                        android:layout_height="@dimen/_70sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_width="@dimen/_56sdp"
+                        android:layout_height="@dimen/_56sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
                         android:onClick="@{ ()-> navvm.OpenUserProfile()}"
-                        android:src="@drawable/piyush" />
+                        android:src="@drawable/dummy_profile" />
 
                     <TextView
                         android:id="@+id/tv_name"
@@ -51,7 +54,7 @@
                         android:layout_below="@+id/iv_profile"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:ellipsize="end"
-                        android:text="Piyush Mittal"
+                        android:text="@string/username"
                         android:textColor="@color/blakish"
                         android:textSize="@dimen/_12ssp" />
 
@@ -61,42 +64,42 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_name"
-                        android:text="+91 9625106606"
+                        android:text="@string/dummy_mobile_no"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/_12ssp" />
 
                 </RelativeLayout>
 
                 <androidx.cardview.widget.CardView
+                    android:onClick="@{()->navvm.GramCashClicked()}"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_56sdp"
                     android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="-20dp"
-                    android:elevation="@dimen/_2sdp"
+                    android:layout_marginTop="-30dp"
                     android:layout_marginEnd="@dimen/_16sdp"
+                    android:elevation="@dimen/_2sdp"
                     app:cardCornerRadius="@dimen/_10sdp">
 
                     <RelativeLayout
-                        android:paddingStart="@dimen/_10sdp"
-                        android:paddingEnd="@dimen/_16sdp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_16sdp">
 
-                        <ImageView
-                            android:layout_centerVertical="true"
+                        <pl.droidsonroids.gif.GifImageView
                             android:id="@+id/iv_cash"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/_34sdp"
+                            android:layout_height="@dimen/_34sdp"
+                            android:layout_centerVertical="true"
                             android:contentDescription="@string/image"
-                            android:src="@drawable/ic_cash" />
-
+                            android:src="@drawable/ic_gram_coinn" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/_8sdp"
+                            android:layout_marginStart="@dimen/_4sdp"
                             android:layout_toEndOf="@+id/iv_cash"
                             android:gravity="center_vertical"
                             android:orientation="vertical">
@@ -105,15 +108,16 @@
                                 style="@style/regular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Gram Cash"
+                                android:text="@string/gram_cash_without_extra_space"
                                 android:textColor="@color/gray_strike_through"
                                 android:textSize="@dimen/_10sdp" />
 
                             <TextView
+                                android:id="@+id/tv_gc"
                                 style="@style/heading_title_bold_large"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="₹ 100"
+                                android:text="@string/dummy_price"
                                 android:textColor="@color/blakish"
                                 android:textSize="@dimen/_12ssp" />
 
@@ -133,15 +137,14 @@
 
 
                 <RelativeLayout
-                    android:onClick="@{()->navvm.ReferandEarnClicked()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/_16sdp"
-                    android:paddingEnd="@dimen/_26sdp"
-                    android:paddingTop="@dimen/_15sdp"
-                    android:paddingBottom="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    >
+                    android:onClick="@{()->navvm.ReferandEarnClicked()}"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:paddingTop="@dimen/_15sdp"
+                    android:paddingEnd="@dimen/_26sdp"
+                    android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
                         android:id="@+id/iv_my_post"
@@ -175,7 +178,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/invite_and_earn"
                             android:textColor="@color/gray_strike_through"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
 
@@ -212,7 +215,7 @@
                             style="@style/regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="My Orders"
+                            android:text="@string/my_orders"
                             android:textColor="@color/blakish"
                             android:textSize="@dimen/_12ssp" />
 
@@ -222,29 +225,89 @@
                             android:layout_height="wrap_content"
                             android:text="@string/order_desc"
                             android:textColor="@color/gray_strike_through"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
 
 
                 </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:paddingTop="@dimen/_15sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_15sdp">
+
+                    <ImageView
+                        android:id="@+id/iv_my_farms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/image"
+                        android:src="@drawable/ic_my_crop_farms" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_toEndOf="@+id/iv_my_farms"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/my_crop_farms"
+                            android:textColor="@color/blakish"
+                            android:textSize="@dimen/_12ssp" />
+
+                        <TextView
+                            style="@style/regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/manage_all_your_crops_and_farms"
+                            android:textColor="@color/gray_strike_through"
+                            android:textSize="@dimen/_8sdp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="@dimen/_38sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/rounded_corner_6_light_green"
+                        android:backgroundTint="@color/orange"
+                        android:fontFamily="@font/manrope_bold"
+                        android:gravity="center"
+                        android:text="@string/new_text"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10ssp" />
+
+
+                </RelativeLayout>
+
                 <TextView
                     style="@style/heading_title_bold_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_20sdp"
-                    android:text="FOR YOU"
+                    android:text="@string/for_you"
                     android:textColor="@color/gray_strike_through"
                     android:textSize="@dimen/_12ssp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/_16sdp"
-                    android:paddingEnd="@dimen/_26sdp"
-                    android:paddingTop="@dimen/_15sdp"
                     android:onClick="@{()->navvm.openOfferListClicked()}"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:paddingTop="@dimen/_15sdp"
+                    android:paddingEnd="@dimen/_26sdp"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
@@ -277,20 +340,21 @@
                             style="@style/regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sub text will be displayed here"
+                            android:text="@string/sub_text_will_be_displayed_here"
                             android:textColor="@color/gray_strike_through"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
 
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_16sdp"
-                    android:paddingEnd="@dimen/_26sdp"
                     android:paddingTop="@dimen/_15sdp"
+                    android:paddingEnd="@dimen/_26sdp"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
@@ -315,7 +379,7 @@
                             style="@style/regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Articles"
+                            android:text="@string/articles"
                             android:textColor="@color/blakish"
                             android:textSize="@dimen/_12ssp" />
 
@@ -323,9 +387,9 @@
                             style="@style/regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sub text will be displayed here"
+                            android:text="@string/sub_text_will_be_displayed_here"
                             android:textColor="@color/gray_strike_through"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
 
@@ -336,8 +400,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_16sdp"
-                    android:paddingEnd="@dimen/_26sdp"
                     android:paddingTop="@dimen/_15sdp"
+                    android:paddingEnd="@dimen/_26sdp"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
@@ -370,9 +434,9 @@
                             style="@style/regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sub text will be displayed here"
+                            android:text="@string/sub_text_will_be_displayed_here"
                             android:textColor="@color/gray_strike_through"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
 
@@ -419,7 +483,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/manage_settings"
                             android:textColor="@color/gray_strike_through"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
 
@@ -433,8 +497,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_20sdp"
-                    android:text="@string/tools"
                     android:fontFamily="@font/manrope_semibold"
+                    android:text="@string/tools"
                     android:textColor="@color/gray_strike_through"
                     android:textSize="@dimen/_12ssp" />
 
@@ -469,7 +533,7 @@
                             style="@style/regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Weather"
+                            android:text="@string/weather"
                             android:textColor="@color/blakish"
                             android:textSize="@dimen/_12ssp" />
 
@@ -477,9 +541,9 @@
                             style="@style/regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sub text will be displayed here"
+                            android:text="@string/sub_text_will_be_displayed_here"
                             android:textColor="@color/gray_strike_through"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
 
@@ -487,12 +551,11 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_16sdp"
-                    android:paddingEnd="@dimen/_26sdp"
                     android:paddingTop="@dimen/_15sdp"
+                    android:paddingEnd="@dimen/_26sdp"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
@@ -517,7 +580,7 @@
                             style="@style/regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Mandi Bhav"
+                            android:text="@string/mandi_bhav"
                             android:textColor="@color/blakish"
                             android:textSize="@dimen/_12ssp" />
 
@@ -525,12 +588,11 @@
                             style="@style/regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sub text will be displayed here"
+                            android:text="@string/sub_text_will_be_displayed_here"
                             android:textColor="@color/gray_strike_through"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
-
 
 
                 </RelativeLayout>
@@ -538,11 +600,11 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{ ()-> navvm.openUnitConverter()}"
                     android:paddingStart="@dimen/_16sdp"
-                    android:paddingEnd="@dimen/_26sdp"
                     android:paddingTop="@dimen/_15sdp"
-                    android:paddingBottom="@dimen/_15sdp"
-                    android:onClick="@{ ()-> navvm.openUnitConverter()}">
+                    android:paddingEnd="@dimen/_26sdp"
+                    android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
                         android:id="@+id/iv_unit_convertor"
@@ -574,13 +636,11 @@
                             style="@style/regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sub text will be displayed here"
+                            android:text="@string/sub_text_will_be_displayed_here"
                             android:textColor="@color/gray_strike_through"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
-
-
 
                 </RelativeLayout>
 
@@ -590,49 +650,58 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_20sdp"
-                    android:text="OTHER"
+                    android:text="@string/other"
+                    android:textAllCaps="true"
                     android:textColor="@color/gray_strike_through"
                     android:textSize="@dimen/_12ssp" />
 
-
-
                 <TextView
-                    android:gravity="center_vertical"
                     style="@style/regular"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
+                    android:gravity="center_vertical"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="@dimen/_26sdp"
-                    android:text="@string/feedback"
-                    android:onClick="@{()->navvm.openLeaveFeedback()}"
+                    android:text="@string/watch_app_demo"
                     android:textColor="@color/blakish"
                     android:textSize="@dimen/_12ssp" />
 
                 <TextView
-                    android:gravity="center_vertical"
                     style="@style/regular"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{()->navvm.openLeaveFeedback()}"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:paddingEnd="@dimen/_26sdp"
+                    android:text="@string/feedback"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    style="@style/regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{ ()-> navvm.shareApp() }"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="@dimen/_26sdp"
                     android:text="@string/share_app"
-                    android:onClick="@{ ()-> navvm.shareApp() }"
 
                     android:textColor="@color/blakish"
                     android:textSize="@dimen/_12ssp" />
 
                 <TextView
                     android:id="@+id/tvLogout"
-                    android:gravity="center_vertical"
                     style="@style/regular"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
+                    android:layout_marginBottom="@dimen/_16sdp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{ ()-> navvm.logout(tvLogout) }"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="@dimen/_26sdp"
-                    android:onClick="@{ ()-> navvm.logout(tvLogout) }"
-
-                    android:text="Logout"
-                    android:layout_marginBottom="@dimen/_40sdp"
+                    android:text="@string/logout"
                     android:textColor="@color/blakish"
                     android:textSize="@dimen/_12ssp" />
 
@@ -640,7 +709,6 @@
         </ScrollView>
 
     </RelativeLayout>
-
 
 
 </layout>

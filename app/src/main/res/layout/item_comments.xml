@@ -1,99 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginEnd="@dimen/_7sdp"
-    android:layout_marginStart="@dimen/_5sdp">
+<layout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/ivProfileImage1"
-        app:civ_border_color="@color/white"
-        app:civ_border_width="2dp"
-        android:layout_width="@dimen/_25sdp"
-        android:layout_height="@dimen/_25sdp"
-        android:layout_gravity="center_horizontal"
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.comments.model.Data" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_5sdp"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:src="@drawable/dummy_jacob" />
+        android:layout_marginEnd="@dimen/_7sdp">
 
-    <RelativeLayout
-        android:id="@+id/rel_expert"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ivProfileImage1"
-        android:layout_marginStart="@dimen/_30sdp"
-        android:background="@drawable/expert_rel_bg"
-        android:padding="@dimen/_4ssp">
-
-        <TextView
-            android:id="@+id/tvName1"
-            tools:text="Jacob Rana"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivProfileImage1"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_2sdp"
-            android:fontFamily="@font/manrope_bold"
-            android:textColor="@color/blue"
-            android:textSize="@dimen/_14ssp"
-            android:textStyle="bold" />
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:src="@drawable/dummy_jacob"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp" />
 
-        <TextView
-
-            tools:text="EXPERT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_2sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_toEndOf="@+id/tvName1"
-            android:background="@drawable/expert_bg"
-            android:fontFamily="@font/manrope_medium"
-            android:padding="@dimen/_3sdp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_5ssp"
-            android:textStyle="bold" />
-
-
-        <TextView
-            android:id="@+id/tv_long_desc"
+        <RelativeLayout
+            android:id="@+id/rel_expert"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvName1"
-            android:fontFamily="@font/manrope_light"
-            android:padding="@dimen/_5sdp"
-            android:text="This is message which sent in bulletin will be displayed here"
-            android:textSize="@dimen/_14sdp" />
+            android:layout_alignLeft="@+id/ivProfileImage1"
+            android:layout_marginStart="@dimen/_30sdp"
+            android:background="@drawable/expert_rel_bg"
+            android:padding="@dimen/_4ssp">
 
-        <ImageView
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:fontFamily="@font/manrope_bold"
+                android:text="@{model.author.username}"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                tools:text="Jacob Rana" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/tvName"
+                android:background="@drawable/expert_bg"
+                android:fontFamily="@font/manrope_medium"
+                android:padding="@dimen/_3sdp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_5ssp"
+                android:textStyle="bold"
+                tools:text="EXPERT" />
+
+
+            <TextView
+                android:id="@+id/tv_long_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvName"
+                android:fontFamily="@font/manrope_light"
+                android:padding="@dimen/_5sdp"
+                android:text="@{model.text}"
+
+                android:textSize="@dimen/_14sdp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_long_desc"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:adjustViewBounds="true" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_long_desc"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:adjustViewBounds="true" />
-
-
+            android:layout_below="@+id/rel_expert"
+            android:layout_marginLeft="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_8ssp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="@{model.commentDuration}"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_15sdp" />
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rel_expert"
-        android:layout_marginLeft="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_8ssp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:text="3:40 PM "
-        android:textColor="@color/gray"
-        android:textSize="@dimen/_15sdp" />
-
-    <ImageView
-        android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_15ssp"
-        android:layout_below="@+id/rel_expert"
-        android:layout_marginLeft="@dimen/_110sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:src="@drawable/horizontal_dot" />
-</RelativeLayout>
+</layout>

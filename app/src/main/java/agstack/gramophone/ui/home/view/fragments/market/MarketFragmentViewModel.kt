@@ -3,20 +3,16 @@ package agstack.gramophone.ui.home.view.fragments.market
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
-import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
-import agstack.gramophone.ui.home.adapter.ShopByCompanyAdapter
-import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
-import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
+import agstack.gramophone.ui.cart.model.CartItem
+import agstack.gramophone.ui.home.adapter.HomeAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
-import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
+import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
-import android.os.Bundle
 import androidx.lifecycle.viewModelScope
-import com.amnix.xtension.extensions.isNotNull
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
 
@@ -26,39 +22,33 @@ class MarketFragmentViewModel
     private val productRepository: ProductRepository,
 ) : BaseViewModel<MarketFragmentNavigator>() {
 
-    var productList = ArrayList<ProductData>()
+    var allProductsResponse: AllProductsResponse? = null
     var cropResponse: CropResponse? = null
     var storeResponse: StoreResponse? = null
     var companyResponse: CompanyResponse? = null
+    var allBannerResponse: BannerResponse? = null
+    var categoryResponse: CategoryResponse? = null
+    var cartList: List<CartItem>? = arrayListOf()
 
-    fun getFeaturedProducts(hashMap: HashMap<Any, Any>) {
+    fun getHomeData() {
+        allProductsResponse = null
+        cropResponse = null
+        storeResponse = null
+        companyResponse = null
+        allBannerResponse = null
+        categoryResponse = null
+        cartList = null
+
         viewModelScope.launch {
             try {
-                //To get Product Data
-                //homeRepository.getProducts(hashMap)
-                val productImagesList = ArrayList<String>()
-                productImagesList.add("https://s3.ap-south-1.amazonaws.com/gramophone-webapps-dev/product_erp_images/1647503375.jpg")
-                productImagesList.add("https://s3.ap-south-1.amazonaws.com/gramophone-webapps-dev/product_erp_images/1647503375.jpg")
-                productImagesList.add("https://s3.ap-south-1.amazonaws.com/gramophone-webapps-dev/product_erp_images/1647503375.jpg")
-                productImagesList.add("https://s3.ap-south-1.amazonaws.com/gramophone-webapps-dev/product_erp_images/1647503375.jpg")
-                productList.add(
-                    ProductData(700322)
-                )
-                productList.add(
-                    ProductData(700322)
-                )
-                productList.add(
-                    ProductData(700322)
-                )
-                productList.add(
-                    ProductData(700322)
-                )
-                //set received productList in Adapter
-
-                getNavigator()?.setFeaturedProductsAdapter(ProductListAdapter(productList)) {
-                    getNavigator()?.startProductDetailsActivity(it)
+                val response = productRepository.getHomeData()
+                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
+                    getNavigator()?.setHomeAdapter(HomeAdapter(response.body()?.gp_api_response_data?.home_screen_sequence!!,
+                        allBannerResponse, categoryResponse, allProductsResponse,
+                        cropResponse,
+                        storeResponse, companyResponse, cartList)) {
+                    }
                 }
-
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -66,27 +56,42 @@ class MarketFragmentViewModel
                 }
             }
         }
-
     }
 
     fun getBanners() {
         viewModelScope.launch {
             try {
-                val bannerResponse = SharedPreferencesHelper.instance?.getParcelable(
+                var bannerResponse = SharedPreferencesHelper.instance?.getParcelable(
                     SharedPreferencesKeys.BANNER_DATA, BannerResponse::class.java
                 )
-                if (bannerResponse?.gpApiStatus == Constants.GP_API_STATUS) {
-                    getNavigator()?.setViewPagerAdapter(bannerResponse.gpApiResponseData?.homeBanner1)
-                } else {
+                allBannerResponse = bannerResponse
+                if (bannerResponse?.gpApiStatus != Constants.GP_API_STATUS) {
                     val response = productRepository.getBanners()
                     if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS) {
+                        bannerResponse = response.body()
+                        allBannerResponse = bannerResponse
                         SharedPreferencesHelper.instance?.putParcelable(
                             SharedPreferencesKeys.BANNER_DATA,
-                            response.body()!!
+                            bannerResponse!!
                         )
-                        getNavigator()?.setViewPagerAdapter(response.body()?.gpApiResponseData?.homeBanner1)
                     }
                 }
+                notifyAdapter()
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
+
+    fun getFeaturedProducts() {
+        viewModelScope.launch {
+            try {
+                val response = productRepository.getFeaturedProducts(PageLimitRequest("10", "1"))
+                allProductsResponse = response.body()
+                notifyAdapter()
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -100,15 +105,13 @@ class MarketFragmentViewModel
         viewModelScope.launch {
             try {
                 val response = productRepository.getCategories()
-                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
-                    getNavigator()?.setCategoryAdapter(ShopByCategoryAdapter(response.body()?.gp_api_response_data?.product_app_categories_list)) {
-                        getNavigator()?.openSubCategoryActivity(Bundle().apply {
-                            putString(Constants.CATEGORY_ID,
-                                it)
-                        })
-                    }
+                categoryResponse = response.body()
+                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS &&
+                    response.body()?.gp_api_response_data?.product_app_categories_list != null
+                ) {
 
                 }
+                notifyAdapter()
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -132,16 +135,8 @@ class MarketFragmentViewModel
                     val tempCropList: List<CropData> = if (cropList.size >= 9)
                         cropList.subList(0, 9)
                     else cropList
-
-                    getNavigator()?.setCropAdapter(ShopByCropsAdapter(tempCropList)) {
-                        getNavigator()?.openSubCategoryActivity(Bundle().apply {
-                            putString(Constants.CROP_ID,
-                                it)
-                        })
-
-                    }
-
                 }
+                notifyAdapter()
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -165,16 +160,8 @@ class MarketFragmentViewModel
                     val tempStoreList: List<StoreData> = if (storeList.size >= 4)
                         storeList.subList(0, 4)
                     else storeList
-
-                    getNavigator()?.setStoreAdapter(ShopByStoresAdapter(tempStoreList)) {
-                        getNavigator()?.openSubCategoryActivity(Bundle().apply {
-                            putString(Constants.STORE_ID,
-                                it)
-                        })
-
-                    }
-
                 }
+                notifyAdapter()
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -188,7 +175,7 @@ class MarketFragmentViewModel
         viewModelScope.launch {
             try {
                 val response = productRepository.getCompanies()
-                if (response.isSuccessful && response.body()?.gpApiStatus== Constants.GP_API_STATUS
+                if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS
                     && response.body()?.gpApiResponseData?.companiesList?.size!! > 0
                 ) {
                     companyResponse = response.body()
@@ -198,13 +185,8 @@ class MarketFragmentViewModel
                     val tempCompanyList: List<CompanyData> = if (companyList.size >= 6)
                         companyList.subList(0, 6)
                     else companyList
-                    getNavigator()?.setCompanyAdapter(ShopByCompanyAdapter(tempCompanyList)) {
-                        /*getNavigator()?.openSubCategoryActivity(Bundle().apply {
-                            putString(Constants.COMPANIES_ID,
-                                it)
-                        })*/
-                    }
                 }
+                notifyAdapter()
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -212,5 +194,31 @@ class MarketFragmentViewModel
                 }
             }
         }
+    }
+
+    fun getCartProducts() {
+        viewModelScope.launch {
+            try {
+                val response = productRepository.getCartData()
+                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                    && response.body()?.gp_api_response_data?.cart_items != null && response.body()?.gp_api_response_data?.cart_items?.size!! > 0
+                ) {
+                    cartList = response.body()?.gp_api_response_data?.cart_items
+                }
+                notifyAdapter()
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
+
+    private fun notifyAdapter() {
+        getNavigator()?.notifyHomeAdapter(
+            allBannerResponse, categoryResponse, allProductsResponse,
+            cropResponse,
+            storeResponse, companyResponse, cartList)
     }
 }

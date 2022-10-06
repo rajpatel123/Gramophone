@@ -4,35 +4,35 @@ import agstack.gramophone.R
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.SpannableString
+import android.text.TextUtils
 import android.text.style.BulletSpan
 import android.util.Log
 import android.widget.Toast
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import java.io.*
+import okhttp3.ResponseBody
+import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.OutputStream
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
-
-import java.io.OutputStream
-import java.net.URL
 import java.util.*
 
 
 object Utility {
     private const val MONTH_DATE_YEAR_FORMAT = "MMM dd, yyyy" /*"Jun 21, 2022"*/
     private const val DATE_MONTH_YEAR_FORMAT = "dd-MMM-yyyy"  /*05-Jul-2022*/
+
 
     fun List<String>.toBulletedList(): CharSequence {
         return SpannableString(this.joinToString("\n")).apply {
@@ -146,4 +146,30 @@ object Utility {
         }
         return dateString
     }
+
+    fun bitmapToUri(inContext: Context,bitmap: Bitmap?): Uri? {
+        val bytes = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path: String = MediaStore.Images.Media.insertImage(
+            inContext.getContentResolver(),
+            bitmap,
+            "Title",
+            null
+        )
+        return Uri.parse(path)
+
+
+    }
+
+    fun getErrorMessage(data: ResponseBody?): String? {
+        val errorBody = data?.string()?.let { JSONObject(it) }
+        var messgae: String = ""
+        messgae = errorBody?.optString(Constants.GP_API_MESSAGE).toString()
+        if (TextUtils.isEmpty(messgae)) {
+            messgae = errorBody?.optString(Constants.MESSAGE).toString()
+        }
+        return messgae
+    }
+
+
 }

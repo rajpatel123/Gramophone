@@ -201,7 +201,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     override fun hideProgressBar() {
     }
 
-    fun checkPermission(permission: String): Boolean {
+    override fun checkPermission(permission: String): Boolean {
         when {
             ContextCompat.checkSelfPermission(
                 this,
@@ -267,6 +267,10 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
     override fun getGeoCoder(): Geocoder {
         return Geocoder(this, Locale.getDefault())
+    }
+
+    override fun finishActivity() {
+        finish()
     }
 
 }

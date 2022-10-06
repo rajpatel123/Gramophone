@@ -62,15 +62,20 @@
                             android:isIndicator="true"
                             android:numStars="5"
                             android:stepSize="0.1"
+                            android:layout_marginLeft="@dimen/_minus15sdp"
+                            android:scaleX=".8"
+                            android:scaleY=".8"
                             android:theme="@style/RatingBar"
-                            android:visibility="@{viewModel.productReviewsData.rating.totalReview>0?View.VISIBLE : View.INVISIBLE}" />
+                            android:visibility="@{viewModel.productReviewsData.rating.totalRating>0?View.VISIBLE : View.INVISIBLE}" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvTotalReviews"
+                            android:layout_marginLeft="@dimen/_5sdp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/manrope_bold"
                             android:hint="15 Farmers"
+                            android:visibility="@{viewModel.productReviewsData.rating.totalRating>0?View.VISIBLE : View.INVISIBLE}"
                             android:text="@{viewModel.productReviewsData.rating.totalReview.toString()+` `+ @string/farmers}"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_13ssp" />
@@ -113,10 +118,10 @@
 
                         </LinearLayout>
 
-                      <!--  <ImageView
-                            app:srcCompat="@drawable/ic_whatsappshare"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"/>-->
+                        <!--  <ImageView
+                              app:srcCompat="@drawable/ic_whatsappshare"
+                              android:layout_width="wrap_content"
+                              android:layout_height="match_parent"/>-->
 
                         <androidx.appcompat.widget.AppCompatImageView
                             isUserFavorite="@{viewModel.isHeartSelected}"
@@ -195,12 +200,11 @@
                             android:layout_marginLeft="@dimen/_7sdp"
                             android:background="@drawable/strike_through"
                             android:gravity="center"
-                            tools:text="₹1,290"
                             android:text="@{viewModel.selectedSkuListItem.mrpPrice}"
                             android:textColor="@color/oldmrpcolor"
-                            android:textSize="@dimen/_12ssp" />
-                        <!-- android:visibility="@{Double.valueOf(viewModel.selectedSkuListItem.mrpPrice)>Double.valueOf(viewModel.selectedSkuListItem.salesPrice)?View.VISIBLE:View.INVISIBLE}"
-                        isMRPVisible="@{viewModel.selectedSkuListItem}"-->
+                            android:textSize="@dimen/_12ssp"
+                            tools:text="₹1,290" />
+
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_percentageOffOnSelectedSKU"
@@ -209,9 +213,9 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/_7sdp"
                             android:gravity="center"
-                            tools:text="60%"
                             android:textColor="@color/green"
-                            android:textSize="@dimen/_14ssp" />
+                            android:textSize="@dimen/_14ssp"
+                            tools:text="60%" />
 
                         <!-- percentageOffSKUItem="@{viewModel.selectedSkuListItem}"-->
 
@@ -220,13 +224,13 @@
 
                     <LinearLayout
                         android:id="@+id/ll_qty"
-                        android:background="@drawable/rounded_corner_4_solid_stroke_gray"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_productname"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
+                        android:background="@drawable/rounded_corner_4_solid_stroke_gray"
                         android:foregroundGravity="center"
                         android:gravity="center"
                         android:orientation="horizontal">
@@ -238,11 +242,11 @@
                             android:onClick="@{()->viewModel.onMinusQtyClicked()}" />
 
                         <TextView
+                            format2Digit="@{viewModel.qtySelected}"
                             android:layout_width="@dimen/_32sdp"
                             android:layout_height="@dimen/_32sdp"
                             android:fontFamily="@font/manrope_medium"
                             android:gravity="center"
-                            format2Digit="@{viewModel.qtySelected}"
                             android:textColor="@color/blakish"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
@@ -258,20 +262,20 @@
 
                     <TextView
                         android:id="@+id/tv_contactForPrice"
-                        android:onClick="@{()->viewModel.ContactForPriceClicked()}"
-                        android:visibility="gone"
                         style="@style/TextSize16Sp"
-                        android:textColor="@color/order_delivered_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_productname"
                         android:layout_marginTop="@dimen/_12sdp"
                         android:background="@drawable/deselected_product_background"
-                        android:paddingTop="@dimen/_8sdp"
-                        android:paddingBottom="@dimen/_8sdp"
+                        android:onClick="@{()->viewModel.ContactForPriceClicked()}"
                         android:paddingLeft="@dimen/_16sdp"
+                        android:paddingTop="@dimen/_8sdp"
                         android:paddingRight="@dimen/_16sdp"
-                        android:text="@string/contactforprice" />
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:text="@string/contactforprice"
+                        android:textColor="@color/order_delivered_text"
+                        android:visibility="gone" />
 
                 </RelativeLayout>
 
@@ -316,8 +320,8 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_16sdp"
-                    android:paddingLeft="@dimen/_10sdp"
                     android:drawablePadding="@dimen/_minus20sdp"
+                    android:paddingLeft="@dimen/_10sdp"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="3"
                     tools:itemCount="3"
@@ -357,7 +361,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/iv_availableoffers"
-                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_available_offers" />
@@ -376,27 +380,26 @@
                 <RelativeLayout
                     android:id="@+id/rl_howtouse"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                   >
+                    android:layout_height="wrap_content">
 
                     <ImageView
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:layout_marginBottom="@dimen/_16sdp"
-                        android:layout_marginLeft="@dimen/_16sdp"
                         android:id="@+id/iv_video"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
+                        android:layout_marginLeft="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
                         android:layout_marginRight="@dimen/_14sdp"
+                        android:layout_marginBottom="@dimen/_16sdp"
                         app:srcCompat="@drawable/ic_how_to_use_gardening" />
 
                     <TextView
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:layout_marginBottom="@dimen/_16sdp"
                         style="@style/TextSize16Sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginBottom="@dimen/_16sdp"
                         android:layout_toRightOf="@+id/iv_video"
                         android:text="@string/how_to_use"></TextView>
 
@@ -481,7 +484,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_2sdp"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:background="#F2F4F7"/>
+                    android:background="#F2F4F7" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="match_parent"
@@ -499,7 +502,8 @@
                     android:id="@+id/rl_productDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_16sdp">
+                    android:padding="@dimen/_16sdp"
+                    android:visibility="@{viewModel.productData.productDetails!=null? View.VISIBLE:View.GONE}">
 
                     <TextView
                         android:id="@+id/product_detail_title"
@@ -517,23 +521,25 @@
                         android:background="@drawable/rounded_corner"
                         android:orientation="vertical">
 
-                        <TextView
+               <!--         <TextView
+                            android:id="@+id/tv_detailType"
                             style="@style/TextSize14Sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/grey_rounded_corner_solid_grey_color"
                             android:padding="@dimen/_8sdp"
-                            android:text="@string/key_points"></TextView>
+                            android:text="@string/key_points"></TextView>-->
 
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:background="@drawable/rounded_corner_with_grey_color"
                             android:id="@+id/rv_productDetails"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_corner_with_grey_color"
                             android:nestedScrollingEnabled="false"
                             android:orientation="vertical"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:itemCount="2"
                             tools:listitem="@layout/product_details_row_item" />
                     </LinearLayout>
 
@@ -626,7 +632,7 @@
                     android:id="@+id/rl_rating_reviews"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                   android:layout_margin="@dimen/_16sdp">
+                    android:layout_margin="@dimen/_16sdp">
 
                     <TextView
                         android:id="@+id/tv_rating_title"
@@ -657,6 +663,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_viewAllReviews"
+                        android:visibility="@{viewModel.productReviewsData.reviewList.data.size()>0?View.VISIBLE:View.GONE}"
                         style="@style/TextSize14Sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -726,10 +733,10 @@
                 android:layout_marginRight="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_4sdp"
                 android:layout_weight="1"
+                android:background="@{ viewModel.addToCartEnabled ? @drawable/active_button_background : @drawable/deactive_button_background}"
                 android:drawableStart="@drawable/ic_cart_white"
                 android:drawablePadding="@dimen/_minus20sdp"
                 android:enabled="@{viewModel.addToCartEnabled}"
-                android:background="@{ viewModel.addToCartEnabled ? @drawable/active_button_background : @drawable/deactive_button_background}"
                 android:onClick="@{()->viewModel.onAddToCartClicked()}"
                 android:paddingStart="@dimen/_5sdp"
                 android:text="@string/add_to_cart"

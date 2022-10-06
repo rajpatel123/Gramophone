@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:id="@+id/itemView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvCateg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:text="@string/shop_by_category"
+            android:textColor="@color/blakish"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="normal" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_shop_by_cat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_category" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:background="@color/gray_stroke" />
+
+    </LinearLayout>
+
+</RelativeLayout>

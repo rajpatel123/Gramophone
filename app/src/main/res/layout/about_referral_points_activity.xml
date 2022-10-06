@@ -23,19 +23,16 @@
             android:id="@+id/myToolbar"
             layout="@layout/layout_toolbar" />
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nestedscroll"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_aboutreferalpoints"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/myToolbar">
+            app:layout_constraintTop_toBottomOf="@id/myToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_about_referal_points"/>
 
-
-
-
-        </androidx.core.widget.NestedScrollView>
 
 
 

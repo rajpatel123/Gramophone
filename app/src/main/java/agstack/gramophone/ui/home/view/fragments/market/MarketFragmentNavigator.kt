@@ -1,12 +1,9 @@
 package agstack.gramophone.ui.home.view.fragments.market
 
 import agstack.gramophone.base.BaseNavigator
-import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
-import agstack.gramophone.ui.home.adapter.ShopByCompanyAdapter
-import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
-import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
-import agstack.gramophone.ui.home.view.fragments.market.model.Banner
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.cart.model.CartItem
+import agstack.gramophone.ui.home.adapter.*
+import agstack.gramophone.ui.home.view.fragments.market.model.*
 import android.os.Bundle
 
 interface MarketFragmentNavigator : BaseNavigator {
@@ -16,14 +13,16 @@ interface MarketFragmentNavigator : BaseNavigator {
 
     fun openSubCategoryActivity(bundle: Bundle)
 
-    fun setCategoryAdapter(
-        adapter: ShopByCategoryAdapter,
-        onCategoryClick: (String) -> Unit,
+    fun setHomeAdapter(
+        adapter: HomeAdapter,
+        onItemClick: (String) -> Unit,
     )
 
-    fun setFeaturedProductsAdapter(
-        adapter: ProductListAdapter,
-        onProductListItemClick: (ProductData) -> Unit,
+    fun notifyHomeAdapter(
+        allBannerResponse: BannerResponse?, categoryResponse: CategoryResponse?,
+        allProductsResponse: AllProductsResponse?, cropResponse: CropResponse?,
+        storeResponse: StoreResponse?, companyResponse: CompanyResponse?,
+        cartList: List<CartItem>?,
     )
 
     fun setCompanyAdapter(
@@ -38,6 +37,11 @@ interface MarketFragmentNavigator : BaseNavigator {
 
     fun setCropAdapter(
         adapter: ShopByCropsAdapter,
+        onItemClick: (String) -> Unit,
+    )
+
+    fun setExclusiveBannerAdapter(
+        adapter: ExclusiveBannerAdapter,
         onItemClick: (String) -> Unit,
     )
 }

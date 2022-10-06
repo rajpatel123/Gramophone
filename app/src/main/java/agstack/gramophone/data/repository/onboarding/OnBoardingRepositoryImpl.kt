@@ -1,5 +1,6 @@
 package agstack.gramophone.data.repository.onboarding
 
+import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.data.model.UpdateLanguageRequestModel
 import agstack.gramophone.data.model.UpdateLanguageResponseModel
 import agstack.gramophone.di.GramAppService
@@ -9,6 +10,7 @@ import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
+import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
@@ -16,6 +18,10 @@ import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
+import agstack.gramophone.ui.profile.model.ProfileResponse
+import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
+import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
+import agstack.gramophone.ui.userprofile.verifyotp.model.VerifyOTPRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import kotlinx.coroutines.Dispatchers
@@ -99,9 +105,9 @@ class OnBoardingRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun updateAddressByLatLong(addressRequestModel: AddressRequestWithLatLongModel):Response<AddressDataByLatLongResponseModel> = withContext(
+    override suspend fun getAddressByLatLong(addressRequestModel: AddressRequestWithLatLongModel):Response<StateResponseModel> = withContext(
         Dispatchers.IO){
-        val addressData = gramAppService.updateAddressByLatLong(addressRequestModel)
+        val addressData = gramAppService.getAddressByLatLong(addressRequestModel)
         addressData
     }
 
@@ -112,10 +118,41 @@ class OnBoardingRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun getLocationAddress(lat: String, key: String): Response<JSONObject>  = withContext(
+    override suspend fun getLocationAddress(lat: String, key: String): Response<GoogleAddressResponseModel>  = withContext(
         Dispatchers.IO) {
         val bannerResponse = gramAppService.getLocationAddress(lat,key)
         bannerResponse
     }
 
+
+    override suspend fun getProfile(): Response<ProfileResponse>  = withContext(
+        Dispatchers.IO) {
+        val profileResponse = gramAppService.getProfile()
+        profileResponse
+    }
+
+
+    override suspend fun updateProfile(updateProfileModel: UpdateProfileModel): Response<SuccessStatusResponse> = withContext(
+        Dispatchers.IO) {
+        val profileResponse = gramAppService.updateProfile(updateProfileModel)
+        profileResponse
+    }
+
+    override suspend fun sendOTPMobile(verifyOtpRequestModel:VerifyOTPRequestModel): Response<SendOtpResponseModel> = withContext(
+        Dispatchers.IO) {
+        val sendOTP = gramAppService.sendOTPMobile(verifyOtpRequestModel)
+        sendOTP
+    }
+
+    override suspend fun resendOTPMobile(resendOtpRequestModel: SendOtpRequestModel): Response<SendOtpResponseModel> = withContext(
+        Dispatchers.IO) {
+        val resendOTP = gramAppService.resendOTPMobile(resendOtpRequestModel)
+        resendOTP
+    }
+
+    override suspend fun validateOtpMobile(validateOtpRequestModel: ValidateOtpMobileRequestModel): Response<SuccessStatusResponse> = withContext(
+        Dispatchers.IO) {
+        val validateOTPMobile = gramAppService.validateOTPMobile(validateOtpRequestModel)
+        validateOTPMobile
+    }
 }

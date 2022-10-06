@@ -27,6 +27,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.forEach
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.FirebaseApp
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
@@ -50,6 +52,7 @@ class HomeActivity :
         super.onCreate(savedInstanceState)
         setupUi()
         setUpFirebaseConfig()
+
     }
 
     private fun setUpFirebaseConfig() {
@@ -85,6 +88,19 @@ class HomeActivity :
             }
     }
 
+    override fun setImageNameMobile(name: String, mobile: String, profileImage: String,gramCash:String?) {
+        viewDataBinding.navigationlayout.tvName.text = name
+        viewDataBinding.navigationlayout.tvContact.text =
+            getString(R.string.dialing_code).plus(mobile)
+        viewDataBinding.navigationlayout.tvGc.text = gramCash
+        Glide.with(this)
+            .load(profileImage)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
+            .fitCenter()
+            .into(viewDataBinding.navigationlayout.ivProfile)
+    }
+
     private fun setupUi() {
         marketFragment = MarketFragment()
         communityFragment = CommunityFragment()
@@ -107,38 +123,43 @@ class HomeActivity :
 
         setUpNavigationDrawer()
         viewDataBinding.navView.itemIconTintList = null
-        /*val navController = findNavController(R.id.nav_host)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        *//*val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home, R.id.navigation_community, R.id.navigation_profile, R.id.navigation_trade))
-        setupActionBarWithNavController(navController, appBarConfiguration)*//*
-        viewDataBinding.navView.setupWithNavController(navController)*/
+
         viewDataBinding.navView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_home -> {
-                    updateMenuItemVisibility(true)
+                    viewDataBinding.toolbar.myToolbar.title =
+                        "  " + resources.getString(R.string.app_name)
+                    updateMenuItemVisibility(showHomeItems = true, showCommunityItems = false)
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(marketFragment).commit()
                     activeFragment = marketFragment
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_community -> {
-                    updateMenuItemVisibility(false)
+                    viewDataBinding.toolbar.myToolbar.title =
+                        "  " + resources.getString(R.string.community)
+                    updateMenuItemVisibility(showHomeItems = false, showCommunityItems = true)
+
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(communityFragment).commit()
                     activeFragment = communityFragment
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_profile -> {
-                    updateMenuItemVisibility(false)
+                    viewDataBinding.toolbar.myToolbar.title =
+                        "  " + resources.getString(R.string.my_profile)
+
+                    updateMenuItemVisibility(false, false)
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(profileFragment).commit()
                     activeFragment = profileFragment
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_trade -> {
-                    updateMenuItemVisibility(false)
+                    viewDataBinding.toolbar.myToolbar.title =
+                        "  " + resources.getString(R.string.trade)
+
+                    updateMenuItemVisibility(false, false)
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(tradeFragment).commit()
                     activeFragment = tradeFragment
@@ -148,6 +169,7 @@ class HomeActivity :
             false
         }
     }
+
 
 
     private fun setUpNavigationDrawer() {
@@ -179,7 +201,7 @@ class HomeActivity :
         toggle.isDrawerIndicatorEnabled = true
         toggle.syncState()
 
-        viewDataBinding.toolbar.myToolbar.inflateMenu(R.menu.menu_home_activity)
+        viewDataBinding.toolbar.myToolbar.inflateMenu(R.menu.menu_home)
         viewDataBinding.toolbar.myToolbar.setOnMenuItemClickListener { menuItem ->
             onOptionsItemSelected(menuItem)
         }
@@ -189,10 +211,14 @@ class HomeActivity :
         }
     }
 
-    private fun updateMenuItemVisibility(showItems: Boolean) {
+    private fun updateMenuItemVisibility(showHomeItems: Boolean, showCommunityItems: Boolean) {
         viewDataBinding.toolbar.myToolbar.menu.forEach {
-            if (showItems) {
-                it.isVisible = true
+            if (showHomeItems) {
+                it.isVisible =
+                    (it.itemId == R.id.item_search || it.itemId == R.id.item_favorite || it.itemId == R.id.item_cart)
+            } else if (showCommunityItems) {
+                it.isVisible =
+                    (it.itemId == R.id.item_search || it.itemId == R.id.item_notification || it.itemId == R.id.item_cart)
             } else {
                 it.isVisible = it.itemId == R.id.item_search
             }
@@ -214,6 +240,7 @@ class HomeActivity :
 
     override fun onResume() {
         super.onResume()
+        mViewModel?.getProfile()
     }
 
     override fun getLayoutID(): Int {
@@ -235,5 +262,10 @@ class HomeActivity :
 
     override fun shareApp(intent: Intent) {
         startActivity(Intent.createChooser(intent, getMessage(R.string.share_app_link)));
+    }
+
+    fun setToolbarTitle(title:String){
+        viewDataBinding.toolbar.myToolbar.title = title
+
     }
 }

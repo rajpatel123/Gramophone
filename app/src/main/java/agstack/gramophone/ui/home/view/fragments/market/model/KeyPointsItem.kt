@@ -8,10 +8,10 @@ import kotlinx.android.parcel.Parcelize
 data class KeyPointsItem(
 
 	@field:SerializedName("value")
-	val value: String? = null,
+	var value: String? = null,
 
 	@field:SerializedName("key")
-	val key: String? = null,
+	var key: String? = null,
 
 	@field:SerializedName("viewType")
 	var viewType:String?="Normal"

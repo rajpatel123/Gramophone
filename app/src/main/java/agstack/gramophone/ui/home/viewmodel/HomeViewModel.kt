@@ -5,6 +5,7 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.feedback.FeedbackActivity
+import agstack.gramophone.ui.gramcash.GramCashActivity
 import agstack.gramophone.ui.offerslist.OffersListActivity
 import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
@@ -20,6 +21,7 @@ import agstack.gramophone.utils.SharedPreferencesKeys
 import android.content.Intent
 import android.view.View
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -29,13 +31,70 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val onBoardingRepository: OnBoardingRepository
-    ) : BaseViewModel<HomeActivityNavigator>() {
+    private val onBoardingRepository: OnBoardingRepository,
+) : BaseViewModel<HomeActivityNavigator>() {
 
     var progressBar = ObservableField<Boolean>()
+    var profileName = MutableLiveData<String>()
+    var profileMobile = MutableLiveData<String>()
+    var profileImage = MutableLiveData<String>()
+    var profileGramCash = MutableLiveData<String>()
 
     fun logout(v: View) {
         logoutUser()
+    }
+
+    fun getProfile() {
+        progressBar.set(true)
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    val response = onBoardingRepository.getProfile()
+                    progressBar.set(false)
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
+                        val name = response.body()?.gp_api_response_data?.customer_name
+                        val mobile = response.body()?.gp_api_response_data?.mobile_no
+                        val image = response.body()?.gp_api_response_data?.profile_image
+                        val gramcash = response.body()?.gp_api_response_data?.gramcashpoints
+                        val customer_id = response.body()?.gp_api_response_data?.customer_id
+                        profileName.value = name!!
+                        profileMobile.value = mobile!!
+                        profileImage.value = image!!
+                        profileGramCash.value = gramcash?.toString()
+                        getNavigator()?.setImageNameMobile(name, mobile, image,gramcash?.toString())
+                        SharedPreferencesHelper.instance?.putString(
+                            SharedPreferencesKeys.USERNAME,
+                            name
+                        )
+                        SharedPreferencesHelper.instance?.putString(
+                            SharedPreferencesKeys.USER_MOBILE,
+                            mobile
+                        )
+                        SharedPreferencesHelper.instance?.putString(
+                            SharedPreferencesKeys.USER_IMAGE,
+                            image
+                        )
+
+                        SharedPreferencesHelper.instance?.putString(
+                            SharedPreferencesKeys.CUSTOMER_ID,
+                            customer_id
+                        )
+                    } else {
+                        getNavigator()?.onError(response.message())
+                    }
+
+
+                } else
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                }
+            }
+
+        }
+
     }
 
     private fun logoutUser() {
@@ -109,23 +168,27 @@ class HomeViewModel @Inject constructor(
         })
     }
 
-    fun OpenUserProfile(){
+    fun OpenUserProfile() {
         getNavigator()?.openActivity(UserProfileActivity::class.java, null)
     }
 
-    fun openUnitConverter(){
-        getNavigator()?.openActivity(UnitConverterActivity::class.java , null)
+    fun openUnitConverter() {
+        getNavigator()?.openActivity(UnitConverterActivity::class.java, null)
     }
 
-    fun openLeaveFeedback(){
-        getNavigator()?.openActivity(FeedbackActivity::class.java , null)
+    fun openLeaveFeedback() {
+        getNavigator()?.openActivity(FeedbackActivity::class.java, null)
     }
 
-    fun openOfferListClicked(){
-        getNavigator()?.openActivity(OffersListActivity::class.java , null)
+    fun openOfferListClicked() {
+        getNavigator()?.openActivity(OffersListActivity::class.java, null)
     }
 
-    fun ReferandEarnClicked(){
-        getNavigator()?.openActivity(ReferAndEarnActivity::class.java , null)
+    fun ReferandEarnClicked() {
+        getNavigator()?.openActivity(ReferAndEarnActivity::class.java, null)
+    }
+
+    fun GramCashClicked(){
+        getNavigator()?.openActivity(GramCashActivity::class.java , null)
     }
 }

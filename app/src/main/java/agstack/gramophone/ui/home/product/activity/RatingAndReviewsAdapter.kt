@@ -50,7 +50,7 @@ class RatingAndReviewsAdapter(reviewList: ArrayList<ReviewListItem?>?, limit: In
     }
 
     override fun getItemCount(): Int {
-        if (listSizeLimit != null) {
+        if (listSizeLimit != null && listSizeLimit<=mReviewList?.size!!) {
             return listSizeLimit
         } else {
             return mReviewList?.size!!
@@ -74,10 +74,7 @@ class RatingAndReviewsAdapter(reviewList: ArrayList<ReviewListItem?>?, limit: In
         val lastItem = itemCount - 1;
         mReviewList?.remove(null)
         notifyItemRemoved(lastItem)
-       /* if (mReviewList?.size!! > 0 && mReviewList?.get(lastItem) == null) {
-            mReviewList?.removeAt(lastItem)
-            notifyItemRemoved(lastItem)
-        }*/
+
 
     }
 

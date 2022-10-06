@@ -50,9 +50,6 @@ class ProductDetailsActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         productDetailsViewModel.getBundleData()
-        /*  Handler().postDelayed({
-              initYoutubePlayer()
-          }, 500)*/
         initProductDetailView()
 
     }
@@ -76,11 +73,13 @@ class ProductDetailsActivity :
 
     }
 
-    private var genuineCustomerDialog = GenuineCustomerRatingAlertFragment.newInstance()
+
     override fun showGenuineCustomerRatingDialog(
         genuineCustomerRatingAlertFragment: GenuineCustomerRatingAlertFragment,
+        addToCartEnable:Boolean,
         onAddToCartClick: () -> Unit
     ) {
+         var genuineCustomerDialog = GenuineCustomerRatingAlertFragment.newInstance(addToCartEnable)
         genuineCustomerDialog = genuineCustomerRatingAlertFragment
         genuineCustomerDialog.setOnClickSelectedListener(onAddToCartClick)
         genuineCustomerDialog.show(supportFragmentManager, "genuineCustomerDialog")
@@ -223,7 +222,6 @@ class ProductDetailsActivity :
 
         productSKUAdapter.selectedProduct = onSKUItemClicked
         viewDataBinding.rvProductSku.adapter = productSKUAdapter
-        //if sku's price is null , then hide the offer section
 
 
     }
@@ -245,11 +243,11 @@ class ProductDetailsActivity :
     ) {
         viewDataBinding.tvProductSP.setText(resources.getString(R.string.rupee) + "" + salesPrice)
         viewDataBinding.tvPercentageOffOnSelectedSKU.setText(discountPercentage)
-        if (isMRPVisible) {
+        if (isMRPVisible)
             viewDataBinding.tvProductMRP.visibility = View.VISIBLE
-        } else {
+        else
             viewDataBinding.tvProductMRP.visibility = View.GONE
-        }
+
 
         if (isContactforPriceVisible) {
             viewDataBinding.tvContactForPrice.visibility = View.VISIBLE

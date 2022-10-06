@@ -5,6 +5,6 @@ import android.os.Bundle
 
 interface AddEditProductReviewNavigator :BaseNavigator {
     fun getBundle(): Bundle?
-    fun finishActivity()
     fun finishActivityandRefreshProductDetails()
+    fun enableSubmitButton(enableSubmit: Boolean)
 }

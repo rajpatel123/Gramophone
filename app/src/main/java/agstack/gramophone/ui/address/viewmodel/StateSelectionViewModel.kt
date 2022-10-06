@@ -135,7 +135,7 @@ class StateSelectionViewModel @Inject constructor(
 
     fun updateUI() {
         if (!getNavigator()?.getBundle()?.getString(Constants.CHANGE_STATE).isNullOrEmpty()){
-            getNavigator()?.fetchStateList()
+            fetchStateList()
         }else{
             if (getNavigator()?.checkPermission() == true){
                 getNavigator()?.openAndFinishActivity(AddOrUpdateAddressActivity::class.java,null)

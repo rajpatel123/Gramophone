@@ -34,6 +34,7 @@ public abstract class SharedPreferencesKeys {
     public static final String RefreshDate = "refresh_within";
     public static final String referral_applied = "referral_applied";
     public static final String UUIdKey = "uuid";
+    public static final String IS_ADMIN = "admin";
     public static final String NotificationCount = "notificationCount";
     public static final String CartItemCount = "cartItemCount";
     public static final String ProfileUuid = "profile_uuid";
@@ -100,4 +101,8 @@ public abstract class SharedPreferencesKeys {
     public static final String APP_TOUR_ENABLED="app_tour_enabled";
     @Nullable
     public static final String BANNER_DATA="banner_data";
+    public static final String USERNAME="username";
+    public static final String USER_MOBILE="user_mobile";
+    public static final String USER_IMAGE="user_image";
+    public static final String CUSTOMER_ID="CUSTOMER_ID";
 }

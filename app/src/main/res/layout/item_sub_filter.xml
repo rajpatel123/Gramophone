@@ -2,31 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="horizontal">
 
-    <!--<CheckBox
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:fontFamily="@font/manrope_regular"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="0sp"
-        android:paddingStart="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_10sdp"
-        android:text="Samridhdhie Kit"
-        android:textColor="@color/blakish"
-        android:textSize="14sp" />-->
-
     <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/chkName"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:paddingStart="@dimen/_10sdp"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/_40sdp"
         android:layout_marginStart="14dp"
-        android:paddingEnd="@dimen/_10sdp"
-        android:lineSpacingExtra="0sp"
+        android:button="@drawable/custom_checkbox"
         android:fontFamily="@font/manrope_regular"
-        android:id="@+id/chkPayUsingGramCash"
-        android:text="Samridhdhie Kit"
-        android:button="@drawable/custom_checkbox" />
+        android:lineSpacingExtra="0sp"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        tools:text="Samridhdhie Kit" />
 
 </LinearLayout>

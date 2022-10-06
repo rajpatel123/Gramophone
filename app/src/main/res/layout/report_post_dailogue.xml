@@ -1,127 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/_303sdp"
-    android:orientation="horizontal">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
 
-    <TextView
-        android:id="@+id/tv_del"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="@dimen/_32sdp"
-        android:layout_marginTop="@dimen/_28sdp"
-        android:text="Report Comment/Post"
-        android:textColor="#0638A0"
-        android:textSize="@dimen/_20ssp"
-        android:textStyle="bold" />
-<RadioGroup
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"/>
+        <import type="android.view.View" />
 
-    <RadioButton
-        android:id="@+id/radioBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_26sdp"
-        android:layout_marginTop="@dimen/_68sdp"
-        android:textSize="@dimen/_10sdp" />
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel" />
+    </data>
 
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_55sdp"
-        android:layout_marginTop="@dimen/_64sdp"
-        android:text="Unwanted commercial content or spam"
-        android:textColor="#10203E"
-        android:textSize="@dimen/_16ssp" />
-
-    <RadioButton
-        android:id="@+id/sec_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_26sdp"
-        android:layout_marginTop="@dimen/_108sdp"
-        android:textSize="@dimen/_10sdp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_55sdp"
-        android:layout_marginTop="@dimen/_105sdp"
-        android:text="Pornography or sexually explicit material"
-        android:textColor="#10203E"
-        android:textSize="@dimen/_16ssp" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_26sdp"
-        android:layout_marginTop="@dimen/_148sdp"
-        android:textSize="@dimen/_10sdp" />
-
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_55sdp"
-        android:layout_marginTop="@dimen/_155sdp"
-        android:text="Hate speech or graphic violence"
-        android:textColor="#10203E"
-        android:textSize="@dimen/_16ssp" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_26sdp"
-        android:layout_marginTop="@dimen/_195sdp"
-        android:textSize="@dimen/_10sdp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_55sdp"
-        android:layout_marginTop="@dimen/_200sdp"
-        android:text="Harassment or bullying"
-        android:textColor="#10203E"
-        android:textSize="@dimen/_16ssp" />
-
-
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_230sdp"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        >
+        <LinearLayout
 
-    <TextView
-        android:id="@+id/tv_cancel_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_180sdp"
-        android:layout_marginTop="@dimen/_265sdp"
-        android:text="Cancel"
-        android:textColor="#606774"
-        android:textSize="@dimen/_17ssp"
-        android:textStyle="bold" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/menu_dialog_shape"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            >
 
-    <TextView
-        android:id="@+id/tv_Del_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_22sdp"
-        android:layout_marginTop="@dimen/_265sdp"
-        android:layout_toRightOf="@+id/tv_cancel_box"
-        android:text="Report"
-        android:textColor="#0638A0"
-        android:textSize="@dimen/_17ssp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="Report Comment/Post"
+                android:textColor="@color/brand_color"
+                android:textSize="@dimen/_14ssp"
+                 />
+
+            <RadioGroup
+                android:id="@+id/rbReportReson"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/rbUnwanted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_regular"
+                    android:text="@{viewModel.unWanted}"
+                    android:textSize="@dimen/_10ssp" />
 
 
+                <RadioButton
+                    android:id="@+id/rbSecurity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.harasgStr}"
+
+                    android:fontFamily="@font/manrope_regular"
+
+                    android:textSize="@dimen/_10ssp" />
 
 
+                <RadioButton
+                    android:id="@+id/rbHate"
 
-</RelativeLayout>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.hateStr}"
+
+                    android:fontFamily="@font/manrope_regular"
+                    android:textSize="@dimen/_10ssp" />
+
+
+                <RadioButton
+                    android:id="@+id/rbHarash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.harasgStr}"
+                    android:fontFamily="@font/manrope_regular"
+
+                    android:textSize="@dimen/_10ssp" />
+            </RadioGroup>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/grey" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <TextView
+                    android:id="@+id/tv_cancel_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_18sdp"
+                    android:layout_toStartOf="@+id/tvReport"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:onClick="@{()->viewModel.onCancel()}"
+                    android:text="Cancel"
+                    android:textColor="#606774"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    android:id="@+id/tvReport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:onClick="@{()->viewModel.onReport()}"
+                    android:text="Report"
+                    android:textColor="@color/brand_color"
+                    android:textSize="@dimen/_14ssp" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

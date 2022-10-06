@@ -4,13 +4,14 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentMarketBinding
+import agstack.gramophone.ui.cart.model.CartItem
+import agstack.gramophone.ui.dialog.AppTourDialog
 import agstack.gramophone.ui.home.adapter.*
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.shop.ShopByActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
-import agstack.gramophone.ui.home.view.fragments.market.model.Banner
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,10 +22,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 
 private const val ARG_PARAM1 = "param1"
@@ -44,8 +41,7 @@ class MarketFragment :
     private var param1: String? = null
     private var param2: String? = null
     private val marketFragmentViewModel: MarketFragmentViewModel by viewModels()
-    private var viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    var homeAdapter: HomeAdapter? = null
 
     companion object {
         /**
@@ -93,14 +89,27 @@ class MarketFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpUI()
-        marketFragmentViewModel.getFeaturedProducts(HashMap<Any, Any>())
+        callApi()
+        AppTourDialog().show(childFragmentManager, null)
+    }
+
+    private fun callApi() {
+        marketFragmentViewModel.getHomeData()
+        marketFragmentViewModel.getBanners()
+        marketFragmentViewModel.getFeaturedProducts()
         marketFragmentViewModel.getCategories()
-        marketFragmentViewModel.getCompanies()
-        marketFragmentViewModel.getStores()
         marketFragmentViewModel.getCrops()
+        marketFragmentViewModel.getStores()
+        marketFragmentViewModel.getCompanies()
+        marketFragmentViewModel.getCartProducts()
     }
 
     private fun setUpUI() {
+        binding?.swipeRefresh?.setColorSchemeResources(R.color.blue)
+        binding?.swipeRefresh?.setOnRefreshListener {
+            callApi()
+            binding?.swipeRefresh?.isRefreshing = false
+        }
         binding?.viewAllFeaturedProduct?.setOnClickListener {
             openActivity(FeaturedProductActivity::class.java, null)
         }
@@ -128,15 +137,6 @@ class MarketFragment :
         binding?.rvMandiRates?.setHasFixedSize(true)
         binding?.rvMandiRates?.adapter = MandiRatesAdapter()
 
-        binding?.rvRecentlyViewed?.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        binding?.rvRecentlyViewed?.setHasFixedSize(true)
-        binding?.rvRecentlyViewed?.adapter = RecentlyViewedAdapter()
-
-        binding?.rvCart?.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        binding?.rvCart?.setHasFixedSize(true)
-        binding?.rvCart?.adapter = RecentlyViewedAdapter()
 
         binding?.rvArticles?.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -148,28 +148,34 @@ class MarketFragment :
         binding?.rvPopularProducts?.adapter = PopularProductAdapter()
     }
 
+    override fun setHomeAdapter(adapter: HomeAdapter, onItemClick: (String) -> Unit) {
+        homeAdapter = adapter
+        adapter.onItemClicked = onItemClick
+        binding?.rvHome?.adapter = homeAdapter
+    }
+
+    override fun notifyHomeAdapter(
+        allBannerResponse: BannerResponse?,
+        categoryResponse: CategoryResponse?,
+        allProductsResponse: AllProductsResponse?,
+        cropResponse: CropResponse?,
+        storeResponse: StoreResponse?,
+        companyResponse: CompanyResponse?,
+        cartList: List<CartItem>?,
+    ) {
+        homeAdapter?.notifyAdapterOnDataChange(allBannerResponse,
+            categoryResponse,
+            allProductsResponse,
+            cropResponse,
+            storeResponse,
+            companyResponse,
+            cartList)
+    }
+
     override fun setViewPagerAdapter(bannerList: List<Banner>?) {
         val adapter = ViewPagerAdapter(bannerList!!)
         binding?.viewPager?.adapter = adapter
         binding?.dotsIndicator?.attachTo(binding?.viewPager!!)
-    }
-
-    override fun setFeaturedProductsAdapter(
-        adapter: ProductListAdapter,
-        onProductListItemClick: (ProductData) -> Unit,
-    ) {
-        uiScope.launch {
-            adapter.selectedProduct = onProductListItemClick
-            binding?.rvFeatureProduct?.adapter = adapter
-        }
-    }
-
-    override fun setCategoryAdapter(
-        adapter: ShopByCategoryAdapter,
-        onCategoryClick: (String) -> Unit,
-    ) {
-        adapter.itemClicked = onCategoryClick
-        binding?.rvShopByCat?.adapter = adapter
     }
 
     override fun setCropAdapter(adapter: ShopByCropsAdapter, onItemClick: (String) -> Unit) {
@@ -185,6 +191,14 @@ class MarketFragment :
     override fun setStoreAdapter(adapter: ShopByStoresAdapter, onItemClick: (String) -> Unit) {
         adapter.onItemClicked = onItemClick
         binding?.rvShopByStores?.adapter = adapter
+    }
+
+    override fun setExclusiveBannerAdapter(
+        adapter: ExclusiveBannerAdapter,
+        onItemClick: (String) -> Unit,
+    ) {
+        adapter.itemClicked = onItemClick
+        binding?.rvExclusive?.adapter = adapter
     }
 
     override fun startProductDetailsActivity(it: ProductData) {

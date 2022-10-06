@@ -11,22 +11,22 @@ import agstack.gramophone.ui.address.model.AddressDataModel
 import agstack.gramophone.ui.address.viewmodel.AddOrUpdateAddressViewModel
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.utils.Constants
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
-import android.location.Address
-import android.location.Geocoder
-import android.location.Location
-import android.location.LocationManager
+import android.Manifest
 import android.os.Bundle
-import android.provider.Settings
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_or_update_address.*
 import java.util.*
+
 
 @AndroidEntryPoint
 class AddOrUpdateAddressActivity :
@@ -43,6 +43,7 @@ class AddOrUpdateAddressActivity :
                 intent?.extras?.get(Constants.STATE_IMAGE_URL) as String
             )
         }
+        watchSpinners()
     }
 
     override fun getLayoutID(): Int {
@@ -59,6 +60,119 @@ class AddOrUpdateAddressActivity :
     }
 
 
+    fun watchSpinners(){
+        districtSpinner.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            }
+            override fun afterTextChanged(s: Editable) {
+                districtSpinner.threshold = 1
+                addOrUpdateAddressViewModel.tehsilName.set("")
+                addOrUpdateAddressViewModel.villageName.set("")
+                addOrUpdateAddressViewModel.pinCode.set("")
+                tehsilSpinner.setAdapter(null)
+                villageNameSpinner.setAdapter(null)
+                pincodeSpinner.setAdapter(null)
+
+                if (TextUtils.isEmpty(s)){
+                    addOrUpdateAddressViewModel.getDistrict(
+                        "district",
+                        addOrUpdateAddressViewModel.stateNameStr.get()!!,
+                        "",
+                        ""
+                    )
+                }
+            }
+        })
+
+        tehsilSpinner.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            }
+            override fun afterTextChanged(s: Editable) {
+                tehsilSpinner.threshold = 1
+                addOrUpdateAddressViewModel.villageName.set("")
+                addOrUpdateAddressViewModel.pinCode.set("")
+                villageNameSpinner.setAdapter(null)
+                pincodeSpinner.setAdapter(null)
+
+                if (TextUtils.isEmpty(s)){
+                    addOrUpdateAddressViewModel.getTehsil(
+                        "tehsil",
+                        addOrUpdateAddressViewModel.stateNameStr.get()!!,
+                        addOrUpdateAddressViewModel.districtName.get()!!,
+                        ""
+                    )
+                }
+            }
+        })
+        villageNameSpinner.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            }
+            override fun afterTextChanged(s: Editable) {
+                villageNameSpinner.threshold = 1
+                addOrUpdateAddressViewModel.pinCode.set("")
+                pincodeSpinner.setAdapter(null)
+
+                if (TextUtils.isEmpty(s)){
+                    addOrUpdateAddressViewModel.getVillage(
+                        "village",
+                        addOrUpdateAddressViewModel.stateNameStr.get()!!,
+                        addOrUpdateAddressViewModel.districtName.get()!!,
+                        addOrUpdateAddressViewModel.tehsilName.get()!!,
+                        ""
+                        )
+                }
+            }
+        })
+        pincodeSpinner.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            }
+            override fun afterTextChanged(s: Editable) {
+                pincodeSpinner.threshold = 1
+
+                if (TextUtils.isEmpty(s)){
+                    addOrUpdateAddressViewModel.getPinCode(
+                        "pincode",
+                        addOrUpdateAddressViewModel.stateNameStr.get()!!,
+                        addOrUpdateAddressViewModel.districtName.get()!!,
+                        addOrUpdateAddressViewModel.tehsilName.get()!!,
+                        addOrUpdateAddressViewModel.villageName.get()!!,
+
+                        )
+                }
+            }
+        })
+
+    }
+
+
     //Can be improved
     override fun updateDistrict(
         adapter: AddressDataListAdapter,
@@ -69,6 +183,7 @@ class AddOrUpdateAddressActivity :
         districtSpinner.setOnClickListener {
             districtSpinner.threshold = 1
         }
+
     }
 
     override fun updateTehsil(
@@ -80,6 +195,7 @@ class AddOrUpdateAddressActivity :
         tehsilSpinner.setOnClickListener {
             tehsilSpinner.threshold = 1
         }
+
     }
 
     override fun updateVillage(
@@ -91,6 +207,7 @@ class AddOrUpdateAddressActivity :
         villageNameSpinner.setOnClickListener {
             villageNameSpinner.threshold = 1
         }
+
     }
 
     override fun updatePinCode(
@@ -104,6 +221,48 @@ class AddOrUpdateAddressActivity :
         }
     }
 
+    override fun setStateImage(imageUrl: String) {
+        Glide.with(this).load(imageUrl).into(ivStateImage)
+    }
+
+    override fun requestForLocation() {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),1)
+    }
+
+    override fun updateUi() {
+        if (intent?.extras?.containsKey(Constants.STATE) == true) {
+            addOrUpdateAddressViewModel.setStatesName(
+                intent?.extras?.get(Constants.STATE) as String,
+                intent?.extras?.get(Constants.STATE_IMAGE_URL) as String
+            )
+            addOrUpdateAddressViewModel.getDistrict(
+                "district",
+                intent?.extras?.get(Constants.STATE) as String,
+                "",
+                ""
+            )
+        } else {
+            addOrUpdateAddressViewModel.getAddressByLocation()
+        }
+
+        if (intent?.extras?.containsKey(Constants.FROM_EDIT_PROFILE) == true) {
+
+            viewDataBinding.ivBack.visibility = View.VISIBLE
+            viewDataBinding.saveBtn.visibility=View.VISIBLE
+            if(intent?.extras?.containsKey(Constants.ADDRESSOBJECT)==true){
+                val addressReceivedfromBundle =
+                    intent?.getParcelableExtra<agstack.gramophone.ui.profile.model.UserAddress>(
+                        Constants.ADDRESSOBJECT
+                    )
+                mViewModel?.setAddressdata(addressReceivedfromBundle!!)
+            }
+
+
+        } else {
+            viewDataBinding.ivBack.visibility = View.GONE
+            viewDataBinding.saveBtn.visibility=View.GONE
+        }
+    }
 
     override fun goToApp() {
         //add check here , if intent from Edit Profile then just finish this activity else
@@ -161,29 +320,7 @@ class AddOrUpdateAddressActivity :
 
     override fun onResume() {
         super.onResume()
-        if (intent?.extras?.containsKey(Constants.STATE) == true) {
-            addOrUpdateAddressViewModel.setStatesName(
-                intent?.extras?.get(Constants.STATE) as String,
-                intent?.extras?.get(Constants.STATE_IMAGE_URL) as String
-            )
-            addOrUpdateAddressViewModel.getDistrict(
-                "district",
-                intent?.extras?.get(Constants.STATE) as String,
-                "",
-                ""
-            )
-        } else {
-            addOrUpdateAddressViewModel.getAddressByLocation()
-        }
-
-        if (intent?.extras?.containsKey(Constants.FROM_EDIT_PROFILE) == true) {
-            viewDataBinding.ivBack.visibility = View.VISIBLE
-            viewDataBinding.saveBtn.visibility=View.VISIBLE
-
-        } else {
-            viewDataBinding.ivBack.visibility = View.GONE
-            viewDataBinding.saveBtn.visibility=View.GONE
-        }
+        addOrUpdateAddressViewModel.checkPermissionAndUpdateUi()
     }
 
     override fun onBackPressClick() {

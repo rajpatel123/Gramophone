@@ -54,7 +54,8 @@
             android:layout_toEndOf="@+id/ivProduct"
             android:numStars="5"
             android:rating="3"
-            android:stepSize="1" />
+            android:stepSize="1"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tvSellingPrice"
@@ -121,6 +122,7 @@
 
 
         <View
+            android:layout_below="@+id/tvAddToCart"
             android:id="@+id/itemSeparator"
             android:layout_width="match_parent"
             android:layout_height="1dp"
