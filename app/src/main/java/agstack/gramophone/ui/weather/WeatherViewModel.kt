@@ -48,7 +48,7 @@ class WeatherViewModel @Inject constructor(
         isRainView.value = isRainView.value != true
     }
 
-    private fun fetchWeatherDetail() {
+    fun getWeatherDetail() {
         val weatherRequest = WeatherRequest(null, null, null, null)
         viewModelScope.launch {
             try {
@@ -79,7 +79,7 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
-    private fun fetchWeatherDetailHourly() {
+    fun getWeatherDetailHourly() {
         val weatherRequest = WeatherRequest(null, null, null, null)
         viewModelScope.launch {
             try {
@@ -104,7 +104,7 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
-    private fun fetchWeatherDetailDayWise() {
+    fun getWeatherDetailDayWise() {
         val weatherRequest = WeatherRequest(null, null, null, null)
         viewModelScope.launch {
             try {

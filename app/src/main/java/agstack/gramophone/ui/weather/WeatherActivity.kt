@@ -29,6 +29,9 @@ class WeatherActivity :
     private fun setupUi() {
         viewDataBinding.tvChangeLoc.setOnClickListener(this)
         weatherViewModel.getWeatherData()
+        weatherViewModel.getWeatherDetail()
+        weatherViewModel.getWeatherDetailHourly()
+        weatherViewModel.getWeatherDetailDayWise()
     }
 
     override fun setToolbarTitle(title: String) {
