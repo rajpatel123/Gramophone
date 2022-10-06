@@ -5,6 +5,7 @@ import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
+import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferRequest
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
@@ -77,4 +78,6 @@ interface ProductRepository {
     suspend fun getFeaturedProducts(pageLimitRequest: PageLimitRequest): Response<AllProductsResponse>
 
     suspend fun getApplicableOffersOnProduct(applicableOfferRequest: ApplicableOfferRequest): Response<ApplicableOfferResponse>
+
+    suspend fun checkPromotionOnProduct(verifyPromotionRequestModel: VerifyPromotionRequestModel): Response<CheckPromotionResponseModel>
 }

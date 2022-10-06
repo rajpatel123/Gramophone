@@ -200,7 +200,7 @@
                             android:layout_marginLeft="@dimen/_7sdp"
                             android:background="@drawable/strike_through"
                             android:gravity="center"
-                            android:text="@{viewModel.selectedSkuListItem.mrpPrice}"
+                            android:text="@{viewModel.selectedSkuListItem.mrpPrice.toString()}"
                             android:textColor="@color/oldmrpcolor"
                             android:textSize="@dimen/_12ssp"
                             tools:text="₹1,290" />
