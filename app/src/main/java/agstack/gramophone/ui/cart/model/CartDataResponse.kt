@@ -8,7 +8,7 @@ data class CartDataResponse(
     val gp_api_message: String,
     val gp_api_response_data: GpApiResponseData,
     val gp_api_status: String,
-    val gp_api_trace: GpApiTrace
+    val gp_api_trace: GpApiTrace,
 )
 
 class GpApiErrorData
@@ -23,13 +23,13 @@ data class GpApiResponseData(
     val promotional_discount_total: Int,
     val sub_total: Int,
     val total: Int,
-    val total_discount: Int
+    val total_discount: Int,
 )
 
 data class GpApiTrace(
     val gp_language: String,
     val gp_request_id: String,
-    val gp_trace_id: String
+    val gp_trace_id: String,
 )
 
 data class CartItem(
@@ -55,7 +55,7 @@ data class CartItem(
     val selling_price: String,
     val sgst_percent: String,
     val shipping_details: ShippingDetails,
-    val unit_selling_price: String
+    val unit_selling_price: String,
 )
 
 data class OfferApplied(
@@ -64,11 +64,11 @@ data class OfferApplied(
     val offer_name: String,
     val pay_total: String,
     val valid_on_sku: String,
-    val valid_till: String
+    val valid_till: String,
 )
 
 data class ShippingDetails(
     val cash_on_delivery: String,
     val free_shipping: String,
-    val shipping_cost: String
+    val shipping_cost: String,
 )

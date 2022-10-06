@@ -39,6 +39,10 @@ import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.ui.userprofile.verifyotp.model.VerifyOTPRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
+import agstack.gramophone.ui.weather.model.WeatherForecastDetailResponse
+import agstack.gramophone.ui.weather.model.WeatherForecastSummaryResponse
+import agstack.gramophone.ui.weather.model.WeatherRequest
+import agstack.gramophone.ui.weather.model.WeatherResponse
 import agstack.gramophone.utils.Constants
 import retrofit2.Response
 import retrofit2.http.*
@@ -254,4 +258,23 @@ interface GramAppService {
     suspend fun getApplicableOffersOnProduct(
         @Body applicableOfferRequest: ApplicableOfferRequest,
     ): Response<ApplicableOfferResponse>
+
+    @GET("api/v5/category/stores/{store_id}")
+    suspend fun getStoresFilterData(@Path("store_id") storeId: String): Response<SubCategoryResponse>
+
+    @POST("api/v5/weather/")
+    suspend fun getWeatherDetails(
+        @Body weatherRequest: WeatherRequest,
+    ): Response<WeatherResponse>
+
+    @POST("api/v5/weather/forecast-detail")
+    suspend fun getWeatherForeCastDetailHourly(
+        @Body weatherRequest: WeatherRequest,
+    ): Response<WeatherForecastDetailResponse>
+
+    @POST("weather/forecast-summary")
+    suspend fun getWeatherForecastSummaryDayWise(
+        @Body weatherRequest: WeatherRequest,
+    ): Response<WeatherForecastSummaryResponse>
+
 }

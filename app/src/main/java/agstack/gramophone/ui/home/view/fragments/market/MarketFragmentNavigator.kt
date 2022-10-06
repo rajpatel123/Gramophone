@@ -30,11 +30,6 @@ interface MarketFragmentNavigator : BaseNavigator {
         onItemClick: (String) -> Unit,
     )
 
-    fun setStoreAdapter(
-        adapter: ShopByStoresAdapter,
-        onItemClick: (String) -> Unit,
-    )
-
     fun setCropAdapter(
         adapter: ShopByCropsAdapter,
         onItemClick: (String) -> Unit,

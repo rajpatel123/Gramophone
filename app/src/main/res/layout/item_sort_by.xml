@@ -13,11 +13,11 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/item"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:id="@+id/rlSortItem"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:orientation="horizontal"
@@ -29,9 +29,10 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:gravity="center_vertical"
                 android:id="@+id/tvSortingType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/manrope_medium"
                 android:lineSpacingExtra="1sp"

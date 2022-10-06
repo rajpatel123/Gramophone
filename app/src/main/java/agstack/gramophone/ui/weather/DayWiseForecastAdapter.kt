@@ -2,13 +2,14 @@ package agstack.gramophone.ui.weather
 
 
 import agstack.gramophone.databinding.ItemDayWiseForecastBinding
+import agstack.gramophone.ui.weather.model.Day
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import javax.inject.Singleton
 
 @Singleton
-class DayWiseForecastAdapter() :
+class DayWiseForecastAdapter(private val dayWiseForecastList: List<Day>) :
     RecyclerView.Adapter<DayWiseForecastAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
@@ -18,10 +19,11 @@ class DayWiseForecastAdapter() :
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+        holder.binding.model = dayWiseForecastList[position]
     }
 
     override fun getItemCount(): Int {
-        return 10
+        return dayWiseForecastList.size
     }
 
     override fun getItemId(position: Int): Long {

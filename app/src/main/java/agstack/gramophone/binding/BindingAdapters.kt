@@ -285,7 +285,11 @@ fun mrpPriceVisibility(
     textView: TextView, mrp_price: Float, sales_price: Float,
 ) {
     try {
-        if (mrp_price == sales_price) {
+        if (mrp_price == 0f) {
+            textView.visibility = View.GONE
+        } else if (mrp_price == sales_price) {
+            textView.visibility = View.GONE
+        } else if (mrp_price < sales_price) {
             textView.visibility = View.GONE
         } else {
             textView.visibility = View.VISIBLE

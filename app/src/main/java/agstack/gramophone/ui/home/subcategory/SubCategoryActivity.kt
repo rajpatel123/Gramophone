@@ -53,16 +53,8 @@ class SubCategoryActivity :
         disableSortAndFilter()
         viewDataBinding.tvSortBy.setOnClickListener(this)
         viewDataBinding.tvFilter.setOnClickListener(this)
-
-
         viewDataBinding.dotsIndicator.setOnClickListener { }
-    }
 
-    private fun setUpStoreCollapsing() {
-
-    }
-
-    private fun setUpCategoryCollapsing() {
         viewDataBinding.toolbar.inflateMenu(R.menu.menu_search_and_cart)
         viewDataBinding.toolbar.setOnMenuItemClickListener { menuItem ->
             onOptionsItemSelected(menuItem)
@@ -71,14 +63,14 @@ class SubCategoryActivity :
         viewDataBinding.appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
             //Check if the view is collapsed
             if (abs(verticalOffset) >= viewDataBinding.appbar.totalScrollRange) {
-                viewDataBinding.collapsingToolbarCategory.title = subCategoryViewModel.categoryName.value
-                viewDataBinding.collapsingToolbarCategory.setCollapsedTitleTextColor(ContextCompat.getColor(
+                viewDataBinding.collapsingToolbar.title = subCategoryViewModel.toolbarTitle.value
+                viewDataBinding.collapsingToolbar.setCollapsedTitleTextColor(ContextCompat.getColor(
                     this,
                     R.color.blakish))
-                viewDataBinding.collapsingToolbarCategory.frameToolbarImage.visibility = View.VISIBLE
+                viewDataBinding.collapsingToolbar.frameToolbarImage.visibility = View.VISIBLE
             } else {
-                viewDataBinding.collapsingToolbarCategory.title = ""
-                viewDataBinding.collapsingToolbarCategory.frameToolbarImage.visibility = View.GONE
+                viewDataBinding.collapsingToolbar.title = ""
+                viewDataBinding.collapsingToolbar.frameToolbarImage.visibility = View.GONE
             }
         })
     }
@@ -140,14 +132,15 @@ class SubCategoryActivity :
         return true
     }
 
-    override fun showStoreCollapsing() {
-        viewDataBinding.collapsingToolbarStore.visibility = View.VISIBLE
-        viewDataBinding.collapsingToolbarCategory.visibility = View.GONE
+    override fun showCategoryCollapsing() {
+        viewDataBinding.rlCategory.visibility = View.VISIBLE
+        viewDataBinding.tvStoreName.visibility = View.GONE
     }
 
-    override fun showCategoryCollapsing() {
-        viewDataBinding.collapsingToolbarStore.visibility = View.GONE
-        viewDataBinding.collapsingToolbarCategory.visibility = View.VISIBLE
+    override fun showStoreCollapsing() {
+        viewDataBinding.rlCategory.visibility = View.GONE
+        viewDataBinding.tvStoreName.visibility = View.VISIBLE
+        viewDataBinding.tvStoreName.text = getString(R.string.pesticides)
     }
 
     override fun disableSortAndFilter() {

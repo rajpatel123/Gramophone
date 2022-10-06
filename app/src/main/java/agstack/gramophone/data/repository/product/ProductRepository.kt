@@ -77,4 +77,6 @@ interface ProductRepository {
     suspend fun getFeaturedProducts(pageLimitRequest: PageLimitRequest): Response<AllProductsResponse>
 
     suspend fun getApplicableOffersOnProduct(applicableOfferRequest: ApplicableOfferRequest): Response<ApplicableOfferResponse>
+
+    suspend fun getStoresFilterData(storeId: String): Response<SubCategoryResponse>
 }

@@ -38,9 +38,9 @@ interface SubCategoryNavigator : BaseNavigator {
         errorMsg: String,
     )
 
-    fun showStoreCollapsing()
-
     fun showCategoryCollapsing()
+
+    fun showStoreCollapsing()
 
     fun disableSortAndFilter()
 

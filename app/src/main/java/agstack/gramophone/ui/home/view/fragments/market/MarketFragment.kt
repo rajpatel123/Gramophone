@@ -188,11 +188,6 @@ class MarketFragment :
         binding?.rvShopByCompany?.adapter = adapter
     }
 
-    override fun setStoreAdapter(adapter: ShopByStoresAdapter, onItemClick: (String) -> Unit) {
-        adapter.onItemClicked = onItemClick
-        binding?.rvShopByStores?.adapter = adapter
-    }
-
     override fun setExclusiveBannerAdapter(
         adapter: ExclusiveBannerAdapter,
         onItemClick: (String) -> Unit,

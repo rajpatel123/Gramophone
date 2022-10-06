@@ -2,13 +2,15 @@ package agstack.gramophone.ui.weather
 
 
 import agstack.gramophone.databinding.ItemHourWiseForecastBinding
+import agstack.gramophone.ui.weather.model.Day
+import agstack.gramophone.ui.weather.model.Time
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import javax.inject.Singleton
 
 @Singleton
-class HourWiseForecastAdapter() :
+class HourWiseForecastAdapter(private val hourWiseForecastList: List<Time>) :
     RecyclerView.Adapter<HourWiseForecastAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
@@ -18,10 +20,11 @@ class HourWiseForecastAdapter() :
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+        holder.binding.model = hourWiseForecastList[position]
     }
 
     override fun getItemCount(): Int {
-        return 10
+        return hourWiseForecastList.size
     }
 
     override fun getItemId(position: Int): Long {

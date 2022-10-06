@@ -211,11 +211,13 @@ class HomeAdapter(
                     val tempStoreList: List<StoreData> = if (storeList.size >= 4)
                         storeList.subList(0, 4)
                     else storeList
-                    val storeAdapter = ShopByStoresAdapter(tempStoreList) {
+                    val storeAdapter = ShopByStoresAdapter(tempStoreList) { id, name, image ->
                         openActivity(holder.itemView.context,
-                            ShopByDetailActivity::class.java,
+                            SubCategoryActivity::class.java,
                             Bundle().apply {
-                                putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
+                                putString(Constants.STORE_ID, id)
+                                putString(Constants.STORE_NAME, name)
+                                putString(Constants.STORE_IMAGE, image)
                             })
                     }
                     holder.binding.rvShopByStore.adapter = storeAdapter

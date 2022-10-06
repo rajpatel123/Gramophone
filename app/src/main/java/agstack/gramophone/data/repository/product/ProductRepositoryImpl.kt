@@ -229,4 +229,12 @@ class ProductRepositoryImpl @Inject constructor(
         val response = gramoAppService.getApplicableOffersOnProduct(applicableOfferRequest)
         response
     }
+
+    override suspend fun getStoresFilterData(storeId: String): Response<SubCategoryResponse> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val subCategoryResponse = gramoAppService.getStoresFilterData(storeId)
+            subCategoryResponse
+        }
 }
