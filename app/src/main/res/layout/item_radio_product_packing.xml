@@ -67,7 +67,10 @@
                 android:textColor="@color/green_medium"
                 android:textSize="@dimen/_16ssp"
                 tools:text="₹ 900" />
-            <!--android:text="@{`₹`+ model.mrpPrice.toString() }"-->
+
+            <!--   android:visibility="@{model.mrpPrice!=null? View.VISIBLE:View.INVISIBLE}"
+                android:text="@{model.mrpPrice.toString()}"-->
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

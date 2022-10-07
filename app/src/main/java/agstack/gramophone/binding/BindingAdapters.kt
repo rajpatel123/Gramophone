@@ -300,20 +300,24 @@ fun mrpPriceVisibility(
 
 @BindingAdapter(value = ["sku_mrp_price", "sku_sales_price"], requireAll = true)
 fun setPriceAndVisibility(
-    textView: TextView, mrp_price: String? = null, sales_price: String? = null,
+    textView: TextView, mrp_price: Double? = null, sales_price: String? = null,
 ) {
     try {
-        if (mrp_price.isNullOrEmpty() && sales_price.isNullOrEmpty()) {
-            textView.visibility = View.GONE
-        } else if (mrp_price.isNullOrEmpty() && !sales_price.isNullOrEmpty()) {
+        if (mrp_price==null && sales_price.isNullOrEmpty()) {
+            textView.visibility = View.INVISIBLE
+        } else if (mrp_price==null && !sales_price.isNullOrEmpty()) {
             textView.text = "₹ " + sales_price.toString()
             textView.visibility = View.VISIBLE
-        } else if (sales_price.isNullOrEmpty() && !mrp_price.isNullOrEmpty()) {
+        } else if (sales_price.isNullOrEmpty() && mrp_price!=null) {
+            textView.text = "₹ " + mrp_price.toString()
+            textView.visibility = View.VISIBLE
+        }
+        else if (!sales_price.isNullOrEmpty() && mrp_price!=null) {
             textView.text = "₹ " + mrp_price.toString()
             textView.visibility = View.VISIBLE
         }
     } catch (e: Exception) {
-        textView.visibility = View.GONE
+        textView.visibility = View.INVISIBLE
     }
 }
 
