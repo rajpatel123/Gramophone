@@ -79,6 +79,13 @@ object Constants {
     val REQUEST_CAMERA = 1012
     val REQUEST_GALLERY = 1013
 
+
+    val IV_ONE = 10131
+    val IV_TWO = 10132
+    val IV_THREE = 10133
+
+
+
     //sortBy options
     val TOP = "top"
     val RECENT = "recent"

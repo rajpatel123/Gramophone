@@ -1,6 +1,8 @@
 package agstack.gramophone.data.repository.community
 
 import agstack.gramophone.di.CommunityApiService
+import agstack.gramophone.ui.comments.model.CommentsResponseModel
+import agstack.gramophone.ui.comments.model.sendcomment.GetCommentRequestModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.BookmarkPostResponse
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikePostResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedusersResponseModel
@@ -9,16 +11,16 @@ import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.block.BlockResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.follow.FollowResponseModel
 import agstack.gramophone.ui.postdetails.model.PostDetailResponseModel
-import agstack.gramophone.ui.comments.model.CommentsResponseModel
+import agstack.gramophone.ui.comments.model.sendcomment.SendCommentResponseModel
 import agstack.gramophone.ui.othersporfile.model.CommunityUserPostRequestModel
 import agstack.gramophone.ui.othersporfile.model.ProfileDataResponse
 import agstack.gramophone.ui.userprofile.model.TestUserModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Part
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -86,7 +88,7 @@ class CommunityRepositoryImpl @Inject constructor(
             appData
         }
 
-    override suspend fun getPostComments(id: PostRequestModel): Response<CommentsResponseModel> =
+    override suspend fun getPostComments(id: GetCommentRequestModel): Response<CommentsResponseModel> =
         withContext(
             Dispatchers.IO
         ) {
@@ -145,6 +147,23 @@ class CommunityRepositoryImpl @Inject constructor(
     override suspend fun getProfileData(uuid: String): Response<ProfileDataResponse> = withContext(
         Dispatchers.IO) {
         val userData = communityApiService.getProfileData(uuid)
+        userData
+    }
+
+    override suspend fun postComment(postId: RequestBody, text: RequestBody, tags: RequestBody,): Response<SendCommentResponseModel> = withContext(
+        Dispatchers.IO) {
+        val userData = communityApiService.postComment(postId,text,tags)
+        userData
+    }
+
+    override suspend fun postComment(
+        postId: RequestBody,
+        text: RequestBody,
+        tags: RequestBody,
+        postImage: MultipartBody.Part
+    ): Response<SendCommentResponseModel> = withContext(
+        Dispatchers.IO) {
+        val userData = communityApiService.postComment(postId,text,tags,postImage)
         userData
     }
 

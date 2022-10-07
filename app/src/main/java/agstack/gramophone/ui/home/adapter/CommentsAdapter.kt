@@ -5,11 +5,13 @@ import agstack.gramophone.databinding.ItemCommentsBinding
 import agstack.gramophone.ui.comments.model.Data
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class CommentsAdapter(val items: List<Data>?) :
+class CommentsAdapter(val items:List<Data>?) :
     RecyclerView.Adapter<CommentsAdapter.CardViewHolder>() {
     lateinit var context: Context
     var onItemCommentsClicked: ((commentId: String) -> Unit)? = null
@@ -30,6 +32,15 @@ class CommentsAdapter(val items: List<Data>?) :
             Glide.with(context).load(comment?.author?.photoUrl).into(holder.binding.ivProfileImage1)
 
         }
+
+        if (comment?.image != null) {
+            Glide.with(context).load(comment?.image).into(holder.binding.commentImage)
+            holder.binding.imageContainer.visibility=VISIBLE
+        }else{
+            holder.binding.imageContainer.visibility= GONE
+        }
+
+
 
 
     }

@@ -15,7 +15,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
+<ProgressBar
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/progressBar"
+    android:visibility="@{viewModel.isLoading?View.VISIBLE:View.GONE}"
+    android:layout_centerInParent="true"/>
         <RelativeLayout
             android:id="@+id/rlHeader"
             android:layout_width="match_parent"
@@ -30,7 +35,7 @@
                 android:layout_marginEnd="22dp"
                 android:fontFamily="@font/manrope_bold"
                 android:lineSpacingExtra="0sp"
-                android:text="@{String.format(@string/comments,viewModel.commentsCount)}"
+                android:text="@={viewModel.commentsCount}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16ssp"
                 android:translationY="-0.24sp" />
@@ -66,6 +71,41 @@
             android:layout_above="@+id/addComment"
             android:layout_below="@+id/separator" />
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvPostImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_300sdp"
+            android:layout_above="@+id/addComment"
+            android:minHeight="@dimen/_200sdp"
+            app:cardCornerRadius="@dimen/_2sdp"
+            android:visibility="gone"
+            >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="@dimen/_2sdp"
+                >
+
+            <ImageView
+                android:id="@+id/deleteImage"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="end"
+                android:elevation="@dimen/_2sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:onClick="@{()->viewModel.deleteImage()}"
+                app:srcCompat="@drawable/ic_image_delete" />
+
+                <ImageView
+                android:id="@+id/postImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                 />
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/addComment"
             android:layout_width="match_parent"
@@ -98,9 +138,10 @@
                         android:layout_marginStart="@dimen/_2sdp"
                         android:background="@null"
                         android:hint="Write a comment..."
+                        android:maxLength="300"
                         android:paddingEnd="@dimen/_40sdp"
                         android:singleLine="true"
-                        android:textColor="@color/grey" />
+                        android:text="@={viewModel.commentInput}" />
 
                     <ImageView
                         android:id="@+id/ivCameraButton"
@@ -109,14 +150,18 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         app:srcCompat="@drawable/ic_camera"
+                        android:onClick="@{()->viewModel.captureImage()}"
+
                         app:tint="@color/grey" />
                 </RelativeLayout>
 
                 <ImageView
+                    android:id="@+id/ivSendComment"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_50sdp"
                     android:layout_weight=".15"
                     android:minHeight="@dimen/_40sdp"
+                    android:onClick="@{()->viewModel.sendComment()}"
                     android:layout_marginEnd="@dimen/_10sdp"
                     app:srcCompat="@drawable/ic_send" />
             </LinearLayout>

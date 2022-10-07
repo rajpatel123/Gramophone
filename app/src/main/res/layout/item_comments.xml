@@ -31,74 +31,91 @@
             app:civ_border_color="@color/white"
             app:civ_border_width="2dp" />
 
-        <RelativeLayout
-            android:id="@+id/rel_expert"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/ivProfileImage1"
-            android:layout_marginStart="@dimen/_30sdp"
-            android:background="@drawable/expert_rel_bg"
-            android:padding="@dimen/_4ssp">
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:layout_marginStart="@dimen/_30sdp"
+           android:layout_alignLeft="@+id/ivProfileImage1"
+           >
+           <RelativeLayout
+               android:id="@+id/rel_expert"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="@drawable/expert_rel_bg"
+               android:padding="@dimen/_4ssp">
 
-            <TextView
-                android:id="@+id/tvName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:fontFamily="@font/manrope_bold"
-                android:text="@{model.author.username}"
-                android:textColor="@color/blue"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="bold"
-                tools:text="Jacob Rana" />
+               <TextView
+                   android:id="@+id/tvName"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="@dimen/_2sdp"
+                   android:fontFamily="@font/manrope_bold"
+                   android:text="@{model.author.username}"
+                   android:textColor="@color/blue"
+                   android:textSize="@dimen/_14ssp"
+                   android:textStyle="bold"
+                   tools:text="Jacob Rana" />
 
-            <TextView
+               <TextView
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_toEndOf="@+id/tvName"
-                android:background="@drawable/expert_bg"
-                android:fontFamily="@font/manrope_medium"
-                android:padding="@dimen/_3sdp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_5ssp"
-                android:textStyle="bold"
-                tools:text="EXPERT" />
-
-
-            <TextView
-                android:id="@+id/tv_long_desc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvName"
-                android:fontFamily="@font/manrope_light"
-                android:padding="@dimen/_5sdp"
-                android:text="@{model.text}"
-
-                android:textSize="@dimen/_14sdp" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_long_desc"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:adjustViewBounds="true" />
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="@dimen/_2sdp"
+                   android:layout_marginTop="@dimen/_5sdp"
+                   android:layout_toEndOf="@+id/tvName"
+                   android:background="@drawable/expert_bg"
+                   android:fontFamily="@font/manrope_medium"
+                   android:padding="@dimen/_3sdp"
+                   android:textColor="@color/white"
+                   android:textSize="@dimen/_5ssp"
+                   android:textStyle="bold"
+                   android:visibility="invisible"
+                   tools:text="EXPERT" />
 
 
-        </RelativeLayout>
+               <TextView
+                   android:id="@+id/tv_long_desc"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_below="@+id/tvName"
+                   android:fontFamily="@font/manrope_light"
+                   android:padding="@dimen/_5sdp"
+                   android:text="@{model.text}"
 
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rel_expert"
-            android:layout_marginLeft="@dimen/_40sdp"
-            android:layout_marginTop="@dimen/_8ssp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:text="@{model.commentDuration}"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/_15sdp" />
+                   android:textSize="@dimen/_14sdp" />
+
+               <ImageView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_below="@+id/tv_long_desc"
+                   android:layout_marginTop="@dimen/_10sdp"
+                   android:adjustViewBounds="true" />
+
+
+           </RelativeLayout>
+           <androidx.cardview.widget.CardView
+               android:id="@+id/imageContainer"
+               android:layout_width="@dimen/_120sdp"
+               android:layout_height="@dimen/_140sdp"
+               android:layout_marginTop="@dimen/_10sdp"
+               android:layout_marginBottom="@dimen/_5sdp"
+               app:cardCornerRadius="@dimen/_10sdp">
+               <ImageView
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:id="@+id/commentImage"/>
+           </androidx.cardview.widget.CardView>
+           <TextView
+               android:id="@+id/tv_time"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_below="@+id/rel_expert"
+               android:layout_marginTop="@dimen/_8ssp"
+               android:layout_marginBottom="@dimen/_10sdp"
+               android:text="@{model.commentDuration}"
+               android:textColor="@color/gray"
+               android:textSize="@dimen/_15sdp" />
+       </LinearLayout>
     </RelativeLayout>
 </layout>

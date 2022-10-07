@@ -473,4 +473,6 @@
     <string name="no_offers_found">No Offers Available</string>
     <string name="add_address">+ Add Address</string>
     <string name="na">--</string>
+    <string name="create_post">Create a Post</string>
+    <string name="enter_description">Please enter some comment</string>
 </resources>

@@ -18,5 +18,8 @@ data class ProfileData(
     val totalFollowees: Int,
     val totalFollowers: Int,
     val username: String,
-    val uuid: String
+    val uuid: String,
+    val firm: String?="--",
+    val mandi: String?="--"
+
 )

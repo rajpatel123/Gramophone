@@ -37,13 +37,18 @@ import javax.inject.Inject
 class CommunityViewModel @Inject constructor(
     private val communityRepository: CommunityRepository
 ) : BaseViewModel<CommunityFragmentNavigator>() {
-    var profileData=  ObservableField<ProfileData>()
+    var profileData = ObservableField<ProfileData>()
     lateinit var postId: String
+    var block = "block"
     private lateinit var menuClickedData: Data
     lateinit var mAlertDialog: AlertDialog
     var sorting = ObservableField<String>()
 
+    var blockStr = ObservableField<String>()
+    var phoneNo = ObservableField<String>()
     var hateStr = ObservableField<String>()
+    var firm = ObservableField<String>()
+    var mandi = ObservableField<String>()
     var harasgStr = ObservableField<String>()
     var unWanted = ObservableField<String>()
     var followers = ObservableField<String>()
@@ -52,6 +57,7 @@ class CommunityViewModel @Inject constructor(
     var showProgress = ObservableField<Boolean>()
     var following = ObservableField<Boolean>()
     var menuVisible = ObservableField<Boolean>()
+    var isAdmin = ObservableField<Boolean>()
     var limit = ObservableField<Int>()
     lateinit var uuid: String
     lateinit var id: String
@@ -136,6 +142,7 @@ class CommunityViewModel @Inject constructor(
     }
 
     fun getProfile() {
+        blockStr.set("Block User")
         showProgress.set(true)
         viewModelScope.launch {
 
@@ -146,12 +153,29 @@ class CommunityViewModel @Inject constructor(
                     showProgress.set(false)
                     if (response.isSuccessful) {
                         profileData.set(response.body()?.data!!)
-                        if (!TextUtils.isEmpty(""+response.body()?.data?.photoUrl))
-                        getNavigator()?.setProfileImage(""+response.body()?.data?.photoUrl)
+                        if (!TextUtils.isEmpty("" + response.body()?.data?.photoUrl))
+                            getNavigator()?.setProfileImage("" + response.body()?.data?.photoUrl)
 
                         following.set(profileData.get()?.following)
+                        if (TextUtils.isEmpty(profileData.get()?.firm)) {
+                            firm.set("--")
+                        } else {
+                            firm.set(profileData.get()?.firm)
+                        }
 
+                        if (TextUtils.isEmpty(profileData.get()?.mandi)) {
+                            mandi.set("--")
+                        } else {
+                            mandi.set(profileData.get()?.mandi)
+                        }
 
+                        mandi.set(profileData.get()?.mandi)
+                        phoneNo.set(profileData.get()?.phoneNo)
+                        if (profileData.get()?.communityUserType.equals("admin")) {
+                            isAdmin.set(true)
+                        } else {
+                            isAdmin.set(false)
+                        }
                         followers.set(response.body()?.data!!.totalFollowers.toString())
                         followeee.set(response.body()?.data!!.totalFollowees.toString())
                     } else {
@@ -249,7 +273,7 @@ class CommunityViewModel @Inject constructor(
                 if (response.isSuccessful) {
                     val data = response.body()?.data
 
-                    communityPostAdapter =  CommunityPostAdapter(data)
+                    communityPostAdapter =  CommunityPostAdapter(data, false)
 
                     getNavigator()?.updatePostList(communityPostAdapter,
                         {//postDetail click
@@ -372,7 +396,7 @@ class CommunityViewModel @Inject constructor(
                     if (response.isSuccessful) {
                         val data = response.body()?.data
 
-                        communityPostAdapter = CommunityPostAdapter(data)
+                        communityPostAdapter = CommunityPostAdapter(data,true)
 
                         getNavigator()?.updatePostList(communityPostAdapter,
                             {//postDetail click
@@ -663,7 +687,8 @@ class CommunityViewModel @Inject constructor(
     }
 
     fun onBlockUserClicked() {
-        //block(postId,id)
+        menuVisible.set(false)
+        block(postId, id, block)
     }
 
 
@@ -675,7 +700,15 @@ class CommunityViewModel @Inject constructor(
                     val response =
                         communityRepository.blockUser(BlockUserRequestModel(action, id, postId))
                     if (response.isSuccessful) {
-                        getPost(sorting = sorting.get().toString())
+                        if (block.equals("block")) {
+                            block = "unblock"
+                            blockStr.set("Unblock User")
+
+                        } else {
+                            block = "block"
+                            blockStr.set("Block User")
+
+                        }
                     } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                     }

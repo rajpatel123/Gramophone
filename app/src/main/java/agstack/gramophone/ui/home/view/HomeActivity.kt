@@ -19,6 +19,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -133,9 +135,12 @@ class HomeActivity :
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(marketFragment).commit()
                     activeFragment = marketFragment
+                    viewDataBinding.llCreateAPost.visibility= GONE
+
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_community -> {
+                    viewDataBinding.llCreateAPost.visibility=VISIBLE
                     viewDataBinding.toolbar.myToolbar.title =
                         "  " + resources.getString(R.string.community)
                     updateMenuItemVisibility(showHomeItems = false, showCommunityItems = true)
@@ -153,6 +158,8 @@ class HomeActivity :
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(profileFragment).commit()
                     activeFragment = profileFragment
+                    viewDataBinding.llCreateAPost.visibility= GONE
+
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_trade -> {
@@ -163,6 +170,8 @@ class HomeActivity :
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(tradeFragment).commit()
                     activeFragment = tradeFragment
+                    viewDataBinding.llCreateAPost.visibility= GONE
+
                     return@setOnItemSelectedListener true
                 }
             }

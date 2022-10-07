@@ -14,226 +14,290 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#E9E6E6E6"
+        android:orientation="vertical">
 
-        <ScrollView
+
+        <FrameLayout
+            android:id="@+id/fmDesc"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:context=".ui.address.view.AddOrUpdateAddressActivity">
 
-            <FrameLayout
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:orientation="vertical"
-                tools:context=".ui.address.view.AddOrUpdateAddressActivity">
+                android:layout_height="wrap_content"
+                android:background="@color/blue"
+                android:minHeight="@dimen/_150sdp"
+                android:orientation="horizontal">
 
-                <ProgressBar
-                    android:id="@+id/stateProgressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@color/zxing_viewfinder_laser"
-                    android:elevation="@dimen/_1sdp"
-                    android:visibility="@{viewModel.loading? View.VISIBLE:View.GONE}" />
+                <ImageView
+                    android:id="@+id/closeActivity"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="34dp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="20dp"
+                    android:onClick="@{()->viewModel.finishActivity()}"
+                    android:src="@drawable/ic_cross"
+                    app:tint="@color/white" />
 
-                <LinearLayout
+
+                <TextView
+                    android:id="@+id/tvCompleteAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/blue"
-                    android:minHeight="@dimen/_130sdp"
-                    android:orientation="horizontal">
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="Create Post"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_16ssp"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginTop="40dp"
-                        android:src="@drawable/ic_cross"
-                        app:tint="@color/white" />
+            </LinearLayout>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/descriptionCard"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_80sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@color/white"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_8sdp">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_4sdp"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tvCompleteAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginTop="42dp"
-                        android:fontFamily="@font/manrope_bold"
-                        android:text="Create Post"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_16ssp"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </LinearLayout>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_120sdp"
-                    android:layout_marginStart="@dimen/_24sdp"
-                    android:layout_marginTop="@dimen/_80sdp"
-                    android:layout_marginEnd="@dimen/_24sdp"
-                    android:background="@color/white"
-                    android:padding="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_10sdp">
-
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:text="Write your question about your crop eg. how do I prevent this bug?"
+                        android:textSize="@dimen/_12ssp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_4sdp"
-                        android:orientation="vertical">
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="match_parent"
+
+                        <ImageView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_5sdp"
                             android:layout_marginEnd="@dimen/_5sdp"
-                            android:text="Write your question about your crop eg. how do I prevent this bug?"
-                            android:textSize="@dimen/_12ssp" />
+                            app:srcCompat="@drawable/ic_at_rate" />
 
-                        <LinearLayout
+                        <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_45sdp"
-                            android:orientation="horizontal">
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            app:srcCompat="@drawable/ic_hash" />
 
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            app:srcCompat="@drawable/ic_doller" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_5sdp"
-                                android:layout_marginEnd="@dimen/_5sdp"
-                                android:background="@drawable/poll_rectangle_bg"
-                                android:padding="@dimen/_6sdp"
-                                android:text=" @Tag People"
-                                android:textSize="@dimen/_12ssp" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            app:srcCompat="@drawable/ic_crops_tag" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_5sdp"
-                                android:layout_marginEnd="@dimen/_5sdp"
-                                android:background="@drawable/poll_rectangle"
-                                android:padding="@dimen/_6sdp"
-                                android:text="# Add crop"
-                                android:textSize="@dimen/_12ssp" />
-
-
-                        </LinearLayout>
 
                     </LinearLayout>
 
+                </RelativeLayout>
 
+
+            </androidx.cardview.widget.CardView>
+
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fmDesc"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:text="Add Image"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:text="Add one or more picture " />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:layout_weight="2"
+                    android:minHeight="@dimen/_10sdp"
+                    app:cardCornerRadius="@dimen/_10sdp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/iveOne"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+                            android:minHeight="@dimen/_210sdp"
+                            android:minWidth="@dimen/_210sdp"
+                            android:src="@drawable/preview_frame" />
+
+                        <ImageView
+                            android:id="@+id/ivPlusBig"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_gravity="bottom|end"
+                            android:layout_margin="@dimen/_8ssp"
+                            android:onClick="@{()->viewModel.onAddImageClicked(ivPlusBig)}"
+                            android:src="@drawable/ic_add_image" />
+
+                        <ImageView
+                            android:id="@+id/ivDeletBig"
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_gravity="bottom|end"
+                            android:layout_margin="@dimen/_8ssp"
+                            android:onClick="@{()->viewModel.onDeleteImage(ivDeletBig)}"
+                            android:src="@drawable/ic_image_delete"
+                            android:visibility="gone" />
+                    </FrameLayout>
                 </androidx.cardview.widget.CardView>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_250sdp"
-                    android:layout_marginBottom="@dimen/_150sdp"
-                    android:background="@color/light_gray"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:text="Add Image"
-                        android:textColor="@color/black" />
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:cardCornerRadius="@dimen/_10sdp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:text="Add one or more picture " />
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
 
-                    <RelativeLayout
+                            <ImageView
+                                android:id="@+id/ivTwo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/_98sdp"
+                                android:scaleType="fitXY"
+                                android:minWidth="@dimen/_110sdp"
+                                android:src="@drawable/preview_frame" />
+
+                            <ImageView
+                                android:id="@+id/ivPlusSmall1"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_gravity="bottom|end"
+                                android:layout_margin="@dimen/_8ssp"
+                                android:onClick="@{()->viewModel.onAddImageClicked(ivPlusSmall1)}"
+                                android:src="@drawable/ic_add_image" />
+
+                            <ImageView
+                                android:id="@+id/ivDeleteSmall1"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_gravity="bottom|end"
+                                android:layout_margin="@dimen/_8ssp"
+                                android:onClick="@{()->viewModel.onDeleteImage(ivDeleteSmall1)}"
+                                android:src="@drawable/ic_image_delete"
+                                android:visibility="gone" />
+                        </FrameLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:cardCornerRadius="@dimen/_10sdp"
 
+                        >
 
-                        <ImageView
-                            android:id="@+id/iv_big_preview"
-                            android:layout_width="@dimen/_200sdp"
-                            android:layout_height="@dimen/_200sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:src="@drawable/preview_frame" />
-
-                        <ImageView
-                            android:id="@+id/ivAddImage"
-                            android:layout_width="@dimen/_30sdp"
-                            android:layout_height="@dimen/_30sdp"
-                            android:layout_marginStart="@dimen/_140sdp"
-                            android:layout_marginTop="@dimen/_150sdp"
-                            android:background="@drawable/admin_tag_bg"
-                            android:onClick="@{()->viewModel.openOrCapture(ivAddImage)}"
-                            android:padding="@dimen/_4sdp"
-                            android:src="@drawable/ic_plus"
-                            android:visibility="visible"
-                            app:tint="@color/white" />
-
-                        <ImageView
-                            android:id="@+id/iv_delete_image"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
-                            android:layout_marginStart="@dimen/_140sdp"
-                            android:layout_marginTop="@dimen/_150sdp"
-                            android:src="@drawable/ic_delete"
-                            android:visibility="gone" />
-
-
-                        <ImageView
-                            android:id="@+id/iv_preview_first"
-                            android:layout_width="@dimen/_100sdp"
-                            android:layout_height="@dimen/_80sdp"
-                            android:layout_marginLeft="3dp"
-                            android:layout_marginTop="@dimen/_20sdp"
-                            android:layout_toRightOf="@+id/iv_big_preview"
-                            android:src="@drawable/preview_frame" />
-
-                        <ImageView
-                            android:id="@+id/ivAddImageOne"
-                            android:layout_width="16dp"
+                        <FrameLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/iv_preview_first"
-                            android:layout_marginStart="@dimen/_265sdp"
-                            android:layout_marginTop="-35dp"
-                            android:background="@drawable/admin_tag_bg"
-                            android:onClick="@{()->viewModel.openOrCapture(ivAddImageOne)}"
-                            android:src="@drawable/ic_plus"
-                            app:tint="@color/white" />
+                            android:layout_weight="1">
 
-                        <ImageView
-                            android:id="@+id/iv_sec_preview"
-                            android:layout_width="@dimen/_100sdp"
-                            android:layout_height="@dimen/_80sdp"
-                            android:layout_below="@+id/iv_preview_first"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_toRightOf="@+id/iv_big_preview"
-                            android:src="@drawable/preview_frame" />
+                            <ImageView
+                                android:id="@+id/ivThree"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:scaleType="fitXY"
+                                android:minWidth="@dimen/_110sdp"
+                                android:src="@drawable/preview_frame" />
 
-                        <ImageView
-                            android:id="@+id/ivAddImageTwo"
-                            android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"
-                            android:layout_below="@+id/iv_sec_preview"
-                            android:layout_marginStart="@dimen/_260sdp"
-                            android:layout_marginTop="-35dp"
-                            android:onClick="@{()->viewModel.openOrCapture(ivAddImageTwo)}"
-                            android:background="@drawable/admin_tag_bg"
-                            android:padding="@dimen/_4sdp"
-                            android:src="@drawable/ic_plus"
-                            app:tint="@color/white" />
+                            <ImageView
+                                android:id="@+id/ivPlusSmall2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_gravity="bottom|end"
+                                android:layout_margin="@dimen/_8ssp"
+                                android:onClick="@{()->viewModel.onAddImageClicked(ivPlusSmall2)}"
+                                android:src="@drawable/ic_add_image" />
 
-                    </RelativeLayout>
-
-
+                            <ImageView
+                                android:id="@+id/ivDeleteSmall2"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_gravity="bottom|end"
+                                android:layout_margin="@dimen/_8ssp"
+                                android:onClick="@{()->viewModel.onDeleteImage(ivDeleteSmall2)}"
+                                android:src="@drawable/ic_image_delete"
+                                android:visibility="gone" />
+                        </FrameLayout>
+                    </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
-            </FrameLayout>
+            </LinearLayout>
 
-        </ScrollView>
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/submitBtn"
@@ -242,7 +306,7 @@
             android:layout_alignParentBottom="true"
             android:background="@color/btn_disabled"
             android:gravity="center"
-            android:onClick="@{ ()-> viewModel.submitAddress() }"
+            android:onClick="@{ ()-> viewModel.createPost() }"
             android:padding="@dimen/_13sdp"
             android:text="Post now "
             android:textColor="@color/white"

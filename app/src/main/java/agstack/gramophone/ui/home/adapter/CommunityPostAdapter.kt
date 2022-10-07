@@ -33,7 +33,7 @@ import java.util.*
 /**
  * [RecyclerView.Adapter] holding [NestedRecyclerFragment] view pager logic
  */
-class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CommunityPostAdapter(val dataList: List<Data>?, isOther: Boolean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val viewPageStates = HashMap<Int, Int>()
     private lateinit var context: Context
@@ -164,7 +164,6 @@ class CommunityPostAdapter(val dataList: List<agstack.gramophone.ui.home.view.fr
             )
         ) {
             holder.itemPostBinding.llEdit.visibility = VISIBLE
-            holder.itemPostBinding.llPinPost.visibility = VISIBLE
             holder.itemPostBinding.llDelete.visibility = VISIBLE
             holder.itemPostBinding.llReport.visibility = GONE
             holder.itemPostBinding.llBlock.visibility = GONE

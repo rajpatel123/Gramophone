@@ -29,7 +29,7 @@
                 layout="@layout/layout_toolbar" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/postDetails"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -207,7 +207,7 @@
                             android:id="@+id/rlLikes"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1">
+                            android:layout_weight=".8">
 
                             <ImageView
                                 android:id="@+id/ivLike"
@@ -231,7 +231,7 @@
                             android:id="@+id/rlComments"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1">
+                            android:layout_weight="1.2">
 
                             <ImageView
                                 android:id="@+id/ivComment"
@@ -302,7 +302,39 @@
                     tools:listitem="@layout/item_comments" />
             </LinearLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvPostImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_300sdp"
+            android:layout_above="@+id/bottomCommentBar"
+            android:minHeight="@dimen/_200sdp"
+            android:visibility="gone"
+            app:cardCornerRadius="@dimen/_2sdp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="@dimen/_2sdp">
+
+                <ImageView
+                    android:id="@+id/deleteImage"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="end"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:elevation="@dimen/_2sdp"
+                    android:onClick="@{()->viewModel.deleteImage()}"
+                    app:srcCompat="@drawable/ic_image_delete" />
+
+                <ImageView
+                    android:id="@+id/postCommentImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY" />
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -336,9 +368,9 @@
                         android:layout_marginStart="@dimen/_2sdp"
                         android:background="@null"
                         android:hint="Write a comment..."
-                        android:paddingEnd="@dimen/_40sdp"
                         android:singleLine="true"
-                        android:textColor="@color/grey" />
+                        android:paddingEnd="@dimen/_40sdp"
+                        android:text="@={viewModel.commentInput}" />
 
                     <ImageView
                         android:id="@+id/ivCameraButton"
@@ -347,6 +379,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         app:srcCompat="@drawable/ic_camera"
+                        android:onClick="@{()->viewModel.captureImage()}"
                         app:tint="@color/grey" />
                 </RelativeLayout>
 
@@ -355,8 +388,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".09"
                     android:minHeight="@dimen/_40sdp"
-                    app:srcCompat="@drawable/ic_tick_check"
-                   />
+                    android:layout_marginEnd="@dimen/_10sdp"
+
+                    android:onClick="@{()->viewModel.sendComment()}"
+                    app:srcCompat="@drawable/ic_send" />
             </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
     </RelativeLayout>

@@ -280,7 +280,7 @@
                 android:id="@+id/rlLikes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight=".8">
 
                 <ImageView
                     android:id="@+id/ivLike"
@@ -305,7 +305,7 @@
                 android:id="@+id/rlComments"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1.2">
 
                 <ImageView
                     android:id="@+id/ivComment"
@@ -320,12 +320,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/_2sdp"
-                    android:textColor="@color/gray"
-
-
                     android:layout_toEndOf="@+id/ivComment"
-
-                    />
+                    android:textColor="@color/gray"
+                    tools:text="1132 Comments" />
             </RelativeLayout>
 
             <RelativeLayout
