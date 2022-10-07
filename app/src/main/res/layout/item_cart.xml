@@ -39,7 +39,7 @@
             android:gravity="center_vertical"
             android:lineSpacingExtra="-2sp"
             android:maxLines="2"
-            android:text="@{model.product_name}"
+            android:text='@{model.product_name ?? ""}'
             android:textColor="@color/blakish"
             android:textSize="13sp"
             tools:text="Fungicides Crystal Bavistin 50% WP Fun gicide Carbe ..." />
@@ -74,7 +74,7 @@
             android:gravity="center_vertical"
             android:lineSpacingExtra="-2sp"
             android:maxLines="1"
-            android:text="@{model.product_sku}"
+            android:text='@{model.product_sku ?? ""}'
             android:textColor="@color/blakish"
             android:textSize="13sp"
             tools:text="200 Gms" />

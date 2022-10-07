@@ -418,6 +418,8 @@
     <string name="expiring_in30days">Expiring in 30 days</string>
     <string name="transaction_by_expiry_date">Transactions by Expiry Date</string>
     <string name="no_offers_found">No Offers Available</string>
+    <string name="pay_only">Pay only</string>
+    <string name="_01_quantity">01</string>
 </resources>
 
 

@@ -30,8 +30,9 @@ import java.util.*
 
 
 object Utility {
-    private const val MONTH_DATE_YEAR_FORMAT = "MMM dd, yyyy" /*"Jun 21, 2022"*/
-    private const val DATE_MONTH_YEAR_FORMAT = "dd-MMM-yyyy"  /*05-Jul-2022*/
+    public const val MONTH_DATE_YEAR_FORMAT = "MMM dd, yyyy" /*"Jun 21, 2022"*/
+    public const val DATE_MONTH_YEAR_FORMAT = "dd-MMM-yyyy"  /*05-Jul-2022*/
+    public const val YEAR_MONTH_DATA_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"  /*2022-11-19 19:18:00*/
 
 
     fun List<String>.toBulletedList(): CharSequence {
@@ -132,6 +133,8 @@ object Utility {
 
     fun getFormattedDate(
         dateString: String,
+        requiredFormat: String,
+        currentFormat: String,
     ): String {
         try {
             // Creating date format

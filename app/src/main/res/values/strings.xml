@@ -475,4 +475,6 @@
     <string name="na">--</string>
     <string name="create_post">Create a Post</string>
     <string name="enter_description">Please enter some comment</string>
+    <string name="pay_only">Pay only</string>
+    <string name="_01_quantity">01</string>
 </resources>
