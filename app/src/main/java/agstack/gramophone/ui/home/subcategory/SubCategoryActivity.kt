@@ -132,17 +132,6 @@ class SubCategoryActivity :
         return true
     }
 
-    override fun showCategoryCollapsing() {
-        viewDataBinding.rlCategory.visibility = View.VISIBLE
-        viewDataBinding.tvStoreName.visibility = View.GONE
-    }
-
-    override fun showStoreCollapsing() {
-        viewDataBinding.rlCategory.visibility = View.GONE
-        viewDataBinding.tvStoreName.visibility = View.VISIBLE
-        viewDataBinding.tvStoreName.text = getString(R.string.pesticides)
-    }
-
     override fun disableSortAndFilter() {
         viewDataBinding.tvSortBy.isEnabled = false
         viewDataBinding.tvFilter.isEnabled = false

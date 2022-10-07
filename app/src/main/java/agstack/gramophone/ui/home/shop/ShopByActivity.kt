@@ -9,9 +9,7 @@ import agstack.gramophone.ui.home.adapter.ShopByCompanyAdapter
 import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
 import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
 import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
-import agstack.gramophone.ui.home.shopbydetail.ShopByDetailActivity
-import agstack.gramophone.ui.home.stage.CropStageActivity
-import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
+import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.Menu
@@ -76,7 +74,7 @@ class ShopByActivity :
 
 
     override fun openShopByDetailActivity(storeId: String, storeName: String, storeImage: String) {
-        openActivity(SubCategoryActivity::class.java, Bundle().apply {
+        openActivity(FeaturedProductActivity::class.java, Bundle().apply {
             putString(Constants.STORE_ID, storeId)
             putString(Constants.STORE_NAME, storeName)
             putString(Constants.STORE_IMAGE, storeImage)

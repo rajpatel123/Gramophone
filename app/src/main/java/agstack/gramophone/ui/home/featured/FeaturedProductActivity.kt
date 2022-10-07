@@ -39,6 +39,7 @@ class FeaturedProductActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
+        subCategoryViewModel.getBundleData()
         subCategoryViewModel.getFeaturedProducts()
     }
 
@@ -59,7 +60,7 @@ class FeaturedProductActivity :
         viewDataBinding.appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
             //Check if the view is collapsed
             if (abs(verticalOffset) >= viewDataBinding.appbar.totalScrollRange) {
-                viewDataBinding.collapsingToolbar.title = getString(R.string.featured_products)
+                viewDataBinding.collapsingToolbar.title = subCategoryViewModel.toolbarTitle.value
                 viewDataBinding.collapsingToolbar.setCollapsedTitleTextColor(ContextCompat.getColor(
                     this,
                     R.color.blakish))
@@ -131,14 +132,6 @@ class FeaturedProductActivity :
     override fun updateAddToCartDialog(isShowError: Boolean, errorMsg: String) {
         if (bottomSheet.isNotNull())
             bottomSheet?.updateDialog(isShowError, errorMsg)
-    }
-
-    override fun showCategoryCollapsing() {
-
-    }
-
-    override fun showStoreCollapsing() {
-
     }
 
     override fun disableSortAndFilter() {

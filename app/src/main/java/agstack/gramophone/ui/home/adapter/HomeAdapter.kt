@@ -9,7 +9,6 @@ import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.shop.ShopByActivity
-import agstack.gramophone.ui.home.shopbydetail.ShopByDetailActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.utils.Constants
@@ -162,7 +161,9 @@ class HomeAdapter(
                     holder.binding.viewAllFeaturedProduct.setOnClickListener {
                         openActivity(holder.itemView.context,
                             FeaturedProductActivity::class.java,
-                            null)
+                            Bundle().apply {
+                                putString(Constants.SHOP_BY_TYPE, Constants.HOME_FEATURED_PRODUCTS)
+                            })
                     }
                 } else {
                     holder.binding.itemView.visibility = View.GONE
@@ -213,7 +214,7 @@ class HomeAdapter(
                     else storeList
                     val storeAdapter = ShopByStoresAdapter(tempStoreList) { id, name, image ->
                         openActivity(holder.itemView.context,
-                            SubCategoryActivity::class.java,
+                            FeaturedProductActivity::class.java,
                             Bundle().apply {
                                 putString(Constants.STORE_ID, id)
                                 putString(Constants.STORE_NAME, name)

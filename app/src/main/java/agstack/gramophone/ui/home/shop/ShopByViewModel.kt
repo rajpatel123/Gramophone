@@ -6,10 +6,11 @@ import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.home.adapter.ShopByCompanyAdapter
 import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
 import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
-import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
-import agstack.gramophone.ui.home.view.fragments.market.model.*
+import agstack.gramophone.ui.home.view.fragments.market.model.CompanyResponse
+import agstack.gramophone.ui.home.view.fragments.market.model.CropResponse
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.home.view.fragments.market.model.StoreResponse
 import agstack.gramophone.utils.Constants
-import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

@@ -57,17 +57,17 @@ class SubCategoryViewModel @Inject constructor(
         val bundle = getNavigator()?.getBundle()
         initializeSortData()
 
-        if (bundle?.containsKey(Constants.STORE_ID)!! && bundle.getString(Constants.STORE_ID) != null) {
+        if (bundle?.containsKey(Constants.SHOP_BY_TYPE)!! && bundle.getString(Constants.SHOP_BY_TYPE) != null) {
+            toolbarTitle.value = getNavigator()?.getMessage(R.string.featured_products)
+        } else if (bundle?.containsKey(Constants.STORE_ID)!! && bundle.getString(Constants.STORE_ID) != null) {
             storeId = bundle.getString(Constants.STORE_ID)!!
             toolbarTitle.value = bundle.getString(Constants.STORE_NAME)!!
             toolbarImage.value = bundle.getString(Constants.STORE_IMAGE)!!
-            getNavigator()?.showStoreCollapsing()
             getStoresFilterData()
         } else if (bundle.containsKey(Constants.CATEGORY_ID) && bundle.getString(Constants.CATEGORY_ID) != null) {
             categoryId = bundle.get(Constants.CATEGORY_ID) as String
             toolbarTitle.value = bundle.get(Constants.CATEGORY_NAME) as String
             toolbarImage.value = bundle.get(Constants.CATEGORY_IMAGE) as String
-            getNavigator()?.showCategoryCollapsing()
             getSubCategoryData()
         }
     }
@@ -382,7 +382,7 @@ class SubCategoryViewModel @Inject constructor(
                     val response =
                         productRepository.addToCart(productData)
                     progress.value = false
-                    if (response.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+                    if (response.body()?.gp_api_status!! == Constants.GP_API_STATUS) {
 
                         getNavigator()?.showToast(response.body()?.gp_api_message)
 
