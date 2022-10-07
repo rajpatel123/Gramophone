@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/add_farm_gradient_drawable">
+
+    <ImageView
+        android:layout_width="@dimen/_240sdp"
+        android:layout_height="@dimen/_240sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/_minus32sdp"
+        android:contentDescription="@string/image"
+        app:srcCompat="@drawable/farmer_first" />
+
+    <TextView
+        android:id="@+id/txtSubHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtHeader"
+        android:layout_marginLeft="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:fontFamily="@font/manrope_bold"
+        android:text='Add your farm to get age and stage wise guidence like -'
+        android:textColor="@color/gray"
+        android:textSize="@dimen/_13ssp" />
+
+    <TextView
+        android:id="@+id/txtStepFirst"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtSubHeader"
+        android:layout_marginLeft="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:drawableLeft="@drawable/inset_arrow_drawable"
+        android:drawablePadding="@dimen/_8sdp"
+        android:fontFamily="@font/manrope_bold"
+        android:text='Recommendations about nutritional requirements and fertilisers'
+        android:textColor="@color/gray"
+        android:textSize="@dimen/_13ssp" />
+
+
+    <TextView
+        android:id="@+id/txtStepSecond"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtStepFirst"
+        android:layout_marginLeft="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:drawableLeft="@drawable/inset_arrow_drawable"
+        android:drawablePadding="@dimen/_8sdp"
+        android:fontFamily="@font/manrope_bold"
+        android:text='Suggestions for protection and prevention against pests &amp;  diseases'
+        android:textColor="@color/gray"
+        android:textSize="@dimen/_13ssp" />
+
+    <TextView
+        android:id="@+id/txtStepThird"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtStepSecond"
+        android:layout_marginLeft="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:drawableLeft="@drawable/ic_right_head_arrow"
+        android:drawablePadding="@dimen/_12sdp"
+        android:fontFamily="@font/manrope_bold"
+        android:text='Peronalized tips'
+        android:textColor="@color/gray"
+        android:textSize="@dimen/_13ssp" />
+
+    <TextView
+        android:id="@+id/txtHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginLeft="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:fontFamily="@font/manrope_bold"
+        android:text='Get personalised expert advice for your farm'
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20ssp" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        android:theme="@style/ToolbarTheme"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:layout_collapseMode="pin"
+        app:layout_collapseParallaxMultiplier="0.7"
+        app:menu="@menu/menu_home"
+        app:navigationIcon="@drawable/ic_cross"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        app:titleTextColor="@color/blakish">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txToolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="Why Add Farm"
+            android:textStyle="bold"
+            android:visibility="visible" />
+    </androidx.appcompat.widget.Toolbar>
+
+</RelativeLayout>
