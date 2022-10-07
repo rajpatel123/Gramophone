@@ -133,9 +133,9 @@ class AddToCartBottomSheetDialog(
     }
 
     private fun setSelectedSkuPrice(selectedSkuListItem: ProductSkuListItem) {
-        if (selectedSkuListItem.mrpPrice.isNullOrEmpty() && !selectedSkuListItem.salesPrice.isNullOrEmpty()) {
+        if (selectedSkuListItem.mrpPrice==null && !selectedSkuListItem.salesPrice.isNullOrEmpty()) {
             selectedSkuPrice = mSKUList[0]?.salesPrice!!.toFloat()
-        } else if (selectedSkuListItem.salesPrice.isNullOrEmpty() && !selectedSkuListItem.mrpPrice.isNullOrEmpty()) {
+        } else if (selectedSkuListItem.salesPrice.isNullOrEmpty() && selectedSkuListItem.mrpPrice!=null) {
             selectedSkuPrice = mSKUList[0]?.mrpPrice!!.toFloat()
         } else {
             selectedSkuPrice = 0f
@@ -156,15 +156,15 @@ class AddToCartBottomSheetDialog(
         var isContactForPriceVisible = false
         var proceedForCalculation = false
 
-        if (model.mrpPrice.isNullOrEmpty() && model.salesPrice.isNullOrEmpty()) {
+        if (model.mrpPrice==null && model.salesPrice.isNullOrEmpty()) {
             modelMrpPrice = 0f
             modelSalesPrice = 0f
             isContactForPriceVisible = true
-        } else if (model.salesPrice.isNullOrEmpty() && !model.mrpPrice.isNullOrEmpty()) {
+        } else if (model.salesPrice.isNullOrEmpty() && model.mrpPrice!=null) {
             modelSalesPrice = model.mrpPrice.toFloat()
             modelMrpPrice = model.mrpPrice.toFloat()
             proceedForCalculation = true
-        } else if (model.mrpPrice.isNullOrEmpty() && !model.salesPrice.isNullOrEmpty()) {
+        } else if (model.mrpPrice==null && !model.salesPrice.isNullOrEmpty()) {
             modelSalesPrice = model.salesPrice.toFloat()
             modelMrpPrice = model.salesPrice.toFloat()
             proceedForCalculation = true

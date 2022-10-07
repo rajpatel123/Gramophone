@@ -26,7 +26,7 @@ class OfferDetailActivity :
         bundle?.let {
             if (bundle.getParcelable<PromotionListItem>(Constants.OFFERSDATA) != null) {
                 //Check when flowing from Product Details as Model is changed , PromotionListItem->DataItem
-               // mViewModel?.mOffersItem?.set(bundle.getParcelable<PromotionListItem>(Constants.OFFERSDATA))
+              mViewModel?.mOffersItem?.set(bundle.getParcelable<DataItem>(Constants.OFFERSDATA))
             }
 
             if (bundle.getParcelable<DataItem>(Constants.OFFERSDATA_OFFERSLIST) != null) {

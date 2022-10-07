@@ -17,7 +17,9 @@ data class ProductSkuListItem(
 	val salesPrice: String? = null,
 
 	@field:SerializedName("mrp_price")
-	val mrpPrice: String? = null,
+	val mrpPrice: Double? = null,
 	@field:SerializedName("selected")
-	var selected: Boolean? = false
+	var selected: Boolean? = false,
+	@field:SerializedName("product_app_name")
+	var product_app_name: String?=null
 ) : Parcelable
