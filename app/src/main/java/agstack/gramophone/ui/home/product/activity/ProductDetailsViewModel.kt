@@ -19,6 +19,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -58,6 +59,7 @@ class ProductDetailsViewModel @Inject constructor(
     var selectedSkuListItem = ObservableField<ProductSkuListItem>()
     var selectedOfferItem = PromotionListItem()
     var addToCartEnabled = NonNullObservableField<Boolean>(true)
+    var isApplicableChanged = ObservableField<Boolean>(false)
     fun onHeartIconClicked() {
         isHeartSelected.set(!isHeartSelected.get())
         updateProductFavoriteJob.cancelIfActive()
@@ -188,11 +190,20 @@ class ProductDetailsViewModel @Inject constructor(
                                 selectedSkuListItem.set(it)
                                 productDetailstoBeFetched.product_id =
                                     selectedSkuListItem.get()?.productId!!.toInt()
+                                //Refresh offerList when product SKU is selected
 
-                                setPercentage_mrpVisibility(
-                                    selectedSkuListItem.get()!!,
-                                    selectedOfferItem
-                                )
+
+                                    setPercentage_mrpVisibility(
+                                        selectedSkuListItem.get()!!,
+                                        null
+                                    )
+                                    //reset the selectedOfferItem
+                                    selectedOfferItem= PromotionListItem()
+
+                                    loadOffersData(productDetailstoBeFetched, qtySelected.get())
+
+
+
 
                             }
 
@@ -250,11 +261,16 @@ class ProductDetailsViewModel @Inject constructor(
             isContactforPriceVisible = false
             addToCartEnabled.set(true)
 
-            if (offerModel == null || offerModel?.amount_saved == 0.0) {
+            var amountSaved = 0f
+            if (offerModel?.amount_saved.isNotNull()) {
+                amountSaved = offerModel?.amount_saved!!.toFloat()
+            }
+
+            if (offerModel == null || amountSaved==0f) {
                 priceDiff = (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat())
-            } else if (offerModel != null && offerModel.amount_saved!! > 0.0) {
+            } else if (offerModel != null && amountSaved > 0f) {
                 priceDiff =
-                    (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat()) - offerModel.amount_saved.toFloat()
+                    (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat()) -amountSaved
             }
 
             val numarator = (priceDiff * 100)
@@ -372,13 +388,14 @@ class ProductDetailsViewModel @Inject constructor(
     private fun loadOffersData(productDetailstoBeFetched: ProductData, quantity: Int? = 0) {
         loadProductOffersDataJob.cancelIfActive()
         loadProductOffersDataJob = checkNetworkThenRun {
+            progressLoader.set(true)
             if (quantity!! > 0) {
                 productDetailstoBeFetched.quantity = quantity
             }
             val offersOnProductResponse =
                 productRepository.getOffersOnProductData(productDetailstoBeFetched)
+            progressLoader.set(false)
             if (offersOnProductResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
-
                 //setOffer List
                 offersOnProductResponse.body()?.gpApiResponseData?.offersProductList.let {
                     val prodOfferList =
@@ -413,9 +430,7 @@ class ProductDetailsViewModel @Inject constructor(
                                         qtySelected.get()!!
                                     )
                                 ) {
-
                                     //Selected Offer is Applicable on selectedSKU
-
 
                                     for (item in mSkuOfferList) {
                                         item?.selected =
@@ -478,11 +493,18 @@ class ProductDetailsViewModel @Inject constructor(
             isApplicable =
                 offersOnProductResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)
 
+
+            isApplicableChanged.set(isApplicable)
+            /*    isApplicableChanged.addOnPropertyChangedCallback((new OnPropertyChangedCallback() ) -> {
+                // Update marker object
+            })*/
+
+
             if (!isApplicable) {
                 getNavigator()?.showToast(offersOnProductResponse.body()?.gpApiMessage)
             }
         }
-        return isApplicable
+        return true
 
 
     }

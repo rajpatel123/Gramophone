@@ -44,9 +44,23 @@ class BindingAdapter {
 
         @BindingAdapter("priceWithSymbol")
         @JvmStatic
-        fun priceWithSymbol(view: TextView, price: String) {
-            view.setText("\u20B9" + price);
+        fun priceWithSymbol(view: TextView, price: String?) {
+            if (price != null)
+                view.setText("\u20B9" + price) else
+                view.visibility = View.GONE
 
+        }
+
+
+        @BindingAdapter("amountSaved")
+        @JvmStatic
+        fun amountSaved(view: TextView, amountSaved: Double?) {
+            if (amountSaved != null) {
+                view.visibility = View.VISIBLE
+                view.setText("Save ₹" + amountSaved)
+            } else {
+                view.visibility = View.INVISIBLE
+            }
         }
 
         @BindingAdapter("isUserFavorite")
@@ -72,11 +86,17 @@ class BindingAdapter {
         @JvmStatic
         fun percentageOff(textView: TextView, model: RelatedProductItem) {
             /*Formula = (MP-SP/SP *100 )*/
-            val numarator = ((model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat()) * 100)
-            val denominator = model.salesPrice.toFloat()
-            val percentage = numarator / denominator
-            val formatted_percentage = String.format("%.02f", percentage);
-            textView.setText(formatted_percentage + " % Off")
+
+            if (model.mrpPrice != null && model.salesPrice != null) {
+                val numarator =
+                    ((model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat()) * 100)
+                val denominator = model.mrpPrice.toFloat()
+                val percentage = numarator / denominator
+                val formatted_percentage = String.format("%.02f", percentage);
+                textView.setText(formatted_percentage + " % Off")
+            }else{
+                textView.visibility=View.GONE
+            }
         }
 
         //arrowImage
@@ -166,7 +186,7 @@ class BindingAdapter {
 
                 d = input.parse(date)
                 val formatted = output.format(d)
-                view.setText("Registered on "+formatted)
+                view.setText("Registered on " + formatted)
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
@@ -186,15 +206,13 @@ class BindingAdapter {
 
                 d = input.parse(date)
                 val formatted = output.format(d)
-                view.setText("Valid Till "+formatted)
+                view.setText("Valid Till " + formatted)
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
 
 
         }
-
-
 
 
     }
