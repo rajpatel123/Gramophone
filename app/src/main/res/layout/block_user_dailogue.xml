@@ -76,7 +76,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:fontFamily="@font/manrope_semibold"
-                android:onClick="@{()->viewModel.onReport()}"
+                android:onClick="@{()->viewModel.onBlock()}"
                 android:text="@string/block_user"
                 android:textColor="@color/brand_color"
                 android:textSize="@dimen/_14ssp"

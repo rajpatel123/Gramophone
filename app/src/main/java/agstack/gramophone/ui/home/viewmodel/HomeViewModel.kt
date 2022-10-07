@@ -4,6 +4,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
+import agstack.gramophone.ui.createpost.view.CreatePostActivity
 import agstack.gramophone.ui.feedback.FeedbackActivity
 import agstack.gramophone.ui.gramcash.GramCashActivity
 import agstack.gramophone.ui.offerslist.OffersListActivity
@@ -190,5 +191,9 @@ class HomeViewModel @Inject constructor(
 
     fun GramCashClicked(){
         getNavigator()?.openActivity(GramCashActivity::class.java , null)
+    }
+
+    fun onCreatePostClicked(){
+        getNavigator()?.openActivity(CreatePostActivity::class.java,null)
     }
 }

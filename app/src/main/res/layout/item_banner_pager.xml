@@ -17,7 +17,7 @@
             android:layout_height="@dimen/_200sdp"
             android:contentDescription="@string/app_name"
             android:maxHeight="@dimen/_180sdp"
-            android:scaleType="centerCrop" />
+            android:scaleType="fitXY" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

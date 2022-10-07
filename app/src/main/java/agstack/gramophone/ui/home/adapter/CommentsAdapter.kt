@@ -1,27 +1,49 @@
 package agstack.gramophone.ui.home.adapter
 
+import agstack.gramophone.BR
 import agstack.gramophone.databinding.ItemCommentsBinding
-import agstack.gramophone.ui.home.view.fragments.community.model.Data
+import agstack.gramophone.ui.comments.model.Data
+import android.content.Context
 import android.view.LayoutInflater
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
-class CommentsAdapter(val items: List<Data>) :
+class CommentsAdapter(val items:List<Data>?) :
     RecyclerView.Adapter<CommentsAdapter.CardViewHolder>() {
-
+    lateinit var context: Context
+    var onItemCommentsClicked: ((commentId: String) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
+        context = parent.context
         return CardViewHolder(
-            ItemCommentsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+            ItemCommentsBinding.inflate(LayoutInflater.from(context), parent, false)
         )
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount(): Int = items?.size!!
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        val loginBanner = items[position]
-    }
+        val comment = items?.get(position)
+        holder.binding.setVariable(BR.model, comment)
+        if (comment?.author?.photoUrl != null) {
+            Glide.with(context).load(comment?.author?.photoUrl).into(holder.binding.ivProfileImage1)
 
-    inner class CardViewHolder(var binding: ItemCommentsBinding) :
+        }
+
+        if (comment?.image != null) {
+            Glide.with(context).load(comment?.image).into(holder.binding.commentImage)
+            holder.binding.imageContainer.visibility=VISIBLE
+        }else{
+            holder.binding.imageContainer.visibility= GONE
+        }
+
+
+
+
+    }
+    class CardViewHolder(var binding: ItemCommentsBinding) :
         RecyclerView.ViewHolder(binding.root)
 }

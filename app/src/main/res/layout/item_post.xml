@@ -1,18 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
 
         <import type="android.view.View" />
 
         <variable
             name="model"
-            type="agstack.gramophone.ui.home.view.fragments.community.model.Data" />
+            type="agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data" />
     </data>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/rlBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <agstack.gramophone.ui.home.view.fragments.community.SquareViewPager
+                    android:id="@+id/bannerPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    />
+
+                <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+                    android:id="@+id/dots_indicator"
+                    app:dotsColor="@color/blue"
+                    app:dotsSize="12dp"
+                    app:dotsSpacing="5dp"
+                    app:dotsStrokeColor="@color/gray_stroke"
+                    app:progressMode="false"
+                    app:stiffness="300"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginBottom="@dimen/_7sdp" />
+
+
+            </FrameLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_below="@+id/frameLayout"
+                android:background="@color/grey" />
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlPosts"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="visible"
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -29,45 +78,87 @@
             app:civ_border_width="2dp" />
 
 
-        <TextView
-            android:id="@+id/tvName"
+        <LinearLayout
+            android:id="@+id/llName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12sdp"
             android:layout_toEndOf="@+id/ivProfileImage"
-            android:fontFamily="@font/manrope_bold"
-            android:text="Thakur Bhanupratap"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_11ssp" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvCity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvName"
-            android:layout_toEndOf="@+id/ivProfileImage"
-            android:fontFamily="@font/manrope_medium"
-            android:text="+ Add Address"
-            android:textColor="@color/red"
-            android:textSize="@dimen/_10ssp" />
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_bold"
+                android:text="@{model.author.username}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11ssp"
+                tools:text="gkjfdgksfksfskf" />
+
+            <TextView
+                android:id="@+id/tvCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvName"
+                android:layout_toEndOf="@+id/ivProfileImage"
+                android:fontFamily="@font/manrope_medium"
+                android:text="@{model.author.address!=null?model.author.address:@string/add_address}"
+                android:textColor="@{model.author.address!=null?@color/gray:@color/red}"
+                android:textSize="@dimen/_10ssp"
+                android:visibility="visible" />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCity"
+            android:layout_below="@+id/llName"
             android:layout_toEndOf="@+id/ivProfileImage"
             android:fontFamily="@font/manrope_medium"
-            android:text="15 Aug 2022"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/_10ssp" />
+            android:text="@{model.createdDate}"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_10ssp"
+            android:layout_marginTop="@dimen/_5sdp"
+            tools:text="Datefhjd" />
+
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_below="@+id/llName"
+           android:layout_centerVertical="true"
+           android:gravity="center_vertical"
+           android:layout_marginStart="@dimen/_10sdp"
+           android:layout_marginTop="@dimen/_5sdp"
+
+           android:layout_toEndOf="@+id/tvDate">
+           <View
+               android:id="@+id/view"
+               android:layout_width="@dimen/_8sdp"
+               android:layout_height="@dimen/_8sdp"
+               android:background="@drawable/circle_solid_gray" />
+
+           <TextView
+               android:id="@+id/tvFollow"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:fontFamily="@font/manrope_bold"
+               android:text="@{model.following?@string/following:@string/follow}"
+               android:textColor="@{model.following?@color/gray:@color/red}"
+               android:textSize="@dimen/_10ssp"
+               android:layout_marginStart="@dimen/_5sdp"
+               tools:text="Dated" />
+       </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/rlAdminTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_13sdp"
-            android:layout_toEndOf="@+id/tvName"
+            android:layout_toEndOf="@+id/llName"
             android:background="@drawable/admin_tag_bg"
             android:paddingStart="@dimen/_5sdp"
             android:paddingTop="@dimen/_2sdp"
@@ -100,6 +191,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_11sdp"
             android:layout_toStartOf="@+id/ivMenu"
+            android:visibility="@{model.pinned?View.VISIBLE:View.GONE}"
             app:srcCompat="@drawable/ic_pin" />
 
         <ImageView
@@ -115,42 +207,69 @@
             app:srcCompat="@drawable/ic_menu_tripple_dot" />
 
 
-        <TextView
-            android:id="@+id/tvDesc"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/llDetails"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvDate"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:fontFamily="@font/manrope_bold"
-            android:text="Which is the system of farming in which the farmer is directly related to the state?"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp" />
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tvDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvDate"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:fontFamily="@font/manrope_bold"
+                android:text="@{model.description}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/imageContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvDate"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:visibility="gone"
+                app:cardCornerRadius="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/postImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY" />
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tvTag"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvSpace"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvDesc"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_14sdp"
-            android:background="@drawable/following_bg"
-            android:fontFamily="@font/manrope_medium"
-            android:paddingStart="@dimen/_7sdp"
-            android:paddingTop="@dimen/_2sdp"
-            android:paddingEnd="@dimen/_7sdp"
-            android:paddingBottom="@dimen/_3sdp"
-            android:text="Tomato"
-            android:textColor="@color/blakish"
-            android:textSize="@dimen/_10ssp" />
+            android:layout_below="@+id/llDetails"
+            android:minHeight="@dimen/_26sdp" />
+
+
+        <LinearLayout
+            android:id="@+id/llTVTag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/tvSpace"
+            >
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/llActions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvTag"
+            android:layout_below="@+id/llTVTag"
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_12sdp"
             android:layout_marginEnd="@dimen/_12sdp"
@@ -161,14 +280,14 @@
                 android:id="@+id/rlLikes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight=".8">
 
                 <ImageView
                     android:id="@+id/ivLike"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/ic_like" />
+                    />
 
                 <TextView
                     android:id="@+id/tvLikes"
@@ -177,14 +296,16 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/_2sdp"
                     android:layout_toEndOf="@+id/ivLike"
-                    android:text="2 Likes" />
+                    android:textColor="@color/gray"
+
+                    />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rlComments"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1.2">
 
                 <ImageView
                     android:id="@+id/ivComment"
@@ -200,36 +321,44 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/_2sdp"
                     android:layout_toEndOf="@+id/ivComment"
-                    android:text="Comments" />
+                    android:textColor="@color/gray"
+                    tools:text="1132 Comments" />
             </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
                 android:gravity="center_vertical">
 
-                <ImageView
-                    android:id="@+id/ivWhatsapp"
-                    android:layout_width="0dp"
+                <RelativeLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_whatsapp" />
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:layout_toStartOf="@+id/ivBookmark"
+                    android:background="@drawable/rounded_corner_stroke"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:paddingEnd="@dimen/_16sdp">
 
+                    <ImageView
+                        android:id="@+id/ivWhatsapp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:minHeight="@dimen/_25sdp"
+                        app:srcCompat="@drawable/ic_whatsapp" />
+                </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/ivFacebook"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_facebook" />
                 <ImageView
                     android:id="@+id/ivBookmark"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     app:srcCompat="@drawable/ic_bookmark" />
-            </LinearLayout>
+            </RelativeLayout>
 
         </LinearLayout>
 
@@ -241,12 +370,13 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
+            android:visibility="gone"
             android:layout_marginBottom="@dimen/_10sdp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ivProfileImage1"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
+                android:id="@+id/ivCommentUsersProfile"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_2sdp"
@@ -260,8 +390,8 @@
                 android:id="@+id/rel_expert"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/ivProfileImage1"
-                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_alignLeft="@+id/ivCommentUsersProfile"
+                android:layout_marginStart="@dimen/_35sdp"
                 android:background="@drawable/expert_rel_bg"
                 android:padding="@dimen/_4ssp">
 
@@ -271,13 +401,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/manrope_bold"
-                    android:text="Jacob Rana"
+                    android:maxLength="20"
                     android:textColor="@color/blue"
-                    android:textSize="@dimen/_14ssp"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/_14ssp" />
 
                 <TextView
-
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_2sdp"
@@ -297,8 +426,8 @@
                     android:layout_below="@+id/tvName1"
                     android:fontFamily="@font/manrope_light"
                     android:padding="@dimen/_5sdp"
-                    android:text="This is message which sent in bulletin will be displayed here"
-                    android:textSize="@dimen/_14sdp" />
+                    android:text="@{model.lastComment.text}"
+                    android:textSize="@dimen/_14ssp" />
 
 
             </RelativeLayout>
@@ -311,9 +440,10 @@
                 android:layout_marginLeft="@dimen/_40sdp"
                 android:layout_marginTop="@dimen/_8ssp"
                 android:layout_marginBottom="@dimen/_10sdp"
-                android:text="3:40 PM "
-                android:textColor="@color/gray"
-                android:textSize="@dimen/_15sdp" />
+                android:fontFamily="@font/manrope_regular"
+                android:text="@{model.lastComment.commentDuration}"
+                android:textColor="@color/gray_strike_through"
+                android:textSize="@dimen/_12ssp" />
 
             <ImageView
                 android:layout_width="@dimen/_20sdp"
@@ -321,6 +451,7 @@
                 android:layout_below="@+id/rel_expert"
                 android:layout_marginLeft="@dimen/_110sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:visibility="gone"
                 android:src="@drawable/horizontal_dot" />
 
         </RelativeLayout>
@@ -330,7 +461,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/llChat"
-            android:layout_marginStart="@dimen/_12sdp">
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:minHeight="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_5sdp">
 
             <ImageView
                 android:id="@+id/ivCommentBottom"
@@ -338,7 +472,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 app:srcCompat="@drawable/ic_comment"
-                app:tint="@color/grey" />
+                app:tint="@color/gray" />
 
             <TextView
                 android:id="@+id/tvCommentBottom"
@@ -348,7 +482,7 @@
                 android:layout_marginStart="@dimen/_2sdp"
                 android:layout_toEndOf="@+id/ivCommentBottom"
                 android:text="Write a comment..."
-                android:textColor="@color/grey" />
+                android:textColor="@color/gray" />
 
         </RelativeLayout>
 
@@ -370,140 +504,135 @@
             android:background="@color/white"
             android:elevation="@dimen/_2sdp"
             android:minWidth="@dimen/_140sdp"
-            android:minHeight="@dimen/_140sdp"
+
             android:orientation="vertical"
             android:padding="@dimen/_12sdp"
             android:visibility="@{model.selected? View.VISIBLE:View.GONE}"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <LinearLayout
-                android:id="@+id/llCopy"
-                android:layout_width="wrap_content"
+                android:id="@+id/llAdminMenu"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:visibility="visible">
 
-                <ImageView
+                <LinearLayout
+                    android:id="@+id/llEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_copy" />
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <TextView
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_post_edit" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/edit" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llPinPost"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:fontFamily="@font/manrope_regular"
-                    android:text="@string/copy" />
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_pin_post" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@{model.pinned?@string/unpin_post:@string/pin_post}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:gravity="center_vertical"
+
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_delete" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/delete" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/llEdit"
-
-                android:layout_width="wrap_content"
+                android:id="@+id/llUserMenu"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:visibility="visible">
 
-                <ImageView
+                <LinearLayout
+                    android:id="@+id/llReport"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_post_edit" />
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <TextView
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_info" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/report" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llBlock"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:fontFamily="@font/manrope_regular"
-                    android:text="@string/edit" />
-            </LinearLayout>
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/llPinPost"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_block" />
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_pin_post" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:fontFamily="@font/manrope_regular"
-                    android:text="@string/pin_post" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center_vertical"
-
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_delete" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:fontFamily="@font/manrope_regular"
-                    android:text="@string/delete" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llReport"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_info" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:fontFamily="@font/manrope_regular"
-                    android:text="@string/report" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llBlock"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_block" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:fontFamily="@font/manrope_regular"
-                    android:text="@string/block_user" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/block_user" />
+                </LinearLayout>
             </LinearLayout>
 
 
@@ -511,5 +640,7 @@
 
 
     </RelativeLayout>
+    </LinearLayout>
+
 </layout>
 

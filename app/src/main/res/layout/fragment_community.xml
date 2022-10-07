@@ -54,24 +54,29 @@
                     android:id="@+id/tabFollowing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:text="@string/tab_following" />
 
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/tabExpert"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:text="@string/tab_expert" />
 
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/tabMyPost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
+
                     android:text="@string/tab_my_post" />
 
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/tabSavedPost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:text="@string/tab_saved_post" />
 
             </com.google.android.material.tabs.TabLayout>
@@ -89,6 +94,39 @@
             app:layout_constraintTop_toBottomOf="@+id/hsvTabBar"
             tools:listitem="@layout/item_post"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvNoPost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintCircleRadius="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/no_post"
+            android:gravity="center_horizontal"
+            app:flow_verticalGap="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@+id/hsvTabBar"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:visibility="visible" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintCircleRadius="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            android:visibility="@{viewModel.showProgress?View.VISIBLE:View.GONE}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

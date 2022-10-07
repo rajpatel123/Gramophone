@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.SpannableString
+import android.text.TextUtils
 import android.text.style.BulletSpan
 import android.util.Log
 import android.widget.Toast
@@ -32,6 +33,7 @@ object Utility {
     public const val MONTH_DATE_YEAR_FORMAT = "MMM dd, yyyy" /*"Jun 21, 2022"*/
     public const val DATE_MONTH_YEAR_FORMAT = "dd-MMM-yyyy"  /*05-Jul-2022*/
     public const val YEAR_MONTH_DATA_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"  /*2022-11-19 19:18:00*/
+
 
     fun List<String>.toBulletedList(): CharSequence {
         return SpannableString(this.joinToString("\n")).apply {
@@ -164,6 +166,13 @@ object Utility {
 
     fun getErrorMessage(data: ResponseBody?): String? {
         val errorBody = data?.string()?.let { JSONObject(it) }
-        return errorBody?.optString(Constants.GP_API_MESSAGE)
+        var messgae: String = ""
+        messgae = errorBody?.optString(Constants.GP_API_MESSAGE).toString()
+        if (TextUtils.isEmpty(messgae)) {
+            messgae = errorBody?.optString(Constants.MESSAGE).toString()
+        }
+        return messgae
     }
+
+
 }
