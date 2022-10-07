@@ -5,8 +5,6 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.cart.CartNavigator
 import agstack.gramophone.ui.cart.adapter.CartAdapter
-import agstack.gramophone.ui.cart.model.AddToCartRequest
-import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
@@ -27,7 +25,6 @@ class CartViewModel @Inject constructor(
 ) : BaseViewModel<CartNavigator>() {
 
     var itemCount = MutableLiveData<Int>()
-    var amount = MutableLiveData<Int>()
     var discount = MutableLiveData<Int>()
     var gramCash = MutableLiveData<Int>()
     var totalAmount = MutableLiveData<Int>()
@@ -37,25 +34,27 @@ class CartViewModel @Inject constructor(
 
     init {
         itemCount.value = 0
-        amount.value = 0
         discount.value = 0
         gramCash.value = 0
         totalAmount.value = 0
         progress.value = false
         showGramCashCoinView.value = true
-        showCartView.value = true
-    }
-
-    private fun calculateAmount(cartItems: List<CartItem>) {
-        var subTotal = 0
-        for (cartItem in cartItems) {
-            subTotal += cartItem.price.toFloat().toInt() * cartItem.quantity.toInt()
-        }
-        amount.value = subTotal
+        showCartView.value = false
     }
 
     fun onCheckedChange(button: CompoundButton, check: Boolean) {
         showGramCashCoinView.value = check
+        if (check) {
+            val total = totalAmount.value
+            val gramCashCoin = gramCash.value
+            val amount = total!! - gramCashCoin!!
+            totalAmount.value = amount
+        } else {
+            val total = totalAmount.value
+            val gramCashCoin = gramCash.value
+            val amount = total!! + gramCashCoin!!
+            totalAmount.value = amount
+        }
     }
 
     fun onClickPlaceOrder() {
@@ -102,8 +101,12 @@ class CartViewModel @Inject constructor(
                         itemCount.value = response.body()?.gp_api_response_data?.cart_items?.size
                         discount.value = response.body()?.gp_api_response_data?.total_discount
                         gramCash.value = response.body()?.gp_api_response_data?.gramcash_coins
-                        totalAmount.value = response.body()?.gp_api_response_data?.total
-                        calculateAmount(response.body()?.gp_api_response_data?.cart_items!!)
+
+                        val total = response.body()?.gp_api_response_data?.total
+                        val gramCashCoin = response.body()?.gp_api_response_data?.gramcash_coins
+
+                        val amount = total!! - gramCashCoin!!
+                        totalAmount.value = amount
 
                         getNavigator()?.setCartAdapter(CartAdapter(response.body()?.gp_api_response_data?.cart_items!!),
                             {
@@ -121,8 +124,6 @@ class CartViewModel @Inject constructor(
                                 promotionListItem.applicable_on_sku = it.valid_on_sku
                                 promotionListItem.valid_till = it.valid_till
                                 promotionListItem.product_name = it.product_name
-                                promotionListItem.tnc = it.tnc
-                                promotionListItem.redemption = it.redemption
                                 getNavigator()?.openActivity(
                                     OfferDetailActivity::class.java,
                                     Bundle().apply {
@@ -131,12 +132,13 @@ class CartViewModel @Inject constructor(
                                     })
                             }, {
                                 // on quantity increase and decrease clicked
-                                addToCart(AddToCartRequest(it.product_id.toInt(),
-                                    it.quantity.toInt()))
+                                val productData = ProductData()
+                                productData.product_id = it.product_id.toInt()
+                                productData.quantity = it.quantity
+                                updateCart(productData)
                             })
                     } else {
                         showCartView.value = false
-                        getNavigator()?.showToast(response.message())
                     }
                     progress.value = false
                 } else {
@@ -177,12 +179,12 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    private fun addToCart(addToCartRequest: AddToCartRequest) {
+    private fun updateCart(productData: ProductData) {
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
-                    val response = productRepository.addToCart(addToCartRequest)
+                    val response = productRepository.updateCartItem(productData)
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
                         getCartData()
                     }

@@ -21,13 +21,13 @@
         android:background="@{model.selected ? @drawable/offer_card_selected: @drawable/deselected_product_background}"
         card_view:cardCornerRadius="10dp"
         card_view:cardElevation="1dp"
+        android:layout_marginEnd="@dimen/_12sdp"
         card_view:cardUseCompatPadding="true">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_2sdp">
+            android:layout_height="wrap_content">
 
 
             <LinearLayout
@@ -80,6 +80,7 @@
                     <TextView
                         android:id="@+id/tvProductWeight"
                         style="@style/TextSize16Sp"
+                        android:textSize="@dimen/_12ssp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Get Flat 5% Off"
@@ -87,29 +88,32 @@
 
 
                     <TextView
+                        android:layout_marginTop="@dimen/_4sdp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:ellipsize="end"
-                        android:fontFamily="@font/manrope_medium"
+                        android:fontFamily="@font/manrope_regular"
                         android:hint="Offer valid on SKU 500"
                         android:maxLength="20"
                         android:maxLines="1"
                         android:text="@{@string/allsymbol.concat(model.applicable_on_sku)}"
                         android:textColor="@color/gray"
-                        android:textSize="@dimen/_11ssp" />
+                        android:textSize="@dimen/_10ssp" />
 
                     <TextView
+                        android:layout_marginTop="@dimen/_1sdp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:fontFamily="@font/manrope_medium"
+                        android:fontFamily="@font/manrope_regular"
                         android:hint="Valid till March 2023"
                         android:text="Valid till March 2023"
                         android:textColor="@color/gray"
-                        android:textSize="@dimen/_11ssp" />
+                        android:textSize="@dimen/_10ssp" />
 
                     <TextView
+                        android:layout_marginTop="@dimen/_4sdp"
                         android:id="@+id/tv_viewdetail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -118,7 +122,7 @@
                         android:fontFamily="@font/manrope_bold"
                         android:text="@string/view_detail"
                         android:textColor="@color/orange"
-                        android:textSize="@dimen/_12ssp"
+                        android:textSize="@dimen/_11ssp"
                         android:textStyle="normal"
                         app:drawableEndCompat="@drawable/ic_arrow_right" />
                 </LinearLayout>
@@ -131,10 +135,9 @@
                 android:id="@+id/llbottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_4sdp"
-                android:layout_marginRight="@dimen/_4sdp"
                 android:background="@drawable/ic_pink_background"
                 android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:padding="@dimen/_7sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -144,8 +147,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:layout_marginBottom="@dimen/_2sdp"
                     android:fontFamily="@font/manrope_bold"
                     android:gravity="center"
                     android:hint="Save Rs 100"
@@ -157,30 +158,38 @@
                     android:layout_width="@dimen/_1sdp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/_9sdp"
-                    android:layout_marginTop="@dimen/_2sdp"
                     android:layout_marginRight="@dimen/_9sdp"
-                    android:layout_marginBottom="@dimen/_2sdp"
                     android:background="@color/gray" />
 
                 <TextView
+                    android:id="@+id/tvPayOnlyTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:layout_marginBottom="@dimen/_2sdp"
-                    android:fontFamily="@font/manrope_bold"
+                    android:fontFamily="@font/manrope_regular"
                     android:gravity="center"
-                    android:text="Pay only ₹ 100"
+                    android:text="@string/pay_only"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_11ssp" />
 
                 <TextView
+                    android:id="@+id/tvPayOnly"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:layout_marginBottom="@dimen/_2sdp"
-                    android:background="@drawable/strike_through"
-                    android:fontFamily="@font/manrope_medium"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:fontFamily="@font/manrope_bold"
                     android:gravity="center"
+                    card_view:text="@string/dummy_price"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:id="@+id/tvSkuPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/strike_through_ligt_orange"
+                    android:fontFamily="@font/manrope_regular"
+                    android:gravity="center"
+                    android:layout_marginStart="@dimen/_2sdp"
                     android:text=" ₹200"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_11ssp" />

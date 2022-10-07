@@ -73,11 +73,13 @@ class ProductDetailsActivity :
 
     }
 
-    private var genuineCustomerDialog = GenuineCustomerRatingAlertFragment.newInstance()
+
     override fun showGenuineCustomerRatingDialog(
         genuineCustomerRatingAlertFragment: GenuineCustomerRatingAlertFragment,
+        addToCartEnable:Boolean,
         onAddToCartClick: () -> Unit
     ) {
+         var genuineCustomerDialog = GenuineCustomerRatingAlertFragment.newInstance(addToCartEnable)
         genuineCustomerDialog = genuineCustomerRatingAlertFragment
         genuineCustomerDialog.setOnClickSelectedListener(onAddToCartClick)
         genuineCustomerDialog.show(supportFragmentManager, "genuineCustomerDialog")

@@ -82,7 +82,7 @@ class LanguageViewModel @Inject constructor(
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
                 val response = onBoardingRepository.getInitialData(initiateAppDataRequestModel)
-                val initiateAppDataResponseModel = handleOrderResponse(response).data
+                val initiateAppDataResponseModel: InitiateAppDataResponseModel? = handleOrderResponse(response).data
 
                 if (GP_API_STATUS.equals(initiateAppDataResponseModel?.gp_api_status)) {
                     SharedPreferencesHelper.instance?.putString(

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="model"
-            type="agstack.gramophone.ui.home.view.fragments.market.model.ProductData" />
+            type="agstack.gramophone.ui.cart.model.CartItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +19,7 @@
             android:id="@+id/productDetailsContainer"
             android:layout_width="@dimen/_140sdp"
             android:layout_height="wrap_content"
-           android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
             android:background="@drawable/rounded_corner_12_solid_white_stroke_gray"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -37,7 +38,7 @@
                 android:paddingTop="4dp"
                 android:paddingEnd="6dp"
                 android:paddingBottom="4dp"
-                android:text="20% Off"
+                android:text="@string/_0_off"
                 android:textColor="@color/order_approved_text"
                 android:textSize="11sp" />
 
@@ -46,7 +47,8 @@
                 android:layout_width="@dimen/_110sdp"
                 android:layout_height="@dimen/_110sdp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/dummy_feature_product" />
+                android:src="@drawable/dummy_feature_product"
+                app:product_image='@{model.product_image ?? ""}' />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,9 +74,10 @@
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_12sdp"
                     android:paddingBottom="5dp"
-                    android:text="fungicides Crystal Bavistin 50% WP Fun gicide Carbe ..."
+                    android:text='@{model.product_name ?? ""}'
                     android:textColor="@color/blakish"
-                    android:textSize="@dimen/_11ssp" />
+                    android:textSize="13sp"
+                    tools:text="@string/product_fungicide" />
 
                 <RatingBar
                     style="@style/CustomRatingBar"
@@ -83,7 +86,8 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     android:numStars="5"
                     android:rating="3"
-                    android:stepSize="1" />
+                    android:stepSize="1"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -99,21 +103,23 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="3"
-                        android:text="₹ 900"
+                        android:text="@{(@string/rupee).concat(@string/space).concat(model.selling_price)}"
                         android:textColor="@color/blakish"
-                        android:textSize="@dimen/_12ssp" />
+                        android:textSize="16sp"
+                        tools:text="@string/_900" />
 
                     <TextView
-                        style="@style/heading_title_bold_large"
+                        style="@style/regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_4sdp"
                         android:background="@drawable/strike_through_mutegrey"
                         android:ellipsize="end"
                         android:maxLines="3"
-                        android:text="₹ 1800"
+                        tools:text="@string/dummy_price"
+                        android:text="@{(@string/rupee).concat(@string/space).concat(model.selling_price)}"
                         android:textColor="@color/gray_strike_through"
-                        android:textSize="@dimen/_12ssp" />
+                        android:textSize="13sp" />
 
                 </LinearLayout>
 

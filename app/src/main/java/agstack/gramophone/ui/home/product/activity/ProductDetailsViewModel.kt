@@ -13,6 +13,7 @@ import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.NonNullObservableField
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
@@ -24,7 +25,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductDetailsViewModel @Inject constructor(
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
 ) : BaseViewModel<ProductDetailsNavigator>() {
     val productDetailstoBeFetched = ProductData()
     var mSKUList = ArrayList<ProductSkuListItem?>()
@@ -35,7 +36,7 @@ class ProductDetailsViewModel @Inject constructor(
     var productReviewsData = ObservableField<GpApiResponseData?>()
     var relatedProductData = ObservableField<GpApiResponseDataRelatedProduct?>()
     var productId: Int = 0
-    lateinit var mProductDetailsKeyValues: MutableList<KeyPointsItem?>
+    lateinit var mProductDetailsList: MutableList<ProductDetailsItem?>
     private var loadProductDataJob: Job? = null
     private var loadRelatedProductDataJob: Job? = null
     private var loadProductReviewsDataJob: Job? = null
@@ -43,14 +44,14 @@ class ProductDetailsViewModel @Inject constructor(
     private var addToCartJob: Job? = null
     private var expertAdviceJob: Job? = null
     private var updateProductFavoriteJob: Job? = null
-    private var contactForPriceJob :Job?=null
+    private var contactForPriceJob: Job? = null
     var progressLoader = ObservableField<Boolean>(false)
 
     //Values selected by User
     var qtySelected = ObservableField<Int>(1)
 
     var ratingSelected = ObservableField<Double>(0.0)
-    var isHeartSelected = ObservableField<Boolean>(false)
+    var isHeartSelected = NonNullObservableField<Boolean>(false)
     var selectedSkuListItem = ObservableField<ProductSkuListItem>()
     var selectedOfferItem = PromotionListItem()
     var addToCartEnabled = ObservableField<Boolean>(true)
@@ -93,10 +94,10 @@ class ProductDetailsViewModel @Inject constructor(
         if (bundle?.getParcelable<ProductData>("product") != null) {
             Log.d(
                 "ProductName",
-                (bundle?.getParcelable<ProductData>("product") as ProductData).product_id.toString()
+                (bundle.getParcelable<ProductData>("product") as ProductData).product_id.toString()
             )
 
-            productId = (bundle?.getParcelable<ProductData>("product") as ProductData).product_id!!
+            productId = (bundle.getParcelable<ProductData>("product") as ProductData).product_id!!
 
             productDetailstoBeFetched.product_id = productId
 
@@ -116,7 +117,7 @@ class ProductDetailsViewModel @Inject constructor(
                     productData.let {
                         val productResponseData = productData.get()
                         getNavigator()?.setToolbarTitle(productResponseData?.productBaseName!!)
-                        isHeartSelected.set(productResponseData?.isUserFavourite)
+                        isHeartSelected.set(productResponseData?.isUserFavourite!!)
                         productResponseData?.productImages?.let {
                             getNavigator()?.setProductImagesViewPagerAdapter(
                                 ProductImagesAdapter(
@@ -126,18 +127,48 @@ class ProductDetailsViewModel @Inject constructor(
                             )
                         }
 
-                        mProductDetailsKeyValues =
-                            (productResponseData?.productDetails?.keyPoints!!).toMutableList()
+                        productResponseData?.productDetails?.let {
+                            //product Details could be null
 
-                        //set ProductDetails Adapter
-                        getNavigator()?.setProductDetailsAdapter(
-                            ProductDetailsAdapter(
-                                ArrayList(
-                                    mProductDetailsKeyValues
-                                )
+
+                            mProductDetailsList =
+                                (productResponseData?.productDetails!!).toMutableList()
+                            var detailTypeKeyValueList = HashMap<String, ArrayList<KeyPointsItem>>()
+
+                            var keyArrayList = ArrayList<String>()
+                            for (value in mProductDetailsList) {
+                                keyArrayList.add(value?.productDetailType!!)
+                            }
+
+                            if (keyArrayList.size > 1) {
+
+                                val hset: HashSet<String> = HashSet<String>(keyArrayList)
+                                keyArrayList = ArrayList<String>(hset)
+                            }
+
+
+                            for (keyValue in keyArrayList) {
+                                var keyValueArrayList = ArrayList<KeyPointsItem>()
+                                for (value in mProductDetailsList) {
+                                    if (keyValue.equals(value?.productDetailType)) {
+                                        keyValueArrayList.add(
+                                            KeyPointsItem(
+                                                value?.productDetailKey,
+                                                value?.productDetailValue
+                                            )
+                                        )
+                                    }
+                                }
+                                detailTypeKeyValueList.put(keyValue, keyValueArrayList)
+
+                            }
+
+
+                            //set ProductDetails Adapter
+                            getNavigator()?.setProductDetailsAdapter(
+                                ProductDetailsAdapter(detailTypeKeyValueList)
                             )
-                        )
-
+                        }
 
                         //set skuList
                         mSKUList = ArrayList(productData?.get()?.productSkuList)
@@ -146,22 +177,30 @@ class ProductDetailsViewModel @Inject constructor(
                             getNavigator()?.setProductSKUAdapter(
                                 ProductSKUAdapter(
                                     mSKUList
-                                )
+                                ) {
+
+                                }
                             ) {
                                 Log.d("productSKUItemSelected", it.productId.toString())
                                 selectedSkuListItem.set(it)
                                 productDetailstoBeFetched.product_id =
                                     selectedSkuListItem.get()?.productId!!.toInt()
 
-                                setPercentage_mrpVisibility(selectedSkuListItem.get()!!, selectedOfferItem)
+                                setPercentage_mrpVisibility(
+                                    selectedSkuListItem.get()!!,
+                                    selectedOfferItem
+                                )
 
                             }
 
-                            val productIdDefault = productResponseData.productIdDefault
+                            val productIdDefault = productResponseData?.productIdDefault
                             for (item in mSKUList) {
                                 item?.selected = item?.productId!!.equals(productIdDefault)
                                 if (item?.selected == true) {
                                     selectedSkuListItem.set(item)
+
+                                    mSKUList
+
                                     productDetailstoBeFetched.product_id =
                                         selectedSkuListItem.get()?.productId!!.toInt()
                                     setPercentage_mrpVisibility(
@@ -191,7 +230,7 @@ class ProductDetailsViewModel @Inject constructor(
 
     private fun setPercentage_mrpVisibility(
         model: ProductSkuListItem,
-        offerModel: PromotionListItem? = null
+        offerModel: PromotionListItem? = null,
     ) {
         var isOffersLayoutVisible = true
         var priceDiff: Float = 0.0f
@@ -359,12 +398,15 @@ class ProductDetailsViewModel @Inject constructor(
                             }
                         }
                         getNavigator()?.setProductSKUOfferAdapter(
-                            ProductSKUOfferAdapter(mSkuOfferList),
+                            ProductSKUOfferAdapter(mSkuOfferList, 0f, {}, {}),
                             {
                                 //When RadioButton is clicked
                                 selectedOfferItem = it
 
-                                setPercentage_mrpVisibility(selectedSkuListItem.get()!!, selectedOfferItem)
+                                setPercentage_mrpVisibility(
+                                    selectedSkuListItem.get()!!,
+                                    selectedOfferItem
+                                )
 
                             },
                             {
@@ -408,7 +450,7 @@ class ProductDetailsViewModel @Inject constructor(
 
         //If Genuine Customer
 
-        if (!productReviewsData.get()?.selfRating?.is_certified_buyer!!) {
+        if (productReviewsData.get()?.selfRating?.is_certified_buyer!!) {
             getNavigator()?.openActivityWithBottomToTopAnimation(
                 AddEditProductReviewActivity::class.java,
                 Bundle().apply {
@@ -425,7 +467,9 @@ class ProductDetailsViewModel @Inject constructor(
 
             // else if not genuine customer
 
-            getNavigator()?.showGenuineCustomerRatingDialog(GenuineCustomerRatingAlertFragment()) {
+
+
+            getNavigator()?.showGenuineCustomerRatingDialog(GenuineCustomerRatingAlertFragment.newInstance(addToCartEnabled.get()!!),addToCartEnabled.get()!!) {
                 //callback comes here when on add to cart is clicked
                 Log.d("Click", "Add to cart Clicked")
                 addToCartJob.cancelIfActive()
@@ -440,6 +484,7 @@ class ProductDetailsViewModel @Inject constructor(
                     if (addTocartResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
                         progressLoader.set(false)
                         getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+                        onAddToCartClicked()
                     } else {
                         progressLoader.set(false)
                         getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
@@ -532,7 +577,9 @@ class ProductDetailsViewModel @Inject constructor(
             if (expertAdviceResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
 
                 getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
-                getNavigator()?.showContactForPriceBottomSheetDialog(ContactForPriceBottomSheetDialog())
+                getNavigator()?.showContactForPriceBottomSheetDialog(
+                    ContactForPriceBottomSheetDialog()
+                )
             } else {
                 getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
             }

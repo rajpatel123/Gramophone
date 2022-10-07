@@ -7,4 +7,5 @@ interface AddEditProductReviewNavigator :BaseNavigator {
     fun getBundle(): Bundle?
     fun finishActivity()
     fun finishActivityandRefreshProductDetails()
+    fun enableSubmitButton(enableSubmit: Boolean)
 }

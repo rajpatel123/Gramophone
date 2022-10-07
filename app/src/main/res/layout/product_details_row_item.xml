@@ -2,53 +2,40 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/tools">
+    xmlns:card_view="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <import type="android.view.View" />
 
-        <variable
-            name="model"
-            type="agstack.gramophone.ui.home.view.fragments.market.model.KeyPointsItem" />
+
     </data>
 
-
     <LinearLayout
-        android:id="@+id/mainContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_key"
-            style="@style/heading_title_medium"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight=".8"
-            android:background="@drawable/no_corner_with_grey_color"
-            android:gravity="center"
-            android:hint="Insectictice/Fungicide/Herrbicide"
-            android:padding="@dimen/_4sdp"
-            android:text="@{model.key }"
-            android:textColor="@color/grey_weight" />
+            android:id="@+id/tv_detailType"
+            style="@style/TextSize14Sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/grey_rounded_corner_solid_grey_color"
+            android:padding="@dimen/_8sdp"
+            tools:text="@string/key_points"></TextView>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_keyvalue_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="2"
+            tools:listitem="@layout/key_value_item" />
 
-        <TextView
-            android:id="@+id/tv_value"
-            style="@style/heading_title_medium"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.2"
-            android:background="@drawable/no_corner_with_grey_color"
-            android:gravity="center"
-            android:hint="Herbicide"
-            android:padding="@dimen/_4sdp"
-            android:text="@{model.value }"
-            android:textColor="@color/blakish"
-            android:textSize="@dimen/_12ssp" />
 
     </LinearLayout>
+
 
 </layout>

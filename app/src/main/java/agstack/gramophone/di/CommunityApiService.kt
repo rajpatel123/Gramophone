@@ -1,7 +1,6 @@
 package agstack.gramophone.di
 
 import agstack.gramophone.ui.userprofile.model.TestUserModel
-import agstack.gramophone.ui.userprofile.model.UserModel
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.GET

@@ -7,11 +7,10 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class GpApiResponseDataProduct (
-
     @field:SerializedName("related_product")
     val relatedProduct: List<RelatedProductItem?>? = null,
 
-    @field:SerializedName("is_user_favourite")
+    @field:SerializedName("is_customer_favourite")
     val isUserFavourite: Boolean? = null,
 
     @field:SerializedName("product_featured_flag")
@@ -38,8 +37,11 @@ data class GpApiResponseDataProduct (
     @field:SerializedName("currency")
     val currency: String? = null,
 
+   /* @field:SerializedName("product_details")
+    val productDetails: ProductDetails? = null,*/
+
     @field:SerializedName("product_details")
-    val productDetails: ProductDetails? = null,
+    val productDetails: List<ProductDetailsItem?>? = null,
 
     @field:SerializedName("product_id_default")
     val productIdDefault: String? = null,

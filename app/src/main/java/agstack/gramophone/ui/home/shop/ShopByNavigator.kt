@@ -13,11 +13,11 @@ interface ShopByNavigator : BaseNavigator {
 
     fun setShopByCropAdapter(shopByCropsAdapter: ShopByCropsAdapter, id: (String) -> Unit)
 
-    fun setShopByStoresAdapter(shopByStoresAdapter: ShopByStoresAdapter, id: (String) -> Unit)
+    fun setShopByStoresAdapter(shopByStoresAdapter: ShopByStoresAdapter)
 
     fun setShopByCompanyAdapter(shopByCompanyAdapter: ShopByCompanyAdapter, id: (String) -> Unit)
 
-    fun openShopByDetailActivity(id: String)
+    fun openShopByDetailActivity(storeId: String, storeName: String, storeImage: String)
 
     fun openCropStageActivity(id: String)
 }

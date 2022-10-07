@@ -34,22 +34,22 @@ class CartAdapter(cartItemList: List<CartItem>) :
             onItemDeleteClicked?.invoke(cartList[position].product_id.toString())
         }
         holder.binding.tvOffersApplied.setOnClickListener {
-            if (cartList[position].offer_applied.isNotEmpty()) {
+           /* if (cartList[position].offer_applied.isNotEmpty()) {
                 cartList[position].offer_applied[0].product_name = cartList[position].product_name
                 onOfferClicked?.invoke(cartList[position].offer_applied[0])
-            }
+            }*/
         }
         holder.binding.ivSubtract.setOnClickListener {
             if (quantity > 1) {
                 quantity -= 1
-                cartList[position].quantity = quantity.toString()
+                cartList[position].quantity = quantity
                 notifyDataSetChanged()
             }
             onQuantityClicked?.invoke(cartList[position])
         }
         holder.binding.ivAdd.setOnClickListener {
             quantity += 1
-            cartList[position].quantity = quantity.toString()
+            cartList[position].quantity = quantity
             notifyDataSetChanged()
             onQuantityClicked?.invoke(cartList[position])
         }

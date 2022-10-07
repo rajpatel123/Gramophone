@@ -22,7 +22,7 @@ data class ProductData(
     @SerializedName("is_favourite")
     var is_favourite  : Boolean? = null,
     @SerializedName("comments")
-    var comments  : String? = null
+    var comments  : String? = null,
 
 
     ) : Parcelable

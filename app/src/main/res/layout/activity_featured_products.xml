@@ -9,13 +9,12 @@
 
         <variable
             name="viewModel"
-            type="agstack.gramophone.ui.home.featured.FeaturedViewModel" />
+            type="agstack.gramophone.ui.home.subcategory.SubCategoryViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
@@ -50,99 +49,114 @@
                     android:text="@string/featured_products"
                     android:textColor="@color/blakish"
                     android:textSize="18sp" />
+
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:isScrollContainer="true"
                     android:background="@color/white"
+                    android:isScrollContainer="true"
                     app:contentInsetLeft="0dp"
                     app:contentInsetStart="0dp"
                     app:contentInsetStartWithNavigation="0dp"
                     app:layout_collapseMode="pin"
-                    app:menu="@menu/menu_home"
                     app:navigationIcon="@drawable/ic_arrow_left" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                <LinearLayout
+                    android:id="@+id/llSortFilter"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tvSortBy"
-                        android:layout_width="wrap_content"
+                    <FrameLayout
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:drawablePadding="8dp"
-                        android:fontFamily="@font/manrope_medium"
-                        android:gravity="center"
-                        android:lineSpacingExtra="0sp"
-                        android:text="@string/sort_by"
-                        android:textColor="@color/gray"
-                        android:textSize="14sp"
-                        app:drawableStartCompat="@drawable/ic_sort_by" />
+                        android:layout_weight="1">
 
-                </FrameLayout>
+                        <TextView
+                            android:id="@+id/tvSortBy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:drawablePadding="8dp"
+                            android:fontFamily="@font/manrope_medium"
+                            android:gravity="center"
+                            android:lineSpacingExtra="0sp"
+                            android:text="@string/sort_by"
+                            android:textColor="@color/gray"
+                            android:textSize="14sp"
+                            app:drawableStartCompat="@drawable/ic_sort_by" />
 
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    </FrameLayout>
 
-                    <TextView
-                        android:id="@+id/tvFilter"
-                        android:layout_width="wrap_content"
+                    <FrameLayout
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:drawablePadding="8dp"
-                        android:fontFamily="@font/manrope_medium"
-                        android:gravity="center"
-                        android:lineSpacingExtra="0sp"
-                        android:text="@string/filter"
-                        android:textColor="@color/gray"
-                        android:textSize="14sp"
-                        app:drawableStartCompat="@drawable/ic_filter" />
+                        android:layout_weight="1">
 
-                </FrameLayout>
+                        <TextView
+                            android:id="@+id/tvFilter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:drawablePadding="8dp"
+                            android:fontFamily="@font/manrope_medium"
+                            android:gravity="center"
+                            android:lineSpacingExtra="0sp"
+                            android:text="@string/filter"
+                            android:textColor="@color/gray"
+                            android:textSize="14sp"
+                            app:drawableStartCompat="@drawable/ic_filter" />
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_6sdp"
+                    android:background="@color/gray_stroke" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_product_list" />
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_6sdp"
-                android:background="@color/gray_stroke"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvProduct"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:itemCount="6"
-                tools:listitem="@layout/item_product_list" />
-
-        </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.progress == true ? View.VISIBLE : View.GONE}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -8,14 +8,17 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class BottomSheetSortByDialog : BottomSheetDialogFragment() {
+class BottomSheetSortByDialog(
+    private val sortDataList: ArrayList<SortByData>?,
+    private val listener: (String) -> Unit,
+) :
+    BottomSheetDialogFragment() {
     var binding: BottomSheetDialogSortByBinding? = null
-    var listener: AcceptRejectListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = BottomSheetDialogSortByBinding.inflate(inflater)
 
@@ -24,7 +27,10 @@ class BottomSheetSortByDialog : BottomSheetDialogFragment() {
     }
 
     private fun setupUi() {
-        binding?.rvSortBy?.adapter = SortByAdapter(requireContext())
+        binding?.rvSortBy?.adapter = SortByAdapter(requireContext(), sortDataList) {
+            listener.invoke(it)
+            dismiss()
+        }
         binding?.ivCloseDialog?.setOnClickListener {
             dismiss()
         }
@@ -33,13 +39,5 @@ class BottomSheetSortByDialog : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-    }
-
-    fun setAcceptRejectListener(listener: AcceptRejectListener?) {
-        this.listener = listener
-    }
-
-    interface AcceptRejectListener {
-        fun onAcceptRejectClick(friendRequestId: Int, status: Boolean)
     }
 }

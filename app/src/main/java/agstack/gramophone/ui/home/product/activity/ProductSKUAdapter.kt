@@ -8,7 +8,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ProductSKUAdapter(SKUList: ArrayList<ProductSkuListItem?>) :
+class ProductSKUAdapter(
+    SKUList: ArrayList<ProductSkuListItem?>,
+    val selectedSKUProduct: ((ProductSkuListItem) -> Unit)?,
+) :
     RecyclerView.Adapter<ProductSKUAdapter.CustomViewHolder>() {
     var mSKUList = SKUList
     lateinit var mContext: Context
@@ -19,7 +22,11 @@ class ProductSKUAdapter(SKUList: ArrayList<ProductSkuListItem?>) :
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         mContext = viewGroup.context
         return CustomViewHolder(
-            ItemRadioProductPackingBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
+            ItemRadioProductPackingBinding.inflate(
+                LayoutInflater.from(viewGroup.context),
+                viewGroup,
+                false
+            )
         )
     }
 
@@ -30,11 +37,17 @@ class ProductSKUAdapter(SKUList: ArrayList<ProductSkuListItem?>) :
         val mBinding = holder.binding as ItemRadioProductPackingBinding
 
         mBinding.radioBtn.setOnClickListener {
+            if (lastSelectPosition == 0) {
+                for (item in mSKUList) {
+                    item?.selected = false
+                }
+            }
             mSKUList[lastSelectPosition]?.selected = false
             lastSelectPosition = position
             model.selected = true
             notifyDataSetChanged()
             selectedProduct?.invoke(model)
+            selectedSKUProduct?.invoke(model)
         }
 
 
