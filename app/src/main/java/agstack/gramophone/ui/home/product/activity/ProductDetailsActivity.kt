@@ -76,10 +76,10 @@ class ProductDetailsActivity :
 
     override fun showGenuineCustomerRatingDialog(
         genuineCustomerRatingAlertFragment: GenuineCustomerRatingAlertFragment,
-        addToCartEnable:Boolean,
+        addToCartEnable: Boolean,
         onAddToCartClick: () -> Unit
     ) {
-         var genuineCustomerDialog = GenuineCustomerRatingAlertFragment.newInstance(addToCartEnable)
+        var genuineCustomerDialog = GenuineCustomerRatingAlertFragment.newInstance(addToCartEnable)
         genuineCustomerDialog = genuineCustomerRatingAlertFragment
         genuineCustomerDialog.setOnClickSelectedListener(onAddToCartClick)
         genuineCustomerDialog.show(supportFragmentManager, "genuineCustomerDialog")
@@ -243,10 +243,13 @@ class ProductDetailsActivity :
     ) {
         viewDataBinding.tvProductSP.setText(resources.getString(R.string.rupee) + "" + salesPrice)
         viewDataBinding.tvPercentageOffOnSelectedSKU.setText(discountPercentage)
-        if (isMRPVisible)
+        if (isMRPVisible) {
             viewDataBinding.tvProductMRP.visibility = View.VISIBLE
-        else
+            viewDataBinding.tvPercentageOffOnSelectedSKU.visibility = View.VISIBLE
+        } else {
             viewDataBinding.tvProductMRP.visibility = View.GONE
+            viewDataBinding.tvPercentageOffOnSelectedSKU.visibility = View.INVISIBLE
+        }
 
 
         if (isContactforPriceVisible) {
@@ -316,7 +319,7 @@ class ProductDetailsActivity :
     }
 
     override fun setRatingAndReviewsAdapter(ratingAndReviewsAdapter: RatingAndReviewsAdapter) {
-       viewDataBinding.ratingbarReviews.rvReviewsProduct.adapter = ratingAndReviewsAdapter
+        viewDataBinding.ratingbarReviews.rvReviewsProduct.adapter = ratingAndReviewsAdapter
     }
 
     override fun openViewAllReviewRatingsActivity(

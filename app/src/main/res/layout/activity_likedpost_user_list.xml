@@ -32,8 +32,23 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvUserList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="@dimen/_10sdp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:visibility="@{viewModel.isDataAvailable?View.VISIBLE:View.GONE}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:visibility="gone"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.isDataAvailable?View.GONE:View.VISIBLE}"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_likes"
+                android:gravity="center_horizontal"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
     </LinearLayout>
 </layout>

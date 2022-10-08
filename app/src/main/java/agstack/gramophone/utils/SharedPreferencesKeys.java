@@ -34,6 +34,7 @@ public abstract class SharedPreferencesKeys {
     public static final String RefreshDate = "refresh_within";
     public static final String referral_applied = "referral_applied";
     public static final String UUIdKey = "uuid";
+    public static final String IS_ADMIN = "admin";
     public static final String NotificationCount = "notificationCount";
     public static final String CartItemCount = "cartItemCount";
     public static final String ProfileUuid = "profile_uuid";

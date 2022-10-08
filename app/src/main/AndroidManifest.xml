@@ -17,10 +17,12 @@
         </intent>
         <intent>
             <action android:name="android.intent.action.PICK" />
+
             <data android:mimeType="image/*" />
         </intent>
         <intent>
             <action android:name="android.intent.action.ACTION_GET_CONTENT" />
+
             <data android:mimeType="image/*" />
         </intent>
     </queries>
@@ -37,15 +39,20 @@
         android:theme="@style/SplashTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.othersporfile.view.OtherUserProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.comments.view.CommentsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.createpost.view.CreatePostActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.postdetails.view.PostDetailsActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".ui.home.view.fragments.community.LikedPostUserListActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".ui.settings.view.BlockedUsersActivity"
             android:exported="false"
@@ -72,6 +79,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -134,7 +142,6 @@
             android:name=".ui.referandearn.referralpoints.ReferralPointsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.referandearn.aboutreferralpoints.AboutReferralPointsBalanceActivity"
             android:exported="false"
@@ -148,7 +155,6 @@
             android:name=".ui.referralrules.ReferralRulesActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity android:name=".ui.userprofile.firm.AddFirmActivity" />
         <activity android:name=".ui.weather.WeatherActivity" />
         <activity android:name=".ui.home.subcategory.SubCategoryActivity" />
@@ -158,10 +164,8 @@
         <activity android:name=".ui.home.stage.CropStageActivity" />
         <activity android:name=".ui.home.stagedetail.CropStageDetailActivity" />
         <activity android:name=".ui.home.cropdetail.CropDetailActivity" />
-
-        <activity android:name=".ui.gramcash.GramCashActivity"/>
-        <activity android:name=".ui.gramcash.expiringsoon.GCExpiringSoonActivity"/>
-
+        <activity android:name=".ui.gramcash.GramCashActivity" />
+        <activity android:name=".ui.gramcash.expiringsoon.GCExpiringSoonActivity" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"

@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="agstack.gramophone.ui.home.view.fragments.community.model.Data" />
+            type="agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data" />
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

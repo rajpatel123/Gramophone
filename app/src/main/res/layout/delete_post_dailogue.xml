@@ -82,7 +82,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/_16sdp"
                     android:fontFamily="@font/manrope_semibold"
-                    android:onClick="@{()->viewModel.onReport()}"
+                    android:onClick="@{()->viewModel.onDelete()}"
                     android:text="@string/delete"
                     android:textColor="@color/brand_color"
                     android:textSize="@dimen/_14ssp" />

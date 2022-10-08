@@ -4,5 +4,6 @@ data class GpApiResponseData(
     val is_address: Boolean,
     val token: String,
     val uuid: String,
-    val whatsapp_optin: Boolean
+    val whatsapp_optin: Boolean,
+    val community_user_type: String
 )

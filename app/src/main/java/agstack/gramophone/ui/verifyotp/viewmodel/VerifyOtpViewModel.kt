@@ -92,6 +92,11 @@ class VerifyOtpViewModel @Inject constructor(
                         )
 
                         SharedPreferencesHelper.instance?.putString(
+                            SharedPreferencesKeys.IS_ADMIN,
+                            responseData?.gp_api_response_data!!.community_user_type
+                        )
+
+                        SharedPreferencesHelper.instance?.putString(
                             SharedPreferencesKeys.USER_PHONE_NUMBER,
                             mobileNo.get()
                         )

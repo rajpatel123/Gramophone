@@ -4,6 +4,5 @@ import agstack.gramophone.base.BaseNavigator
 
 interface EditProfileNavigator :BaseNavigator {
      fun showVerifyOTPFragment(otpReferenceId: Int, onUpdateSuccess: (String) -> Unit)
-     fun finishActivity()
 
 }

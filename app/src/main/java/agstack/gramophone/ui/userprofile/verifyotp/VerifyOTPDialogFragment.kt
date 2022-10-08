@@ -94,6 +94,8 @@ class VerifyOTPDialogFragment :
         }
     }
 
+    override fun finishActivity() {
+    }
 
 
     fun setOnSuccessListener(update: (String) -> Unit) {

@@ -46,18 +46,23 @@ class ProductSKUOfferAdapter(
             amountSaved = model.amount_saved!!.toFloat()
         }
 
-        if (model.amount_saved.isNotNull() && selectedSku.mrpPrice?.toFloat()!! > model.amount_saved!!.toFloat()) {
-            val payOnly = selectedSku.mrpPrice?.toFloat() - amountSaved
+        var selectedSKUMrpPrice = 0.0f
+        if(selectedSku.mrpPrice!=null){
+            selectedSKUMrpPrice = selectedSku.mrpPrice.toFloat()
+        }
+
+        if (model.amount_saved.isNotNull() && selectedSKUMrpPrice > amountSaved) {
+            val payOnly = selectedSKUMrpPrice - model.amount_saved!!.toFloat()
             val payOnlyString: String = if (payOnly.toString().contains(".0") || payOnly.toString().contains(".00")) {
                 payOnly.roundToInt().toString()
             } else {
                 payOnly.toString()
             }
             val selectedSkuPriceString: String =
-                if (selectedSku.mrpPrice?.toString().contains(".0") || selectedSku.mrpPrice?.toString().contains(".00")) {
-                    selectedSku.mrpPrice?.roundToInt().toString()
+                if (selectedSKUMrpPrice.toString().contains(".0") || selectedSKUMrpPrice.toString().contains(".00")) {
+                    selectedSKUMrpPrice.roundToInt().toString()
                 } else {
-                    selectedSku.mrpPrice?.toString()
+                    selectedSKUMrpPrice.toString()
                 }
             mBinding.tvPayOnly.text = holder.itemView.context.getString(R.string.rupee) + payOnlyString
             mBinding.tvSkuPrice.text = holder.itemView.context.getString(R.string.rupee) + selectedSkuPriceString

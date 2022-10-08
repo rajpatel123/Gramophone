@@ -19,6 +19,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -188,11 +189,18 @@ class ProductDetailsViewModel @Inject constructor(
                                 selectedSkuListItem.set(it)
                                 productDetailstoBeFetched.product_id =
                                     selectedSkuListItem.get()?.productId!!.toInt()
+                                //Refresh offerList when product SKU is selected
+
 
                                 setPercentage_mrpVisibility(
                                     selectedSkuListItem.get()!!,
-                                    selectedOfferItem
+                                    null
                                 )
+                                //reset the selectedOfferItem
+                                selectedOfferItem = PromotionListItem()
+
+                                loadOffersData(productDetailstoBeFetched, qtySelected.get())
+
 
                             }
 
@@ -241,20 +249,30 @@ class ProductDetailsViewModel @Inject constructor(
         var finaldiscount = "0"
         var isMRPVisibile = false
         var isContactforPriceVisible = false
-        if (model.mrpPrice == null || model.salesPrice == null) {
+        if (model.mrpPrice == null && model.salesPrice == null) {
 
             isOffersLayoutVisible = false
             isContactforPriceVisible = true
             addToCartEnabled.set(false)
+        } else if (model.mrpPrice == null && model.salesPrice != null) {
+            isContactforPriceVisible = false
+            addToCartEnabled.set(true)
+            finalSalePrice = model.salesPrice?.toDouble()!!
+
         } else {
             isContactforPriceVisible = false
             addToCartEnabled.set(true)
 
-            if (offerModel == null || offerModel?.amount_saved == 0.0) {
+            var amountSaved = 0f
+            if (offerModel?.amount_saved.isNotNull()) {
+                amountSaved = offerModel?.amount_saved!!.toFloat()
+            }
+
+            if (offerModel == null || amountSaved == 0f) {
                 priceDiff = (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat())
-            } else if (offerModel != null && offerModel.amount_saved!! > 0.0) {
+            } else if (offerModel != null && amountSaved > 0f) {
                 priceDiff =
-                    (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat()) - offerModel.amount_saved.toFloat()
+                    (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat()) - amountSaved
             }
 
             val numarator = (priceDiff * 100)
@@ -267,11 +285,11 @@ class ProductDetailsViewModel @Inject constructor(
 
             offerModel?.let {
                 if (offerModel.amount_saved!! > 0) {
-                    finalSalePrice = model.salesPrice.toDouble() - offerModel?.amount_saved!!
+                    finalSalePrice = model.salesPrice?.toDouble()!! - offerModel?.amount_saved!!
                 }
             }
             if (offerModel == null || offerModel?.amount_saved == 0.0) {
-                finalSalePrice = model.salesPrice.toDouble()
+                finalSalePrice = model.salesPrice?.toDouble()!!
             }
 // set offer detailsLayout visibility
             isOffersLayoutVisible = !model.mrpPrice.equals(null)
@@ -372,13 +390,14 @@ class ProductDetailsViewModel @Inject constructor(
     private fun loadOffersData(productDetailstoBeFetched: ProductData, quantity: Int? = 0) {
         loadProductOffersDataJob.cancelIfActive()
         loadProductOffersDataJob = checkNetworkThenRun {
+            progressLoader.set(true)
             if (quantity!! > 0) {
                 productDetailstoBeFetched.quantity = quantity
             }
             val offersOnProductResponse =
                 productRepository.getOffersOnProductData(productDetailstoBeFetched)
+            progressLoader.set(false)
             if (offersOnProductResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
-
                 //setOffer List
                 offersOnProductResponse.body()?.gpApiResponseData?.offersProductList.let {
                     val prodOfferList =
@@ -407,16 +426,13 @@ class ProductDetailsViewModel @Inject constructor(
                             {
                                 //When RadioButton is clicked
                                 selectedOfferItem = it
-                                if (checkPromotionApplicable(
-                                        selectedOfferItem,
-                                        selectedSkuListItem.get()!!,
-                                        qtySelected.get()!!
-                                    )
-                                ) {
-
-                                    //Selected Offer is Applicable on selectedSKU
-
-
+                                checkPromotionApplicable(
+                                    selectedOfferItem, selectedSkuListItem.get()!!,
+                                    qtySelected.get()!!
+                                )
+                                /*{
+                                   //Selected Offer is Applicable on selectedSKU
+*//*
                                     for (item in mSkuOfferList) {
                                         item?.selected =
                                             selectedOfferItem.promotion_id!!.equals(item?.promotion_id)
@@ -429,8 +445,8 @@ class ProductDetailsViewModel @Inject constructor(
                                     setPercentage_mrpVisibility(
                                         selectedSkuListItem.get()!!,
                                         selectedOfferItem
-                                    )
-                                }
+                                    )*//*
+                                }*/
 
                             },
                             {
@@ -461,7 +477,7 @@ class ProductDetailsViewModel @Inject constructor(
         selectedOfferItem: PromotionListItem,
         selectedSKU: ProductSkuListItem,
         quantity: Int
-    ): Boolean {
+    ) {
 
         var isApplicable = false
         checkPromotionApplicableJob.cancelIfActive()
@@ -471,18 +487,28 @@ class ProductDetailsViewModel @Inject constructor(
                 quantity,
                 selectedOfferItem.promotion_id?.toString()!!
             )
-
-
             val offersOnProductResponse =
                 productRepository.checkPromotionOnProduct(verifyPromotionsModel)
             isApplicable =
                 offersOnProductResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)
 
-            if (!isApplicable) {
+            if (isApplicable) {
+                for (item in mSkuOfferList) {
+                    item?.selected =
+                        selectedOfferItem.promotion_id!!.equals(item?.promotion_id)
+
+                }
+                getNavigator()?.refreshOfferAdapter()
+
+                setPercentage_mrpVisibility(
+                    selectedSkuListItem.get()!!,
+                    selectedOfferItem
+                )
+            } else {
                 getNavigator()?.showToast(offersOnProductResponse.body()?.gpApiMessage)
             }
+
         }
-        return isApplicable
 
 
     }

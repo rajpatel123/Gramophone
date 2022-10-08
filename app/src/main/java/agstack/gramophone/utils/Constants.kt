@@ -7,10 +7,22 @@ import android.content.Context
 
 object Constants {
 
+
+    val POST_LATEST: String = "Latest"
+    val POST_TRENDING: String = "Trending"
+    val POST_FOLLOWING: String = "Following"
+    val POST_EXPERT: String = "Expert"
+    val POST_SELF: String = "My Post"
+    val POST_BOOKMARK: String = "Saved Post"
+    val POST_ID: String = "postId"
+    val AUTHER_ID: String = "auth_id"
+    val AUTHER_UUID: String = "auth_uuid"
+
     val ADDRESSOBJECT: String = "address"
     val REFERRAL_CODE: String="referralCOde"
     val UNAUTHORIZED: Int=401
     val GP_API_MESSAGE: String="gp_api_message"
+    val MESSAGE: String="message"
     val PIN_POST: String="pinpost"
     val EDIT_POST: String="edit_post"
     val COPY_POST: String="copy_post"
@@ -66,6 +78,13 @@ object Constants {
     val READ_EXTERNAL_STORAGE = Manifest.permission.CAMERA
     val REQUEST_CAMERA = 1012
     val REQUEST_GALLERY = 1013
+
+
+    val IV_ONE = 10131
+    val IV_TWO = 10132
+    val IV_THREE = 10133
+
+
 
     //sortBy options
     val TOP = "top"
