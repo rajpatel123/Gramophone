@@ -136,8 +136,8 @@ object Utility {
     ): String {
         try {
             // Creating date format
-            val dateFormat: DateFormat = SimpleDateFormat(DATE_MONTH_YEAR_FORMAT, Locale.ENGLISH)
-            val format = SimpleDateFormat(MONTH_DATE_YEAR_FORMAT, Locale.ENGLISH)
+            val dateFormat: DateFormat = SimpleDateFormat(requiredFormat, Locale.ENGLISH)
+            val format = SimpleDateFormat(currentFormat, Locale.ENGLISH)
             val date: Date = format.parse(dateString)!!
 
             // Formatting Date according to the given format

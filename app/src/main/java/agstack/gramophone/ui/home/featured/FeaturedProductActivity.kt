@@ -16,10 +16,11 @@ import agstack.gramophone.ui.home.subcategory.model.Offer
 import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
+import agstack.gramophone.ui.offer.OfferDetailActivity
+import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.amnix.xtension.extensions.isNotNull
@@ -40,11 +41,9 @@ class FeaturedProductActivity :
         super.onCreate(savedInstanceState)
         setupUi()
         subCategoryViewModel.getBundleData()
-        subCategoryViewModel.getFeaturedProducts()
     }
 
     private fun setupUi() {
-        viewDataBinding.llSortFilter.visibility = View.GONE
         viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
         viewDataBinding.swipeRefresh.setOnRefreshListener {
             subCategoryViewModel.getFeaturedProducts()
@@ -115,8 +114,21 @@ class FeaturedProductActivity :
     ) {
         bottomSheet = AddToCartBottomSheetDialog({
             //Offer detail activity from here
+            openActivity(
+                OfferDetailActivity::class.java,
+                Bundle().apply {
+
+                    val offersDataItem = DataItem()
+                    offersDataItem.endDate = it.end_date
+                    offersDataItem.productName = it.title
+                    offersDataItem.productsku = it.applicable_on_sku
+                    offersDataItem.image = it.image
+                    offersDataItem.termsConditions = it.t_c
+                    putParcelable(Constants.OFFERSDATA, offersDataItem)
+
+                })
         }, {
-            subCategoryViewModel.applyOfferOnProduct(it)
+            subCategoryViewModel.checkOfferApplicability(it)
         }, {
             subCategoryViewModel.onAddToCartClicked(it)
         })
@@ -129,9 +141,9 @@ class FeaturedProductActivity :
         )
     }
 
-    override fun updateAddToCartDialog(isShowError: Boolean, errorMsg: String) {
+    override fun updateOfferApplicabilityOnDialog(isOfferApplicable: Boolean, message: String) {
         if (bottomSheet.isNotNull())
-            bottomSheet?.updateDialog(isShowError, errorMsg)
+            bottomSheet?.updateDialog(isOfferApplicable, message)
     }
 
     override fun disableSortAndFilter() {

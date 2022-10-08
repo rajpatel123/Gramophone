@@ -3,12 +3,14 @@ package agstack.gramophone.ui.home.subcategory
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
-import agstack.gramophone.data.repository.promotions.PromotionsRepository
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.dialog.filter.MainFilterData
 import agstack.gramophone.ui.dialog.sortby.SortByData
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
-import agstack.gramophone.ui.home.subcategory.model.*
+import agstack.gramophone.ui.home.subcategory.model.Brands
+import agstack.gramophone.ui.home.subcategory.model.Crops
+import agstack.gramophone.ui.home.subcategory.model.Offer
+import agstack.gramophone.ui.home.subcategory.model.TechnicalData
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.utils.Constants
@@ -21,6 +23,7 @@ import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.amnix.xtension.extensions.isNull
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,12 +31,12 @@ import javax.inject.Inject
 @HiltViewModel
 class SubCategoryViewModel @Inject constructor(
     private val productRepository: ProductRepository,
-    private val promotionsRepository: PromotionsRepository,
 ) : BaseViewModel<SubCategoryNavigator>() {
 
     var productData = ObservableField<GpApiResponseDataProduct?>()
     var mSKUList = ArrayList<ProductSkuListItem?>()
     var showSubCategoryView = MutableLiveData<Boolean>()
+    var showSortFilterView = MutableLiveData<Boolean>()
     var toolbarTitle = MutableLiveData<String>()
     var toolbarImage = MutableLiveData<String>()
     var mainFilterList: ArrayList<MainFilterData>? = null
@@ -45,11 +48,13 @@ class SubCategoryViewModel @Inject constructor(
     var progress = MutableLiveData<Boolean>()
     var categoryId: String? = null
     var storeId: String? = null
+    private var checkOfferApplicableJob: Job? = null
 
     init {
         progress.value = false
         toolbarTitle.value = ""
         toolbarImage.value = ""
+        showSortFilterView.value = false
         showSubCategoryView.value = false
     }
 
@@ -58,8 +63,11 @@ class SubCategoryViewModel @Inject constructor(
         initializeSortData()
 
         if (bundle?.containsKey(Constants.SHOP_BY_TYPE)!! && bundle.getString(Constants.SHOP_BY_TYPE) != null) {
+            showSortFilterView.value = false
             toolbarTitle.value = getNavigator()?.getMessage(R.string.featured_products)
-        } else if (bundle?.containsKey(Constants.STORE_ID)!! && bundle.getString(Constants.STORE_ID) != null) {
+            getFeaturedProducts()
+        } else if (bundle.containsKey(Constants.STORE_ID) && bundle.getString(Constants.STORE_ID) != null) {
+            showSortFilterView.value = true
             storeId = bundle.getString(Constants.STORE_ID)!!
             toolbarTitle.value = bundle.getString(Constants.STORE_NAME)!!
             toolbarImage.value = bundle.getString(Constants.STORE_IMAGE)!!
@@ -314,8 +322,7 @@ class SubCategoryViewModel @Inject constructor(
 
                     var offerList = ArrayList<Offer>()
 
-                    val offersResponse =
-                        productRepository.getApplicableOffersOnProduct(ApplicableOfferRequest("BASF | XELORA"))
+                    val offersResponse = productRepository.getOffersOnProduct(productData)
                     progress.value = false
                     if (offersResponse.isSuccessful && offersResponse.body()?.gp_api_response_data.isNotNull()
                         && offersResponse.body()?.gp_api_response_data?.offers.isNotNullOrEmpty()
@@ -334,40 +341,40 @@ class SubCategoryViewModel @Inject constructor(
         }
     }
 
-    fun applyOfferOnProduct(offerForProduct: OfferForProduct) {
-        val products = ArrayList<OfferForProduct>()
-        products.add(offerForProduct)
-        val checkOfferRequest = CheckOfferRequest(
-            "krishi app",
-            "customer",
-            SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!,
-            "app",
-            products,
-            "app"
-        )
-
-        viewModelScope.launch {
+    fun checkOfferApplicability(
+        verifyPromotionsModel: VerifyPromotionRequestModel,
+    ) {
+        checkOfferApplicableJob.cancelIfActive()
+        checkOfferApplicableJob = checkNetworkThenRun {
             try {
-                if (getNavigator()?.isNetworkAvailable() == true) {
+                val response =
+                    productRepository.checkPromotionOnProduct(verifyPromotionsModel)
 
-                    val checkOfferResponse =
-                        promotionsRepository.checkOfferOnProduct(checkOfferRequest)
-                    val errorMsg: String
-                    val isShowErrorMsg: Boolean
-                    val gpiApiOfferResponse: GpApiOfferResponse?
-                    if (checkOfferResponse.body()?.gp_api_status.equals(Constants.GP_API_STATUS)) {
-                        isShowErrorMsg = false
-                        errorMsg = ""
-                        gpiApiOfferResponse =
-                            checkOfferResponse.body()?.gp_api_response_data!! as GpApiOfferResponse
-                    } else {
-                        isShowErrorMsg = true
-                        errorMsg = checkOfferResponse.body()?.gp_api_message!!
-                        gpiApiOfferResponse = null
-                    }
-                    getNavigator()?.updateAddToCartDialog(isShowErrorMsg, errorMsg)
+                if (response.body()?.gpApiStatus.equals(Constants.GP_API_STATUS) &&
+                    response.body()?.gpApiResponseData?.promotionApplicable == true
+                ) {
+                    getNavigator()?.updateOfferApplicabilityOnDialog(true, if (response.body()?.gpApiMessage.isNull()) "" else response.body()?.gpApiMessage!!)
+                } else {
+                    getNavigator()?.updateOfferApplicabilityOnDialog(false, if (response.body()?.gpApiMessage.isNull()) "" else response.body()?.gpApiMessage!!)
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
+                getNavigator()?.updateOfferApplicabilityOnDialog(false,
+                    if (e.message.isNull()) "" else e.message!!)
+            }
+        }
+    }
+
+    private fun checkNetworkThenRun(runCode: (suspend () -> Unit)): Job {
+        return viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    runCode.invoke()
+                } else {
+                    getNavigator()?.showToast(R.string.nointernet)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }

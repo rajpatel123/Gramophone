@@ -83,7 +83,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     android:baselineAligned="false"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="@{viewModel.showSortFilterView == true ? View.VISIBLE : View.GONE}">
 
                     <FrameLayout
                         android:layout_width="0dp"

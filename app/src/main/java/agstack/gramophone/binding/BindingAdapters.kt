@@ -304,16 +304,20 @@ fun mrpPriceVisibility(
 
 @BindingAdapter(value = ["sku_mrp_price", "sku_sales_price"], requireAll = true)
 fun setPriceAndVisibility(
-    textView: TextView, mrp_price: String? = null, sales_price: String? = null,
+    textView: TextView, mrp_price: Double, sales_price: String? = null,
 ) {
     try {
-        if (mrp_price.isNullOrEmpty() && sales_price.isNullOrEmpty()) {
+        if (mrp_price == 0.0 && sales_price.isNullOrEmpty()) {
             textView.visibility = View.GONE
-        } else if (mrp_price.isNullOrEmpty() && !sales_price.isNullOrEmpty()) {
-            textView.text = "₹ " + sales_price.toString()
+        } else if (mrp_price == 0.0 && !sales_price.isNullOrEmpty()) {
+            if (sales_price.toString().contains(".0") || sales_price.toString().contains(".00"))
+                textView.text = "₹ " + sales_price.toFloat().roundToInt().toString()
+            else textView.text = "₹ " + sales_price.toString()
             textView.visibility = View.VISIBLE
-        } else if (sales_price.isNullOrEmpty() && !mrp_price.isNullOrEmpty()) {
-            textView.text = "₹ " + mrp_price.toString()
+        } else {
+            if (mrp_price.toString().contains(".0") || mrp_price.toString().contains(".00"))
+                textView.text = "₹ " + mrp_price.roundToInt().toString()
+            else textView.text = "₹ " + mrp_price.toString()
             textView.visibility = View.VISIBLE
         }
     } catch (e: Exception) {
