@@ -38,6 +38,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 
 class AddToCartBottomSheetDialog(
@@ -85,6 +86,8 @@ class AddToCartBottomSheetDialog(
             setSelectedSkuPrice(if (it.mrpPrice.isNull()) 0f else it.mrpPrice!!.toFloat(),
                 if (it.salesPrice.isNullOrEmpty()) 0f else it.salesPrice.toFloat())
             calculateDiscountAndPromotion(selectedSkuListItem.get()!!, selectedOfferItem)
+            if (availableProductOffersAdapter.isNotNull())
+                availableProductOffersAdapter?.updateSelectedSkuPrice(selectedSkuPrice)
         }
         if (mSkuOfferList.isNullOrEmpty()) {
             binding?.v2Separator?.visibility = View.GONE
@@ -173,20 +176,26 @@ class AddToCartBottomSheetDialog(
             isMRPVisible = modelMrpPrice > modelSalesPrice
             val discountPercent =
                 ((modelMrpPrice - modelSalesPrice) / modelMrpPrice) * 100
-            finalDiscount = (String.format("%.0f", discountPercent) + " % off")
-            isDiscountPercentVisible =
-                !(discountPercent.toString().contains("0.0") || discountPercent.toString()
-                    .contains(".00"))
+            finalDiscount = (String.format("%.0f", discountPercent) + "% off")
+            isDiscountPercentVisible = discountPercent > 0
 
             finalSalePrice = modelSalesPrice
-            offerModel?.let {
-                if (offerModel.amount_saved > 0) {
-                    finalSalePrice = modelSalesPrice - offerModel.amount_saved
+            if (offerModel.isNotNull())
+                offerModel?.let {
+                    if (offerModel.benefit.isNotNull() && offerModel.benefit.amount > 0) {
+                        finalSalePrice = modelSalesPrice - offerModel.benefit.amount
+                    }
                 }
-            }
+        }
+        if(modelMrpPrice.toString().endsWith(".0") || modelMrpPrice.toString()
+                .contains(".00")) {
+            binding?.tvProductMRP?.text =
+                getString(R.string.rupee) + modelMrpPrice.roundToInt().toString()
+        } else {
+            binding?.tvProductMRP?.text =
+                getString(R.string.rupee) + modelMrpPrice.toString()
         }
 
-        binding?.tvProductMRP?.text = getString(R.string.rupee) + modelMrpPrice.toString()
         binding?.tvDiscountPercent?.text = finalDiscount
         showHideViewVisibilityAfterCalculation(
             finalSalePrice,
@@ -232,8 +241,16 @@ class AddToCartBottomSheetDialog(
     }
 
     private fun setPrice(quantity: Int, perUnitPrice: Float) {
-        binding?.tvProductSP?.text =
-            getString(R.string.rupee) + (quantity * perUnitPrice).toString()
+        val totalPrice = perUnitPrice * quantity
+        if(totalPrice.toString().endsWith(".0") || totalPrice.toString()
+            .contains(".00")) {
+            binding?.tvProductSP?.text =
+                getString(R.string.rupee) + totalPrice.roundToInt().toString()
+        } else {
+            binding?.tvProductSP?.text =
+                getString(R.string.rupee) + totalPrice.toString()
+        }
+
     }
 
     fun updateDialog(

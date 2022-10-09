@@ -307,15 +307,15 @@ fun setPriceAndVisibility(
     textView: TextView, mrp_price: Double, sales_price: String? = null,
 ) {
     try {
-        if (mrp_price == 0.0 && sales_price.isNullOrEmpty()) {
+        if (sales_price.isNullOrEmpty() && mrp_price == 0.0) {
             textView.visibility = View.INVISIBLE
-        } else if (mrp_price == 0.0 && !sales_price.isNullOrEmpty()) {
-            if (sales_price.toString().contains(".0") || sales_price.toString().contains(".00"))
+        } else if (!sales_price.isNullOrEmpty() && sales_price.toFloat() >0) {
+            if (sales_price.toString().endsWith(".0") || sales_price.toString().contains(".00"))
                 textView.text = "₹ " + sales_price.toFloat().roundToInt().toString()
             else textView.text = "₹ " + sales_price.toString()
             textView.visibility = View.VISIBLE
         } else {
-            if (mrp_price.toString().contains(".0") || mrp_price.toString().contains(".00"))
+            if (mrp_price.toString().endsWith(".0") || mrp_price.toString().contains(".00"))
                 textView.text = "₹ " + mrp_price.roundToInt().toString()
             else textView.text = "₹ " + mrp_price.toString()
             textView.visibility = View.VISIBLE
