@@ -131,7 +131,7 @@ class HomeActivity :
                 R.id.navigation_home -> {
                     viewDataBinding.toolbar.myToolbar.title =
                         "  " + resources.getString(R.string.app_name)
-                    updateMenuItemVisibility(showHomeItems = true, showCommunityItems = false)
+                    updateMenuItemVisibility(showHomeItems = false, showCommunityItems = true)
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(marketFragment).commit()
                     activeFragment = marketFragment
