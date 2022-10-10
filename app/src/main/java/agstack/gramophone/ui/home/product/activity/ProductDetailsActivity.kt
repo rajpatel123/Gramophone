@@ -340,7 +340,6 @@ class ProductDetailsActivity :
         })
     }
 
-
     override fun updateAddToCartButtonText(newText: String?): String {
         if (newText != null)
             viewDataBinding.tvAddtocart.setText(newText)
