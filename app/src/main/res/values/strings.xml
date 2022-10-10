@@ -477,4 +477,9 @@
     <string name="enter_description">Please enter some comment</string>
     <string name="pay_only">Pay only</string>
     <string name="_01_quantity">01</string>
+    <string name="hint_add_new_post">Write your question about your crop eg. how do I prevent this bug?</string>
+    <string name="collapse_text_label">show less</string>
+    <string name="expand_text_label">show more</string>
+    <string name="failed_preview">Failed Preview</string>
+    <string name="no_data_title">No Data Available.</string>
 </resources>

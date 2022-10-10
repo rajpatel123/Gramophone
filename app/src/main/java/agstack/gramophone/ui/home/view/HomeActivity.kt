@@ -140,7 +140,7 @@ class HomeActivity :
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_community -> {
-                    viewDataBinding.llCreateAPost.visibility=VISIBLE
+                    //viewDataBinding.llCreateAPost.visibility=VISIBLE
                     viewDataBinding.toolbar.myToolbar.title =
                         "  " + resources.getString(R.string.community)
                     updateMenuItemVisibility(showHomeItems = false, showCommunityItems = true)

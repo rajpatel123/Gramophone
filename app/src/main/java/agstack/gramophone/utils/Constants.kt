@@ -7,6 +7,10 @@ import android.content.Context
 
 object Constants {
 
+    const val SearchUrl = "app://www.gramophone.in/"
+    const val SearchUrlPARAMETER = "search/?category=search&text="
+    const val ProfileUrlPARAMETER = "profile/?category=profile&uuid="
+
 
     val POST_LATEST: String = "Latest"
     val POST_TRENDING: String = "Trending"

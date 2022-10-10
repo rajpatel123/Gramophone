@@ -71,5 +71,16 @@ class CreatePostViewModel @Inject constructor(
 
     }
 
+    fun getSearchSuggestion(text: String?) {
+        if (text != null && text.length > 0) {
 
+            //CallHashtTag api
+        }
+    }
+
+    fun getMentionSuggestion(text: String?) {
+        if (text != null && text.length > 0) {
+           //Call mention Api
+        }
+    }
 }
