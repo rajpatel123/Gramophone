@@ -48,9 +48,6 @@ class MarketFragmentViewModel
                 val response = productRepository.getHomeData()
                 if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
                     val list = response.body()?.gp_api_response_data?.home_screen_sequence!!
-                    if(list is ArrayList ){
-                        //list.add(2, Constants.HOME_FARMS)
-                    }
                     getNavigator()?.setHomeAdapter(HomeAdapter(list,
                         allBannerResponse, categoryResponse, allProductsResponse,
                         cropResponse,

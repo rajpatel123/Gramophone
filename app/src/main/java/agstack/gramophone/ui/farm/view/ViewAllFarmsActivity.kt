@@ -26,9 +26,9 @@ class ViewAllFarmsActivity :
 
         viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
         viewDataBinding.swipeRefresh.setOnRefreshListener {
-            if(viewDataBinding.addFarmWrapper.viewOldFarmsLayout.visibility == View.GONE){
+            if (viewDataBinding.addFarmWrapper.viewOldFarmsLayout.visibility == View.GONE) {
                 getViewModel().getOldFarms()
-            }else{
+            } else {
                 getViewModel().getFarms()
             }
             viewDataBinding.swipeRefresh.isRefreshing = false
@@ -55,10 +55,10 @@ class ViewAllFarmsActivity :
     }
 
     override fun onBackPressed() {
-        if(viewDataBinding.addFarmWrapper.viewOldFarmsLayout.visibility == View.GONE){
+        if (viewDataBinding.addFarmWrapper.viewOldFarmsLayout.visibility == View.GONE) {
             viewDataBinding.addFarmWrapper.viewOldFarmsLayout.visibility = View.VISIBLE
             getViewModel().getFarms()
-        }else{
+        } else {
             super.onBackPressed()
         }
     }
@@ -84,14 +84,20 @@ class ViewAllFarmsActivity :
         viewDataBinding.rvFarms.adapter = ViewAllFarmsAdapter(
             farmsList,
             {
-
+                if (isCustomerFarm) {
+                    openActivity(CropGroupExplorerActivity::class.java, Bundle().apply {
+                        putParcelableArrayList(
+                            "cropList", it as ArrayList<Data>
+                        )
+                    })
+                }
             },
             {
                 if (isCustomerFarm) {
                     val selectedCrop = CropData(
-                        cropId = it.crop_id,
-                        cropName = it.crop_name,
-                        cropImage = it.crop_image,
+                        cropId = it[0].crop_id,
+                        cropName = it[0].crop_name,
+                        cropImage = it[0].crop_image,
                     )
                     openActivity(
                         AddFarmActivity::class.java,
