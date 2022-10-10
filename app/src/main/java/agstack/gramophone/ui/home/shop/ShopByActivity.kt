@@ -5,6 +5,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityShopByStoreBinding
+import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.adapter.ShopByCompanyAdapter
 import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
 import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
@@ -13,6 +14,7 @@ import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -43,8 +45,18 @@ class ShopByActivity :
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_home, menu);
+        menuInflater.inflate(R.menu.menu_search_and_cart, menu);
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_cart -> {
+                openActivity(CartActivity::class.java)
+            }
+
+        }
+        return true
     }
 
     override fun onClick(view: View?) {
