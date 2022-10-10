@@ -1,14 +1,16 @@
 package agstack.gramophone.ui.dialog.cart
 
 import agstack.gramophone.R
+import agstack.gramophone.data.repository.promotions.PromotionsRepository
 import agstack.gramophone.databinding.BottomSheetAddToCartBinding
 import agstack.gramophone.ui.home.product.activity.ProductSKUAdapter
 import agstack.gramophone.ui.home.subcategory.AvailableProductOffersAdapter
-import agstack.gramophone.ui.home.subcategory.model.GpApiOfferResponse
-import agstack.gramophone.ui.home.subcategory.model.Offer
-import agstack.gramophone.ui.home.subcategory.model.OfferForProduct
+import agstack.gramophone.ui.home.subcategory.model.*
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
+import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.Utility
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -20,9 +22,19 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.ObservableField
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.async
 import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNull
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 class AddToCartBottomSheetDialog(
@@ -31,6 +43,8 @@ class AddToCartBottomSheetDialog(
     private val onAddToCart: ((ProductData) -> Unit)?,
 ) :
     BottomSheetDialogFragment() {
+    @Inject
+    lateinit var promotionsRepository: PromotionsRepository
     var binding: BottomSheetAddToCartBinding? = null
     lateinit var mSKUList: ArrayList<ProductSkuListItem?>
     lateinit var mSkuOfferList: ArrayList<Offer>
@@ -40,19 +54,6 @@ class AddToCartBottomSheetDialog(
     var selectedOfferItem: Offer? = null
     var price = 0f
     var quantity = 1
-
-    public fun updateDialog(
-        isShowError: Boolean,
-        errorMsg: String,
-        appliedOfferResponse: GpApiOfferResponse,
-    ) {
-        if (isShowError) {
-            Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_LONG)
-                .show()
-        } else {
-
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,6 +95,10 @@ class AddToCartBottomSheetDialog(
                 AvailableProductOffersAdapter(mSkuOfferList, selectedSkuPrice, {
                     selectedOfferItem = it
                     setPercentage_mrpVisibility(selectedSkuListItem.get()!!, selectedOfferItem)
+                    /*applyOfferOnProduct(OfferForProduct(selectedSkuListItem.get()?.productId!!,
+                        it.promotion_id,
+                        quantity,
+                        selectedSkuPrice.toString()))*/
                     applyOfferOnProduct?.invoke(OfferForProduct(selectedSkuListItem.get()?.productId!!,
                         it.promotion_id,
                         quantity,
@@ -184,8 +189,8 @@ class AddToCartBottomSheetDialog(
 
             finalSalePrice = modelSalesPrice
             offerModel?.let {
-                if (offerModel.benefitinrupes.isNotNull() && offerModel.benefitinrupes > 0) {
-                    finalSalePrice = modelSalesPrice - offerModel.benefitinrupes
+                if (offerModel.amount_saved.isNotNull() && offerModel.amount_saved > 0) {
+                    finalSalePrice = modelSalesPrice - offerModel.amount_saved
                 }
             }
         }
@@ -238,5 +243,22 @@ class AddToCartBottomSheetDialog(
     private fun setPrice(quantity: Int, perUnitPrice: Float) {
         binding?.tvProductSP?.text =
             getString(R.string.rupee) + (quantity * perUnitPrice).toString()
+    }
+
+    fun updateDialog(
+        isShowError: Boolean,
+        errorMsg: String,
+    ) {
+        try {
+            if (isShowError) {
+                val offerErrResponse = Gson().fromJson(errorMsg, OfferErrorResponse::class.java)
+                Toast.makeText(requireContext(), offerErrResponse.message, Toast.LENGTH_LONG)
+                    .show()
+            } else {
+
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

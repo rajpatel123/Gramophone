@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/add_farm_gradient_drawable">
+
+        <ImageView
+            android:layout_width="@dimen/_240sdp"
+            android:layout_height="@dimen/_240sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="@dimen/_minus32sdp"
+            android:contentDescription="@string/image"
+            app:srcCompat="@drawable/farmer_first" />
+
+        <TextView
+            android:id="@+id/txtSubHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtHeader"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:text='Add your farm to get age and stage wise guidence like -'
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/txtStepFirst"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtSubHeader"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:drawableLeft="@drawable/inset_arrow_drawable"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:text='Recommendations about nutritional requirements and fertilisers'
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_12ssp" />
+
+
+        <TextView
+            android:id="@+id/txtStepSecond"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtStepFirst"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:drawableLeft="@drawable/inset_arrow_drawable"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:text='Suggestions for protection and prevention against pests &amp;  diseases'
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/txtStepThird"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtStepSecond"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:drawableLeft="@drawable/ic_right_head_arrow"
+            android:drawablePadding="@dimen/_12sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:text='Peronalized tips'
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/txtHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myToolbar"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:text='Get personalised expert advice for your farm'
+            android:textColor="@color/black"
+            android:textSize="@dimen/_18ssp" />
+
+        <include
+            android:id="@+id/myToolbar"
+            layout="@layout/layout_toolbar" />
+
+    </RelativeLayout>
+</layout>

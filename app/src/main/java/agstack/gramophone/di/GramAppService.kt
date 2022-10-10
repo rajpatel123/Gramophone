@@ -9,10 +9,10 @@ import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
-import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
+import agstack.gramophone.ui.farm.model.*
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferRequest
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
@@ -22,8 +22,8 @@ import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
-import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.OrderListResponse
+import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
@@ -40,6 +40,10 @@ import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.ui.userprofile.verifyotp.model.VerifyOTPRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
+import agstack.gramophone.ui.weather.model.WeatherForecastDetailResponse
+import agstack.gramophone.ui.weather.model.WeatherForecastSummaryResponse
+import agstack.gramophone.ui.weather.model.WeatherRequest
+import agstack.gramophone.ui.weather.model.WeatherResponse
 import agstack.gramophone.utils.Constants
 import retrofit2.Response
 import retrofit2.http.*
@@ -149,9 +153,6 @@ interface GramAppService {
     @PUT("api/v5/product/update-product-favourite")
     suspend fun updateProductFavorite(@Body productData: ProductData):Response<SuccessStatusResponse>
 
-    @POST("api/v5/cart/add-to-cart")
-    suspend fun addToCart(@Body addToCartRequest: AddToCartRequest): Response<SuccessStatusResponse>
-
     @GET("api/v5/cart/get-cart")
     suspend fun getCartData(): Response<CartDataResponse>
 
@@ -245,7 +246,7 @@ interface GramAppService {
     suspend fun getGramCashTxn(@Path("type") type: String,
                                @Body requestModel: TransactionRequestModel): Response<GramCashTxnResponseModel>
 
-    @POST("api/v5/category/product-app-category-data")
+    @POST("api/v5/category/product-filter-data")
     suspend fun getAllProducts(
         @Body filterRequest: FilterRequest,
     ): Response<AllProductsResponse>
@@ -259,4 +260,35 @@ interface GramAppService {
     suspend fun getApplicableOffersOnProduct(
         @Body applicableOfferRequest: ApplicableOfferRequest,
     ): Response<ApplicableOfferResponse>
+
+    @GET("api/v5/category/stores/{store_id}")
+    suspend fun getStoresFilterData(@Path("store_id") storeId: String): Response<SubCategoryResponse>
+
+    @POST("api/v5/weather")
+    suspend fun getWeatherDetails(
+        @Body weatherRequest: WeatherRequest,
+    ): Response<WeatherResponse>
+
+    @POST("api/v5/weather/forecast-detail")
+    suspend fun getWeatherForeCastDetailHourly(
+        @Body weatherRequest: WeatherRequest,
+    ): Response<WeatherForecastDetailResponse>
+
+    @POST("api/v5/weather/forecast-summary")
+    suspend fun getWeatherForecastSummaryDayWise(
+        @Body weatherRequest: WeatherRequest,
+    ): Response<WeatherForecastSummaryResponse>
+
+    @POST("api/v5/cart/update-to-cart")
+    suspend fun updateCartItem(@Body productData: ProductData): Response<SuccessStatusResponse>
+
+    @POST("api/v5/farm/get-farm/{type}")
+    suspend fun getFarmsData(@Path("type") storeId: String, @Body request : FarmRequest): Response<FarmResponse>
+
+    @POST("api/v5/farm/add-farm")
+    suspend fun addFarm(@Body request : AddFarmRequest): Response<AddFarmResponse>
+
+    @GET("api/v5/farm/farm-unit")
+    suspend fun getFarmUnits(): Response<FarmUnitResponse>
+
 }

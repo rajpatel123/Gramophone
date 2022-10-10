@@ -14,6 +14,7 @@ import agstack.gramophone.ui.home.adapter.ViewPagerAdapter
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.subcategory.model.GpApiOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.Offer
+import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.utils.Constants
@@ -35,6 +36,7 @@ class SubCategoryActivity :
 
     //initialise ViewModel
     private val subCategoryViewModel: SubCategoryViewModel by viewModels()
+    var bottomSheet: AddToCartBottomSheetDialog? = null
     var sortBy: String = Constants.RELAVENT_CODE
     var subCategoryIdsArray = ArrayList<String>()
     var brandIdsArray = ArrayList<String>()
@@ -52,6 +54,7 @@ class SubCategoryActivity :
         disableSortAndFilter()
         viewDataBinding.tvSortBy.setOnClickListener(this)
         viewDataBinding.tvFilter.setOnClickListener(this)
+
         viewDataBinding.toolbar.inflateMenu(R.menu.menu_search_and_cart)
         viewDataBinding.toolbar.setOnMenuItemClickListener { menuItem ->
             onOptionsItemSelected(menuItem)
@@ -60,18 +63,16 @@ class SubCategoryActivity :
         viewDataBinding.appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
             //Check if the view is collapsed
             if (abs(verticalOffset) >= viewDataBinding.appbar.totalScrollRange) {
-                viewDataBinding.collapsingToolbar.title = getString(R.string.crop_nutritions)
+                viewDataBinding.collapsingToolbar.title = subCategoryViewModel.toolbarTitle.value
                 viewDataBinding.collapsingToolbar.setCollapsedTitleTextColor(ContextCompat.getColor(
                     this,
                     R.color.blakish))
-                viewDataBinding.collapsingToolbar.ivToolbar.visibility = View.VISIBLE
+                viewDataBinding.collapsingToolbar.frameToolbarImage.visibility = View.VISIBLE
             } else {
                 viewDataBinding.collapsingToolbar.title = ""
-                viewDataBinding.collapsingToolbar.ivToolbar.visibility = View.GONE
+                viewDataBinding.collapsingToolbar.frameToolbarImage.visibility = View.GONE
             }
         })
-
-        viewDataBinding.dotsIndicator.setOnClickListener { }
     }
 
     override fun onClick(view: View?) {
@@ -131,6 +132,17 @@ class SubCategoryActivity :
         return true
     }
 
+    override fun showCategoryCollapsing() {
+        viewDataBinding.rlCategory.visibility = View.VISIBLE
+        viewDataBinding.tvStoreName.visibility = View.GONE
+    }
+
+    override fun showStoreCollapsing() {
+        viewDataBinding.rlCategory.visibility = View.GONE
+        viewDataBinding.tvStoreName.visibility = View.VISIBLE
+        viewDataBinding.tvStoreName.text = getString(R.string.pesticides)
+    }
+
     override fun disableSortAndFilter() {
         viewDataBinding.tvSortBy.isEnabled = false
         viewDataBinding.tvFilter.isEnabled = false
@@ -141,7 +153,7 @@ class SubCategoryActivity :
         viewDataBinding.tvFilter.isEnabled = true
     }
 
-    override fun setViewPagerAdapter(bannerList: List<agstack.gramophone.ui.home.view.fragments.market.model.Banner>?) {
+    override fun setViewPagerAdapter(bannerList: List<Banner>?) {
         val adapter = ViewPagerAdapter(bannerList!!)
         viewDataBinding.viewPager.adapter = adapter
         viewDataBinding.dotsIndicator.attachTo(viewDataBinding.viewPager)
@@ -163,7 +175,6 @@ class SubCategoryActivity :
         viewDataBinding.rvProducts.adapter = productListAdapter
     }
 
-    var bottomSheet: AddToCartBottomSheetDialog? = null
     override fun openAddToCartDialog(
         mSKUList: ArrayList<ProductSkuListItem?>,
         mSkuOfferList: ArrayList<Offer>,
@@ -188,10 +199,9 @@ class SubCategoryActivity :
     override fun updateAddToCartDialog(
         isShowError: Boolean,
         errorMsg: String,
-        appliedOfferResponse: GpApiOfferResponse,
     ) {
         if (bottomSheet.isNotNull())
-            bottomSheet?.updateDialog(isShowError, errorMsg, appliedOfferResponse)
+            bottomSheet?.updateDialog(isShowError, errorMsg)
     }
 
     override fun openProductDetailsActivity(productData: ProductData) {

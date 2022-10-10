@@ -5,8 +5,6 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.cart.CartNavigator
 import agstack.gramophone.ui.cart.adapter.CartAdapter
-import agstack.gramophone.ui.cart.model.AddToCartRequest
-import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
@@ -134,8 +132,10 @@ class CartViewModel @Inject constructor(
                                     })
                             }, {
                                 // on quantity increase and decrease clicked
-                                addToCart(AddToCartRequest(it.product_id.toInt(),
-                                    it.quantity.toInt()))
+                                val productData = ProductData()
+                                productData.product_id = it.product_id.toInt()
+                                productData.quantity = it.quantity
+                                updateCart(productData)
                             })
                     } else {
                         showCartView.value = false
@@ -179,12 +179,12 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    private fun addToCart(addToCartRequest: AddToCartRequest) {
+    private fun updateCart(productData: ProductData) {
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
-                    val response = productRepository.addToCart(addToCartRequest)
+                    val response = productRepository.updateCartItem(productData)
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
                         getCartData()
                     }

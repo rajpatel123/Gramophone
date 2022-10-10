@@ -60,6 +60,7 @@ object Constants {
     val HOME_BANNER_REFERRAL = "home_referral_banner"
     val HOME_GRAMOPHONE_PROMISE = "gramophone_promise"
     val HOME_CART = "products_in_your_cart"
+    val HOME_FARMS = "crops_and_farm"
 
     val HOME_EMPTY_VIEW_TYPE = 0
     val HOME_BANNER_VIEW_TYPE = 1
@@ -72,6 +73,7 @@ object Constants {
     val HOME_SHOP_BY_COMPANY_VIEW_TYPE = 8
     val HOME_GRAMOPHONE_PROMISE_VIEW_TYPE = 9
     val HOME_CART_VIEW_TYPE = 10
+    val HOME_FARMS_VIEW_TYPE = 11
     val GramCashResponse = "GramCashResponse"
     val ReferralPointBalanceData ="ReferralPointBalanceData"
     val GramCashFAQList = "GramCashFAQList"
@@ -187,8 +189,11 @@ val SHAREIMAGEURIStRING = "imageuriString"
     const val ORDER_ID = "order_id"
     const val CATEGORY_ID = "category_id"
     const val CATEGORY_NAME = "category_name"
+    const val CATEGORY_IMAGE = "category_image"
     const val COMPANY_ID = "company_id"
     const val STORE_ID = "store_id"
+    const val STORE_NAME = "store_name"
+    const val STORE_IMAGE = "store_image"
     const val CROP_ID = "crop_id"
     const val BOTTOM_SHEET = "bottom_sheet"
     const val LOCATION_ACCESS_DIALOG = "location_access_dialog"

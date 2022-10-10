@@ -11,6 +11,7 @@ import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
 import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
 import agstack.gramophone.ui.home.shopbydetail.ShopByDetailActivity
 import agstack.gramophone.ui.home.stage.CropStageActivity
+import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.Menu
@@ -57,9 +58,7 @@ class ShopByActivity :
 
     override fun setShopByStoresAdapter(
         shopByStoresAdapter: ShopByStoresAdapter,
-        id: (String) -> Unit,
     ) {
-        shopByStoresAdapter.onItemClicked = id
         viewDataBinding.rvShopBy.layoutManager = GridLayoutManager(this, 2)
         viewDataBinding.rvShopBy.setHasFixedSize(true)
         viewDataBinding.rvShopBy.adapter = shopByStoresAdapter
@@ -75,9 +74,12 @@ class ShopByActivity :
         viewDataBinding.rvShopBy.adapter = shopByCompanyAdapter
     }
 
-    override fun openShopByDetailActivity(id: String) {
-        openActivity(ShopByDetailActivity::class.java, Bundle().apply {
-            putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
+
+    override fun openShopByDetailActivity(storeId: String, storeName: String, storeImage: String) {
+        openActivity(SubCategoryActivity::class.java, Bundle().apply {
+            putString(Constants.STORE_ID, storeId)
+            putString(Constants.STORE_NAME, storeName)
+            putString(Constants.STORE_IMAGE, storeImage)
         })
     }
 

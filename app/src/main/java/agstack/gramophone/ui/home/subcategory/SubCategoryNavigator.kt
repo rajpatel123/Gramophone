@@ -36,8 +36,11 @@ interface SubCategoryNavigator : BaseNavigator {
     fun updateAddToCartDialog(
         isShowError: Boolean,
         errorMsg: String,
-        appliedOfferResponse: GpApiOfferResponse,
     )
+
+    fun showCategoryCollapsing()
+
+    fun showStoreCollapsing()
 
     fun disableSortAndFilter()
 

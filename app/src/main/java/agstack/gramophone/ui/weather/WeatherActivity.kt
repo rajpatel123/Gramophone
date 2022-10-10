@@ -27,9 +27,15 @@ class WeatherActivity :
     }
 
     private fun setupUi() {
-        setUpToolBar(true, getString(R.string.weather_city), R.drawable.ic_arrow_left)
         viewDataBinding.tvChangeLoc.setOnClickListener(this)
         weatherViewModel.getWeatherData()
+        weatherViewModel.getWeatherDetail()
+        weatherViewModel.getWeatherDetailHourly()
+        weatherViewModel.getWeatherDetailDayWise()
+    }
+
+    override fun setToolbarTitle(title: String) {
+        setUpToolBar(true, title, R.drawable.ic_arrow_left)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
