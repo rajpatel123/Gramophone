@@ -5,6 +5,8 @@ import agstack.gramophone.ui.order.adapter.OrderListAdapter
 import android.os.Bundle
 
 interface OrderListNavigator : BaseNavigator {
+    fun setPlacedOrderAdapter(adapter: OrderListAdapter, onOrderItemClick: (String) -> Unit)
+
     fun setRecentOrderAdapter(adapter: OrderListAdapter, onOrderItemClick: (String) -> Unit)
 
     fun setPastOrderAdapter(adapter: OrderListAdapter, onOrderItemClick: (String) -> Unit)

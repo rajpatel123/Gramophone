@@ -145,7 +145,7 @@ fun setHtmlTextValue(textView: TextView, htmlText: String?) {
 
 @BindingAdapter(value = ["selectedTab", "recentSize", "pastSize"], requireAll = true)
 fun orderEmptyViewHandling(
-    emptyView: LinearLayout, selectedTab: Int, recentSize: Int, pastSize: Int,
+    emptyView: View, selectedTab: Int, recentSize: Int, pastSize: Int,
 ) {
     when (selectedTab) {
         0 -> {
@@ -165,14 +165,25 @@ fun orderEmptyViewHandling(
     }
 }
 
+@BindingAdapter(value = ["selectedTab", "placeSize"], requireAll = true)
+fun placedOrderRecyclerHandling(
+    view: View, selectedTab: Int, placedSize: Int,
+) {
+    if (selectedTab == 0 && placedSize > 0) {
+        view.visibility = View.VISIBLE
+    } else {
+        view.visibility = View.GONE
+    }
+}
+
 @BindingAdapter(value = ["selectedTab", "recentSize"], requireAll = true)
 fun recentOrderRecyclerHandling(
-    recyclerView: RecyclerView, selectedTab: Int, recentSize: Int,
+    view: View, selectedTab: Int, recentSize: Int,
 ) {
     if (selectedTab == 0 && recentSize > 0) {
-        recyclerView.visibility = View.VISIBLE
+        view.visibility = View.VISIBLE
     } else {
-        recyclerView.visibility = View.GONE
+        view.visibility = View.GONE
     }
 }
 
@@ -187,13 +198,26 @@ fun pastOrderRecyclerHandling(
     }
 }
 
-@BindingAdapter(value = ["orderDate", "quantity", "items"], requireAll = true)
+@BindingAdapter(value = ["orderDate", "quantity", "items", "isDateAlreadyFormatted"],
+    requireAll = true)
 fun setDateAndItemCount(
-    textView: TextView, orderDate: String, quantity: String, itemsText: String,
+    textView: TextView,
+    orderDate: String,
+    quantity: String,
+    items: String,
+    isDateAlreadyFormatted: Boolean,
 ) {
-    textView.text = Utility.getFormattedDate(orderDate,
-        Utility.DATE_MONTH_YEAR_FORMAT,
-        Utility.MONTH_DATE_YEAR_FORMAT) + " / " + quantity + itemsText
+    try {
+        if (isDateAlreadyFormatted) {
+            textView.text = orderDate + " / " + quantity + items
+        } else {
+            textView.text = Utility.getFormattedDate(orderDate,
+                Utility.DATE_MONTH_YEAR_FORMAT,
+                Utility.MONTH_DATE_YEAR_FORMAT) + " / " + quantity + items
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 }
 
 @BindingAdapter(value = ["validity_date"], requireAll = true)
@@ -309,7 +333,7 @@ fun setPriceAndVisibility(
     try {
         if (sales_price.isNullOrEmpty() && mrp_price == 0.0) {
             textView.visibility = View.INVISIBLE
-        } else if (!sales_price.isNullOrEmpty() && sales_price.toFloat() >0) {
+        } else if (!sales_price.isNullOrEmpty() && sales_price.toFloat() > 0) {
             if (sales_price.toString().endsWith(".0") || sales_price.toString().contains(".00"))
                 textView.text = "₹ " + sales_price.toFloat().roundToInt().toString()
             else textView.text = "₹ " + sales_price.toString()

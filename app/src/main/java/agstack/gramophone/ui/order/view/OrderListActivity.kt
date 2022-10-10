@@ -71,6 +71,14 @@ class OrderListActivity :
         }
     }
 
+    override fun setPlacedOrderAdapter(
+        adapter: OrderListAdapter,
+        onOrderItemClick: (String) -> Unit,
+    ) {
+        adapter.onOrderDetailClicked = onOrderItemClick
+        viewDataBinding.rvPlaced.adapter = adapter
+    }
+
     override fun setRecentOrderAdapter(
         adapter: OrderListAdapter,
         onOrderItemClick: (String) -> Unit,

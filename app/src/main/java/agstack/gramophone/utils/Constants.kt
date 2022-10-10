@@ -88,6 +88,7 @@ object Constants {
 
     //sortBy options
     val TOP = "top"
+    val PLACED = "placed"
     val RECENT = "recent"
     val TOP_REVIEWS = "Top Reviews"
     val RECENT_REVIEWS = "Recent Reviews"

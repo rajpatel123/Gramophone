@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="all_products">All Products</string>
+    <string name="others">Others</string>
+    <string name="order_placed">Order Placed</string>
+    <string name="no_orders_yet">No orders yet!</string>
 </resources>

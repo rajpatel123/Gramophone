@@ -280,7 +280,7 @@
     <string name="my_orders">My Orders</string>
     <string name="my_order">My Order</string>
     <string name="address_note"><![CDATA[<b>Note: </b>Address will be taken from you after placing the order]]></string>
-    <string name="no_recent_order">Orders till 6 months will be displayed here, check \"Past Orders\" for past orders.</string>
+    <string name="no_recent_order">When you place your first order, it will appear here</string>
     <string name="no_past_order">Orders older than 6 months will be displayed here, check \"Recent Orders\" for recent orders.</string>
     <string name="no_orders">No Orders</string>
     <string name="your_order_no_is">Your order no. is #</string>
@@ -419,6 +419,9 @@
     <string name="no_offers_found">No Offers Available</string>
     <string name="pay_only">Pay only</string>
     <string name="_01_quantity">01</string>
+    <string name="others">Others</string>
+    <string name="order_placed">Order Placed</string>
+    <string name="no_orders_yet">No orders yet!</string>
 
 </resources>
 

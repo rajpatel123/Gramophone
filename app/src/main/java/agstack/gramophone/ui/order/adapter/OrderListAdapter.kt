@@ -4,6 +4,7 @@ package agstack.gramophone.ui.order.adapter
 import agstack.gramophone.databinding.ItemOrderBinding
 import agstack.gramophone.ui.order.model.Data
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
@@ -20,8 +21,13 @@ class OrderListAdapter(orderDataList: List<Data>) :
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.binding.model = orderList[position]
+        if (orderList.size - 1 == position) {
+            holder.binding.tabSeparator.visibility = View.GONE
+        } else {
+            holder.binding.tabSeparator.visibility = View.VISIBLE
+        }
         holder.binding.tvDetail.setOnClickListener {
-            onOrderDetailClicked?.invoke(orderList[position].order_id)
+            onOrderDetailClicked?.invoke(orderList[position].order_id.toString())
         }
     }
 

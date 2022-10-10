@@ -63,6 +63,7 @@
                     android:lineSpacingExtra="-2sp"
                     android:textColor="@color/gray_strike_through"
                     android:textSize="13sp"
+                    app:isDateAlreadyFormatted="@{true}"
                     app:items="@{@string/items}"
                     app:orderDate="@{viewModel.orderDate}"
                     app:quantity="@{viewModel.quantity}"
