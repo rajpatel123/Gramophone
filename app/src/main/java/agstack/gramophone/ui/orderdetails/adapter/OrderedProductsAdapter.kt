@@ -2,12 +2,13 @@ package agstack.gramophone.ui.orderdetails.adapter
 
 
 import agstack.gramophone.databinding.ItemOrderedProductBinding
-import agstack.gramophone.ui.orderdetails.model.OfferApplied
+import agstack.gramophone.ui.orderdetails.model.FreeProduct
 import agstack.gramophone.ui.orderdetails.model.Product
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import javax.inject.Singleton
 
 @Singleton
@@ -15,7 +16,7 @@ class OrderedProductsAdapter(orderedProducts: List<Product>) :
     RecyclerView.Adapter<OrderedProductsAdapter.CustomViewHolder>() {
     var orderedProductsList = orderedProducts
     var onItemDetailClicked: ((Int) -> Unit)? = null
-    var onOfferClicked: ((offerList: OfferApplied) -> Unit)? = null
+    var onOfferClicked: ((FreeProduct, String) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         return CustomViewHolder(
@@ -34,9 +35,8 @@ class OrderedProductsAdapter(orderedProducts: List<Product>) :
                 onItemDetailClicked?.invoke(orderedProductsList[position].product_id)
             }
         holder.binding.tvOffersApplied.setOnClickListener {
-            if (orderedProductsList[position].offer_applied.isNotEmpty()) {
-                orderedProductsList[position].offer_applied[0].product_name = orderedProductsList[position].product_name
-                onOfferClicked?.invoke(orderedProductsList[position].offer_applied[0])
+            if (orderedProductsList[position].free_products.isNotNullOrEmpty()) {
+                onOfferClicked?.invoke(orderedProductsList[position].free_products[0], orderedProductsList[position].product_sku)
             }
         }
     }

@@ -19,6 +19,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -27,6 +29,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.forEach
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.FirebaseApp
@@ -93,6 +96,7 @@ class HomeActivity :
         viewDataBinding.navigationlayout.tvContact.text =
             getString(R.string.dialing_code).plus(mobile)
         viewDataBinding.navigationlayout.tvGc.text = gramCash
+        if (profileImage.isNotNullOrEmpty())
         Glide.with(this)
             .load(profileImage)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -124,40 +128,60 @@ class HomeActivity :
         setUpNavigationDrawer()
         viewDataBinding.navView.itemIconTintList = null
 
+        updateMenuItemVisibility(showHomeItems = false, showCommunityItems = true)
         viewDataBinding.navView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_home -> {
-                    updateMenuItemVisibility(true)
+                    viewDataBinding.toolbar.myToolbar.title =
+                        "  " + resources.getString(R.string.app_name)
+                    updateMenuItemVisibility(showHomeItems = false, showCommunityItems = true)
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(marketFragment).commit()
                     activeFragment = marketFragment
+                    viewDataBinding.llCreateAPost.visibility= GONE
+
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_community -> {
-                    updateMenuItemVisibility(false)
+                    //viewDataBinding.llCreateAPost.visibility=VISIBLE
+                    viewDataBinding.toolbar.myToolbar.title =
+                        "  " + resources.getString(R.string.community)
+                    updateMenuItemVisibility(showHomeItems = false, showCommunityItems = true)
+
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(communityFragment).commit()
                     activeFragment = communityFragment
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_profile -> {
-                    updateMenuItemVisibility(false)
+                    viewDataBinding.toolbar.myToolbar.title =
+                        "  " + resources.getString(R.string.my_profile)
+
+                    updateMenuItemVisibility(false, false)
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(profileFragment).commit()
                     activeFragment = profileFragment
+                    viewDataBinding.llCreateAPost.visibility= GONE
+
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_trade -> {
-                    updateMenuItemVisibility(false)
+                    viewDataBinding.toolbar.myToolbar.title =
+                        "  " + resources.getString(R.string.trade)
+
+                    updateMenuItemVisibility(false, false)
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(tradeFragment).commit()
                     activeFragment = tradeFragment
+                    viewDataBinding.llCreateAPost.visibility= GONE
+
                     return@setOnItemSelectedListener true
                 }
             }
             false
         }
     }
+
 
 
     private fun setUpNavigationDrawer() {
@@ -199,10 +223,14 @@ class HomeActivity :
         }
     }
 
-    private fun updateMenuItemVisibility(showItems: Boolean) {
+    private fun updateMenuItemVisibility(showHomeItems: Boolean, showCommunityItems: Boolean) {
         viewDataBinding.toolbar.myToolbar.menu.forEach {
-            if (showItems) {
-                it.isVisible = true
+            if (showHomeItems) {
+                it.isVisible =
+                    (it.itemId == R.id.item_search || it.itemId == R.id.item_favorite || it.itemId == R.id.item_cart)
+            } else if (showCommunityItems) {
+                it.isVisible =
+                    (it.itemId == R.id.item_search || it.itemId == R.id.item_notification || it.itemId == R.id.item_cart)
             } else {
                 it.isVisible = it.itemId == R.id.item_search
             }
@@ -246,5 +274,10 @@ class HomeActivity :
 
     override fun shareApp(intent: Intent) {
         startActivity(Intent.createChooser(intent, getMessage(R.string.share_app_link)));
+    }
+
+    fun setToolbarTitle(title:String){
+        viewDataBinding.toolbar.myToolbar.title = title
+
     }
 }

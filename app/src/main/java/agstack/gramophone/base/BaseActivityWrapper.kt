@@ -158,16 +158,11 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         if (toolbar != null) {
             setSupportActionBar(toolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(enableBackButton)
-            supportActionBar?.setTitle(title)
+            supportActionBar?.title = title
             drawable?.let {
                 toolbar.setNavigationIcon(drawable)
             }
-
-            toolbar.setNavigationOnClickListener(object : View.OnClickListener {
-                override fun onClick(v: View?) {
-                    onBackPressed()
-                }
-            })
+            toolbar.setNavigationOnClickListener { onBackPressed() }
         }
     }
 
@@ -267,6 +262,10 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
     override fun getGeoCoder(): Geocoder {
         return Geocoder(this, Locale.getDefault())
+    }
+
+    override fun finishActivity() {
+        finish()
     }
 
 }

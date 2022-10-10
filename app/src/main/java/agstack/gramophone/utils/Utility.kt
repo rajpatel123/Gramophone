@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.SpannableString
+import android.text.TextUtils
 import android.text.style.BulletSpan
 import android.util.Log
 import android.widget.Toast
@@ -32,6 +33,9 @@ object Utility {
     public const val MONTH_DATE_YEAR_FORMAT = "MMM dd, yyyy" /*"Jun 21, 2022"*/
     public const val DATE_MONTH_YEAR_FORMAT = "dd-MMM-yyyy"  /*05-Jul-2022*/
     public const val YEAR_MONTH_DATA_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"  /*2022-11-19 19:18:00*/
+    public const val HOUR_MIN_12_TIME_FORMAT = "h:mm a"  /*12:08 PM*/
+    public const val HOUR_MIN_SECOND_TIME_FORMAT = "HH:mm:ss"  /*12:08 PM*/
+
 
     fun List<String>.toBulletedList(): CharSequence {
         return SpannableString(this.joinToString("\n")).apply {
@@ -136,8 +140,8 @@ object Utility {
     ): String {
         try {
             // Creating date format
-            val dateFormat: DateFormat = SimpleDateFormat(DATE_MONTH_YEAR_FORMAT, Locale.ENGLISH)
-            val format = SimpleDateFormat(MONTH_DATE_YEAR_FORMAT, Locale.ENGLISH)
+            val dateFormat: DateFormat = SimpleDateFormat(requiredFormat, Locale.ENGLISH)
+            val format = SimpleDateFormat(currentFormat, Locale.ENGLISH)
             val date: Date = format.parse(dateString)!!
 
             // Formatting Date according to the given format
@@ -164,6 +168,13 @@ object Utility {
 
     fun getErrorMessage(data: ResponseBody?): String? {
         val errorBody = data?.string()?.let { JSONObject(it) }
-        return errorBody?.optString(Constants.GP_API_MESSAGE)
+        var messgae: String = ""
+        messgae = errorBody?.optString(Constants.GP_API_MESSAGE).toString()
+        if (TextUtils.isEmpty(messgae)) {
+            messgae = errorBody?.optString(Constants.MESSAGE).toString()
+        }
+        return messgae
     }
+
+
 }

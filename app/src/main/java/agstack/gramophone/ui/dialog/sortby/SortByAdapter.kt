@@ -35,7 +35,7 @@ class SortByAdapter(
         } else {
             holder.binding.tvSortingType.typeface = typefaceMedium
         }
-        mBinding.item.setOnClickListener {
+        mBinding.rlSortItem.setOnClickListener {
             sortDataList[lastSelectPosition].isSelected = false
             lastSelectPosition = position
             sortData.isSelected = true

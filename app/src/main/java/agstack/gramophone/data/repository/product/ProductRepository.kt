@@ -2,11 +2,10 @@ package agstack.gramophone.data.repository.product
 
 
 import agstack.gramophone.data.model.SuccessStatusResponse
-import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
+import agstack.gramophone.ui.farm.model.*
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
-import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferRequest
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
@@ -16,7 +15,6 @@ import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
 import retrofit2.Response
-import retrofit2.http.Query
 import javax.inject.Singleton
 
 
@@ -39,8 +37,6 @@ interface ProductRepository {
 
     suspend fun getOffersOnProductData(productMap: ProductData): Response<OffersProductResponseData>
 
-    suspend fun addToCart(addToCartRequest: AddToCartRequest): Response<SuccessStatusResponse>
-
     suspend fun addToCart(productData: ProductData): Response<CartDataResponse>
 
     suspend fun updateProductFavorite(productData: ProductData): Response<SuccessStatusResponse>
@@ -48,6 +44,8 @@ interface ProductRepository {
     suspend fun getCartData(): Response<CartDataResponse>
 
     suspend fun removeCartItem(productId: Int): Response<SuccessStatusResponse>
+
+    suspend fun updateCartItem(productData: ProductData): Response<SuccessStatusResponse>
 
     suspend fun getOrderData(type: String, limit: String, page: String): Response<OrderListResponse>
 
@@ -77,7 +75,15 @@ interface ProductRepository {
 
     suspend fun getFeaturedProducts(pageLimitRequest: PageLimitRequest): Response<AllProductsResponse>
 
-    suspend fun getApplicableOffersOnProduct(applicableOfferRequest: ApplicableOfferRequest): Response<ApplicableOfferResponse>
+    suspend fun getStoresFilterData(storeId: String): Response<SubCategoryResponse>
+
+    suspend fun getFarmsData(type: String, farmRequest: FarmRequest): Response<FarmResponse>
+
+    suspend fun addFarm(addFarmRequest: AddFarmRequest): Response<AddFarmResponse>
+
+    suspend fun getFarmUnits(): Response<FarmUnitResponse>
 
     suspend fun checkPromotionOnProduct(verifyPromotionRequestModel: VerifyPromotionRequestModel): Response<CheckPromotionResponseModel>
+
+    suspend fun getOffersOnProduct(productData: ProductData): Response<ApplicableOfferResponse>
 }

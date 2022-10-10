@@ -36,6 +36,7 @@
                  />
 
             <RadioGroup
+                android:id="@+id/rbReportReson"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
@@ -43,37 +44,41 @@
                 android:orientation="vertical">
 
                 <RadioButton
-                    android:id="@+id/radioBtn"
+                    android:id="@+id/rbUnwanted"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/manrope_regular"
-                    android:text="Unwanted commercial content or spam"
+                    android:text="@{viewModel.unWanted}"
                     android:textSize="@dimen/_10ssp" />
 
 
                 <RadioButton
-                    android:id="@+id/sec_btn"
+                    android:id="@+id/rbSecurity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pornography or sexually explicit material"
-                    android:fontFamily="@font/manrope_regular"
+                    android:text="@{viewModel.harasgStr}"
 
-                    android:textSize="@dimen/_10ssp" />
-
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hate speech or graphic violence"
                     android:fontFamily="@font/manrope_regular"
 
                     android:textSize="@dimen/_10ssp" />
 
 
                 <RadioButton
+                    android:id="@+id/rbHate"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Harassment or bullying"
+                    android:text="@{viewModel.hateStr}"
+
+                    android:fontFamily="@font/manrope_regular"
+                    android:textSize="@dimen/_10ssp" />
+
+
+                <RadioButton
+                    android:id="@+id/rbHarash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.harasgStr}"
                     android:fontFamily="@font/manrope_regular"
 
                     android:textSize="@dimen/_10ssp" />
