@@ -7,6 +7,8 @@ import android.content.Context
 
 object Constants {
 
+    val DISCOUNT ="discount"
+    val FREEBIE ="freebie"
     const val SearchUrl = "app://www.gramophone.in/"
     const val SearchUrlPARAMETER = "search/?category=search&text="
     const val ProfileUrlPARAMETER = "profile/?category=profile&uuid="
