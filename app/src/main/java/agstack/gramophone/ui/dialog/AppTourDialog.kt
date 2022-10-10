@@ -89,6 +89,7 @@ class AppTourDialog : DialogFragment() {
                 }
                 binding?.llProfile?.visibility == View.VISIBLE -> {
                     binding?.llCommunity?.visibility = View.INVISIBLE
+                    binding?.tvSkip3?.visibility = View.INVISIBLE
                     binding?.llProfile?.visibility = View.INVISIBLE
                     binding?.llTrade?.visibility = View.VISIBLE
 
