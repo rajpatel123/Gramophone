@@ -29,6 +29,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.forEach
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.FirebaseApp
@@ -95,6 +96,7 @@ class HomeActivity :
         viewDataBinding.navigationlayout.tvContact.text =
             getString(R.string.dialing_code).plus(mobile)
         viewDataBinding.navigationlayout.tvGc.text = gramCash
+        if (profileImage.isNotNullOrEmpty())
         Glide.with(this)
             .load(profileImage)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -126,12 +128,13 @@ class HomeActivity :
         setUpNavigationDrawer()
         viewDataBinding.navView.itemIconTintList = null
 
+        updateMenuItemVisibility(showHomeItems = false, showCommunityItems = true)
         viewDataBinding.navView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_home -> {
                     viewDataBinding.toolbar.myToolbar.title =
                         "  " + resources.getString(R.string.app_name)
-                    updateMenuItemVisibility(showHomeItems = true, showCommunityItems = false)
+                    updateMenuItemVisibility(showHomeItems = false, showCommunityItems = true)
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(marketFragment).commit()
                     activeFragment = marketFragment

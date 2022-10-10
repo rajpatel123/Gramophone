@@ -211,7 +211,7 @@
     <string name="my_orders">My Orders</string>
     <string name="my_order">My Order</string>
     <string name="address_note"><![CDATA[<b>Note: </b>Address will be taken from you after placing the order]]></string>
-    <string name="no_recent_order">Orders till 6 months will be displayed here, check \"Past Orders\" for past orders.</string>
+    <string name="no_recent_order">When you place your first order, it will appear here</string>
     <string name="no_past_order">Orders older than 6 months will be displayed here, check \"Recent Orders\" for recent orders.</string>
     <string name="no_orders">No Orders</string>
     <string name="your_order_no_is">Your order no. is #</string>
@@ -275,7 +275,7 @@
     <string name="enter_10_digit_mob">Enter 10 digit mobile number</string>
 
     <string name="weather">Weather</string>
-    <string name="weather_city">Weather - Indore</string>
+    <string name="weather_city">Weather - Rohini</string>
     <string name="powered_by">Powered by</string>
     <string name="accuweather">AccuWeather</string>
     <string name="forecast_for_the_next_days">Forecast for the next few days</string>
@@ -358,7 +358,7 @@
     <string name="add_you_farm">+ Add you Farm</string>
     <string name="know_more_about_my_farm"><![CDATA[Know more about My Farm >]]></string>
     <string name="checkout">Checkout</string>
-    <string name="sub_text_will_be_displayed_here">Sub text will be displayed here</string>
+    <string name="sub_text_will_be_displayed_here"> </string>
     <string name="receive_order_related_information_on_whatsapp">Receive order related information on whatsapp</string>
     <string name="gramophone_promise">Gramophone Promise</string>
     <string name="_100_genuine_nproducts">100% Genuine\nProducts</string>
@@ -416,7 +416,7 @@
     <string name="_900">₹ 900</string>
     <string name="skip_tour">SKIP TOUR</string>
     <string name="app_tour_descrition_menu">Direct access to most used App functionalities and features</string>
-    <string name="app_tour_descrition_youtube">Watch the video to learn how to user Gramophone App</string>
+    <string name="app_tour_descrition_youtube">Watch the video to learn how to use Gramophone App</string>
     <string name="app_tour_descrition_community">Connect &amp; engage with farmers and Agri experts via social media posts</string>
     <string name="app_tour_descrition_profile">Sell/Buy your crop easily by connecting with the right buyers/sellers</string>
     <string name="app_tour_descrition_trade">Sell/Buy your crop easily by connecting with the right buyers/sellers</string>
@@ -480,6 +480,10 @@
     <string name="degee_temp">°</string>
     <string name="degee_temp_centigrade">°C</string>
     <string name="comma_with_space">", "</string>
+    <string name="others">Others</string>
+    <string name="order_placed">Order Placed</string>
+    <string name="no_orders_yet">No orders yet!</string>
+    <string name="download_invoice">Download Invoice</string>
 
     <string name="crop_duration">"बुआई का समय : %1$s"</string>
     <string name="crop_sowing_date">"बुआई की तारीख : %1$s"</string>

@@ -14,7 +14,6 @@ data class GpApiOfferResponseData(
 
 data class Offer(
     val applicable_on_sku: String? = null,
-    val amount_saved: Float,
     val end_date: String,
     val id: Int,
     val image: String,
@@ -26,7 +25,14 @@ data class Offer(
     val promotion_type_id: Int,
     val t_c: String,
     val title: String,
+    val benefit: Benefit,
     var selected: Boolean? = false,
+)
+
+data class Benefit(
+    val promotion_type: String? = null,
+    val amount: Float,
+    val freebie_text: String? = null,
 )
 
 data class Product(

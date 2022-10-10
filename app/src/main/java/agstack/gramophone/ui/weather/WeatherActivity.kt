@@ -7,6 +7,8 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityWeatherBinding
 import agstack.gramophone.ui.dialog.LocationAccessDialog
 import agstack.gramophone.utils.Constants
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -53,7 +55,16 @@ class WeatherActivity :
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.itemShare -> {
-
+                val whatsappIntent = Intent(Intent.ACTION_SEND)
+                whatsappIntent.type = "text/plain"
+                whatsappIntent.setPackage("com.whatsapp")
+                whatsappIntent.putExtra(Intent.EXTRA_TEXT,
+                    "Current temperature in your area " + weatherViewModel.currentTemp.value)
+                try {
+                    startActivity(whatsappIntent)
+                } catch (ex: ActivityNotFoundException) {
+                    showToast("Whatsapp have not been installed.")
+                }
             }
             R.id.tvChangeLoc -> {
                 val locationAccessDialog = LocationAccessDialog()

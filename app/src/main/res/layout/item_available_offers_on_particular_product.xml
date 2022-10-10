@@ -13,9 +13,6 @@
             type="agstack.gramophone.ui.home.subcategory.model.Offer" />
     </data>
 
-    <!--
-        android:background="@{model.selected ? @drawable/offer_card_selected: @drawable/deselected_product_background}"
-    -->
     <RelativeLayout
         android:id="@+id/productDetailsContainer"
         android:layout_width="@dimen/_210sdp"
@@ -94,31 +91,37 @@
                         android:textSize="@dimen/_10ssp"
                         tools:text="Offer valid on SKU 500" />
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_1sdp"
-                        android:fontFamily="@font/manrope_regular"
-                        android:maxLines="1"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/_10ssp"
-                        app:validity_date="@{model.end_date}"
-                        tools:text="Valid till March 2023" />
+                        android:layout_height="@dimen/_36sdp"
+                        android:gravity="top"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_viewdetail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:layout_marginBottom="@dimen/_10sdp"
-                        android:drawablePadding="@dimen/_10sdp"
-                        android:fontFamily="@font/manrope_bold"
-                        android:maxLines="1"
-                        android:text="@string/view_detail"
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/_11ssp"
-                        android:textStyle="normal"
-                        app:drawableEndCompat="@drawable/ic_arrow_right" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_regular"
+                            android:maxLines="1"
+                            android:textColor="@color/gray"
+                            android:textSize="@dimen/_10ssp"
+                            app:validity_date="@{model.end_date}"
+                            tools:text="Valid till March 2023" />
+
+                        <TextView
+                            android:id="@+id/tv_viewdetail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:drawablePadding="@dimen/_6sdp"
+                            android:fontFamily="@font/manrope_bold"
+                            android:maxLines="1"
+                            android:text="@string/view_detail"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/_11ssp"
+                            android:textStyle="normal"
+                            app:drawableEndCompat="@drawable/ic_arrow_right" />
+                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>
@@ -146,6 +149,7 @@
                     tools:text="Save " />
 
                 <TextView
+                    android:id="@+id/tvSaveAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_2sdp"
@@ -153,7 +157,6 @@
                     android:gravity="center"
                     android:textColor="@color/green"
                     android:textSize="@dimen/_11ssp"
-                    app:reformatFloatPriceToInt="@{model.amount_saved}"
                     tools:text="@string/dummy_price" />
 
                 <View

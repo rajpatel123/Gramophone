@@ -3,7 +3,7 @@ package agstack.gramophone.ui.orderdetails
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.orderdetails.adapter.OrderedProductsAdapter
-import agstack.gramophone.ui.orderdetails.model.OfferApplied
+import agstack.gramophone.ui.orderdetails.model.FreeProduct
 import android.os.Bundle
 
 interface OrderDetailsNavigator : BaseNavigator {
@@ -12,9 +12,11 @@ interface OrderDetailsNavigator : BaseNavigator {
     fun setOrderListAdapter(
         orderedProductsAdapter: OrderedProductsAdapter,
         onOrderItemClicked: (Int) -> Unit,
-        onOfferClicked: (offerList: OfferApplied) -> Unit,
+        onOfferClicked: (FreeProduct, String) -> Unit,
     )
 
     fun openProductDetailsActivity(productData: ProductData)
+
+    fun setColorOnOrderStatus(orderStatus: String)
 
 }

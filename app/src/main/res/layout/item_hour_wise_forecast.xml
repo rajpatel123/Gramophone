@@ -32,19 +32,21 @@
                 android:fontFamily="@font/manrope_medium"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="1sp"
-                android:text='@{model.time ?? "N.A"}'
+                app:reformat_date='@{model.time ?? ""}'
                 android:textColor="@color/gray"
                 android:textSize="11sp"
                 tools:text="9 AM" />
 
             <ImageView
+                android:layout_marginTop="@dimen/_4sdp"
                 android:layout_width="@dimen/_25sdp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_25sdp"
                 android:contentDescription="@string/image"
                 android:src="@drawable/ic_weather_rain"
                 app:product_image='@{model.temperature.weather_icon ?? ""}' />
 
             <LinearLayout
+                android:layout_marginTop="@dimen/_4sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">

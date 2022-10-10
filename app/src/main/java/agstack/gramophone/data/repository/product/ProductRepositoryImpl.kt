@@ -7,7 +7,6 @@ import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.farm.model.*
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
-import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferRequest
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
@@ -224,13 +223,6 @@ class ProductRepositoryImpl @Inject constructor(
         response
     }
 
-    override suspend fun getApplicableOffersOnProduct(applicableOfferRequest: ApplicableOfferRequest): Response<ApplicableOfferResponse> = withContext(
-        Dispatchers.IO
-    ) {
-        val response = gramoAppService.getApplicableOffersOnProduct(applicableOfferRequest)
-        response
-    }
-
     override suspend fun getStoresFilterData(storeId: String): Response<SubCategoryResponse> =
         withContext(
             Dispatchers.IO
@@ -260,6 +252,13 @@ class ProductRepositoryImpl @Inject constructor(
         response
     }
 
+    override suspend fun getOffersOnProduct(productData: ProductData): Response<ApplicableOfferResponse> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val response = gramoAppService.getOffersOnProduct(productData)
+            response
+        }
     override suspend fun checkPromotionOnProduct(verifyPromotionRequestModel: VerifyPromotionRequestModel): Response<CheckPromotionResponseModel> = withContext(
         Dispatchers.IO
     ) {

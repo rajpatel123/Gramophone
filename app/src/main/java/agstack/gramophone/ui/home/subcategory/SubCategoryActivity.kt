@@ -12,11 +12,12 @@ import agstack.gramophone.ui.dialog.sortby.BottomSheetSortByDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.adapter.ViewPagerAdapter
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
-import agstack.gramophone.ui.home.subcategory.model.GpApiOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.Offer
 import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
+import agstack.gramophone.ui.offer.OfferDetailActivity
+import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.MenuItem
@@ -132,17 +133,6 @@ class SubCategoryActivity :
         return true
     }
 
-    override fun showCategoryCollapsing() {
-        viewDataBinding.rlCategory.visibility = View.VISIBLE
-        viewDataBinding.tvStoreName.visibility = View.GONE
-    }
-
-    override fun showStoreCollapsing() {
-        viewDataBinding.rlCategory.visibility = View.GONE
-        viewDataBinding.tvStoreName.visibility = View.VISIBLE
-        viewDataBinding.tvStoreName.text = getString(R.string.pesticides)
-    }
-
     override fun disableSortAndFilter() {
         viewDataBinding.tvSortBy.isEnabled = false
         viewDataBinding.tvFilter.isEnabled = false
@@ -182,8 +172,21 @@ class SubCategoryActivity :
     ) {
         bottomSheet = AddToCartBottomSheetDialog({
             //Offer detail activity from here
+            openActivity(
+                OfferDetailActivity::class.java,
+                Bundle().apply {
+
+                    val offersDataItem = DataItem()
+                    offersDataItem.endDate = it.end_date
+                    offersDataItem.productName = it.title
+                    offersDataItem.productsku = it.applicable_on_sku
+                    offersDataItem.image = it.image
+                    offersDataItem.termsConditions = it.t_c
+                    putParcelable(Constants.OFFERSDATA, offersDataItem)
+
+                })
         }, {
-            subCategoryViewModel.applyOfferOnProduct(it)
+            subCategoryViewModel.checkOfferApplicability(it)
         }, {
             subCategoryViewModel.onAddToCartClicked(it)
         })
@@ -196,12 +199,9 @@ class SubCategoryActivity :
         )
     }
 
-    override fun updateAddToCartDialog(
-        isShowError: Boolean,
-        errorMsg: String,
-    ) {
+    override fun updateOfferApplicabilityOnDialog(isOfferApplicable: Boolean, message: String) {
         if (bottomSheet.isNotNull())
-            bottomSheet?.updateDialog(isShowError, errorMsg)
+            bottomSheet?.updateDialog(isOfferApplicable, message)
     }
 
     override fun openProductDetailsActivity(productData: ProductData) {

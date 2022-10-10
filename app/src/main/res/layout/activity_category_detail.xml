@@ -38,17 +38,6 @@
                     android:paddingEnd="20dp"
                     app:layout_collapseMode="parallax">
 
-                    <TextView
-                        android:id="@+id/tvStoreName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:fontFamily="@font/manrope_bold"
-                        android:text='@{viewModel.toolbarTitle ?? ""}'
-                        android:textColor="@color/blakish"
-                        android:textSize="20sp"
-                        tools:text="Store Name" />
-
                     <RelativeLayout
                         android:id="@+id/rlCategory"
                         android:layout_width="match_parent"

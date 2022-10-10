@@ -46,9 +46,10 @@
                     android:layout_marginBottom="30dp"
                     android:fontFamily="@font/manrope_bold"
                     android:lineSpacingExtra="-1sp"
-                    android:text="@string/featured_products"
+                    android:text='@{viewModel.toolbarTitle ?? ""}'
                     android:textColor="@color/blakish"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:text="@string/featured_products" />
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -82,7 +83,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     android:baselineAligned="false"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="@{viewModel.showSortFilterView == true ? View.VISIBLE : View.GONE}">
 
                     <FrameLayout
                         android:layout_width="0dp"

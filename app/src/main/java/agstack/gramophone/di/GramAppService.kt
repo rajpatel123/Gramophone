@@ -13,7 +13,6 @@ import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
 import agstack.gramophone.ui.farm.model.*
-import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferRequest
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
@@ -256,11 +255,6 @@ interface GramAppService {
         @Body pageLimitRequest: PageLimitRequest,
     ): Response<AllProductsResponse>
 
-    @POST("api/v5/product/offer-applicable-on-products")
-    suspend fun getApplicableOffersOnProduct(
-        @Body applicableOfferRequest: ApplicableOfferRequest,
-    ): Response<ApplicableOfferResponse>
-
     @GET("api/v5/category/stores/{store_id}")
     suspend fun getStoresFilterData(@Path("store_id") storeId: String): Response<SubCategoryResponse>
 
@@ -281,6 +275,9 @@ interface GramAppService {
 
     @POST("api/v5/cart/update-to-cart")
     suspend fun updateCartItem(@Body productData: ProductData): Response<SuccessStatusResponse>
+
+    @POST("api/v5/product/get-promotion")
+    suspend fun getOffersOnProduct(@Body productData: ProductData): Response<ApplicableOfferResponse>
 
     @POST("api/v5/farm/get-farm/{type}")
     suspend fun getFarmsData(@Path("type") storeId: String, @Body request : FarmRequest): Response<FarmResponse>
