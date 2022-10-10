@@ -223,13 +223,6 @@ class ProductRepositoryImpl @Inject constructor(
         response
     }
 
-    override suspend fun checkPromotionOnProduct(verifyPromotionRequestModel: VerifyPromotionRequestModel): Response<CheckPromotionResponseModel> = withContext(
-        Dispatchers.IO
-    ) {
-        val response = gramoAppService.checkPromotionApplicable(verifyPromotionRequestModel)
-        response
-    }
-
     override suspend fun getStoresFilterData(storeId: String): Response<SubCategoryResponse> =
         withContext(
             Dispatchers.IO
