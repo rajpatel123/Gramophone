@@ -513,7 +513,6 @@ class ProductDetailsViewModel @Inject constructor(
 
         }
 
-
     }
 
     private fun checkNetworkThenRun(runCode: (suspend () -> Unit)): Job {
