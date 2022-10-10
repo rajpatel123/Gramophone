@@ -22,72 +22,24 @@
             android:id="@+id/myToolbar"
             layout="@layout/layout_toolbar" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvShopBy"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/item_shop_by_store"
-            app:spanCount="2"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            android:layout_below="@+id/myToolbar"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:orientation="vertical" />
+            android:layout_below="@+id/myToolbar">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="@{viewModel.showWeatherView == true ? View.GONE : View.VISIBLE}"
-            tools:visibility="gone">
-
-            <ImageView
-                android:layout_width="@dimen/_90sdp"
-                android:layout_height="@dimen/_90sdp"
-                android:contentDescription="@string/image"
-                android:src="@drawable/ic_cart_empty" />
-
-            <TextView
-                android:id="@+id/tvCartEmptyTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:fontFamily="@font/manrope_bold"
-                android:text="@string/cart_empty_title"
-                android:textColor="@color/blakish"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tvCartEmptyDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:fontFamily="@font/manrope_regular"
-                android:gravity="center"
-                android:lineSpacingExtra="0sp"
-                android:text="@string/cart_empty_msg"
-                android:textColor="@color/gray"
-                android:textSize="14sp"
-                android:translationY="-0.24sp" />
-
-            <TextView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvShopBy"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_24sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:background="@drawable/btn_rounded_corner_16_solid_orange"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="@font/manrope_bold"
-                android:gravity="center"
-                android:text="@string/start_shopping"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="normal" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/item_shop_by_store" />
 
-        </LinearLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
         <ProgressBar
             android:id="@+id/progress"

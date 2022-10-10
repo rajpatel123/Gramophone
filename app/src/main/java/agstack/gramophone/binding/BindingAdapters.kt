@@ -241,6 +241,31 @@ fun setDateAndVisibility(
     }
 }
 
+@BindingAdapter(value = ["reformat_date"], requireAll = true)
+fun reformatDate(
+    textView: TextView, reformat_date: String? = null,
+) {
+    try {
+        if (reformat_date.isNullOrEmpty()) {
+            textView.visibility = View.GONE
+        } else {
+            textView.visibility = View.VISIBLE
+            var date = reformat_date
+            if (date.contains(":00")) {
+                date = date.replace(":00", " ")
+            }
+            if (date.contains("pm")) {
+                date = date.replace("pm", "PM")
+            } else if (date.contentEquals("am")) {
+                date = date.replace("am", "AM")
+            }
+            textView.text = date
+        }
+    } catch (e: Exception) {
+        textView.visibility = View.GONE
+    }
+}
+
 @BindingAdapter("product_quantity")
 fun setQuantity(textView: TextView, quantity: String) {
     val productQuantity: Int

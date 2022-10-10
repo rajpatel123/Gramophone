@@ -8,10 +8,12 @@ import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.weather.model.GpApiWeatherResponseData
 import agstack.gramophone.ui.weather.model.WeatherRequest
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.Utility
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
+import com.bumptech.glide.util.Util
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -49,7 +51,7 @@ class WeatherViewModel @Inject constructor(
     }
 
     fun getWeatherDetail() {
-        val weatherRequest = WeatherRequest(null, null, null, null)
+        val weatherRequest = WeatherRequest(null, null, "28.7041", "77.1025")
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -62,15 +64,25 @@ class WeatherViewModel @Inject constructor(
                         && response.body()?.gp_api_response_data?.get(0).isNotNull()
                     ) {
                         val weatherData = response.body()?.gp_api_response_data?.get(0)
-                        getNavigator()?.setToolbarTitle(weatherData?.city!!)
+                        getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.weather)!! + " - " + weatherData?.city!!)
                         address.value = weatherData?.address
-                        currentTime.value = weatherData?.current_time
                         currentTemp.value = weatherData?.temperature?.current
                         minTemp.value = weatherData?.temperature?.min
                         maxTemp.value = weatherData?.temperature?.max
                         weatherCondition.value = weatherData?.temperature?.weather_condition
                         perceptionIntensity.value = weatherData?.temperature?.perception_intensity
                         perceptionType.value = weatherData?.temperature?.perception_type
+
+                        try {
+                            var date: String = weatherData?.current_time!!
+                            date = date.replace("Today - ", "")
+                            val time = Utility.getFormattedDate(date,
+                                Utility.HOUR_MIN_12_TIME_FORMAT,
+                                Utility.HOUR_MIN_SECOND_TIME_FORMAT)
+                            currentTime.value = "Today - $time"
+                        } catch (e: Exception) {
+                            currentTime.value = weatherData?.current_time
+                        }
                     }
                 }
             } catch (e: Exception) {
@@ -80,7 +92,7 @@ class WeatherViewModel @Inject constructor(
     }
 
     fun getWeatherDetailHourly() {
-        val weatherRequest = WeatherRequest(null, null, null, null)
+        val weatherRequest = WeatherRequest("2022-10-10", null, "28.7041", "77.1025")
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -105,7 +117,7 @@ class WeatherViewModel @Inject constructor(
     }
 
     fun getWeatherDetailDayWise() {
-        val weatherRequest = WeatherRequest(null, null, null, null)
+        val weatherRequest = WeatherRequest(null, null, "28.7041", "77.1025")
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {

@@ -128,6 +128,7 @@ class HomeActivity :
         setUpNavigationDrawer()
         viewDataBinding.navView.itemIconTintList = null
 
+        updateMenuItemVisibility(showHomeItems = false, showCommunityItems = true)
         viewDataBinding.navView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_home -> {

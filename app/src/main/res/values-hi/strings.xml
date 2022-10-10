@@ -336,7 +336,8 @@
     <string name="please_enter_6_digit_otp">Please enter 6 digit OTP</string>
     <string name="enter_10_digit_mob">Enter 10 digit mobile number</string>
 
-    <string name="weather">Weather - Indore</string>
+    <string name="weather">Weather</string>
+    <string name="weather_city">Weather - Rohini</string>
     <string name="powered_by">Powered by</string>
     <string name="accuweather">AccuWeather</string>
     <string name="forecast_for_the_next_days">Forecast for the next few days</string>

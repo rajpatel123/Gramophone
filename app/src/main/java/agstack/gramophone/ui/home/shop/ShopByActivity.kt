@@ -33,6 +33,12 @@ class ShopByActivity :
 
     private fun setupUi() {
         shopByViewModel.getBundleData()
+
+        viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
+        viewDataBinding.swipeRefresh.setOnRefreshListener {
+            shopByViewModel.getStores()
+            viewDataBinding.swipeRefresh.isRefreshing = false
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
