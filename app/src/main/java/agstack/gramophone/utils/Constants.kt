@@ -7,6 +7,8 @@ import android.content.Context
 
 object Constants {
 
+    val DISCOUNT ="discount"
+    val FREEBIE ="freebie"
     val ADDRESSOBJECT: String = "address"
     val REFERRAL_CODE: String="referralCOde"
     val UNAUTHORIZED: Int=401

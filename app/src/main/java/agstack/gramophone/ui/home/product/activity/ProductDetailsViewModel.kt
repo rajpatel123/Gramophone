@@ -264,8 +264,8 @@ class ProductDetailsViewModel @Inject constructor(
             addToCartEnabled.set(true)
 
             var amountSaved = 0f
-            if (offerModel?.amount_saved.isNotNull()) {
-                amountSaved = offerModel?.amount_saved!!.toFloat()
+            if (offerModel?.benefit?.amount_saved.isNotNull()) {
+                amountSaved = offerModel?.benefit?.amount_saved!!.toFloat()
             }
 
             if (offerModel == null || amountSaved == 0f) {
@@ -284,11 +284,12 @@ class ProductDetailsViewModel @Inject constructor(
 
 
             offerModel?.let {
-                if (offerModel.amount_saved!! > 0) {
-                    finalSalePrice = model.salesPrice?.toDouble()!! - offerModel?.amount_saved!!
+                if(offerModel?.benefit?.promotionType.equals(Constants.DISCOUNT) && offerModel?.benefit?.amount_saved!=null )
+                if (offerModel?.benefit?.amount_saved!! > 0) {
+                    finalSalePrice = model.salesPrice?.toDouble()!! - offerModel?.benefit?.amount_saved
                 }
             }
-            if (offerModel == null || offerModel?.amount_saved == 0.0) {
+            if (offerModel == null || offerModel?.benefit?.amount_saved == 0.0) {
                 finalSalePrice = model.salesPrice?.toDouble()!!
             }
 // set offer detailsLayout visibility
@@ -297,6 +298,7 @@ class ProductDetailsViewModel @Inject constructor(
         }
 
         getNavigator()?.setPercentageOff_mrpVisibility(
+            model.product_app_name!!,
             finalSalePrice.toString(),
             finaldiscount,
             isMRPVisibile, isOffersLayoutVisible, isContactforPriceVisible
@@ -490,7 +492,7 @@ class ProductDetailsViewModel @Inject constructor(
             val offersOnProductResponse =
                 productRepository.checkPromotionOnProduct(verifyPromotionsModel)
             isApplicable =
-                offersOnProductResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)
+                ( offersOnProductResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS) &&  offersOnProductResponse.body()?.gpApiResponseData?.promotionApplicable!!)
 
             if (isApplicable) {
                 for (item in mSkuOfferList) {
@@ -505,6 +507,7 @@ class ProductDetailsViewModel @Inject constructor(
                     selectedOfferItem
                 )
             } else {
+                getNavigator()?.refreshOfferAdapter()
                 getNavigator()?.showToast(offersOnProductResponse.body()?.gpApiMessage)
             }
 

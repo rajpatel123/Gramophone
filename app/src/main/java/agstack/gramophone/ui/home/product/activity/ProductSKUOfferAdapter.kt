@@ -5,6 +5,7 @@ import agstack.gramophone.R
 import agstack.gramophone.databinding.ItemAvailableOffersBinding
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
+import agstack.gramophone.utils.Constants
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -30,9 +31,11 @@ class ProductSKUOfferAdapter(
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         mContext = viewGroup.context
         return CustomViewHolder(
-            ItemAvailableOffersBinding.inflate(LayoutInflater.from(viewGroup.context),
+            ItemAvailableOffersBinding.inflate(
+                LayoutInflater.from(viewGroup.context),
                 viewGroup,
-                false)
+                false
+            )
         )
     }
 
@@ -42,50 +45,88 @@ class ProductSKUOfferAdapter(
         holder.binding.setVariable(BR.model, model)
         val mBinding = holder.binding as ItemAvailableOffersBinding
         var amountSaved = 0f
-        if (model.amount_saved.isNotNull()) {
-            amountSaved = model.amount_saved!!.toFloat()
+        if (model.benefit?.amount_saved.isNotNull()) {
+            amountSaved = model.benefit?.amount_saved!!.toFloat()
         }
+
+        mBinding.tvSaveRs.text = "Save ₹" + amountSaved
+
 
         var selectedSKUMrpPrice = 0.0f
-        if(selectedSku.mrpPrice!=null){
+        if (selectedSku.mrpPrice != null) {
             selectedSKUMrpPrice = selectedSku.mrpPrice.toFloat()
-        }
-
-        if (model.amount_saved.isNotNull() && selectedSKUMrpPrice > amountSaved) {
-            val payOnly = selectedSKUMrpPrice - model.amount_saved!!.toFloat()
-            val payOnlyString: String = if (payOnly.toString().contains(".0") || payOnly.toString().contains(".00")) {
-                payOnly.roundToInt().toString()
-            } else {
-                payOnly.toString()
-            }
-            val selectedSkuPriceString: String =
-                if (selectedSKUMrpPrice.toString().contains(".0") || selectedSKUMrpPrice.toString().contains(".00")) {
-                    selectedSKUMrpPrice.roundToInt().toString()
-                } else {
-                    selectedSKUMrpPrice.toString()
-                }
-            mBinding.tvPayOnly.text = holder.itemView.context.getString(R.string.rupee) + payOnlyString
-            mBinding.tvSkuPrice.text = holder.itemView.context.getString(R.string.rupee) + selectedSkuPriceString
-
-            mBinding.tvPayOnlyTitle.visibility = View.VISIBLE
-            mBinding.tvPayOnly.visibility = View.VISIBLE
-            mBinding.tvSkuPrice.visibility = View.VISIBLE
         } else {
+            if (selectedSku.salesPrice != null) {
+                selectedSKUMrpPrice = selectedSku.salesPrice.toFloat()
+            }
+        }
+        if (model.benefit != null && model.benefit?.promotionType.equals(Constants.DISCOUNT)) {
+            mBinding.tvFreebietext.visibility = View.GONE
+            if (model.benefit?.amount_saved.isNotNull() && model.benefit?.amount_saved!! > 0.0 && selectedSKUMrpPrice > amountSaved) {
+                val payOnly = selectedSKUMrpPrice - model.benefit?.amount_saved!!.toFloat()
+                val payOnlyString: String =
+                    if (payOnly.toString().contains(".0") || payOnly.toString().contains(".00")) {
+                        payOnly.roundToInt().toString()
+                    } else {
+                        payOnly.toString()
+                    }
+                val selectedSkuPriceString: String =
+                    if (selectedSKUMrpPrice.toString()
+                            .contains(".0") || selectedSKUMrpPrice.toString()
+                            .contains(".00")
+                    ) {
+                        selectedSKUMrpPrice.roundToInt().toString()
+                    } else {
+                        selectedSKUMrpPrice.toString()
+                    }
+                mBinding.tvPayOnly.text =
+                    holder.itemView.context.getString(R.string.rupee) + payOnlyString
+                mBinding.tvSkuPrice.text =
+                    holder.itemView.context.getString(R.string.rupee) + selectedSkuPriceString
+
+                mBinding.tvPayOnlyTitle.visibility = View.VISIBLE
+                mBinding.tvPayOnly.visibility = View.VISIBLE
+                mBinding.tvSkuPrice.visibility = View.VISIBLE
+                mBinding.tvSaveRs.visibility = View.VISIBLE
+                mBinding.tvSaveRs.visibility = View.VISIBLE
+                mBinding.viewDivider.visibility = View.VISIBLE
+
+            } else {
+                mBinding.tvPayOnlyTitle.visibility = View.GONE
+                mBinding.tvPayOnly.visibility = View.GONE
+                mBinding.tvSkuPrice.visibility = View.GONE
+                mBinding.tvSaveRs.visibility = View.GONE
+                mBinding.viewDivider.visibility = View.GONE
+                mBinding.tvSaveRs.visibility = View.GONE
+            }
+
+        } else if (model.benefit != null && model.benefit?.promotionType.equals(Constants.FREEBIE)) {
+
             mBinding.tvPayOnlyTitle.visibility = View.GONE
             mBinding.tvPayOnly.visibility = View.GONE
             mBinding.tvSkuPrice.visibility = View.GONE
+            mBinding.tvSaveRs.visibility = View.GONE
+            mBinding.tvSaveRs.visibility = View.GONE
+            mBinding.viewDivider.visibility = View.GONE
+            mBinding.tvFreebietext.visibility = View.VISIBLE
+            mBinding.tvFreebietext.text = model.benefit?.freebieText
+
+        } else if (model.benefit?.promotionType == null) {
+            mBinding.tvPayOnlyTitle.visibility = View.GONE
+            mBinding.tvPayOnly.visibility = View.GONE
+            mBinding.tvSkuPrice.visibility = View.GONE
+            mBinding.tvSaveRs.visibility = View.GONE
+            mBinding.tvSaveRs.visibility = View.GONE
+            mBinding.viewDivider.visibility = View.GONE
+            mBinding.tvFreebietext.visibility = View.GONE
         }
-            mBinding.radioBtn.setOnClickListener {
 
 
-            /*    make an api call in View Model, based on it, set the selected status of the model in adapter
-            mSKUOfferList[lastSelectPosition]?.selected = false
-                lastSelectPosition = position
-                model.selected = true
-                notifyDataSetChanged()*/
-                selectedProduct?.invoke(model)
-                selectedOfferProduct?.invoke(model)
-            }
+        mBinding.radioBtn.setOnClickListener {
+
+            selectedProduct?.invoke(model)
+            selectedOfferProduct?.invoke(model)
+        }
         mBinding.tvViewdetail.setOnClickListener {
             onViewAllClicked?.invoke(model)
             onOfferDetailClicked?.invoke(model)
