@@ -15,6 +15,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -48,13 +49,13 @@ class ViewAllFarmsViewModel @Inject constructor(
                     val farmResponse = response.body()
                     val farmsList = ArrayList<List<Data>>()
                     var isCustomerFarms = false
-                    if (farmResponse?.gp_api_response_data?.customer_farm != null &&
-                        farmResponse.gp_api_response_data.customer_farm.data.isNotEmpty()
+                    if (farmResponse?.gp_api_response_data?.customer_farm != null
+                        && farmResponse.gp_api_response_data.customer_farm.data.isNotNullOrEmpty()
                     ) {
                         isCustomerFarms = true
                         farmsList.addAll(farmResponse.gp_api_response_data.customer_farm.data)
                     } else if (farmResponse?.gp_api_response_data?.model_farm != null &&
-                        farmResponse.gp_api_response_data.model_farm.data.isNotEmpty()
+                        farmResponse.gp_api_response_data.model_farm.data.isNotNullOrEmpty()
                     ) {
                         isCustomerFarms = false
                         farmsList.addAll(farmResponse.gp_api_response_data.model_farm.data)

@@ -25,6 +25,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.bumptech.glide.Glide
 
 
@@ -351,7 +352,7 @@ class HomeAdapter(
                 holder.binding.itemView.visibility = View.VISIBLE
 
                 if (farmResponse?.gp_api_response_data?.customer_farm != null &&
-                    farmResponse?.gp_api_response_data?.customer_farm?.data?.isNotEmpty() == true
+                    farmResponse?.gp_api_response_data?.customer_farm?.data?.isNotNullOrEmpty() == true
                 ) {
                     val customerFarmList = farmResponse?.gp_api_response_data?.customer_farm?.data
                     holder.binding.rvFarms.adapter = FarmAdapter(
@@ -389,7 +390,7 @@ class HomeAdapter(
                     }
 
                 } else if (farmResponse?.gp_api_response_data?.model_farm != null &&
-                    farmResponse?.gp_api_response_data?.model_farm?.data?.isNotEmpty() == true
+                    farmResponse?.gp_api_response_data?.model_farm?.data?.isNotNullOrEmpty() == true
                 ) {
                     val modelFarmList = farmResponse?.gp_api_response_data?.model_farm?.data
                     holder.binding.rvFarms.adapter = FarmAdapter(
