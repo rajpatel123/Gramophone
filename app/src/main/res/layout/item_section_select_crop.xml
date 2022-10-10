@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.home.view.fragments.market.model.CropData" />
+    </data>
+
+<LinearLayout
+    android:id="@+id/section"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingEnd="@dimen/_16sdp"
+    android:paddingStart="@dimen/_16sdp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txtSectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/manrope_bold"
+        android:text='@{model.sectionTitle ?? ""}'
+        tools:text='Popular in your area'
+        android:textColor="@color/blakish"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:textSize="@dimen/_12ssp"
+        android:layout_marginBottom="@dimen/_4sdp"/>
+
+    <TextView
+        android:id="@+id/txtSubSectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/manrope_regular"
+        android:text= '@{model.sectionSubTitle ?? ""}'
+        tools:text='With best practices and modal farm'
+        android:textColor="@color/gray"
+        android:textSize="@dimen/_11ssp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:visibility='@{model.sectionSubTitle != null ? View.VISIBLE : View.GONE }'/>
+</LinearLayout>
+</layout>

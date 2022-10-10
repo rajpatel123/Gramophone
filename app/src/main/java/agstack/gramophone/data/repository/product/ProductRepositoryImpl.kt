@@ -5,6 +5,7 @@ import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.di.GramAppService
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
+import agstack.gramophone.ui.farm.model.*
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferRequest
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
@@ -236,4 +237,26 @@ class ProductRepositoryImpl @Inject constructor(
             val subCategoryResponse = gramoAppService.getStoresFilterData(storeId)
             subCategoryResponse
         }
+
+    override suspend fun getFarmsData(type : String, farmRequest: FarmRequest): Response<FarmResponse> = withContext(
+        Dispatchers.IO
+    ) {
+        val response = gramoAppService.getFarmsData(type, farmRequest)
+        response
+    }
+
+    override suspend fun addFarm(addFarmRequest: AddFarmRequest): Response<AddFarmResponse> = withContext(
+        Dispatchers.IO
+    ) {
+        val response = gramoAppService.addFarm(addFarmRequest)
+        response
+    }
+
+    override suspend fun getFarmUnits(): Response<FarmUnitResponse> = withContext(
+        Dispatchers.IO
+    ) {
+        val response = gramoAppService.getFarmUnits()
+        response
+    }
+
 }

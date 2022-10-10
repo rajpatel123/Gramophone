@@ -159,8 +159,8 @@
         <activity android:name=".ui.home.stagedetail.CropStageDetailActivity" />
         <activity android:name=".ui.home.cropdetail.CropDetailActivity" />
 
-        <activity android:name=".ui.gramcash.GramCashActivity"/>
-        <activity android:name=".ui.gramcash.expiringsoon.GCExpiringSoonActivity"/>
+        <activity android:name=".ui.gramcash.GramCashActivity" />
+        <activity android:name=".ui.gramcash.expiringsoon.GCExpiringSoonActivity" />
 
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
@@ -176,6 +176,18 @@
         <activity android:name=".ui.unitconverter.UnitConverterActivity" />
         <activity android:name=".ui.feedback.FeedbackActivity" />
         <activity android:name=".ui.offerslist.OffersListActivity" />
+        <activity
+            android:name=".ui.farm.view.WhyAddFarmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.farm.view.SelectCropActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.farm.view.AddFarmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.farm.view.ViewAllFarmsActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".pushnotification.MyFirebaseMessagingService" />
         <service

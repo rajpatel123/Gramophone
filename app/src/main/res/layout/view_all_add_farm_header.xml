@@ -7,66 +7,51 @@
     android:paddingBottom="@dimen/_8sdp">
 
     <RelativeLayout
-        android:id="@+id/headerLayout"
+        android:id="@+id/viewOldFarmsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16sdp">
+        android:background="@color/yellow_light"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:elevation="@dimen/_6sdp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:layout_centerVertical="true"
+            android:lines="1"
+            android:maxLength="50"
+            android:textColor="@color/blakish"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="normal"
+            android:text="पुराने खेत देखे " />
 
         <ImageView
             android:id="@+id/imageCorp"
-            android:layout_width="@dimen/_24sdp"
-            android:layout_height="@dimen/_24sdp"
+            android:layout_width="@dimen/_12sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginBottom="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:contentDescription="@string/image"
-            app:srcCompat="@drawable/ic_leaf" />
-
-
-        <LinearLayout
-            android:layout_toEndOf="@id/imageCorp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:fontFamily="@font/manrope_bold"
-                android:lines="1"
-                android:maxLength="50"
-                android:textColor="@color/blakish"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="normal"
-                android:text="अपनी फसलों द्वारा खरीदारी करें" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:fontFamily="@font/manrope_regular"
-                android:lines="1"
-                android:maxLength="50"
-                android:textColor="@color/gray_strike_through"
-                android:textSize="@dimen/_13ssp"
-                android:textStyle="normal"
-                android:text="आपके एरिया के मुख्य फसलें एवं आपके खेत " />
-
-        </LinearLayout>
+            app:srcCompat="@drawable/ic_right_head_arrow" />
 
     </RelativeLayout>
 
-
     <RelativeLayout
-        android:layout_below="@+id/headerLayout"
+        android:layout_below="@+id/viewOldFarmsLayout"
         android:id="@+id/buttonWrapperLayout"
         android:layout_width="match_parent"
-        android:layout_alignStart="@+id/headerLayout"
-        android:layout_alignEnd="@+id/headerLayout"
         android:layout_height="@dimen/_56sdp"
+        android:layout_marginLeft="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
         android:background="@drawable/btn_rounded_corner_stroke_orange">
 
         <LinearLayout

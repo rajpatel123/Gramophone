@@ -11,6 +11,7 @@ import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatL
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
+import agstack.gramophone.ui.farm.model.*
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferRequest
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
@@ -275,5 +276,14 @@ interface GramAppService {
 
     @POST("api/v5/cart/update-to-cart")
     suspend fun updateCartItem(@Body productData: ProductData): Response<SuccessStatusResponse>
+
+    @POST("api/v5/farm/get-farm/{type}")
+    suspend fun getFarmsData(@Path("type") storeId: String, @Body request : FarmRequest): Response<FarmResponse>
+
+    @POST("api/v5/farm/add-farm")
+    suspend fun addFarm(@Body request : AddFarmRequest): Response<AddFarmResponse>
+
+    @GET("api/v5/farm/farm-unit")
+    suspend fun getFarmUnits(): Response<FarmUnitResponse>
 
 }

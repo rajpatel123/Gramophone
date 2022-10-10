@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.farm.viewmodel.AddFarmViewModel" />
+    </data>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
 
         <RelativeLayout
             android:id="@+id/flBannerFrameLayout"
@@ -31,33 +34,50 @@
                 app:srcCompat="@drawable/farmer" />
 
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_90sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_78sdp"
-                android:elevation="@dimen/_2sdp">
+                android:elevation="@dimen/_2sdp"
+                tools:ignore="RelativeOverlap">
+
+                <FrameLayout
+                    android:id="@+id/imageCorpWrapper"
+                    android:background="@drawable/rounded_corner_20_solid_white"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
+                    android:layout_gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:padding="@dimen/_2sdp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imageCorp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="@string/image"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize20Percent"
+                        app:product_image='@{viewModel.selectedCrop.cropImage ?? ""}'
+                        tools:srcCompat="@drawable/dummy_crop" />
+
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/txtCropName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/imageCorp"
+                    android:layout_below="@+id/imageCorpWrapper"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_6sdp"
                     android:fontFamily="@font/manrope_bold"
-                    android:lines="1"
-                    android:maxLength="25"
+                    android:lines="2"
+                    android:maxLength="50"
+                    android:text='@{viewModel.selectedCrop.cropName ?? ""}'
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     tools:text='Maize' />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/imageCorp"
-                    android:layout_width="@dimen/_64sdp"
-                    android:layout_height="@dimen/_64sdp"
-                    android:contentDescription="@string/image"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
-                    tools:srcCompat="@drawable/ic_dummy_crop_icon" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -83,7 +103,6 @@
                     app:contentInsetStartWithNavigation="0dp"
                     app:layout_collapseMode="pin"
                     app:layout_collapseParallaxMultiplier="0.7"
-                    app:menu="@menu/menu_home"
                     app:navigationIcon="@drawable/ic_arrow_left"
                     app:titleTextAppearance="@style/Toolbar.TitleText"
                     app:titleTextColor="@color/blakish">
@@ -117,18 +136,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtDatePickerTitle"
-                android:layout_marginTop="@dimen/_8sdp">
+                android:layout_marginTop="@dimen/_8sdp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:onClick='@{()-> viewModel.onDateViewClick()}'>
 
-                <EditText
-                    android:id="@+id/edtDate"
+                <TextView
+                    android:id="@+id/txtDate"
                     style="@style/small"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_38sdp"
                     android:background="@drawable/rounded_corner"
                     android:backgroundTint="@color/mute_grey"
                     android:hint="MM/DD/YYYY"
-                    android:imeOptions="actionDone"
-                    android:inputType="date"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:inputType="none"
                     android:letterSpacing=".05"
                     android:maxLength="10"
                     android:paddingBottom="@dimen/_10sdp"
@@ -141,7 +162,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/edtDate"
+                    android:layout_alignEnd="@+id/txtDate"
                     android:layout_margin="@dimen/_4sdp"
                     android:contentDescription="@string/image"
                     android:src="@drawable/ic_astrick" />
@@ -149,7 +170,7 @@
                 <ImageView
                     android:layout_width="@dimen/_32sdp"
                     android:layout_height="@dimen/_32sdp"
-                    android:layout_alignEnd="@+id/edtDate"
+                    android:layout_alignEnd="@+id/txtDate"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:contentDescription="@string/image"
@@ -179,6 +200,7 @@
             android:gravity="center"
             android:padding="@dimen/_13sdp"
             android:text="@string/save_continue"
+            android:onClick="@{() -> viewModel.onClickSaveAndContinue()}"
             android:textColor="@color/white" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -208,17 +230,18 @@
                         android:id="@+id/edtArea"
                         style="@style/small"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_38sdp"
                         android:background="@drawable/rounded_corner"
                         android:backgroundTint="@color/mute_grey"
                         android:imeOptions="actionDone"
-                        android:inputType="text"
+                        android:inputType="numberDecimal"
                         android:letterSpacing=".05"
                         android:maxLength="20"
                         android:paddingBottom="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_2sdp"
                         android:paddingStart="@dimen/_5sdp"
                         android:paddingTop="@dimen/_10sdp"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:singleLine="true"
                         android:textSize="@dimen/_12ssp" />
 
@@ -255,23 +278,20 @@
                     android:layout_below="@+id/title1"
                     android:layout_marginTop="@dimen/_5sdp">
 
-                    <AutoCompleteTextView
+                    <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/edtAreaUnit"
                         style="@style/small"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_38sdp"
                         android:background="@drawable/rounded_corner"
                         android:backgroundTint="@color/mute_grey"
-                        android:imeOptions="actionDone"
-                        android:letterSpacing=".05"
-                        android:maxLength="20"
                         android:paddingBottom="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_2sdp"
                         android:paddingStart="@dimen/_5sdp"
-                        android:paddingTop="@dimen/_10sdp"
-                        android:singleLine="true"
+                        android:paddingTop="@dimen/_8sdp"
                         android:textSize="@dimen/_12ssp"
-                        tools:hint="Bigha" />
+                        tools:hint="Bigha"
+                        android:foreground="?android:attr/selectableItemBackground"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -296,6 +316,14 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="@{viewModel.progress == true ? View.VISIBLE : View.GONE, default=gone}"
+            android:translationZ="@dimen/_4sdp"
+            tools:visibility="visible" />
 
     </RelativeLayout>
 </layout>

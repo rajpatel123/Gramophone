@@ -2,4 +2,4 @@
 <inset
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:drawable="@drawable/ic_right_head_arrow"
-    android:insetBottom="15dp" />
+    android:insetBottom="20dp" />
