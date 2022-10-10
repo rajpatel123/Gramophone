@@ -64,10 +64,10 @@ class OrderListViewModel @Inject constructor(
 
                         getNavigator()?.setPlacedOrderAdapter(
                             OrderListAdapter(placedList)
-                        ) {
+                        ) { orderId, price ->
                             getNavigator()?.openOrderDetailsActivity(Bundle().apply {
-                                putString(Constants.ORDER_ID,
-                                    it)
+                                putString(Constants.ORDER_ID, orderId)
+                                putString(Constants.ORDER_PRICE, price)
                             })
                         }
                     }
@@ -78,10 +78,10 @@ class OrderListViewModel @Inject constructor(
                         recentOrderSize.value = recentOrderDataResponse.body()?.gp_api_response_data?.data?.size
                         getNavigator()?.setRecentOrderAdapter(
                             OrderListAdapter(recentOrderDataResponse.body()?.gp_api_response_data?.data!!)
-                        ) {
+                        ) { orderId, price ->
                             getNavigator()?.openOrderDetailsActivity(Bundle().apply {
-                                putString(Constants.ORDER_ID,
-                                    it)
+                                putString(Constants.ORDER_ID, orderId)
+                                putString(Constants.ORDER_PRICE, price)
                             })
                         }
                     }
@@ -92,10 +92,10 @@ class OrderListViewModel @Inject constructor(
                         pastOrderSize.value = pastOrderDataResponse.body()?.gp_api_response_data?.data?.size
                         getNavigator()?.setPastOrderAdapter(
                             OrderListAdapter(pastOrderDataResponse.body()?.gp_api_response_data?.data!!)
-                        ) {
+                        ) { orderId, price ->
                             getNavigator()?.openOrderDetailsActivity(Bundle().apply {
-                                putString(Constants.ORDER_ID,
-                                    it)
+                                putString(Constants.ORDER_ID, orderId)
+                                putString(Constants.ORDER_PRICE, price)
                             })
                         }
                     }

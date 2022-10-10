@@ -8,11 +8,14 @@ import agstack.gramophone.databinding.ActivityOrderDetailsBinding
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.orderdetails.adapter.OrderedProductsAdapter
-import agstack.gramophone.ui.orderdetails.model.OfferApplied
+import agstack.gramophone.ui.orderdetails.model.FreeProduct
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -51,10 +54,78 @@ class OrderDetailsActivity :
         }
     }
 
+    override fun setColorOnOrderStatus(orderStatus: String) {
+        when (orderStatus) {
+            "Order Placed" -> {
+                viewDataBinding.rlOrderStatus.backgroundTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.order_placed_bg))
+                viewDataBinding.tvOrderStatus.setTextColor(ContextCompat.getColor(this,
+                    R.color.order_placed_text))
+                viewDataBinding.tvOrderStatus.setCompoundDrawablesWithIntrinsicBounds(
+                    AppCompatResources.getDrawable(this, R.drawable.ic_order_placed),
+                    null,
+                    null,
+                    null
+                )
+            }
+            "Order Approved" -> {
+                viewDataBinding.rlOrderStatus.backgroundTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.order_approved_bg))
+                viewDataBinding.tvOrderStatus.setTextColor(ContextCompat.getColor(this,
+                    R.color.order_approved_text))
+                viewDataBinding.tvOrderStatus.setCompoundDrawablesWithIntrinsicBounds(
+                    AppCompatResources.getDrawable(this, R.drawable.ic_order_approved),
+                    null,
+                    null,
+                    null
+                )
+            }
+            "Order Cancelled" -> {
+                viewDataBinding.rlOrderStatus.backgroundTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.order_cancelled_bg))
+                viewDataBinding.tvOrderStatus.setTextColor(ContextCompat.getColor(this,
+                    R.color.order_cancelled_text))
+                viewDataBinding.tvOrderStatus.setCompoundDrawablesWithIntrinsicBounds(
+                    AppCompatResources.getDrawable(this, R.drawable.ic_order_cancelled),
+                    null,
+                    null,
+                    null
+                )
+            }
+            "Delivered" -> {
+                viewDataBinding.rlOrderStatus.backgroundTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.order_delivered_bg))
+                viewDataBinding.tvOrderStatus.setTextColor(ContextCompat.getColor(this,
+                    R.color.order_delivered_text))
+                viewDataBinding.tvOrderStatus.setCompoundDrawablesWithIntrinsicBounds(
+                    AppCompatResources.getDrawable(this, R.drawable.ic_order_delivered),
+                    null,
+                    null,
+                    null
+                )
+                viewDataBinding.viewOrderStatus.visibility = View.VISIBLE
+                viewDataBinding.tvInvoice.visibility = View.VISIBLE
+            }
+            "Order Dispatched" -> {
+                viewDataBinding.rlOrderStatus.backgroundTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(this,
+                        R.color.order_dispatched_bg))
+                viewDataBinding.tvOrderStatus.setTextColor(ContextCompat.getColor(this,
+                    R.color.order_dispatched_text))
+                viewDataBinding.tvOrderStatus.setCompoundDrawablesWithIntrinsicBounds(
+                    AppCompatResources.getDrawable(this, R.drawable.ic_order_dispatched),
+                    null,
+                    null,
+                    null
+                )
+            }
+        }
+    }
+
     override fun setOrderListAdapter(
         orderedProductsAdapter: OrderedProductsAdapter,
         onOrderItemClicked: (Int) -> Unit,
-        onOfferClicked: (offerList: OfferApplied) -> Unit,
+        onOfferClicked: (freeProduct: FreeProduct, sku: String) -> Unit,
     ) {
         orderedProductsAdapter.onItemDetailClicked = onOrderItemClicked
         orderedProductsAdapter.onOfferClicked = onOfferClicked

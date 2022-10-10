@@ -182,6 +182,7 @@ val SHAREIMAGEURIStRING = "imageuriString"
     //Product
     const val PRODUCT = "product"
     const val ORDER_ID = "order_id"
+    const val ORDER_PRICE = "order_price"
     const val CATEGORY_ID = "category_id"
     const val CATEGORY_NAME = "category_name"
     const val CATEGORY_IMAGE = "category_image"

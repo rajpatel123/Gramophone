@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -208,12 +209,14 @@ fun setDateAndItemCount(
     isDateAlreadyFormatted: Boolean,
 ) {
     try {
-        if (isDateAlreadyFormatted) {
-            textView.text = orderDate + " / " + quantity + items
-        } else {
-            textView.text = Utility.getFormattedDate(orderDate,
-                Utility.DATE_MONTH_YEAR_FORMAT,
-                Utility.MONTH_DATE_YEAR_FORMAT) + " / " + quantity + items
+        if (orderDate.isNotNullOrEmpty()) {
+            if (isDateAlreadyFormatted) {
+                textView.text = orderDate + " / " + quantity + items
+            } else {
+                textView.text = Utility.getFormattedDate(orderDate,
+                    Utility.DATE_MONTH_YEAR_FORMAT,
+                    Utility.MONTH_DATE_YEAR_FORMAT) + " / " + quantity + items
+            }
         }
     } catch (e: Exception) {
         e.printStackTrace()
@@ -311,15 +314,13 @@ fun mrpPriceVisibility(
     try {
         if (mrp_price == 0f) {
             textView.visibility = View.GONE
-        } else if (mrp_price == sales_price) {
-            textView.visibility = View.GONE
-        } else if (mrp_price < sales_price) {
+        } else if (mrp_price <= sales_price) {
             textView.visibility = View.GONE
         } else {
             textView.visibility = View.VISIBLE
-            if (sales_price.toString().contains(".0") || sales_price.toString().contains(".00"))
-                textView.text = "₹ " + sales_price.roundToInt().toString()
-            else textView.text = "₹ " + sales_price.toString()
+            if (mrp_price.toString().contains(".0") || mrp_price.toString().contains(".00"))
+                textView.text = "₹ " + mrp_price.roundToInt().toString()
+            else textView.text = "₹ " + mrp_price.toString()
         }
     } catch (e: Exception) {
         textView.visibility = View.GONE

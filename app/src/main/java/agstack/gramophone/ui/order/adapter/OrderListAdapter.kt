@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 class OrderListAdapter(orderDataList: List<Data>) :
     RecyclerView.Adapter<OrderListAdapter.CustomViewHolder>() {
     var orderList = orderDataList
-    var onOrderDetailClicked: ((String) -> Unit)? = null
+    var onOrderDetailClicked: ((String, String) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         return CustomViewHolder(
@@ -27,7 +27,7 @@ class OrderListAdapter(orderDataList: List<Data>) :
             holder.binding.tabSeparator.visibility = View.VISIBLE
         }
         holder.binding.tvDetail.setOnClickListener {
-            onOrderDetailClicked?.invoke(orderList[position].order_id.toString())
+            onOrderDetailClicked?.invoke(orderList[position].order_id.toString(), orderList[position].price.toString())
         }
     }
 

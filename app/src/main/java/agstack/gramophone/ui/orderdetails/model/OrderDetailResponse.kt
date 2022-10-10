@@ -3,50 +3,66 @@ package agstack.gramophone.ui.orderdetails.model
 
 data class OrderDetailResponse(
     val gp_api_error_data: GpApiErrorData,
-    val gp_api_exception: GpApiException,
     val gp_api_message: String,
-    val gp_api_response_data: GpApiResponseData = GpApiResponseData("", "", "", "","", emptyList(), ""),
-    val gp_api_status: String
+    val gp_api_response_data: GpApiResponseData,
+    val gp_api_status: String,
+    val gp_api_trace: GpApiTrace,
 )
 
 class GpApiErrorData
 
-class GpApiException
-
 data class GpApiResponseData(
-    val order_date: String = "",
-    val order_id: String = "",
-    val order_status: String = "",
-    val payment_method: String = "",
-    val price: String = "",
-    val products: List<Product> = emptyList(),
-    val quantity: String = ""
+    val delivery_address: DeliveryAddress,
+    val items: Int,
+    val message: String,
+    val order_date: String,
+    val order_id: Int,
+    val order_status: String,
+    val order_type: String,
+    val pricing_details: PricingDetails,
+    val product_image: String,
+    val products: List<Product>,
+    val vr_info: List<Any>,
 )
 
-data class Product(
-    val delivery_address: DeliveryAddress,
-    val offer_applied: List<OfferApplied>,
-    val price: String,
-    val product_id: Int,
-    val product_image: String,
-    val product_name: String,
-    val product_sku: String,
-    val product_unit: String,
-    val quantity: Int
+data class GpApiTrace(
+    val gp_language: String,
+    val gp_request_id: String,
+    val gp_trace_id: String,
 )
 
 data class DeliveryAddress(
     val address: String,
     val mobile: String,
-    val name: String
+    val name: String,
 )
 
-data class OfferApplied(
-    var product_name: String,
-    val discount: String,
-    val offer_name: String,
-    val pay_total: String,
+data class PricingDetails(
+    val additional_discount: Int,
+    val coupon_discount: Int,
+    val delivery_charge: Int,
+    val gram_cash: Int,
+    val product_discount: Int,
+    val promotional_discount: Int,
+    val sub_total_price: Int,
+    val total_price: Int,
+)
 
-    val valid_on_sku: String,
-    val valid_till: String
+data class Product(
+    val discounted_price: Int,
+    val free_products: List<FreeProduct>,
+    val is_offer_applied: String,
+    val price: Int,
+    val product_id: Int,
+    val product_image: String,
+    val product_name: String,
+    val product_sku: String,
+    val quantity: Int,
+)
+
+data class FreeProduct(
+    val mrp_price: Int,
+    val price: Int,
+    val product_image: String,
+    val product_name: String,
 )
