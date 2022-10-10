@@ -58,6 +58,7 @@ class AddToCartBottomSheetDialog(
         if (!mSKUList.isNullOrEmpty()) {
             selectedSkuListItem.set(mSKUList[0])
             mSKUList[0]?.selected = true
+            productData.product_id = mSKUList[0]?.productId?.toInt()
             setSelectedSkuPrice(if (mSKUList[0]?.mrpPrice.isNull()) 0f else mSKUList[0]?.mrpPrice!!.toFloat(),
                 if (mSKUList[0]?.salesPrice.isNullOrEmpty()) 0f else mSKUList[0]?.salesPrice!!.toFloat())
         }
@@ -66,6 +67,7 @@ class AddToCartBottomSheetDialog(
         binding?.rvProductSku?.adapter = ProductSKUAdapter(mSKUList) {
             Log.d("productSKUItemSelected", it.productId.toString())
             selectedSkuListItem.set(it)
+            productData.product_id = it.productId?.toInt()
             setSelectedSkuPrice(if (it.mrpPrice.isNull()) 0f else it.mrpPrice!!.toFloat(),
                 if (it.salesPrice.isNullOrEmpty()) 0f else it.salesPrice.toFloat())
             calculateDiscountAndPromotion(selectedSkuListItem.get()!!, selectedOfferItem)
@@ -120,9 +122,9 @@ class AddToCartBottomSheetDialog(
 
     private fun setSelectedSkuPrice(mrpPrice: Float, salesPrice: Float) {
         selectedSkuPrice = if (salesPrice == 0f) {
-            mrpPrice
+            mrpPrice * quantity
         } else {
-            salesPrice
+            salesPrice * quantity
         }
     }
 
@@ -138,7 +140,7 @@ class AddToCartBottomSheetDialog(
         var isMRPVisible = false
         var isDiscountPercentVisible = false
         var isContactForPriceVisible = false
-        val proceedForCalculation = true
+        var proceedForCalculation = true
 
         modelMrpPrice = if (model.mrpPrice.isNull()) 0f else model.mrpPrice!!.toFloat()
         modelSalesPrice = if (model.salesPrice.isNullOrEmpty()) 0f else model.salesPrice.toFloat()
@@ -153,11 +155,14 @@ class AddToCartBottomSheetDialog(
             modelMrpPrice = 0f
             modelSalesPrice = 0f
             isContactForPriceVisible = true
+            proceedForCalculation = false
         }
-
+        modelMrpPrice *= quantity
+        modelSalesPrice *= quantity
+        var discountPercent = 0f
         if (proceedForCalculation) {
             isMRPVisible = modelMrpPrice > modelSalesPrice
-            val discountPercent =
+            discountPercent =
                 ((modelMrpPrice - modelSalesPrice) / modelMrpPrice) * 100
             finalDiscount = (String.format("%.0f", discountPercent) + "% off")
             isDiscountPercentVisible = discountPercent > 0
@@ -167,16 +172,22 @@ class AddToCartBottomSheetDialog(
                 offerModel?.let {
                     if (offerModel.benefit.isNotNull() && offerModel.benefit.amount > 0) {
                         finalSalePrice = modelSalesPrice - offerModel.benefit.amount
+
+                        discountPercent =
+                            ((modelMrpPrice - finalSalePrice) / modelMrpPrice) * 100
+                        finalDiscount = (String.format("%.0f", discountPercent) + "% off")
+                        isDiscountPercentVisible = discountPercent > 0
                     }
                 }
         }
-        if(modelMrpPrice.toString().endsWith(".0") || modelMrpPrice.toString()
-                .contains(".00")) {
+        if (modelMrpPrice.toString().endsWith(".0") || modelMrpPrice.toString()
+                .contains(".00")
+        ) {
             binding?.tvProductMRP?.text =
-                getString(R.string.rupee) + modelMrpPrice.roundToInt().toString()
+                getString(R.string.rupee) + (modelMrpPrice.roundToInt()).toString()
         } else {
             binding?.tvProductMRP?.text =
-                getString(R.string.rupee) + modelMrpPrice.toString()
+                getString(R.string.rupee) + (modelMrpPrice).toString()
         }
 
         binding?.tvDiscountPercent?.text = finalDiscount
@@ -192,8 +203,9 @@ class AddToCartBottomSheetDialog(
         isDiscountPercentVisible: Boolean,
         isMRPVisible: Boolean,
         isContactForPriceVisible: Boolean,
-    ) {
-        setPrice(quantity, finalSalePrice)
+
+        ) {
+        setSalesPrice(finalSalePrice)
         if (isMRPVisible)
             binding?.tvProductMRP?.visibility = View.VISIBLE
         else
@@ -223,15 +235,15 @@ class AddToCartBottomSheetDialog(
         }
     }
 
-    private fun setPrice(quantity: Int, perUnitPrice: Float) {
-        val totalPrice = perUnitPrice * quantity
-        if(totalPrice.toString().endsWith(".0") || totalPrice.toString()
-            .contains(".00")) {
+    private fun setSalesPrice(priceAfterDiscount: Float) {
+        if (priceAfterDiscount.toString().endsWith(".0") || priceAfterDiscount.toString()
+                .contains(".00")
+        ) {
             binding?.tvProductSP?.text =
-                getString(R.string.rupee) + totalPrice.roundToInt().toString()
+                getString(R.string.rupee) + priceAfterDiscount.roundToInt().toString()
         } else {
             binding?.tvProductSP?.text =
-                getString(R.string.rupee) + totalPrice.toString()
+                getString(R.string.rupee) + priceAfterDiscount.toString()
         }
 
     }

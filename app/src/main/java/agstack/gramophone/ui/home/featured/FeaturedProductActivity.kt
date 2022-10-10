@@ -7,6 +7,8 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityFeaturedProductsBinding
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
+import agstack.gramophone.ui.dialog.filter.BottomSheetFilterDialog
+import agstack.gramophone.ui.dialog.sortby.BottomSheetSortByDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.subcategory.ProductListAdapter
@@ -21,6 +23,7 @@ import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.amnix.xtension.extensions.isNotNull
@@ -31,11 +34,16 @@ import kotlin.math.abs
 @AndroidEntryPoint
 class FeaturedProductActivity :
     BaseActivityWrapper<ActivityFeaturedProductsBinding, SubCategoryNavigator, SubCategoryViewModel>(),
-    SubCategoryNavigator {
+    SubCategoryNavigator, View.OnClickListener {
 
     //initialise ViewModel
     private val subCategoryViewModel: SubCategoryViewModel by viewModels()
     var bottomSheet: AddToCartBottomSheetDialog? = null
+    var sortBy: String = Constants.RELAVENT_CODE
+    var subCategoryIdsArray = ArrayList<String>()
+    var brandIdsArray = ArrayList<String>()
+    var cropIdsArray = ArrayList<String>()
+    var technicalIdsArray = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +52,10 @@ class FeaturedProductActivity :
     }
 
     private fun setupUi() {
+        disableSortAndFilter()
+        viewDataBinding.tvSortBy.setOnClickListener(this)
+        viewDataBinding.tvFilter.setOnClickListener(this)
+
         viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
         viewDataBinding.swipeRefresh.setOnRefreshListener {
             subCategoryViewModel.getFeaturedProducts()
@@ -67,6 +79,53 @@ class FeaturedProductActivity :
                 viewDataBinding.collapsingToolbar.title = ""
             }
         })
+    }
+
+    override fun onClick(view: View?) {
+        when (view?.id) {
+            R.id.tvSortBy -> {
+                val bottomSheet = BottomSheetSortByDialog(subCategoryViewModel.sortDataList) {
+                    sortBy = it
+                    subCategoryViewModel.getAllProducts(sortBy,
+                        subCategoryIdsArray,
+                        brandIdsArray,
+                        cropIdsArray,
+                        technicalIdsArray,
+                        "10",
+                        "1")
+                }
+                bottomSheet.isCancelable = false
+                bottomSheet.show(
+                    supportFragmentManager,
+                    "bottomSheet"
+                )
+            }
+            R.id.tvFilter -> {
+                val bottomSheet = BottomSheetFilterDialog(subCategoryViewModel.mainFilterList,
+                    subCategoryViewModel.subCategoryList,
+                    subCategoryViewModel.brandsList,
+                    subCategoryViewModel.cropsList,
+                    subCategoryViewModel.technicalDataList) { subCategoryIds, brandIds, cropIds, technicalIds ->
+                    subCategoryIdsArray = subCategoryIds
+                    brandIdsArray = brandIds
+                    cropIdsArray = cropIds
+                    technicalIdsArray = technicalIds
+
+                    subCategoryViewModel.getAllProducts(sortBy,
+                        subCategoryIds,
+                        brandIds,
+                        cropIds,
+                        technicalIds,
+                        "10",
+                        "1")
+                }
+                bottomSheet.isCancelable = false
+                bottomSheet.show(
+                    supportFragmentManager,
+                    "bottomSheet"
+                )
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
