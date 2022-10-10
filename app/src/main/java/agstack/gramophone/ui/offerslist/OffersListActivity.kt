@@ -46,6 +46,13 @@ class OffersListActivity :
     }
 
     private fun getAllOffersData() {
+
+        viewDataBinding?.swipeRefresh?.setColorSchemeResources(R.color.blue)
+        viewDataBinding?.swipeRefresh?.setOnRefreshListener {
+            mViewModel?.getAllOffersData()
+            viewDataBinding?.swipeRefresh?.isRefreshing = false
+        }
+
         mViewModel?.getAllOffersData()
     }
 
