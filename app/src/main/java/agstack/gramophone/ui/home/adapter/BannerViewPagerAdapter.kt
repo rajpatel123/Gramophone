@@ -1,34 +1,30 @@
 package agstack.gramophone.ui.home.adapter
 
 import agstack.gramophone.R
+import agstack.gramophone.ui.home.model.Banner
 import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActivity
-import agstack.gramophone.ui.home.view.fragments.community.model.PagerItem
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.PagerItem
+import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
-import java.util.ArrayList
 
 
-
-class BannerViewPagerAdapter(list: List<PagerItem>?, private val mContext: Context) : PagerAdapter() {
+class BannerViewPagerAdapter(private  val list: ArrayList<agstack.gramophone.ui.home.view.fragments.market.model.Banner>, private val mContext: Context) : PagerAdapter() {
 
     private val mInflater: LayoutInflater
 
-    private val mPagerList = ArrayList<PagerItem>()
+    private val mPagerList = ArrayList<Banner>()
 
     init {
-
-        if (list != null)
-            mPagerList.addAll(list)
-
         this.mInflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     }
 
@@ -38,18 +34,15 @@ class BannerViewPagerAdapter(list: List<PagerItem>?, private val mContext: Conte
 
         val holder = ViewHolder(rootView)
 
-        val data = mPagerList[position]
+        val data = list[position]
 
         Glide.with(rootView.context)
-            .load(data.itemImageUrl)
-            .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .skipMemoryCache(true)
-            .fitCenter()
+            .load(data.bannerImage)
             .into(holder.imageView)
         container.addView(rootView)
 
         rootView.setOnClickListener {
-            container.context.startActivity(Intent(container.context,LikedPostUserListActivity::class.java))
+            //container.context.startActivity(Intent(container.context,LikedPostUserListActivity::class.java))
         }
 
         return rootView
@@ -57,7 +50,7 @@ class BannerViewPagerAdapter(list: List<PagerItem>?, private val mContext: Conte
 
     override fun getCount(): Int {
 
-        return mPagerList.size
+        return list.size
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {

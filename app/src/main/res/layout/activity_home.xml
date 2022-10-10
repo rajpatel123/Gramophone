@@ -57,6 +57,47 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
+                    <LinearLayout
+                        android:id="@+id/llCreateAPost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="20dp"
+                        android:paddingEnd="@dimen/_15sdp"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:visibility="gone"
+                        android:onClick="@{()->viewModel.onCreatePostClicked()}"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@drawable/create_a_post_bg"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+
+                        <ImageView
+                            android:id="@+id/callButton"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:tint="@color/white"
+                            android:layout_marginEnd="4dp"
+                            android:src="@drawable/ic_post_edit"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/create_post"
+                            android:textSize="@dimen/_14ssp"
+                            android:fontFamily="@font/manrope_semibold"
+                            android:textColor="@color/white"/>
+
+
+                    </LinearLayout>
+
                     <com.google.android.material.bottomnavigation.BottomNavigationView
                         android:id="@+id/nav_view"
                         android:layout_width="0dp"

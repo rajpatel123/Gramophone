@@ -264,4 +264,8 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         return Geocoder(this, Locale.getDefault())
     }
 
+    override fun finishActivity() {
+        finish()
+    }
+
 }

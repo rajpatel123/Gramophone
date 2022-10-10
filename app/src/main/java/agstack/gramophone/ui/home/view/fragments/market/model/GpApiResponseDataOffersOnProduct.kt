@@ -8,6 +8,6 @@ import kotlinx.android.parcel.Parcelize
 data class GpApiResponseDataOffersOnProduct(
 
 
-    @field:SerializedName("promotion_list")
+    @field:SerializedName("offers")
     val offersProductList: List<PromotionListItem?>? = null
 ) : Parcelable

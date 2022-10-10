@@ -54,7 +54,7 @@ class OffersListViewModel @Inject constructor(
                 val languageCode = getNavigator()?.getLanguageCode()
 
                 offerListRequestModel.limit = 10
-                offerListRequestModel.requested_source = "b2c"
+                offerListRequestModel.requested_source = "app"
                 offerListRequestModel.customer_id = SharedPreferencesHelper.instance?.getString(
                     SharedPreferencesKeys.CUSTOMER_ID
                 )
@@ -174,6 +174,7 @@ class OffersListViewModel @Inject constructor(
         offersJob.cancelIfActive()
         getNavigator()?.showLoaderFooter()
         offersJob = viewModelScope.launch {
+            offerListRequestModel.page = currentPage
 
 
             val offersListResponse =

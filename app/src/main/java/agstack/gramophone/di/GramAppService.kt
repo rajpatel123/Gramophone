@@ -11,6 +11,7 @@ import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatL
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
+import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
 import agstack.gramophone.ui.farm.model.*
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferRequest
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
@@ -134,6 +135,10 @@ interface GramAppService {
 
     @POST("api/v5/product/get-promotion")
     suspend fun getOffersOnProductData(@Body productData: ProductData): Response<OffersProductResponseData>
+
+
+    @POST("api/v5/product/check-promotion-applicable")
+    suspend fun checkPromotionApplicable(@Body verifyPromotionRequestModel: VerifyPromotionRequestModel): Response<CheckPromotionResponseModel>
 
 
     @POST("api/v5/cart/add-to-cart")

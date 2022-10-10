@@ -15,6 +15,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CallSuper
 import androidx.core.app.ActivityCompat
@@ -146,7 +147,7 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     }
 
     override fun showToast(message: String?) {
-
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }
 
     override fun onError(message: String?) {
@@ -211,6 +212,10 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
                 return false
             }
         }
+    }
+
+    override fun finishActivity() {
+        activity?.finish()
     }
 
 }

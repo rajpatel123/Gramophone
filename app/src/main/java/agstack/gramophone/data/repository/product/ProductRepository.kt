@@ -4,6 +4,7 @@ package agstack.gramophone.data.repository.product
 import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
+import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
 import agstack.gramophone.ui.farm.model.*
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferRequest
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
@@ -84,4 +85,6 @@ interface ProductRepository {
     suspend fun addFarm(addFarmRequest: AddFarmRequest): Response<AddFarmResponse>
 
     suspend fun getFarmUnits(): Response<FarmUnitResponse>
+
+    suspend fun checkPromotionOnProduct(verifyPromotionRequestModel: VerifyPromotionRequestModel): Response<CheckPromotionResponseModel>
 }
