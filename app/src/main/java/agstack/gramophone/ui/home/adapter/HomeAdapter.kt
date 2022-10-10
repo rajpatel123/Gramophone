@@ -5,6 +5,12 @@ import agstack.gramophone.R
 import agstack.gramophone.databinding.*
 import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.cart.view.CartActivity
+import agstack.gramophone.ui.farm.adapter.FarmAdapter
+import agstack.gramophone.ui.farm.model.FarmResponse
+import agstack.gramophone.ui.farm.view.AddFarmActivity
+import agstack.gramophone.ui.farm.view.SelectCropActivity
+import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
+import agstack.gramophone.ui.farm.view.WhyAddFarmActivity
 import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
@@ -21,6 +27,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
+
 class HomeAdapter(
     private val homeScreenSequenceList: List<String>,
     private var allBannerResponse: BannerResponse?,
@@ -30,6 +37,7 @@ class HomeAdapter(
     private var storeResponse: StoreResponse?,
     private var companyResponse: CompanyResponse?,
     private var cartList: List<CartItem>?,
+    private var farmResponse: FarmResponse?,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onItemClicked: ((id: String) -> Unit)? = null
@@ -38,7 +46,7 @@ class HomeAdapter(
         allBannerResponse: BannerResponse?, categoryResponse: CategoryResponse?,
         allProductsResponse: AllProductsResponse?, cropResponse: CropResponse?,
         storeResponse: StoreResponse?, companyResponse: CompanyResponse?,
-        cartList: List<CartItem>?,
+        cartList: List<CartItem>?,farmResponse: FarmResponse?
     ) {
         this.allBannerResponse = allBannerResponse
         this.categoryResponse = categoryResponse
@@ -47,6 +55,7 @@ class HomeAdapter(
         this.storeResponse = storeResponse
         this.companyResponse = companyResponse
         this.cartList = cartList
+        this.farmResponse = farmResponse
         notifyDataSetChanged()
     }
 
@@ -91,6 +100,10 @@ class HomeAdapter(
             }
             Constants.HOME_CART_VIEW_TYPE -> {
                 return CartViewHolder(ItemHomeCartBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
+            }
+            Constants.HOME_FARMS_VIEW_TYPE -> {
+                return FarmsViewHolder(ItemHomeFarmsViewBinding.inflate(LayoutInflater.from(
                     viewGroup.context)))
             }
         }
@@ -334,6 +347,87 @@ class HomeAdapter(
                     holder.binding.itemView.visibility = View.GONE
                 }
             }
+            is FarmsViewHolder -> {
+                holder.binding.itemView.visibility = View.VISIBLE
+
+                if (farmResponse?.gp_api_response_data?.customer_farm != null &&
+                    farmResponse?.gp_api_response_data?.customer_farm?.data?.isNotEmpty() == true
+                ) {
+                    val customerFarmList = farmResponse?.gp_api_response_data?.customer_farm?.data
+                    holder.binding.rvFarms.adapter = FarmAdapter(
+                        customerFarmList,
+                        {
+
+                        },
+                        {
+                            val selectedCrop = CropData(
+                                cropId = it.crop_id,
+                                cropName = it.crop_name,
+                                cropImage = it.crop_image,
+                            )
+                            openActivity(
+                                holder.binding.itemView.context,
+                                AddFarmActivity::class.java,
+                                Bundle().apply {
+                                    putParcelable("selectedCrop", selectedCrop)
+                                })
+                        },
+                    )
+                    holder.binding.addFarmWrapper.addFarmTitleLayout.setOnClickListener {
+                        openActivity(
+                            holder.binding.itemView.context,
+                            SelectCropActivity::class.java,
+                            null
+                        )
+                    }
+                    holder.binding.addFarmWrapper.txtWhyAddFarm.setOnClickListener {
+                        openActivity(
+                            holder.binding.itemView.context,
+                            WhyAddFarmActivity::class.java,
+                            null
+                        )
+                    }
+
+                } else if (farmResponse?.gp_api_response_data?.model_farm != null &&
+                    farmResponse?.gp_api_response_data?.model_farm?.data?.isNotEmpty() == true
+                ) {
+                    val modelFarmList = farmResponse?.gp_api_response_data?.model_farm?.data
+                    holder.binding.rvFarms.adapter = FarmAdapter(
+                        modelFarmList,
+                        {
+
+                        },
+                        {
+                            openActivity(
+                                holder.binding.itemView.context,
+                                SelectCropActivity::class.java,
+                                null
+                            )
+                        },
+                    )
+
+                    holder.binding.addFarmWrapper.addFarmTitleLayout.setOnClickListener {
+                        openActivity(
+                            holder.binding.itemView.context,
+                            SelectCropActivity::class.java,
+                            null
+                        )
+                    }
+                    holder.binding.addFarmWrapper.txtWhyAddFarm.setOnClickListener {
+                        openActivity(
+                            holder.binding.itemView.context,
+                            WhyAddFarmActivity::class.java,
+                            null
+                        )
+                    }
+                } else {
+                    holder.binding.itemView.visibility = View.GONE
+                }
+
+                holder.binding.viewAllFarms.setOnClickListener {
+                    openActivity(holder.itemView.context, ViewAllFarmsActivity::class.java, null)
+                }
+            }
         }
     }
 
@@ -368,6 +462,9 @@ class HomeAdapter(
             }
             Constants.HOME_CART -> {
                 return Constants.HOME_CART_VIEW_TYPE
+            }
+            Constants.HOME_FARMS -> {
+                return Constants.HOME_FARMS_VIEW_TYPE
             }
         }
         return Constants.HOME_EMPTY_VIEW_TYPE
@@ -404,6 +501,9 @@ class HomeAdapter(
             }
             Constants.HOME_CART -> {
                 return Constants.HOME_CART_VIEW_TYPE.toLong()
+            }
+            Constants.HOME_FARMS -> {
+                return Constants.HOME_FARMS_VIEW_TYPE.toLong()
             }
         }
         return Constants.HOME_EMPTY_VIEW_TYPE.toLong()
@@ -452,5 +552,8 @@ class HomeAdapter(
         RecyclerView.ViewHolder(binding.root)
 
     inner class CartViewHolder(var binding: ItemHomeCartBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    inner class FarmsViewHolder(var binding: ItemHomeFarmsViewBinding) :
         RecyclerView.ViewHolder(binding.root)
 }

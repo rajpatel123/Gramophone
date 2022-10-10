@@ -5,6 +5,8 @@ import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
+import agstack.gramophone.ui.farm.model.*
+import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferRequest
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
@@ -73,6 +75,16 @@ interface ProductRepository {
     suspend fun getAllProducts(filterRequest: FilterRequest): Response<AllProductsResponse>
 
     suspend fun getFeaturedProducts(pageLimitRequest: PageLimitRequest): Response<AllProductsResponse>
+
+    suspend fun getApplicableOffersOnProduct(applicableOfferRequest: ApplicableOfferRequest): Response<ApplicableOfferResponse>
+
+    suspend fun getStoresFilterData(storeId: String): Response<SubCategoryResponse>
+
+    suspend fun getFarmsData(type: String, farmRequest: FarmRequest): Response<FarmResponse>
+
+    suspend fun addFarm(addFarmRequest: AddFarmRequest): Response<AddFarmResponse>
+
+    suspend fun getFarmUnits(): Response<FarmUnitResponse>
 
     suspend fun checkPromotionOnProduct(verifyPromotionRequestModel: VerifyPromotionRequestModel): Response<CheckPromotionResponseModel>
 

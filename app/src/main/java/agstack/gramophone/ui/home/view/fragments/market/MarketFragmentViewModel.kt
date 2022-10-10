@@ -4,6 +4,8 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.cart.model.CartItem
+import agstack.gramophone.ui.farm.model.FarmRequest
+import agstack.gramophone.ui.farm.model.FarmResponse
 import agstack.gramophone.ui.home.adapter.HomeAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.order.model.PageLimitRequest
@@ -29,6 +31,7 @@ class MarketFragmentViewModel
     var allBannerResponse: BannerResponse? = null
     var categoryResponse: CategoryResponse? = null
     var cartList: List<CartItem>? = arrayListOf()
+    var farmResponse: FarmResponse? = null
 
     fun getHomeData() {
         allProductsResponse = null
@@ -38,15 +41,20 @@ class MarketFragmentViewModel
         allBannerResponse = null
         categoryResponse = null
         cartList = null
+        farmResponse = null
 
         viewModelScope.launch {
             try {
                 val response = productRepository.getHomeData()
                 if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
-                    getNavigator()?.setHomeAdapter(HomeAdapter(response.body()?.gp_api_response_data?.home_screen_sequence!!,
+                    val list = response.body()?.gp_api_response_data?.home_screen_sequence!!
+                    if(list is ArrayList ){
+                        //list.add(2, Constants.HOME_FARMS)
+                    }
+                    getNavigator()?.setHomeAdapter(HomeAdapter(list,
                         allBannerResponse, categoryResponse, allProductsResponse,
                         cropResponse,
-                        storeResponse, companyResponse, cartList)) {
+                        storeResponse, companyResponse, cartList, farmResponse)) {
                     }
                 }
             } catch (ex: Exception) {
@@ -215,10 +223,29 @@ class MarketFragmentViewModel
         }
     }
 
+    fun getFarms() {
+        viewModelScope.launch {
+            try {
+            val response = productRepository.getFarmsData("active", FarmRequest("3","1"))
+            if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                && response.body()?.gp_api_response_data != null
+            ) {
+                farmResponse = response.body()
+            }
+            notifyAdapter()
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
+
     private fun notifyAdapter() {
         getNavigator()?.notifyHomeAdapter(
             allBannerResponse, categoryResponse, allProductsResponse,
             cropResponse,
-            storeResponse, companyResponse, cartList)
+            storeResponse, companyResponse, cartList, farmResponse)
     }
 }

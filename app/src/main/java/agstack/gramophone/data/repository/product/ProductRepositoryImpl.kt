@@ -5,6 +5,7 @@ import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.di.GramAppService
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
+import agstack.gramophone.ui.farm.model.*
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
@@ -237,6 +238,27 @@ class ProductRepositoryImpl @Inject constructor(
             subCategoryResponse
         }
 
+    override suspend fun getFarmsData(type : String, farmRequest: FarmRequest): Response<FarmResponse> = withContext(
+        Dispatchers.IO
+    ) {
+        val response = gramoAppService.getFarmsData(type, farmRequest)
+        response
+    }
+
+    override suspend fun addFarm(addFarmRequest: AddFarmRequest): Response<AddFarmResponse> = withContext(
+        Dispatchers.IO
+    ) {
+        val response = gramoAppService.addFarm(addFarmRequest)
+        response
+    }
+
+    override suspend fun getFarmUnits(): Response<FarmUnitResponse> = withContext(
+        Dispatchers.IO
+    ) {
+        val response = gramoAppService.getFarmUnits()
+        response
+    }
+
     override suspend fun getOffersOnProduct(productData: ProductData): Response<ApplicableOfferResponse> =
         withContext(
             Dispatchers.IO
@@ -244,4 +266,11 @@ class ProductRepositoryImpl @Inject constructor(
             val response = gramoAppService.getOffersOnProduct(productData)
             response
         }
+    override suspend fun checkPromotionOnProduct(verifyPromotionRequestModel: VerifyPromotionRequestModel): Response<CheckPromotionResponseModel> = withContext(
+        Dispatchers.IO
+    ) {
+        val response = gramoAppService.checkPromotionApplicable(verifyPromotionRequestModel)
+        response
+    }
+
 }
