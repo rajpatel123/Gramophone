@@ -176,5 +176,10 @@ object Utility {
         return messgae
     }
 
-
+    fun isValidFloat(float: Float) : Boolean {
+        if (float.toString().endsWith(".0") || float.toString().contains(".00")) {
+            return false
+        }
+        return true
+    }
 }

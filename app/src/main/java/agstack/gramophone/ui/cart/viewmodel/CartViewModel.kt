@@ -8,7 +8,9 @@ import agstack.gramophone.ui.cart.adapter.CartAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
+import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.Utility
 import android.os.Bundle
 import android.widget.CompoundButton
 import androidx.lifecycle.MutableLiveData
@@ -17,6 +19,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 
 @HiltViewModel
@@ -25,18 +28,20 @@ class CartViewModel @Inject constructor(
 ) : BaseViewModel<CartNavigator>() {
 
     var itemCount = MutableLiveData<Int>()
-    var discount = MutableLiveData<Int>()
+    var discount = MutableLiveData<Float>()
     var gramCash = MutableLiveData<Int>()
-    var totalAmount = MutableLiveData<Int>()
+    var subTotal = MutableLiveData<String>()
+    var totalAmount = MutableLiveData<Float>()
     var progress = MutableLiveData<Boolean>()
     var showGramCashCoinView = MutableLiveData<Boolean>()
     var showCartView = MutableLiveData<Boolean>()
 
     init {
         itemCount.value = 0
-        discount.value = 0
+        discount.value = 0f
         gramCash.value = 0
-        totalAmount.value = 0
+        totalAmount.value = 0f
+        subTotal.value = "0"
         progress.value = false
         showGramCashCoinView.value = true
         showCartView.value = false
@@ -101,6 +106,7 @@ class CartViewModel @Inject constructor(
                         itemCount.value = response.body()?.gp_api_response_data?.cart_items?.size
                         discount.value = response.body()?.gp_api_response_data?.total_discount
                         gramCash.value = response.body()?.gp_api_response_data?.gramcash_coins
+                        subTotal.value = response.body()?.gp_api_response_data?.sub_total
 
                         val total = response.body()?.gp_api_response_data?.total
                         val gramCashCoin = response.body()?.gp_api_response_data?.gramcash_coins
@@ -117,17 +123,17 @@ class CartViewModel @Inject constructor(
                                 //on cartItem delete clicked
                                 removeCartItem(it.toInt())
                             },
-                            {
-                                //on offer detail clicked
-                                val promotionListItem = PromotionListItem()
-                                promotionListItem.title = it.offer_name
-                                promotionListItem.applicable_on_sku = it.valid_on_sku
-                                promotionListItem.valid_till = it.valid_till
-                               // promotionListItem.product_name = it.product_name
+                            { offerApplied, productName, productSku ->
                                 getNavigator()?.openActivity(
                                     OfferDetailActivity::class.java,
                                     Bundle().apply {
-                                        putParcelable(Constants.OFFERSDATA, promotionListItem)
+                                        val offersDataItem = DataItem()
+                                        offersDataItem.endDate = offerApplied.valid_till
+                                        offersDataItem.productName = productName
+                                        offersDataItem.productsku = productSku
+                                        offersDataItem.image = offerApplied.image
+                                        offersDataItem.termsConditions = offerApplied.t_c
+                                        putParcelable(Constants.OFFERSDATA, offersDataItem)
 
                                     })
                             }, {

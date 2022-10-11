@@ -13,7 +13,7 @@ interface CartNavigator : BaseNavigator {
         cartAdapter: CartAdapter,
         onItemDetailClicked: (productId: String) -> Unit,
         onCartItemDeleteClicked: (productId: String) -> Unit,
-        onOfferClicked: (offerAppliedList: OfferApplied) -> Unit,
+        onOfferClicked: (offerAppliedList: OfferApplied, productName: String, productSku: String) -> Unit,
         onQuantityClicked: (cartItem: CartItem) -> Unit,
     )
 

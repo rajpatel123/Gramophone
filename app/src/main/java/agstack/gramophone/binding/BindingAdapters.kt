@@ -26,10 +26,17 @@ import kotlin.math.roundToInt
 
 @BindingAdapter("product_image")
 fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
-    if (!imageUrl.isNullOrEmpty()) {
+    if (imageUrl.isNullOrEmpty()) {
+        Glide.with(view.context)
+            .load(R.drawable.ic_gramophone_leaf)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(view)
+    } else {
         Glide.with(view.context)
             .load(imageUrl)
             .transition(DrawableTransitionOptions.withCrossFade())
+            .placeholder(R.drawable.ic_gramophone_leaf)
+            .error(R.drawable.ic_gramophone_leaf)
             .into(view)
     }
 }
@@ -281,28 +288,18 @@ fun setQuantity(textView: TextView, quantity: String) {
     }
 }
 
-@BindingAdapter("reformatPrice")
-fun setReformattedPrice(textView: TextView, price: String) {
-    if (price.isNullOrEmpty()) {
-        textView.text = "₹"
-    } else {
-        val ac = price.replace(".00", "")
-        textView.text = "₹ " + ac
-    }
-}
-
 @BindingAdapter("reformatFloatPriceToInt")
 fun setReformattedIntPrice(textView: TextView, price: Float) {
     try {
         if (price.isNaN() || price.isInfinite()) {
-            textView.text = "₹ 0"
+            textView.text = textView.context.getString(R.string.rupee_0)
         } else {
             if (price.toString().contains(".0") || price.toString().contains(".00"))
-                textView.text = "₹ " + price.roundToInt().toString()
-            else textView.text = "₹ " + price.toString()
+                textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + price.roundToInt().toString()
+            else textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + price.toString()
         }
     } catch (e: Exception) {
-        textView.text = "₹ 0"
+        textView.text = textView.context.getString(R.string.rupee_0)
     }
 }
 
@@ -344,8 +341,8 @@ fun mrpPriceVisibility(
         } else {
             textView.visibility = View.VISIBLE
             if (mrp_price.toString().contains(".0") || mrp_price.toString().contains(".00"))
-                textView.text = "₹ " + mrp_price.roundToInt().toString()
-            else textView.text = "₹ " + mrp_price.toString()
+                textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + mrp_price.roundToInt().toString()
+            else textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + mrp_price.toString()
         }
     } catch (e: Exception) {
         textView.visibility = View.GONE
@@ -361,13 +358,13 @@ fun setPriceAndVisibility(
             textView.visibility = View.INVISIBLE
         } else if (!sales_price.isNullOrEmpty() && sales_price.toFloat() > 0) {
             if (sales_price.toString().endsWith(".0") || sales_price.toString().contains(".00"))
-                textView.text = "₹ " + sales_price.toFloat().roundToInt().toString()
-            else textView.text = "₹ " + sales_price.toString()
+                textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + sales_price.toFloat().roundToInt().toString()
+            else textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + sales_price.toString()
             textView.visibility = View.VISIBLE
         } else {
             if (mrp_price.toString().endsWith(".0") || mrp_price.toString().contains(".00"))
-                textView.text = "₹ " + mrp_price.roundToInt().toString()
-            else textView.text = "₹ " + mrp_price.toString()
+                textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + mrp_price.roundToInt().toString()
+            else textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + mrp_price.toString()
             textView.visibility = View.VISIBLE
         }
     } catch (e: Exception) {

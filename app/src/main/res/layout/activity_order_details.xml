@@ -80,7 +80,7 @@
                     android:layout_marginEnd="@dimen/_16sdp"
                     android:fontFamily="@font/manrope_bold"
                     android:lineSpacingExtra="-1sp"
-                    android:text="@{@string/rupee_symbol.concat(String.valueOf(viewModel.totalPrice))}"
+                    android:text="@{@string/rupee_symbol_with_space.concat(String.valueOf(viewModel.totalPrice))}"
                     android:textColor="@color/blakish"
                     android:textSize="20sp"
                     tools:text="₹4320" />
@@ -399,10 +399,10 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="@{@string/rupee_symbol.concat(String.valueOf(viewModel.subTotalPrice))}"
+                    android:text="@{@string/rupee_symbol_with_space.concat(String.valueOf(viewModel.subTotalPrice))}"
                     android:textColor="@color/blakish"
                     android:textSize="16sp"
-                    tools:text="@string/rupee_symbol" />
+                    tools:text="@string/rupee_symbol_with_space" />
 
                 <TextView
                     android:id="@+id/tvDiscountTitle"
@@ -573,7 +573,7 @@
                         android:layout_centerVertical="true"
                         android:fontFamily="@font/manrope_bold"
                         android:lineSpacingExtra="1sp"
-                        android:text="@{@string/rupee_symbol.concat(String.valueOf(viewModel.totalPrice))}"
+                        android:text="@{@string/rupee_symbol_with_space.concat(String.valueOf(viewModel.totalPrice))}"
                         android:textColor="@color/blakish"
                         android:textSize="20sp"
                         tools:text="₹ 100" />

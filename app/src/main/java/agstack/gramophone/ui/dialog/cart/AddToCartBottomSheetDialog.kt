@@ -109,14 +109,22 @@ class AddToCartBottomSheetDialog(
         }
         binding?.ivAdd?.setOnClickListener {
             quantity += 1
-            binding?.tvQTY?.text = quantity.toString()
+            setQuantity()
             calculateDiscountAndPromotion(selectedSkuListItem.get()!!, selectedOfferItem)
         }
         binding?.ivSubtract?.setOnClickListener {
             if (quantity > 1)
                 quantity -= 1
-            binding?.tvQTY?.text = quantity.toString()
+            setQuantity()
             calculateDiscountAndPromotion(selectedSkuListItem.get()!!, selectedOfferItem)
+        }
+    }
+
+    private fun setQuantity() {
+        if (quantity < 10) {
+            binding?.tvQTY?.text = "0".plus(quantity)
+        } else {
+            binding?.tvQTY?.text = quantity.toString()
         }
     }
 
