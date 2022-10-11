@@ -69,11 +69,12 @@
                                 <TextView
                                     android:id="@+id/tv_title"
                                     style="@style/TextSize16Sp"
+                                    android:minLines="2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/manrope_bold"
                                     android:hint="50% Off on Pesticide"
-                                    android:text="@{viewModel.MOffersItem.productName}" />
+                                    android:text="@{viewModel.MOffersItem.name}" />
 
                                 <TextView
                                     android:id="@+id/tv_valid_till"

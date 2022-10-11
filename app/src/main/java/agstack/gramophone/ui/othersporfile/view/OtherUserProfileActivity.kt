@@ -170,6 +170,9 @@ class OtherUserProfileActivity :
         Glide.with(this).load(profileImage).into(cv_profile_pic)
     }
 
+    override fun stopRefresh() {
+    }
+
     override fun onImageSet(imageUrl: String, iv: ImageView) {
         Glide.with(this).load(imageUrl).into(iv)
     }

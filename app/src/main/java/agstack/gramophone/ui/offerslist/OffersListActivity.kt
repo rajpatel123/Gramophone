@@ -7,8 +7,6 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.OffersListActivityBinding
 import agstack.gramophone.ui.offerslist.adapter.OffersListAdapter
 import agstack.gramophone.ui.offerslist.model.DataItem
-import agstack.gramophone.ui.referandearn.transaction.GramCashTransactionListAdapter
-import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.EndlessRecyclerScrollListener
 import agstack.gramophone.utils.LocaleManagerClass
 import android.os.Bundle

@@ -94,7 +94,7 @@ class UserProfileViewModel @Inject constructor(
                 isTraderSelected.set(userProfileResponseData?.is_trader)
 
 
-                getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)
+                //getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)
             } else {
                 progressLoader.set(false)
                 getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)
