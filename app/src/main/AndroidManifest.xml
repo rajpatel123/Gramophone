@@ -193,6 +193,9 @@
         <activity
             android:name=".ui.farm.view.ViewAllFarmsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.farm.view.CropGroupExplorerActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".pushnotification.MyFirebaseMessagingService" />
         <service

@@ -62,7 +62,7 @@ class AddFarmActivity :
     }
 
     override fun onFarmAdded() {
-        showToast("Farm Added")
+        showToast("you successfully added the farm")
         finish()
     }
 

@@ -62,9 +62,9 @@
                             android:isIndicator="true"
                             android:numStars="5"
                             android:stepSize="0.1"
-                            android:layout_marginLeft="@dimen/_minus15sdp"
-                            android:scaleX=".8"
-                            android:scaleY=".8"
+                            android:layout_marginLeft="@dimen/_minus25sdp"
+                            android:scaleX=".6"
+                            android:scaleY=".6"
                             android:theme="@style/RatingBar"
                             android:visibility="@{viewModel.productReviewsData.rating.totalRating>0?View.VISIBLE : View.INVISIBLE}" />
 
@@ -365,6 +365,16 @@
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_available_offers" />
+
+
+                    <TextView
+                        android:visibility="gone"
+                        android:gravity="center_horizontal"
+                        android:text="@string/no_offers_found"
+                        android:layout_below="@id/iv_availableoffers"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
 
 
                 </RelativeLayout>
@@ -698,51 +708,112 @@
         <LinearLayout
             android:id="@+id/layout_bottom"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_48sdp"
             android:background="@color/white"
             android:orientation="horizontal"
             android:weightSum="2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nestedscroll">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <LinearLayout
                 android:id="@+id/btn_expertAdvice"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_48sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:layout_marginBottom="@dimen/_4sdp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corner"
                 android:backgroundTint="@color/mute_grey"
-                android:drawableStart="@drawable/ic_expert_grey"
-                android:drawablePadding="@dimen/_minus25sdp"
                 android:onClick="@{()->viewModel.onExpertAdviceClicked()}"
-                android:paddingStart="@dimen/_5sdp"
-                android:text="@string/expert_advice"
-                android:textAllCaps="false"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/_14ssp" />
+                android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    app:srcCompat="@drawable/ic_expert_grey" />
+
+                <TextView
+                    android:id="@+id/tv_expertAdvice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/expert_advice"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_14ssp" />
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:id="@+id/btn_addtocart"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_48sdp"
-                android:layout_marginLeft="@dimen/_6sdp"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_4sdp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_weight="1"
                 android:background="@{ viewModel.addToCartEnabled ? @drawable/active_button_background : @drawable/deactive_button_background}"
-                android:drawableStart="@drawable/ic_cart_white"
-                android:drawablePadding="@dimen/_minus30sdp"
-                android:enabled="@{viewModel.addToCartEnabled}"
+                android:clickable="@{viewModel.addToCartEnabled}"
                 android:onClick="@{()->viewModel.onAddToCartClicked()}"
-                android:paddingStart="@dimen/_5sdp"
-                android:text="@string/add_to_cart"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14ssp" />
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    app:srcCompat="@drawable/ic_cart_white" />
+
+                <TextView
+                    android:id="@+id/tv_addtocart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/add_to_cart"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14ssp" />
+            </LinearLayout>
+
+            <!--
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_expertAdvice"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_48sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:layout_marginBottom="@dimen/_4sdp"
+                            android:layout_weight="1"
+                            android:background="@drawable/rounded_corner"
+                            android:backgroundTint="@color/mute_grey"
+                            android:drawableStart="@drawable/ic_expert_grey"
+                            android:drawablePadding="@dimen/_minus25sdp"
+                            android:onClick="@{()->viewModel.onExpertAdviceClicked()}"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:text="@string/expert_advice"
+                            android:textAllCaps="false"
+                            android:textColor="@color/gray"
+                            android:textSize="@dimen/_14ssp" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_addtocart"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_48sdp"
+                            android:layout_marginLeft="@dimen/_6sdp"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_4sdp"
+                            android:layout_weight="1"
+                            android:background="@{ viewModel.addToCartEnabled ? @drawable/active_button_background : @drawable/deactive_button_background}"
+                            android:drawableStart="@drawable/ic_cart_white"
+                            android:drawablePadding="@dimen/_minus30sdp"
+                            android:enabled="@{viewModel.addToCartEnabled}"
+                            android:onClick="@{()->viewModel.onAddToCartClicked()}"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:text="@string/add_to_cart"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_14ssp" />-->
 
 
         </LinearLayout>
