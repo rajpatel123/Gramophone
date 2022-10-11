@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.farm.viewmodel.CropGroupExplorerViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:id="@+id/itemView"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/myToolbar"
+                    layout="@layout/layout_toolbar" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCrops"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:orientation="vertical"
+                    tools:itemCount="1"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/card_farms" />
+
+            </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="@{viewModel.progress == true ? View.VISIBLE : View.GONE, default = gone}"
+            android:translationZ="@dimen/_4sdp"
+            tools:visibility="visible" />
+
+    </RelativeLayout>
+
+</layout>
