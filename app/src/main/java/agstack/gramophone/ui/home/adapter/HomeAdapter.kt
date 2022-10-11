@@ -362,9 +362,9 @@ class HomeAdapter(
                         },
                         {
                             val selectedCrop = CropData(
-                                cropId = it.crop_id,
-                                cropName = it.crop_name,
-                                cropImage = it.crop_image,
+                                cropId = it[0].crop_id,
+                                cropName = it[0].crop_name,
+                                cropImage = it[0].crop_image,
                             )
                             openActivity(
                                 holder.binding.itemView.context,
