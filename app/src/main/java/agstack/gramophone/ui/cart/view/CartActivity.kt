@@ -19,6 +19,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
+import com.amnix.xtension.extensions.setOnSwipeListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_cart.*
 
@@ -40,6 +41,11 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
         setUpToolBar(true, getString(R.string.cart), R.drawable.ic_arrow_left)
         viewDataBinding.llPriceBreakUp.setOnClickListener {
             viewDataBinding.nestedScroll.fullScroll(View.FOCUS_DOWN)
+        }
+        viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
+        viewDataBinding.swipeRefresh.setOnRefreshListener {
+            cartViewModel.getCartData()
+            viewDataBinding.swipeRefresh.isRefreshing = false
         }
     }
 

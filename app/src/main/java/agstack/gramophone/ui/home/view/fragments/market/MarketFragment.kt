@@ -96,7 +96,7 @@ class MarketFragment :
         marketFragmentViewModel.getStores()
         marketFragmentViewModel.getCompanies()
         marketFragmentViewModel.getCartProducts()
-        marketFragmentViewModel.getFarms()
+   //     marketFragmentViewModel.getFarms()
     }
 
     private fun setUpUI() {

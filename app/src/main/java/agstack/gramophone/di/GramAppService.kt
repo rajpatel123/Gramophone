@@ -291,11 +291,6 @@ interface GramAppService {
     @GET("api/v5/farm/farm-unit")
     suspend fun getFarmUnits(): Response<FarmUnitResponse>
 
-    @POST("api/v5/product/offer-applicable-on-products")
-    suspend fun getApplicableOffersOnProduct(
-        @Body applicableOfferRequest: ApplicableOfferRequest,
-    ): Response<ApplicableOfferResponse>
-
     @POST("api/v5/search/mention-autocomplete")
     suspend fun getMentionTags(
         @Body mentionRequestModel: MentionRequestModel,
