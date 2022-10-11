@@ -3,9 +3,7 @@ package agstack.gramophone.ui.weather
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.weather.WeatherRepository
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
-import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
-import agstack.gramophone.ui.weather.model.GpApiWeatherResponseData
+import agstack.gramophone.di.GPSTracker
 import agstack.gramophone.ui.weather.model.WeatherRequest
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Utility
@@ -13,9 +11,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
-import com.bumptech.glide.util.Util
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 
@@ -35,6 +33,8 @@ class WeatherViewModel @Inject constructor(
     var weatherCondition = MutableLiveData<String>()
     var perceptionIntensity = MutableLiveData<String>()
     var perceptionType = MutableLiveData<String>()
+    var latitude: String? = null
+    var longitude: String? = null
 
     init {
         progress.value = false
@@ -51,7 +51,7 @@ class WeatherViewModel @Inject constructor(
     }
 
     fun getWeatherDetail() {
-        val weatherRequest = WeatherRequest(null, null, "28.7041", "77.1025")
+        val weatherRequest = WeatherRequest(null, null, latitude, longitude)
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -92,7 +92,7 @@ class WeatherViewModel @Inject constructor(
     }
 
     fun getWeatherDetailHourly() {
-        val weatherRequest = WeatherRequest("2022-10-10", null, "28.7041", "77.1025")
+        val weatherRequest = WeatherRequest(Utility.getCurrentDate(), null, latitude, longitude)
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -117,7 +117,7 @@ class WeatherViewModel @Inject constructor(
     }
 
     fun getWeatherDetailDayWise() {
-        val weatherRequest = WeatherRequest(null, null, "28.7041", "77.1025")
+        val weatherRequest = WeatherRequest(null, null, latitude, longitude)
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -139,6 +139,26 @@ class WeatherViewModel @Inject constructor(
             } catch (e: Exception) {
                 progress.value = false
             }
+        }
+    }
+
+    fun getLatitudeLongitude(gpsTracker: GPSTracker?) {
+        try {
+            if (gpsTracker != null && gpsTracker.canGetLocation()) {
+                latitude = gpsTracker.getLatitude().toString()
+                longitude = gpsTracker.getLongitude().toString()
+
+                getWeatherDetail()
+                getWeatherDetailHourly()
+                getWeatherDetailDayWise()
+            } else {
+                // Can't get location.
+                // GPS or network is not enabled.
+                // Ask user to enable GPS/network in settings.
+                gpsTracker!!.showSettingsAlert()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }
