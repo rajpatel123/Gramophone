@@ -3,20 +3,14 @@ package agstack.gramophone.ui.offerslist
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.promotions.PromotionsRepository
-import agstack.gramophone.data.repository.settings.SettingsRepository
-import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
-
 import agstack.gramophone.ui.offerslist.adapter.OffersListAdapter
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.ui.offerslist.model.OfferListRequestModel
-import agstack.gramophone.ui.referandearn.transaction.TransactionRequestModel
-import agstack.gramophone.ui.referandearn.transaction.model.GramcashTxnItem
-import agstack.gramophone.ui.userprofile.model.Data
-import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -26,7 +20,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
-import android.os.Bundle
 
 
 @HiltViewModel
