@@ -1,93 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <import type="android.text.TextUtils" />
 
         <import type="android.view.View" />
 
         <variable
             name="viewModel"
-            type="agstack.gramophone.ui.home.product.activity.ProductDetailsViewModel" />
+            type="agstack.gramophone.ui.unitconverter.UnitConverterViewModel" />
     </data>
 
-
-    <LinearLayout
-        android:id="@+id/layout_bottom"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_48sdp"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nestedscroll">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.unitconverter.UnitConverterActivity">
 
+        <include
+            android:id="@+id/myToolbar"
+            layout="@layout/layout_toolbar" />
 
         <LinearLayout
-            android:id="@+id/btn_expertAdvice"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_corner"
-            android:backgroundTint="@color/mute_grey"
-            android:onClick="@{()->viewModel.onExpertAdviceClicked()}"
-            android:orientation="horizontal">
+            android:id="@+id/llarea"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:background="@color/blue_area"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/myToolbar"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="0dp">
+
+            <Spinner
+                android:visibility="gone"
+                android:background="@drawable/rounded_corner_with_grey_color"
+                android:id="@+id/spinnerArea"
+                android:clickable="false"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_margin="@dimen/_24sdp"
+                android:entries="@array/units_kind_array"
+                android:textColor="@android:color/white"
+                app:backgroundTint="@color/white" />
 
             <ImageView
+                android:layout_margin="@dimen/_24sdp"
+                android:src="@drawable/ic_area"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                app:srcCompat="@drawable/ic_expert_grey" />
+                android:layout_height="wrap_content"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/expert_advice"
-                android:textAllCaps="false"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/_14ssp" />
+
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.43" />
+
+        <LinearLayout
+            android:id="@+id/ll_unit_converter"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginRight="@dimen/_30sdp"
+            android:background="@drawable/rounded_corner_with_grey_color"
+            android:orientation="vertical"
+            android:weightSum="2"
+            app:layout_constraintBottom_toBottomOf="@id/guideline"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline"
+            tools:layout_editor_absoluteX="49dp"
+            tools:layout_editor_absoluteY="210dp">
+
+            <LinearLayout
+                android:id="@+id/ll_top_unit"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Spinner
+                    android:id="@+id/spinnerUnit1"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/units_array"
+                    android:gravity="center_vertical"
+                    android:onItemSelected="@{(parent,view,pos,id)->viewModel.onSelectSpinner1Item(parent,view,pos,id)}"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_minus10sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/editTextUnit1"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/transparent_background"
+                    android:ems="3"
+                    android:hint="0.00"
+                    android:inputType="numberDecimal"
+                    android:maxLength="15"
+                    android:textSize="@dimen/_40ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/spinnerUnit1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </EditText>
+
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_2sdp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{()->viewModel.onSwitchClick()}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_switch" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_bottom_unit"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Spinner
+                    android:layout_weight="1"
+                    android:spinnerMode="dropdown"
+                    android:id="@+id/spinnerUnit2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/units_array"
+                    android:gravity="center_vertical"
+                    android:onItemSelected="@{(parent,view,pos,id)->viewModel.onSelectSpinner2Item(parent,view,pos,id)}"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_minus10sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/editTextUnit2"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/transparent_background"
+                    android:ems="3"
+                    android:hint="0.00"
+                    android:inputType="numberDecimal"
+                    android:maxLength="15"
+                    android:textSize="@dimen/_40ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/spinnerUnit2"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </EditText>
+
+
+            </LinearLayout>
+            >
+
+
         </LinearLayout>
 
 
-        <LinearLayout
-            android:id="@+id/btn_addtocart"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_weight="1"
-            android:background="@{ viewModel.addToCartEnabled ? @drawable/active_button_background : @drawable/deactive_button_background}"
-            android:clickable="@{viewModel.addToCartEnabled}"
-            android:onClick="@{()->viewModel.onAddToCartClicked()}"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                app:srcCompat="@drawable/ic_cart_white" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/add_to_cart"
-                android:textAllCaps="false"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/_14ssp" />
-        </LinearLayout>
-
-
-
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

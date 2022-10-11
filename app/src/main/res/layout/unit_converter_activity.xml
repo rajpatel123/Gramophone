@@ -26,7 +26,7 @@
         <LinearLayout
             android:id="@+id/llarea"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_200sdp"
+            android:layout_height="@dimen/_195sdp"
             android:background="@color/blue_area"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
@@ -35,7 +35,9 @@
             tools:layout_editor_absoluteX="0dp">
 
             <Spinner
+                android:visibility="gone"
                 android:id="@+id/spinnerArea"
+                android:clickable="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_24sdp"
@@ -43,14 +45,13 @@
                 android:textColor="@android:color/white"
                 app:backgroundTint="@color/white" />
 
-           <!-- <ImageView
+            <ImageView
+                android:layout_margin="@dimen/_12sdp"
+                android:src="@drawable/ic_area"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_9sdp"
-                android:layout_marginLeft="@dimen/_24sdp"
-                android:layout_marginTop="@dimen/_24sdp"
-                android:layout_marginBottom="@dimen/_27sdp"
-                app:srcCompat="@drawable/ic_area_witharrows" />-->
+                android:layout_height="wrap_content"/>
+
+
 
 
         </LinearLayout>
@@ -58,7 +59,7 @@
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="1dp"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.43" />
 
@@ -78,30 +79,33 @@
             tools:layout_editor_absoluteX="49dp"
             tools:layout_editor_absoluteY="210dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:id="@+id/ll_top_unit"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:weightSum="2"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <Spinner
                     android:id="@+id/spinnerUnit1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:entries="@array/units_array"
                     android:gravity="center_vertical"
                     android:onItemSelected="@{(parent,view,pos,id)->viewModel.onSelectSpinner1Item(parent,view,pos,id)}"
-                    android:paddingLeft="@dimen/_30sdp"
-
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_minus10sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
                     android:id="@+id/editTextUnit1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:background="@drawable/transparent_background"
@@ -118,13 +122,15 @@
                 </EditText>
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <View
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:background="@color/viewcolor"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_2sdp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -143,29 +149,34 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:id="@+id/ll_bottom_unit"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:weightSum="2"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <Spinner
+                    android:layout_weight="1"
+                    android:spinnerMode="dropdown"
                     android:id="@+id/spinnerUnit2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:entries="@array/units_array"
                     android:gravity="center_vertical"
                     android:onItemSelected="@{(parent,view,pos,id)->viewModel.onSelectSpinner2Item(parent,view,pos,id)}"
-                    android:paddingLeft="@dimen/_30sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_minus10sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
                     android:id="@+id/editTextUnit2"
-                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:background="@drawable/transparent_background"
@@ -182,7 +193,7 @@
                 </EditText>
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
             >
 
 
