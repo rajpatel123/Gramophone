@@ -184,7 +184,7 @@ class OffersListViewModel @Inject constructor(
                 allOfferslist.addAll(offersListResponse.body()?.gpApiResponseData?.data as ArrayList<DataItem>)
 
                 val lastpage = offersListResponse.body()?.gpApiResponseData?.lastPage
-                if (currentPage == lastpage) {
+                if (currentPage >= lastpage!!) {
                     isLastPage = true
 
                 }
