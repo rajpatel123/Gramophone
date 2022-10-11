@@ -127,6 +127,11 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
             progress.visibility= GONE
 
 
+
+            swipeRefresh.setOnRefreshListener {
+                swipeRefresh.isRefreshing=true
+                communityViewModel.loadData(communityViewModel.sorting.get().toString())
+            }
         }
     }
 
@@ -206,6 +211,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     }
 
     override fun setProfileImage(url:String) {
+    }
+
+    override fun stopRefresh() {
+        swipeRefresh.isRefreshing=false
     }
 
     override fun onImageSet(imageUrl: String, iv: ImageView) {

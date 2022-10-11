@@ -7,6 +7,9 @@ import android.content.Context
 
 object Constants {
 
+    val GET_SELECTED_TAGS: Int= 32
+    val IsUrlForPlayStore: String="play.google.com"
+    val sharedContent: String="sharedContent"
     val DISCOUNT ="discount"
     val FREEBIE ="freebie"
     const val SearchUrl = "app://www.gramophone.in/"
@@ -230,5 +233,15 @@ val SHAREIMAGEURIStRING = "imageuriString"
         const val MAX_NAME_LENGTH = 120
         const val FollowerType = "follower"
         const val FollowingType = "following"
+    }
+
+    object PostType {
+        const val AdvertisedProduct = "FEATURED_PRODUCTS"
+        const val NearByProfile = "NEARBY_PROFILES"
+        const val Post = "POST"
+        const val POLL = "POLL"
+        const val QUIZ = "QUIZ"
+        const val Loader = "LOADER"
+        const val Banner = "Banner"
     }
 }

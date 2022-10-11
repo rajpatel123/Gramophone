@@ -10,6 +10,9 @@ import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
+import agstack.gramophone.ui.createnewpost.view.model.MentionRequestModel
+import agstack.gramophone.ui.createnewpost.view.model.MentionTagResponsemodel
+import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
@@ -57,10 +60,20 @@ interface OnBoardingRepository {
     suspend fun getBanners(): Response<BannerResponse>
 
     suspend fun getProfile(): Response<ProfileResponse>
+
     suspend fun getLocationAddress(lat: String, key: String): Response<GoogleAddressResponseModel>
+
     suspend fun updateProfile(updateProfileModel: UpdateProfileModel):Response<SuccessStatusResponse>
+
     suspend fun sendOTPMobile(sendOtpRequestModel: VerifyOTPRequestModel): Response<SendOtpResponseModel>
+
     suspend fun resendOTPMobile(resendOtpRequestModel: SendOtpRequestModel): Response<SendOtpResponseModel>
+
     suspend fun validateOtpMobile(validateOtpRequestModel: ValidateOtpMobileRequestModel): Response<SuccessStatusResponse>
+
+    suspend fun getMentionTags(mentionRequestModel: MentionRequestModel): Response<MentionTagResponsemodel>
+
+
+    suspend fun getHasTags(mentionRequestModel: MentionRequestModel): Response<HasgTagResponseModel>
 
 }

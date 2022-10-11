@@ -4,10 +4,11 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityCreatePostBinding
+import agstack.gramophone.ui.createnewpost.view.PostDetailsModel
+import agstack.gramophone.ui.createnewpost.view.model.GpApiResponseData
 import agstack.gramophone.ui.createpost.CreatePostNavigator
 import agstack.gramophone.ui.createpost.viewmodel.CreatePostViewModel
 import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
-import agstack.gramophone.ui.tagandmention.ExpandableTextView
 import agstack.gramophone.ui.tagandmention.Tag
 import agstack.gramophone.ui.tagandmention.TagAdapter
 import agstack.gramophone.utils.Constants
@@ -27,8 +28,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -39,8 +38,6 @@ import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.options
 import com.google.zxing.integration.android.IntentIntegrator
-import com.leocardz.link.preview.library.LinkPreviewCallback
-import com.leocardz.link.preview.library.SourceContent
 import com.leocardz.link.preview.library.TextCrawler
 import com.tokenautocomplete.TagTokenizer
 import com.tokenautocomplete.TokenCompleteTextView
@@ -50,8 +47,6 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.net.MalformedURLException
-import java.net.URL
 import java.util.*
 import java.util.regex.Pattern
 
@@ -188,6 +183,9 @@ LanguageBottomSheetFragment.LanguageUpdateListener {
             } else {
             }
         }
+
+        initiateTextWatcher()
+
     }
 
     override fun getLayoutID(): Int = R.layout.activity_create_post
@@ -268,6 +266,15 @@ LanguageBottomSheetFragment.LanguageUpdateListener {
         }
     }
 
+    override fun populateTagSuggestionList(tags: Array<Tag>) {
+        viewDataBinding!!.descriptionEditText?.setAdapter(TagAdapter(this, R.layout.tag_layout, tags))
+
+    }
+
+    override fun populateHasTagList(tags: Array<Tag>) {
+        viewDataBinding!!.descriptionEditText?.setAdapter(TagAdapter(this, R.layout.tag_layout, tags))
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
@@ -281,38 +288,6 @@ LanguageBottomSheetFragment.LanguageUpdateListener {
 
 
     fun initiateTextWatcher() {
-
-
-        //  binding?.descriptionEditText?.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-        if (viewDataBinding!!.descriptionNoTokenEditText?.visibility == View.VISIBLE) {
-            textWatcher = object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                    if (timer != null) timer!!.cancel()
-                }
-
-                override fun afterTextChanged(s: Editable) {
-                    //avoid triggering event when text is too short
-                    timer = Timer()
-                    timer!!.schedule(object : TimerTask() {
-                        override fun run() {
-                            // TODO: do what you need here (refresh list)
-                            // you will probably need to use
-                            // runOnUiThread(Runnable action) for some specific
-                            // actions
-                            Log.i("Create Post", "handle input")
-                            if (gramophoneTvUrl == null) {
-                                var text = s.toString()
-                                text = Html.fromHtml(text).toString()
-                                handleEditTextInput(text)
-                            }
-                            timer = null
-                        }
-                    }, DELAY)
-                }
-            }
-            viewDataBinding!!.descriptionNoTokenEditText?.addTextChangedListener(textWatcher)
-        } else {
             textWatcher = object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -381,7 +356,7 @@ LanguageBottomSheetFragment.LanguageUpdateListener {
             viewDataBinding!!.descriptionEditText?.threshold = 1
             viewDataBinding!!.descriptionEditText?.setTokenListener(this)
             viewDataBinding!!.descriptionEditText?.addTextChangedListener(textWatcher)
-        }
+
     }
 
 
@@ -423,8 +398,18 @@ LanguageBottomSheetFragment.LanguageUpdateListener {
     }
 
 
-    override fun populateTagSuggestionList(tags: Array<Tag>) {
-        viewDataBinding!!.descriptionEditText?.setAdapter(TagAdapter(this, R.layout.tag_layout, tags))
+
+
+    override fun enablePostButton() {
+    }
+
+    override fun disablePostButton() {
+    }
+
+    override fun gotoSocialPage(post: PostDetailsModel) {
+    }
+
+    override fun populatePostDetails(postDetailsModel: PostDetailsModel) {
     }
 
     override fun onTokenAdded(token: Tag?) {

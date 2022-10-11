@@ -77,7 +77,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
         }
 
         if (TextUtils.isEmpty(pinCode.get())) {
-            getNavigator()?.onError(getNavigator()?.getMessage(R.string.tehsil_required))
+            getNavigator()?.onError(getNavigator()?.getMessage(R.string.pincode_required))
             return
         }
         if (!TextUtils.isEmpty(pinCode.get()) && pinCode.get()?.length!=6) {
@@ -109,7 +109,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                 loading.set(false)
 
                 if (Constants.GP_API_STATUS.equals(updateAddress?.gp_api_status)) {
-                    getNavigator()?.onSuccess(updateAddress?.gp_api_message!!)
+                   // getNavigator()?.onSuccess(updateAddress?.gp_api_message!!)
                     SharedPreferencesHelper.instance?.putBoolean(
                         SharedPreferencesKeys.logged_in,
                         true
@@ -402,7 +402,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                     if (Constants.GP_API_STATUS.equals(updateAddress?.gp_api_status)) {
                         updateAddressByLatLong(updateAddress?.gp_api_response_data)
                     } else {
-                        getNavigator()?.onError(updateAddress?.gp_api_message)
+                        getNavigator()?.onError(Utility.getErrorMessage(addressResponse.errorBody()))
                     }
 
                 }
@@ -457,6 +457,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                     val addressDataModel = AddressDataModel(it.name.toString())
                     dataList.add(addressDataModel)
                 }
+                tehsilName.set(dataList[0].name)
                 val adapter = getNavigator()?.getAdapter(dataList)!!
                 getNavigator()?.updateTehsil(adapter) {
                     tehsilName.set(it.name)

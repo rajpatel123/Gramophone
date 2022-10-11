@@ -272,7 +272,7 @@ class CommunityViewModel @Inject constructor(
                 val response = communityRepository.getCommunityPost(CommunityRequestModel(sorting,limit.get()))
                 if (response.isSuccessful) {
                     val data = response.body()?.data
-
+getNavigator()?.stopRefresh()
                     communityPostAdapter =  CommunityPostAdapter(data, false)
 
                     getNavigator()?.updatePostList(communityPostAdapter,
