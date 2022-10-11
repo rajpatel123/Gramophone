@@ -52,7 +52,7 @@
             android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_15sdp">
+            android:layout_marginTop="@dimen/_10sdp">
 
 
             <androidx.recyclerview.widget.RecyclerView
