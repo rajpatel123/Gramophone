@@ -258,13 +258,16 @@ class AddToCartBottomSheetDialog(
 
     fun updateDialog(
         isOfferApplicable: Boolean,
+        promotionId: String,
         message: String,
     ) {
         try {
             if (isOfferApplicable) {
+                productData.promotion_id = promotionId.toInt()
                 Toast.makeText(requireContext(), message, Toast.LENGTH_LONG)
                     .show()
             } else {
+                productData.promotion_id = null
                 if (!mSkuOfferList.isNullOrEmpty()) {
                     for (item in mSkuOfferList) {
                         item.selected = false

@@ -32,7 +32,7 @@ interface SubCategoryNavigator : BaseNavigator {
     fun openProductDetailsActivity(productData: ProductData)
 
     fun updateOfferApplicabilityOnDialog(
-        isOfferApplicable: Boolean, message: String,
+        isOfferApplicable: Boolean, promotionId: String? = null, message: String,
     )
 
     fun disableSortAndFilter()

@@ -353,13 +353,13 @@ class SubCategoryViewModel @Inject constructor(
                 if (response.body()?.gpApiStatus.equals(Constants.GP_API_STATUS) &&
                     response.body()?.gpApiResponseData?.promotionApplicable == true
                 ) {
-                    getNavigator()?.updateOfferApplicabilityOnDialog(true, if (response.body()?.gpApiMessage.isNull()) "" else response.body()?.gpApiMessage!!)
+                    getNavigator()?.updateOfferApplicabilityOnDialog(true, verifyPromotionsModel.promotion_id, if (response.body()?.gpApiMessage.isNull()) "" else response.body()?.gpApiMessage!!)
                 } else {
-                    getNavigator()?.updateOfferApplicabilityOnDialog(false, if (response.body()?.gpApiMessage.isNull()) "" else response.body()?.gpApiMessage!!)
+                    getNavigator()?.updateOfferApplicabilityOnDialog(false, verifyPromotionsModel.promotion_id, if (response.body()?.gpApiMessage.isNull()) "" else response.body()?.gpApiMessage!!)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                getNavigator()?.updateOfferApplicabilityOnDialog(false,
+                getNavigator()?.updateOfferApplicabilityOnDialog(false, null,
                     if (e.message.isNull()) "" else e.message!!)
             }
         }
