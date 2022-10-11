@@ -273,7 +273,7 @@ interface GramAppService {
         @Body weatherRequest: WeatherRequest,
     ): Response<WeatherForecastSummaryResponse>
 
-    @POST("api/v5/cart/update-to-cart")
+    @PUT("api/v5/cart/update-to-cart")
     suspend fun updateCartItem(@Body productData: ProductData): Response<SuccessStatusResponse>
 
     @POST("api/v5/product/get-promotion")

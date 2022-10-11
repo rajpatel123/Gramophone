@@ -78,7 +78,7 @@
             android:layout_marginTop="@dimen/_3sdp"
             android:fontFamily="@font/manrope_bold"
             android:lineSpacingExtra="-1sp"
-            android:text="@{@string/rupee_symbol.concat(String.valueOf(model.price))}"
+            android:text="@{@string/rupee_symbol_with_space.concat(String.valueOf(model.price))}"
             android:textColor="@color/blakish"
             android:textSize="18sp"
             tools:text="₹4320"

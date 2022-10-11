@@ -200,9 +200,9 @@ class FeaturedProductActivity :
         )
     }
 
-    override fun updateOfferApplicabilityOnDialog(isOfferApplicable: Boolean, message: String) {
+    override fun updateOfferApplicabilityOnDialog(isOfferApplicable: Boolean, promotionId: String?, message: String) {
         if (bottomSheet.isNotNull())
-            bottomSheet?.updateDialog(isOfferApplicable, message)
+            bottomSheet?.updateDialog(isOfferApplicable, promotionId!!, message)
     }
 
     override fun disableSortAndFilter() {

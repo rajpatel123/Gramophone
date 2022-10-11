@@ -5,23 +5,27 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityWeatherBinding
+import agstack.gramophone.di.GPSTracker
 import agstack.gramophone.ui.dialog.LocationAccessDialog
 import agstack.gramophone.utils.Constants
+import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class WeatherActivity :
     BaseActivityWrapper<ActivityWeatherBinding, WeatherNavigator, WeatherViewModel>(),
-    WeatherNavigator, View.OnClickListener, LocationAccessDialog.OkCancelListener {
+    WeatherNavigator, View.OnClickListener {
 
     //initialise ViewModel
     private val weatherViewModel: WeatherViewModel by viewModels()
+    private var gpsTracker: GPSTracker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +38,7 @@ class WeatherActivity :
         weatherViewModel.getWeatherDetail()
         weatherViewModel.getWeatherDetailHourly()
         weatherViewModel.getWeatherDetailDayWise()
+        gpsTracker = GPSTracker(this@WeatherActivity)
     }
 
     override fun setToolbarTitle(title: String) {
@@ -67,18 +72,21 @@ class WeatherActivity :
                 }
             }
             R.id.tvChangeLoc -> {
-                val locationAccessDialog = LocationAccessDialog()
-                locationAccessDialog.listener = this
+                val locationAccessDialog = LocationAccessDialog() {
+                    if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        weatherViewModel.getLatitudeLongitude(gpsTracker)
+                    } else {
+                        ActivityCompat.requestPermissions(this,
+                            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                            1)
+                    }
+                }
                 locationAccessDialog.show(
                     supportFragmentManager,
                     Constants.LOCATION_ACCESS_DIALOG
                 )
             }
         }
-    }
-
-    override fun onGoToSettingClick() {
-        weatherViewModel.onLocationClick()
     }
 
     override fun setHourWiseForecastAdapter(hourWiseForecastAdapter: HourWiseForecastAdapter) {

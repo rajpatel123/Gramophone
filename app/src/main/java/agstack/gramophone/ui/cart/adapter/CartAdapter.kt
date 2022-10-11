@@ -7,6 +7,7 @@ import agstack.gramophone.ui.cart.model.OfferApplied
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.amnix.xtension.extensions.isNotNull
 import javax.inject.Singleton
 
 @Singleton
@@ -15,7 +16,7 @@ class CartAdapter(cartItemList: List<CartItem>) :
     var cartList = cartItemList
     var onItemDetailClicked: ((productId: String) -> Unit)? = null
     var onItemDeleteClicked: ((productId: String) -> Unit)? = null
-    var onOfferClicked: ((offerAppliedList: OfferApplied) -> Unit)? = null
+    var onOfferClicked: ((offerAppliedList: OfferApplied, productName: String, productSku: String) -> Unit)? = null
     var onQuantityClicked: ((cartItem: CartItem) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
@@ -34,10 +35,9 @@ class CartAdapter(cartItemList: List<CartItem>) :
             onItemDeleteClicked?.invoke(cartList[position].product_id.toString())
         }
         holder.binding.tvOffersApplied.setOnClickListener {
-           /* if (cartList[position].offer_applied.isNotEmpty()) {
-                cartList[position].offer_applied[0].product_name = cartList[position].product_name
-                onOfferClicked?.invoke(cartList[position].offer_applied[0])
-            }*/
+            if (cartList[position].offer_applied.isNotNull()) {
+                onOfferClicked?.invoke(cartList[position].offer_applied, cartList[position].product_name, cartList[position].product_sku )
+            }
         }
         holder.binding.ivSubtract.setOnClickListener {
             if (quantity > 1) {
