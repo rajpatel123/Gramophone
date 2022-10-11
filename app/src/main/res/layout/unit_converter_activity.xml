@@ -18,7 +18,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".ui.unitconverter.UnitConverterActivity">
-
         <include
             android:id="@+id/myToolbar"
             layout="@layout/layout_toolbar" />
