@@ -125,7 +125,7 @@ class CartViewModel @Inject constructor(
                                 promotionListItem.title = it.offer_name
                                 promotionListItem.applicable_on_sku = it.valid_on_sku
                                 promotionListItem.valid_till = it.valid_till
-                                promotionListItem.product_name = it.product_name
+                               // promotionListItem.product_name = it.product_name
                                 getNavigator()?.openActivity(
                                     OfferDetailActivity::class.java,
                                     Bundle().apply {

@@ -11,7 +11,7 @@ data class DataItem(
 	val maxLimit: Int? = null,
 
 	@field:SerializedName("end_date")
-	val endDate: String? = null,
+	var endDate: String? = null,
 
 	@field:SerializedName("created_at")
 	val createdAt: String? = null,
@@ -26,7 +26,7 @@ data class DataItem(
 	val rules: String? = null,
 
 	@field:SerializedName("title")
-	val title: Title? = null,
+	var title: Title? = null,
 
 	@field:SerializedName("b2c_applicable")
 	val b2cApplicable: Boolean? = null,
@@ -41,7 +41,7 @@ data class DataItem(
 	val updatedAt: String? = null,
 
 	@field:SerializedName("terms_conditions")
-	val termsConditions: String? = null,
+	var termsConditions: String? = null,
 
 	@field:SerializedName("product_id")
 	val productId: Int? = null,
@@ -59,7 +59,7 @@ data class DataItem(
 	val startDate: String? = null,
 
 	@field:SerializedName("image")
-	val image: String? = null,
+	var image: String? = null,
 
 	@field:SerializedName("available_on_krishi_app")
 	val availableOnKrishiApp: Boolean? = null,
@@ -68,10 +68,10 @@ data class DataItem(
 	val createdBy: Int? = null,
 
 	@field:SerializedName("product_name")
-	val productName: String? = null,
+	var productName: String? = null,
 
 	@field:SerializedName("productsku")
-	val productsku: String? = null,
+	var productsku: String? = null,
 
 	@field:SerializedName("available_on_gs")
 	val availableOnGs: Boolean? = null,

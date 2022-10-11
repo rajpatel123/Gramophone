@@ -77,8 +77,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/manrope_bold"
-                                    android:hint="Valid Till March 31,2022"
-                                    app:formatDateValidTil="@{viewModel.MOffersItem.createdAt}"
+                                    android:visibility="@{viewModel.MOffersItem.endDate!=null?View.VISIBLE:View.GONE}"
+                                    app:formatDateValidTil='@{viewModel.MOffersItem.endDate ?? ""}'
                                     android:textColor="@color/gray_strike_through" />
 
 
@@ -88,7 +88,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/manrope_bold"
-                                    android:hint="On UPL_PHOSKILL 1 Ltr."
+                                    tools:text="On UPL_PHOSKILL 1 Ltr."
                                     android:text="@{@string/on.concat(viewModel.MOffersItem.productName).concat(@string/space).concat(viewModel.MOffersItem.productsku)}"
                                     android:textColor="@color/gray_strike_through"
                                     app:layout_constraintLeft_toLeftOf="parent"
@@ -139,13 +139,13 @@
                          android:layout_height="wrap_content"
                          android:text="@string/redemption_steps" />-->
 
-                    <TextView
+                  <!--  <TextView
                         android:id="@+id/tv_tnc_label"
                         android:layout_marginTop="@dimen/_20sdp"
                         style="@style/TextSize16Sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{@string/terms_n_conditions+` : `}" />
+                        android:text="@{@string/terms_n_conditions+` : `}" />-->
 
                     <TextView
                         android:id="@+id/tv_tnc"

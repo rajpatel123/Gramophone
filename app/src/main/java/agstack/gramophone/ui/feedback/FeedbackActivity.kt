@@ -17,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class FeedbackActivity :
     BaseActivityWrapper<FeedbackActivityBinding, FeedbackNavigator, FeedbackViewModel>(),
     FeedbackNavigator {
-
     private val feedbackViewModel: FeedbackViewModel by viewModels()
 
     override fun getLayoutID(): Int {
