@@ -11,6 +11,9 @@ import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatL
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
 import agstack.gramophone.ui.cart.model.AddToCartRequest
 import agstack.gramophone.ui.cart.model.CartDataResponse
+import agstack.gramophone.ui.createnewpost.view.model.MentionRequestModel
+import agstack.gramophone.ui.createnewpost.view.model.MentionTagResponsemodel
+import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferRequest
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
@@ -254,4 +257,14 @@ interface GramAppService {
     suspend fun getApplicableOffersOnProduct(
         @Body applicableOfferRequest: ApplicableOfferRequest,
     ): Response<ApplicableOfferResponse>
+
+    @POST("api/v5/search/mention-autocomplete")
+    suspend fun getMentionTags(
+        @Body mentionRequestModel: MentionRequestModel,
+    ): Response<MentionTagResponsemodel>
+
+    @POST("api/v5/search/hashtags")
+    suspend fun getHasTags(
+        @Body mentionRequestModel: MentionRequestModel,
+    ): Response<HasgTagResponseModel>
 }

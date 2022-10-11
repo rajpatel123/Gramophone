@@ -482,4 +482,11 @@
     <string name="expand_text_label">show more</string>
     <string name="failed_preview">Failed Preview</string>
     <string name="no_data_title">No Data Available.</string>
+    <string name="expert_advice_needed_label">Tap here twice to get advice from expert</string>
+    <string name="error_out_of_memory">Out of memory</string>
+    <string name="confirm_url_preview_off_post">Url preview off for this post?</string>
+    <string name="button_title_cancel">Cancel</string>
+    <string name="button_ok">OK</string>
+    <string name="add_tag_message">Please select crop to identify the post discussion.</string>
+    <string name="add_tag_title">Select Crop</string>
 </resources>

@@ -115,7 +115,7 @@ class VerifyOtpViewModel @Inject constructor(
                         } else {
                             getNavigator()?.openAndFinishActivity(StateListActivity::class.java)
                         }
-                        getNavigator()?.showToast(responseData?.gp_api_message)
+                        //getNavigator()?.showToast(responseData?.gp_api_message)
                     } else {
                         val arrayTutorialType =
                             object : TypeToken<ValidateOtpResponseModel>() {}.type
@@ -222,7 +222,7 @@ class VerifyOtpViewModel @Inject constructor(
                         timeOver.set(false)
 
                         getNavigator()?.showTimer(Constants.RESEND_OTP_TIME)
-                        getNavigator()?.showToast(sendOtpResponseModel?.gp_api_message)
+                        //getNavigator()?.showToast(sendOtpResponseModel?.gp_api_message)
                     } else {
                         getNavigator()?.showToast(sendOtpResponseModel?.gp_api_message)
                     }
@@ -279,7 +279,7 @@ class VerifyOtpViewModel @Inject constructor(
                 val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
-                    getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
+                    //getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
                     getNavigator()?.openAndFinishActivity(
                         VerifyOtpActivity::class.java,
                         Bundle().apply {

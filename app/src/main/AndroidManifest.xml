@@ -47,6 +47,14 @@
         <activity
             android:name=".ui.createpost.view.CreatePostActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".view.activity.EditPostActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.activity.CreatePostActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.postdetails.view.PostDetailsActivity"
             android:exported="true" />

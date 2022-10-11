@@ -25,4 +25,5 @@ interface CommunityFragmentNavigator: BaseNavigator {
     fun blockUserDialog()
     fun getReportReason(): String
     fun setProfileImage(url:String)
+    fun stopRefresh()
 }

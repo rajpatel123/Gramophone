@@ -4,7 +4,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
-import agstack.gramophone.ui.createpost.view.CreatePostActivity
+
 import agstack.gramophone.ui.feedback.FeedbackActivity
 import agstack.gramophone.ui.gramcash.GramCashActivity
 import agstack.gramophone.ui.offerslist.OffersListActivity
@@ -19,6 +19,7 @@ import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.view.activity.CreatePostActivity
 import android.content.Intent
 import android.view.View
 import androidx.databinding.ObservableField
@@ -114,7 +115,7 @@ class HomeViewModel @Inject constructor(
                             SharedPreferencesKeys.logged_in,
                             false
                         )
-                        getNavigator()?.onSuccess(logoutResponseModel?.gp_api_message)
+                      //  getNavigator()?.onSuccess(logoutResponseModel?.gp_api_message)
                         getNavigator()?.logout()
 
                     } else {

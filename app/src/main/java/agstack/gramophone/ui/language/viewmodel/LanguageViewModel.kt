@@ -203,7 +203,7 @@ class LanguageViewModel @Inject constructor(
                 val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
 
                 if (GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
-                    getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
+                   // getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
                     SharedPreferencesHelper.instance?.putParcelable(
                         SharedPreferencesKeys.BANNER_DATA,
                         BannerResponse("")
