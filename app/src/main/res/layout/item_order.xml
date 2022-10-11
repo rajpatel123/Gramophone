@@ -32,7 +32,7 @@
                 android:layout_gravity="center"
                 android:contentDescription="@string/image"
                 android:padding="@dimen/_4sdp"
-                app:product_image="@{model.product_image}" />
+                app:product_image='@{model.product_image ?? ""}' />
 
         </FrameLayout>
 
@@ -46,7 +46,7 @@
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
-            android:text="@{@string/hash_sign.concat(model.order_id)}"
+            android:text="@{@string/hash_sign.concat(String.valueOf(model.order_id))}"
             android:textColor="@color/blakish"
             android:textSize="16sp"
             tools:text="#234554677" />
@@ -64,9 +64,10 @@
             android:lineSpacingExtra="-2sp"
             android:textColor="@color/gray_strike_through"
             android:textSize="13sp"
+            app:isDateAlreadyFormatted="@{true}"
             app:items="@{@string/items}"
             app:orderDate="@{model.order_date}"
-            app:quantity="@{model.quantity}"
+            app:quantity="@{String.valueOf(model.quantity)}"
             tools:text="05-Jul-2022 / 3 Items" />
 
         <TextView
@@ -77,7 +78,7 @@
             android:layout_marginTop="@dimen/_3sdp"
             android:fontFamily="@font/manrope_bold"
             android:lineSpacingExtra="-1sp"
-            android:text="@{@string/rupee_symbol.concat(model.price)}"
+            android:text="@{@string/rupee_symbol_with_space.concat(String.valueOf(model.price))}"
             android:textColor="@color/blakish"
             android:textSize="18sp"
             tools:text="₹4320"
@@ -124,7 +125,7 @@
                     android:drawablePadding="@dimen/_6sdp"
                     android:fontFamily="@font/manrope_medium"
                     android:lineSpacingExtra="0sp"
-                    android:text="@{@string/order.concat(model.order_status)}"
+                    android:text='@{model.order_status_name ?? ""}'
                     android:textColor="@color/yellow_dark"
                     android:textSize="14sp"
                     app:drawableStartCompat="@drawable/ic_order_placed"

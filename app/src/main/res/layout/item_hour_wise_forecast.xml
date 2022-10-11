@@ -9,7 +9,7 @@
 
         <variable
             name="model"
-            type="agstack.gramophone.ui.cart.model.CartItem" />
+            type="agstack.gramophone.ui.weather.model.Time" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_96sdp"
             android:gravity="center"
             android:orientation="vertical"
@@ -27,36 +27,54 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/tvProductName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/manrope_medium"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="1sp"
-                android:text="9 AM"
+                app:reformat_date='@{model.time ?? ""}'
                 android:textColor="@color/gray"
-                android:textSize="11sp" />
+                android:textSize="11sp"
+                tools:text="9 AM" />
 
             <ImageView
-                android:id="@+id/ivProduct"
+                android:layout_marginTop="@dimen/_4sdp"
                 android:layout_width="@dimen/_25sdp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_height="@dimen/_25sdp"
                 android:contentDescription="@string/image"
-                android:src="@drawable/ic_weather_rain" />
+                android:src="@drawable/ic_weather_rain"
+                app:product_image='@{model.temperature.weather_icon ?? ""}' />
 
-            <TextView
-                android:id="@+id/sku"
+            <LinearLayout
+                android:layout_marginTop="@dimen/_4sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/manrope_bold"
-                android:gravity="center_vertical"
-                android:lineSpacingExtra="1sp"
-                android:maxLines="2"
-                android:text="28°"
-                android:textColor="@color/blakish"
-                android:textSize="11sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_bold"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="1sp"
+                    android:maxLines="1"
+                    android:text='@{model.temperature.value ?? ""}'
+                    android:textColor="@color/blakish"
+                    android:textSize="11sp"
+                    tools:text="28" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_bold"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="1sp"
+                    android:maxLines="1"
+                    android:text="@string/degee_temp"
+                    android:textColor="@color/blakish"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

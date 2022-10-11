@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -25,10 +26,17 @@ import kotlin.math.roundToInt
 
 @BindingAdapter("product_image")
 fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
-    if (!imageUrl.isNullOrEmpty()) {
+    if (imageUrl.isNullOrEmpty()) {
+        Glide.with(view.context)
+            .load(R.drawable.ic_gramophone_leaf)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(view)
+    } else {
         Glide.with(view.context)
             .load(imageUrl)
             .transition(DrawableTransitionOptions.withCrossFade())
+            .placeholder(R.drawable.ic_gramophone_leaf)
+            .error(R.drawable.ic_gramophone_leaf)
             .into(view)
     }
 }
@@ -145,7 +153,7 @@ fun setHtmlTextValue(textView: TextView, htmlText: String?) {
 
 @BindingAdapter(value = ["selectedTab", "recentSize", "pastSize"], requireAll = true)
 fun orderEmptyViewHandling(
-    emptyView: LinearLayout, selectedTab: Int, recentSize: Int, pastSize: Int,
+    emptyView: View, selectedTab: Int, recentSize: Int, pastSize: Int,
 ) {
     when (selectedTab) {
         0 -> {
@@ -165,14 +173,25 @@ fun orderEmptyViewHandling(
     }
 }
 
+@BindingAdapter(value = ["selectedTab", "placeSize"], requireAll = true)
+fun placedOrderRecyclerHandling(
+    view: View, selectedTab: Int, placedSize: Int,
+) {
+    if (selectedTab == 0 && placedSize > 0) {
+        view.visibility = View.VISIBLE
+    } else {
+        view.visibility = View.GONE
+    }
+}
+
 @BindingAdapter(value = ["selectedTab", "recentSize"], requireAll = true)
 fun recentOrderRecyclerHandling(
-    recyclerView: RecyclerView, selectedTab: Int, recentSize: Int,
+    view: View, selectedTab: Int, recentSize: Int,
 ) {
     if (selectedTab == 0 && recentSize > 0) {
-        recyclerView.visibility = View.VISIBLE
+        view.visibility = View.VISIBLE
     } else {
-        recyclerView.visibility = View.GONE
+        view.visibility = View.GONE
     }
 }
 
@@ -187,13 +206,28 @@ fun pastOrderRecyclerHandling(
     }
 }
 
-@BindingAdapter(value = ["orderDate", "quantity", "items"], requireAll = true)
+@BindingAdapter(value = ["orderDate", "quantity", "items", "isDateAlreadyFormatted"],
+    requireAll = true)
 fun setDateAndItemCount(
-    textView: TextView, orderDate: String, quantity: String, itemsText: String,
+    textView: TextView,
+    orderDate: String,
+    quantity: String,
+    items: String,
+    isDateAlreadyFormatted: Boolean,
 ) {
-    textView.text = Utility.getFormattedDate(orderDate,
-        Utility.DATE_MONTH_YEAR_FORMAT,
-        Utility.MONTH_DATE_YEAR_FORMAT) + " / " + quantity + itemsText
+    try {
+        if (orderDate.isNotNullOrEmpty()) {
+            if (isDateAlreadyFormatted) {
+                textView.text = orderDate + " / " + quantity + items
+            } else {
+                textView.text = Utility.getFormattedDate(orderDate,
+                    Utility.DATE_MONTH_YEAR_FORMAT,
+                    Utility.MONTH_DATE_YEAR_FORMAT) + " / " + quantity + items
+            }
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 }
 
 @BindingAdapter(value = ["validity_date"], requireAll = true)
@@ -208,6 +242,31 @@ fun setDateAndVisibility(
             textView.text = "Valid till " + Utility.getFormattedDate(validity_date,
                 Utility.MONTH_DATE_YEAR_FORMAT,
                 Utility.YEAR_MONTH_DATA_TIME_FORMAT)
+        }
+    } catch (e: Exception) {
+        textView.visibility = View.GONE
+    }
+}
+
+@BindingAdapter(value = ["reformat_date"], requireAll = true)
+fun reformatDate(
+    textView: TextView, reformat_date: String? = null,
+) {
+    try {
+        if (reformat_date.isNullOrEmpty()) {
+            textView.visibility = View.GONE
+        } else {
+            textView.visibility = View.VISIBLE
+            var date = reformat_date
+            if (date.contains(":00")) {
+                date = date.replace(":00", " ")
+            }
+            if (date.contains("pm")) {
+                date = date.replace("pm", "PM")
+            } else if (date.contentEquals("am")) {
+                date = date.replace("am", "AM")
+            }
+            textView.text = date
         }
     } catch (e: Exception) {
         textView.visibility = View.GONE
@@ -229,28 +288,18 @@ fun setQuantity(textView: TextView, quantity: String) {
     }
 }
 
-@BindingAdapter("reformatPrice")
-fun setReformattedPrice(textView: TextView, price: String) {
-    if (price.isNullOrEmpty()) {
-        textView.text = "₹"
-    } else {
-        val ac = price.replace(".00", "")
-        textView.text = "₹ " + ac
-    }
-}
-
 @BindingAdapter("reformatFloatPriceToInt")
 fun setReformattedIntPrice(textView: TextView, price: Float) {
     try {
         if (price.isNaN() || price.isInfinite()) {
-            textView.text = "₹ 0"
+            textView.text = textView.context.getString(R.string.rupee_0)
         } else {
             if (price.toString().contains(".0") || price.toString().contains(".00"))
-                textView.text = "₹ " + price.roundToInt().toString()
-            else textView.text = "₹ " + price.toString()
+                textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + price.roundToInt().toString()
+            else textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + price.toString()
         }
     } catch (e: Exception) {
-        textView.text = "₹ 0"
+        textView.text = textView.context.getString(R.string.rupee_0)
     }
 }
 
@@ -285,13 +334,15 @@ fun mrpPriceVisibility(
     textView: TextView, mrp_price: Float, sales_price: Float,
 ) {
     try {
-        if (mrp_price == sales_price) {
+        if (mrp_price == 0f) {
+            textView.visibility = View.GONE
+        } else if (mrp_price <= sales_price) {
             textView.visibility = View.GONE
         } else {
             textView.visibility = View.VISIBLE
-            if (sales_price.toString().contains(".0") || sales_price.toString().contains(".00"))
-                textView.text = "₹ " + sales_price.roundToInt().toString()
-            else textView.text = "₹ " + sales_price.toString()
+            if (mrp_price.toString().contains(".0") || mrp_price.toString().contains(".00"))
+                textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + mrp_price.roundToInt().toString()
+            else textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + mrp_price.toString()
         }
     } catch (e: Exception) {
         textView.visibility = View.GONE
@@ -300,20 +351,20 @@ fun mrpPriceVisibility(
 
 @BindingAdapter(value = ["sku_mrp_price", "sku_sales_price"], requireAll = true)
 fun setPriceAndVisibility(
-    textView: TextView, mrp_price: Double? = null, sales_price: String? = null,
+    textView: TextView, mrp_price: Double, sales_price: String? = null,
 ) {
     try {
-        if (mrp_price==null && sales_price.isNullOrEmpty()) {
+        if (sales_price.isNullOrEmpty() && mrp_price == 0.0) {
             textView.visibility = View.INVISIBLE
-        } else if (mrp_price==null && !sales_price.isNullOrEmpty()) {
-            textView.text = "₹ " + sales_price.toString()
+        } else if (!sales_price.isNullOrEmpty() && sales_price.toFloat() > 0) {
+            if (sales_price.toString().endsWith(".0") || sales_price.toString().contains(".00"))
+                textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + sales_price.toFloat().roundToInt().toString()
+            else textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + sales_price.toString()
             textView.visibility = View.VISIBLE
-        } else if (sales_price.isNullOrEmpty() && mrp_price!=null) {
-            textView.text = "₹ " + mrp_price.toString()
-            textView.visibility = View.VISIBLE
-        }
-        else if (!sales_price.isNullOrEmpty() && mrp_price!=null) {
-            textView.text = "₹ " + mrp_price.toString()
+        } else {
+            if (mrp_price.toString().endsWith(".0") || mrp_price.toString().contains(".00"))
+                textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + mrp_price.roundToInt().toString()
+            else textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + mrp_price.toString()
             textView.visibility = View.VISIBLE
         }
     } catch (e: Exception) {

@@ -5,15 +5,16 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityShopByStoreBinding
+import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.adapter.ShopByCompanyAdapter
 import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
 import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
 import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
-import agstack.gramophone.ui.home.shopbydetail.ShopByDetailActivity
-import agstack.gramophone.ui.home.stage.CropStageActivity
+import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -34,12 +35,28 @@ class ShopByActivity :
 
     private fun setupUi() {
         shopByViewModel.getBundleData()
+
+        viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
+        viewDataBinding.swipeRefresh.setOnRefreshListener {
+            shopByViewModel.getStores()
+            viewDataBinding.swipeRefresh.isRefreshing = false
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_home, menu);
+        menuInflater.inflate(R.menu.menu_search_and_cart, menu);
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_cart -> {
+                openActivity(CartActivity::class.java)
+            }
+
+        }
+        return true
     }
 
     override fun onClick(view: View?) {
@@ -57,9 +74,7 @@ class ShopByActivity :
 
     override fun setShopByStoresAdapter(
         shopByStoresAdapter: ShopByStoresAdapter,
-        id: (String) -> Unit,
     ) {
-        shopByStoresAdapter.onItemClicked = id
         viewDataBinding.rvShopBy.layoutManager = GridLayoutManager(this, 2)
         viewDataBinding.rvShopBy.setHasFixedSize(true)
         viewDataBinding.rvShopBy.adapter = shopByStoresAdapter
@@ -75,9 +90,12 @@ class ShopByActivity :
         viewDataBinding.rvShopBy.adapter = shopByCompanyAdapter
     }
 
-    override fun openShopByDetailActivity(id: String) {
-        openActivity(ShopByDetailActivity::class.java, Bundle().apply {
-            putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
+
+    override fun openShopByDetailActivity(storeId: String, storeName: String, storeImage: String) {
+        openActivity(FeaturedProductActivity::class.java, Bundle().apply {
+            putString(Constants.STORE_ID, storeId)
+            putString(Constants.STORE_NAME, storeName)
+            putString(Constants.STORE_IMAGE, storeImage)
         })
     }
 

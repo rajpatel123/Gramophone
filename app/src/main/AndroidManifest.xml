@@ -189,6 +189,21 @@
         <activity android:name=".ui.feedback.FeedbackActivity"
             android:windowSoftInputMode="adjustResize" />/>
         <activity android:name=".ui.offerslist.OffersListActivity" />
+        <activity
+            android:name=".ui.farm.view.WhyAddFarmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.farm.view.SelectCropActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.farm.view.AddFarmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.farm.view.ViewAllFarmsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.farm.view.CropGroupExplorerActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".pushnotification.MyFirebaseMessagingService" />
         <service

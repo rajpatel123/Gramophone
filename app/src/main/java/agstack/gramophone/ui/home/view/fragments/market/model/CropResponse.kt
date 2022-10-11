@@ -21,4 +21,8 @@ data class CropData(
     @SerializedName("crop_id") var cropId: Int? = null,
     @SerializedName("crop_name") var cropName: String? = null,
     @SerializedName("crop_image") var cropImage: String? = null,
+    @SerializedName("is_section_header")  var isSectionHeader: Boolean = false,
+    @SerializedName("section_title")  var sectionTitle: String? = null,
+    @SerializedName("section_sub_title")  var sectionSubTitle: String? = null,
+    @SerializedName("is_selected")  var isSelected: Boolean = false,
 ) : Parcelable

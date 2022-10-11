@@ -38,10 +38,5 @@ open class BaseViewModel<N : BaseNavigator>() : ViewModel() {
     fun getGeoCoder(): Geocoder? {
         return getNavigator()?.getGeoCoder()
     }
-    fun onLocationClick() {
-        if (getNavigator()?.requestPermission(Manifest.permission.ACCESS_FINE_LOCATION) == true) {
-            getNavigator()?.proceedOnLocationSetting()
-        }
-    }
 
 }

@@ -1,206 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:card_view="http://schemas.android.com/tools">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <import type="android.view.View" />
 
         <variable
-            name="model"
-            type="agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem" />
+            name="viewModel"
+            type="agstack.gramophone.ui.unitconverter.UnitConverterViewModel" />
     </data>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.unitconverter.UnitConverterActivity">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/productDetailsContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@{model.selected ? @drawable/offer_card_selected: @drawable/deselected_product_background}"
-        card_view:cardCornerRadius="10dp"
-        card_view:cardElevation="1dp"
-        android:layout_marginEnd="@dimen/_12sdp"
-        card_view:cardUseCompatPadding="true">
-
+        <include
+            android:id="@+id/myToolbar"
+            layout="@layout/layout_toolbar" />
 
         <LinearLayout
-            android:orientation="vertical"
+            android:id="@+id/llarea"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="@dimen/_200sdp"
+            android:background="@color/blue_area"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/myToolbar"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="0dp">
 
+            <Spinner
+                android:visibility="gone"
+                android:background="@drawable/rounded_corner_with_grey_color"
+                android:id="@+id/spinnerArea"
+                android:clickable="false"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_margin="@dimen/_24sdp"
+                android:entries="@array/units_kind_array"
+                android:textColor="@android:color/white"
+                app:backgroundTint="@color/white" />
+
+            <ImageView
+                android:layout_margin="@dimen/_24sdp"
+                android:src="@drawable/ic_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.43" />
+
+        <LinearLayout
+            android:id="@+id/ll_unit_converter"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginRight="@dimen/_30sdp"
+            android:background="@drawable/rounded_corner_with_grey_color"
+            android:orientation="vertical"
+            android:weightSum="2"
+            app:layout_constraintBottom_toBottomOf="@id/guideline"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline"
+            tools:layout_editor_absoluteX="49dp"
+            tools:layout_editor_absoluteY="210dp">
 
             <LinearLayout
-                android:id="@+id/ll_top"
+                android:id="@+id/ll_top_unit"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:weightSum="2"
                 android:orientation="horizontal"
-                android:padding="@dimen/_5sdp"
-                android:weightSum="5"
-                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <LinearLayout
+                <Spinner
+                    android:id="@+id/spinnerUnit1"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="left"
-                    android:orientation="vertical"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/units_array"
+                    android:gravity="center_vertical"
+                    android:onItemSelected="@{(parent,view,pos,id)->viewModel.onSelectSpinner1Item(parent,view,pos,id)}"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_minus10sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-
-                    >
-
-                    <ImageView
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:layout_gravity="left"
-                        android:visibility="@{model.selected? View.VISIBLE:View.GONE}"
-                        app:srcCompat="@drawable/ic_tick_check" />
-
-
-                    <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/radioBtn"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:layout_gravity="left"
-                        android:checked="@{model.selected}"
-                        android:visibility="@{model.selected? View.GONE:View.VISIBLE}" />
-
-                </LinearLayout>
-
-                <LinearLayout
+                <EditText
+                    android:id="@+id/editTextUnit1"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="4"
-                    android:orientation="vertical">
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/transparent_background"
+                    android:ems="3"
+                    android:hint="0.00"
+                    android:inputType="numberDecimal"
+                    android:maxLength="15"
+                    android:textSize="@dimen/_40ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/spinnerUnit1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/tvProductWeight"
-                        style="@style/TextSize16Sp"
-                        android:textSize="@dimen/_12ssp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Get Flat 5% Off"
-                        android:text="@{model.title}" />
-
-
-                    <TextView
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/manrope_regular"
-                        tools:text="*Offer valid on SKU 500,Offer valid on SKU 500  "
-                        android:maxLines="1"
-                        android:maxLength="35"
-
-                        android:text="@{@string/allsymbol.concat(model.applicable_on_sku)}"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/_10ssp" />
-
-
-                    <TextView
-                        android:layout_marginTop="@dimen/_1sdp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:fontFamily="@font/manrope_regular"
-                        android:hint="Valid till March 2023"
-                        app:formatDateValidTil='@{model.valid_till ?? ""}'
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/_10ssp" />
-
-                    <TextView
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:id="@+id/tv_viewdetail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_10sdp"
-                        android:drawablePadding="@dimen/_10sdp"
-                        android:fontFamily="@font/manrope_bold"
-                        android:text="@string/view_detail"
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/_11ssp"
-                        android:textStyle="normal"
-                        app:drawableEndCompat="@drawable/ic_arrow_right" />
-                </LinearLayout>
+                </EditText>
 
 
             </LinearLayout>
 
-
-            <LinearLayout
-                android:id="@+id/llbottom"
-                android:gravity="center"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_22sdp"
-                android:background="@drawable/ic_pink_background"
-                android:orientation="horizontal">
-
-
-                <TextView
-                    amountSaved="@{model.amount_saved}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/manrope_bold"
-                    android:gravity="center"
-                    android:textColor="@color/green"
-                    android:textSize="@dimen/_11ssp"
-                    tools:text="@string/save_rupees" />
-
-                <!-- android:text="@{@string/save_rupees.concat(model.amount_saved.toString())}"-->
+                android:layout_height="wrap_content">
 
                 <View
-                    android:layout_width="@dimen/_1sdp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/_9sdp"
-                    android:layout_marginRight="@dimen/_9sdp"
-                    android:background="@color/gray" />
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_2sdp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tvPayOnlyTitle"
+                <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/manrope_regular"
-                    android:gravity="center"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/_11ssp"
-                    android:text="@string/pay_only" />
+                    android:layout_height="wrap_content"
+                    android:onClick="@{()->viewModel.onSwitchClick()}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_switch" />
 
-                <TextView
-                    android:id="@+id/tvPayOnly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/_3sdp"
-                    android:fontFamily="@font/manrope_bold"
-                    android:gravity="center"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/_11ssp"
-                    card_view:text="@string/dummy_price" />
 
-                <TextView
-                    android:id="@+id/tvSkuPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/_2sdp"
-                    android:background="@drawable/strike_through_ligt_orange"
-                    android:fontFamily="@font/manrope_regular"
-                    android:gravity="center"
-                    android:text=" ₹200"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/_11ssp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_bottom_unit"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Spinner
+                    android:layout_weight="1"
+                    android:spinnerMode="dropdown"
+                    android:id="@+id/spinnerUnit2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/units_array"
+                    android:gravity="center_vertical"
+                    android:onItemSelected="@{(parent,view,pos,id)->viewModel.onSelectSpinner2Item(parent,view,pos,id)}"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_minus10sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/editTextUnit2"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/transparent_background"
+                    android:ems="3"
+                    android:hint="0.00"
+                    android:inputType="numberDecimal"
+                    android:maxLength="15"
+                    android:textSize="@dimen/_40ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/spinnerUnit2"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </EditText>
 
 
             </LinearLayout>
+            >
+
+
         </LinearLayout>
 
 
-    </androidx.cardview.widget.CardView>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

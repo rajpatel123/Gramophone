@@ -157,10 +157,10 @@
     <string name="no_internet">"No internet connection "</string>
     <string name="sku">SKU:&#160;</string>
     <string name="offers_applied">&#160;Offers applied</string>
-    <string name="rupee_symbol">₹&#160;</string>
+    <string name="rupee_symbol_with_space">\u20B9&#160;</string>
     <string name="rupee">\u20B9</string>
-    <string name="minus_rupee_symbol">-₹&#160;</string>
-    <string name="save_extra_rupees">Save extra ₹</string>
+    <string name="minus_rupee_symbol">-\u20B9&#160;</string>
+    <string name="save_extra_rupees">Save extra \u20B9</string>
     <string name="using">&#160;using&#160;</string>
     <string name="gram_cash">&#160;Gram Cash</string>
     <string name="gram_cash_without_extra_space">Gram Cash</string>
@@ -211,7 +211,7 @@
     <string name="my_orders">My Orders</string>
     <string name="my_order">My Order</string>
     <string name="address_note"><![CDATA[<b>Note: </b>Address will be taken from you after placing the order]]></string>
-    <string name="no_recent_order">Orders till 6 months will be displayed here, check \"Past Orders\" for past orders.</string>
+    <string name="no_recent_order">When you place your first order, it will appear here</string>
     <string name="no_past_order">Orders older than 6 months will be displayed here, check \"Recent Orders\" for recent orders.</string>
     <string name="no_orders">No Orders</string>
     <string name="your_order_no_is">Your order no. is #</string>
@@ -245,8 +245,8 @@
     <string name="_0_off">0% off</string>
     <string name="item_added_as_a_free_giveaway">This item is added as a free giveaway.</string>
     <string name="daily_object_backpack">Daily Object Backpack</string>
-    <string name="rupee_0">₹ 0</string>
-    <string name="dummy_price">₹ 1290</string>
+    <string name="rupee_0">\u20B9 0</string>
+    <string name="dummy_price">\u20B9 1290</string>
     <string name="recent_orders">Recent Orders</string>
     <string name="past_orders">Past Orders</string>
     <string name="shop_now">Shop Now</string>
@@ -275,7 +275,7 @@
     <string name="enter_10_digit_mob">Enter 10 digit mobile number</string>
 
     <string name="weather">Weather</string>
-    <string name="weather_city">Weather - Indore</string>
+    <string name="weather_city">Weather</string>
     <string name="powered_by">Powered by</string>
     <string name="accuweather">AccuWeather</string>
     <string name="forecast_for_the_next_days">Forecast for the next few days</string>
@@ -352,13 +352,13 @@
     <string name="all_transactions">All Transactions</string>
     <string name="_01">01</string>
     <string name="_60">60%</string>
-    <string name="_1_290">₹1,290</string>
-    <string name="_799_00">₹799.00</string>
+    <string name="_1_290">\u20B91,290</string>
+    <string name="_799_00">\u20B9799.00</string>
     <string name="get_accurate_information_nabout_your_farm_for_better_nharvest">Get accurate information\nabout your farm for better\nharvest</string>
     <string name="add_you_farm">+ Add you Farm</string>
     <string name="know_more_about_my_farm"><![CDATA[Know more about My Farm >]]></string>
     <string name="checkout">Checkout</string>
-    <string name="sub_text_will_be_displayed_here">Sub text will be displayed here</string>
+    <string name="sub_text_will_be_displayed_here"> </string>
     <string name="receive_order_related_information_on_whatsapp">Receive order related information on whatsapp</string>
     <string name="gramophone_promise">Gramophone Promise</string>
     <string name="_100_genuine_nproducts">100% Genuine\nProducts</string>
@@ -374,13 +374,13 @@
     <string name="tab_expert">Expert</string>
     <string name="tab_my_post">My Post</string>
     <string name="tab_saved_post">Saved Post</string>
-    <string name="starts_from_99">Starts from ₹ 99</string>
+    <string name="starts_from_99">Starts from \u20B9 99</string>
     <string name="shop_by_sub_category">Shop by Sub Category</string>
     <string name="sort_by">Sort by</string>
     <string name="filter">Filters</string>
 
     <string name="allsymbol">\u002A</string>
-    <string name="save_rupees">Save ₹</string>
+    <string name="save_rupees">Save \u20B9</string>
 
     <string-array name="SortReviewsByOptions">
         <item>Top Reviews</item>
@@ -413,10 +413,10 @@
     <string name="my_crop_farms">My Crops &amp; Farms</string>
     <string name="manage_all_your_crops_and_farms">Manage all your crops and farms</string>
     <string name="new_text">New</string>
-    <string name="_900">₹ 900</string>
+    <string name="_900">\u20B9 900</string>
     <string name="skip_tour">SKIP TOUR</string>
     <string name="app_tour_descrition_menu">Direct access to most used App functionalities and features</string>
-    <string name="app_tour_descrition_youtube">Watch the video to learn how to user Gramophone App</string>
+    <string name="app_tour_descrition_youtube">Watch the video to learn how to use Gramophone App</string>
     <string name="app_tour_descrition_community">Connect &amp; engage with farmers and Agri experts via social media posts</string>
     <string name="app_tour_descrition_profile">Sell/Buy your crop easily by connecting with the right buyers/sellers</string>
     <string name="app_tour_descrition_trade">Sell/Buy your crop easily by connecting with the right buyers/sellers</string>
@@ -477,6 +477,21 @@
     <string name="enter_description">Please enter some comment</string>
     <string name="pay_only">Pay only</string>
     <string name="_01_quantity">01</string>
+    <string name="degee_temp">°</string>
+    <string name="degee_temp_centigrade">°C</string>
+    <string name="comma_with_space">", "</string>
+    <string name="others">Others</string>
+    <string name="order_placed">Order Placed</string>
+    <string name="no_orders_yet">No orders yet!</string>
+    <string name="download_invoice">Download Invoice</string>
+
+    <string name="crop_duration">"बुआई का समय : %1$s"</string>
+    <string name="crop_sowing_date">"बुआई की तारीख : %1$s"</string>
+    <string name="farm_area">"खेत का एरिया : %1$s"</string>
+    <string name="stage_name">"वर्तमान चरण : %1$s days &#8226; %2$s"</string>
+    <string name="added_one_farm">"1 खेत जोड़ा गया है"</string>
+    <string name="added_farm_count">"%1$s खेत जोड़े गये है"</string>
+
     <string name="hint_add_new_post">Write your question about your crop eg. how do I prevent this bug?</string>
     <string name="collapse_text_label">show less</string>
     <string name="expand_text_label">show more</string>
@@ -489,4 +504,5 @@
     <string name="button_ok">OK</string>
     <string name="add_tag_message">Please select crop to identify the post discussion.</string>
     <string name="add_tag_title">Select Crop</string>
+    <string name="one_offer_applied">1 Offer applied</string>
 </resources>

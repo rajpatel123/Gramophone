@@ -9,6 +9,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
+import com.amnix.xtension.extensions.enableIf
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -56,9 +57,11 @@ class UnitConverterActivity :
             }
 
         })
-        val mUnitsList = resources.getStringArray(R.array.units_array)
+        val mUnitsList = resources.getStringArray(R.array.units_kind_array)
         val unitKindArrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, R.layout.spinner_item, mUnitsList)
         unitKindArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        viewDataBinding.spinnerArea.enableIf(false)
+        viewDataBinding.spinnerArea.isClickable = false
         viewDataBinding.spinnerArea.setAdapter(unitKindArrayAdapter)
 
     }

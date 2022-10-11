@@ -67,7 +67,7 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
         cartAdapter: CartAdapter,
         onItemDetailClicked: (productId: String) -> Unit,
         onCartItemDeleteClicked: (productId: String) -> Unit,
-        onOfferClicked: (offerAppliedList: OfferApplied) -> Unit,
+        onOfferClicked: (offerAppliedList: OfferApplied, productName: String, productSku: String) -> Unit,
         onQuantityClicked: (cartItem: CartItem) -> Unit,
     ) {
         cartAdapter.onItemDetailClicked = onItemDetailClicked

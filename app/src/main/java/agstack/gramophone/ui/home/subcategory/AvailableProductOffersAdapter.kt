@@ -14,7 +14,7 @@ import kotlin.math.roundToInt
 
 class AvailableProductOffersAdapter(
     SKUOfferList: ArrayList<Offer>,
-    private val selectedSkuPrice: Float,
+    private var selectedSkuPrice: Float,
     private val selectedOfferProduct: ((Offer) -> Unit)?,
     private val onOfferDetailClicked: ((Offer) -> Unit)?,
 ) :
@@ -22,7 +22,6 @@ class AvailableProductOffersAdapter(
     var mSKUOfferList = SKUOfferList
     lateinit var mContext: Context
     var lastSelectPosition: Int = 0
-
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         mContext = viewGroup.context
@@ -39,11 +38,14 @@ class AvailableProductOffersAdapter(
         holder.binding.setVariable(BR.model, model)
         val mBinding = holder.binding as ItemAvailableOffersOnParticularProductBinding
         var amountSaved = 0f
-        if (model.benefitinrupes.isNotNull()) {
-            amountSaved = model.benefitinrupes.toFloat()
+        if (model.benefit.isNotNull()) {
+            amountSaved = model.benefit.amount
         }
+        if (amountSaved.toString().contains(".0") || amountSaved.toString().contains(".00"))
+            mBinding.tvSaveAmount.text = "₹ " + amountSaved.roundToInt().toString()
+        else mBinding.tvSaveAmount.text = "₹ " + amountSaved.toString()
 
-        if (model.benefitinrupes.isNotNull() && model.benefitinrupes > 0f && selectedSkuPrice > model.benefitinrupes.toFloat()) {
+        if (amountSaved > 0f && selectedSkuPrice - amountSaved >= 0) {
             val payOnly = selectedSkuPrice - amountSaved
             val payOnlyString: String =
                 if (payOnly.toString().contains(".0") || payOnly.toString().contains(".00")) {
@@ -88,6 +90,11 @@ class AvailableProductOffersAdapter(
 
     override fun getItemCount(): Int {
         return mSKUOfferList.size
+    }
+
+    fun updateSelectedSkuPrice(selectedPrice: Float) {
+        selectedSkuPrice = selectedPrice
+        notifyDataSetChanged()
     }
 
     inner class CustomViewHolder(var binding: ItemAvailableOffersOnParticularProductBinding) :

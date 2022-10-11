@@ -6,21 +6,15 @@ import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentMarketBinding
 import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.dialog.AppTourDialog
-import agstack.gramophone.ui.home.adapter.*
-import agstack.gramophone.ui.home.featured.FeaturedProductActivity
-import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
-import agstack.gramophone.ui.home.shop.ShopByActivity
-import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
+import agstack.gramophone.ui.farm.model.FarmResponse
+import agstack.gramophone.ui.home.adapter.HomeAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
-import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -102,6 +96,7 @@ class MarketFragment :
         marketFragmentViewModel.getStores()
         marketFragmentViewModel.getCompanies()
         marketFragmentViewModel.getCartProducts()
+        marketFragmentViewModel.getFarms()
     }
 
     private fun setUpUI() {
@@ -110,42 +105,6 @@ class MarketFragment :
             callApi()
             binding?.swipeRefresh?.isRefreshing = false
         }
-        binding?.viewAllFeaturedProduct?.setOnClickListener {
-            openActivity(FeaturedProductActivity::class.java, null)
-        }
-        binding?.viewAllCrops?.setOnClickListener {
-            openActivity(ShopByActivity::class.java, Bundle().apply {
-                putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
-                putParcelable(Constants.SHOP_BY_CROP, marketFragmentViewModel.cropResponse)
-            })
-        }
-        binding?.viewAllStores?.setOnClickListener {
-            openActivity(ShopByActivity::class.java, Bundle().apply {
-                putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_STORE)
-                putParcelable(Constants.SHOP_BY_STORE, marketFragmentViewModel.storeResponse)
-            })
-        }
-        binding?.viewAllCompanies?.setOnClickListener {
-            openActivity(ShopByActivity::class.java, Bundle().apply {
-                putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_COMPANY)
-                putParcelable(Constants.SHOP_BY_COMPANY, marketFragmentViewModel.companyResponse)
-            })
-        }
-
-        binding?.rvMandiRates?.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        binding?.rvMandiRates?.setHasFixedSize(true)
-        binding?.rvMandiRates?.adapter = MandiRatesAdapter()
-
-
-        binding?.rvArticles?.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        binding?.rvArticles?.setHasFixedSize(true)
-        binding?.rvArticles?.adapter = ArticlesAdapter()
-
-        binding?.rvPopularProducts?.layoutManager = GridLayoutManager(activity, 2)
-        binding?.rvPopularProducts?.setHasFixedSize(true)
-        binding?.rvPopularProducts?.adapter = PopularProductAdapter()
     }
 
     override fun setHomeAdapter(adapter: HomeAdapter, onItemClick: (String) -> Unit) {
@@ -162,6 +121,7 @@ class MarketFragment :
         storeResponse: StoreResponse?,
         companyResponse: CompanyResponse?,
         cartList: List<CartItem>?,
+        farmResponse: FarmResponse?
     ) {
         homeAdapter?.notifyAdapterOnDataChange(allBannerResponse,
             categoryResponse,
@@ -169,46 +129,8 @@ class MarketFragment :
             cropResponse,
             storeResponse,
             companyResponse,
-            cartList)
-    }
-
-    override fun setViewPagerAdapter(bannerList: List<Banner>?) {
-        val adapter = ViewPagerAdapter(bannerList!!)
-        binding?.viewPager?.adapter = adapter
-        binding?.dotsIndicator?.attachTo(binding?.viewPager!!)
-    }
-
-    override fun setCropAdapter(adapter: ShopByCropsAdapter, onItemClick: (String) -> Unit) {
-        adapter.onItemClicked = onItemClick
-        binding?.rvShopByCrops?.adapter = adapter
-    }
-
-    override fun setCompanyAdapter(adapter: ShopByCompanyAdapter, onItemClick: (String) -> Unit) {
-        adapter.onItemClicked = onItemClick
-        binding?.rvShopByCompany?.adapter = adapter
-    }
-
-    override fun setStoreAdapter(adapter: ShopByStoresAdapter, onItemClick: (String) -> Unit) {
-        adapter.onItemClicked = onItemClick
-        binding?.rvShopByStores?.adapter = adapter
-    }
-
-    override fun setExclusiveBannerAdapter(
-        adapter: ExclusiveBannerAdapter,
-        onItemClick: (String) -> Unit,
-    ) {
-        adapter.itemClicked = onItemClick
-        binding?.rvExclusive?.adapter = adapter
-    }
-
-    override fun startProductDetailsActivity(it: ProductData) {
-        val bundle = Bundle()
-        bundle.putParcelable("product", it)
-        openActivity(ProductDetailsActivity::class.java, bundle)
-    }
-
-    override fun openSubCategoryActivity(bundle: Bundle) {
-        openActivity(SubCategoryActivity::class.java, bundle)
+            cartList,
+            farmResponse)
     }
 
     override fun onResume() {
@@ -227,36 +149,4 @@ class MarketFragment :
     override fun getViewModel(): MarketFragmentViewModel {
         return marketFragmentViewModel
     }
-
-    /* private fun initializeYoutube() {
-         binding?.ytPlayer?.initialize(
-             "api_key",
-             object : YouTubePlayer.OnInitializedListener {
-                 // Implement two methods by clicking on red
-                 // error bulb inside onInitializationSuccess
-                 // method add the video link or the playlist
-                 // link that you want to play In here we
-                 // also handle the play and pause
-                 // functionality
-                 override fun onInitializationSuccess(
-                     provider: YouTubePlayer.Provider,
-                     youTubePlayer: YouTubePlayer, b: Boolean,
-                 ) {
-                     youTubePlayer.loadVideo("HzeK7g8cD0Y")
-                     youTubePlayer.play()
-                 }
-
-                 // Inside onInitializationFailure
-                 // implement the failure functionality
-                 // Here we will show toast
-                 override fun onInitializationFailure(
-                     provider: YouTubePlayer.Provider,
-                     youTubeInitializationResult: YouTubeInitializationResult,
-                 ) {
-                     Toast.makeText(activity,
-                         "Video player Failed",
-                         Toast.LENGTH_SHORT).show()
-                 }
-             })
-     }*/
 }

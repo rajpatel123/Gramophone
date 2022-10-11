@@ -2,8 +2,6 @@ package agstack.gramophone.ui.home.subcategory
 
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
-import agstack.gramophone.ui.home.subcategory.model.CheckOfferResponse
-import agstack.gramophone.ui.home.subcategory.model.GpApiOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.Offer
 import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
@@ -33,10 +31,8 @@ interface SubCategoryNavigator : BaseNavigator {
 
     fun openProductDetailsActivity(productData: ProductData)
 
-    fun updateAddToCartDialog(
-        isShowError: Boolean,
-        errorMsg: String,
-        appliedOfferResponse: GpApiOfferResponse,
+    fun updateOfferApplicabilityOnDialog(
+        isOfferApplicable: Boolean, promotionId: String? = null, message: String,
     )
 
     fun disableSortAndFilter()

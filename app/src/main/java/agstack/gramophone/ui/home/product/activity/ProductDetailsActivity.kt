@@ -235,12 +235,14 @@ class ProductDetailsActivity :
     }
 
     override fun setPercentageOff_mrpVisibility(
+        product_app_name:String,
         salesPrice: String,
         discountPercentage: String,
         isMRPVisible: Boolean,
         isOffersLayoutVisible: Boolean,
         isContactforPriceVisible: Boolean
     ) {
+        viewDataBinding.tvProductname.text=product_app_name
         viewDataBinding.tvProductSP.setText(resources.getString(R.string.rupee) + "" + salesPrice)
         viewDataBinding.tvPercentageOffOnSelectedSKU.setText(discountPercentage)
         if (isMRPVisible) {
@@ -338,10 +340,9 @@ class ProductDetailsActivity :
         })
     }
 
-
     override fun updateAddToCartButtonText(newText: String?): String {
         if (newText != null)
-            viewDataBinding.btnAddtocart.setText(newText)
-        return viewDataBinding.btnAddtocart.text.toString()
+            viewDataBinding.tvAddtocart.setText(newText)
+        return viewDataBinding.tvAddtocart.text.toString()
     }
 }

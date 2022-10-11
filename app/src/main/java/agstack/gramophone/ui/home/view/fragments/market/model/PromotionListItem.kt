@@ -1,5 +1,6 @@
 package agstack.gramophone.ui.home.view.fragments.market.model
 
+import agstack.gramophone.ui.home.product.test.Benefit
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
@@ -29,8 +30,8 @@ data class PromotionListItem(
     @field:SerializedName("selected")
     var selected: Boolean? = false,
 
-    @field:SerializedName("amount_saved")
-    val amount_saved: Double? = 0.0,
+    @field:SerializedName("benefit")
+    val benefit: Benefit? = null
 
     ) : Parcelable
 

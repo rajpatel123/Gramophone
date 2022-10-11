@@ -63,6 +63,7 @@
                     android:lineSpacingExtra="-2sp"
                     android:textColor="@color/gray_strike_through"
                     android:textSize="13sp"
+                    app:isDateAlreadyFormatted="@{false}"
                     app:items="@{@string/items}"
                     app:orderDate="@{viewModel.orderDate}"
                     app:quantity="@{viewModel.quantity}"
@@ -79,27 +80,31 @@
                     android:layout_marginEnd="@dimen/_16sdp"
                     android:fontFamily="@font/manrope_bold"
                     android:lineSpacingExtra="-1sp"
-                    android:text="@{@string/rupee_symbol.concat(viewModel.price)}"
+                    android:text="@{@string/rupee_symbol_with_space.concat(String.valueOf(viewModel.totalPrice))}"
                     android:textColor="@color/blakish"
                     android:textSize="20sp"
                     tools:text="₹4320" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/rl_order_status"
                     android:layout_width="match_parent"
-                    android:layout_height="88dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/date_time"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_16sdp"
                     android:layout_marginEnd="@dimen/_16sdp"
-                    android:background="@drawable/rounded_corner_8_solid_orange_light">
+                    android:background="@drawable/rounded_corner_8_solid_orange_light"
+                    android:gravity="center_vertical"
+                    android:minHeight="88dp"
+                    android:orientation="vertical"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="14dp">
 
                     <TextView
                         android:id="@+id/tv_order_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="14dp"
-                        android:layout_marginTop="16dp"
                         android:drawablePadding="@dimen/_6sdp"
                         android:fontFamily="@font/manrope_bold"
                         android:lineSpacingExtra="0sp"
@@ -112,17 +117,44 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_order_status"
                         android:layout_marginStart="36dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="20dp"
                         android:fontFamily="@font/manrope_regular"
                         android:lineSpacingExtra="-2sp"
-                        android:text="@string/order_placed_msg"
+                        android:text="@{@string/order.concat(viewModel.orderStatusMessage)}"
                         android:textColor="@color/gray"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        tools:text="@string/order_placed_msg" />
 
-                </RelativeLayout>
+                    <View
+                        android:id="@+id/viewOrderStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginEnd="@dimen/_12sdp"
+                        android:alpha="0.1"
+                        android:background="@color/blakish"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_invoice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="9dp"
+                        android:drawablePadding="@dimen/_6sdp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:lineSpacingExtra="0sp"
+                        android:text="@string/download_invoice"
+                        android:textColor="@color/weather_orange"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        app:drawableStartCompat="@drawable/ic_invoice_download"
+                        tools:text="Order Placed" />
+
+                </LinearLayout>
 
                 <View
                     android:id="@+id/order_status_separator"
@@ -367,10 +399,10 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="@{@string/rupee_symbol.concat(String.valueOf(viewModel.price))}"
+                    android:text="@{@string/rupee_symbol_with_space.concat(String.valueOf(viewModel.subTotalPrice))}"
                     android:textColor="@color/blakish"
                     android:textSize="16sp"
-                    tools:text="@string/rupee_symbol" />
+                    tools:text="@string/rupee_symbol_with_space" />
 
                 <TextView
                     android:id="@+id/tvDiscountTitle"
@@ -398,7 +430,7 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="@{@string/minus_rupee_symbol.concat(String.valueOf(viewModel.price))}"
+                    android:text="@{@string/minus_rupee_symbol.concat(viewModel.discount)}"
                     android:textColor="@color/green_medium"
                     android:textSize="16sp"
                     tools:text="-₹ 0" />
@@ -429,7 +461,7 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="@{@string/minus_rupee_symbol.concat(String.valueOf(viewModel.price))}"
+                    android:text="@{@string/minus_rupee_symbol.concat(viewModel.gramCash)}"
                     android:textColor="@color/green_medium"
                     android:textSize="16sp"
                     tools:text="-₹ 50" />
@@ -541,7 +573,7 @@
                         android:layout_centerVertical="true"
                         android:fontFamily="@font/manrope_bold"
                         android:lineSpacingExtra="1sp"
-                        android:text="@{@string/rupee_symbol.concat(String.valueOf(viewModel.price))}"
+                        android:text="@{@string/rupee_symbol_with_space.concat(String.valueOf(viewModel.totalPrice))}"
                         android:textColor="@color/blakish"
                         android:textSize="20sp"
                         tools:text="₹ 100" />

@@ -21,4 +21,5 @@ data class StoreData(
     @SerializedName("store_id") var storeId: Int? = null,
     @SerializedName("store_image") var storeImage: String? = null,
     @SerializedName("store_name") var storeName: String? = null,
+    @SerializedName("highlight") var highlight: String? = null,
 ) : Parcelable

@@ -33,12 +33,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:background="@drawable/ic_stripe_bg">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/_100sdp"
                         android:layout_marginLeft="@dimen/_13sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginRight="@dimen/_13sdp"
                         android:layout_marginBottom="@dimen/_15sdp"
@@ -65,11 +69,12 @@
                                 <TextView
                                     android:id="@+id/tv_title"
                                     style="@style/TextSize16Sp"
+                                    android:minLines="2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/manrope_bold"
                                     android:hint="50% Off on Pesticide"
-                                    android:text="@{viewModel.MOffersItem.productName}" />
+                                    android:text="@{viewModel.MOffersItem.name}" />
 
                                 <TextView
                                     android:id="@+id/tv_valid_till"

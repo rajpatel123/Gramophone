@@ -26,7 +26,7 @@ interface ProductDetailsNavigator: BaseNavigator {
     fun showExpertAdviceDialog(expertAdviceBottomSheetFragment: ExpertAdviceBottomSheetFragment, onOkayClick: () -> Unit,onCancelClick: () -> Unit)
     fun dismissExpertBottomSheet()
     fun refreshSKUAdapter()
-     fun setPercentageOff_mrpVisibility(salesprice:String,discount: String,isMRPVisible:Boolean,isOffersLayoutVisible:Boolean,isContactforPriceVisible:Boolean)
+     fun setPercentageOff_mrpVisibility(productname:String,salesprice:String,discount: String,isMRPVisible:Boolean,isOffersLayoutVisible:Boolean,isContactforPriceVisible:Boolean)
     fun setRatingBarChangeListener()
     fun refreshOfferAdapter()
     fun showContactForPriceBottomSheetDialog(contactForPriceBottomSheetDialog: ContactForPriceBottomSheetDialog)
