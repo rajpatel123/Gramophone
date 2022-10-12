@@ -92,6 +92,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_14sdp"
                     android:alpha="0.5"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/_16sdp"
                     android:background="@color/gray_view_line"
                     android:visibility="visible"
                     app:placeSize="@{viewModel.placedOrderSize}"

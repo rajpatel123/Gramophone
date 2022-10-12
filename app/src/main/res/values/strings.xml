@@ -505,4 +505,7 @@
     <string name="add_tag_message">Please select crop to identify the post discussion.</string>
     <string name="add_tag_title">Select Crop</string>
     <string name="one_offer_applied">1 Offer applied</string>
+    <string name="phone">Phone</string>
+    <string name="not_available">N.A</string>
+    <string name="order_has_been_assigned">has been assigned to deliver your order!</string>
 </resources>

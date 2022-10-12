@@ -51,7 +51,7 @@ class WeatherViewModel @Inject constructor(
     }
 
     fun getWeatherDetail() {
-        val weatherRequest = WeatherRequest(null, null, latitude, longitude)
+        val weatherRequest = WeatherRequest(latitude, longitude)
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -76,9 +76,11 @@ class WeatherViewModel @Inject constructor(
                         try {
                             var date: String = weatherData?.current_time!!
                             date = date.replace("Today - ", "")
-                            val time = Utility.getFormattedDate(date,
+                            var time = Utility.getFormattedDate(date,
                                 Utility.HOUR_MIN_12_TIME_FORMAT,
                                 Utility.HOUR_MIN_SECOND_TIME_FORMAT)
+                            time = time.replace("pm", "PM")
+                            time = time.replace("am", "AM")
                             currentTime.value = "Today - $time"
                         } catch (e: Exception) {
                             currentTime.value = weatherData?.current_time
@@ -93,7 +95,7 @@ class WeatherViewModel @Inject constructor(
     }
 
     fun getWeatherDetailHourly() {
-        val weatherRequest = WeatherRequest(Utility.getCurrentDate(), null, latitude, longitude)
+        val weatherRequest = WeatherRequest(latitude, longitude)
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -118,7 +120,7 @@ class WeatherViewModel @Inject constructor(
     }
 
     fun getWeatherDetailDayWise() {
-        val weatherRequest = WeatherRequest(null, null, latitude, longitude)
+        val weatherRequest = WeatherRequest(latitude, longitude)
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
