@@ -89,7 +89,6 @@ class WeatherViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 progress.value = false
-                getNavigator()?.showToast(e.message)
             }
         }
     }
