@@ -43,14 +43,16 @@ class WeatherViewModel @Inject constructor(
     }
 
     fun getWeatherData() {
-        getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.weather)!!)
+        getWeatherDetail()
+        getWeatherDetailHourly()
+        getWeatherDetailDayWise()
     }
 
     fun weatherChange() {
         isRainView.value = isRainView.value != true
     }
 
-    fun getWeatherDetail() {
+    private fun getWeatherDetail() {
         val weatherRequest = WeatherRequest(latitude, longitude)
         viewModelScope.launch {
             try {
@@ -93,7 +95,7 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
-    fun getWeatherDetailHourly() {
+    private fun getWeatherDetailHourly() {
         val weatherRequest = WeatherRequest(latitude, longitude)
         viewModelScope.launch {
             try {
@@ -118,7 +120,7 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
-    fun getWeatherDetailDayWise() {
+    private fun getWeatherDetailDayWise() {
         val weatherRequest = WeatherRequest(latitude, longitude)
         viewModelScope.launch {
             try {
@@ -133,7 +135,6 @@ class WeatherViewModel @Inject constructor(
                         && response.body()?.gp_api_response_data?.get(0).isNotNull()
                         && response.body()?.gp_api_response_data?.get(0)?.days.isNotNullOrEmpty()
                     ) {
-
                         getNavigator()?.setDayWiseForecastAdapter(DayWiseForecastAdapter(response.body()?.gp_api_response_data?.get(
                             0)!!.days))
                     }
@@ -144,15 +145,18 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
-    fun getLatitudeLongitude(gpsTracker: GPSTracker?) {
+    fun getLatitudeLongitude() {
         try {
+            val gpsTracker = getNavigator()?.getGPSTracker()
             if (gpsTracker != null && gpsTracker.canGetLocation()) {
                 latitude = gpsTracker.getLatitude().toString()
                 longitude = gpsTracker.getLongitude().toString()
-
-                getWeatherDetail()
-                getWeatherDetailHourly()
-                getWeatherDetailDayWise()
+                // refresh weather data
+                if (latitude.equals("0.0")) {
+                    latitude = null
+                    longitude = null
+                }
+                getWeatherData()
             } else {
                 // Can't get location.
                 // GPS or network is not enabled.
