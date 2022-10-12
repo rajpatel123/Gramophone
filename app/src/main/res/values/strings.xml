@@ -505,4 +505,6 @@
     <string name="add_tag_message">Please select crop to identify the post discussion.</string>
     <string name="add_tag_title">Select Crop</string>
     <string name="one_offer_applied">1 Offer applied</string>
+    <string name="feedback_submit_success_alert_title">Success !</string>
+    <string name="feedback_submit_success_alert_message">Feedback successfully submitted.</string>
 </resources>

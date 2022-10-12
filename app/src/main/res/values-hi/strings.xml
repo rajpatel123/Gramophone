@@ -426,6 +426,8 @@
     <string name="no_orders_yet">No orders yet!</string>
     <string name="download_invoice">Download Invoice</string>
     <string name="one_offer_applied">1 Offer applied</string>
+    <string name="feedback_submit_success_alert_title">सफलता!</string>
+    <string name="feedback_submit_success_alert_message">आपकी राय सफलतापूर्वक दर्ज हुई!</string>
 
 
 </resources>
