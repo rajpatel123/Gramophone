@@ -51,6 +51,8 @@ class OffersListViewModel @Inject constructor(
                 offerListRequestModel.customer_id = SharedPreferencesHelper.instance?.getString(
                     SharedPreferencesKeys.CUSTOMER_ID
                 )
+                offerListRequestModel.search = searchedString
+                offerListRequestModel.page = 1
 
                 offerListRequestModel.business_type = "customer"
                 offerListRequestModel.language = languageCode

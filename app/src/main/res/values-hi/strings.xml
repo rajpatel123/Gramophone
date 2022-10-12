@@ -429,6 +429,8 @@
     <string name="phone">Phone</string>
     <string name="not_available">N.A</string>
     <string name="order_has_been_assigned">has been assigned to deliver your order!</string>
+    <string name="feedback_submit_success_alert_title">सफलता!</string>
+    <string name="feedback_submit_success_alert_message">आपकी राय सफलतापूर्वक दर्ज हुई!</string>
 
 
 </resources>

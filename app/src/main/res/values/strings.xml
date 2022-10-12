@@ -508,4 +508,6 @@
     <string name="phone">Phone</string>
     <string name="not_available">N.A</string>
     <string name="order_has_been_assigned">has been assigned to deliver your order!</string>
+    <string name="feedback_submit_success_alert_title">Success !</string>
+    <string name="feedback_submit_success_alert_message">Feedback successfully submitted.</string>
 </resources>

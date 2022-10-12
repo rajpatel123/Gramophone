@@ -38,12 +38,13 @@ var feedbackText = ObservableField<String>("")
 
                 if (expertAdviceResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
 
-                    getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
+                    //getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
+                    getNavigator()?.showFeedbackSubmitted()
                 } else {
                     getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
                 }
 
-                getNavigator()?.finishActivity()
+               // getNavigator()?.finishActivity()
             }
         } else {
             getNavigator()?.showToast(R.string.please_enter_feedback)
