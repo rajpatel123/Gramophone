@@ -4,12 +4,12 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.FeedbackActivityBinding
-import agstack.gramophone.databinding.UnitConverterActivityBinding
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.graphics.Typeface
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.ArrayAdapter
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -34,12 +34,23 @@ class FeedbackActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpToolBar(true, resources.getString(R.string.leave_feedback), R.drawable.ic_arrow_left)
-        initViews()
+
     }
 
-    private fun initViews() {
+    override fun showFeedbackSubmitted() {
+        val feedbackSubmitSuccessAlert = AlertDialog.Builder(this)
+        feedbackSubmitSuccessAlert.setTitle(resources.getString(R.string.feedback_submit_success_alert_title))
+        feedbackSubmitSuccessAlert.setMessage(resources.getString(R.string.feedback_submit_success_alert_message))
+        feedbackSubmitSuccessAlert.setPositiveButton(resources.getString(R.string.ok)) { dialog, id -> onBackPressed() }
+        val feedbackSubmitSuccessAlertDialog = feedbackSubmitSuccessAlert.create()
+        feedbackSubmitSuccessAlertDialog.show()
+        boldPositiveButton(feedbackSubmitSuccessAlertDialog)
     }
-
+    fun boldPositiveButton(alertDialog: AlertDialog) {
+        val positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE)
+        positiveButton.setTextColor(ContextCompat.getColor(this, R.color.brand_color))
+        positiveButton.setTypeface(null, Typeface.BOLD)
+    }
 
     override fun finishActivity() {
         finish()
