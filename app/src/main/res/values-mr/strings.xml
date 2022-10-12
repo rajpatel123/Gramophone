@@ -426,5 +426,7 @@
     <string name="one_offer_applied">1 Offer applied</string>
     <string name="feedback_submit_success_alert_title">यशस्वी !</string>
     <string name="feedback_submit_success_alert_message">अभिप्राय यशस्वीपणे जमा केला.</string>
+    <string name="no_connection">No Connection!</string>
+    <string name="no_internet_message">There seems to be no internet connection. Try checking things out</string>
 
 </resources>
