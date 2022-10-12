@@ -10,5 +10,4 @@
     android:background="@color/white"
     app:titleTextColor="@color/blakish"
     app:titleTextAppearance="@style/Toolbar.TitleText"
-    android:theme="@style/ToolbarTheme"
-    android:elevation="@dimen/_8sdp"/>
+    android:theme="@style/ToolbarTheme"/>

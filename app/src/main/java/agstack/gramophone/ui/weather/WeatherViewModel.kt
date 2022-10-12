@@ -40,6 +40,8 @@ class WeatherViewModel @Inject constructor(
         progress.value = false
         isRainView.value = false
         showWeatherView.value = false
+        latitude = null
+        longitude = null
     }
 
     fun getWeatherData() {
