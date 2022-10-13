@@ -59,7 +59,8 @@ class AddFarmViewModel @Inject constructor(
         selectedCrop?.cropId.let { addFarmRequest.crop_id = it.toString() }
         getNavigator()?.getArea().let { addFarmRequest.area = it }
         getNavigator()?.getDate().let { addFarmRequest.crop_sowing_date = it }
-        getNavigator()?.getAreaUnit().let { addFarmRequest.unit = it }
+        getNavigator()?.getAreaUnit().let { addFarmRequest.unit = it?.unit }
+        getNavigator()?.getAreaUnit().let { addFarmRequest.unit_id = it?.unit_id }
     }
 
     private fun addFarm(addFarmRequest: AddFarmRequest) {
@@ -73,8 +74,10 @@ class AddFarmViewModel @Inject constructor(
                     val addFarmResponse = response.body()
                     progress.value = false
                     getNavigator()?.onFarmAdded()
+                }else{
+                    progress.value = false
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
-
             } catch (ex: Exception) {
                 progress.value = false
                 when (ex) {
@@ -85,17 +88,20 @@ class AddFarmViewModel @Inject constructor(
         }
     }
 
-    fun getFarmUnits() {
+    fun getFarmUnits(type : String) {
         progress.value = true
         viewModelScope.launch {
             try {
-                val response = productRepository.getFarmUnits()
+                val response = productRepository.getFarmUnits(type = type)
                 if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
                     && response.body()?.gp_api_response_data != null
                 ) {
                     val farmUnitsResponse = response.body()
                     progress.value = false
                     getNavigator()?.setFarmUnitsAdapter(farmUnitsResponse?.gp_api_response_data!!)
+                }else{
+                    progress.value = false
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
             } catch (ex: Exception) {
                 progress.value = false
