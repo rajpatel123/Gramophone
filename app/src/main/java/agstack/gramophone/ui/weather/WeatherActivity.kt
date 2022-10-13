@@ -25,20 +25,21 @@ class WeatherActivity :
 
     //initialise ViewModel
     private val weatherViewModel: WeatherViewModel by viewModels()
-    private var gpsTracker: GPSTracker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
+        weatherViewModel.getWeatherData()
     }
 
     private fun setupUi() {
+        setToolbarTitle(getString(R.string.weather))
         viewDataBinding.tvChangeLoc.setOnClickListener(this)
-        weatherViewModel.getWeatherData()
-        weatherViewModel.getWeatherDetail()
-        weatherViewModel.getWeatherDetailHourly()
-        weatherViewModel.getWeatherDetailDayWise()
-        gpsTracker = GPSTracker(this@WeatherActivity)
+        viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
+        viewDataBinding.swipeRefresh.setOnRefreshListener {
+            weatherViewModel.getWeatherData()
+            viewDataBinding.swipeRefresh.isRefreshing = false
+        }
     }
 
     override fun setToolbarTitle(title: String) {
@@ -74,7 +75,7 @@ class WeatherActivity :
             R.id.tvChangeLoc -> {
                 val locationAccessDialog = LocationAccessDialog() {
                     if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        weatherViewModel.getLatitudeLongitude(gpsTracker)
+                        weatherViewModel.getLatitudeLongitude()
                     } else {
                         ActivityCompat.requestPermissions(this,
                             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
@@ -96,6 +97,8 @@ class WeatherActivity :
     override fun setDayWiseForecastAdapter(dayWiseForecastAdapter: DayWiseForecastAdapter) {
         viewDataBinding.rvDayForecast.adapter = dayWiseForecastAdapter
     }
+
+    override fun getGPSTracker(): GPSTracker = GPSTracker(this@WeatherActivity)
 
     override fun getLayoutID(): Int {
         return R.layout.activity_weather

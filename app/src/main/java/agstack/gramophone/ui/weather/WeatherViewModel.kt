@@ -40,18 +40,22 @@ class WeatherViewModel @Inject constructor(
         progress.value = false
         isRainView.value = false
         showWeatherView.value = false
+        latitude = null
+        longitude = null
     }
 
     fun getWeatherData() {
-        getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.weather)!!)
+        getWeatherDetail()
+        getWeatherDetailHourly()
+        getWeatherDetailDayWise()
     }
 
     fun weatherChange() {
         isRainView.value = isRainView.value != true
     }
 
-    fun getWeatherDetail() {
-        val weatherRequest = WeatherRequest(null, null, latitude, longitude)
+    private fun getWeatherDetail() {
+        val weatherRequest = WeatherRequest(latitude, longitude)
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -76,9 +80,11 @@ class WeatherViewModel @Inject constructor(
                         try {
                             var date: String = weatherData?.current_time!!
                             date = date.replace("Today - ", "")
-                            val time = Utility.getFormattedDate(date,
+                            var time = Utility.getFormattedDate(date,
                                 Utility.HOUR_MIN_12_TIME_FORMAT,
                                 Utility.HOUR_MIN_SECOND_TIME_FORMAT)
+                            time = time.replace("pm", "PM")
+                            time = time.replace("am", "AM")
                             currentTime.value = "Today - $time"
                         } catch (e: Exception) {
                             currentTime.value = weatherData?.current_time
@@ -87,13 +93,12 @@ class WeatherViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 progress.value = false
-                getNavigator()?.showToast(e.message)
             }
         }
     }
 
-    fun getWeatherDetailHourly() {
-        val weatherRequest = WeatherRequest(Utility.getCurrentDate(), null, latitude, longitude)
+    private fun getWeatherDetailHourly() {
+        val weatherRequest = WeatherRequest(latitude, longitude)
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -117,8 +122,8 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
-    fun getWeatherDetailDayWise() {
-        val weatherRequest = WeatherRequest(null, null, latitude, longitude)
+    private fun getWeatherDetailDayWise() {
+        val weatherRequest = WeatherRequest(latitude, longitude)
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -132,7 +137,6 @@ class WeatherViewModel @Inject constructor(
                         && response.body()?.gp_api_response_data?.get(0).isNotNull()
                         && response.body()?.gp_api_response_data?.get(0)?.days.isNotNullOrEmpty()
                     ) {
-
                         getNavigator()?.setDayWiseForecastAdapter(DayWiseForecastAdapter(response.body()?.gp_api_response_data?.get(
                             0)!!.days))
                     }
@@ -143,15 +147,18 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
-    fun getLatitudeLongitude(gpsTracker: GPSTracker?) {
+    fun getLatitudeLongitude() {
         try {
+            val gpsTracker = getNavigator()?.getGPSTracker()
             if (gpsTracker != null && gpsTracker.canGetLocation()) {
                 latitude = gpsTracker.getLatitude().toString()
                 longitude = gpsTracker.getLongitude().toString()
-
-                getWeatherDetail()
-                getWeatherDetailHourly()
-                getWeatherDetailDayWise()
+                // refresh weather data
+                if (latitude.equals("0.0")) {
+                    latitude = null
+                    longitude = null
+                }
+                getWeatherData()
             } else {
                 // Can't get location.
                 // GPS or network is not enabled.

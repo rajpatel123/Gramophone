@@ -40,12 +40,13 @@ class SubCategoryViewModel @Inject constructor(
     var toolbarTitle = MutableLiveData<String>()
     var toolbarImage = MutableLiveData<String>()
     var mainFilterList: ArrayList<MainFilterData>? = null
-    var sortDataList: ArrayList<SortByData>? = null
+    var sortDataList: ArrayList<SortByData> = ArrayList<SortByData>()
     var subCategoryList: List<CategoryData>? = null
     var brandsList: List<Brands>? = null
     var cropsList: List<Crops>? = null
     var technicalDataList: List<TechnicalData>? = null
     var progress = MutableLiveData<Boolean>()
+    val subCategoryIds = ArrayList<String>()
     var categoryId: String? = null
     var storeId: String? = null
     private var checkOfferApplicableJob: Job? = null
@@ -59,10 +60,11 @@ class SubCategoryViewModel @Inject constructor(
     }
 
     fun getBundleData() {
+        subCategoryIds.clear()
         val bundle = getNavigator()?.getBundle()
         initializeSortData()
 
-        if (bundle?.containsKey(Constants.SHOP_BY_TYPE)!! && bundle.getString(Constants.SHOP_BY_TYPE) != null) {
+        if (bundle?.containsKey(Constants.HOME_FEATURED_PRODUCTS)!! && bundle.getString(Constants.HOME_FEATURED_PRODUCTS) != null) {
             showSortFilterView.value = false
             toolbarTitle.value = getNavigator()?.getMessage(R.string.featured_products)
             getFeaturedProducts()
@@ -77,19 +79,30 @@ class SubCategoryViewModel @Inject constructor(
             toolbarTitle.value = bundle.get(Constants.CATEGORY_NAME) as String
             toolbarImage.value = bundle.get(Constants.CATEGORY_IMAGE) as String
             getSubCategoryData()
+        } else if (bundle.containsKey(Constants.SUB_CATEGORY_ID) && bundle.getString(Constants.SUB_CATEGORY_ID) != null) {
+            showSortFilterView.value = true
+            categoryId = bundle.getString(Constants.SHOP_BY_SUB_CATEGORY)
+            subCategoryIds.add(bundle.getString(Constants.SUB_CATEGORY_ID, ""))
+            toolbarTitle.value = bundle.getString(Constants.SUB_CATEGORY_NAME)
+            toolbarImage.value = bundle.getString(Constants.SUB_CATEGORY_IMAGE)
+            getSubCategoryData()
         }
     }
 
     private fun initializeSortData() {
-        sortDataList = ArrayList<SortByData>()
-        sortDataList?.add(SortByData(true, Constants.RELAVENT, Constants.RELAVENT_CODE))
-        sortDataList?.add(SortByData(false,
+        if (sortDataList.isNull()) {
+            sortDataList = ArrayList<SortByData>()
+        } else {
+            sortDataList.clear()
+        }
+        sortDataList.add(SortByData(true, Constants.RELEVANCE, Constants.RELAVENT_CODE))
+        sortDataList.add(SortByData(false,
             Constants.AVG_CUSTOMER_RATING,
             Constants.AVG_CUSTOMER_RATING_CODE))
-        sortDataList?.add(SortByData(false,
+        sortDataList.add(SortByData(false,
             Constants.PRICE_LOW_TO_HIGH,
             Constants.PRICE_LOW_TO_HIGH_CODE))
-        sortDataList?.add(SortByData(false,
+        sortDataList.add(SortByData(false,
             Constants.PRICE_HIGH_TO_LOW,
             Constants.PRICE_HIGH_TO_LOW_CODE))
     }
@@ -138,22 +151,25 @@ class SubCategoryViewModel @Inject constructor(
                         brandsList = response.body()?.gp_api_response_data?.brands_list
                         cropsList = response.body()?.gp_api_response_data?.crops_list
                         technicalDataList = response.body()?.gp_api_response_data?.technical_data
-                        subCategoryList =
-                            response.body()?.gp_api_response_data?.product_app_sub_categories_list
+                        // subCategoryIds.isNullOrEmpty() this check is placed here
+                        // because It has no need of sub category detail page and only used in category detail page
+                        if (subCategoryIds.isNullOrEmpty()) {
+                            subCategoryList =
+                                response.body()?.gp_api_response_data?.product_app_sub_categories_list
+                            if (subCategoryList != null && subCategoryList?.size!! > 0
+                            ) {
+                                showSubCategoryView.value = true
+                                getNavigator()?.setSubCategoryAdapter(ShopByCategoryAdapter(
+                                    subCategoryList) { subCategoryId, subCategoryName, subCategoryImage ->
+                                    getNavigator()?.getSubCategoryDetail(categoryId!!,
+                                        subCategoryId,
+                                        subCategoryName,
+                                        subCategoryImage)
+                                })
+                            }
+                        }
                         initMainFilterData()
                         getNavigator()?.enableSortAndFilter()
-
-                        if (subCategoryList != null && subCategoryList?.size!! > 0
-                        ) {
-                            showSubCategoryView.value = true
-                            getNavigator()?.setSubCategoryAdapter(ShopByCategoryAdapter(
-                                subCategoryList) { id, name, image ->
-                                /*getNavigator()?.openCheckoutStatusActivity(Bundle().apply {
-                                putString(Constants.ORDER_ID,
-                                    response.body()?.gp_api_response_data?.order_ref_id.toString())
-                            })*/
-                            })
-                        }
                     } else {
                         brandsList = ArrayList()
                         cropsList = ArrayList()
@@ -164,11 +180,11 @@ class SubCategoryViewModel @Inject constructor(
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }
                 getAllProducts(Constants.RELAVENT_CODE,
+                    subCategoryIds,
                     ArrayList(),
                     ArrayList(),
                     ArrayList(),
-                    ArrayList(),
-                    "10",
+                    Constants.API_DATA_LIMITS_IN_ONE_TIME,
                     "1")
             } catch (ex: Exception) {
                 progress.value = false
@@ -199,18 +215,6 @@ class SubCategoryViewModel @Inject constructor(
                             response.body()?.gp_api_response_data?.product_app_sub_categories_list
                         initMainFilterData()
                         getNavigator()?.enableSortAndFilter()
-
-                        if (subCategoryList != null && subCategoryList?.size!! > 0
-                        ) {
-                            showSubCategoryView.value = true
-                            getNavigator()?.setSubCategoryAdapter(ShopByCategoryAdapter(
-                                subCategoryList) { id, name, image ->
-                                /*getNavigator()?.openCheckoutStatusActivity(Bundle().apply {
-                                putString(Constants.ORDER_ID,
-                                    response.body()?.gp_api_response_data?.order_ref_id.toString())
-                            })*/
-                            })
-                        }
                     } else {
                         brandsList = ArrayList()
                         cropsList = ArrayList()
@@ -225,7 +229,7 @@ class SubCategoryViewModel @Inject constructor(
                     ArrayList(),
                     ArrayList(),
                     ArrayList(),
-                    "10",
+                    Constants.API_DATA_LIMITS_IN_ONE_TIME,
                     "1")
             } catch (ex: Exception) {
                 progress.value = false
@@ -353,9 +357,13 @@ class SubCategoryViewModel @Inject constructor(
                 if (response.body()?.gpApiStatus.equals(Constants.GP_API_STATUS) &&
                     response.body()?.gpApiResponseData?.promotionApplicable == true
                 ) {
-                    getNavigator()?.updateOfferApplicabilityOnDialog(true, verifyPromotionsModel.promotion_id, if (response.body()?.gpApiMessage.isNull()) "" else response.body()?.gpApiMessage!!)
+                    getNavigator()?.updateOfferApplicabilityOnDialog(true,
+                        verifyPromotionsModel.promotion_id,
+                        if (response.body()?.gpApiMessage.isNull()) "" else response.body()?.gpApiMessage!!)
                 } else {
-                    getNavigator()?.updateOfferApplicabilityOnDialog(false, verifyPromotionsModel.promotion_id, if (response.body()?.gpApiMessage.isNull()) "" else response.body()?.gpApiMessage!!)
+                    getNavigator()?.updateOfferApplicabilityOnDialog(false,
+                        verifyPromotionsModel.promotion_id,
+                        if (response.body()?.gpApiMessage.isNull()) "" else response.body()?.gpApiMessage!!)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -409,7 +417,8 @@ class SubCategoryViewModel @Inject constructor(
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
                     val response =
-                        productRepository.getFeaturedProducts(PageLimitRequest("20", "1"))
+                        productRepository.getFeaturedProducts(PageLimitRequest(Constants.API_DATA_LIMITS_IN_ONE_TIME,
+                            "1"))
                     progress.value = false
 
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS

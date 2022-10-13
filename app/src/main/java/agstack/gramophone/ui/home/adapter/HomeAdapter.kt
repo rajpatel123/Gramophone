@@ -176,7 +176,7 @@ class HomeAdapter(
                         openActivity(holder.itemView.context,
                             FeaturedProductActivity::class.java,
                             Bundle().apply {
-                                putString(Constants.SHOP_BY_TYPE, Constants.HOME_FEATURED_PRODUCTS)
+                                putString(Constants.HOME_FEATURED_PRODUCTS, Constants.HOME_FEATURED_PRODUCTS)
                             })
                     }
                 } else {
