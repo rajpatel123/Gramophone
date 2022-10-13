@@ -40,7 +40,7 @@ class SubCategoryViewModel @Inject constructor(
     var toolbarTitle = MutableLiveData<String>()
     var toolbarImage = MutableLiveData<String>()
     var mainFilterList: ArrayList<MainFilterData>? = null
-    var sortDataList: ArrayList<SortByData>? = null
+    var sortDataList: ArrayList<SortByData> = ArrayList<SortByData>()
     var subCategoryList: List<CategoryData>? = null
     var brandsList: List<Brands>? = null
     var cropsList: List<Crops>? = null
@@ -81,15 +81,19 @@ class SubCategoryViewModel @Inject constructor(
     }
 
     private fun initializeSortData() {
-        sortDataList = ArrayList<SortByData>()
-        sortDataList?.add(SortByData(true, Constants.RELAVENT, Constants.RELAVENT_CODE))
-        sortDataList?.add(SortByData(false,
+        if (sortDataList.isNull()) {
+            sortDataList = ArrayList<SortByData>()
+        } else {
+            sortDataList.clear()
+        }
+        sortDataList.add(SortByData(true, Constants.RELEVANCE, Constants.RELAVENT_CODE))
+        sortDataList.add(SortByData(false,
             Constants.AVG_CUSTOMER_RATING,
             Constants.AVG_CUSTOMER_RATING_CODE))
-        sortDataList?.add(SortByData(false,
+        sortDataList.add(SortByData(false,
             Constants.PRICE_LOW_TO_HIGH,
             Constants.PRICE_LOW_TO_HIGH_CODE))
-        sortDataList?.add(SortByData(false,
+        sortDataList.add(SortByData(false,
             Constants.PRICE_HIGH_TO_LOW,
             Constants.PRICE_HIGH_TO_LOW_CODE))
     }
@@ -168,7 +172,7 @@ class SubCategoryViewModel @Inject constructor(
                     ArrayList(),
                     ArrayList(),
                     ArrayList(),
-                    "10",
+                    Constants.API_DATA_LIMITS_IN_ONE_TIME,
                     "1")
             } catch (ex: Exception) {
                 progress.value = false
@@ -225,7 +229,7 @@ class SubCategoryViewModel @Inject constructor(
                     ArrayList(),
                     ArrayList(),
                     ArrayList(),
-                    "10",
+                    Constants.API_DATA_LIMITS_IN_ONE_TIME,
                     "1")
             } catch (ex: Exception) {
                 progress.value = false
@@ -353,9 +357,13 @@ class SubCategoryViewModel @Inject constructor(
                 if (response.body()?.gpApiStatus.equals(Constants.GP_API_STATUS) &&
                     response.body()?.gpApiResponseData?.promotionApplicable == true
                 ) {
-                    getNavigator()?.updateOfferApplicabilityOnDialog(true, verifyPromotionsModel.promotion_id, if (response.body()?.gpApiMessage.isNull()) "" else response.body()?.gpApiMessage!!)
+                    getNavigator()?.updateOfferApplicabilityOnDialog(true,
+                        verifyPromotionsModel.promotion_id,
+                        if (response.body()?.gpApiMessage.isNull()) "" else response.body()?.gpApiMessage!!)
                 } else {
-                    getNavigator()?.updateOfferApplicabilityOnDialog(false, verifyPromotionsModel.promotion_id, if (response.body()?.gpApiMessage.isNull()) "" else response.body()?.gpApiMessage!!)
+                    getNavigator()?.updateOfferApplicabilityOnDialog(false,
+                        verifyPromotionsModel.promotion_id,
+                        if (response.body()?.gpApiMessage.isNull()) "" else response.body()?.gpApiMessage!!)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -409,7 +417,8 @@ class SubCategoryViewModel @Inject constructor(
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
                     val response =
-                        productRepository.getFeaturedProducts(PageLimitRequest("20", "1"))
+                        productRepository.getFeaturedProducts(PageLimitRequest(Constants.API_DATA_LIMITS_IN_ONE_TIME,
+                            "1"))
                     progress.value = false
 
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS

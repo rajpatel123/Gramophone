@@ -33,7 +33,7 @@ import kotlin.math.abs
 @AndroidEntryPoint
 class SubCategoryActivity :
     BaseActivityWrapper<ActivityCategoryDetailBinding, SubCategoryNavigator, SubCategoryViewModel>(),
-    SubCategoryNavigator, View.OnClickListener {
+    SubCategoryNavigator, View.OnClickListener, AppBarLayout.OnOffsetChangedListener {
 
     //initialise ViewModel
     private val subCategoryViewModel: SubCategoryViewModel by viewModels()
@@ -55,7 +55,11 @@ class SubCategoryActivity :
         disableSortAndFilter()
         viewDataBinding.tvSortBy.setOnClickListener(this)
         viewDataBinding.tvFilter.setOnClickListener(this)
-
+        viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
+        viewDataBinding.swipeRefresh.setOnRefreshListener {
+            subCategoryViewModel.getBundleData()
+            viewDataBinding.swipeRefresh.isRefreshing = false
+        }
         viewDataBinding.toolbar.inflateMenu(R.menu.menu_search_and_cart)
         viewDataBinding.toolbar.setOnMenuItemClickListener { menuItem ->
             onOptionsItemSelected(menuItem)
@@ -86,7 +90,7 @@ class SubCategoryActivity :
                         brandIdsArray,
                         cropIdsArray,
                         technicalIdsArray,
-                        "10",
+                        Constants.API_DATA_LIMITS_IN_ONE_TIME,
                         "1")
                 }
                 bottomSheet.isCancelable = false
@@ -111,7 +115,7 @@ class SubCategoryActivity :
                         brandIds,
                         cropIds,
                         technicalIds,
-                        "10",
+                        Constants.API_DATA_LIMITS_IN_ONE_TIME,
                         "1")
                 }
                 bottomSheet.isCancelable = false
@@ -131,6 +135,21 @@ class SubCategoryActivity :
 
         }
         return true
+    }
+
+    override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+        //The Refresh must be only active when the offset is zero :
+        viewDataBinding.swipeRefresh.isEnabled = verticalOffset == 0
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewDataBinding.appbar.addOnOffsetChangedListener(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewDataBinding.appbar.removeOnOffsetChangedListener(this)
     }
 
     override fun disableSortAndFilter() {

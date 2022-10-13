@@ -72,7 +72,6 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/popular_bra"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_40sdp"
                             android:layout_marginStart="@dimen/_16sdp"
@@ -151,74 +150,73 @@
                     tools:listitem="@layout/item_order"
                     tools:visibility="gone" />
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:visibility="gone"
+                    app:pastSize="@{viewModel.pastOrderSize}"
+                    app:recentSize="@{viewModel.recentOrderSize}"
+                    app:selectedTab="@{viewModel.selectedTab}">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/_90sdp"
+                            android:layout_height="@dimen/_90sdp"
+                            android:contentDescription="@string/image"
+                            android:src="@drawable/ic_order_empty" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/no_orders_yet"
+                            android:textColor="@color/blakish"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:fontFamily="@font/manrope_regular"
+                            android:gravity="center"
+                            android:hint="@string/no_recent_order"
+                            android:lineSpacingExtra="0sp"
+                            android:text="@{viewModel.emptyText}"
+                            android:textColor="@color/gray"
+                            android:textColorHint="@color/gray"
+                            android:textSize="14sp"
+                            android:translationY="-0.24sp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/orange"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="@font/manrope_bold"
+                        android:gravity="center"
+                        android:onClick="@{() -> viewModel.onClickShopNow()}"
+                        android:text="@string/shop_now"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="normal" />
+
+                </RelativeLayout>
+
             </RelativeLayout>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tab_separator"
-            android:background="@color/white"
-            android:visibility="gone"
-            app:pastSize="@{viewModel.pastOrderSize}"
-            app:recentSize="@{viewModel.recentOrderSize}"
-            app:selectedTab="@{viewModel.selectedTab}">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="@dimen/_90sdp"
-                    android:layout_height="@dimen/_90sdp"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_order_empty" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:fontFamily="@font/manrope_bold"
-                    android:text="@string/no_orders_yet"
-                    android:textColor="@color/blakish"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:fontFamily="@font/manrope_regular"
-                    android:gravity="center"
-                    android:hint="@string/no_recent_order"
-                    android:lineSpacingExtra="0sp"
-                    android:text="@{viewModel.emptyText}"
-                    android:textColor="@color/gray"
-                    android:textColorHint="@color/gray"
-                    android:textSize="14sp"
-                    android:translationY="-0.24sp" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/orange"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="@font/manrope_bold"
-                android:gravity="center"
-                android:onClick="@{() -> viewModel.onClickShopNow()}"
-                android:text="@string/shop_now"
-                android:textColor="@color/white"
-                android:textSize="13sp"
-                android:textStyle="normal" />
-
-        </RelativeLayout>
 
         <ProgressBar
             android:id="@+id/progress"

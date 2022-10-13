@@ -42,7 +42,7 @@
     <string name="back">Back</string>
     <string name="cart">Cart</string>
     <string name="cart_empty_msg">Looks like you haven\'t added\nanything to your cart yet</string>
-    <string name="cart_empty_title">Cart is Empty</string>
+    <string name="cart_empty_title">Your Cart is Empty</string>
     <string name="expert_advice">Expert Advice</string>
     <string name="add_to_cart">Add To Cart</string>
     <string name="share">Share</string>
@@ -205,7 +205,7 @@
     <string name="payment_method">Payment Method</string>
     <string name="product">Product&#160;(</string>
     <string name="price_open_bracket">Price (</string>
-    <string name="price_close_bracket">) Items</string>
+    <string name="price_close_bracket">&#160;Items)</string>
     <string name="cash_on_delivery">Cash on Delivery</string>
     <string name="dialing_code">+91&#160;</string>
     <string name="my_orders">My Orders</string>

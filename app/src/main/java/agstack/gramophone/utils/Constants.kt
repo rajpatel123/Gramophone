@@ -89,6 +89,7 @@ object Constants {
     val READ_EXTERNAL_STORAGE = Manifest.permission.CAMERA
     val REQUEST_CAMERA = 1012
     val REQUEST_GALLERY = 1013
+    val API_DATA_LIMITS_IN_ONE_TIME = "99"
 
 
     val IV_ONE = 10131
@@ -110,7 +111,7 @@ object Constants {
     val BRAND = "Brand"
     val CROP = "Crop"
     val TECHNICAL = "Technical"
-    val RELAVENT = "Relavent"
+    val RELEVANCE = "Relevance"
     val RELAVENT_CODE = "relevant"
     val AVG_CUSTOMER_RATING = "Avg Customer Rating"
     val AVG_CUSTOMER_RATING_CODE = "rating"
