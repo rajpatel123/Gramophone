@@ -46,6 +46,7 @@ class SubCategoryViewModel @Inject constructor(
     var cropsList: List<Crops>? = null
     var technicalDataList: List<TechnicalData>? = null
     var progress = MutableLiveData<Boolean>()
+    val subCategoryIds = ArrayList<String>()
     var categoryId: String? = null
     var storeId: String? = null
     private var checkOfferApplicableJob: Job? = null
@@ -59,10 +60,11 @@ class SubCategoryViewModel @Inject constructor(
     }
 
     fun getBundleData() {
+        subCategoryIds.clear()
         val bundle = getNavigator()?.getBundle()
         initializeSortData()
 
-        if (bundle?.containsKey(Constants.SHOP_BY_TYPE)!! && bundle.getString(Constants.SHOP_BY_TYPE) != null) {
+        if (bundle?.containsKey(Constants.HOME_FEATURED_PRODUCTS)!! && bundle.getString(Constants.HOME_FEATURED_PRODUCTS) != null) {
             showSortFilterView.value = false
             toolbarTitle.value = getNavigator()?.getMessage(R.string.featured_products)
             getFeaturedProducts()
@@ -76,6 +78,13 @@ class SubCategoryViewModel @Inject constructor(
             categoryId = bundle.get(Constants.CATEGORY_ID) as String
             toolbarTitle.value = bundle.get(Constants.CATEGORY_NAME) as String
             toolbarImage.value = bundle.get(Constants.CATEGORY_IMAGE) as String
+            getSubCategoryData()
+        } else if (bundle.containsKey(Constants.SUB_CATEGORY_ID) && bundle.getString(Constants.SUB_CATEGORY_ID) != null) {
+            showSortFilterView.value = true
+            categoryId = bundle.getString(Constants.SHOP_BY_SUB_CATEGORY)
+            subCategoryIds.add(bundle.getString(Constants.SUB_CATEGORY_ID, ""))
+            toolbarTitle.value = bundle.getString(Constants.SUB_CATEGORY_NAME)
+            toolbarImage.value = bundle.getString(Constants.SUB_CATEGORY_IMAGE)
             getSubCategoryData()
         }
     }
@@ -142,22 +151,25 @@ class SubCategoryViewModel @Inject constructor(
                         brandsList = response.body()?.gp_api_response_data?.brands_list
                         cropsList = response.body()?.gp_api_response_data?.crops_list
                         technicalDataList = response.body()?.gp_api_response_data?.technical_data
-                        subCategoryList =
-                            response.body()?.gp_api_response_data?.product_app_sub_categories_list
+                        // subCategoryIds.isNullOrEmpty() this check is placed here
+                        // because It has no need of sub category detail page and only used in category detail page
+                        if (subCategoryIds.isNullOrEmpty()) {
+                            subCategoryList =
+                                response.body()?.gp_api_response_data?.product_app_sub_categories_list
+                            if (subCategoryList != null && subCategoryList?.size!! > 0
+                            ) {
+                                showSubCategoryView.value = true
+                                getNavigator()?.setSubCategoryAdapter(ShopByCategoryAdapter(
+                                    subCategoryList) { subCategoryId, subCategoryName, subCategoryImage ->
+                                    getNavigator()?.getSubCategoryDetail(categoryId!!,
+                                        subCategoryId,
+                                        subCategoryName,
+                                        subCategoryImage)
+                                })
+                            }
+                        }
                         initMainFilterData()
                         getNavigator()?.enableSortAndFilter()
-
-                        if (subCategoryList != null && subCategoryList?.size!! > 0
-                        ) {
-                            showSubCategoryView.value = true
-                            getNavigator()?.setSubCategoryAdapter(ShopByCategoryAdapter(
-                                subCategoryList) { id, name, image ->
-                                /*getNavigator()?.openCheckoutStatusActivity(Bundle().apply {
-                                putString(Constants.ORDER_ID,
-                                    response.body()?.gp_api_response_data?.order_ref_id.toString())
-                            })*/
-                            })
-                        }
                     } else {
                         brandsList = ArrayList()
                         cropsList = ArrayList()
@@ -168,7 +180,7 @@ class SubCategoryViewModel @Inject constructor(
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }
                 getAllProducts(Constants.RELAVENT_CODE,
-                    ArrayList(),
+                    subCategoryIds,
                     ArrayList(),
                     ArrayList(),
                     ArrayList(),
@@ -203,18 +215,6 @@ class SubCategoryViewModel @Inject constructor(
                             response.body()?.gp_api_response_data?.product_app_sub_categories_list
                         initMainFilterData()
                         getNavigator()?.enableSortAndFilter()
-
-                        if (subCategoryList != null && subCategoryList?.size!! > 0
-                        ) {
-                            showSubCategoryView.value = true
-                            getNavigator()?.setSubCategoryAdapter(ShopByCategoryAdapter(
-                                subCategoryList) { id, name, image ->
-                                /*getNavigator()?.openCheckoutStatusActivity(Bundle().apply {
-                                putString(Constants.ORDER_ID,
-                                    response.body()?.gp_api_response_data?.order_ref_id.toString())
-                            })*/
-                            })
-                        }
                     } else {
                         brandsList = ArrayList()
                         cropsList = ArrayList()

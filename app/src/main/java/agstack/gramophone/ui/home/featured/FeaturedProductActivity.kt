@@ -178,7 +178,16 @@ class FeaturedProductActivity :
     }
 
     override fun setSubCategoryAdapter(subCategoryAdapter: ShopByCategoryAdapter) {
-        // No implementation here as there is no subcategory section here on this screen
+        // Don't write any implementation here as there is no subcategory section here on this screen
+    }
+
+    override fun getSubCategoryDetail(
+        categoryId: String,
+        subCategoryId: String,
+        subCategoryName: String,
+        subCategoryImage: String,
+    ) {
+        // Don't write any implementation here
     }
 
     override fun openAddToCartDialog(

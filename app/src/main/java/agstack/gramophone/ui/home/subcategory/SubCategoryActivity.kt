@@ -11,6 +11,7 @@ import agstack.gramophone.ui.dialog.filter.BottomSheetFilterDialog
 import agstack.gramophone.ui.dialog.sortby.BottomSheetSortByDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.adapter.ViewPagerAdapter
+import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.subcategory.model.Offer
 import agstack.gramophone.ui.home.view.fragments.market.model.Banner
@@ -172,6 +173,20 @@ class SubCategoryActivity :
         subCategoryAdapter: ShopByCategoryAdapter,
     ) {
         viewDataBinding.rvSubCategory.adapter = subCategoryAdapter
+    }
+
+    override fun getSubCategoryDetail(
+        categoryId: String,
+        subCategoryId: String,
+        subCategoryName: String,
+        subCategoryImage: String,
+    ) {
+        openActivity(FeaturedProductActivity::class.java, Bundle().apply {
+            putString(Constants.SHOP_BY_SUB_CATEGORY, categoryId)
+            putString(Constants.SUB_CATEGORY_ID, subCategoryId)
+            putString(Constants.SUB_CATEGORY_NAME, subCategoryName)
+            putString(Constants.SUB_CATEGORY_IMAGE, subCategoryImage)
+        })
     }
 
     override fun setProductListAdapter(
