@@ -4,12 +4,15 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.AddFarmActivityBinding
+import agstack.gramophone.ui.farm.model.unit.GpApiResponseData
 import agstack.gramophone.ui.farm.navigator.AddFarmNavigator
 import agstack.gramophone.ui.farm.viewmodel.AddFarmViewModel
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +27,8 @@ class AddFarmActivity :
     AddFarmNavigator {
 
     var myCalendar: Calendar = Calendar.getInstance()
+    var units: List<GpApiResponseData> ? = null
+    var selectedUnit : GpApiResponseData? = null
 
     companion object {
         fun start(activity: AppCompatActivity) {
@@ -37,7 +42,18 @@ class AddFarmActivity :
         if (getBundle() != null && getBundle()?.containsKey("selectedCrop")!!) {
             getViewModel().selectedCrop = getBundle()?.getParcelable("selectedCrop")
         }
-        getViewModel().getFarmUnits()
+
+        viewDataBinding.edtAreaUnit.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedUnit = units?.get(position)
+            }
+
+        }
+
+        getViewModel().getFarmUnits("farm")
     }
 
     fun getBundle(): Bundle? {
@@ -66,9 +82,10 @@ class AddFarmActivity :
         finish()
     }
 
-    override fun setFarmUnitsAdapter(units: List<String>) {
+    override fun setFarmUnitsAdapter(units: List<GpApiResponseData>) {
         val adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1, units)
         viewDataBinding.edtAreaUnit.adapter = adapter
+        this.units = units
     }
 
     override fun showDatePicker() {
@@ -105,8 +122,8 @@ class AddFarmActivity :
         return 0.0
     }
 
-    override fun getAreaUnit() : String {
-        return  viewDataBinding.edtAreaUnit.selectedItem.toString()
+    override fun getAreaUnit() : GpApiResponseData? {
+        return selectedUnit
     }
 }
 
