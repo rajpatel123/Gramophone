@@ -55,6 +55,7 @@ object Constants {
     val SHOP_BY_CROP = "SHOP_BY_CROP"
     val SHOP_BY_STORE = "SHOP_BY_STORE"
     val SHOP_BY_COMPANY = "SHOP_BY_COMPANY"
+    val SHOP_BY_SUB_CATEGORY = "SHOP_BY_SUB_CATEGORY"
     val HOME_BANNER_1 = "home_banner_1"
     val HOME_SHOP_BY_CATEGORY = "shop_by_category"
     val HOME_FEATURED_PRODUCTS = "featured_products"
@@ -89,6 +90,7 @@ object Constants {
     val READ_EXTERNAL_STORAGE = Manifest.permission.CAMERA
     val REQUEST_CAMERA = 1012
     val REQUEST_GALLERY = 1013
+    val API_DATA_LIMITS_IN_ONE_TIME = "99"
 
 
     val IV_ONE = 10131
@@ -110,7 +112,7 @@ object Constants {
     val BRAND = "Brand"
     val CROP = "Crop"
     val TECHNICAL = "Technical"
-    val RELAVENT = "Relavent"
+    val RELEVANCE = "Relevance"
     val RELAVENT_CODE = "relevant"
     val AVG_CUSTOMER_RATING = "Avg Customer Rating"
     val AVG_CUSTOMER_RATING_CODE = "rating"
@@ -197,7 +199,9 @@ val SHAREIMAGEURIStRING = "imageuriString"
     const val CATEGORY_ID = "category_id"
     const val CATEGORY_NAME = "category_name"
     const val CATEGORY_IMAGE = "category_image"
-    const val COMPANY_ID = "company_id"
+    const val SUB_CATEGORY_ID = "sub_category_id"
+    const val SUB_CATEGORY_NAME = "sub_category_name"
+    const val SUB_CATEGORY_IMAGE = "sub_category_image"
     const val STORE_ID = "store_id"
     const val STORE_NAME = "store_name"
     const val STORE_IMAGE = "store_image"

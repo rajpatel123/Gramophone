@@ -206,7 +206,7 @@ fun pastOrderRecyclerHandling(
     }
 }
 
-@BindingAdapter(value = ["orderDate", "quantity", "items", "isDateAlreadyFormatted"],
+@BindingAdapter(value = ["orderDate", "quantity", "items", "isDateAlreadyFormatted", "isEnglish"],
     requireAll = true)
 fun setDateAndItemCount(
     textView: TextView,
@@ -214,15 +214,22 @@ fun setDateAndItemCount(
     quantity: String,
     items: String,
     isDateAlreadyFormatted: Boolean,
+    isEnglish: Boolean,
 ) {
     try {
         if (orderDate.isNotNullOrEmpty()) {
             if (isDateAlreadyFormatted) {
                 textView.text = orderDate + " / " + quantity + items
             } else {
-                textView.text = Utility.getFormattedDate(orderDate,
-                    Utility.DATE_MONTH_YEAR_FORMAT,
-                    Utility.MONTH_DATE_YEAR_FORMAT) + " / " + quantity + items
+                if (isEnglish) {
+                    textView.text = Utility.getEnglishFormattedDate(orderDate,
+                        Utility.DATE_MONTH_YEAR_FORMAT,
+                        Utility.MONTH_DATE_YEAR_FORMAT) + " / " + quantity + items
+                } else {
+                    textView.text = Utility.getFormattedDate(orderDate,
+                        Utility.DATE_MONTH_YEAR_FORMAT,
+                        Utility.MONTH_DATE_YEAR_FORMAT) + " / " + quantity + items
+                }
             }
         }
     } catch (e: Exception) {
@@ -263,7 +270,7 @@ fun reformatDate(
             }
             if (date.contains("pm")) {
                 date = date.replace("pm", "PM")
-            } else if (date.contentEquals("am")) {
+            } else if (date.contains("am")) {
                 date = date.replace("am", "AM")
             }
             textView.text = date

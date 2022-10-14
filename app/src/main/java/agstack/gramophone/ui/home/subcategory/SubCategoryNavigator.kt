@@ -17,6 +17,8 @@ interface SubCategoryNavigator : BaseNavigator {
         subCategoryAdapter: ShopByCategoryAdapter,
     )
 
+    fun getSubCategoryDetail(categoryId: String, subCategoryId: String, subCategoryName: String, subCategoryImage: String)
+
     fun setProductListAdapter(
         productListAdapter: ProductListAdapter,
         onAddToCartClick: ((productId: Int) -> Unit),

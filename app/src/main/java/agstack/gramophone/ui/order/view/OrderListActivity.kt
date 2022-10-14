@@ -30,11 +30,16 @@ class OrderListActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
-        orderListViewModel.getOrderList()
+        orderListViewModel.getOrders()
     }
 
     private fun setupUi() {
         setUpToolBar(true, getString(R.string.my_orders), R.drawable.ic_arrow_left)
+        viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
+        viewDataBinding.swipeRefresh.setOnRefreshListener {
+            orderListViewModel.getOrders()
+            viewDataBinding.swipeRefresh.isRefreshing = false
+        }
         viewDataBinding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 if (viewDataBinding.tabLayout.selectedTabPosition == 0) {

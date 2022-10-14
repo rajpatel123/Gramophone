@@ -11,6 +11,7 @@ import agstack.gramophone.ui.dialog.filter.BottomSheetFilterDialog
 import agstack.gramophone.ui.dialog.sortby.BottomSheetSortByDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.adapter.ViewPagerAdapter
+import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.subcategory.model.Offer
 import agstack.gramophone.ui.home.view.fragments.market.model.Banner
@@ -33,7 +34,7 @@ import kotlin.math.abs
 @AndroidEntryPoint
 class SubCategoryActivity :
     BaseActivityWrapper<ActivityCategoryDetailBinding, SubCategoryNavigator, SubCategoryViewModel>(),
-    SubCategoryNavigator, View.OnClickListener {
+    SubCategoryNavigator, View.OnClickListener, AppBarLayout.OnOffsetChangedListener {
 
     //initialise ViewModel
     private val subCategoryViewModel: SubCategoryViewModel by viewModels()
@@ -55,7 +56,11 @@ class SubCategoryActivity :
         disableSortAndFilter()
         viewDataBinding.tvSortBy.setOnClickListener(this)
         viewDataBinding.tvFilter.setOnClickListener(this)
-
+        viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
+        viewDataBinding.swipeRefresh.setOnRefreshListener {
+            subCategoryViewModel.getBundleData()
+            viewDataBinding.swipeRefresh.isRefreshing = false
+        }
         viewDataBinding.toolbar.inflateMenu(R.menu.menu_search_and_cart)
         viewDataBinding.toolbar.setOnMenuItemClickListener { menuItem ->
             onOptionsItemSelected(menuItem)
@@ -86,7 +91,7 @@ class SubCategoryActivity :
                         brandIdsArray,
                         cropIdsArray,
                         technicalIdsArray,
-                        "10",
+                        Constants.API_DATA_LIMITS_IN_ONE_TIME,
                         "1")
                 }
                 bottomSheet.isCancelable = false
@@ -111,7 +116,7 @@ class SubCategoryActivity :
                         brandIds,
                         cropIds,
                         technicalIds,
-                        "10",
+                        Constants.API_DATA_LIMITS_IN_ONE_TIME,
                         "1")
                 }
                 bottomSheet.isCancelable = false
@@ -131,6 +136,21 @@ class SubCategoryActivity :
 
         }
         return true
+    }
+
+    override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+        //The Refresh must be only active when the offset is zero :
+        viewDataBinding.swipeRefresh.isEnabled = verticalOffset == 0
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewDataBinding.appbar.addOnOffsetChangedListener(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewDataBinding.appbar.removeOnOffsetChangedListener(this)
     }
 
     override fun disableSortAndFilter() {
@@ -153,6 +173,20 @@ class SubCategoryActivity :
         subCategoryAdapter: ShopByCategoryAdapter,
     ) {
         viewDataBinding.rvSubCategory.adapter = subCategoryAdapter
+    }
+
+    override fun getSubCategoryDetail(
+        categoryId: String,
+        subCategoryId: String,
+        subCategoryName: String,
+        subCategoryImage: String,
+    ) {
+        openActivity(FeaturedProductActivity::class.java, Bundle().apply {
+            putString(Constants.SHOP_BY_SUB_CATEGORY, categoryId)
+            putString(Constants.SUB_CATEGORY_ID, subCategoryId)
+            putString(Constants.SUB_CATEGORY_NAME, subCategoryName)
+            putString(Constants.SUB_CATEGORY_IMAGE, subCategoryImage)
+        })
     }
 
     override fun setProductListAdapter(

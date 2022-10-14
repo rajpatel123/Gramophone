@@ -8,11 +8,14 @@ import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.ui.orderdetails.adapter.OrderedProductsAdapter
+import agstack.gramophone.ui.orderdetails.model.GpApiResponseData
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNull
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -76,46 +79,60 @@ class OrderDetailsViewModel @Inject constructor(
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
                         && response.body()?.gp_api_response_data?.products != null && response.body()?.gp_api_response_data?.products?.size!! > 0
                     ) {
+                        val responseData: GpApiResponseData =
+                            response.body()?.gp_api_response_data!!
                         this@OrderDetailsViewModel.orderId.value =
-                            response.body()?.gp_api_response_data?.order_id.toString()
+                            responseData.order_id.toString()
                         this@OrderDetailsViewModel.orderDate.value =
-                            response.body()?.gp_api_response_data?.order_date
+                            responseData.order_date
                         this@OrderDetailsViewModel.quantity.value =
-                            response.body()?.gp_api_response_data?.items.toString()
+                            responseData.items.toString()
                         this@OrderDetailsViewModel.orderStatus.value =
-                            response.body()?.gp_api_response_data?.order_status
-                        this@OrderDetailsViewModel.orderStatusMessage.value =
-                            response.body()?.gp_api_response_data?.message
+                            responseData.order_status
                         this@OrderDetailsViewModel.paymentMethod.value =
-                            response.body()?.gp_api_response_data?.order_type
+                            responseData.order_type
                         this@OrderDetailsViewModel.productSize.value =
-                            response.body()?.gp_api_response_data?.products?.size?.toString()
+                            responseData.products.size.toString()
                         this@OrderDetailsViewModel.username.value =
-                            response.body()?.gp_api_response_data?.delivery_address?.name
+                            responseData.delivery_address.name
                         this@OrderDetailsViewModel.address.value =
-                            response.body()?.gp_api_response_data?.delivery_address?.address
+                            responseData.delivery_address.address
                         this@OrderDetailsViewModel.mobile.value =
-                            response.body()?.gp_api_response_data?.delivery_address?.mobile
+                            responseData.delivery_address.mobile
                         this@OrderDetailsViewModel.subTotalPrice.value =
-                            response.body()?.gp_api_response_data?.pricing_details?.sub_total_price.toString()
+                            responseData.pricing_details.sub_total_price.toString()
                         this@OrderDetailsViewModel.totalPrice.value =
-                            response.body()?.gp_api_response_data?.pricing_details?.total_price.toString()
+                            responseData.pricing_details.total_price.toString()
 
                         val totalDiscount =
-                            response.body()?.gp_api_response_data?.pricing_details?.product_discount!! +
-                                    response.body()?.gp_api_response_data?.pricing_details?.promotional_discount!! +
-                                    response.body()?.gp_api_response_data?.pricing_details?.coupon_discount!! +
-                                    response.body()?.gp_api_response_data?.pricing_details?.additional_discount!!
+                            /*responseData.pricing_details.product_discount +
+                                    responseData.pricing_details.promotional_discount +
+                                    responseData.pricing_details.coupon_discount +
+                                    responseData.pricing_details.additional_discount*/
+                            responseData.pricing_details.additional_discount
 
                         this@OrderDetailsViewModel.discount.value = totalDiscount.toString()
 
                         this@OrderDetailsViewModel.gramCash.value =
-                            response.body()?.gp_api_response_data?.pricing_details?.gram_cash.toString()
+                            responseData.pricing_details.gram_cash.toString()
+
+                        if (responseData.vr_info.name.isNotNullOrEmpty() && orderStatus.value.equals(
+                                "Order Dispatched")
+                        ) {
+                            val orderStatusMessage =
+                                responseData.vr_info.name + ";<br>" + getNavigator()?.getMessage(R.string.phone) + " <font color = '#10203E'>" + if (responseData.vr_info.mobile_no.isNotNullOrEmpty())
+                                    responseData.vr_info.mobile_no else getNavigator()?.getMessage(R.string.not_available) + "</font></b> " +getNavigator()?.getMessage(
+                                    R.string.order_has_been_assigned)
+                            this@OrderDetailsViewModel.orderStatusMessage.value = orderStatusMessage
+                        } else {
+                            this@OrderDetailsViewModel.orderStatusMessage.value =
+                                responseData.message
+                        }
 
                         getNavigator()?.setColorOnOrderStatus(orderStatus.value!!)
 
                         getNavigator()?.setOrderListAdapter(
-                            OrderedProductsAdapter(response.body()?.gp_api_response_data?.products!!),
+                            OrderedProductsAdapter(responseData.products),
                             {
                                 //on cartItem clicked for details page
                                 getNavigator()?.openProductDetailsActivity(ProductData(it.toInt()))
