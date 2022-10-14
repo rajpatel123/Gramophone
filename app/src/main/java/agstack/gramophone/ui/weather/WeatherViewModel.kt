@@ -25,6 +25,7 @@ class WeatherViewModel @Inject constructor(
     var progress = MutableLiveData<Boolean>()
     var isRainView = MutableLiveData<Boolean>()
     var showWeatherView = MutableLiveData<Boolean>()
+    var weatherTypeImage = MutableLiveData<String>()
     var address = MutableLiveData<String>()
     var currentTime = MutableLiveData<String>()
     var currentTemp = MutableLiveData<String>()
@@ -71,24 +72,16 @@ class WeatherViewModel @Inject constructor(
                         getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.weather)!! + " - " + weatherData?.city!!)
                         address.value = weatherData?.address
                         currentTemp.value = weatherData?.temperature?.current
-                        minTemp.value = weatherData?.temperature?.min
+                        weatherTypeImage.value = weatherData?.temperature?.weather_icon
+                        minTemp.value =
+                            if (weatherData?.temperature?.min == null || weatherData.temperature.min.isEmpty()) "" else weatherData.temperature.min
                         maxTemp.value = weatherData?.temperature?.max
                         weatherCondition.value = weatherData?.temperature?.weather_condition
-                        perceptionIntensity.value = weatherData?.temperature?.perception_intensity
-                        perceptionType.value = weatherData?.temperature?.perception_type
-
-                        try {
-                            var date: String = weatherData?.current_time!!
-                            date = date.replace("Today - ", "")
-                            var time = Utility.getFormattedDate(date,
-                                Utility.HOUR_MIN_12_TIME_FORMAT,
-                                Utility.HOUR_MIN_SECOND_TIME_FORMAT)
-                            time = time.replace("pm", "PM")
-                            time = time.replace("am", "AM")
-                            currentTime.value = "Today - $time"
-                        } catch (e: Exception) {
-                            currentTime.value = weatherData?.current_time
-                        }
+                        perceptionIntensity.value =
+                            if (weatherData?.temperature?.perception_intensity == null || weatherData.temperature.perception_intensity.isEmpty()) "" else weatherData.temperature.perception_intensity
+                        perceptionType.value =
+                            if (weatherData?.temperature?.perception_type == null || weatherData.temperature.perception_type.isEmpty()) "" else weatherData.temperature.perception_type
+                        currentTime.value = weatherData?.current_time
                     }
                 }
             } catch (e: Exception) {
