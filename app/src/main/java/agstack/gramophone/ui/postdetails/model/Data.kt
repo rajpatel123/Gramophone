@@ -27,5 +27,6 @@ data class Data(
     val urlPreviewMeta: UrlPreviewMeta,
     val whatsAppShare: Int,
     val bookMarked: Boolean,
-    val linkUrl: String
+    val linkUrl: String,
+    val showingDate:String?
 )

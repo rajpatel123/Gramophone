@@ -58,4 +58,11 @@ interface CommunityRepository {
     suspend fun postComment(postId: RequestBody,text: RequestBody,tags: RequestBody,postImage: MultipartBody.Part): Response<SendCommentResponseModel>
 
     suspend fun createPost(description: RequestBody?,tags: RequestBody?,postImage1: MultipartBody.Part?,postImage2: MultipartBody.Part?,postImage3: MultipartBody.Part?): Response<CreatePostResponseModel>
+
+    suspend fun updatePost(
+        postId: RequestBody,
+        tags: RequestBody?,
+        area: RequestBody?,
+        date: RequestBody?
+       ): Response<CreatePostResponseModel>
 }

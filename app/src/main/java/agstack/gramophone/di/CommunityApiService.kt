@@ -96,4 +96,13 @@ interface CommunityApiService {
         @Part("description") text: RequestBody?,
         @Part("tags") tags: RequestBody?,
     ): Response<CreatePostResponseModel>
+
+    @Multipart
+    @PUT("/api/v2/posts/update-post")
+    suspend fun updatePost(
+        @Part("postId") postId: RequestBody?,
+        @Part("tags") tags: RequestBody?,
+        @Part("farmArea") farmArea: RequestBody?,
+        @Part("showingDate") showingDate : RequestBody?,
+    ): Response<CreatePostResponseModel>
 }
