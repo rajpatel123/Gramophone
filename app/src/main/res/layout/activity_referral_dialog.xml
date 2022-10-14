@@ -21,10 +21,9 @@
             android:layout_height="wrap_content"
             android:background="@drawable/referral_dialog_shape"
             android:orientation="vertical"
-            android:paddingTop="@dimen/_16sdp"
             android:paddingStart="@dimen/_16sdp"
-            android:paddingEnd="@dimen/_16sdp"
-            >
+            android:paddingTop="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp">
 
             <TextView
                 style="@style/heading_title_bold_large"
@@ -63,12 +62,12 @@
                     android:inputType="textCapCharacters"
                     android:letterSpacing=".05"
                     android:maxLength="10"
-                    android:text="@={viewModel.referralCode}"
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_2sdp"
                     android:paddingBottom="@dimen/_10sdp"
                     android:singleLine="true"
+                    android:text="@={viewModel.referralCode}"
 
                     android:textSize="@dimen/_12ssp" />
 
@@ -80,9 +79,9 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/rounded_corner_with_border"
                     android:gravity="center_vertical"
+                    android:onClick="@{ ()-> viewModel.scanQR() }"
                     android:orientation="horizontal"
                     android:padding="@dimen/_10ssp"
-                    android:onClick="@{ ()-> viewModel.scanQR() }"
                     android:paddingBottom="@dimen/_10sdp">
 
                     <ImageView
@@ -105,9 +104,9 @@
                 android:background="@drawable/btn_rounded_corner"
                 android:gravity="center"
                 android:maxHeight="@dimen/_485sdp"
+                android:onClick="@{ ()-> viewModel.applyCode() }"
                 android:padding="@dimen/_9sdp"
                 android:text="@string/apply"
-                android:onClick="@{ ()-> viewModel.applyCode() }"
 
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp" />
@@ -120,8 +119,8 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:gravity="center"
-                android:padding="@dimen/_9sdp"
                 android:onClick="@{ ()-> viewModel.onTermsOfUseClicked() }"
+                android:padding="@dimen/_9sdp"
 
                 android:text="@string/terms_of_use"
                 android:textColor="@color/green"

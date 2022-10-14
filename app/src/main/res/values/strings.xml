@@ -505,4 +505,12 @@
     <string name="add_tag_message">Please select crop to identify the post discussion.</string>
     <string name="add_tag_title">Select Crop</string>
     <string name="one_offer_applied">1 Offer applied</string>
+    <string name="add_crops">Add Crops</string>
+    <string name="add_image">Add Image</string>
+    <string name="date_sheet_heading">Get faster and better response from us</string>
+    <string name="date_sheet_sub_title">Just share your crop, sowing date  and farm area with us</string>
+    <string name="select_crop">Please select your crop</string>
+    <string name="show_date_text">What is your sowing date and farm area ?</string>
+    <string name="select_showing_date">Select sowing date</string>
+    <string name="farm_areas">Area (%d.%d)</string>
 </resources>

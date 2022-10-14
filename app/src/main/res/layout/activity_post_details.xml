@@ -130,12 +130,11 @@
                     </RelativeLayout>
 
                     <LinearLayout
+                        android:id="@+id/llDetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:id="@+id/llDetails"
                         android:layout_below="@+id/tvDate"
-                        >
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tvDesc"
@@ -146,6 +145,7 @@
                             android:layout_marginEnd="@dimen/_12sdp"
                             android:fontFamily="@font/manrope_bold"
                             android:text="@{viewModel.postDesc}"
+                            android:visibility="@{viewModel.postDesc!=null?View.VISIBLE:View.GONE}"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_14ssp" />
 
@@ -157,14 +157,15 @@
                             android:layout_marginStart="@dimen/_12sdp"
                             android:layout_marginTop="@dimen/_30sdp"
                             android:layout_marginEnd="@dimen/_12sdp"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             app:cardCornerRadius="@dimen/_10sdp">
 
                             <ImageView
                                 android:id="@+id/postImage"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:scaleType="fitXY" />
+                                android:scaleType="fitXY"
+                                android:minHeight="@dimen/_300sdp"/>
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
 
@@ -175,28 +176,29 @@
                         android:layout_below="@+id/llDetails"
                         android:minHeight="@dimen/_26sdp" />
 
-                    <TextView
-                        android:id="@+id/tvTag"
-                        android:layout_width="wrap_content"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvTag"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tvSpace"
                         android:layout_marginStart="@dimen/_12sdp"
                         android:layout_marginTop="@dimen/_14sdp"
-                        android:background="@drawable/tags_bg"
                         android:fontFamily="@font/manrope_medium"
+                        android:orientation="horizontal"
                         android:paddingStart="@dimen/_7sdp"
                         android:paddingTop="@dimen/_2sdp"
                         android:paddingEnd="@dimen/_7sdp"
                         android:paddingBottom="@dimen/_3sdp"
-                        android:text="Tomato"
                         android:textColor="@color/blakish"
-                        android:textSize="@dimen/_10ssp" />
+                        android:textSize="@dimen/_10ssp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/final_tag_list_item" />
 
                     <LinearLayout
                         android:id="@+id/llActions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/tvTag"
+                        android:layout_below="@+id/rvTag"
                         android:layout_marginStart="@dimen/_12sdp"
                         android:layout_marginTop="@dimen/_12sdp"
                         android:layout_marginEnd="@dimen/_12sdp"
