@@ -198,9 +198,10 @@
             android:background="@color/orange"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center"
+            android:onClick="@{() -> viewModel.onClickSaveAndContinue()}"
             android:padding="@dimen/_13sdp"
             android:text="@string/save_continue"
-            android:onClick="@{() -> viewModel.onClickSaveAndContinue()}"
+            android:enabled="@{viewModel.enableSaveButton, default=true}"
             android:textColor="@color/white" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -233,15 +234,15 @@
                         android:layout_height="@dimen/_38sdp"
                         android:background="@drawable/rounded_corner"
                         android:backgroundTint="@color/mute_grey"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:imeOptions="actionDone"
                         android:inputType="numberDecimal"
                         android:letterSpacing=".05"
-                        android:maxLength="20"
+                        android:maxLength="5"
                         android:paddingBottom="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_2sdp"
                         android:paddingStart="@dimen/_5sdp"
                         android:paddingTop="@dimen/_10sdp"
-                        android:foreground="?android:attr/selectableItemBackground"
                         android:singleLine="true"
                         android:textSize="@dimen/_12ssp" />
 

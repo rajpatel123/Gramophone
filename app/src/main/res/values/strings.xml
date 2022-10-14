@@ -491,6 +491,16 @@
     <string name="stage_name">"वर्तमान चरण : %1$s days &#8226; %2$s"</string>
     <string name="added_one_farm">"1 खेत जोड़ा गया है"</string>
     <string name="added_farm_count">"%1$s खेत जोड़े गये है"</string>
+    <string name="message_select_crop">Please select a crop</string>
+    <string name="message_enter_area">Please enter the area</string>
+    <string name="message_valid_area_upper_bound">The area should not be larger than 500</string>
+    <string name="message_sowing_date">Please select sowing date</string>
+    <string name="message_area_unit">Please select area unit</string>
+    <string name="message_farm_added">you successfully added the farm</string>
+    <string name="message_buy_your_crop">अपनी फसलों द्वारा खरीदारी करें</string>
+    <string name="message_why_add_farm">Why Add Farm</string>
+
+
 
     <string name="hint_add_new_post">Write your question about your crop eg. how do I prevent this bug?</string>
     <string name="collapse_text_label">show less</string>
