@@ -69,6 +69,9 @@ class PostDetailViewModel @Inject constructor(
       getNavigator()?.setLikeImage(R.drawable.ic_like)
      }
 
+      if (data?.tags!=null && data?.tags!!.size>0){
+       getNavigator()?.setTags(data?.tags!!)
+      }
      if (data?.bookMarked == true) {
       getNavigator()?.setBookMarkImage(R.drawable.ic_bookmarked)
      } else {

@@ -4,8 +4,11 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityPostDetailsBinding
+import agstack.gramophone.ui.dialog.posts.BottomSheetShowPostDateDialog
 import agstack.gramophone.ui.home.adapter.CommentsAdapter
+import agstack.gramophone.ui.postdetails.DisplayTagAdapter
 import agstack.gramophone.ui.postdetails.PostDetailNavigator
+import agstack.gramophone.ui.postdetails.model.Tag
 import agstack.gramophone.ui.postdetails.viewmodel.PostDetailViewModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.ImagePicker
@@ -19,10 +22,12 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.View.VISIBLE
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.canhub.cropper.CropImageContract
@@ -54,7 +59,7 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
             "",
             R.drawable.ic_arrow_left
         )
-
+        showBottomSheet()
         cropImage = registerForActivityResult(CropImageContract()) { result ->
             if (result.isSuccessful) {
                 // use the returned uri
@@ -72,6 +77,15 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
         }
         shareSheetPresenter = this?.let { ShareSheetPresenter(this) }
     }
+
+    private fun showBottomSheet() {
+        val bottomSheet = BottomSheetShowPostDateDialog()
+        bottomSheet.show(
+            getSupportFragmentManager(),
+            getMessage(R.string.bottomsheet_tag)
+        )
+    }
+
     var cameraIntentLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -159,6 +173,7 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
 
     override fun onImageSet(url: String) {
         Glide.with(this).load(url).into(postImage)
+        viewDataBinding.imageContainer.visibility = VISIBLE
     }
 
     override fun setLikeImage(icLiked: Int) {
@@ -184,7 +199,14 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
 
     override fun clearImage() {
         postDetailViewModel.postImage.set(null)
-        viewDataBinding.cvPostImage.visibility= View.GONE
+        viewDataBinding.cvPostImage.visibility = View.GONE
+    }
+
+    override fun setTags(tags: List<Tag>) {
+        val tagsCropAdapter = DisplayTagAdapter(tags)
+        viewDataBinding.rvTag.adapter = tagsCropAdapter
+        viewDataBinding.rvTag.layoutManager =
+            StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL)
     }
 
 

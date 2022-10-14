@@ -17,7 +17,8 @@
 
         <include
             android:id="@+id/myToolbar"
-            layout="@layout/layout_toolbar" />
+            layout="@layout/layout_toolbar"
+            android:background="@color/brand_color"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -66,6 +67,7 @@
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/_5sdp"
                                 android:layout_weight="1">
 
                                 <agstack.gramophone.ui.tagandmention.TagCompletionView
@@ -84,11 +86,29 @@
                                     android:inputType="text|textNoSuggestions|textMultiLine"
                                     android:lineSpacingExtra="1dp"
                                     android:padding="@dimen/_10sdp"
-                                    android:text=""
+                                    android:text="@={viewModel.description}"
                                     android:textColorHint="@color/gray"
                                     android:textColorLink="@color/brand_color"
                                     android:textSize="20sp"
                                     android:visibility="visible" />
+
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/finalTagRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/descriptionEditText"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:lineSpacingExtra="@dimen/_5sdp"
+                                    android:orientation="horizontal"
+                                    android:padding="@dimen/_10sdp"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                    tools:listitem="@layout/final_tag_list_item" />
                                 <EditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -116,7 +136,7 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@+id/descriptionEditText"
+                                    android:layout_below="@+id/finalTagRecyclerView"
                                     android:layout_alignParentBottom="true"
                                     android:layout_marginStart="@dimen/_10sdp"
                                     android:layout_marginBottom="@dimen/_10sdp"
@@ -171,7 +191,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/_10sdp"
-                                    android:text="Add Image"
+                                    android:text="@string/add_image"
+                                    android:fontFamily="@font/manrope_bold"
                                     android:textColor="@color/black" />
 
                                 <TextView
@@ -424,16 +445,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_alignParentBottom="true">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/finalTagRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="10dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/final_tag_list_item" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -504,6 +516,7 @@
                                 android:textColor="@color/black"
                                 android:layout_gravity="end|center_vertical"
                                 android:background="@color/btn_disabled"
+                                android:onClick="@{()->viewModel.createPost()}"
                                 android:gravity="center"
                                 android:text="@string/create_post"/>
                         </LinearLayout>
