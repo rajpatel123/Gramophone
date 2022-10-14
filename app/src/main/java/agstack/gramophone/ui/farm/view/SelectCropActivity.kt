@@ -28,7 +28,7 @@ class SelectCropActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setToolbarTitle("Select Crop")
+        setToolbarTitle(getMessage(R.string.add_tag_title))
         getViewModel().getCrops()
 
         viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)

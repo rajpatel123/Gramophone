@@ -50,9 +50,7 @@ class AddFarmActivity :
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 selectedUnit = units?.get(position)
             }
-
         }
-
         getViewModel().getFarmUnits("farm")
     }
 
@@ -78,7 +76,7 @@ class AddFarmActivity :
     }
 
     override fun onFarmAdded() {
-        showToast("you successfully added the farm")
+        showToast(getMessage(R.string.message_farm_added))
         finish()
     }
 

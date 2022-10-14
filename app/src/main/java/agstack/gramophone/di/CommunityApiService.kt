@@ -3,6 +3,7 @@ package agstack.gramophone.di
 import agstack.gramophone.ui.comments.model.CommentsResponseModel
 import agstack.gramophone.ui.comments.model.sendcomment.GetCommentRequestModel
 import agstack.gramophone.ui.comments.model.sendcomment.SendCommentResponseModel
+import agstack.gramophone.ui.createnewpost.view.model.create.CreatePostResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.BookmarkPostResponse
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikePostResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedusersResponseModel
@@ -84,4 +85,15 @@ interface CommunityApiService {
         @Part("text") text: RequestBody,
         @Part("tags") tags: RequestBody,
     ): Response<SendCommentResponseModel>
+
+
+    @Multipart
+    @POST("/api/v2/posts/create-post")
+    suspend fun createPost(
+        @Part image_1: MultipartBody.Part?,
+        @Part image_2: MultipartBody.Part?,
+        @Part image_3: MultipartBody.Part?,
+        @Part("description") text: RequestBody?,
+        @Part("tags") tags: RequestBody?,
+    ): Response<CreatePostResponseModel>
 }

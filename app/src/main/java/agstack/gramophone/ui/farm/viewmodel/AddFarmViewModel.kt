@@ -20,11 +20,13 @@ class AddFarmViewModel @Inject constructor(
 ) : BaseViewModel<AddFarmNavigator>() {
 
     var progress = MutableLiveData<Boolean>()
+    var enableSaveButton = MutableLiveData<Boolean>()
     var addFarmRequest = AddFarmRequest()
     var selectedCrop : CropData? = null
 
     init {
         progress.value = false
+        enableSaveButton.value = true
     }
 
     fun onDateViewClick(){
@@ -32,7 +34,7 @@ class AddFarmViewModel @Inject constructor(
     }
 
     fun onClickSaveAndContinue() {
-        updateFarm()
+        updateFarmValues()
         validateFarmValues()
     }
 
@@ -40,20 +42,22 @@ class AddFarmViewModel @Inject constructor(
         if (addFarmRequest.field_name.isNullOrEmpty() ||
             addFarmRequest.crop_id.isNullOrEmpty()
         ) {
-            getNavigator()?.showToast("Please select a crop")
+            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.message_select_crop))
         } else if (addFarmRequest.area!! <= 0.0) {
-            getNavigator()?.showToast("Please enter the area")
-        } else if (addFarmRequest.crop_sowing_date.isNullOrEmpty()) {
-            getNavigator()?.showToast("Please select sowing date")
+            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.message_enter_area))
+        } else if (addFarmRequest.area!! > 500.0) {
+            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.message_valid_area_upper_bound))
+        }else if (addFarmRequest.crop_sowing_date.isNullOrEmpty()) {
+            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.message_sowing_date))
         } else if (addFarmRequest.unit.isNullOrEmpty()) {
-            getNavigator()?.showToast("Please select area unit")
+            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.message_area_unit))
         } else {
             addFarm(addFarmRequest)
         }
     }
 
 
-   private fun updateFarm(
+   private fun updateFarmValues(
     ) {
         selectedCrop?.cropName.let { addFarmRequest.field_name = it }
         selectedCrop?.cropId.let { addFarmRequest.crop_id = it.toString() }
@@ -65,6 +69,8 @@ class AddFarmViewModel @Inject constructor(
 
     private fun addFarm(addFarmRequest: AddFarmRequest) {
         progress.value = true
+        enableSaveButton.value = false
+
         viewModelScope.launch {
             try {
                 val response = productRepository.addFarm(addFarmRequest)
@@ -72,14 +78,15 @@ class AddFarmViewModel @Inject constructor(
                     && response.body()?.gp_api_response_data != null
                 ) {
                     val addFarmResponse = response.body()
-                    progress.value = false
                     getNavigator()?.onFarmAdded()
                 }else{
-                    progress.value = false
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
+                progress.value = false
+                enableSaveButton.value = true
             } catch (ex: Exception) {
                 progress.value = false
+                enableSaveButton.value = true
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
                     else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))

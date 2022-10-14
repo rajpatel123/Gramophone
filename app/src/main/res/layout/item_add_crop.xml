@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.home.view.fragments.market.model.CropData" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/itemView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingLeft="@dimen/_2sdp"
+        android:paddingRight="@dimen/_2sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:background="@drawable/rounded_corner_20_solid_white"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_gravity="center"
+            android:padding="@dimen/_2sdp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageSelectCorpItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize20Percent"
+                android:contentDescription="@string/image"
+                app:product_image='@{model.cropImage ?? ""}'
+                tools:src="@drawable/dummy_crop" />
+
+
+            <ImageView
+                android:id="@+id/imgSelected1"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_gravity="top|end"
+                android:contentDescription="@string/image"
+                android:src="@drawable/ic_crop_selected"
+                android:visibility="@{model.selected? View.VISIBLE:View.GONE}" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/txtSelectCropItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:lines="2"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:maxLength="50"
+            android:ellipsize="end"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_13ssp"
+            android:text='@{model.cropName ?? ""}'
+            tools:text='Maize' />
+
+    </LinearLayout>
+
+</layout>

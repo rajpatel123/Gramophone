@@ -97,7 +97,7 @@ class SelectCropViewModel @Inject constructor(
                     putParcelable("selectedCrop", selectedCrop)
                 })
         } else {
-            getNavigator()?.showToast("Please select a crop")
+            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.message_select_crop))
         }
     }
 }
