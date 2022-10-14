@@ -41,6 +41,9 @@ class WeatherViewModel @Inject constructor(
         progress.value = false
         isRainView.value = false
         showWeatherView.value = false
+        minTemp.value = ""
+        perceptionIntensity.value = ""
+        perceptionType.value = ""
         latitude = null
         longitude = null
     }
