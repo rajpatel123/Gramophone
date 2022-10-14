@@ -10,12 +10,15 @@ import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.orderdetails.adapter.OrderedProductsAdapter
 import agstack.gramophone.ui.orderdetails.model.FreeProduct
 import android.content.res.ColorStateList
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

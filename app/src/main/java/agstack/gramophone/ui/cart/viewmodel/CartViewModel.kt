@@ -44,7 +44,7 @@ class CartViewModel @Inject constructor(
         subTotal.value = "0"
         progress.value = false
         showGramCashCoinView.value = true
-        showCartView.value = false
+        showCartView.value = true
     }
 
     fun onCheckedChange(button: CompoundButton, check: Boolean) {
@@ -171,7 +171,6 @@ class CartViewModel @Inject constructor(
                         getCartData()
                     }
                     progress.value = false
-                    getNavigator()?.showToast(response.body()?.gp_api_message)
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }

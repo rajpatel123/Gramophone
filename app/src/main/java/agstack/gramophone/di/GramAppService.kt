@@ -16,6 +16,7 @@ import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseMo
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
 import agstack.gramophone.ui.farm.model.*
+import agstack.gramophone.ui.farm.model.unit.FarmUnitResponse
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
@@ -288,8 +289,8 @@ interface GramAppService {
     @POST("api/v5/farm/add-farm")
     suspend fun addFarm(@Body request : AddFarmRequest): Response<AddFarmResponse>
 
-    @GET("api/v5/farm/farm-unit")
-    suspend fun getFarmUnits(): Response<FarmUnitResponse>
+    @GET("api/v5/farm/unit/{type}")
+    suspend fun getFarmUnits(@Path("type") type: String): Response<FarmUnitResponse>
 
     @POST("api/v5/search/mention-autocomplete")
     suspend fun getMentionTags(

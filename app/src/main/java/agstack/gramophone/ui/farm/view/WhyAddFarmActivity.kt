@@ -24,7 +24,7 @@ class WhyAddFarmActivity  : BaseActivityWrapper<ActivityWhyAddFarmBinding, WhyAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setToolbarTitle("Why Add Farm")
+        setToolbarTitle(getMessage(R.string.message_why_add_farm))
     }
 
     override fun setToolbarTitle(title: String) {
