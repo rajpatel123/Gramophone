@@ -70,7 +70,7 @@ class OrderListViewModel @Inject constructor(
                         ) { orderId, price ->
                             getNavigator()?.openOrderDetailsActivity(Bundle().apply {
                                 putString(Constants.ORDER_ID, orderId)
-                                putString(Constants.ORDER_PRICE, price)
+                                putString(Constants.ORDER_TYPE, Constants.PLACED)
                             })
                         }
                     }
@@ -105,7 +105,7 @@ class OrderListViewModel @Inject constructor(
                         ) { orderId, price ->
                             getNavigator()?.openOrderDetailsActivity(Bundle().apply {
                                 putString(Constants.ORDER_ID, orderId)
-                                putString(Constants.ORDER_PRICE, price)
+                                putString(Constants.ORDER_TYPE, Constants.RECENT)
                             })
                         }
                     } else {
@@ -143,7 +143,7 @@ class OrderListViewModel @Inject constructor(
                         ) { orderId, price ->
                             getNavigator()?.openOrderDetailsActivity(Bundle().apply {
                                 putString(Constants.ORDER_ID, orderId)
-                                putString(Constants.ORDER_PRICE, price)
+                                putString(Constants.ORDER_TYPE, Constants.PAST)
                             })
                         }
                     } else {

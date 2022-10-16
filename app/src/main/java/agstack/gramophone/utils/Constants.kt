@@ -101,6 +101,7 @@ object Constants {
 
     //sortBy options
     val TOP = "top"
+    val ORDER_TYPE = "order_type"
     val PLACED = "placed"
     val RECENT = "recent"
     val TOP_REVIEWS = "Top Reviews"
