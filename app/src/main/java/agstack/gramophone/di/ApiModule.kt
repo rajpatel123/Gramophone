@@ -74,6 +74,17 @@ object ApiModule {
 
     @Provides
     @Singleton
+    @Named("articles")
+    fun provideRetrofitArticles(client: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL_ARTICLES_BLOG)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+    }
+
+    @Provides
+    @Singleton
     fun provideGramAppService(@Named("mobility") retrofit: Retrofit): GramAppService {
         return retrofit.create(GramAppService::class.java)
     }
@@ -91,6 +102,11 @@ object ApiModule {
         return retrofit.create(PromotionsApiService::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideGramAppArticlesService(@Named("articles") retrofit: Retrofit): ArticlesApiService {
+        return retrofit.create(ArticlesApiService::class.java)
+    }
 
     private fun getHeaderInterceptor(): Interceptor {
         return Interceptor { chain ->

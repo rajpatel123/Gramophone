@@ -515,6 +515,14 @@
     <string name="add_tag_message">Please select crop to identify the post discussion.</string>
     <string name="add_tag_title">Select Crop</string>
     <string name="one_offer_applied">1 Offer applied</string>
+    <string name="add_crops">Add Crops</string>
+    <string name="add_image">Add Image</string>
+    <string name="date_sheet_heading">Get faster and better response from us</string>
+    <string name="date_sheet_sub_title">Just share your crop, sowing date  and farm area with us</string>
+    <string name="select_crop">Please select your crop</string>
+    <string name="show_date_text">What is your sowing date and farm area ?</string>
+    <string name="select_showing_date">Select sowing date</string>
+    <string name="farm_areas">Area (%d.%d)</string>
     <string name="phone">Phone</string>
     <string name="not_available">N.A</string>
     <string name="order_has_been_assigned">has been assigned to deliver your order!</string>
@@ -522,4 +530,14 @@
     <string name="feedback_submit_success_alert_message">Feedback successfully submitted.</string>
     <string name="suggestions">Suggestions</string>
     <string name="search_here">Search here</string>
+    <string name="please_select_date">Please select showing date</string>
+    <string name="please_enter_farm_area">Please enter farm area</string>
+    <string name="showing_date_msg">Get faster response from Agri Expert.</string>
+    <string name="start">Start</string>
+    <string name="featured_articles">Featured Articles</string>
+    <string name="farming">FARMING</string>
+    <string name="suggested_articles">Suggested Articles</string>
+    <string name="trending_articles">Trending Articles</string>
+    <string name="article_read">&#160;Read</string>
+    <string name="article_views">&#160;Views</string>
 </resources>

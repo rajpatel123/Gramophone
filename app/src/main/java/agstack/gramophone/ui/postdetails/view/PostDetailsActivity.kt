@@ -4,8 +4,12 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityPostDetailsBinding
+import agstack.gramophone.ui.dialog.posts.BottomSheetShowPostDateDialog
 import agstack.gramophone.ui.home.adapter.CommentsAdapter
+import agstack.gramophone.ui.home.view.fragments.market.model.CropData
+import agstack.gramophone.ui.postdetails.DisplayTagAdapter
 import agstack.gramophone.ui.postdetails.PostDetailNavigator
+import agstack.gramophone.ui.postdetails.model.Tag
 import agstack.gramophone.ui.postdetails.viewmodel.PostDetailViewModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.ImagePicker
@@ -18,11 +22,14 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
+import android.view.View.VISIBLE
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.canhub.cropper.CropImageContract
@@ -31,13 +38,15 @@ import com.canhub.cropper.CropImageView
 import com.canhub.cropper.options
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_post_details.*
+import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
 @AndroidEntryPoint
-class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostDetailNavigator,PostDetailViewModel>(),PostDetailNavigator {
+class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostDetailNavigator,PostDetailViewModel>(),PostDetailNavigator ,
+    BottomSheetShowPostDateDialog.OnSelectionShowDone{
 
     private val postDetailViewModel: PostDetailViewModel by viewModels()
     private var shareSheetPresenter: ShareSheetPresenter? = null
@@ -54,6 +63,10 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
             "",
             R.drawable.ic_arrow_left
         )
+
+        postDetailViewModel.getCrops()
+
+
 
         cropImage = registerForActivityResult(CropImageContract()) { result ->
             if (result.isSuccessful) {
@@ -72,6 +85,15 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
         }
         shareSheetPresenter = this?.let { ShareSheetPresenter(this) }
     }
+
+    override fun showBottomSheet() {
+        val bottomSheet = BottomSheetShowPostDateDialog(postDetailViewModel.cropResponse,this)
+        bottomSheet.show(
+            getSupportFragmentManager(),
+            getMessage(R.string.bottomsheet_tag)
+        )
+    }
+
     var cameraIntentLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -159,6 +181,7 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
 
     override fun onImageSet(url: String) {
         Glide.with(this).load(url).into(postImage)
+        viewDataBinding.imageContainer.visibility = VISIBLE
     }
 
     override fun setLikeImage(icLiked: Int) {
@@ -184,7 +207,14 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
 
     override fun clearImage() {
         postDetailViewModel.postImage.set(null)
-        viewDataBinding.cvPostImage.visibility= View.GONE
+        viewDataBinding.cvPostImage.visibility = View.GONE
+    }
+
+    override fun setTags(tags: List<Tag>) {
+        val tagsCropAdapter = DisplayTagAdapter(tags)
+        viewDataBinding.rvTag.adapter = tagsCropAdapter
+        viewDataBinding.rvTag.layoutManager =
+            StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL)
     }
 
 
@@ -210,6 +240,19 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
             showToast("Whatsapp have not been installed.")
         }
 
+    }
+
+    override fun onSelectionDone(cropList: MutableList<CropData>, area: JSONObject, date: String?) {
+        if (cropList.size > 0) {
+            cropList.forEach {
+                val tagMap = JSONObject()
+                tagMap.put("tag", it.cropName.toString())
+                postDetailViewModel.tags.add(tagMap)
+
+            }
+
+            postDetailViewModel.updatePost(area,date)
+        }
     }
 
 }

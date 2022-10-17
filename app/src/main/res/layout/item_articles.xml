@@ -1,33 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.home.view.fragments.market.model.FormattedArticlesData" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_16sdp"
-        android:background="@drawable/rounded_corner_16_solid_white_stroke_gray"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_156sdp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/dummy_article" />
-
-        <TextView
-            android:fontFamily="@font/manrope_bold"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="@dimen/_250sdp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:paddingStart="@dimen/_12sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_12sdp"
-            android:textColor="@color/blakish"
-            android:textSize="@dimen/_14sdp"
-            android:layout_marginBottom="@dimen/_12sdp"
-            android:text="See what are the prices of new soybean in the Mandsaur market today?" />
+            android:layout_marginStart="@dimen/_16sdp"
+            android:orientation="vertical">
 
-    </LinearLayout>
-</FrameLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_130sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/white"
+                    android:scaleType="fitXY"
+                    app:product_image='@{model.image_url ?? ""}'
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerTopOnly20"
+                    app:strokeColor="@color/gray_stroke"
+                    app:strokeWidth="1dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/ic_article_featured" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner_bottom_20_solid_white_stroke_gray"
+                android:paddingStart="@dimen/_12sdp"
+                android:paddingTop="@dimen/_12sdp"
+                android:paddingEnd="@dimen/_2sdp"
+                android:paddingBottom="@dimen/_12sdp">
+
+                <TextView
+                    android:id="@+id/tvTagFarming"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_corner_4_solid_green"
+                    android:backgroundTint="@color/article_tag_bg"
+                    android:fontFamily="@font/manrope_bold"
+                    android:gravity="top"
+                    android:lineSpacingExtra="1sp"
+                    android:paddingStart="@dimen/_4sdp"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingEnd="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_2sdp"
+                    app:htmlText='@{model.tag ?? ""}'
+                    android:textColor="@color/article_tag_text"
+                    android:textSize="@dimen/_10ssp"
+                    android:translationY="-0.49sp"
+                    tools:text="@string/farming" />
+
+                <TextView
+                    android:id="@+id/tvArticleTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_below="@+id/tvTagFarming"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/manrope_bold"
+                    android:maxLines="2"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_13sdp"
+                    app:htmlText='@{model.title ?? ""}'
+                    tools:text="See what are the prices of new soybean in the Mandsaur market today?" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvArticleTitle"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvViewsCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/_4sdp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:gravity="top"
+                        android:lineSpacingExtra="1sp"
+                        android:text='@{model.post_views.concat(@string/article_views)}'
+                        android:textSize="@dimen/_10ssp"
+                        android:translationY="-0.49sp"
+                        app:drawableStartCompat="@drawable/ic_article_viewed"
+                        tools:text="200 Views" />
+
+                    <View
+                        android:layout_width="@dimen/_4sdp"
+                        android:layout_height="@dimen/_4sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:background="@drawable/circle_solid_gray" />
+
+                    <TextView
+                        android:id="@+id/tvReadTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/_4sdp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:gravity="top"
+                        android:lineSpacingExtra="1sp"
+                        app:readTime='@{model.min_to_read ?? ""}'
+                        android:textSize="@dimen/_10ssp"
+                        android:translationY="-0.49sp"
+                        app:drawableStartCompat="@drawable/ic_article_read_time"
+                        tools:text="5 Min Read" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </FrameLayout>
+</layout>

@@ -446,6 +446,12 @@
     <string name="message_farm_added">आपने सफलतापूर्वक खेत जोड़ा</string>
     <string name="message_buy_your_crop">अपनी फसलों द्वारा खरीदारी करें</string>
     <string name="message_why_add_farm">Why Add Farm</string>
+    <string name="featured_articles">Featured Articles</string>
+    <string name="farming">FARMING</string>
+    <string name="suggested_articles">Suggested Articles</string>
+    <string name="trending_articles">Trending Articles</string>
+    <string name="article_read">&#160;Read</string>
+    <string name="article_views">&#160;Views</string>
     <string name="suggestions">Suggestions</string>
     <string name="search_here">Search here</string>
 

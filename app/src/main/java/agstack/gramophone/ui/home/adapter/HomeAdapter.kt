@@ -11,6 +11,7 @@ import agstack.gramophone.ui.farm.view.AddFarmActivity
 import agstack.gramophone.ui.farm.view.SelectCropActivity
 import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
 import agstack.gramophone.ui.farm.view.WhyAddFarmActivity
+import agstack.gramophone.ui.home.view.fragments.market.model.FeaturedArticlesResponse
 import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
@@ -39,6 +40,7 @@ class HomeAdapter(
     private var companyResponse: CompanyResponse?,
     private var cartList: List<CartItem>?,
     private var farmResponse: FarmResponse?,
+    private var featuredArticlesList: ArrayList<FormattedArticlesData>,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onItemClicked: ((id: String) -> Unit)? = null
@@ -47,7 +49,8 @@ class HomeAdapter(
         allBannerResponse: BannerResponse?, categoryResponse: CategoryResponse?,
         allProductsResponse: AllProductsResponse?, cropResponse: CropResponse?,
         storeResponse: StoreResponse?, companyResponse: CompanyResponse?,
-        cartList: List<CartItem>?,farmResponse: FarmResponse?
+        cartList: List<CartItem>?, farmResponse: FarmResponse?,
+        featuredArticlesList: ArrayList<FormattedArticlesData>,
     ) {
         this.allBannerResponse = allBannerResponse
         this.categoryResponse = categoryResponse
@@ -57,6 +60,7 @@ class HomeAdapter(
         this.companyResponse = companyResponse
         this.cartList = cartList
         this.farmResponse = farmResponse
+        this.featuredArticlesList = featuredArticlesList
         notifyDataSetChanged()
     }
 
@@ -105,6 +109,10 @@ class HomeAdapter(
             }
             Constants.HOME_FARMS_VIEW_TYPE -> {
                 return FarmsViewHolder(ItemHomeFarmsViewBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
+            }
+            Constants.HOME_ARTICLES_VIEW_TYPE -> {
+                return ArticlesViewHolder(ItemHomeArticlesBinding.inflate(LayoutInflater.from(
                     viewGroup.context)))
             }
         }
@@ -176,7 +184,8 @@ class HomeAdapter(
                         openActivity(holder.itemView.context,
                             FeaturedProductActivity::class.java,
                             Bundle().apply {
-                                putString(Constants.HOME_FEATURED_PRODUCTS, Constants.HOME_FEATURED_PRODUCTS)
+                                putString(Constants.HOME_FEATURED_PRODUCTS,
+                                    Constants.HOME_FEATURED_PRODUCTS)
                             })
                     }
                 } else {
@@ -429,6 +438,15 @@ class HomeAdapter(
                     openActivity(holder.itemView.context, ViewAllFarmsActivity::class.java, null)
                 }
             }
+            is ArticlesViewHolder -> {
+                if (featuredArticlesList.size > 0) {
+                    holder.binding.rvFeaturedArticles.adapter = ArticlesAdapter(featuredArticlesList)
+                    holder.binding.rvTrendingArticles.adapter = ArticlesAdapter(featuredArticlesList)
+                    holder.binding.rvSuggestedArticles.adapter = ArticlesAdapter(featuredArticlesList)
+                }
+
+
+            }
         }
     }
 
@@ -466,6 +484,9 @@ class HomeAdapter(
             }
             Constants.HOME_FARMS -> {
                 return Constants.HOME_FARMS_VIEW_TYPE
+            }
+            Constants.HOME_ARTICLES -> {
+                return Constants.HOME_ARTICLES_VIEW_TYPE
             }
         }
         return Constants.HOME_EMPTY_VIEW_TYPE
@@ -505,6 +526,9 @@ class HomeAdapter(
             }
             Constants.HOME_FARMS -> {
                 return Constants.HOME_FARMS_VIEW_TYPE.toLong()
+            }
+            Constants.HOME_ARTICLES -> {
+                return Constants.HOME_ARTICLES_VIEW_TYPE.toLong()
             }
         }
         return Constants.HOME_EMPTY_VIEW_TYPE.toLong()
@@ -556,5 +580,8 @@ class HomeAdapter(
         RecyclerView.ViewHolder(binding.root)
 
     inner class FarmsViewHolder(var binding: ItemHomeFarmsViewBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    inner class ArticlesViewHolder(var binding: ItemHomeArticlesBinding) :
         RecyclerView.ViewHolder(binding.root)
 }
