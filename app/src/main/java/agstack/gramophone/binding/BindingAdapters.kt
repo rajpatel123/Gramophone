@@ -9,8 +9,8 @@ import android.text.Html
 import android.text.Spanned
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.amnix.xtension.extensions.isNotNullOrEmpty
@@ -206,8 +206,10 @@ fun pastOrderRecyclerHandling(
     }
 }
 
-@BindingAdapter(value = ["orderDate", "quantity", "items", "isDateAlreadyFormatted"],
-    requireAll = true)
+@BindingAdapter(
+    value = ["orderDate", "quantity", "items", "isDateAlreadyFormatted"],
+    requireAll = true
+)
 fun setDateAndItemCount(
     textView: TextView,
     orderDate: String,
@@ -220,9 +222,11 @@ fun setDateAndItemCount(
             if (isDateAlreadyFormatted) {
                 textView.text = orderDate + " / " + quantity + items
             } else {
-                textView.text = Utility.getFormattedDate(orderDate,
+                textView.text = Utility.getFormattedDate(
+                    orderDate,
                     Utility.DATE_MONTH_YEAR_FORMAT,
-                    Utility.MONTH_DATE_YEAR_FORMAT) + " / " + quantity + items
+                    Utility.MONTH_DATE_YEAR_FORMAT
+                ) + " / " + quantity + items
             }
         }
     } catch (e: Exception) {
@@ -239,9 +243,11 @@ fun setDateAndVisibility(
             textView.visibility = View.GONE
         } else {
             textView.visibility = View.VISIBLE
-            textView.text = "Valid till " + Utility.getFormattedDate(validity_date,
+            textView.text = "Valid till " + Utility.getFormattedDate(
+                validity_date,
                 Utility.MONTH_DATE_YEAR_FORMAT,
-                Utility.YEAR_MONTH_DATA_TIME_FORMAT)
+                Utility.YEAR_MONTH_DATA_TIME_FORMAT
+            )
         }
     } catch (e: Exception) {
         textView.visibility = View.GONE
@@ -295,8 +301,11 @@ fun setReformattedIntPrice(textView: TextView, price: Float) {
             textView.text = textView.context.getString(R.string.rupee_0)
         } else {
             if (price.toString().contains(".0") || price.toString().contains(".00"))
-                textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + price.roundToInt().toString()
-            else textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + price.toString()
+                textView.text =
+                    textView.context.getString(R.string.rupee_symbol_with_space) + price.roundToInt()
+                        .toString()
+            else textView.text =
+                textView.context.getString(R.string.rupee_symbol_with_space) + price.toString()
         }
     } catch (e: Exception) {
         textView.text = textView.context.getString(R.string.rupee_0)
@@ -341,8 +350,11 @@ fun mrpPriceVisibility(
         } else {
             textView.visibility = View.VISIBLE
             if (mrp_price.toString().contains(".0") || mrp_price.toString().contains(".00"))
-                textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + mrp_price.roundToInt().toString()
-            else textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + mrp_price.toString()
+                textView.text =
+                    textView.context.getString(R.string.rupee_symbol_with_space) + mrp_price.roundToInt()
+                        .toString()
+            else textView.text =
+                textView.context.getString(R.string.rupee_symbol_with_space) + mrp_price.toString()
         }
     } catch (e: Exception) {
         textView.visibility = View.GONE
@@ -358,19 +370,54 @@ fun setPriceAndVisibility(
             textView.visibility = View.INVISIBLE
         } else if (!sales_price.isNullOrEmpty() && sales_price.toFloat() > 0) {
             if (sales_price.toString().endsWith(".0") || sales_price.toString().contains(".00"))
-                textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + sales_price.toFloat().roundToInt().toString()
-            else textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + sales_price.toString()
+                textView.text =
+                    textView.context.getString(R.string.rupee_symbol_with_space) + sales_price.toFloat()
+                        .roundToInt().toString()
+            else textView.text =
+                textView.context.getString(R.string.rupee_symbol_with_space) + sales_price.toString()
             textView.visibility = View.VISIBLE
         } else {
             if (mrp_price.toString().endsWith(".0") || mrp_price.toString().contains(".00"))
-                textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + mrp_price.roundToInt().toString()
-            else textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + mrp_price.toString()
+                textView.text =
+                    textView.context.getString(R.string.rupee_symbol_with_space) + mrp_price.roundToInt()
+                        .toString()
+            else textView.text =
+                textView.context.getString(R.string.rupee_symbol_with_space) + mrp_price.toString()
             textView.visibility = View.VISIBLE
         }
     } catch (e: Exception) {
         textView.visibility = View.INVISIBLE
     }
+
+
 }
+
+
+@BindingAdapter(value = ["salesprice_", "qtySelected"], requireAll = true)
+fun calculateSalesPrice(
+    textView: AppCompatTextView, salesprice: String?, qty: Int
+) {
+    if (salesprice != null)
+
+        textView.text = (salesprice?.toFloat()!! * qty).toString()
+
+}
+
+
+@BindingAdapter(value = ["mrpprice_", "qtySelected"], requireAll = true)
+fun calculateMRPPrice(
+    textView: AppCompatTextView, mrpPrice: String?, qty: Int
+) {
+    if (mrpPrice != null) {
+        textView.visibility = View.VISIBLE
+
+        textView.text = (mrpPrice?.toFloat()!! * qty).toString()
+    } else {
+        textView.visibility = View.GONE
+    }
+
+}
+
 
 
 
