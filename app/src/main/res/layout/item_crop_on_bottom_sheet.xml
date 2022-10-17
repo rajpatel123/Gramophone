@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:orientation="horizontal"
+
+        >
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text=" "/>-->
+        <LinearLayout
+            android:id="@+id/llCrops"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingStart="@dimen/_5sdp"
+            android:background="@drawable/tags_crop_selected"
+            android:paddingTop="@dimen/_1sdp"
+            android:layout_gravity="center_vertical"
+            android:paddingBottom="@dimen/_1sdp"
+            >
+
+            <TextView
+                android:id="@+id/finalTagText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:paddingBottom="@dimen/_3sdp"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:paddingTop="@dimen/_3sdp"
+                android:fontFamily="@font/manrope_regular"
+                android:layout_gravity="center_vertical"
+                android:singleLine="true"
+                tools:text="Tomato"
+                android:textSize="@dimen/_12ssp" />
+
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/otherText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:paddingBottom="@dimen/_3sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingTop="@dimen/_3sdp"
+            android:fontFamily="@font/manrope_regular"
+            android:layout_gravity="center_vertical"
+            android:singleLine="true"
+            android:text="@string/other"
+            android:textSize="@dimen/_12ssp" />
+    </LinearLayout>
+
+</layout>

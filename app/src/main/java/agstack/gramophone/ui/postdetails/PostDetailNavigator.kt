@@ -17,4 +17,5 @@ interface PostDetailNavigator :BaseNavigator {
     fun openCameraToCapture()
     fun clearImage()
     fun setTags(tags: List<Tag>)
+    fun showBottomSheet()
 }

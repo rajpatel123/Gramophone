@@ -3,15 +3,15 @@ package agstack.gramophone.ui.postdetails.viewmodel
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.community.CommunityRepository
+import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.comments.model.sendcomment.GetCommentRequestModel
 import agstack.gramophone.ui.home.adapter.CommentsAdapter
 import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActivity
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
+import agstack.gramophone.ui.home.view.fragments.market.model.CropResponse
 import agstack.gramophone.ui.postdetails.PostDetailNavigator
 import agstack.gramophone.ui.postdetails.model.Data
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.FileUploadRequestBody
-import agstack.gramophone.utils.Utility
+import agstack.gramophone.utils.*
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.databinding.ObservableField
@@ -22,13 +22,15 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import java.io.File
 import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
 class PostDetailViewModel @Inject constructor(
- private val  communityRepository: CommunityRepository
+ private val  communityRepository: CommunityRepository,
+ private val productRepository: ProductRepository
 ) : BaseViewModel<PostDetailNavigator>() {
 
  private var data: Data? = null
@@ -41,11 +43,16 @@ class PostDetailViewModel @Inject constructor(
  var likeCount = ObservableField<String>()
  var commentCount = ObservableField<String>()
  var imageAvailable = ObservableField<Boolean>()
+ var isDate = ObservableField<Boolean>()
+ var showingDate = ObservableField<String>()
+ var showDateView = ObservableField<Boolean>()
+ lateinit var cropResponse: CropResponse
 
  var postImage = ObservableField<File>()
  var isLoading = ObservableField<Boolean>()
- lateinit var tags: List<Map<String, String>>
  lateinit var postId: String
+ var tags = ArrayList<JSONObject>()
+
  fun getPostDetails(postId: String) {
   viewModelScope.launch {
    getNavigator()?.onLoading()
@@ -69,6 +76,25 @@ class PostDetailViewModel @Inject constructor(
       getNavigator()?.setLikeImage(R.drawable.ic_like)
      }
 
+      if (data?.author?.uuid.equals(
+        SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.UUIdKey)) ){
+       showDateView.set(true)
+       if (data?.showingDate==null){
+        isDate.set(true)
+       }else{
+        isDate.set(false)
+       }
+      }else{
+       showDateView.set(false)
+      }
+
+      if (data?.showingDate!=null){
+       showingDate.set(""+data?.showingDate)
+      }
+
+      if (data?.farmArea!=null){
+
+      }
       if (data?.tags!=null && data?.tags!!.size>0){
        getNavigator()?.setTags(data?.tags!!)
       }
@@ -268,6 +294,54 @@ class PostDetailViewModel @Inject constructor(
 
  fun deleteImage() {
   getNavigator()?.clearImage()
+ }
+
+ fun getCrops() {
+  tags = ArrayList()
+  viewModelScope.launch {
+   if (getNavigator()?.isNetworkAvailable() == true) {
+
+    val response = productRepository.getCrops()
+    if (response.isSuccessful) {
+     this@PostDetailViewModel.cropResponse = response.body()!!
+    } else {
+     getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+    }
+   }
+  }
+ }
+
+ fun updatePost(area: JSONObject, date: String?) {
+  viewModelScope.launch {
+   try {
+    if (getNavigator()?.isNetworkAvailable() == true) {
+     val postID: RequestBody = data?._id!!.toRequestBody("text/plain".toMediaTypeOrNull())
+     val tags: RequestBody = tags.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+     val showDate: RequestBody = date.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+     val area: RequestBody = area.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+
+     val response = communityRepository.updatePost(postID,tags,area,showDate)
+     if (response.isSuccessful) {
+      getPostDetails(data?._id!!)
+     }else{
+      getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+     }
+
+    } else
+     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+   } catch (ex: Exception) {
+
+    when (ex) {
+     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+     else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+    }
+   }
+
+  }
+ }
+
+ fun showUpdatePostBottomSheet(){
+ getNavigator()?.showBottomSheet()
  }
 
 }

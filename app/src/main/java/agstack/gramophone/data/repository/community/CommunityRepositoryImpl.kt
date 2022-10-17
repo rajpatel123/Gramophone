@@ -180,5 +180,16 @@ class CommunityRepositoryImpl @Inject constructor(
         userData
     }
 
+    override suspend fun updatePost(
+        postId: RequestBody,
+        tags: RequestBody?,
+        area: RequestBody?,
+        date: RequestBody?
+    ): Response<CreatePostResponseModel> = withContext(
+    Dispatchers.IO) {
+        val userData = communityApiService.updatePost(postId=postId, tags=tags, farmArea = area, showingDate = date)
+        userData
+    }
+
 
 }

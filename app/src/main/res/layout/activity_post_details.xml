@@ -145,9 +145,9 @@
                             android:layout_marginEnd="@dimen/_12sdp"
                             android:fontFamily="@font/manrope_bold"
                             android:text="@{viewModel.postDesc}"
-                            android:visibility="@{viewModel.postDesc!=null?View.VISIBLE:View.GONE}"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/_14ssp" />
+                            android:textSize="@dimen/_14ssp"
+                            android:visibility="@{viewModel.postDesc!=null?View.VISIBLE:View.GONE}" />
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/imageContainer"
@@ -164,9 +164,133 @@
                                 android:id="@+id/postImage"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:scaleType="fitXY"
-                                android:minHeight="@dimen/_300sdp"/>
+                                android:minHeight="@dimen/_300sdp"
+                                android:scaleType="fitXY" />
                         </androidx.cardview.widget.CardView>
+
+                        <LinearLayout
+                            android:id="@+id/llShowingDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/rvTag"
+                            android:layout_marginStart="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:layout_marginEnd="@dimen/_12sdp"
+                            android:background="@drawable/rounded_corner_4showing_date_bg"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:visibility="@{viewModel.showDateView?View.VISIBLE:View.GONE}">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingStart="@dimen/_8sdp"
+                                android:paddingTop="@dimen/_8sdp"
+                                android:paddingBottom="@dimen/_8sdp"
+                                android:visibility="@{viewModel.isDate?View.VISIBLE:View.GONE}"
+
+                                >
+
+                                <ImageView
+                                    android:id="@+id/ivImg"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    app:srcCompat="@drawable/ic_group__1_" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="@dimen/_5sdp"
+                                    android:layout_toEndOf="@+id/ivImg"
+
+                                    android:fontFamily="@font/manrope_semibold"
+                                    android:text="@string/showing_date_msg"
+                                    android:textColor="@color/date_color"
+                                    android:textSize="@dimen/_11ssp"
+
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="@dimen/_5sdp"
+                                    android:fontFamily="@font/manrope_semibold"
+                                    android:onClick="@{()->viewModel.showUpdatePostBottomSheet()}"
+                                    android:text="@string/start"
+                                    android:textColor="@color/green_dark"
+                                    android:textSize="@dimen/_11ssp"
+
+                                    />
+                            </RelativeLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:visibility="@{viewModel.isDate?View.GONE:View.VISIBLE}">
+
+                                <TextView
+                                    android:id="@+id/tvTag"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/_2sdp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/manrope_semibold"
+                                    android:text="@{viewModel.likeCount}"
+                                    android:textColor="@color/date_color"
+                                    android:textSize="@dimen/_12ssp"
+                                    tools:text="Tomato" />
+
+                                <TextView
+                                    android:id="@+id/tvShowDate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/_2sdp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/manrope_semibold"
+                                    android:onClick="@{()->viewModel.openLikedUserList()}"
+                                    android:text="@{viewModel.showingDate}"
+
+                                    android:textColor="@color/date_color"
+                                    android:textSize="@dimen/_12ssp"
+                                    tools:text="2022-10-14" />
+
+                                <TextView
+                                    android:id="@+id/tvArea"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/_2sdp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/manrope_semibold"
+                                    android:onClick="@{()->viewModel.openLikedUserList()}"
+                                    android:text="@{viewModel.likeCount}"
+                                    android:textColor="@color/date_color"
+                                    android:textSize="@dimen/_12ssp"
+                                    tools:text="10 Acre" />
+
+                                <ImageView
+                                    android:id="@+id/ivEdit"
+                                    android:layout_width="@dimen/_40sdp"
+                                    android:layout_height="@dimen/_40sdp"
+                                    android:fontFamily="@font/manrope_semibold"
+                                    android:onClick="@{()->viewModel.showUpdatePostBottomSheet()}"
+                                    android:paddingStart="@dimen/_10sdp"
+                                    android:paddingEnd="@dimen/_10sdp"
+                                    app:srcCompat="@drawable/ic_post_edit"
+                                    app:tint="@color/date_color" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <TextView
