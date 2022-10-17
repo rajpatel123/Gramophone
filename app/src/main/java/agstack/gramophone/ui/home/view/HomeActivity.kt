@@ -155,7 +155,7 @@ class HomeActivity :
                 }
                 R.id.navigation_profile -> {
                     viewDataBinding.toolbar.myToolbar.title =
-                        "  " + resources.getString(R.string.my_profile)
+                        "  " + resources.getString(R.string.my_gramophone)
 
                     updateMenuItemVisibility(false, false)
                     supportFragmentManager.beginTransaction().hide(activeFragment)
