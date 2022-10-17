@@ -4,6 +4,7 @@ import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.farm.model.FarmResponse
 import agstack.gramophone.ui.home.adapter.HomeAdapter
+import agstack.gramophone.ui.home.view.fragments.market.model.FeaturedArticlesResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 
 interface MarketFragmentNavigator : BaseNavigator {
@@ -17,6 +18,6 @@ interface MarketFragmentNavigator : BaseNavigator {
         allBannerResponse: BannerResponse?, categoryResponse: CategoryResponse?,
         allProductsResponse: AllProductsResponse?, cropResponse: CropResponse?,
         storeResponse: StoreResponse?, companyResponse: CompanyResponse?,
-        cartList: List<CartItem>?, farmResponse: FarmResponse?
+        cartList: List<CartItem>?, farmResponse: FarmResponse?, featuredArticlesList: ArrayList<FormattedArticlesData>
     )
 }

@@ -1,6 +1,8 @@
 package agstack.gramophone.binding
 
 import agstack.gramophone.R
+import agstack.gramophone.ui.home.view.fragments.market.model.FeaturedArticlesResponse
+import agstack.gramophone.ui.home.view.fragments.market.model.FeaturedArticlesResponseItem
 import agstack.gramophone.utils.Utility
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -142,7 +144,7 @@ fun bindRating(view: TextView, rating: Double?) {
 
 @BindingAdapter("htmlText")
 fun setHtmlTextValue(textView: TextView, htmlText: String?) {
-    if (htmlText == null) return
+    if (htmlText.isNullOrEmpty()) return
     val result: Spanned = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY)
     } else {
@@ -379,6 +381,22 @@ fun setPriceAndVisibility(
     }
 }
 
+@BindingAdapter("readTime")
+fun setArticleReadTime(textView: TextView, readTime: String) {
+    try {
+        if(readTime.isNullOrEmpty()) {
+            textView.text = ""
+        } else{
+            var formattedTime = readTime
+            if (formattedTime.startsWith("0 minutes,")) formattedTime = formattedTime.replace("0 minutes,", "")
+            formattedTime = formattedTime.replace("minutes", "Min")
+            formattedTime = formattedTime.replace("seconds", "Sec")
+            textView.text = formattedTime + textView.context.getString(R.string.article_read)
+        }
+    } catch (e: Exception) {
+        textView.text = textView.context.getString(R.string.rupee_0)
+    }
+}
 
 
 

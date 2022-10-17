@@ -26,4 +26,5 @@ interface CommunityFragmentNavigator: BaseNavigator {
     fun getReportReason(): String
     fun setProfileImage(url:String)
     fun stopRefresh()
+    fun hideViews()
 }

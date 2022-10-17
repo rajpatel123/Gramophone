@@ -2,6 +2,7 @@ package agstack.gramophone.ui.postdetails
 
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.ui.home.adapter.CommentsAdapter
+import agstack.gramophone.ui.postdetails.model.Tag
 import agstack.gramophone.widget.FilePicker
 
 interface PostDetailNavigator :BaseNavigator {
@@ -15,4 +16,6 @@ interface PostDetailNavigator :BaseNavigator {
     fun showImageSelect(file: FilePicker, onCamera: () -> Unit, onGallery: () -> Unit)
     fun openCameraToCapture()
     fun clearImage()
+    fun setTags(tags: List<Tag>)
+    fun showBottomSheet()
 }
