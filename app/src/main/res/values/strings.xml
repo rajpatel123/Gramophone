@@ -528,6 +528,8 @@
     <string name="order_has_been_assigned">has been assigned to deliver your order!</string>
     <string name="feedback_submit_success_alert_title">Success !</string>
     <string name="feedback_submit_success_alert_message">Feedback successfully submitted.</string>
+    <string name="suggestions">Suggestions</string>
+    <string name="search_here">Search here</string>
     <string name="please_select_date">Please select showing date</string>
     <string name="please_enter_farm_area">Please enter farm area</string>
     <string name="showing_date_msg">Get faster response from Agri Expert.</string>

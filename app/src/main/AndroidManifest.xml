@@ -204,6 +204,9 @@
         <activity
             android:name=".ui.farm.view.CropGroupExplorerActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.search.view.GlobalSearchActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".pushnotification.MyFirebaseMessagingService" />
         <service

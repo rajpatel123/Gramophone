@@ -452,6 +452,8 @@
     <string name="trending_articles">Trending Articles</string>
     <string name="article_read">&#160;Read</string>
     <string name="article_views">&#160;Views</string>
+    <string name="suggestions">Suggestions</string>
+    <string name="search_here">Search here</string>
 
 
 </resources>
