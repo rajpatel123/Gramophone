@@ -5,7 +5,10 @@ import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.di.GramAppService
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
-import agstack.gramophone.ui.farm.model.*
+import agstack.gramophone.ui.farm.model.AddFarmRequest
+import agstack.gramophone.ui.farm.model.AddFarmResponse
+import agstack.gramophone.ui.farm.model.FarmRequest
+import agstack.gramophone.ui.farm.model.FarmResponse
 import agstack.gramophone.ui.farm.model.unit.FarmUnitResponse
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
@@ -271,7 +274,11 @@ class ProductRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun getSuggestions(suggestionsRequest: SuggestionsRequest): Response<SuggestionsResponse> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getSuggestions(body: SuggestionsRequest): Response<SuggestionsResponse> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val response = gramoAppService.getSuggestions(body)
+            response
+        }
 }

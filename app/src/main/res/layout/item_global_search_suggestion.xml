@@ -10,26 +10,34 @@
 
         <variable
             name="item"
-            type="agstack.gramophone.ui.farm.model.Data" />
+            type="String" />
     </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/txtSuggestionWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground">
 
     <TextView
         android:id="@+id/txtSuggestion"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_36sdp"
-        android:layout_marginLeft="@dimen/_16sdp"
-        android:layout_marginRight="@dimen/_16sdp"
-        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/_16sdp"
+        android:paddingEnd="@dimen/_16sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
         android:fontFamily="@font/manrope_medium"
         android:lines="1"
         android:maxLength="100"
-        android:text='@{item[0].crop_name ?? "" }'
+        android:text='@{item ?? "" }'
         android:textColor="@color/blakish"
-        android:textSize="@dimen/_12ssp"
+        android:textSize="@dimen/_10ssp"
         android:drawableStart="@drawable/ic_search"
         tools:text="Tomotto issue"
         android:gravity="center_vertical"
-        android:drawablePadding="@dimen/_16sdp"
-        android:foreground="?android:attr/selectableItemBackground"/>
+        android:drawablePadding="@dimen/_16sdp"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </layout>

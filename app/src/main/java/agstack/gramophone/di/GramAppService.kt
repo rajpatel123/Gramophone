@@ -305,5 +305,5 @@ interface GramAppService {
     ): Response<HasgTagResponseModel>
 
     @POST("api/v5/search/suggestions")
-    suspend fun getSuggestions(@Body request : SuggestionsRequest): Response<SuggestionsResponse>
+    suspend fun getSuggestions(@Body body : SuggestionsRequest): Response<SuggestionsResponse>
 }

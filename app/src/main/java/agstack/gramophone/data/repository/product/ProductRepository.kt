@@ -90,5 +90,5 @@ interface ProductRepository {
 
     suspend fun getOffersOnProduct(productData: ProductData): Response<ApplicableOfferResponse>
 
-    suspend fun getSuggestions(suggestionsRequest: SuggestionsRequest): Response<SuggestionsResponse>
+    suspend fun getSuggestions(body: SuggestionsRequest): Response<SuggestionsResponse>
 }
