@@ -39,7 +39,7 @@
                     android:orientation="vertical">
 
                     <RelativeLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/weather_clear"
                         app:backgroundResource="@{viewModel.isRainView() ? R.color.weather_rain : R.color.weather_clear}">
@@ -157,7 +157,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/llTemp"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:visibility="@{viewModel.minTemp.isEmpty() ? View.GONE : View.VISIBLE}">
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -225,11 +226,11 @@
                             </LinearLayout>
 
                             <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="@dimen/_80sdp"
+                                android:layout_height="@dimen/_80sdp"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:src="@{viewModel.isRainView() ? @drawable/ic_weather_rain :@drawable/ic_weather_clear}"
+                                app:product_image='@{viewModel.weatherTypeImage ?? ""}'
                                 tools:src="@drawable/ic_weather_clear" />
 
                         </RelativeLayout>
@@ -252,6 +253,7 @@
                             tools:textColor="@color/orange" />
 
                         <View
+                            tools:visibility="gone"
                             android:id="@+id/viewWeatherSeparator"
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
@@ -259,9 +261,11 @@
                             android:layout_marginStart="24dp"
                             android:layout_marginTop="@dimen/_12sdp"
                             android:layout_marginEnd="24dp"
-                            android:background="@color/gray" />
+                            android:background="@color/gray"
+                            android:visibility="@{viewModel.perceptionIntensity.isEmpty() ? View.GONE : View.VISIBLE}" />
 
                         <LinearLayout
+                            tools:visibility="gone"
                             android:id="@+id/llWeatherType"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -269,7 +273,8 @@
                             android:layout_marginStart="24dp"
                             android:layout_marginTop="@dimen/_20sdp"
                             android:layout_marginEnd="24dp"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="@{viewModel.perceptionIntensity.isEmpty() ? View.GONE : View.VISIBLE}">
 
                             <TextView
                                 android:id="@+id/tvWeatherType"
@@ -299,6 +304,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            tools:visibility="gone"
                             android:id="@+id/llForecast"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -307,7 +313,8 @@
                             android:layout_marginTop="@dimen/_6sdp"
                             android:layout_marginEnd="24dp"
                             android:layout_marginBottom="@dimen/_20sdp"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="@{viewModel.perceptionType.isEmpty() ? View.GONE : View.VISIBLE}">
 
                             <TextView
                                 android:id="@+id/tvRainProbability"

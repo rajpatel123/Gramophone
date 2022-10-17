@@ -430,6 +430,12 @@
     <string name="order_has_been_assigned">has been assigned to deliver your order!</string>
     <string name="feedback_submit_success_alert_title">Success !</string>
     <string name="feedback_submit_success_alert_message">Feedback successfully submitted.</string>
+    <string name="featured_articles">Featured Articles</string>
+    <string name="farming">FARMING</string>
+    <string name="suggested_articles">Suggested Articles</string>
+    <string name="trending_articles">Trending Articles</string>
+    <string name="article_read">&#160;Read</string>
+    <string name="article_views">&#160;Views</string>
 
 </resources>
 

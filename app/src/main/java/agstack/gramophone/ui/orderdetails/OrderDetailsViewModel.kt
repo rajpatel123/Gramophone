@@ -62,11 +62,11 @@ class OrderDetailsViewModel @Inject constructor(
     fun getBundleData() {
         val bundle = getNavigator()?.getBundle()
         if (bundle?.containsKey(Constants.ORDER_ID)!! && bundle.getString(Constants.ORDER_ID) != null) {
-            getOrderDetails(bundle.get(Constants.ORDER_ID) as String)
+            getOrderDetails(bundle.getString(Constants.ORDER_ID) as String, bundle.getString(Constants.ORDER_TYPE) as String)
         }
     }
 
-    private fun getOrderDetails(orderId: String) {
+    private fun getOrderDetails(orderId: String, orderType: String) {
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -74,6 +74,7 @@ class OrderDetailsViewModel @Inject constructor(
 
                     val orderDetailRequest = OrderDetailRequest()
                     orderDetailRequest.order_id = orderId
+                    orderDetailRequest.type = orderType
 
                     val response = productRepository.getOrderDetails(orderDetailRequest)
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS

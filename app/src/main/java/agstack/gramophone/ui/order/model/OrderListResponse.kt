@@ -40,7 +40,6 @@ data class Data(
     val price: Int,
     val product_image: String,
     val quantity: Int,
-    val vr_info: List<Any>
 )
 
 data class Link(

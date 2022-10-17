@@ -10,4 +10,6 @@ import kotlinx.android.parcel.Parcelize
 data class OrderDetailRequest(
     @SerializedName("order_id")
     var order_id: String = "",
+    @SerializedName("type")
+    var type: String = "",
 ) : Parcelable
