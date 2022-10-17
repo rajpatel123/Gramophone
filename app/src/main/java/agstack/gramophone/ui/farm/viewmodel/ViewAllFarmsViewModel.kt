@@ -60,8 +60,6 @@ class ViewAllFarmsViewModel @Inject constructor(
                         isCustomerFarms = false
                         farmsList.addAll(farmResponse.gp_api_response_data.model_farm.data)
                     }
-                    farmsList.addAll(farmsList)
-                    farmsList.addAll(farmsList)
 
                     getNavigator()?.setViewAllFarmsAdapter(
                        farmsList, isCustomerFarms
