@@ -67,6 +67,7 @@ object Constants {
     val HOME_GRAMOPHONE_PROMISE = "gramophone_promise"
     val HOME_CART = "products_in_your_cart"
     val HOME_FARMS = "crops_and_farm"
+    val HOME_ARTICLES = "new_articles"
 
     val HOME_EMPTY_VIEW_TYPE = 0
     val HOME_BANNER_VIEW_TYPE = 1
@@ -80,6 +81,7 @@ object Constants {
     val HOME_GRAMOPHONE_PROMISE_VIEW_TYPE = 9
     val HOME_CART_VIEW_TYPE = 10
     val HOME_FARMS_VIEW_TYPE = 11
+    val HOME_ARTICLES_VIEW_TYPE = 12
     val GramCashResponse = "GramCashResponse"
     val ReferralPointBalanceData ="ReferralPointBalanceData"
     val GramCashFAQList = "GramCashFAQList"

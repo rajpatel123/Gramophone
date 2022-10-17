@@ -8,6 +8,7 @@ import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.dialog.AppTourDialog
 import agstack.gramophone.ui.farm.model.FarmResponse
 import agstack.gramophone.ui.home.adapter.HomeAdapter
+import agstack.gramophone.ui.home.view.fragments.market.model.FeaturedArticlesResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -97,6 +98,7 @@ class MarketFragment :
         marketFragmentViewModel.getCompanies()
         marketFragmentViewModel.getCartProducts()
         marketFragmentViewModel.getFarms()
+        marketFragmentViewModel.getFeaturedArticles()
     }
 
     private fun setUpUI() {
@@ -121,7 +123,8 @@ class MarketFragment :
         storeResponse: StoreResponse?,
         companyResponse: CompanyResponse?,
         cartList: List<CartItem>?,
-        farmResponse: FarmResponse?
+        farmResponse: FarmResponse?,
+        featuredArticlesList: ArrayList<FormattedArticlesData>,
     ) {
         homeAdapter?.notifyAdapterOnDataChange(allBannerResponse,
             categoryResponse,
@@ -130,7 +133,8 @@ class MarketFragment :
             storeResponse,
             companyResponse,
             cartList,
-            farmResponse)
+            farmResponse,
+            featuredArticlesList)
     }
 
     override fun onResume() {

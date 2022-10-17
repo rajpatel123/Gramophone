@@ -61,8 +61,6 @@ class OrderListViewModel @Inject constructor(
                     ) {
                         val placedList = ArrayList<Data>()
                         placedList.addAll(placeOrderResponse.body()?.gp_api_response_data?.data as ArrayList<Data>)
-                        if (placedList.isNotNullOrEmpty()) placedList.removeAt(0)
-
                         placedOrderSize.value = placedList.size
 
                         getNavigator()?.setPlacedOrderAdapter(
