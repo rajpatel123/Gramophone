@@ -399,7 +399,7 @@ fun calculateSalesPrice(
 ) {
     if (salesprice != null)
 
-        textView.text = (salesprice?.toFloat()!! * qty).toString()
+        textView.text =  textView.context.getString(R.string.rupee_symbol_with_space) +(salesprice?.toFloat()!! * qty).toString()
 
 }
 
