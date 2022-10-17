@@ -429,5 +429,7 @@
     <string name="order_has_been_assigned">has been assigned to deliver your order!</string>
     <string name="feedback_submit_success_alert_title">यशस्वी !</string>
     <string name="feedback_submit_success_alert_message">अभिप्राय यशस्वीपणे जमा केला.</string>
+    <string name="suggestions">Suggestions</string>
+    <string name="search_here">Search here</string>
 
 </resources>

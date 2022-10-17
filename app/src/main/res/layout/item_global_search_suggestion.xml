@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="item"
+            type="agstack.gramophone.ui.farm.model.Data" />
+    </data>
+
+    <TextView
+        android:id="@+id/txtSuggestion"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_marginLeft="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:fontFamily="@font/manrope_medium"
+        android:lines="1"
+        android:maxLength="100"
+        android:text='@{item[0].crop_name ?? "" }'
+        android:textColor="@color/blakish"
+        android:textSize="@dimen/_12ssp"
+        android:drawableStart="@drawable/ic_search"
+        tools:text="Tomotto issue"
+        android:gravity="center_vertical"
+        android:drawablePadding="@dimen/_16sdp"
+        android:foreground="?android:attr/selectableItemBackground"/>
+
+</layout>

@@ -16,6 +16,8 @@ import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
+import agstack.gramophone.ui.search.model.SuggestionsRequest
+import agstack.gramophone.ui.search.model.SuggestionsResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -260,6 +262,7 @@ class ProductRepositoryImpl @Inject constructor(
             val response = gramoAppService.getOffersOnProduct(productData)
             response
         }
+
     override suspend fun checkPromotionOnProduct(verifyPromotionRequestModel: VerifyPromotionRequestModel): Response<CheckPromotionResponseModel> = withContext(
         Dispatchers.IO
     ) {
@@ -267,4 +270,8 @@ class ProductRepositoryImpl @Inject constructor(
         response
     }
 
+
+    override suspend fun getSuggestions(suggestionsRequest: SuggestionsRequest): Response<SuggestionsResponse> {
+        TODO("Not yet implemented")
+    }
 }
