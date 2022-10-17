@@ -532,4 +532,5 @@
     <string name="please_enter_farm_area">Please enter farm area</string>
     <string name="showing_date_msg">Get faster response from Agri Expert.</string>
     <string name="start">Start</string>
+    <string name="can_not_block">You can not report/block admin user</string>
 </resources>
