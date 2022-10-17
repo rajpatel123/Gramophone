@@ -23,7 +23,7 @@ class BottomSheetCropsDialog(
 ) : BottomSheetDialogFragment() {
     private lateinit var addCropAdapter: AddCropAdapter
     var binding: CropBottomSheetBinding? = null
-    val cropList =ArrayList<CropData>()
+    val cropListData =ArrayList<CropData>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,9 +50,9 @@ class BottomSheetCropsDialog(
 
         binding?.doneButton?.setOnClickListener {
             addCropAdapter.cropList?.forEach {
-                if (it.isSelected) cropList.add(it)
+                if (it.isSelected) cropListData.add(it)
             }
-            listener.onCropSelectionDone(cropList)
+            listener.onCropSelectionDone(cropListData)
             dismiss()
         }
     }

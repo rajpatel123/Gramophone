@@ -66,6 +66,7 @@ class CommunityViewModel @Inject constructor(
 
     fun filterPost(v: TabLayout.Tab) {
         showProgress.set(true)
+        getNavigator()?.hideViews()
         when (v.text) {
             Constants.POST_LATEST -> {
                 sorting.set("latest")

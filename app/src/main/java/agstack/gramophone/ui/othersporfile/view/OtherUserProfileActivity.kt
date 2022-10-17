@@ -173,6 +173,9 @@ class OtherUserProfileActivity :
     override fun stopRefresh() {
     }
 
+    override fun hideViews() {
+    }
+
     override fun onImageSet(imageUrl: String, iv: ImageView) {
         Glide.with(this).load(imageUrl).into(iv)
     }

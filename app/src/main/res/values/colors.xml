@@ -81,4 +81,5 @@
     <color name="wert">#3F51B5</color>
     <color name="colorexpire">#F8111B</color>
     <color name="colorBorder">#F7F7F7</color>
+    <color name="date_color">#97651A</color>
 </resources>

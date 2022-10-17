@@ -6,6 +6,7 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityPostDetailsBinding
 import agstack.gramophone.ui.dialog.posts.BottomSheetShowPostDateDialog
 import agstack.gramophone.ui.home.adapter.CommentsAdapter
+import agstack.gramophone.ui.home.view.fragments.market.model.CropData
 import agstack.gramophone.ui.postdetails.DisplayTagAdapter
 import agstack.gramophone.ui.postdetails.PostDetailNavigator
 import agstack.gramophone.ui.postdetails.model.Tag
@@ -21,6 +22,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.view.View.VISIBLE
 import androidx.activity.result.ActivityResultLauncher
@@ -36,13 +38,15 @@ import com.canhub.cropper.CropImageView
 import com.canhub.cropper.options
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_post_details.*
+import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
 @AndroidEntryPoint
-class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostDetailNavigator,PostDetailViewModel>(),PostDetailNavigator {
+class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostDetailNavigator,PostDetailViewModel>(),PostDetailNavigator ,
+    BottomSheetShowPostDateDialog.OnSelectionShowDone{
 
     private val postDetailViewModel: PostDetailViewModel by viewModels()
     private var shareSheetPresenter: ShareSheetPresenter? = null
@@ -59,7 +63,11 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
             "",
             R.drawable.ic_arrow_left
         )
-        showBottomSheet()
+
+        postDetailViewModel.getCrops()
+
+
+
         cropImage = registerForActivityResult(CropImageContract()) { result ->
             if (result.isSuccessful) {
                 // use the returned uri
@@ -78,8 +86,8 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
         shareSheetPresenter = this?.let { ShareSheetPresenter(this) }
     }
 
-    private fun showBottomSheet() {
-        val bottomSheet = BottomSheetShowPostDateDialog()
+    override fun showBottomSheet() {
+        val bottomSheet = BottomSheetShowPostDateDialog(postDetailViewModel.cropResponse,this)
         bottomSheet.show(
             getSupportFragmentManager(),
             getMessage(R.string.bottomsheet_tag)
@@ -232,6 +240,19 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
             showToast("Whatsapp have not been installed.")
         }
 
+    }
+
+    override fun onSelectionDone(cropList: MutableList<CropData>, area: JSONObject, date: String?) {
+        if (cropList.size > 0) {
+            cropList.forEach {
+                val tagMap = JSONObject()
+                tagMap.put("tag", it.cropName.toString())
+                postDetailViewModel.tags.add(tagMap)
+
+            }
+
+            postDetailViewModel.updatePost(area,date)
+        }
     }
 
 }

@@ -19,6 +19,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
@@ -54,7 +55,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         shareSheetPresenter = this?.let { ShareSheetPresenter(requireActivity()) }
-
+        communityViewModel.sorting.set("latest")
     }
 
 
@@ -73,18 +74,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     override fun onResume() {
         super.onResume()
-        communityViewModel.loadData("latest")
-        tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                progress.visibility= VISIBLE
-                communityViewModel.filterPost(tab)
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
-            override fun onTabReselected(tab: TabLayout.Tab) {}
-        })
-
-
     }
 
 
@@ -135,6 +124,19 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        communityViewModel.loadData(communityViewModel.sorting.get().toString())
+        tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                progress.visibility= VISIBLE
+                communityViewModel.filterPost(tab)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+    }
     override fun sharePost(link: String) {
         val whatsappIntent = Intent(Intent.ACTION_SEND)
         whatsappIntent.type = "text/plain"
@@ -215,6 +217,11 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     override fun stopRefresh() {
         swipeRefresh.isRefreshing=false
+    }
+
+    override fun hideViews() {
+        tvNoPost.visibility=GONE
+        rvPost.visibility= GONE
     }
 
     override fun onImageSet(imageUrl: String, iv: ImageView) {
