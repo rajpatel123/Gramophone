@@ -540,4 +540,6 @@
     <string name="trending_articles">Trending Articles</string>
     <string name="article_read">&#160;Read</string>
     <string name="article_views">&#160;Views</string>
+    <string name="sorry_no_result_found">Sorry!No result found!</string>
+    <string name="please_try_another_way">We\'re sorry what you are looking for. Please try another way.</string>
 </resources>

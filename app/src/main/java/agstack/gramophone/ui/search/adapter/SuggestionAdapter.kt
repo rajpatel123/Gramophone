@@ -13,7 +13,7 @@ class SuggestionAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int
     ): SuggestionAdapter.SuggestionViewHolder {
         return SuggestionViewHolder(
-            ItemGlobalSearchSuggestionBinding.inflate(LayoutInflater.from(parent.context))
+            ItemGlobalSearchSuggestionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
