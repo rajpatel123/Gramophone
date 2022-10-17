@@ -44,6 +44,7 @@ class PostDetailViewModel @Inject constructor(
  var commentCount = ObservableField<String>()
  var imageAvailable = ObservableField<Boolean>()
  var isDate = ObservableField<Boolean>()
+ var showingDate = ObservableField<String>()
  var showDateView = ObservableField<Boolean>()
  lateinit var cropResponse: CropResponse
 
@@ -87,6 +88,13 @@ class PostDetailViewModel @Inject constructor(
        showDateView.set(false)
       }
 
+      if (data?.showingDate!=null){
+       showingDate.set(""+data?.showingDate)
+      }
+
+      if (data?.farmArea!=null){
+
+      }
       if (data?.tags!=null && data?.tags!!.size>0){
        getNavigator()?.setTags(data?.tags!!)
       }

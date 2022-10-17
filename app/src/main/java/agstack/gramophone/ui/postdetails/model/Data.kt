@@ -1,5 +1,6 @@
 package agstack.gramophone.ui.postdetails.model
 
+import agstack.gramophone.ui.createnewpost.view.model.create.FarmArea
 import com.google.gson.annotations.SerializedName
 
 data class Data(
@@ -28,5 +29,6 @@ data class Data(
     val whatsAppShare: Int,
     val bookMarked: Boolean,
     val linkUrl: String,
-    val showingDate:String?
-)
+    val showingDate:String?,
+    val farmArea: FarmArea
+    )
