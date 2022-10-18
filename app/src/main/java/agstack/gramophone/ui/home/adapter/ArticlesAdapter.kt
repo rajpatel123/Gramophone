@@ -2,13 +2,16 @@ package agstack.gramophone.ui.home.adapter
 
 
 import agstack.gramophone.databinding.ItemArticlesBinding
-import agstack.gramophone.ui.home.view.fragments.market.model.FeaturedArticlesResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.FormattedArticlesData
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import java.util.ArrayList
 
-class ArticlesAdapter(private val featuredArticlesList: ArrayList<FormattedArticlesData>) :
+class ArticlesAdapter(
+    private val articlesList: ArrayList<FormattedArticlesData>,
+    private val listener: (String) -> Unit,
+) :
     RecyclerView.Adapter<ArticlesAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
@@ -18,11 +21,14 @@ class ArticlesAdapter(private val featuredArticlesList: ArrayList<FormattedArtic
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, i: Int) {
-        holder.binding.model = featuredArticlesList[i]
+        holder.binding.model = articlesList[i]
+        holder.binding.llArticlesItem.setOnClickListener {
+            listener.invoke(articlesList[i].id.toString())
+        }
     }
 
     override fun getItemCount(): Int {
-        return featuredArticlesList.size
+        return articlesList.size
     }
 
     inner class CustomViewHolder(var binding: ItemArticlesBinding) :

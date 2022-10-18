@@ -16,14 +16,11 @@ data class FeaturedArticlesResponseItem(
 data class Embedded(
     @field:SerializedName("wp:featuredmedia")
     val featuredmedia: List<WpFeaturedmedia>? = null,
-
-    )
+)
 
 data class Acf(
     val category_name: String? = null,
     val crop_name: String? = null,
-    val featured_post_sorting: Int,
-    val icon: Int,
 )
 
 data class TitleX(

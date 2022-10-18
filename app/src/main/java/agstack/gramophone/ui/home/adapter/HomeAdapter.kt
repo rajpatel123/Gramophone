@@ -1,8 +1,10 @@
 package agstack.gramophone.ui.home.adapter
 
 
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.databinding.*
+import agstack.gramophone.ui.articles.ArticlesWebViewActivity
 import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.farm.adapter.FarmAdapter
@@ -11,13 +13,13 @@ import agstack.gramophone.ui.farm.view.AddFarmActivity
 import agstack.gramophone.ui.farm.view.SelectCropActivity
 import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
 import agstack.gramophone.ui.farm.view.WhyAddFarmActivity
-import agstack.gramophone.ui.home.view.fragments.market.model.FeaturedArticlesResponse
 import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.shop.ShopByActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.*
+import agstack.gramophone.ui.webview.view.WebViewActivity
 import agstack.gramophone.utils.Constants
 import android.content.Context
 import android.content.Intent
@@ -40,7 +42,7 @@ class HomeAdapter(
     private var companyResponse: CompanyResponse?,
     private var cartList: List<CartItem>?,
     private var farmResponse: FarmResponse?,
-    private var featuredArticlesList: ArrayList<FormattedArticlesData>,
+    private var articlesData: HashMap<String, ArrayList<FormattedArticlesData>>,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onItemClicked: ((id: String) -> Unit)? = null
@@ -50,7 +52,7 @@ class HomeAdapter(
         allProductsResponse: AllProductsResponse?, cropResponse: CropResponse?,
         storeResponse: StoreResponse?, companyResponse: CompanyResponse?,
         cartList: List<CartItem>?, farmResponse: FarmResponse?,
-        featuredArticlesList: ArrayList<FormattedArticlesData>,
+        articlesData: HashMap<String, ArrayList<FormattedArticlesData>>,
     ) {
         this.allBannerResponse = allBannerResponse
         this.categoryResponse = categoryResponse
@@ -60,7 +62,7 @@ class HomeAdapter(
         this.companyResponse = companyResponse
         this.cartList = cartList
         this.farmResponse = farmResponse
-        this.featuredArticlesList = featuredArticlesList
+        this.articlesData = articlesData
         notifyDataSetChanged()
     }
 
@@ -439,13 +441,70 @@ class HomeAdapter(
                 }
             }
             is ArticlesViewHolder -> {
-                if (featuredArticlesList.size > 0) {
-                    holder.binding.rvFeaturedArticles.adapter = ArticlesAdapter(featuredArticlesList)
-                    holder.binding.rvTrendingArticles.adapter = ArticlesAdapter(featuredArticlesList)
-                    holder.binding.rvSuggestedArticles.adapter = ArticlesAdapter(featuredArticlesList)
+                if (articlesData.size > 0) {
+                    if (articlesData.containsKey(Constants.FEATURED_ARTICLES) && articlesData[Constants.FEATURED_ARTICLES].isNotNullOrEmpty()) {
+                        holder.binding.itemViewFeatured.visibility = View.VISIBLE
+                        holder.binding.rvFeaturedArticles.adapter =
+                            ArticlesAdapter(articlesData[Constants.FEATURED_ARTICLES]!!) {
+                                openActivity(
+                                    holder.binding.viewAllArticles.context,
+                                    ArticlesWebViewActivity::class.java,
+                                    Bundle().apply {
+                                        putString(Constants.PAGE_URL, BuildConfig.BASE_URL_SINGLE_ARTICLE + it)
+                                    }
+                                )
+                            }
+                    } else {
+                        holder.binding.itemViewFeatured.visibility = View.GONE
+                    }
+                    if (articlesData.containsKey(Constants.TRENDING_ARTICLES) && articlesData[Constants.TRENDING_ARTICLES].isNotNullOrEmpty()) {
+                        holder.binding.itemViewTrending.visibility = View.VISIBLE
+                        holder.binding.rvTrendingArticles.adapter =
+                            ArticlesAdapter(articlesData[Constants.TRENDING_ARTICLES]!!) {
+                                openActivity(
+                                    holder.binding.viewAllArticles.context,
+                                    ArticlesWebViewActivity::class.java,
+                                    Bundle().apply {
+                                        putString(Constants.PAGE_URL, BuildConfig.BASE_URL_SINGLE_ARTICLE + it)
+                                    }
+                                )
+                            }
+                    } else {
+                        holder.binding.itemViewTrending.visibility = View.GONE
+                    }
+                    if (articlesData.containsKey(Constants.SUGGESTED_ARTICLES) && articlesData[Constants.SUGGESTED_ARTICLES].isNotNullOrEmpty()) {
+                        holder.binding.itemViewSuggested.visibility = View.VISIBLE
+                        holder.binding.rvSuggestedArticles.adapter =
+                            ArticlesAdapter(articlesData[Constants.SUGGESTED_ARTICLES]!!) {
+                                openActivity(
+                                    holder.binding.viewAllArticles.context,
+                                    ArticlesWebViewActivity::class.java,
+                                    Bundle().apply {
+                                        putString(Constants.PAGE_URL, BuildConfig.BASE_URL_SINGLE_ARTICLE + it)
+                                    }
+                                )
+                            }
+                    } else {
+                        holder.binding.itemViewSuggested.visibility = View.GONE
+                    }
+                    holder.binding.viewAllArticles.setOnClickListener {
+                        openActivity(
+                            holder.binding.viewAllArticles.context,
+                            ArticlesWebViewActivity::class.java,
+                            Bundle().apply {
+                                putString(Constants.PAGE_URL, BuildConfig.BASE_URL_ARTICLES)
+                            }
+                        )
+                    }
+                    holder.binding.viewAllArticles.visibility = View.VISIBLE
+                    holder.binding.view.visibility = View.VISIBLE
+                } else {
+                    holder.binding.itemViewFeatured.visibility = View.GONE
+                    holder.binding.itemViewTrending.visibility = View.GONE
+                    holder.binding.itemViewSuggested.visibility = View.GONE
+                    holder.binding.viewAllArticles.visibility = View.GONE
+                    holder.binding.view.visibility = View.GONE
                 }
-
-
             }
         }
     }

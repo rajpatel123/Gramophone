@@ -124,7 +124,7 @@ class MarketFragment :
         companyResponse: CompanyResponse?,
         cartList: List<CartItem>?,
         farmResponse: FarmResponse?,
-        featuredArticlesList: ArrayList<FormattedArticlesData>,
+        articlesData: HashMap<String, ArrayList<FormattedArticlesData>>,
     ) {
         homeAdapter?.notifyAdapterOnDataChange(allBannerResponse,
             categoryResponse,
@@ -134,7 +134,7 @@ class MarketFragment :
             companyResponse,
             cartList,
             farmResponse,
-            featuredArticlesList)
+            articlesData)
     }
 
     override fun onResume() {

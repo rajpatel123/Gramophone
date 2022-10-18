@@ -1,10 +1,10 @@
 package agstack.gramophone.ui.home.view.fragments.market.model
 
-class TrendingArticlesResponse : ArrayList<TrendingArticlesResponseItem>()
+class SuggestedArticlesResponse : ArrayList<SuggestedArticlesResponseItem>()
 
-data class TrendingArticlesResponseItem(
-    val id: Int,
-    val title: TitleX? = null,
+data class SuggestedArticlesResponseItem(
+    val ID: Int,
+    val post_title: String? = null,
     val min_to_read: String? = null,
     val post_views: String? = null,
     val acf: Acf? = null,
