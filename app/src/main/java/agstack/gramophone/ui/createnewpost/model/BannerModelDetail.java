@@ -1,4 +1,5 @@
-package agstack.gramophone.ui.createnewpost.view;
+package agstack.gramophone.ui.createnewpost.model;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

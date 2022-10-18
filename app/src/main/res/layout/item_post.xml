@@ -191,7 +191,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_11sdp"
             android:layout_toStartOf="@+id/ivMenu"
-            android:visibility="@{model.pinned?View.VISIBLE:View.GONE}"
+            android:visibility="@{model.pinned?View.VISIBLE:View.INVISIBLE}"
             app:srcCompat="@drawable/ic_pin" />
 
         <ImageView
@@ -515,7 +515,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:id="@+id/llEdit"
@@ -590,7 +590,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:id="@+id/llReport"
