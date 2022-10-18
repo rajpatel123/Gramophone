@@ -528,6 +528,8 @@
     <string name="order_has_been_assigned">has been assigned to deliver your order!</string>
     <string name="feedback_submit_success_alert_title">Success !</string>
     <string name="feedback_submit_success_alert_message">Feedback successfully submitted.</string>
+    <string name="suggestions">Suggestions</string>
+    <string name="search_here">Search here</string>
     <string name="please_select_date">Please select showing date</string>
     <string name="please_enter_farm_area">Please enter farm area</string>
     <string name="showing_date_msg">Get faster response from Agri Expert.</string>
@@ -545,4 +547,6 @@
     <string name="contributr_community">Contribute in community</string>
     <string name="polls">Participate in Quiz and Polls</string>
     <string name="go_to_community">Go To Community</string>
+    <string name="sorry_no_result_found">Sorry!No result found!</string>
+    <string name="please_try_another_way">We\'re sorry what you are looking for. Please try another way.</string>
 </resources>

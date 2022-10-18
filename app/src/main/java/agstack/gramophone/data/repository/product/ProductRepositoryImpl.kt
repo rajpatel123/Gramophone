@@ -5,7 +5,10 @@ import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.di.GramAppService
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
-import agstack.gramophone.ui.farm.model.*
+import agstack.gramophone.ui.farm.model.AddFarmRequest
+import agstack.gramophone.ui.farm.model.AddFarmResponse
+import agstack.gramophone.ui.farm.model.FarmRequest
+import agstack.gramophone.ui.farm.model.FarmResponse
 import agstack.gramophone.ui.farm.model.unit.FarmUnitResponse
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
@@ -16,6 +19,8 @@ import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
+import agstack.gramophone.ui.search.model.SuggestionsRequest
+import agstack.gramophone.ui.search.model.SuggestionsResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -260,6 +265,7 @@ class ProductRepositoryImpl @Inject constructor(
             val response = gramoAppService.getOffersOnProduct(productData)
             response
         }
+
     override suspend fun checkPromotionOnProduct(verifyPromotionRequestModel: VerifyPromotionRequestModel): Response<CheckPromotionResponseModel> = withContext(
         Dispatchers.IO
     ) {
@@ -267,4 +273,12 @@ class ProductRepositoryImpl @Inject constructor(
         response
     }
 
+
+    override suspend fun getSuggestions(body: SuggestionsRequest): Response<SuggestionsResponse> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val response = gramoAppService.getSuggestions(body)
+            response
+        }
 }
