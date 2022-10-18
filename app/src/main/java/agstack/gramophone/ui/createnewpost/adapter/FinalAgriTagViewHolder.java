@@ -1,4 +1,4 @@
-package agstack.gramophone.ui.createnewpost.view;
+package agstack.gramophone.ui.createnewpost.adapter;
 
 import android.content.Context;
 import androidx.recyclerview.widget.RecyclerView;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import agstack.gramophone.R;
+import agstack.gramophone.ui.createnewpost.model.AgriTag;
 
 /**
  * Created by Ashish on 13-06-2018.

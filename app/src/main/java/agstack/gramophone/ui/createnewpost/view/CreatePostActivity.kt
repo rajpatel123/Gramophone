@@ -5,6 +5,11 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.CreatePostsActivityBinding
+import agstack.gramophone.ui.createnewpost.adapter.TagsCropAdapter
+import agstack.gramophone.ui.createnewpost.model.AgriTag
+import agstack.gramophone.ui.createnewpost.model.AgriTagListResult
+import agstack.gramophone.ui.createnewpost.model.MySingleton
+import agstack.gramophone.ui.createnewpost.model.PostDetailsModel
 import agstack.gramophone.ui.createnewpost.view.*
 import agstack.gramophone.ui.createpost.CreatePostNavigator
 import agstack.gramophone.ui.createpost.viewmodel.CreatePostViewModel
@@ -144,7 +149,7 @@ class CreatePostActivity :
             getMessage(R.string.create_post),
             R.drawable.ic_cross
         )
-        if (MySingleton.getInstance().isOffTokenAutoComplete) {
+        if ( MySingleton.getInstance().isOffTokenAutoComplete) {
             viewDataBinding?.descriptionEditText?.visibility = View.GONE
             viewDataBinding.hashSymbol?.visibility = View.GONE
             viewDataBinding.atSymbol?.visibility = View.GONE

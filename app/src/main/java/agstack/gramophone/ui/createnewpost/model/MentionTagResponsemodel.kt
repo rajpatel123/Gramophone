@@ -1,4 +1,4 @@
-package agstack.gramophone.ui.createnewpost.view.model
+package agstack.gramophone.ui.createnewpost.model;
 
 data class MentionTagResponsemodel(
     val gp_api_error_data: GpApiErrorData,

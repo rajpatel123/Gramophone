@@ -1,4 +1,4 @@
-package agstack.gramophone.ui.createnewpost.view
+package agstack.gramophone.ui.createnewpost.adapter
 
 import agstack.gramophone.R
 import agstack.gramophone.databinding.ItemCropOnBottomSheetBinding

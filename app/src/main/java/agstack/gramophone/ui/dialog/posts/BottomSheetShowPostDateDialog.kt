@@ -2,7 +2,7 @@ package agstack.gramophone.ui.dialog.posts
 
 import agstack.gramophone.R
 import agstack.gramophone.databinding.ShowPostDateBottomSheetDialogBinding
-import agstack.gramophone.ui.createnewpost.view.CropTagAdapter
+import agstack.gramophone.ui.createnewpost.adapter.CropTagAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.CropData
 import agstack.gramophone.ui.home.view.fragments.market.model.CropResponse
 import agstack.gramophone.ui.postdetails.view.PostDetailsActivity

@@ -539,4 +539,10 @@
     <string name="trending_articles">Trending Articles</string>
     <string name="article_read">&#160;Read</string>
     <string name="article_views">&#160;Views</string>
+    <string name="join_community">Join 5000+ farmers  and get quick solution from agri experts</string>
+    <string name="get_advise">Get Expert advice quickly</string>
+    <string name="connect_farmer">Connect with farmers around you</string>
+    <string name="contributr_community">Contribute in community</string>
+    <string name="polls">Participate in Quiz and Polls</string>
+    <string name="go_to_community">Go To Community</string>
 </resources>
