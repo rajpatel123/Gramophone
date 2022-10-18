@@ -2,6 +2,8 @@ package agstack.gramophone.data.repository.articles
 
 import agstack.gramophone.di.ArticlesApiService
 import agstack.gramophone.ui.home.view.fragments.market.model.FeaturedArticlesResponse
+import agstack.gramophone.ui.home.view.fragments.market.model.SuggestedArticlesResponse
+import agstack.gramophone.ui.home.view.fragments.market.model.TrendingArticlesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -21,5 +23,19 @@ class ArticlesRepositoryImpl @Inject constructor(
             response
         }
 
+    override suspend fun getTrendingArticles(): Response<TrendingArticlesResponse> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val response = articleApiService.getTrendingArticles()
+            response
+        }
 
+    override suspend fun getSuggestedArticles(): Response<SuggestedArticlesResponse> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val response = articleApiService.getSuggestedArticles()
+            response
+        }
 }

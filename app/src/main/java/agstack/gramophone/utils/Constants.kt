@@ -128,6 +128,9 @@ object Constants {
     const val LANG: String = "lang"
     const val PAGE_URL: String = "url"
     const val PAGE_TITLE: String = "title"
+    const val FEATURED_ARTICLES = "featured_articles"
+    const val TRENDING_ARTICLES = "trending_articles"
+    const val SUGGESTED_ARTICLES = "suggested_articles"
 
 val SHAREIMAGEURIStRING = "imageuriString"
 
