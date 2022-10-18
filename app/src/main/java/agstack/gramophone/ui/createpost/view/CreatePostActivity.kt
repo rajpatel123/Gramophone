@@ -4,8 +4,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityCreatePostBinding
-import agstack.gramophone.ui.createnewpost.view.PostDetailsModel
-import agstack.gramophone.ui.createnewpost.view.model.GpApiResponseData
+import agstack.gramophone.ui.createnewpost.model.PostDetailsModel
 import agstack.gramophone.ui.createpost.CreatePostNavigator
 import agstack.gramophone.ui.createpost.viewmodel.CreatePostViewModel
 import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment

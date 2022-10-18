@@ -1,4 +1,4 @@
-package agstack.gramophone.ui.createnewpost.view.model
+package agstack.gramophone.ui.createnewpost.model;
 
 data class GpApiTrace(
     val gp_language: String,

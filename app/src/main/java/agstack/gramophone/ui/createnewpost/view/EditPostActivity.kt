@@ -5,46 +5,65 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityEditPostBinding
+import agstack.gramophone.databinding.CreatePostsActivityBinding
+import agstack.gramophone.ui.createnewpost.adapter.TagsCropAdapter
+import agstack.gramophone.ui.createnewpost.model.AgriTag
+import agstack.gramophone.ui.createnewpost.model.AgriTagListResult
+import agstack.gramophone.ui.createnewpost.model.MySingleton
+import agstack.gramophone.ui.createnewpost.model.PostDetailsModel
 import agstack.gramophone.ui.createnewpost.view.*
-import agstack.gramophone.ui.createnewpost.view.model.GpApiResponseData
 import agstack.gramophone.ui.createpost.CreatePostNavigator
 import agstack.gramophone.ui.createpost.viewmodel.CreatePostViewModel
+import agstack.gramophone.ui.dialog.posts.BottomSheetCropsDialog
+import agstack.gramophone.ui.home.view.HomeActivity
+import agstack.gramophone.ui.home.view.fragments.market.model.CropData
 import agstack.gramophone.ui.tagandmention.ExpandableTextView
 import agstack.gramophone.ui.tagandmention.Tag
 import agstack.gramophone.ui.tagandmention.TagAdapter
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.ImagePicker
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
+import android.app.Activity
 import android.app.ProgressDialog
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.options
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.leocardz.link.preview.library.LinkPreviewCallback
 import com.leocardz.link.preview.library.SourceContent
 import com.leocardz.link.preview.library.TextCrawler
 import com.tokenautocomplete.TagTokenizer
 import com.tokenautocomplete.TokenCompleteTextView
+import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -54,174 +73,334 @@ import java.net.URL
 import java.util.*
 import java.util.regex.Pattern
 
-class EditPostActivity :
-    BaseActivityWrapper<ActivityEditPostBinding, CreatePostNavigator, CreatePostViewModel>(),
-    CreatePostNavigator, View.OnClickListener, TokenCompleteTextView.TokenListener<Tag?> {
-    private var binding: ActivityEditPostBinding? = null
+class EditPostActivity: BaseActivityWrapper<CreatePostsActivityBinding, CreatePostNavigator, CreatePostViewModel>(),
+    CreatePostNavigator, View.OnClickListener, TokenCompleteTextView.TokenListener<Tag?>,
+    BottomSheetCropsDialog.OnSelectionDone {
     private val presenter: CreatePostViewModel by viewModels()
     var layoutManager: LinearLayoutManager? = null
-    private var postId: String? = null
     var hashMap: HashMap<String?, String?> = HashMap<String?, String?>()
-    private var imageUri: Uri? = null
-    private var pictureMode = 0
-    private var selectedAgriTag: List<AgriTag> = ArrayList<AgriTag>()
-    private var textCrawler: TextCrawler? = null
+    protected var imageView: ImageView? = null
+    protected var progressBar: ProgressBar? = null
     protected var txtUrlTitleDescriptionPreview: ExpandableTextView? = null
-    private var currentImageSet: Array<Bitmap?>? = null
-    private var urlLink: String? = null
-    private var urlFromIntent: String? = null
+    private var sharedImagePath: String? = null
+    private var isFileFromDevice = false
 
-    //   private var intent: Intent? = null
-    private var afterTextChangedCount = 0
-    private var isImageFileFromHttpUrl = false
-    private val attemptToLoadSelectedTag = false
-    private val isTagSaved = false
-    private var post: PostDetailsModel? = null
-    var addImageButton: ImageView? = null
-    protected var textWatcher: TextWatcher? = null
-    private var progressDialog: ProgressDialog? = null
-    private var description: String? = null
-    private var isPreviewFromIntent = false
-    private var urlPreviewImage: String? = null
-    private var urlPreviewDescription: String? = null
-    private var urlPreviewTitle: String? = null
-    private var timer: Timer? = Timer()
-    private val DELAY: Long = 1000 // in ms
+    val REQUEST_CODE = 0x0000c0de
+    private var imageUri: Uri? = null
+    private var bitmapData: ByteArray? = null
+    private val filename = "image"
+    private var imageNo: Int = 0
     private var startSuggestion = false
     private var searchText: String? = null
     private var startPosition: Int? = null
-    private var startSetText = false
+    private var timer: Timer? = Timer()
+    private var gramophoneTvUrl: String? = null
+    private var mLastClickTime: Long = 0
+    private val DELAY: Long = 1000 // in ms
+    private var urlLink: String? = null
+    private var urlFromIntent: String? = null
+    private var textCrawler: TextCrawler? = null
+    private var currentImageSet: Array<Bitmap?>?=null
+    private var clipData: ClipData.Item? = null
+    private var imageFromIntent: String? = null
+    private var isPreviewFromIntent = false
+    private var urlPreviewImage: String? = null
+    private var urlPreviewDescription: String? = null
+    private var urlPreviewOff = false
+    private var isImageFileFromHttpUrl = false
+    private var sharedImageFile: File? = null
+    private var sharedImageBitmap: Bitmap? = null
     private var cropImage: ActivityResultLauncher<CropImageContractOptions>? = null;
+    //   private var intent: Intent? = null
+    private var selectedAgriTag: List<AgriTag>? = ArrayList()
+    protected var imageContainer: RelativeLayout? = null
+    protected var isImageAvailable = false
+    private val isLoginCalled = false
+    private val afterTextChangedCount = 0
+    var addImageButton: ImageView? = null
+    protected var textWatcher: TextWatcher? = null
+    private var progressDialog: ProgressDialog? = null
+    var gson = Gson()
+    var json: String? = null
+    private val imagesFiles: MutableList<File> = ArrayList()
+    private var description: String? = null
+    var myClipboard: ClipboardManager? = null
+
+    var cameraIntentLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+
+                imageUri = ImagePicker.getImageFromResult(this, result.resultCode, data)
+                startCropImageActivity(imageUri)
+
+
+            }
+        }
+
+
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (MySingleton.getInstance().isOffTokenAutoComplete()) {
-            binding!!.descriptionEditText.visibility = View.GONE
-            binding!!.hashSymbol.visibility = View.GONE
-            binding!!.atSymbol.visibility = View.GONE
-            binding!!.descriptionNoTokenEditText.visibility = View.VISIBLE
+        setUpToolBar(
+            enableBackButton = true,
+            getMessage(R.string.create_post),
+            R.drawable.ic_cross
+        )
+        if (MySingleton.getInstance().isOffTokenAutoComplete) {
+            viewDataBinding?.descriptionEditText?.visibility = View.GONE
+            viewDataBinding.hashSymbol?.visibility = View.GONE
+            viewDataBinding.atSymbol?.visibility = View.GONE
+            viewDataBinding.descriptionNoTokenEditText?.visibility = View.VISIBLE
         } else {
-            binding!!.descriptionNoTokenEditText.visibility = View.GONE
-            binding!!.descriptionEditText.visibility = View.VISIBLE
-            binding!!.descriptionEditText.performBestGuess(false)
-            binding!!.descriptionEditText.preventFreeFormText(false)
-            binding!!.descriptionEditText.setTokenizer(TagTokenizer(Arrays.asList('#', '@')))
-            //    binding.commentEditText.setAdapter(new TagAdapter(this, R.layout.tag_layout, Tag.sampleTags()));
-            binding!!.descriptionEditText.setTokenClickStyle(TokenCompleteTextView.TokenClickStyle.Select)
-            binding!!.descriptionEditText.threshold = 1
-            binding!!.descriptionEditText.setTokenListener(this)
-            binding!!.hashSymbol.visibility = View.VISIBLE
-            binding!!.atSymbol.visibility = View.VISIBLE
+            viewDataBinding.descriptionNoTokenEditText?.visibility = View.GONE
+            viewDataBinding.descriptionEditText?.visibility = View.VISIBLE
+            viewDataBinding.hashSymbol?.visibility = View.VISIBLE
+            viewDataBinding.atSymbol?.visibility = View.VISIBLE
         }
-
-        intent = getIntent()
-        postId = intent.getStringExtra(Constants.POST_ID)
+        presenter.description.set("")
+        presenter.getCrops()
+        // initReceiver()
+        intiEasyImagePicker()
+        //intent = getIntent()
+        initiateTextWatcher()
+        AgriTagListResult.getInstance().selectedTagList.clear()
         textCrawler = TextCrawler()
-        txtUrlTitleDescriptionPreview =
-            findViewById<ExpandableTextView>(R.id.urlTitleDescriptionText)
+        progressDialog = ProgressDialog(this)
+        txtUrlTitleDescriptionPreview = findViewById(R.id.urlTitleDescriptionText)
         addImageButton = findViewById(R.id.btnAddImageTitle)
-        if (postId != null) {
-            presenter?.getPostDetails("" + postId)
+        val actionBar = supportActionBar
+        actionBar!!.setTitle(getString(R.string.create_post))
+        if (intent.getExtras() != null) {
+            if (intent.getExtras()!!.containsKey(Constants.sharedContent)) {
+                MySingleton.getInstance().shareIntent
+                handleShareOtherLink(MySingleton.getInstance().shareIntent)
+                MySingleton.getInstance().shareIntent = null
+            } else {
+                handleShareOtherLink(intent)
+            }
+        } else {
+            handleShareOtherLink(intent)
         }
-        binding?.buttonAddTag?.setOnClickListener {
-
-            //TODO add code for get crop tags
-//            hashMap.clear()
-//            hashMap[getString(R.string.analytic_post_id)] = postId
-//            GramophoneApplication.getInstance().setMixPanelDataWithScreenName(hashMap, getString(R.string.analytic_add_tag), getString(R.string.analytic_tag_list_screen_name), null, TAG)
-//            val intent = Intent(this@EditPostActivity, TagListActivity::class.java)
-//            startActivityForResult(intent, Constants.GET_SELECTED_TAGS)
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(true)
+            actionBar.setHomeButtonEnabled(true)
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setTitle(getString(R.string.create_post))
         }
-        binding!!.postButton.setOnClickListener {
-            if (post != null && post?.getTags() != null && post?.getTags()!!.size > 0) {
+        viewDataBinding.buttonAddTag.setOnClickListener {
+            launchTagList()
+        }
+        viewDataBinding.postButton?.setOnClickListener(View.OnClickListener {
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                return@OnClickListener
+            }
+            mLastClickTime = SystemClock.elapsedRealtime()
+            if (selectedAgriTag != null && selectedAgriTag!!.size > 0) {
                 callApi()
             } else {
                 showAddTagAlert()
             }
-        }
-        binding!!.hashSymbol.setOnClickListener { view: View? ->
-            binding!!.descriptionEditText.append("#")
-            binding!!.descriptionEditText.requestFocus()
-            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(binding!!.descriptionEditText, InputMethodManager.SHOW_IMPLICIT)
-        }
-        binding!!.atSymbol.setOnClickListener { view: View? ->
-            binding!!.descriptionEditText.append("@")
-            binding!!.descriptionEditText.requestFocus()
-            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(binding!!.descriptionEditText, InputMethodManager.SHOW_IMPLICIT)
-        }
-        binding!!.urlPreviewRemoveImageButton.setOnClickListener {
+        })
 
+        viewDataBinding.hashSymbol?.setOnClickListener { view: View? ->
+            viewDataBinding.descriptionEditText?.append("#")
+            viewDataBinding.descriptionEditText?.requestFocus()
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm?.showSoftInput(
+                viewDataBinding.descriptionEditText,
+                InputMethodManager.SHOW_IMPLICIT
+            )
         }
+        viewDataBinding.atSymbol?.setOnClickListener { view: View? ->
+            viewDataBinding.descriptionEditText?.append("@")
+            //            viewDataBinding.descriptionEditText?.setFocusable(true);
+//            viewDataBinding.descriptionEditText?.setCursorVisible(true);
+            viewDataBinding.descriptionEditText?.requestFocus()
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm?.showSoftInput(
+                viewDataBinding.descriptionEditText,
+                InputMethodManager.SHOW_IMPLICIT
+            )
+        }
+
+
+
+        viewDataBinding.urlPreviewRemoveImageButton?.setOnClickListener {
+            viewDataBinding.urlPreviewImageContainer?.visibility = View.GONE
+            viewDataBinding.urlTitleDescriptionText?.text = ""
+            viewDataBinding.urlPreviewImageView?.setImageResource(R.drawable.ic_stub)
+            urlLink = null
+            viewDataBinding.imageContainer?.visibility = View.VISIBLE
+            openConfirmUrlPreviewOffDialog()
+        }
+
+        cropImage = registerForActivityResult(CropImageContract()) { result ->
+            if (result.isSuccessful) {
+                // use the returned uri
+                if (ImagePicker.checkImageMinSize(result.cropRect!!)) {
+                    val imageUri = result.uriContent
+                    imageUri?.let {
+                        when(imageNo){
+                            Constants.IV_ONE->{
+                                setImage(it, viewDataBinding.iveOne,"1")
+                                viewDataBinding.ivPlusBig.visibility= View.GONE
+                                viewDataBinding.ivDeletBig.visibility= View.VISIBLE
+
+                            }
+                            Constants.IV_TWO->{
+                                setImage(it, viewDataBinding.ivTwo, "2")
+                                viewDataBinding.ivPlusSmall1.visibility= View.GONE
+                                viewDataBinding.ivDeleteSmall1.visibility= View.VISIBLE
+                            }
+
+                            Constants.IV_THREE->{
+                                setImage(it, viewDataBinding.ivThree, "3")
+                                viewDataBinding.ivPlusSmall2.visibility= View.GONE
+                                viewDataBinding.ivDeleteSmall2.visibility= View.VISIBLE
+                            }
+                        }
+
+                    }
+                } else {
+                    result?.uriContent?.let {
+                        when(imageNo){
+                            Constants.IV_ONE->{
+                                setImage(it, viewDataBinding.iveOne, "1")
+                                viewDataBinding.ivPlusBig.visibility= View.GONE
+                                viewDataBinding.ivDeletBig.visibility= View.VISIBLE
+
+                            }
+                            Constants.IV_TWO->{
+                                setImage(it, viewDataBinding.ivTwo, "2")
+                                viewDataBinding.ivPlusSmall1.visibility= View.GONE
+                                viewDataBinding.ivDeleteSmall1.visibility= View.VISIBLE
+                            }
+
+                            Constants.IV_THREE->{
+                                setImage(it, viewDataBinding.ivThree, "3")
+                                viewDataBinding.ivPlusSmall2.visibility= View.GONE
+                                viewDataBinding.ivDeleteSmall2.visibility= View.VISIBLE
+                            }
+                        }
+                    }
+                }
+
+            } else {
+            }
+        }
+
 
     }
 
+    private fun intiEasyImagePicker() {
+
+    }
+
+
+    private fun setImage(imageUri: Uri, image: ImageView, key: String) {
+
+
+        Glide.with(this)
+            .load(imageUri)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
+            .fitCenter()
+            .into(image)
+
+
+        val bitmap = ImagePicker.getImageResized(this, imageUri)
+        bitmap?.let { saveFilePath(it,key) }
+
+    }
+
+    private fun saveFilePath(bitmap: Bitmap,key:String) {
+        val f = File(this.externalCacheDir!!.absolutePath, filename)
+        try {
+            f.createNewFile()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        try {
+            //Convert bitmap to byte array
+            val bos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+            bitmapData = bos.toByteArray()
+
+            //write the bytes in file
+            val fos = FileOutputStream(f)
+            fos.write(bitmapData)
+            fos.flush()
+            fos.close()
+        } catch (e: Exception) {
+            externalCacheDir
+            e.printStackTrace()
+        }
+        presenter.listOfImages.put(key,f)
+    }
+
+    private fun launchTagList() {
+        val bottomSheet = BottomSheetCropsDialog(presenter.cropResponse, this)
+        bottomSheet.show(
+            getSupportFragmentManager(),
+            getMessage(R.string.bottomsheet_tag)
+        )
+    }
+
+    private fun startCropImageActivity(currentImageUri: Uri?) {
+
+        if (currentImageUri == null) {
+            return
+        }
+        cropImage?.launch(
+            options(uri = currentImageUri) {
+                setGuidelines(CropImageView.Guidelines.ON)
+                setOutputCompressFormat(Bitmap.CompressFormat.PNG)
+            }
+        )
+
+    }
+    private fun openConfirmUrlPreviewOffDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(R.string.confirm_url_preview_off_post)
+            .setNegativeButton(R.string.button_title_cancel, null)
+            .setPositiveButton(R.string.button_ok) { dialogInterface, i ->
+                urlPreviewOff = true
+
+                //       removePost(post);
+            }
+        builder.create().show()
+    }
 
     private fun showAddTagAlert() {
-//        val builder = AlertDialog.Builder(this)
-//        builder.setMessage(getString(R.string.add_tag_message))
-//        builder.setTitle(getString(R.string.add_tag_title))
-//        builder.setPositiveButton(R.string.add_tag_title) { dialog, which ->
-//            launchTagList()
-//        }
-//        builder.setNegativeButton(R.string.button_title_cancel) { dialog, which ->
-//            dialog.dismiss()
-//            callApi()
-//        }
-//        builder.setCancelable(true)
-//        builder.create()
-//        builder.show()
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(getString(R.string.add_tag_message))
+        builder.setTitle(getString(R.string.add_tag_title))
+        builder.setPositiveButton(R.string.add_tag_title) { dialog, which ->
+            launchTagList()
+        }
+        builder.setNegativeButton(R.string.button_title_cancel) { dialog, which ->
+            dialog.dismiss()
+            callApi()
+        }
+        builder.setCancelable(true)
+        builder.create()
+        builder.show()
     }
 
-    override fun enablePostButton() {
-        viewDataBinding.postButton.isEnabled = true
-    }
-
-    override fun disablePostButton() {
-        viewDataBinding.postButton.isEnabled = false
-    }
-
-    //updatePostApi call
     private fun callApi() {
-//        hashMap.clear()
-//        hashMap[getString(R.string.analytic_post_id)] = postId
-//        GramophoneApplication.getInstance().setMixPanelDataWithScreenName(hashMap, getString(R.string.analytic_edit_post), null, null, TAG)
-//        if (presenter!!.isProfileComplete()) {
-//            if (binding!!.descriptionNoTokenEditText.visibility == View.VISIBLE) {
-//                if (binding!!.descriptionNoTokenEditText.text != null) {
-//                    val description = binding!!.descriptionNoTokenEditText.text.toString()
-//
-//                    Log.d("Raj",description)
-//                    if (checkIfEmptyPost()) {
-//                        showProgressBar()
-//                        if (isPreviewFromIntent && post != null) {
-//                            presenter?.updatePostUrlFromIntent(postId, urlPreviewTitle, urlPreviewDescription, urlPreviewImage, post?.getTags(), removedImages, description, urlLink, postImageModel)
-//                        } else {
-//                            if (post != null) {
-//                                presenter?.updatePost(postId, post?.getTags(), removedImages, description, urlLink, postImageModel)
-//                            }
-//                        }
-//                    } else {
-//                        Snackbar.make(binding!!.descriptionNoTokenEditText, getString(R.string.warning_empty_input), Snackbar.LENGTH_LONG).show()
-//                    }
+//        if (presenter!!.isProfileComplete) {
+//            if (checkIfEmptyPost()) {
+//                if (isPreviewFromIntent) {
+//                    presenter!!.createUrlPreviewFromIntentPost(description, urlPreviewDescription, urlPreviewImage, selectedAgriTag as ArrayList<AgriTag>?, urlLink, postImageModel)
+//                } else {
+//                    presenter!!.createPost(description, selectedAgriTag as ArrayList<AgriTag>?, urlLink, postImageModel)
 //                }
 //            } else {
-//                if (binding!!.descriptionEditText.text != null) {
-//                    val description = binding!!.descriptionEditText.text.toString()
-//                    if (checkIfEmptyPost()) {
-//                        showProgressBar()
-//                        if (isPreviewFromIntent && post != null) {
-//                            presenter?.updatePostUrlFromIntent(postId, urlPreviewTitle, urlPreviewDescription, urlPreviewImage, post?.getTags(), removedImages, description, urlLink, postImageModel)
-//                        } else {
-//                            if (post != null) {
-//                                presenter?.updatePost(postId, post?.getTags(), removedImages, description, urlLink, postImageModel)
-//                            }
-//                        }
-//                    } else {
-//                        Snackbar.make(binding!!.descriptionEditText, getString(R.string.warning_empty_input), Snackbar.LENGTH_LONG).show()
-//                    }
+//                if (viewDataBinding.descriptionNoTokenEditText?.visibility == View.VISIBLE) {
+//                    Snackbar.make(viewDataBinding.descriptionNoTokenEditText, getString(R.string.warning_empty_input), Snackbar.LENGTH_LONG).show()
+//                } else {
+//                    Snackbar.make(viewDataBinding.descriptionEditText, getString(R.string.warning_empty_input), Snackbar.LENGTH_LONG).show()
 //                }
 //            }
 //        } else {
@@ -230,406 +409,106 @@ class EditPostActivity :
     }
 
     private fun checkIfEmptyPost(): Boolean {
-        try {
-            if (binding!!.descriptionNoTokenEditText.visibility == View.VISIBLE && binding!!.descriptionNoTokenEditText.text != null) {
-                description =
-                    binding!!.descriptionNoTokenEditText.text.toString().trim { it <= ' ' }
-            } else if (binding!!.descriptionEditText.visibility == View.VISIBLE && binding!!.descriptionEditText.text != null) {
-                description = binding!!.descriptionEditText.text.toString().trim { it <= ' ' }
-            }
-            if (description != null && !description!!.isEmpty()) {
-                return true
-            } else if (urlLink != null && !urlLink!!.isEmpty()) {
-                return true
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
+        if (viewDataBinding.descriptionNoTokenEditText?.visibility == View.VISIBLE && viewDataBinding.descriptionNoTokenEditText?.text != null) {
+            description =
+                viewDataBinding.descriptionNoTokenEditText?.text?.toString()?.trim { it <= ' ' }
+        } else if (viewDataBinding.descriptionEditText?.visibility == View.VISIBLE && viewDataBinding.descriptionEditText?.text != null) {
+            description = viewDataBinding.descriptionEditText?.text?.toString()?.trim { it <= ' ' }
         }
-        return false
-    }
-
-    private fun ContainsUrl(text: String?): Boolean {
-        var contains = false
-        var descriptionUrl: String? = null
-        if (text != null && text.length > 10) {
-            val urlList: List<String> = pullLinks(text)
-            if (urlList.size > 0) {
-                descriptionUrl = urlList[0]
-                if (descriptionUrl != null) {
-                    contains = true
-                }
-            }
-        }
-        return contains
+        return if (description != null && !description!!.isEmpty()) {
+            true
+        } else if (urlLink != null && !urlLink!!.isEmpty()) {
+            true
+        } else true
     }
 
     override fun onClick(v: View) {}
 
 
-    override fun gotoSocialPage(post: PostDetailsModel) {
-//        hashMap.clear()
-//        hashMap[getString(R.string.analytic_post_id)] = postId
-//        val bundle = Bundle()
-//        bundle.putSerializable(IntentKeys.PostDataKey, post)
-//        val intent = Intent()
-//        intent.putExtra(IntentKeys.PostDataKey, bundle)
-//        setResult(RESULT_OK, intent)
-//        finish()
+    override fun gotoSocialPage(postDetailsModel: PostDetailsModel) {
+        if (sharedImageFile != null && sharedImageFile!!.exists()) {
+            sharedImageFile!!.delete()
+            sharedImageFile = null
+            if (sharedImageBitmap != null) {
+                sharedImageBitmap = null
+            }
+        }
+        //GOTO Home
     }
-
 
     override fun populatePostDetails(postDetailsModel: PostDetailsModel) {
-        if (postDetailsModel != null) {
-            post = postDetailsModel
-            fillPostDetail(postDetailsModel)
-        }
     }
 
 
-    override fun hideProgressBar() {
-        if (progressDialog != null) {
-            progressDialog!!.dismiss()
-        }
-    }
-
-    private fun fillPostDetail(post: PostDetailsModel) {
-        if (post?.getTags() != null) {
-            AgriTagListResult.getInstance().setSelectedTagList(post?.getTags())
-            selectedAgriTag = post?.getTags()
-            showTag(post?.getTags())
-        } else {
-            AgriTagListResult.getInstance().getSelectedTagList().clear()
-        }
-        uploadUrlPreviewData(post?.getUrlPreviewMeta())
-
-        if (post?.getDescription() != null) {
-            setTagText(post?.getDescription())
-            if (binding!!.descriptionNoTokenEditText.visibility == View.VISIBLE) {  //binding.descriptionNoTokenEditText.setText(post?.getDescription());
-                binding!!.descriptionNoTokenEditText.setSelection(binding!!.descriptionNoTokenEditText.text.length)
-            } else {
-                //  binding.descriptionEditText.setText(post?.getDescription());
-                binding!!.descriptionEditText.setSelection(binding!!.descriptionEditText.text.length)
-            }
-            if (containsURL(post?.getDescription())) {
-                initiateTextWatcher()
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (permissions.contains("android.permission.CAMERA")) {
+                openCameraToCapture()
             }
         }
     }
-
-
-    private fun uploadUrlPreviewData(urlPreviewModel: UrlPreviewModel?) {
-        if (urlPreviewModel != null) {
-            if (urlPreviewModel.getUrl() != null && !urlPreviewModel.getUrl()
-                    .isEmpty() && urlPreviewModel.getUrl() != ""
-            ) {
-                binding!!.urlPreviewImageContainer.visibility = View.VISIBLE
-                binding!!.btnAddImageTitle.isEnabled = false
-                //    textWatcher=null;
-                binding!!.imageContainer.visibility = View.GONE
-                urlLink = urlPreviewModel.getUrl()
-                //  descriptionEditText.setText(post?.getDescription());
-                binding!!.removeImageButton.isEnabled = false
-                binding!!.removeImageButton.visibility = View.GONE
-                binding!!.urlPreviewRemoveImageButton.isEnabled = false
-                binding!!.urlPreviewRemoveImageButton.visibility = View.GONE
-                //  binding.imageView.setEnabled(false);
-                binding!!.btnAddImageTitle.isEnabled = false
-                if (urlPreviewModel.getDescription() != null) {
-                    binding!!.urlTitleDescriptionText.text =
-                        urlPreviewModel.getTitle() + "\n" + urlPreviewModel.getDescription()
-                    binding!!.urlTitleDescriptionText.visibility = View.VISIBLE
-                } else {
-                    binding!!.urlTitleDescriptionText.visibility = View.GONE
-                }
-                isPreviewFromIntent = true
-                urlPreviewDescription = urlPreviewModel.getDescription()
-                urlPreviewTitle = urlPreviewModel.getTitle()
-                val sharedUrl: String = urlPreviewModel.getUrl()
-                //   Log.i(TAG, sharedUrl);
-                if (urlPreviewModel.getImage() != null && urlPreviewModel.getImage().length > 0) {
-                    urlPreviewImage = urlPreviewModel.getImage()
-                    binding!!.imageContainer.visibility = View.GONE
-                    binding!!.urlPreviewImageContainer.visibility = View.VISIBLE
-                    binding!!.imageView.visibility = View.GONE
-                    binding!!.urlPreviewImageView.visibility = View.VISIBLE
-                    val sharedImageUrl: String = urlPreviewModel.getImage()
-                    loadUrlPreviewImage(sharedImageUrl)
-                }
-            } else {
-                initiateTextWatcher()
-                binding!!.btnAddImageTitle.isEnabled = true
-                binding!!.urlPreviewImageContainer.visibility = View.GONE
-            }
-        } else {
-            initiateTextWatcher()
-            binding!!.btnAddImageTitle.isEnabled = true
-            binding!!.urlPreviewImageContainer.visibility = View.GONE
-        }
+    override fun openCameraToCapture() {
+        this.imageNo = presenter.imageNo
+        val cameraIntent = ImagePicker.getCameraIntent(this)
+        cameraIntentLauncher.launch(cameraIntent)
     }
 
-    private fun loadUrlPreviewImage(imageUrl: String?) {
-        if (imageUrl != null && imageUrl.length > 0) {
-            binding!!.imageContainer.visibility = View.GONE
-            binding!!.urlPreviewImageContainer.visibility = View.VISIBLE
-            binding!!.urlPreviewImageView.visibility = View.VISIBLE
-            Glide.with(this)
-                .load(imageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .error(R.drawable.ic_stub)
-                .into(binding!!.urlPreviewImageView)
-        }
-    }
+    override fun updateAddDeleteBtn(imageNo: Int) {
+        when(imageNo){
+            Constants.IV_ONE->{
+                viewDataBinding.iveOne.setImageResource(R.drawable.preview_frame)
+                viewDataBinding.ivPlusBig.visibility= View.VISIBLE
+                viewDataBinding.ivDeletBig.visibility= View.GONE
 
-    private fun setTagText(commentText: String) {
-        if (binding!!.descriptionNoTokenEditText.visibility != View.VISIBLE) {
-            val list: MutableList<Tag>? = pullTags(commentText)
-            if (list != null) {
-                val text = Html.fromHtml(commentText).toString()
-                startSetText = true
-                binding!!.descriptionEditText.setText("")
-                var start = 0
-                var end = 0
-                var startIgnore = false
-                for (i in 0 until text.length) {
-                    if (end > 0 && end == i) {
-                        end = 0
-                        start = 0
-                        startIgnore = false
-                    } else {
-                        if (!startIgnore) {
-                            if (list.size > 0 && (text[i] == '#' || text[i] == '@')) {
-                                val tagValue = list[0].tag
-                                var subString = ""
-                                if (text.length == tagValue.length + i + 1) {
-                                    // Character character=text.charAt(tagValue.length() + i + 1);
-                                    subString = text.substring(i + 1, tagValue.length + i + 1)
-                                }
-                                if (text.length > tagValue.length + i + 1 && (text[tagValue.length + i + 1] == ' ' || text[tagValue.length + i + 1] == ',')) {
-                                    val character = text[tagValue.length + i + 1]
-                                    subString = text.substring(i + 1, tagValue.length + i + 1)
-                                }
-                                if (tagValue == subString) {
-                                    start = i
-                                    end = list[0].tag.length + i
-                                    binding!!.descriptionEditText.addObjectSync(list[0])
+            }
+            Constants.IV_TWO->{
+                viewDataBinding.ivTwo.setImageResource(R.drawable.preview_frame)
+                viewDataBinding.ivPlusSmall1.visibility= View.VISIBLE
+                viewDataBinding.ivDeleteSmall1.visibility= View.GONE
+            }
 
-                                    list?.removeAt(0)
-                                    startIgnore = true
-                                } else {
-                                    val a = text[i]
-                                    binding!!.descriptionEditText.append(a.toString())
-                                }
-                            } else {
-                                val a = text[i]
-                                binding!!.descriptionEditText.append(a.toString())
-                            }
-                        }
-                    }
-                }
-                startSetText = false
-            } else {
-                binding!!.descriptionEditText.setText(Html.fromHtml(commentText).toString())
-            }
-        } else {
-            binding!!.descriptionNoTokenEditText.setText(Html.fromHtml(commentText).toString())
-        }
-    }
-
-    fun pullTags(text: String?): ArrayList<Tag>? {
-        val links = ArrayList<Tag>()
-        //String regex = "\\(?\\b(http://|www[.])[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]";
-        //  String regex = "\\(?\\b(https?://|www[.]|ftp://)[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]";
-        val regex = "<a[^>]*>(.*?)</a>"
-        //String regex = ">[#|@](.*?)<";
-        val p = Pattern.compile(regex)
-        val m = p.matcher(text)
-        while (m.find()) {
-            val urlStr = m.group()
-            var url: String? = null
-            var tagName: String? = null
-            var prefix: Char? = null
-            // String regex1 = "<a[^>]*>(.*?)</a>";
-            val regex1 = "\"(.*?)\""
-            val p1 = Pattern.compile(regex1)
-            val m1 = p1.matcher(urlStr)
-            while (m1.find()) {
-                val urlStr2 = m1.group()
-                url = urlStr2.substring(1, urlStr2.length - 1)
-            }
-            val regex2 = ">[#|@](.*?)<"
-            val p2 = Pattern.compile(regex2)
-            val m2 = p2.matcher(urlStr)
-            while (m2.find()) {
-                var urlStr3 = m2.group()
-                if (urlStr3.startsWith(">") && urlStr3.endsWith("<")) {
-                    urlStr3 = urlStr3.substring(1, urlStr3.length - 1)
-                    prefix = urlStr3[0]
-                    tagName = urlStr3.substring(1, urlStr3.length)
-                }
-            }
-            if (tagName != null) {
-                if (prefix == '#') {
-                    val tag = Tag(null, prefix, tagName, url, null, null)
-                    links.add(tag)
-                } else if (prefix == '@') {
-                    val profileBaseUrl = Constants.SearchUrl + Constants.ProfileUrlPARAMETER
-                    if (url!!.contains(profileBaseUrl)) {
-                        val uuid = url.substring(profileBaseUrl.length)
-                        if (uuid != null) {
-                            val tag = Tag(null, prefix, tagName, url, uuid, null)
-                            links.add(tag)
-                        }
-                    }
-                }
+            Constants.IV_THREE->{
+                viewDataBinding.ivThree.setImageResource(R.drawable.preview_frame)
+                viewDataBinding.ivPlusSmall2.visibility= View.VISIBLE
+                viewDataBinding.ivDeleteSmall2.visibility= View.GONE
             }
         }
-        return if (links.size > 0) {
-            links
-        } else null
     }
 
 
-    private fun arePermissionsGranted(permissions: Array<String>): Boolean {
-        for (permission in permissions) {
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    permission
-                ) != PackageManager.PERMISSION_GRANTED
-            ) return false
-        }
-        return true
+    override fun populateTagSuggestionList(tags: Array<Tag>) {
+        viewDataBinding.descriptionEditText?.setAdapter(TagAdapter(this, R.layout.tag_layout, tags))
     }
 
-    private fun requestPermissionsCompat(permissions: Array<String>, requestCode: Int) {
-        ActivityCompat.requestPermissions(this, permissions, requestCode)
+    override fun populateHasTagList(tags: Array<Tag>) {
+        viewDataBinding.descriptionEditText?.setAdapter(TagAdapter(this, R.layout.tag_layout, tags))
     }
 
-    //    void getCameraPermission() {
-    //        manager.requestPermissions(Manifest.permission.CAMERA);
-    //    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == Constants.GET_SELECTED_TAGS && resultCode == RESULT_OK) {
-//            selectedAgriTag = AgriTagListResult.getInstance().getSelectedTagList()
-//            if (post != null) {
-//                post?.setTags(selectedAgriTag)
-//            }
-//            showTag(selectedAgriTag)
-//        }
+    override fun enablePostButton() {
+        viewDataBinding.postButton?.isEnabled = true
     }
 
-    protected fun startCropImageActivity(currentImageUri: Uri?) {
-        if (currentImageUri == null) {
-            return
-        }
-//        CropImage.activity(currentImageUri)
-//                .setGuidelines(CropImageView.Guidelines.ON)
-//                .setFixAspectRatio(false)
-//                .setAutoZoomEnabled(true) //  .setAspectRatio(Constants.post?.MAX_WIDTH_POST_SIZE, Constants.post?.MIN_HEIGHT_POST_SIZE)
-//                .setMinCropWindowSize(Constants.post?.MIN_WIDTH_POST_SIZE, Constants.post?.MIN_HEIGHT_POST_SIZE) //    .setMaxCropResultSize(Constants.post?.MAX_WIDTH_POST_SIZE,Constants.post?.MAX_HEIGHT_POST_SIZE)
-//                .start(this)
-        cropImage?.launch(
-            options(uri = currentImageUri) {
-//                    setGuidelines(CropImageView.Guidelines.ON)
-//                    setOutputCompressFormat(Bitmap.CompressFormat.PNG)
-                setScaleType(CropImageView.ScaleType.FIT_CENTER)
-                setCropShape(CropImageView.CropShape.RECTANGLE)
-                setGuidelines(CropImageView.Guidelines.ON_TOUCH)
-                setAspectRatio(1, 1)
-                setMaxZoom(4)
-                setAutoZoomEnabled(true)
-                setMultiTouchEnabled(true)
-                setCenterMoveEnabled(true)
-                setShowCropOverlay(true)
-                setAllowFlipping(true)
-                setSnapRadius(3f)
-                setTouchRadius(48f)
-                setInitialCropWindowPaddingRatio(0.1f)
-                setBorderLineThickness(3f)
-                setBorderLineColor(Color.argb(170, 255, 255, 255))
-                setBorderCornerThickness(2f)
-                setBorderCornerOffset(5f)
-                setBorderCornerLength(14f)
-                setBorderCornerColor(Color.WHITE)
-                setGuidelinesThickness(1f)
-                setGuidelinesColor(R.color.white)
-                setBackgroundColor(Color.argb(119, 0, 0, 0))
-                setMinCropWindowSize(24, 24)
-                setMinCropResultSize(20, 20)
-                setMaxCropResultSize(99999, 99999)
-                setActivityTitle("")
-                setActivityMenuIconColor(0)
-                setOutputUri(null)
-                setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
-                setOutputCompressQuality(90)
-                setRequestedSize(0, 0)
-                setRequestedSize(0, 0, CropImageView.RequestSizeOptions.RESIZE_INSIDE)
-                setInitialCropWindowRectangle(null)
-                setInitialRotation(0)
-                setAllowCounterRotation(false)
-                setFlipHorizontally(false)
-                setFlipVertically(false)
-                setCropMenuCropButtonTitle(getString(R.string.crop_image_title_text))
-
-                setCropMenuCropButtonIcon(0)
-                setAllowRotation(true)
-                setNoOutputImage(false)
-                setFixAspectRatio(false)
-            })
+    override fun disablePostButton() {
+        viewDataBinding.postButton?.isEnabled = false
     }
 
-    fun showTag(selectedTagList: List<AgriTag>?) {
-        val finalAgriTagAdapter = FinalAgriTagAdapter()
-        finalAgriTagAdapter.setCallback(object : FinalAgriTagAdapter.Callback {
-            override fun onRemoveTagFromList(v: View, position: Int) {
-                launchTagList()
-            }
-        })
-        binding!!.finalTagRecyclerView.adapter = finalAgriTagAdapter
-        binding!!.finalTagRecyclerView.layoutManager =
-            StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-        finalAgriTagAdapter.setList(selectedTagList)
+
+    fun showTag(selectedTagList: MutableList<CropData>) {
+        val tagsCropAdapter = TagsCropAdapter(selectedTagList)
+        viewDataBinding.finalTagRecyclerView.adapter = tagsCropAdapter
+        viewDataBinding.finalTagRecyclerView.layoutManager =
+            StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL)
         //    getSelectedTagList(selectedTagList, createOnSelectedTagChangedListner());
-    }
-
-    private fun launchTagList() {
-//        val intent = Intent(this@EditPostActivity, TagListActivity::class.java)
-//        startActivityForResult(intent, Constants.GET_SELECTED_TAGS)
-    }
-
-
-    fun saveFilePath(bitmap: Bitmap) {
-        val filename = "image"
-        val f = File(this.externalCacheDir!!.absolutePath, filename)
-        try {
-            f.createNewFile()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-//Convert bitmap to byte array
-        val bitmap1 = bitmap
-        val bos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
-        //bitmap.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-        val bitmapData = bos.toByteArray()
-
-//write the bytes in file
-        try {
-            val fos = FileOutputStream(f)
-            fos.write(bitmapData)
-            fos.flush()
-            fos.close()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
     }
 
     fun initiateTextWatcher() {
 
 
-        //  binding.descriptionEditText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-        if (binding!!.descriptionNoTokenEditText.visibility == View.VISIBLE) {
+        //  viewDataBinding.descriptionEditText?.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        if (viewDataBinding.descriptionNoTokenEditText?.visibility == View.VISIBLE) {
             textWatcher = object : TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence,
@@ -652,16 +531,18 @@ class EditPostActivity :
                             // you will probably need to use
                             // runOnUiThread(Runnable action) for some specific
                             // actions
-                            //  Log.i("Create Post","handle input");
-                            var text = s.toString()
-                            text = Html.fromHtml(text).toString()
-                            handleEditTextInput(text)
+                            Log.i("Create Post", "handle input")
+                            if (gramophoneTvUrl == null) {
+                                var text = s.toString()
+                                text = Html.fromHtml(text).toString()
+                                handleEditTextInput(text)
+                            }
                             timer = null
                         }
                     }, DELAY)
                 }
             }
-            binding!!.descriptionNoTokenEditText.addTextChangedListener(textWatcher)
+            viewDataBinding.descriptionNoTokenEditText?.addTextChangedListener(textWatcher)
         } else {
             textWatcher = object : TextWatcher {
                 override fun beforeTextChanged(
@@ -673,86 +554,87 @@ class EditPostActivity :
                 }
 
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                    if (!startSetText) {
-                        var text = s.toString()
-                        if (text != null) {
-                            text = Html.fromHtml(text).toString()
-                        }
-                        if (!startSuggestion) {
-                            if (text != null && text.length > 0 && (text[text.length - 1] == '#' || text[text.length - 1] == '@')) {
-                                startSuggestion = true
-                                startPosition = text.length - 1
-                            } else if (text != null && text.length > 0 && text[text.length - 1] == ' ') {
-                                startSuggestion = false
-                                searchText = null
-                                startPosition = null
-                            }
-                        } else {
-                            if (text != null && text.length > 0 && text[text.length - 1] == ' ') {
-                                startSuggestion = false
-                                searchText = null
-                                startPosition = null
-                            } else if (startPosition != null && text.length > 0 && text.length - 1 < startPosition!!) {
-                                startSuggestion = false
-                                searchText = null
-                                startPosition = null
-                            }
-                        }
-                        if (timer != null) timer!!.cancel()
+                    var text = s.toString()
+                    if (text != null) {
+                        text = Html.fromHtml(text).toString()
                     }
+                    if (!startSuggestion) {
+                        if (text != null && text?.length > 0 && (text[text?.length - 1] == '#' || text[text?.length - 1] == '@')) {
+                            startSuggestion = true
+                            startPosition = text?.length - 1
+                        } else if (text != null && text?.length > 0 && text[text?.length - 1] == ' ') {
+                            startSuggestion = false
+                            searchText = null
+                            startPosition = null
+                        }
+                    } else {
+                        if (text != null && text?.length > 0 && text[text?.length - 1] == ' ') {
+                            startSuggestion = false
+                            searchText = null
+                            startPosition = null
+                        } else if (startPosition != null && text?.length > 0 && text?.length - 1 < startPosition!!) {
+                            startSuggestion = false
+                            searchText = null
+                            startPosition = null
+                        }
+                    }
+                    if (timer != null) timer!!.cancel()
                 }
 
                 override fun afterTextChanged(s: Editable) {
                     //avoid triggering event when text is too short wait if he has paused typing
-                    if (!startSetText) {
-                        var text = s.toString()
-                        text = Html.fromHtml(text).toString()
-                        if (startSuggestion) {
-                            if (startPosition != null && text.length > startPosition!!) searchText =
-                                text.substring(startPosition!!)
-                            if (searchText != null && searchText!![0] == '@' && searchText!!.length > 1) {
-                                presenter?.getMentionSuggestion(searchText!!.substring(1))
-                            } else if (searchText != null && searchText!![0] == '#' && searchText!!.length > 1) {
-                                presenter?.getSearchSuggestion(searchText!!.substring(1))
-                            }
-                        } else {
-                            timer = null
-                            timer = Timer()
-                            val finalText = text
-                            timer!!.schedule(object : TimerTask() {
-                                override fun run() {
-                                    // you will probably need to use
-                                    // runOnUiThread(Runnable action) for some specific
-                                    // actions
-                                    //   Log.i("Create Post", "handle input");
-                                    handleEditTextInput(finalText)
-                                    timer = null
-                                }
-                            }, DELAY)
+                    var text = s.toString()
+                    text = Html.fromHtml(text).toString()
+                    if (startSuggestion) {
+                        if (startPosition != null && text?.length > startPosition!!) searchText =
+                            text?.substring(startPosition!!)
+                        if (searchText != null && searchText!![0] == '@' && searchText!!.length > 1) {
+                            presenter!!.getMentionSuggestion(searchText!!.substring(1))
+                        } else if (searchText != null && searchText!![0] == '#' && searchText!!.length > 1) {
+                            presenter!!.getSearchSuggestion(searchText!!.substring(1))
                         }
+                    } else {
+                        timer = null
+                        timer = Timer()
+                        val finalText = text
+                        timer!!.schedule(object : TimerTask() {
+                            override fun run() {
+                                // you will probably need to use
+                                // runOnUiThread(Runnable action) for some specific
+                                // actions
+                                Log.i("Create Post", "handle input")
+                                if (gramophoneTvUrl == null) {
+                                    handleEditTextInput(finalText)
+                                }
+                                timer = null
+                            }
+                        }, DELAY)
                     }
                 }
             }
-            binding!!.descriptionEditText.addTextChangedListener(textWatcher)
+            viewDataBinding.descriptionEditText?.performBestGuess(false)
+            viewDataBinding.descriptionEditText?.preventFreeFormText(false)
+            viewDataBinding.descriptionEditText?.setTokenizer(TagTokenizer(Arrays.asList('#', '@')))
+            //    viewDataBinding.commentEditText?.setAdapter(new TagAdapter(this, R.layout.tag_layout, Tag.sampleTags()));
+            viewDataBinding.descriptionEditText?.setTokenClickStyle(TokenCompleteTextView.TokenClickStyle.Select)
+            viewDataBinding.descriptionEditText?.threshold = 1
+            viewDataBinding.descriptionEditText?.setTokenListener(this)
+            viewDataBinding.descriptionEditText?.addTextChangedListener(textWatcher)
         }
     }
 
-    fun handleEditTextInput(text: String) {
-        afterTextChangedCount++
-        // String text = binding.descriptionEditText.getText().toString();
-        var descriptionUrl: String? = null
-        if (text.length > 10) {
-            val urlList: List<String> = pullLinks(text)
-            if (urlList.size > 0) {
-                descriptionUrl = urlList[0]
-                if (descriptionUrl != null) {
-                    if (intent!!.hasExtra(POST_EXTRA_KEY)) {
-                        if (afterTextChangedCount > 1) {
-                            urlFromIntent = descriptionUrl
-                            initUrlPreview(descriptionUrl)
-                        }
-                    } else {
+    fun handleEditTextInput(text: String?) {
+        if (urlLink == null && !urlPreviewOff) {
+            // afterTextChangedCount++;
+            //  String text = Html.fromHtml(text).toString();
+            var descriptionUrl: String? = null
+            if (text != null) {
+                val urlList: List<String> = pullLinks(text)
+                if (urlList.size > 0) {
+                    descriptionUrl = urlList[0]
+                    if (descriptionUrl != null) {
                         urlFromIntent = descriptionUrl
+                        val isPreviewFromEditText = true
                         initUrlPreview(descriptionUrl)
                     }
                 }
@@ -762,9 +644,9 @@ class EditPostActivity :
 
     private fun initUrlPreview(text: String) {
         try {
-            textCrawler?.makePreview(callback, text)
-            binding!!.urlPreviewImageContainer.visibility = View.VISIBLE
-            binding!!.urlPreviewProgressBar.visibility = View.VISIBLE
+            textCrawler!!.makePreview(callback, text)
+            viewDataBinding.urlPreviewImageContainer.visibility = View.VISIBLE
+            viewDataBinding.urlPreviewProgressBar.visibility = View.VISIBLE
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -797,12 +679,13 @@ class EditPostActivity :
         }
 
         override fun onPos(sourceContent: SourceContent, b: Boolean) {
-            if (b || sourceContent.getFinalUrl() == "") {
+            if (b || sourceContent.finalUrl == "") {
                 /*
                   Inflating the content layout into Main View LinearLayout
                  */
-                binding!!.urlPreviewImageContainer.visibility = View.GONE
-                binding!!.urlPreviewProgressBar.visibility = View.GONE
+                // urlLink=null;
+                viewDataBinding.urlPreviewImageContainer.visibility = View.GONE
+                viewDataBinding.urlPreviewProgressBar.visibility = View.GONE
                 val failed = layoutInflater.inflate(
                     R.layout.failed,
                     linearLayout
@@ -811,7 +694,7 @@ class EditPostActivity :
                     .findViewById<TextView>(R.id.text)
                 titleTextView.text = """
                     ${getString(R.string.failed_preview)}
-                    ${sourceContent.getFinalUrl()}
+                    ${sourceContent.finalUrl}
                     """.trimIndent()
                 failed.setOnClickListener {
                     //                            releasePreviewArea();
@@ -819,55 +702,57 @@ class EditPostActivity :
                 previewDataFromIntentExtraValues
                 // hideProgress();
             } else {
-                if (sourceContent.getCannonicalUrl() != null && sourceContent.getCannonicalUrl() == Constants.IsUrlForPlayStore) {
+                if (sourceContent.cannonicalUrl != null && sourceContent.cannonicalUrl == Constants.IsUrlForPlayStore) {
                     previewDataFromIntentExtraValues
                 } else {
+                    viewDataBinding.urlPreviewImageContainer.visibility = View.VISIBLE
+                    viewDataBinding.urlPreviewProgressBar.visibility = View.GONE
                     isPreviewFromIntent = false
-                    binding!!.urlPreviewImageContainer.visibility = View.VISIBLE
-                    binding!!.urlPreviewProgressBar.visibility = View.GONE
-                    if (sourceContent.getTitle() != null && sourceContent.getDescription() != null && sourceContent.getFinalUrl() != null) {
-                        txtUrlTitleDescriptionPreview?.setText(sourceContent.getTitle() + "\n" + sourceContent.getDescription())
+                    if (sourceContent.title != null && sourceContent.description != null && sourceContent.finalUrl != null) {
+                        txtUrlTitleDescriptionPreview!!.text = """
+                            ${sourceContent.title}
+                            ${sourceContent.description}
+                            """.trimIndent()
                         if (txtUrlTitleDescriptionPreview != null) {
-                            txtUrlTitleDescriptionPreview?.setVisibility(View.VISIBLE)
+                            txtUrlTitleDescriptionPreview!!.visibility = View.VISIBLE
                             // finalDescription=String.valueOf(sourceContent.getTitle ()+"\n"+sourceContent.getDescription()+"\n"+"For mor detail Click on link");
-                            // finalDescription = txtUrlTitleDescriptionPreview.getText().toString();
-                            urlLink = sourceContent.getFinalUrl().toString()
+
+                            //   finalDescription = txtUrlTitleDescriptionPreview.getText().toString();
+                            urlLink = sourceContent.finalUrl.toString()
+                            viewDataBinding.urlPreviewRemoveImageButton?.visibility = View.GONE
                             addImageButton!!.isEnabled = false
                             if (urlFromIntent != null) {
                                 urlLink = urlFromIntent
                             }
                         }
-                    } else if (sourceContent.getFinalUrl() != null) {
-                        // descriptionEditText.setEnabled(false);
+                    } else if (sourceContent.finalUrl != null) {
+                        // descriptionEditText?.setEnabled(false);
                         addImageButton!!.isEnabled = false
-                        urlLink = sourceContent.getFinalUrl().toString()
+                        urlLink = sourceContent.finalUrl.toString()
                         if (urlFromIntent != null) {
                             urlLink = urlFromIntent
                         }
                     } else {
-                        txtUrlTitleDescriptionPreview?.setVisibility(View.GONE)
+                        txtUrlTitleDescriptionPreview!!.visibility = View.GONE
                     }
-                    currentImageSet = arrayOfNulls(sourceContent.getImages().size)
-                    if (sourceContent.getImages().size > 0) {
-                        val imageUrl1: String = sourceContent.getImages().get(0)
+                    currentImageSet = arrayOfNulls(sourceContent.images.size)
+                    if (sourceContent.images.size > 0) {
+                        val imageUrl1 = sourceContent.images[0]
                         try {
                             val url = URL(imageUrl1)
                             try {
                                 val imageUri5 = url.toURI()
                                 val imageUri8 = Uri.parse(imageUri5.toString())
-                                //   loadImage(imageUri8);
-                                loadUrlPreviewImage(imageUri8.toString())
-                                binding!!.urlPreviewRemoveImageButton.visibility = View.GONE
-                                // ifImagePathFalse(imageUri8);
-                                // binding.imageView.setVisibility(View.VISIBLE);
                                 if (imageUri8 == null) {
                                     showSnackBar("Image preview not find .Try again")
                                     //  hideProgress();
                                 } else {
+                                    loadUrlPreviewImage(imageUri8.toString())
                                     isImageFileFromHttpUrl = true
                                     // isFileFromDevice = true;
-                                    val sharedImagePath = imageUri8.toString()
-                                    binding!!.imageView.isEnabled = false
+                                    sharedImagePath = imageUri8.toString()
+                                    viewDataBinding.urlPreviewRemoveImageButton?.visibility =
+                                        View.VISIBLE
                                     //   hideProgress();
                                 }
                             } catch (e: Exception) {
@@ -885,89 +770,117 @@ class EditPostActivity :
         }
     }
 
-    //  isImageFromDevice(item);
-    //     finalDescription = txtUrlTitleDescriptionPreview.getText().toString();
+    private fun loadUrlPreviewImage(imageUrl: String?) {
+        if (imageUrl != null && imageUrl.length > 0) {
+            viewDataBinding.imageContainer.visibility = View.GONE
+            viewDataBinding.urlPreviewImageContainer.visibility = View.VISIBLE
+            viewDataBinding.urlPreviewImageView.visibility = View.VISIBLE
+            Glide.with(this)
+                .load(imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .error(R.drawable.ic_stub)
+                .into(viewDataBinding.urlPreviewImageView)
+        }
+    }// showSnackBar("No data available .Please try again");
+
+    //  showSnackBar("No data available .Please try again");
     private val previewDataFromIntentExtraValues: Unit
         private get() {
-            if (getIntent() != null && getIntent().action != null && getIntent().clipData != null) {
-                if (getIntent().action == Intent.ACTION_SEND) {
-                    val item = getIntent().clipData!!.getItemAt(0)
-                    if (item != null) {
-                        try {
-                            binding!!.urlPreviewImageContainer.visibility = View.VISIBLE
-                            binding!!.urlPreviewProgressBar.visibility = View.GONE
-                            val sharedImageUri = item.uri
-                            txtUrlTitleDescriptionPreview?.setText(item.text.toString())
-                            if (sharedImageUri != null) {
-                                loadUrlPreviewImage(sharedImageUri.toString())
-                                isImageFileFromHttpUrl = true
-                                //  isImageFromDevice(item);
-                            }
-                            if (sharedImageUri != null) {
-                                urlPreviewImage = sharedImageUri.toString()
-                            }
-                            urlPreviewDescription = item.text.toString()
-                            isPreviewFromIntent = true
-                            //     finalDescription = txtUrlTitleDescriptionPreview.getText().toString();
-                            if (urlFromIntent != null) {
-                                urlLink = urlFromIntent
-                            }
-                        } catch (e: Exception) {
-                            urlLink = null
-                            showSnackBar("No preview available .Please try again")
-                        }
-                    } else {
-                        urlLink = null
-                        showSnackBar("No preview available .Please try again")
+            val item = clipData
+            if (item != null) {
+                try {
+                    viewDataBinding.urlPreviewImageContainer.visibility = View.VISIBLE
+                    viewDataBinding.urlPreviewProgressBar.visibility = View.GONE
+                    var sharedImageUri: Uri? = null
+                    if (item.uri != null) {
+                        sharedImageUri = item.uri
+                    } else if (imageFromIntent != null) {
+                        sharedImageUri = Uri.parse(imageFromIntent)
                     }
-                } else {
+                    txtUrlTitleDescriptionPreview!!.text = item.text?.toString()
+                    viewDataBinding.urlPreviewRemoveImageButton?.visibility = View.GONE
+                    if (sharedImageUri != null) {
+                        urlPreviewImage = sharedImageUri.toString()
+                        urlPreviewDescription = item.text?.toString()
+                        isImageFileFromHttpUrl = true
+                        loadUrlPreviewImage(sharedImageUri.toString())
+                    }
+                    isPreviewFromIntent = true
+                    if (gramophoneTvUrl != null) {
+                        urlLink = gramophoneTvUrl
+                    } else {
+                        if (urlFromIntent != null) {
+                            urlLink = urlFromIntent
+                        }
+                    }
+                    viewDataBinding.urlPreviewRemoveImageButton?.visibility = View.VISIBLE
+                } catch (e: Exception) {
                     urlLink = null
-                    showSnackBar("No preview available .Please try again")
+                    //  showSnackBar("No data available .Please try again");
+                    showSnackBar(getString(R.string.no_data_title))
                 }
             } else {
                 urlLink = null
-                showSnackBar("No preview available .Please try again")
+                // showSnackBar("No data available .Please try again");
+                showSnackBar(getString(R.string.no_data_title))
             }
         }
 
-    //// link preview extracting mechanism ends
     fun showSnackBar(message: String?) {
-        if (message != null) {
-            val snackbar: Snackbar = Snackbar.make(
-                findViewById<View>(android.R.id.content),
-                message,
-                Snackbar.LENGTH_LONG
-            )
-            snackbar.show()
+        val snackbar = Snackbar.make(
+            findViewById(android.R.id.content),
+            message!!, Snackbar.LENGTH_LONG
+        )
+        snackbar.show()
+    }
+
+    fun showSnackBar(messageId: Int) {
+        val snackbar = Snackbar.make(
+            findViewById(android.R.id.content),
+            messageId, Snackbar.LENGTH_LONG
+        )
+        snackbar.show()
+    }
+
+    fun showSnackBar(view: View?, messageId: Int) {
+        val snackbar = Snackbar.make(view!!, messageId, Snackbar.LENGTH_LONG)
+        snackbar.show()
+    }
+
+
+    private fun handleShareOtherLink(intent: Intent?) {
+        var url: String? = null
+        if (intent != null) {
+            if (intent.action != null && intent.action == Intent.ACTION_SEND && intent.clipData != null) {
+                val type = intent.type
+                val item = intent.clipData!!.getItemAt(0)
+                imageFromIntent = intent.getStringExtra("image")
+                gramophoneTvUrl = intent.getStringExtra("gramoPhoneTv")
+                clipData = item
+                if (type != null && type.contains("image") && item != null) {
+                    //isImageFromDevice(item)
+                }
+                if (!isFileFromDevice) {
+//                    if(gr!=null)
+//                    {
+//                        url=gramophoneTv;
+//                    }else {
+                    val urlList: List<String> = pullLinks(item.toString())
+                    if (urlList.size > 0) {
+                        url = urlList[0]
+                    }
+                    if (url != null) {
+                        if (containsURL(url)) {
+                            urlFromIntent = url
+                            val isPostFromOtherLink = true
+                            initUrlPreview(url)
+                        }
+                    }
+                }
+            }
         }
     }
 
-    private fun loadImage(imageUri: Uri?) {
-        if (imageUri == null) {
-            return
-        }
-        try {
-            binding!!.removeImageButton.visibility = View.VISIBLE
-            binding!!.imageContainer.visibility = View.VISIBLE
-            binding!!.imageView.visibility = View.VISIBLE
-            this.imageUri = imageUri
-            Glide.with(this)
-                .load(imageUri)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .fitCenter()
-                .into(binding!!.imageView)
-
-            //  imageUri = ImagePicker.getUriAfterResized(this, imageUri, filename);
-            // Bitmap bitmap = ImagePicker.getImageResized(this, imageUri);
-            //saveFilePath(bitmap);
-        } catch (outOfMemoryError: OutOfMemoryError) {
-            showToast(getString(R.string.error_out_of_memory))
-        } catch (e: Exception) {
-            e.printStackTrace()
-            showToast(getString(R.string.some_thing_went_wrong))
-        }
-    }
 
     private fun containsURL(content: String): Boolean {
         val REGEX = "\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"
@@ -978,9 +891,33 @@ class EditPostActivity :
 
     override fun onResume() {
         super.onResume()
-        hashMap.clear()
-//        hashMap[getString(R.string.analytic_post_id)] = postId
-//    }
+        //  handleShareOtherLink(intent);
+
+    }
+
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (getIntent().action != null && getIntent().action == Intent.ACTION_VIEW) {
+            val mode =
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.AppMode)
+            launchHomePage()
+        } else {
+            finish()
+        }
+        super.onBackPressed()
+    }
+
+    private fun launchHomePage() {
+        startActivity(Intent(this, HomeActivity::class.java))
+        //intent!!.putExtra(IntentKeys.LaunchFragmentKey, Constants.SocialFragment)
+        finish()
+    }
+
+    companion object {
+        const val CREATE_NEW_POST_REQUEST = 11
+        private val TAG = CreatePostActivity::class.java.simpleName
+        private const val CHOOSER_PERMISSIONS_REQUEST_CODE = 7459
     }
 
 
@@ -992,30 +929,8 @@ class EditPostActivity :
 
     override fun onTokenRemoved(token: Tag?) {}
     override fun onTokenIgnored(token: Tag?) {}
-    override fun openCameraToCapture() {
-        TODO("Not yet implemented")
-    }
-
-    override fun updateAddDeleteBtn(imageNo: Int) {
-    }
-
-    override fun populateTagSuggestionList(tags: Array<Tag>) {
-        binding!!.descriptionEditText.setAdapter(TagAdapter(this, R.layout.tag_layout, tags))
-    }
-
-    override fun populateHasTagList(tags: Array<Tag>) {
-    }
-
-
-    companion object {
-        const val POST_EXTRA_KEY = "EditPostActivity.POST_EXTRA_KEY"
-        const val UPDATE_POST_REQUEST = 9
-        private val TAG = EditPostActivity::class.java.simpleName
-        private const val CHOOSER_PERMISSIONS_REQUEST_CODE = 7459
-    }
-
     override fun getLayoutID(): Int {
-        return R.layout.activity_edit_post
+        return R.layout.create_posts_activity
     }
 
     override fun getBindingVariable(): Int {
@@ -1024,5 +939,18 @@ class EditPostActivity :
 
     override fun getViewModel(): CreatePostViewModel {
         return presenter
+    }
+
+    override fun onCropSelectionDone(cropList: MutableList<CropData>) {
+        showTag(cropList)
+        if (cropList.size > 0) {
+            cropList.forEach {
+                val tagMap = JSONObject()
+                // tagMap.put("_id",it.cropId.toString())
+                tagMap.put("tag", it.cropName.toString())
+                presenter.tags.add(tagMap)
+
+            }
+        }
     }
 }

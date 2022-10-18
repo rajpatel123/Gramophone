@@ -1,4 +1,5 @@
-package agstack.gramophone.ui.createnewpost.view;
+package agstack.gramophone.ui.createnewpost.model;
+
 
 import agstack.gramophone.utils.Constants;
 

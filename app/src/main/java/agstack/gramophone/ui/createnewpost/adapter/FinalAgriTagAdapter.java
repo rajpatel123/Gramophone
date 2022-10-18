@@ -16,7 +16,7 @@
  *
  */
 
-package agstack.gramophone.ui.createnewpost.view;
+package agstack.gramophone.ui.createnewpost.adapter;
 
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import agstack.gramophone.R;
+import agstack.gramophone.ui.createnewpost.model.AgriTag;
 
 import java.util.ArrayList;
 import java.util.List;
