@@ -242,6 +242,9 @@
             android:name=".ui.farm.view.CropGroupExplorerActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.search.view.GlobalSearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.articles.ArticlesWebViewActivity"
             android:screenOrientation="portrait" />
 

@@ -52,7 +52,7 @@ interface CommunityApiService {
     @DELETE("/api/v2/comments/delete-comment")//change response model
     suspend fun deletePostComment(@Body post: PostRequestModel): Response<CommentsResponseModel>
 
-    @PUT("/api/v2/posts/add-complain")//change response model
+    @POST("/api/v2/posts/add-complain")//change response model
     suspend fun reportPost(@Body post: ReportUserRequestModel): Response<CommentsResponseModel>
 
     @PUT("/api/v2/posts/update-blocked-user")

@@ -201,9 +201,9 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="@dimen/_14sdp"
             android:layout_marginTop="@dimen/_14sdp"
-            android:minWidth="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_14sdp"
             android:layout_marginBottom="@dimen/_14sdp"
+            android:minWidth="@dimen/_20sdp"
             app:srcCompat="@drawable/ic_menu_tripple_dot" />
 
 
@@ -515,13 +515,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/llEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -556,6 +556,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         android:fontFamily="@font/manrope_regular"
                         android:text="@{model.pinned?@string/unpin_post:@string/pin_post}" />
                 </LinearLayout>
@@ -564,7 +565,8 @@
                     android:id="@+id/llDelete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:gravity="center_vertical"
 
                     android:orientation="horizontal">
@@ -588,14 +590,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/llReport"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -617,7 +619,7 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 

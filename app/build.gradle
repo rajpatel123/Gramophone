@@ -219,6 +219,9 @@ dependencies {
     implementation 'com.amnix.xtension:AmniXtension:1.0.1'
     api 'com.miguelcatalan:materialsearchview:1.4.0'
 
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
