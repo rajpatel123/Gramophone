@@ -19,9 +19,11 @@ class GlobalSearchViewModel @Inject constructor(
     private val productRepository: ProductRepository,
 ) : BaseViewModel<GlobalSearchNavigator>() {
     var progress = MutableLiveData<Boolean>()
+    var showEmptyView = MutableLiveData<Boolean>()
 
     init {
         progress.value = false
+        showEmptyView.value = false
     }
 
     fun onBackPressClick(){
@@ -41,13 +43,16 @@ class GlobalSearchViewModel @Inject constructor(
                     && response.body()?.gp_api_response_data != null
                 ) {
                     val suggestionsResponse = response.body()
+                    showEmptyView.value = false
                     getNavigator()?.notifyAdapter(suggestionsResponse?.gp_api_response_data!!)
                 } else {
+                    showEmptyView.value = true
                     getNavigator()?.notifyAdapter(arrayListOf())
                 }
                 progress.value = false
             } catch (ex: Exception) {
                 progress.value = false
+                showEmptyView.value = true
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
                     else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))

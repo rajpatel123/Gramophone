@@ -90,31 +90,93 @@
                 android:layout_height="@dimen/_8sdp"
                 android:background="@color/gray_stroke" />
 
-            <TextView
-                android:id="@+id/txtSuggestionsTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_16sdp"
-                android:layout_marginRight="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_16sdp"
-                android:fontFamily="@font/manrope_bold"
-                android:textColor="@color/blakish"
-                android:textSize="@dimen/_11ssp"
-                android:text="@string/suggestions"
-                android:gravity="center_vertical" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewSearch"
+            <LinearLayout
+                android:id="@+id/suggestionsResultWrapper"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/_4sdp"
-                android:layout_marginTop="@dimen/_16sdp"
-                android:layout_marginEnd="@dimen/_4sdp"
                 android:orientation="vertical"
-                tools:itemCount="3"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_global_search_suggestion" />
+                android:visibility="@{viewModel.showEmptyView == false ? View.VISIBLE : View.GONE, default = visible}"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/txtSuggestionsTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_16sdp"
+                    android:layout_marginRight="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_11ssp"
+                    android:text="@string/suggestions"
+                    android:gravity="center_vertical" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:orientation="vertical"
+                    tools:itemCount="3"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_global_search_suggestion" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/emptyResultWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="@{viewModel.showEmptyView == true ? View.VISIBLE : View.GONE, default = gone}"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/_96sdp"
+                        android:layout_height="@dimen/_96sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:contentDescription="@string/image"
+                        android:src="@drawable/ic_search_black" />
+
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_16sdp"
+                        android:layout_marginRight="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:textColor="@color/blakish"
+                        android:textSize="@dimen/_12ssp"
+                        android:text="@string/sorry_no_result_found"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_16sdp"
+                        android:layout_marginRight="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_11ssp"
+                        android:text="@string/please_try_another_way"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
         </LinearLayout>
 

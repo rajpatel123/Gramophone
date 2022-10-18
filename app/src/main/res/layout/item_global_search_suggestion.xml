@@ -29,7 +29,6 @@
         android:paddingBottom="@dimen/_10sdp"
         android:fontFamily="@font/manrope_medium"
         android:lines="1"
-        android:maxLength="100"
         android:text='@{item ?? "" }'
         android:textColor="@color/blakish"
         android:textSize="@dimen/_10ssp"
