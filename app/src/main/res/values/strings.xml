@@ -549,4 +549,6 @@
     <string name="go_to_community">Go To Community</string>
     <string name="sorry_no_result_found">Sorry!No result found!</string>
     <string name="please_try_another_way">We\'re sorry what you are looking for. Please try another way.</string>
+    <string name="edit_post">Edit Post</string>
+    <string name="update_post">Update Post</string>
 </resources>
