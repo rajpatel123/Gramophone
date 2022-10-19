@@ -70,6 +70,7 @@ class MarketFragmentViewModel
                         cartList,
                         farmResponse,
                         articlesData)) {
+                        getNavigator()?.launchCommunityFragment()
                     }
                 }
             } catch (ex: Exception) {

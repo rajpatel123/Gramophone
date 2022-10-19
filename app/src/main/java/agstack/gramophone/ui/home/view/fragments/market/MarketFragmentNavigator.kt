@@ -21,4 +21,6 @@ interface MarketFragmentNavigator : BaseNavigator {
         storeResponse: StoreResponse?, companyResponse: CompanyResponse?,
         cartList: List<CartItem>?, farmResponse: FarmResponse?, articlesData: HashMap<String, ArrayList<FormattedArticlesData>>
     )
+
+    fun launchCommunityFragment()
 }

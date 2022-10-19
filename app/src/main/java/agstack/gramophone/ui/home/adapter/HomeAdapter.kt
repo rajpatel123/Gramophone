@@ -45,7 +45,7 @@ class HomeAdapter(
     private var articlesData: HashMap<String, ArrayList<FormattedArticlesData>>,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var onItemClicked: ((id: String) -> Unit)? = null
+    var onItemClicked: ((String) -> Unit)? = null
 
     fun notifyAdapterOnDataChange(
         allBannerResponse: BannerResponse?, categoryResponse: CategoryResponse?,
@@ -115,6 +115,10 @@ class HomeAdapter(
             }
             Constants.HOME_ARTICLES_VIEW_TYPE -> {
                 return ArticlesViewHolder(ItemHomeArticlesBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
+            }
+            Constants.HOME_COMMUNITY_VIEW_TYPE -> {
+                return CommunityViewHolder(ItemHomeCommunityBinding.inflate(LayoutInflater.from(
                     viewGroup.context)))
             }
         }
@@ -450,7 +454,8 @@ class HomeAdapter(
                                     holder.binding.viewAllArticles.context,
                                     ArticlesWebViewActivity::class.java,
                                     Bundle().apply {
-                                        putString(Constants.PAGE_URL, BuildConfig.BASE_URL_SINGLE_ARTICLE + it)
+                                        putString(Constants.PAGE_URL,
+                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + it)
                                     }
                                 )
                             }
@@ -465,7 +470,8 @@ class HomeAdapter(
                                     holder.binding.viewAllArticles.context,
                                     ArticlesWebViewActivity::class.java,
                                     Bundle().apply {
-                                        putString(Constants.PAGE_URL, BuildConfig.BASE_URL_SINGLE_ARTICLE + it)
+                                        putString(Constants.PAGE_URL,
+                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + it)
                                     }
                                 )
                             }
@@ -480,7 +486,8 @@ class HomeAdapter(
                                     holder.binding.viewAllArticles.context,
                                     ArticlesWebViewActivity::class.java,
                                     Bundle().apply {
-                                        putString(Constants.PAGE_URL, BuildConfig.BASE_URL_SINGLE_ARTICLE + it)
+                                        putString(Constants.PAGE_URL,
+                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + it)
                                     }
                                 )
                             }
@@ -504,6 +511,11 @@ class HomeAdapter(
                     holder.binding.itemViewSuggested.visibility = View.GONE
                     holder.binding.viewAllArticles.visibility = View.GONE
                     holder.binding.view.visibility = View.GONE
+                }
+            }
+            is CommunityViewHolder -> {
+                holder.binding.rlGoToCommunity.setOnClickListener {
+                    onItemClicked?.invoke("")
                 }
             }
         }
@@ -547,6 +559,9 @@ class HomeAdapter(
             Constants.HOME_ARTICLES -> {
                 return Constants.HOME_ARTICLES_VIEW_TYPE
             }
+            Constants.HOME_COMMUNITY -> {
+                return Constants.HOME_COMMUNITY_VIEW_TYPE
+            }
         }
         return Constants.HOME_EMPTY_VIEW_TYPE
     }
@@ -588,6 +603,9 @@ class HomeAdapter(
             }
             Constants.HOME_ARTICLES -> {
                 return Constants.HOME_ARTICLES_VIEW_TYPE.toLong()
+            }
+            Constants.HOME_COMMUNITY -> {
+                return Constants.HOME_COMMUNITY_VIEW_TYPE.toLong()
             }
         }
         return Constants.HOME_EMPTY_VIEW_TYPE.toLong()
@@ -642,5 +660,8 @@ class HomeAdapter(
         RecyclerView.ViewHolder(binding.root)
 
     inner class ArticlesViewHolder(var binding: ItemHomeArticlesBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    inner class CommunityViewHolder(var binding: ItemHomeCommunityBinding) :
         RecyclerView.ViewHolder(binding.root)
 }
