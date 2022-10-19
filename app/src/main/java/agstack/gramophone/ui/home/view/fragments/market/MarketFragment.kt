@@ -8,6 +8,7 @@ import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.dialog.AppTourDialog
 import agstack.gramophone.ui.farm.model.FarmResponse
 import agstack.gramophone.ui.home.adapter.HomeAdapter
+import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.FeaturedArticlesResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import android.os.Bundle
@@ -85,7 +86,7 @@ class MarketFragment :
         super.onViewCreated(view, savedInstanceState)
         setUpUI()
         callApi()
-        AppTourDialog().show(childFragmentManager, null)
+        marketFragmentViewModel.showAppTourDialogIfApplicable()
     }
 
     private fun callApi() {
@@ -109,10 +110,20 @@ class MarketFragment :
         }
     }
 
+    override fun launchCommunityFragment() {
+        if (activity is HomeActivity) {
+            (activity as HomeActivity).showCommunityFragment()
+        }
+    }
+
     override fun setHomeAdapter(adapter: HomeAdapter, onItemClick: (String) -> Unit) {
         homeAdapter = adapter
         adapter.onItemClicked = onItemClick
         binding?.rvHome?.adapter = homeAdapter
+    }
+
+    override fun showAppTourDialog() {
+        AppTourDialog().show(childFragmentManager, null)
     }
 
     override fun notifyHomeAdapter(

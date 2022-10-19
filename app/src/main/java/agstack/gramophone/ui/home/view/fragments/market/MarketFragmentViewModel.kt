@@ -37,6 +37,14 @@ class MarketFragmentViewModel
     var farmResponse: FarmResponse? = null
     var articlesData: HashMap<String, ArrayList<FormattedArticlesData>> = HashMap()
 
+    fun showAppTourDialogIfApplicable() {
+        if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.APP_TOUR_ENABLED) == true
+            && SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.APP_TOUR_SKIP_COUNT)!! < 2
+        ) {
+            getNavigator()?.showAppTourDialog()
+        }
+    }
+
     fun getHomeData() {
         allProductsResponse = null
         cropResponse = null
@@ -62,6 +70,7 @@ class MarketFragmentViewModel
                         cartList,
                         farmResponse,
                         articlesData)) {
+                        getNavigator()?.launchCommunityFragment()
                     }
                 }
             } catch (ex: Exception) {
@@ -328,7 +337,8 @@ class MarketFragmentViewModel
                                 if (item.post_views.isNotNullOrEmpty()) item.post_views else ""
                             val tag =
                                 if (item.acf != null && item.acf.category_name.isNotNullOrEmpty()) item.acf.category_name else "N.A"
-                            val imageUrl =if (item.featured_image.isNotNullOrEmpty()) item.featured_image else ""
+                            val imageUrl =
+                                if (item.featured_image.isNotNullOrEmpty()) item.featured_image else ""
 
                             val formattedArticlesData = FormattedArticlesData()
                             formattedArticlesData.id = id
@@ -373,7 +383,8 @@ class MarketFragmentViewModel
                                 if (item.post_views.isNotNullOrEmpty()) item.post_views else ""
                             val tag =
                                 if (item.acf != null && item.acf.category_name.isNotNullOrEmpty()) item.acf.category_name else "N.A"
-                            val imageUrl =if (item.featured_image.isNotNullOrEmpty()) item.featured_image else ""
+                            val imageUrl =
+                                if (item.featured_image.isNotNullOrEmpty()) item.featured_image else ""
 
                             val formattedArticlesData = FormattedArticlesData()
                             formattedArticlesData.id = id

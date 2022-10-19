@@ -6,7 +6,9 @@ import agstack.gramophone.utils.Constants
 import android.app.Activity
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
+import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -44,13 +46,12 @@ class ArticlesWebViewActivity : Activity() {
                     progressBar.visibility = View.VISIBLE
                 }
 
-                override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                    if (url.equals(pageURL + "articles")) {
-                        rlBack.visibility = View.VISIBLE
-                    } else {
-                        rlBack.visibility = View.GONE
-                    }
-                    return false
+                override fun doUpdateVisitedHistory(
+                    view: WebView?,
+                    url: String?,
+                    isReload: Boolean,
+                ) {
+                    super.doUpdateVisitedHistory(view, url, isReload)
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
@@ -64,6 +65,21 @@ class ArticlesWebViewActivity : Activity() {
                 webView.loadUrl(pageURL)
         }
 
-        rlBack.setOnClickListener { finish() }
+        viewBack.setOnClickListener {
+            val keyEvent = KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK)
+            onKeyDown(KeyEvent.KEYCODE_BACK, keyEvent)
+        }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+            webView.goBack()
+            return true
+        } else {
+            finish()
+        }
+        // If it wasn't the Back key or there's no webpage history, bubble up to the default
+        // system behavior (probably exit the activity)
+        return super.onKeyDown(keyCode, event)
     }
 }

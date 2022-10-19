@@ -203,6 +203,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun openArticlesClicked() {
+        getNavigator()?.closeDrawer()
         getNavigator()?.openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
             putString(Constants.PAGE_URL, BuildConfig.BASE_URL_ARTICLES)
         })
