@@ -183,7 +183,9 @@ class HomeActivity :
         }
     }
 
-
+    fun showCommunityFragment() {
+        viewDataBinding.navView.selectedItemId = R.id.navigation_community
+    }
 
     private fun setUpNavigationDrawer() {
         setUpToolBar(true, resources.getString(R.string.app_name), R.drawable.ic_cart_menu)

@@ -63,6 +63,7 @@ android {
             buildConfigField "String" , "BASE_URL_PROMOTION","\"https://promotions-api-qa.gramophone.in/\""
             buildConfigField "String" , "BASE_URL_ARTICLES_BLOG","\"https://blogs-dev.gramophone.in/\""
             buildConfigField "String" , "BASE_URL_ARTICLES","\"https://articles.gramophone.in/\""
+            buildConfigField "String" , "BASE_URL_SINGLE_ARTICLE","\"https://articles.gramophone.in/single-article/\""
             signingConfig signingConfigs.release
 
         }
@@ -75,6 +76,7 @@ android {
             buildConfigField "String" , "BASE_URL_PROMOTION","\"https://promotions-api-qa.gramophone.in/\""
             buildConfigField "String" , "BASE_URL_ARTICLES_BLOG","\"https://blogs-dev.gramophone.in/\""
             buildConfigField "String" , "BASE_URL_ARTICLES","\"https://articles-qa.gramophone.in/\""
+            buildConfigField "String" , "BASE_URL_SINGLE_ARTICLE","\"https://articles-qa.gramophone.in/single-article/\""
             signingConfig signingConfigs.debug
         }
         staging {
@@ -87,6 +89,7 @@ android {
             buildConfigField "String" , "BASE_URL_PROMOTION","\"https://promotions-api-qa.gramophone.in/\""
             buildConfigField "String" , "BASE_URL_ARTICLES_BLOG","\"https://blogs-dev.gramophone.in/\""
             buildConfigField "String" , "BASE_URL_ARTICLES","\"https://articles-qa.gramophone.in/\""
+            buildConfigField "String" , "BASE_URL_SINGLE_ARTICLE","\"https://articles-qa.gramophone.in/single-article/\""
             signingConfig signingConfigs.debug
         }
     }
