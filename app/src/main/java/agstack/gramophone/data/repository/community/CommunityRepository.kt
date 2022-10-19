@@ -17,6 +17,7 @@ import agstack.gramophone.ui.othersporfile.model.ProfileDataResponse
 import agstack.gramophone.ui.userprofile.model.TestUserModel
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.Part
 import javax.inject.Singleton
@@ -39,7 +40,7 @@ interface CommunityRepository {
 
     suspend fun getPostComments(post: GetCommentRequestModel): Response<CommentsResponseModel>
 
-    suspend fun deletePost(post: String): Response<CommentsResponseModel>
+    suspend fun deletePost(id: String): Response<JSONObject>
 
     suspend fun deletePostComment(post: PostRequestModel): Response<CommentsResponseModel>
 
@@ -58,6 +59,8 @@ interface CommunityRepository {
     suspend fun postComment(postId: RequestBody,text: RequestBody,tags: RequestBody,postImage: MultipartBody.Part): Response<SendCommentResponseModel>
 
     suspend fun createPost(description: RequestBody?,tags: RequestBody?,postImage1: MultipartBody.Part?,postImage2: MultipartBody.Part?,postImage3: MultipartBody.Part?): Response<CreatePostResponseModel>
+
+    suspend fun updatePost(description: RequestBody?,tags: RequestBody?,removedImages: RequestBody?,postId: RequestBody?,postImage1: MultipartBody.Part?,postImage2: MultipartBody.Part?,postImage3: MultipartBody.Part?): Response<CreatePostResponseModel>
 
     suspend fun updatePost(
         postId: RequestBody,
