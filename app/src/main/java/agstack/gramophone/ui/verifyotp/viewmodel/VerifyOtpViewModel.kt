@@ -111,6 +111,14 @@ class VerifyOtpViewModel @Inject constructor(
                                 SharedPreferencesKeys.logged_in,
                                 true
                             )
+                            SharedPreferencesHelper.instance?.putBoolean(
+                                SharedPreferencesKeys.APP_TOUR_ENABLED,
+                                true
+                            )
+                            SharedPreferencesHelper.instance?.putInteger(
+                                SharedPreferencesKeys.APP_TOUR_SKIP_COUNT,
+                                0
+                            )
                             getNavigator()?.openAndFinishActivity(HomeActivity::class.java)
                         } else {
                             getNavigator()?.openAndFinishActivity(StateListActivity::class.java)
