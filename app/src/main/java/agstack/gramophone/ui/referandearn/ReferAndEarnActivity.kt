@@ -22,7 +22,7 @@ class ReferAndEarnActivity :
     private val referandEarnViewModel: ReferandEarnViewModel by viewModels()
     private var shareSheetPresenter: ShareSheetPresenter? = null
     var qrBitmap: Bitmap? = null
-    var QRCodeURI: Uri? =null
+    var QRCodeURI: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +44,7 @@ class ReferAndEarnActivity :
 
     override fun setQRCodeImage(bitmap: Bitmap?) {
         qrBitmap = bitmap
-        QRCodeURI  = Utility.bitmapToUri(this, qrBitmap)
+        QRCodeURI = Utility.bitmapToUri(this, qrBitmap)
         viewDataBinding?.shareyourreferal.referralCodeImageView?.setImageBitmap(bitmap)
 
     }
@@ -83,7 +83,36 @@ class ReferAndEarnActivity :
             currentShareOption
         )
 
-       // var datainBundle
+        // var datainBundle
+
+
+    }
+
+
+    override fun shareReferalCode(
+        currentShareOption: String,
+        shareText: String?,
+        referralCode: String?
+    ) {
+        var shareMessage = resources.getString(R.string.welcome_msg)
+
+
+        referralCode?.let {
+            shareMessage = "Your referal code is:"+ referralCode
+        }
+
+        shareText?.let {
+            shareMessage = shareMessage +  shareText
+        }
+
+
+        var QRCodeURI: Uri? = Utility.bitmapToUri(this, qrBitmap)
+        shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(
+            shareMessage,
+            getString(R.string.home_share_subject),
+            QRCodeURI,
+            currentShareOption
+        )
 
 
     }

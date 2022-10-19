@@ -5,15 +5,19 @@ import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.os.Environment.DIRECTORY_PICTURES
+import android.os.Environment.getExternalStoragePublicDirectory
 import android.provider.MediaStore
 import android.text.SpannableString
 import android.text.TextUtils
 import android.text.style.BulletSpan
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
@@ -156,7 +160,8 @@ object Utility {
     fun bitmapToUri(inContext: Context,bitmap: Bitmap?): Uri? {
         val bytes = ByteArrayOutputStream()
         bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path: String = MediaStore.Images.Media.insertImage(
+
+   val path: String = MediaStore.Images.Media.insertImage(
             inContext.getContentResolver(),
             bitmap,
             "Title",
@@ -164,6 +169,58 @@ object Utility {
         )
         return Uri.parse(path)
 
+
+
+//          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+//            return saveImageInQ(inContext,bitmap)
+//        else return saveImageInLegacy(inContext,bitmap)
+
+
+    }
+
+    private fun saveImageInLegacy(inContext: Context,bitmap: Bitmap?): Uri? {
+        val appContext = inContext
+        val filename = "IMG_${System.currentTimeMillis()}.jpg"
+        val directory = getExternalStoragePublicDirectory(DIRECTORY_PICTURES)
+        val file = File(directory, filename)
+        val outStream = FileOutputStream(file)
+        bitmap?.compress(Bitmap.CompressFormat.PNG, 100, outStream)
+        outStream.flush()
+        outStream.close()
+        MediaScannerConnection.scanFile(appContext, arrayOf(file.absolutePath),
+            null, null)
+        return FileProvider.getUriForFile(appContext, "${appContext.packageName}.provider",
+            file)
+
+    }
+
+    private fun saveImageInQ(inContext: Context,bitmap: Bitmap?) :Uri?{
+
+        val filename = "IMG_${System.currentTimeMillis()}.jpg"
+        var fos: OutputStream? = null
+        var imageUri: Uri? = null
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
+            put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+            put(MediaStore.Video.Media.IS_PENDING, 1)
+        }
+
+        //use application context to get contentResolver
+        val contentResolver = inContext.contentResolver
+
+        contentResolver.also { resolver ->
+            imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+            fos = imageUri?.let { resolver.openOutputStream(it) }
+        }
+
+        fos?.use { bitmap?.compress(Bitmap.CompressFormat.JPEG, 70, it) }
+
+        contentValues.clear()
+        contentValues.put(MediaStore.Video.Media.IS_PENDING, 0)
+        imageUri?.let { contentResolver.update(it, contentValues, null, null) }
+
+        return imageUri
 
     }
 
