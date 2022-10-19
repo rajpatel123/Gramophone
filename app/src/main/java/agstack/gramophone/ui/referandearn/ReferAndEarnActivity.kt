@@ -6,9 +6,13 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ReferEarnActivityBinding
 import agstack.gramophone.utils.ShareSheetPresenter
 import agstack.gramophone.utils.Utility
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.drawToBitmap
 import com.google.zxing.qrcode.encoder.QRCode
@@ -122,6 +126,14 @@ class ReferAndEarnActivity :
         Utility.saveImage(this, mViewModel?.QR_BitmapfromURL)
 
 
+    }
+
+
+    override fun onReferralCodeClick(referalCode:String) {
+        val clipboard =this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+        val clip = ClipData.newPlainText("referral_code", referalCode)
+        clipboard!!.setPrimaryClip(clip)
+        Toast.makeText(this, getString(R.string.copied), Toast.LENGTH_SHORT).show();
     }
 
 }

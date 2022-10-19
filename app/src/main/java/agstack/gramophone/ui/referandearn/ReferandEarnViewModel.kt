@@ -82,6 +82,10 @@ class ReferandEarnViewModel @Inject constructor(
         getNavigator()?.shareReferalCode(currentShareOption,gramCashResponseData.get()?.share_message,gramCashResponseData.get()?.referral_code)
     }
 
+    fun onReferralCodeClick(){
+getNavigator()?.onReferralCodeClick(gramCashResponseData.get()?.referral_code!!)
+    }
+
     fun onWhatsappShareClick(){
         currentShareOption = IntentKeys.WhatsAppShareKey
         getNavigator()?.share(currentShareOption,gramCashResponseData.get()?.share_message)

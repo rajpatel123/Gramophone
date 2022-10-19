@@ -119,6 +119,7 @@
                         android:fontFamily="sans-serif"
                         android:gravity="center"
                         tools:text="ALUPPT2"
+                        android:onClick="@{()->rvm.onReferralCodeClick()}"
                         android:textAlignment="gravity"
                         android:textAllCaps="false"
                         android:textColor="@color/blakish"

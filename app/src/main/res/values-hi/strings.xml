@@ -430,6 +430,7 @@
     <string name="feedback_submit_success_alert_message">आपकी राय सफलतापूर्वक दर्ज हुई!</string>
     <string name="no_connection">No Connection!</string>
     <string name="no_internet_message">There seems to be no internet connection. Try checking things out</string>
+    <string name="copied">Copied</string>
 
 
 </resources>
