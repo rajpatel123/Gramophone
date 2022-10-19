@@ -11,6 +11,7 @@ import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.follow.FollowResponseModel
 import agstack.gramophone.ui.postdetails.model.PostDetailResponseModel
 import agstack.gramophone.ui.comments.model.sendcomment.SendCommentResponseModel
+import agstack.gramophone.ui.createnewpost.view.model.create.CreatePostResponseModel
 import agstack.gramophone.ui.othersporfile.model.CommunityUserPostRequestModel
 import agstack.gramophone.ui.othersporfile.model.ProfileDataResponse
 import agstack.gramophone.ui.userprofile.model.TestUserModel
@@ -55,4 +56,13 @@ interface CommunityRepository {
     suspend fun postComment(postId: RequestBody, text: RequestBody, tags: RequestBody): Response<SendCommentResponseModel>
 
     suspend fun postComment(postId: RequestBody,text: RequestBody,tags: RequestBody,postImage: MultipartBody.Part): Response<SendCommentResponseModel>
+
+    suspend fun createPost(description: RequestBody?,tags: RequestBody?,postImage1: MultipartBody.Part?,postImage2: MultipartBody.Part?,postImage3: MultipartBody.Part?): Response<CreatePostResponseModel>
+
+    suspend fun updatePost(
+        postId: RequestBody,
+        tags: RequestBody?,
+        area: RequestBody?,
+        date: RequestBody?
+       ): Response<CreatePostResponseModel>
 }

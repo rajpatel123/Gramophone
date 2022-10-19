@@ -66,6 +66,7 @@ class CommunityViewModel @Inject constructor(
 
     fun filterPost(v: TabLayout.Tab) {
         showProgress.set(true)
+        getNavigator()?.hideViews()
         when (v.text) {
             Constants.POST_LATEST -> {
                 sorting.set("latest")
@@ -207,15 +208,25 @@ class CommunityViewModel @Inject constructor(
     }
 
     private fun reportPost() {
+
+        if (menuClickedData.author.communityUserType.equals("admin")) {
+            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.can_not_block))
+            return
+        }
         viewModelScope.launch {
             showProgress.set(true)
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
-                    val response = communityRepository.reportPost(ReportUserRequestModel(reportReason,menuClickedData._id))
+                    val response = communityRepository.reportPost(
+                        ReportUserRequestModel(
+                            reportReason,
+                            menuClickedData._id
+                        )
+                    )
                     showProgress.set(false)
                     if (response.isSuccessful) {
                         getPost(sorting = sorting.get().toString())
-                    }else{
+                    } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                     }
                 } else
@@ -239,6 +250,10 @@ class CommunityViewModel @Inject constructor(
 
 
     private fun blockUser() {
+        if (menuClickedData.author.communityUserType.equals("admin")) {
+            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.can_not_block))
+            return
+        }
         viewModelScope.launch {
 
             try {

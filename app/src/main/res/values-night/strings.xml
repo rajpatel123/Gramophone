@@ -6,4 +6,13 @@
     <string name="no_orders_yet">No orders yet!</string>
     <string name="download_invoice">Download Invoice</string>
     <string name="one_offer_applied">1 Offer applied</string>
+    <string name="phone">Phone</string>
+    <string name="not_available">N.A</string>
+    <string name="order_has_been_assigned">has been assigned to deliver your order!</string>
+    <string name="featured_articles">Featured Articles</string>
+    <string name="farming">FARMING</string>
+    <string name="suggested_articles">Suggested Articles</string>
+    <string name="trending_articles">Trending Articles</string>
+    <string name="article_read">&#160;Read</string>
+    <string name="article_views">&#160;Views</string>
 </resources>

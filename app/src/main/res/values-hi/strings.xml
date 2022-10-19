@@ -175,7 +175,7 @@
     <string name="back">Back</string>
     <string name="cart">Cart</string>
     <string name="cart_empty_msg">Looks like you haven\'t added\nanything to your cart yet</string>
-    <string name="cart_empty_title">Cart is Empty</string>
+    <string name="cart_empty_title">Your Cart is Empty</string>
     <string name="expert_advice">Expert Advice</string>
     <string name="add_to_cart">Add To Cart</string>
     <string name="share">Share</string>
@@ -276,7 +276,7 @@
     <string name="payment_method">Payment Method</string>
     <string name="product">Product&#160;(</string>
     <string name="price_open_bracket">Price (</string>
-    <string name="price_close_bracket">) Items</string>
+    <string name="price_close_bracket">&#160;Items)</string>
     <string name="cash_on_delivery">Cash on Delivery</string>
     <string name="dialing_code">+91&#160;</string>
     <string name="my_orders">My Orders</string>
@@ -426,11 +426,40 @@
     <string name="no_orders_yet">No orders yet!</string>
     <string name="download_invoice">Download Invoice</string>
     <string name="one_offer_applied">1 Offer applied</string>
+    <string name="phone">Phone</string>
+    <string name="not_available">N.A</string>
+    <string name="order_has_been_assigned">has been assigned to deliver your order!</string>
     <string name="feedback_submit_success_alert_title">सफलता!</string>
     <string name="feedback_submit_success_alert_message">आपकी राय सफलतापूर्वक दर्ज हुई!</string>
     <string name="no_connection">No Connection!</string>
     <string name="no_internet_message">There seems to be no internet connection. Try checking things out</string>
     <string name="copied">Copied</string>
+
+    <string name="crop_duration">"बुआई का समय : %1$s"</string>
+    <string name="crop_sowing_date">"बुआई की तारीख : %1$s"</string>
+    <string name="farm_area">"खेत का एरिया : %1$s"</string>
+    <string name="stage_name">"वर्तमान चरण : %1$s days &#8226; %2$s"</string>
+    <string name="added_one_farm">"1 खेत जोड़ा गया है"</string>
+    <string name="added_farm_count">"%1$s खेत जोड़े गये है"</string>
+    <string name="message_select_crop">कृपया एक फसल चुनें</string>
+    <string name="message_enter_area">कृपया क्षेत्रफल दर्ज करें</string>
+    <string name="message_valid_area_upper_bound">The area should not be larger than 500</string>
+    <string name="message_sowing_date">कृपया बुआई की तारीख चुनें</string>
+    <string name="message_area_unit">कृपया क्षेत्रफल की इकाई चुनें</string>
+    <string name="message_farm_added">आपने सफलतापूर्वक खेत जोड़ा</string>
+    <string name="message_buy_your_crop">अपनी फसलों द्वारा खरीदारी करें</string>
+    <string name="message_why_add_farm">Why Add Farm</string>
+    <string name="featured_articles">Featured Articles</string>
+    <string name="farming">FARMING</string>
+    <string name="suggested_articles">Suggested Articles</string>
+    <string name="trending_articles">Trending Articles</string>
+    <string name="article_read">&#160;Read</string>
+    <string name="article_views">&#160;Views</string>
+    <string name="join_community">Join 5000+ farmers\nand get quick solution\nfrom agri experts</string>
+    <string name="suggestions">Suggestions</string>
+    <string name="search_here">Search here</string>
+    <string name="sorry_no_result_found">Sorry!No result found!</string>
+    <string name="please_try_another_way">We\'re sorry what you are looking for. Please try another way.</string>
 
 
 </resources>

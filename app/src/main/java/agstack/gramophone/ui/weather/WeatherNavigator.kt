@@ -13,4 +13,6 @@ interface WeatherNavigator : BaseNavigator {
     fun setDayWiseForecastAdapter(
         dayWiseForecastAdapter: DayWiseForecastAdapter,
     )
+
+    fun getGPSTracker(): GPSTracker
 }

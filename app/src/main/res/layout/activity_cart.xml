@@ -25,12 +25,12 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/myToolbar">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <androidx.core.widget.NestedScrollView
                     android:id="@+id/nestedScroll"
@@ -47,7 +47,7 @@
                             android:id="@+id/toolbarSeparator"
                             android:layout_width="match_parent"
                             android:layout_height="8dp"
-                            android:background="#F2F4F7"
+                            android:background="@color/gray_empty_bg"
                             android:visibility="visible" />
 
                         <RelativeLayout
@@ -64,7 +64,7 @@
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
                                 android:layout_centerVertical="true"
-                                android:background="@drawable/circle_solid_gray">
+                                android:background="@drawable/circle_solid_white">
 
                                 <ImageView
                                     android:layout_width="18dp"
@@ -141,7 +141,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="8dp"
                             android:layout_below="@+id/rvCart"
-                            android:background="#F2F4F7"
+                            android:background="@color/gray_empty_bg"
                             android:visibility="visible" />
 
                         <RelativeLayout
@@ -242,7 +242,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="8dp"
                             android:layout_below="@+id/tvSaveExtra"
-                            android:background="#F2F4F7"
+                            android:background="@color/gray_empty_bg"
                             android:visibility="visible" />
 
                         <TextView
@@ -480,7 +480,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="8dp"
                             android:layout_below="@+id/rlAmount"
-                            android:background="#F2F4F7"
+                            android:background="@color/gray_empty_bg"
                             android:visibility="visible" />
 
                         <LinearLayout
@@ -531,9 +531,9 @@
                         <View
                             android:id="@+id/viewAddressSeparator"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_40sdp"
+                            android:layout_height="@dimen/_18sdp"
                             android:layout_below="@+id/llAddressNote"
-                            android:background="#F2F4F7"
+                            android:background="@color/gray_empty_bg"
                             android:visibility="visible" />
 
                     </RelativeLayout>
@@ -594,72 +594,83 @@
 
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{viewModel.showCartView == false ? View.VISIBLE : View.GONE}"
+                    tools:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/_90sdp"
+                            android:layout_height="@dimen/_90sdp"
+                            android:contentDescription="@string/image"
+                            android:src="@drawable/ic_cart_empty" />
+
+                        <TextView
+                            android:id="@+id/tvCartEmptyTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/cart_empty_title"
+                            android:textColor="@color/blakish"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tvCartEmptyDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:fontFamily="@font/manrope_regular"
+                            android:gravity="center"
+                            android:lineSpacingExtra="0sp"
+                            android:text="@string/cart_empty_msg"
+                            android:textColor="@color/gray"
+                            android:textSize="14sp"
+                            android:translationY="-0.24sp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/orange"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="@font/manrope_bold"
+                        android:gravity="center"
+                        android:onClick="@{() -> viewModel.onClickStartShopping()}"
+                        android:text="@string/shop_now"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
+
+                </RelativeLayout>
+
             </RelativeLayout>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="@{viewModel.showCartView == false ? View.VISIBLE : View.GONE}"
-            tools:visibility="gone">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.progress == true ? View.VISIBLE : View.GONE}">
 
-            <ImageView
-                android:layout_width="@dimen/_90sdp"
-                android:layout_height="@dimen/_90sdp"
-                android:contentDescription="@string/image"
-                android:src="@drawable/ic_cart_empty" />
-
-            <TextView
-                android:id="@+id/tvCartEmptyTitle"
+            <ProgressBar
+                android:id="@+id/progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:fontFamily="@font/manrope_bold"
-                android:text="@string/cart_empty_title"
-                android:textColor="@color/blakish"
-                android:textSize="18sp" />
+                android:layout_gravity="center" />
 
-            <TextView
-                android:id="@+id/tvCartEmptyDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:fontFamily="@font/manrope_regular"
-                android:gravity="center"
-                android:lineSpacingExtra="0sp"
-                android:text="@string/cart_empty_msg"
-                android:textColor="@color/gray"
-                android:textSize="14sp"
-                android:translationY="-0.24sp" />
+        </FrameLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_24sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:background="@drawable/btn_rounded_corner_16_solid_orange"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="@font/manrope_bold"
-                android:gravity="center"
-                android:onClick="@{() -> viewModel.onClickStartShopping()}"
-                android:text="@string/start_shopping"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="normal" />
-
-        </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="@{viewModel.progress == true ? View.VISIBLE : View.GONE}" />
     </RelativeLayout>
 </layout>

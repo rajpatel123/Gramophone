@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.ObservableField
 import com.amnix.xtension.extensions.isNotNull
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.amnix.xtension.extensions.isNull
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import javax.inject.Inject
@@ -55,12 +56,15 @@ class AddToCartBottomSheetDialog(
     }
 
     private fun setupUi() {
-        if (!mSKUList.isNullOrEmpty()) {
-            selectedSkuListItem.set(mSKUList[0])
-            mSKUList[0]?.selected = true
-            productData.product_id = mSKUList[0]?.productId?.toInt()
-            setSelectedSkuPrice(if (mSKUList[0]?.mrpPrice.isNull()) 0f else mSKUList[0]?.mrpPrice!!.toFloat(),
-                if (mSKUList[0]?.salesPrice.isNullOrEmpty()) 0f else mSKUList[0]?.salesPrice!!.toFloat())
+        if (mSKUList.isNotNullOrEmpty()) {
+            for (item in mSKUList) {
+                if (productData.product_id.toString() == item!!.productId) {
+                    selectedSkuListItem.set(item)
+                    item.selected = true
+                    setSelectedSkuPrice(if (item.mrpPrice.isNull()) 0f else item.mrpPrice!!.toFloat(),
+                        if (item.salesPrice.isNullOrEmpty()) 0f else item.salesPrice.toFloat())
+                }
+            }
         }
         calculateDiscountAndPromotion(selectedSkuListItem.get()!!, selectedOfferItem)
 

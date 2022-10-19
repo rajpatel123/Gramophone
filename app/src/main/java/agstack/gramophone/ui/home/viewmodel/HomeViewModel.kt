@@ -1,9 +1,11 @@
 package agstack.gramophone.ui.home.viewmodel
 
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
+import agstack.gramophone.ui.articles.ArticlesWebViewActivity
 
 import agstack.gramophone.ui.feedback.FeedbackActivity
 import agstack.gramophone.ui.gramcash.GramCashActivity
@@ -22,6 +24,7 @@ import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.view.activity.CreatePostActivity
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -128,7 +131,7 @@ class HomeViewModel @Inject constructor(
                             SharedPreferencesKeys.logged_in,
                             false
                         )
-                      //  getNavigator()?.onSuccess(logoutResponseModel?.gp_api_message)
+                        //  getNavigator()?.onSuccess(logoutResponseModel?.gp_api_message)
                         getNavigator()?.logout()
 
                     } else {
@@ -199,6 +202,13 @@ class HomeViewModel @Inject constructor(
         getNavigator()?.openActivity(OffersListActivity::class.java, null)
     }
 
+    fun openArticlesClicked() {
+        getNavigator()?.closeDrawer()
+        getNavigator()?.openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
+            putString(Constants.PAGE_URL, BuildConfig.BASE_URL_ARTICLES)
+        })
+    }
+
     fun ReferandEarnClicked() {
         getNavigator()?.openActivity(ReferAndEarnActivity::class.java, null)
     }
@@ -207,7 +217,7 @@ class HomeViewModel @Inject constructor(
         getNavigator()?.openActivity(GramCashActivity::class.java, null)
     }
 
-    fun onCreatePostClicked(){
-        getNavigator()?.openActivity(CreatePostActivity::class.java,null)
+    fun onCreatePostClicked() {
+        getNavigator()?.openActivity(CreatePostActivity::class.java, null)
     }
 }

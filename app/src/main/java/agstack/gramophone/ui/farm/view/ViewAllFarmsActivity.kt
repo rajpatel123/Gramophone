@@ -21,7 +21,7 @@ class ViewAllFarmsActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setToolbarTitle("अपनी फसलों द्वारा खरीदारी करें")
+        setToolbarTitle(getMessage(R.string.message_buy_your_crop))
         getViewModel().getFarms()
 
         viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)

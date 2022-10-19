@@ -4,12 +4,18 @@ package agstack.gramophone.view.activity
 import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
-import agstack.gramophone.databinding.ActivityCreatePostBinding
 import agstack.gramophone.databinding.CreatePostsActivityBinding
+import agstack.gramophone.ui.createnewpost.adapter.TagsCropAdapter
+import agstack.gramophone.ui.createnewpost.model.AgriTag
+import agstack.gramophone.ui.createnewpost.model.AgriTagListResult
+import agstack.gramophone.ui.createnewpost.model.MySingleton
+import agstack.gramophone.ui.createnewpost.model.PostDetailsModel
 import agstack.gramophone.ui.createnewpost.view.*
 import agstack.gramophone.ui.createpost.CreatePostNavigator
 import agstack.gramophone.ui.createpost.viewmodel.CreatePostViewModel
+import agstack.gramophone.ui.dialog.posts.BottomSheetCropsDialog
 import agstack.gramophone.ui.home.view.HomeActivity
+import agstack.gramophone.ui.home.view.fragments.market.model.CropData
 import agstack.gramophone.ui.tagandmention.ExpandableTextView
 import agstack.gramophone.ui.tagandmention.Tag
 import agstack.gramophone.ui.tagandmention.TagAdapter
@@ -24,7 +30,6 @@ import android.content.ClipboardManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
@@ -39,7 +44,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
@@ -57,7 +61,11 @@ import com.tokenautocomplete.TagTokenizer
 import com.tokenautocomplete.TokenCompleteTextView
 import com.tokenautocomplete.TokenCompleteTextView.TokenListener
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.*
+import org.json.JSONObject
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.net.MalformedURLException
 import java.net.URL
 import java.util.*
@@ -68,7 +76,8 @@ import java.util.regex.Pattern
 @AndroidEntryPoint
 class CreatePostActivity :
     BaseActivityWrapper<CreatePostsActivityBinding, CreatePostNavigator, CreatePostViewModel>(),
-    CreatePostNavigator, View.OnClickListener, TokenListener<Tag?> {
+    CreatePostNavigator, View.OnClickListener, TokenListener<Tag?>,
+    BottomSheetCropsDialog.OnSelectionDone {
     private val presenter: CreatePostViewModel by viewModels()
     var layoutManager: LinearLayoutManager? = null
     var hashMap: HashMap<String?, String?> = HashMap<String?, String?>()
@@ -140,7 +149,7 @@ class CreatePostActivity :
             getMessage(R.string.create_post),
             R.drawable.ic_cross
         )
-        if (MySingleton.getInstance().isOffTokenAutoComplete) {
+        if ( MySingleton.getInstance().isOffTokenAutoComplete) {
             viewDataBinding?.descriptionEditText?.visibility = View.GONE
             viewDataBinding.hashSymbol?.visibility = View.GONE
             viewDataBinding.atSymbol?.visibility = View.GONE
@@ -151,6 +160,8 @@ class CreatePostActivity :
             viewDataBinding.hashSymbol?.visibility = View.VISIBLE
             viewDataBinding.atSymbol?.visibility = View.VISIBLE
         }
+        presenter.description.set("")
+        presenter.getCrops()
         // initReceiver()
         intiEasyImagePicker()
         //intent = getIntent()
@@ -216,9 +227,7 @@ class CreatePostActivity :
         }
 
 
-        viewDataBinding.buttonAddTag?.setOnClickListener { view: View? ->
-            launchTagList()
-        }
+
         viewDataBinding.urlPreviewRemoveImageButton?.setOnClickListener {
             viewDataBinding.urlPreviewImageContainer?.visibility = View.GONE
             viewDataBinding.urlTitleDescriptionText?.text = ""
@@ -333,8 +342,11 @@ class CreatePostActivity :
     }
 
     private fun launchTagList() {
-//        val intent = Intent(this@CreatePostActivity, TagListActivity::class.java)
-//        startActivityForResult(intent, Constants.GET_SELECTED_TAGS)
+        val bottomSheet = BottomSheetCropsDialog(presenter.cropResponse, this)
+        bottomSheet.show(
+            getSupportFragmentManager(),
+            getMessage(R.string.bottomsheet_tag)
+        )
     }
 
     private fun startCropImageActivity(currentImageUri: Uri?) {
@@ -486,23 +498,11 @@ class CreatePostActivity :
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == Constants.GET_SELECTED_TAGS && resultCode == RESULT_OK) {
-            selectedAgriTag = AgriTagListResult.getInstance().selectedTagList
-            showTag(selectedAgriTag)
-        }
-
-    }
-
-
-    fun showTag(selectedTagList: List<AgriTag>?) {
-        val finalAgriTagAdapter = FinalAgriTagAdapter()
-        finalAgriTagAdapter.setCallback { v, position -> launchTagList() }
-        viewDataBinding.finalTagRecyclerView.adapter = finalAgriTagAdapter
+    fun showTag(selectedTagList: MutableList<CropData>) {
+        val tagsCropAdapter = TagsCropAdapter(selectedTagList)
+        viewDataBinding.finalTagRecyclerView.adapter = tagsCropAdapter
         viewDataBinding.finalTagRecyclerView.layoutManager =
-            StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-        finalAgriTagAdapter.setList(selectedTagList)
+            StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL)
         //    getSelectedTagList(selectedTagList, createOnSelectedTagChangedListner());
     }
 
@@ -941,5 +941,18 @@ class CreatePostActivity :
 
     override fun getViewModel(): CreatePostViewModel {
         return presenter
+    }
+
+    override fun onCropSelectionDone(cropList: MutableList<CropData>) {
+        showTag(cropList)
+        if (cropList.size > 0) {
+            cropList.forEach {
+                val tagMap = JSONObject()
+                // tagMap.put("_id",it.cropId.toString())
+                tagMap.put("tag", it.cropName.toString())
+                presenter.tags.add(tagMap)
+
+            }
+        }
     }
 }

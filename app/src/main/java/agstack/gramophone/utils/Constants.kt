@@ -55,6 +55,7 @@ object Constants {
     val SHOP_BY_CROP = "SHOP_BY_CROP"
     val SHOP_BY_STORE = "SHOP_BY_STORE"
     val SHOP_BY_COMPANY = "SHOP_BY_COMPANY"
+    val SHOP_BY_SUB_CATEGORY = "SHOP_BY_SUB_CATEGORY"
     val HOME_BANNER_1 = "home_banner_1"
     val HOME_SHOP_BY_CATEGORY = "shop_by_category"
     val HOME_FEATURED_PRODUCTS = "featured_products"
@@ -66,6 +67,8 @@ object Constants {
     val HOME_GRAMOPHONE_PROMISE = "gramophone_promise"
     val HOME_CART = "products_in_your_cart"
     val HOME_FARMS = "crops_and_farm"
+    val HOME_ARTICLES = "new_articles"
+    val HOME_COMMUNITY = "community"
 
     val HOME_EMPTY_VIEW_TYPE = 0
     val HOME_BANNER_VIEW_TYPE = 1
@@ -79,6 +82,8 @@ object Constants {
     val HOME_GRAMOPHONE_PROMISE_VIEW_TYPE = 9
     val HOME_CART_VIEW_TYPE = 10
     val HOME_FARMS_VIEW_TYPE = 11
+    val HOME_ARTICLES_VIEW_TYPE = 12
+    val HOME_COMMUNITY_VIEW_TYPE = 13
     val GramCashResponse = "GramCashResponse"
     val ReferralPointBalanceData ="ReferralPointBalanceData"
     val GramCashFAQList = "GramCashFAQList"
@@ -89,6 +94,7 @@ object Constants {
     val READ_EXTERNAL_STORAGE = Manifest.permission.CAMERA
     val REQUEST_CAMERA = 1012
     val REQUEST_GALLERY = 1013
+    val API_DATA_LIMITS_IN_ONE_TIME = "99"
 
 
     val IV_ONE = 10131
@@ -99,6 +105,7 @@ object Constants {
 
     //sortBy options
     val TOP = "top"
+    val ORDER_TYPE = "order_type"
     val PLACED = "placed"
     val RECENT = "recent"
     val TOP_REVIEWS = "Top Reviews"
@@ -110,7 +117,7 @@ object Constants {
     val BRAND = "Brand"
     val CROP = "Crop"
     val TECHNICAL = "Technical"
-    val RELAVENT = "Relavent"
+    val RELEVANCE = "Relevance"
     val RELAVENT_CODE = "relevant"
     val AVG_CUSTOMER_RATING = "Avg Customer Rating"
     val AVG_CUSTOMER_RATING_CODE = "rating"
@@ -123,6 +130,9 @@ object Constants {
     const val LANG: String = "lang"
     const val PAGE_URL: String = "url"
     const val PAGE_TITLE: String = "title"
+    const val FEATURED_ARTICLES = "featured_articles"
+    const val TRENDING_ARTICLES = "trending_articles"
+    const val SUGGESTED_ARTICLES = "suggested_articles"
 
 val SHAREIMAGEURIStRING = "imageuriString"
 
@@ -197,7 +207,9 @@ val SHAREIMAGEURIStRING = "imageuriString"
     const val CATEGORY_ID = "category_id"
     const val CATEGORY_NAME = "category_name"
     const val CATEGORY_IMAGE = "category_image"
-    const val COMPANY_ID = "company_id"
+    const val SUB_CATEGORY_ID = "sub_category_id"
+    const val SUB_CATEGORY_NAME = "sub_category_name"
+    const val SUB_CATEGORY_IMAGE = "sub_category_image"
     const val STORE_ID = "store_id"
     const val STORE_NAME = "store_name"
     const val STORE_IMAGE = "store_image"

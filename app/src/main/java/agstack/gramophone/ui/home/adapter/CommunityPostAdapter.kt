@@ -17,6 +17,8 @@ import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.SharedPreferencesKeys.UUIdKey
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.text.Html
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View.*
@@ -78,9 +80,6 @@ class CommunityPostAdapter(val dataList: List<Data>?, isOther: Boolean) : Recycl
             }
         }
 
-
-
-
         configureItem(textHolder, position)
         holder.itemPostBinding.rlBanner.visibility= GONE
         holder.itemPostBinding.rlPosts.visibility= VISIBLE
@@ -92,6 +91,14 @@ class CommunityPostAdapter(val dataList: List<Data>?, isOther: Boolean) : Recycl
         val mBinding = holder.itemPostBinding
         data?.position = position
 
+
+        if (!TextUtils.isEmpty(data?.description)){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                holder.itemPostBinding.tvDesc.text = Html.fromHtml(data?.description,0)
+            }else{
+                holder.itemPostBinding.tvDesc.text = Html.fromHtml(data?.description)
+            }
+        }
         holder.itemPostBinding.tvDesc.setOnClickListener {
             onItemDetailClicked?.invoke(data?._id!!)
         }

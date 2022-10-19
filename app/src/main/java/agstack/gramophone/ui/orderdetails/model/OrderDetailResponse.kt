@@ -22,7 +22,7 @@ data class GpApiResponseData(
     val pricing_details: PricingDetails,
     val product_image: String,
     val products: List<Product>,
-    val vr_info: List<Any>,
+    val vr_info: VRInfo,
 )
 
 data class GpApiTrace(
@@ -58,6 +58,11 @@ data class Product(
     val product_name: String,
     val product_sku: String,
     val quantity: Int,
+)
+
+data class VRInfo(
+    val name: String,
+    val mobile_no: String,
 )
 
 data class FreeProduct(

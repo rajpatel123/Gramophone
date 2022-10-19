@@ -7,4 +7,5 @@ data class AddFarmRequest(
     var area: Double? = null,
     var crop_sowing_date: String? = null,
     var unit: String? = null,
+    var unit_id: String? = null,
 )

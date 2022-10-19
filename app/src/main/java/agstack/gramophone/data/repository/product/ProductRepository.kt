@@ -5,6 +5,7 @@ import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.farm.model.*
+import agstack.gramophone.ui.farm.model.unit.FarmUnitResponse
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
@@ -14,6 +15,8 @@ import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
+import agstack.gramophone.ui.search.model.SuggestionsRequest
+import agstack.gramophone.ui.search.model.SuggestionsResponse
 import retrofit2.Response
 import javax.inject.Singleton
 
@@ -81,9 +84,11 @@ interface ProductRepository {
 
     suspend fun addFarm(addFarmRequest: AddFarmRequest): Response<AddFarmResponse>
 
-    suspend fun getFarmUnits(): Response<FarmUnitResponse>
+    suspend fun getFarmUnits(type: String): Response<FarmUnitResponse>
 
     suspend fun checkPromotionOnProduct(verifyPromotionRequestModel: VerifyPromotionRequestModel): Response<CheckPromotionResponseModel>
 
     suspend fun getOffersOnProduct(productData: ProductData): Response<ApplicableOfferResponse>
+
+    suspend fun getSuggestions(body: SuggestionsRequest): Response<SuggestionsResponse>
 }

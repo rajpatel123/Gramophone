@@ -10,12 +10,13 @@ import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
 import agstack.gramophone.ui.cart.model.CartDataResponse
-import agstack.gramophone.ui.createnewpost.view.model.MentionRequestModel
-import agstack.gramophone.ui.createnewpost.view.model.MentionTagResponsemodel
+import agstack.gramophone.ui.createnewpost.model.MentionRequestModel
+import agstack.gramophone.ui.createnewpost.model.MentionTagResponsemodel
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
 import agstack.gramophone.ui.farm.model.*
+import agstack.gramophone.ui.farm.model.unit.FarmUnitResponse
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
@@ -36,6 +37,8 @@ import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import agstack.gramophone.ui.referandearn.model.GramCashResponseModel
 import agstack.gramophone.ui.referandearn.transaction.TransactionRequestModel
 import agstack.gramophone.ui.referandearn.transaction.model.GramCashTxnResponseModel
+import agstack.gramophone.ui.search.model.SuggestionsRequest
+import agstack.gramophone.ui.search.model.SuggestionsResponse
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
@@ -288,8 +291,8 @@ interface GramAppService {
     @POST("api/v5/farm/add-farm")
     suspend fun addFarm(@Body request : AddFarmRequest): Response<AddFarmResponse>
 
-    @GET("api/v5/farm/farm-unit")
-    suspend fun getFarmUnits(): Response<FarmUnitResponse>
+    @GET("api/v5/farm/unit/{type}")
+    suspend fun getFarmUnits(@Path("type") type: String): Response<FarmUnitResponse>
 
     @POST("api/v5/search/mention-autocomplete")
     suspend fun getMentionTags(
@@ -300,4 +303,7 @@ interface GramAppService {
     suspend fun getHasTags(
         @Body mentionRequestModel: MentionRequestModel,
     ): Response<HasgTagResponseModel>
+
+    @POST("api/v5/search/suggestions")
+    suspend fun getSuggestions(@Body body : SuggestionsRequest): Response<SuggestionsResponse>
 }

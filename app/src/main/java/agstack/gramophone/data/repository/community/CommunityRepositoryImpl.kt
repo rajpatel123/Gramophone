@@ -12,6 +12,7 @@ import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.follow.FollowResponseModel
 import agstack.gramophone.ui.postdetails.model.PostDetailResponseModel
 import agstack.gramophone.ui.comments.model.sendcomment.SendCommentResponseModel
+import agstack.gramophone.ui.createnewpost.view.model.create.CreatePostResponseModel
 import agstack.gramophone.ui.othersporfile.model.CommunityUserPostRequestModel
 import agstack.gramophone.ui.othersporfile.model.ProfileDataResponse
 import agstack.gramophone.ui.userprofile.model.TestUserModel
@@ -164,6 +165,29 @@ class CommunityRepositoryImpl @Inject constructor(
     ): Response<SendCommentResponseModel> = withContext(
         Dispatchers.IO) {
         val userData = communityApiService.postComment(postId,text,tags,postImage)
+        userData
+    }
+
+    override suspend fun createPost(
+        description: RequestBody?,
+        tags: RequestBody?,
+        postImage1: MultipartBody.Part?,
+        postImage2: MultipartBody.Part?,
+        postImage3: MultipartBody.Part?
+    ): Response<CreatePostResponseModel> = withContext(
+        Dispatchers.IO) {
+        val userData = communityApiService.createPost(image_1 = postImage1,image_2 = postImage2,image_3 = postImage3,text = description, tags=tags)
+        userData
+    }
+
+    override suspend fun updatePost(
+        postId: RequestBody,
+        tags: RequestBody?,
+        area: RequestBody?,
+        date: RequestBody?
+    ): Response<CreatePostResponseModel> = withContext(
+    Dispatchers.IO) {
+        val userData = communityApiService.updatePost(postId=postId, tags=tags, farmArea = area, showingDate = date)
         userData
     }
 

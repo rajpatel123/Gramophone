@@ -25,6 +25,7 @@ class WeatherViewModel @Inject constructor(
     var progress = MutableLiveData<Boolean>()
     var isRainView = MutableLiveData<Boolean>()
     var showWeatherView = MutableLiveData<Boolean>()
+    var weatherTypeImage = MutableLiveData<String>()
     var address = MutableLiveData<String>()
     var currentTime = MutableLiveData<String>()
     var currentTemp = MutableLiveData<String>()
@@ -40,18 +41,25 @@ class WeatherViewModel @Inject constructor(
         progress.value = false
         isRainView.value = false
         showWeatherView.value = false
+        minTemp.value = ""
+        perceptionIntensity.value = ""
+        perceptionType.value = ""
+        latitude = null
+        longitude = null
     }
 
     fun getWeatherData() {
-        getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.weather)!!)
+        getWeatherDetail()
+        getWeatherDetailHourly()
+        getWeatherDetailDayWise()
     }
 
     fun weatherChange() {
         isRainView.value = isRainView.value != true
     }
 
-    fun getWeatherDetail() {
-        val weatherRequest = WeatherRequest(null, null, latitude, longitude)
+    private fun getWeatherDetail() {
+        val weatherRequest = WeatherRequest(latitude, longitude)
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -67,33 +75,26 @@ class WeatherViewModel @Inject constructor(
                         getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.weather)!! + " - " + weatherData?.city!!)
                         address.value = weatherData?.address
                         currentTemp.value = weatherData?.temperature?.current
-                        minTemp.value = weatherData?.temperature?.min
+                        weatherTypeImage.value = weatherData?.temperature?.weather_icon
+                        minTemp.value =
+                            if (weatherData?.temperature?.min == null || weatherData.temperature.min.isEmpty()) "" else weatherData.temperature.min
                         maxTemp.value = weatherData?.temperature?.max
                         weatherCondition.value = weatherData?.temperature?.weather_condition
-                        perceptionIntensity.value = weatherData?.temperature?.perception_intensity
-                        perceptionType.value = weatherData?.temperature?.perception_type
-
-                        try {
-                            var date: String = weatherData?.current_time!!
-                            date = date.replace("Today - ", "")
-                            val time = Utility.getFormattedDate(date,
-                                Utility.HOUR_MIN_12_TIME_FORMAT,
-                                Utility.HOUR_MIN_SECOND_TIME_FORMAT)
-                            currentTime.value = "Today - $time"
-                        } catch (e: Exception) {
-                            currentTime.value = weatherData?.current_time
-                        }
+                        perceptionIntensity.value =
+                            if (weatherData?.temperature?.perception_intensity == null || weatherData.temperature.perception_intensity.isEmpty()) "" else weatherData.temperature.perception_intensity
+                        perceptionType.value =
+                            if (weatherData?.temperature?.perception_type == null || weatherData.temperature.perception_type.isEmpty()) "" else weatherData.temperature.perception_type
+                        currentTime.value = weatherData?.current_time
                     }
                 }
             } catch (e: Exception) {
                 progress.value = false
-                getNavigator()?.showToast(e.message)
             }
         }
     }
 
-    fun getWeatherDetailHourly() {
-        val weatherRequest = WeatherRequest(Utility.getCurrentDate(), null, latitude, longitude)
+    private fun getWeatherDetailHourly() {
+        val weatherRequest = WeatherRequest(latitude, longitude)
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -117,8 +118,8 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
-    fun getWeatherDetailDayWise() {
-        val weatherRequest = WeatherRequest(null, null, latitude, longitude)
+    private fun getWeatherDetailDayWise() {
+        val weatherRequest = WeatherRequest(latitude, longitude)
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -132,7 +133,6 @@ class WeatherViewModel @Inject constructor(
                         && response.body()?.gp_api_response_data?.get(0).isNotNull()
                         && response.body()?.gp_api_response_data?.get(0)?.days.isNotNullOrEmpty()
                     ) {
-
                         getNavigator()?.setDayWiseForecastAdapter(DayWiseForecastAdapter(response.body()?.gp_api_response_data?.get(
                             0)!!.days))
                     }
@@ -143,15 +143,18 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
-    fun getLatitudeLongitude(gpsTracker: GPSTracker?) {
+    fun getLatitudeLongitude() {
         try {
+            val gpsTracker = getNavigator()?.getGPSTracker()
             if (gpsTracker != null && gpsTracker.canGetLocation()) {
                 latitude = gpsTracker.getLatitude().toString()
                 longitude = gpsTracker.getLongitude().toString()
-
-                getWeatherDetail()
-                getWeatherDetailHourly()
-                getWeatherDetailDayWise()
+                // refresh weather data
+                if (latitude.equals("0.0")) {
+                    latitude = null
+                    longitude = null
+                }
+                getWeatherData()
             } else {
                 // Can't get location.
                 // GPS or network is not enabled.

@@ -63,6 +63,7 @@
                     android:lineSpacingExtra="-2sp"
                     android:textColor="@color/gray_strike_through"
                     android:textSize="13sp"
+                    app:isEnglish="@{true}"
                     app:isDateAlreadyFormatted="@{false}"
                     app:items="@{@string/items}"
                     app:orderDate="@{viewModel.orderDate}"
@@ -108,21 +109,22 @@
                         android:drawablePadding="@dimen/_6sdp"
                         android:fontFamily="@font/manrope_bold"
                         android:lineSpacingExtra="0sp"
-                        android:text="@{@string/order.concat(viewModel.orderStatus)}"
+                        android:text='@{viewModel.orderStatus ?? @string/order}'
                         android:textColor="@color/yellow_dark"
                         android:textSize="14sp"
                         app:drawableStartCompat="@drawable/ic_order_placed"
                         tools:text="Order Placed" />
 
                     <TextView
+                        android:id="@+id/tv_order_message"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="36dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="20dp"
-                        android:fontFamily="@font/manrope_regular"
+                        android:fontFamily="@font/manrope_medium"
                         android:lineSpacingExtra="-2sp"
-                        android:text="@{@string/order.concat(viewModel.orderStatusMessage)}"
+                        app:htmlText='@{viewModel.orderStatusMessage ?? @string/order}'
                         android:textColor="@color/gray"
                         android:textSize="13sp"
                         tools:text="@string/order_placed_msg" />
