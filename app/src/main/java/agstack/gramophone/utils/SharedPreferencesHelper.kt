@@ -15,6 +15,12 @@ import kotlin.jvm.Synchronized
 class SharedPreferencesHelper(context: Context) {
     private val editor: SharedPreferences.Editor
     private val sharedPreferences: SharedPreferences
+
+    fun putInteger(key: String?, value: Int) {
+        editor.putInt(key, value)
+        editor.apply()
+    }
+
     fun putString(key: String?, value: String?) {
         editor.putString(key, value)
         editor.apply()
@@ -49,6 +55,10 @@ class SharedPreferencesHelper(context: Context) {
     fun removeId(id: String?) {
         editor.remove(id)
         editor.apply()
+    }
+
+    fun getInteger(key: String): Int {
+        return sharedPreferences.getInt(key, 0)
     }
 
     fun getString(key: String?): String? {

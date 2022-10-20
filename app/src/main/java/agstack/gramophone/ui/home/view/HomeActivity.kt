@@ -12,6 +12,7 @@ import agstack.gramophone.ui.home.view.fragments.profile.ProfileFragment
 import agstack.gramophone.ui.home.view.fragments.trading.TradeFragment
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.language.view.LanguageActivity
+import agstack.gramophone.ui.search.view.GlobalSearchActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
@@ -182,7 +183,9 @@ class HomeActivity :
         }
     }
 
-
+    fun showCommunityFragment() {
+        viewDataBinding.navView.selectedItemId = R.id.navigation_community
+    }
 
     private fun setUpNavigationDrawer() {
         setUpToolBar(true, resources.getString(R.string.app_name), R.drawable.ic_cart_menu)
@@ -245,6 +248,9 @@ class HomeActivity :
         when (item.itemId) {
             R.id.item_cart -> {
                 openActivity(CartActivity::class.java)
+            }
+            R.id.item_search -> {
+                openActivity(GlobalSearchActivity::class.java)
             }
         }
         return true

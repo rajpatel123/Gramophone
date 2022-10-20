@@ -127,13 +127,27 @@
             android:name=".ui.home.product.activity.ProductDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.cart.view.CartActivity" />
-        <activity android:name=".ui.order.view.OrderListActivity" />
-        <activity android:name=".ui.checkout.CheckoutStatusActivity" />
-        <activity android:name=".ui.offer.OfferDetailActivity" />
-        <activity android:name=".ui.orderdetails.OrderDetailsActivity" />
-        <activity android:name=".ui.home.product.activity.ProductAllReviewsActivity" />
-        <activity android:name=".ui.home.product.activity.productreview.AddEditProductReviewActivity" />
+        <activity
+            android:name=".ui.cart.view.CartActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.order.view.OrderListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.checkout.CheckoutStatusActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.offer.OfferDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.orderdetails.OrderDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.product.activity.ProductAllReviewsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.product.activity.productreview.AddEditProductReviewActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.userprofile.UserProfileActivity"
             android:exported="false"
@@ -163,17 +177,39 @@
             android:name=".ui.referralrules.ReferralRulesActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.userprofile.firm.AddFirmActivity" />
-        <activity android:name=".ui.weather.WeatherActivity" />
-        <activity android:name=".ui.home.subcategory.SubCategoryActivity" />
-        <activity android:name=".ui.home.featured.FeaturedProductActivity" />
-        <activity android:name=".ui.home.shop.ShopByActivity" />
-        <activity android:name=".ui.home.shopbydetail.ShopByDetailActivity" />
-        <activity android:name=".ui.home.stage.CropStageActivity" />
-        <activity android:name=".ui.home.stagedetail.CropStageDetailActivity" />
-        <activity android:name=".ui.home.cropdetail.CropDetailActivity" />
-        <activity android:name=".ui.gramcash.GramCashActivity" />
-        <activity android:name=".ui.gramcash.expiringsoon.GCExpiringSoonActivity" />
+        <activity
+            android:name=".ui.userprofile.firm.AddFirmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.weather.WeatherActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.subcategory.SubCategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.featured.FeaturedProductActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.shop.ShopByActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.shopbydetail.ShopByDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.stage.CropStageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.stagedetail.CropStageDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.cropdetail.CropDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.gramcash.GramCashActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.gramcash.expiringsoon.GCExpiringSoonActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
@@ -186,8 +222,9 @@
             android:name="com.canhub.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".ui.unitconverter.UnitConverterActivity" />
-        <activity android:name=".ui.feedback.FeedbackActivity"
-            android:windowSoftInputMode="adjustResize" />/>
+        <activity
+            android:name=".ui.feedback.FeedbackActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.offerslist.OffersListActivity" />
         <activity
             android:name=".ui.farm.view.WhyAddFarmActivity"
@@ -203,6 +240,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.farm.view.CropGroupExplorerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.search.view.GlobalSearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.articles.ArticlesWebViewActivity"
             android:screenOrientation="portrait" />
 
         <service android:name=".pushnotification.MyFirebaseMessagingService" />

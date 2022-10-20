@@ -100,6 +100,8 @@ public abstract class SharedPreferencesKeys {
     @Nullable
     public static final String APP_TOUR_ENABLED="app_tour_enabled";
     @Nullable
+    public static final String APP_TOUR_SKIP_COUNT="app_tour_skip_count";
+    @Nullable
     public static final String BANNER_DATA="banner_data";
     public static final String USERNAME="username";
     public static final String USER_MOBILE="user_mobile";

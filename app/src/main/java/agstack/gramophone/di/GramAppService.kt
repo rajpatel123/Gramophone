@@ -10,8 +10,8 @@ import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
 import agstack.gramophone.ui.cart.model.CartDataResponse
-import agstack.gramophone.ui.createnewpost.view.model.MentionRequestModel
-import agstack.gramophone.ui.createnewpost.view.model.MentionTagResponsemodel
+import agstack.gramophone.ui.createnewpost.model.MentionRequestModel
+import agstack.gramophone.ui.createnewpost.model.MentionTagResponsemodel
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
@@ -37,6 +37,8 @@ import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import agstack.gramophone.ui.referandearn.model.GramCashResponseModel
 import agstack.gramophone.ui.referandearn.transaction.TransactionRequestModel
 import agstack.gramophone.ui.referandearn.transaction.model.GramCashTxnResponseModel
+import agstack.gramophone.ui.search.model.SuggestionsRequest
+import agstack.gramophone.ui.search.model.SuggestionsResponse
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
@@ -301,4 +303,7 @@ interface GramAppService {
     suspend fun getHasTags(
         @Body mentionRequestModel: MentionRequestModel,
     ): Response<HasgTagResponseModel>
+
+    @POST("api/v5/search/suggestions")
+    suspend fun getSuggestions(@Body body : SuggestionsRequest): Response<SuggestionsResponse>
 }

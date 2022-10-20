@@ -4,11 +4,12 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityCreatePostBinding
-import agstack.gramophone.ui.createnewpost.view.PostDetailsModel
-import agstack.gramophone.ui.createnewpost.view.model.GpApiResponseData
+import agstack.gramophone.ui.createnewpost.model.PostDetailsModel
+import agstack.gramophone.ui.createnewpost.view.model.create.Image
 import agstack.gramophone.ui.createpost.CreatePostNavigator
 import agstack.gramophone.ui.createpost.viewmodel.CreatePostViewModel
 import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
+import agstack.gramophone.ui.home.view.fragments.market.model.CropData
 import agstack.gramophone.ui.tagandmention.Tag
 import agstack.gramophone.ui.tagandmention.TagAdapter
 import agstack.gramophone.utils.Constants
@@ -410,6 +411,15 @@ LanguageBottomSheetFragment.LanguageUpdateListener {
     }
 
     override fun populatePostDetails(postDetailsModel: PostDetailsModel) {
+    }
+
+    override fun showTags(selectedTagList: MutableList<CropData>) {
+    }
+
+    override fun getPostDetails() {
+    }
+
+    override fun loadImages(images: List<agstack.gramophone.ui.postdetails.model.Image>) {
     }
 
     override fun onTokenAdded(token: Tag?) {
