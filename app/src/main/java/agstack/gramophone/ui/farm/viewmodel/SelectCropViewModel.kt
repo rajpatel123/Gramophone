@@ -100,4 +100,8 @@ class SelectCropViewModel @Inject constructor(
             getNavigator()?.showToast(getNavigator()?.getMessage(R.string.message_select_crop))
         }
     }
+
+    fun clearSelection(){
+        selectedCrop = null
+    }
 }

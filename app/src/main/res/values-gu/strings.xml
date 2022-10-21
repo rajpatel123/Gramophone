@@ -436,6 +436,11 @@
     <string name="trending_articles">Trending Articles</string>
     <string name="article_read">&#160;Read</string>
     <string name="article_views">&#160;Views</string>
+    <string name="farmer_image">farmer image</string>
+    <string name="date_of_sowing">Date of sowing</string>
+    <string name="area">Area</string>
+    <string name="old_farms">पुराने खेत देखे</string>
+    <string name="old_farms_title">पुराने खेत</string>
 
 </resources>
 

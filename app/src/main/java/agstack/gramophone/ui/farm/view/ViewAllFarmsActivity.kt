@@ -49,6 +49,7 @@ class ViewAllFarmsActivity :
 
         viewDataBinding.addFarmWrapper.viewOldFarmsLayout.setOnClickListener {
             viewDataBinding.addFarmWrapper.viewOldFarmsLayout.visibility = View.GONE
+            setToolbarTitle(getMessage(R.string.old_farms_title))
             getViewModel().getOldFarms()
         }
 
@@ -57,6 +58,7 @@ class ViewAllFarmsActivity :
     override fun onBackPressed() {
         if (viewDataBinding.addFarmWrapper.viewOldFarmsLayout.visibility == View.GONE) {
             viewDataBinding.addFarmWrapper.viewOldFarmsLayout.visibility = View.VISIBLE
+            setToolbarTitle(getMessage(R.string.message_buy_your_crop))
             getViewModel().getFarms()
         } else {
             super.onBackPressed()
@@ -64,7 +66,7 @@ class ViewAllFarmsActivity :
     }
 
     override fun setToolbarTitle(title: String) {
-        setUpToolBar(true, title, R.drawable.ic_cross)
+        setUpToolBar(true, title, R.drawable.ic_arrow_left, true)
     }
 
     override fun getLayoutID(): Int {
@@ -93,23 +95,16 @@ class ViewAllFarmsActivity :
                 }
             },
             {
-                if (isCustomerFarm) {
-                    val selectedCrop = CropData(
-                        cropId = it[0].crop_id,
-                        cropName = it[0].crop_name,
-                        cropImage = it[0].crop_image,
-                    )
-                    openActivity(
-                        AddFarmActivity::class.java,
-                        Bundle().apply {
-                            putParcelable("selectedCrop", selectedCrop)
-                        })
-                } else {
-                    openActivity(
-                        SelectCropActivity::class.java,
-                        null
-                    )
-                }
+                val selectedCrop = CropData(
+                    cropId = it[0].crop_id,
+                    cropName = it[0].crop_name,
+                    cropImage = it[0].crop_image,
+                )
+                openActivity(
+                    AddFarmActivity::class.java,
+                    Bundle().apply {
+                        putParcelable("selectedCrop", selectedCrop)
+                    })
             },
         )
     }

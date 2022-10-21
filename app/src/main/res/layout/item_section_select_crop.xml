@@ -26,8 +26,8 @@
         android:text='@{model.sectionTitle ?? ""}'
         tools:text='Popular in your area'
         android:textColor="@color/blakish"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:textSize="@dimen/_12ssp"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:textSize="@dimen/_13ssp"
         android:layout_marginBottom="@dimen/_4sdp"/>
 
     <TextView

@@ -35,7 +35,7 @@ class AddFarmViewModel @Inject constructor(
 
     fun onClickSaveAndContinue() {
         updateFarmValues()
-        validateFarmValues()
+        //validateFarmValues()
     }
 
     private fun validateFarmValues(){

@@ -4,6 +4,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
+import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
 
 import agstack.gramophone.ui.feedback.FeedbackActivity
 import agstack.gramophone.ui.gramcash.GramCashActivity
@@ -171,6 +172,11 @@ class HomeViewModel @Inject constructor(
     fun openWeather() {
         getNavigator()?.closeDrawer()
         getNavigator()?.openActivity(WeatherActivity::class.java, null)
+    }
+
+    fun openCropsNFarms() {
+        getNavigator()?.closeDrawer()
+        getNavigator()?.openActivity(ViewAllFarmsActivity::class.java, null)
     }
 
     fun shareApp() {

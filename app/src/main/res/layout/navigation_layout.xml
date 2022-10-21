@@ -238,7 +238,8 @@
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingTop="@dimen/_15sdp"
                     android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_15sdp">
+                    android:paddingBottom="@dimen/_15sdp"
+                    android:onClick="@{ ()-> navvm.openCropsNFarms()}">
 
                     <ImageView
                         android:id="@+id/iv_my_farms"

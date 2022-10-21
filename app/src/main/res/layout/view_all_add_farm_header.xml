@@ -27,7 +27,7 @@
             android:textColor="@color/blakish"
             android:textSize="@dimen/_13ssp"
             android:textStyle="normal"
-            android:text="पुराने खेत देखे " />
+            android:text="@string/old_farms" />
 
         <ImageView
             android:id="@+id/imageCorp"

@@ -28,7 +28,7 @@ class WhyAddFarmActivity  : BaseActivityWrapper<ActivityWhyAddFarmBinding, WhyAd
     }
 
     override fun setToolbarTitle(title: String) {
-        setUpToolBar(true, title, R.drawable.ic_cross)
+        setUpToolBar(true, title, R.drawable.ic_cross, true)
     }
 
     override fun getLayoutID(): Int {

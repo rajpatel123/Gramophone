@@ -33,13 +33,14 @@ class SelectCropActivity :
 
         viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
         viewDataBinding.swipeRefresh.setOnRefreshListener {
+            getViewModel().clearSelection()
             getViewModel().getCrops()
             viewDataBinding.swipeRefresh.isRefreshing = false
         }
     }
 
     override fun setToolbarTitle(title: String) {
-        setUpToolBar(true, title, R.drawable.ic_cross)
+        setUpToolBar(true, title, R.drawable.ic_cross, true)
     }
 
     override fun setSelectCropAdapter(selectCropAdapter: SelectCropAdapter) {
