@@ -8,4 +8,6 @@ interface ReferandEarnNavigator :BaseNavigator {
      fun convertedReferralLayoutsBitmap()
      fun share(currentShareOption: String,shareText:String?)
      fun getQRCodeURI(): String?
+      fun shareReferalCode(currentShareOption: String, shareText: String?, referralCode: String?)
+    fun onReferralCodeClick(referralCode: String)
 }

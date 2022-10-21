@@ -40,7 +40,7 @@ class OfferDetailActivity :
     }
 
     private fun setupUi() {
-        setUpToolBar(true, resources.getString(R.string.offer_detail), R.drawable.ic_arrow_left)
+        setUpToolBar(true, resources.getString(R.string.offer_detail), R.drawable.ic_cross)
     }
 
     override fun getLayoutID(): Int {
