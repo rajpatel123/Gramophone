@@ -17,6 +17,7 @@ import agstack.gramophone.ui.postdetails.model.PostDetailResponseModel
 import agstack.gramophone.ui.userprofile.model.TestUserModel
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -47,12 +48,12 @@ interface CommunityApiService {
     suspend fun getPostComments(@Body post: GetCommentRequestModel): Response<CommentsResponseModel>
 
     @DELETE("/api/v2/posts/delete-post/{id}")//change response model
-    suspend fun deletePost(@Path("id") post: String): Response<CommentsResponseModel>
+    suspend fun deletePost(@Path("id") id: String): Response<JSONObject>
 
     @DELETE("/api/v2/comments/delete-comment")//change response model
     suspend fun deletePostComment(@Body post: PostRequestModel): Response<CommentsResponseModel>
 
-    @PUT("/api/v2/posts/add-complain")//change response model
+    @POST("/api/v2/posts/add-complain")//change response model
     suspend fun reportPost(@Body post: ReportUserRequestModel): Response<CommentsResponseModel>
 
     @PUT("/api/v2/posts/update-blocked-user")
@@ -95,6 +96,19 @@ interface CommunityApiService {
         @Part image_3: MultipartBody.Part?,
         @Part("description") text: RequestBody?,
         @Part("tags") tags: RequestBody?,
+    ): Response<CreatePostResponseModel>
+
+
+    @Multipart
+    @PUT("/api/v2/posts/update-post")
+    suspend fun updatePost(
+        @Part image_1: MultipartBody.Part?,
+        @Part image_2: MultipartBody.Part?,
+        @Part image_3: MultipartBody.Part?,
+        @Part("description") text: RequestBody?,
+        @Part("tags") tags: RequestBody?,
+        @Part("removedImages") removedImages: RequestBody?,
+        @Part("postId") postId: RequestBody?
     ): Response<CreatePostResponseModel>
 
     @Multipart

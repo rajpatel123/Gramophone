@@ -27,16 +27,28 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val settingsRepository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
 ) : BaseViewModel<SettingsNavigator>() {
-     var initiateAppDataResponseModel: InitiateAppDataResponseModel? = null
+    var initiateAppDataResponseModel: InitiateAppDataResponseModel? = null
     var languageName = ObservableField<String>()
     var swAppTourChecked = ObservableField<Boolean>(false)
 
-    fun onAppTourCheckChanged(switchCompat: SwitchCompat){
-            SharedPreferencesHelper.instance?.putBoolean(
-                SharedPreferencesKeys.APP_TOUR_ENABLED,switchCompat.isChecked)
+    fun onAppTourCheckChanged(switchCompat: SwitchCompat) {
+        if (switchCompat.isPressed) {
+            if (switchCompat.isChecked) {
+                SharedPreferencesHelper.instance?.putBoolean(SharedPreferencesKeys.APP_TOUR_ENABLED,
+                    true)
+                SharedPreferencesHelper.instance?.putInteger(SharedPreferencesKeys.APP_TOUR_SKIP_COUNT,
+                    0)
+            } else {
+                SharedPreferencesHelper.instance?.putBoolean(SharedPreferencesKeys.APP_TOUR_ENABLED,
+                    false)
+                SharedPreferencesHelper.instance?.putInteger(SharedPreferencesKeys.APP_TOUR_SKIP_COUNT,
+                    0)
+            }
+        }
     }
+
     fun onLanguageClicked() {
         getNavigator()?.openActivity(LanguageUpdateActivity::class.java, null)
     }
@@ -46,13 +58,14 @@ class SettingsViewModel @Inject constructor(
     }
 
 
-    fun onBlockedUsersClicked(){
+    fun onBlockedUsersClicked() {
         getNavigator()?.openActivity(BlockedUsersActivity::class.java, null)
     }
 
-    fun onAppFeatureClicked(){
+    fun onAppFeatureClicked() {
         getNavigator()?.openWebView(Bundle().apply {
-            putString(Constants.PAGE_URL, initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.app_features_url)
+            putString(Constants.PAGE_URL,
+                initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.app_features_url)
             putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.app_feature))
         })
     }
@@ -73,16 +86,18 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun onTermsClick(){
+    fun onTermsClick() {
         getNavigator()?.openWebView(Bundle().apply {
-            putString(Constants.PAGE_URL, initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.terms_of_service_url)
+            putString(Constants.PAGE_URL,
+                initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.terms_of_service_url)
             putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.terms_of_service))
         })
     }
 
-    fun onPrivacyClick(){
+    fun onPrivacyClick() {
         getNavigator()?.openWebView(Bundle().apply {
-            putString(Constants.PAGE_URL, initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.privacy_policy_url)
+            putString(Constants.PAGE_URL,
+                initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.privacy_policy_url)
             putString(Constants.PAGE_TITLE, getNavigator()?.getMessage(R.string.privacy))
         })
     }

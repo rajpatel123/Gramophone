@@ -169,8 +169,9 @@ class CartViewModel @Inject constructor(
                     val response = productRepository.removeCartItem(productId)
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
                         getCartData()
+                    } else {
+                        progress.value = false
                     }
-                    progress.value = false
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }
@@ -192,8 +193,9 @@ class CartViewModel @Inject constructor(
                     val response = productRepository.updateCartItem(productData)
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
                         getCartData()
+                    } else {
+                        progress.value = false
                     }
-                    progress.value = false
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }

@@ -5,7 +5,13 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.CreatePostsActivityBinding
+import agstack.gramophone.ui.createnewpost.adapter.TagsCropAdapter
+import agstack.gramophone.ui.createnewpost.model.AgriTag
+import agstack.gramophone.ui.createnewpost.model.AgriTagListResult
+import agstack.gramophone.ui.createnewpost.model.MySingleton
+import agstack.gramophone.ui.createnewpost.model.PostDetailsModel
 import agstack.gramophone.ui.createnewpost.view.*
+import agstack.gramophone.ui.createnewpost.view.model.create.Image
 import agstack.gramophone.ui.createpost.CreatePostNavigator
 import agstack.gramophone.ui.createpost.viewmodel.CreatePostViewModel
 import agstack.gramophone.ui.dialog.posts.BottomSheetCropsDialog
@@ -144,7 +150,7 @@ class CreatePostActivity :
             getMessage(R.string.create_post),
             R.drawable.ic_cross
         )
-        if (MySingleton.getInstance().isOffTokenAutoComplete) {
+        if ( MySingleton.getInstance().isOffTokenAutoComplete) {
             viewDataBinding?.descriptionEditText?.visibility = View.GONE
             viewDataBinding.hashSymbol?.visibility = View.GONE
             viewDataBinding.atSymbol?.visibility = View.GONE
@@ -312,7 +318,7 @@ class CreatePostActivity :
     }
 
     private fun saveFilePath(bitmap: Bitmap,key:String) {
-        val f = File(this.externalCacheDir!!.absolutePath, filename)
+        val f = File(this.externalCacheDir!!.absolutePath, key)
         try {
             f.createNewFile()
         } catch (e: IOException) {
@@ -434,6 +440,15 @@ class CreatePostActivity :
     }
 
     override fun populatePostDetails(postDetailsModel: PostDetailsModel) {
+    }
+
+    override fun showTags(selectedTagList: MutableList<CropData>) {
+    }
+
+    override fun getPostDetails() {
+    }
+
+    override fun loadImages(images: List<agstack.gramophone.ui.postdetails.model.Image>) {
     }
 
 

@@ -20,6 +20,7 @@ import agstack.gramophone.utils.Constants.POST_ID
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.Utility
+import agstack.gramophone.view.activity.EditPostActivity
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.TextUtils
@@ -208,15 +209,25 @@ class CommunityViewModel @Inject constructor(
     }
 
     private fun reportPost() {
+
+        if (menuClickedData.author.communityUserType.equals("admin")) {
+            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.can_not_block))
+            return
+        }
         viewModelScope.launch {
             showProgress.set(true)
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
-                    val response = communityRepository.reportPost(ReportUserRequestModel(reportReason,menuClickedData._id))
+                    val response = communityRepository.reportPost(
+                        ReportUserRequestModel(
+                            reportReason,
+                            menuClickedData._id
+                        )
+                    )
                     showProgress.set(false)
                     if (response.isSuccessful) {
                         getPost(sorting = sorting.get().toString())
-                    }else{
+                    } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                     }
                 } else
@@ -240,6 +251,10 @@ class CommunityViewModel @Inject constructor(
 
 
     private fun blockUser() {
+        if (menuClickedData.author.communityUserType.equals("admin")) {
+            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.can_not_block))
+            return
+        }
         viewModelScope.launch {
 
             try {
@@ -329,7 +344,9 @@ getNavigator()?.stopRefresh()
 
                                 }
                                 Constants.EDIT_POST -> {
-                               //TODO will be done once cretae post implemented
+                                getNavigator()?.openActivity(EditPostActivity::class.java, Bundle().apply {
+                                    putString(POST_ID,it._id)
+                                })
                                 }
                             }
 

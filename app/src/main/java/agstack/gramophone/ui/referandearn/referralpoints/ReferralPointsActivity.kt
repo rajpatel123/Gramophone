@@ -24,7 +24,7 @@ class ReferralPointsActivity :
     private var shareSheetPresenter: ShareSheetPresenter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setUpToolBar(true, resources.getString(R.string.referral_points), R.drawable.ic_arrow_left)
+        setUpToolBar(true, resources.getString(R.string.referral_points), R.drawable.ic_cross)
         val bundle = getBundle()
         bundle?.let {
             if (bundle.getParcelable<GpApiResponseData>(Constants.GramCashResponse) != null) {

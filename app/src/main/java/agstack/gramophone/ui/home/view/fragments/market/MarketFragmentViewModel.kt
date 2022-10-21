@@ -8,14 +8,12 @@ import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.farm.model.FarmRequest
 import agstack.gramophone.ui.farm.model.FarmResponse
 import agstack.gramophone.ui.home.adapter.HomeAdapter
-import agstack.gramophone.ui.home.view.fragments.market.model.FeaturedArticlesResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import androidx.lifecycle.viewModelScope
-import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -37,7 +35,15 @@ class MarketFragmentViewModel
     var categoryResponse: CategoryResponse? = null
     var cartList: List<CartItem>? = arrayListOf()
     var farmResponse: FarmResponse? = null
-    var featuredArticlesList = ArrayList<FormattedArticlesData>()
+    var articlesData: HashMap<String, ArrayList<FormattedArticlesData>> = HashMap()
+
+    fun showAppTourDialogIfApplicable() {
+        if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.APP_TOUR_ENABLED) == true
+            && SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.APP_TOUR_SKIP_COUNT)!! < 2
+        ) {
+            getNavigator()?.showAppTourDialog()
+        }
+    }
 
     fun getHomeData() {
         allProductsResponse = null
@@ -63,7 +69,8 @@ class MarketFragmentViewModel
                         companyResponse,
                         cartList,
                         farmResponse,
-                        featuredArticlesList)) {
+                        articlesData)) {
+                        getNavigator()?.launchCommunityFragment()
                     }
                 }
             } catch (ex: Exception) {
@@ -257,8 +264,7 @@ class MarketFragmentViewModel
                 val response = articlesRepository.getFeaturedArticles()
                 if (response.isSuccessful) {
                     val featuredArticleResponse = response.body()
-                    if (featuredArticlesList.isNotNullOrEmpty()) featuredArticlesList.clear()
-                    else featuredArticlesList = ArrayList<FormattedArticlesData>()
+                    val featuredArticlesList = ArrayList<FormattedArticlesData>()
 
                     if (featuredArticleResponse != null) {
                         for (item in featuredArticleResponse) {
@@ -269,8 +275,16 @@ class MarketFragmentViewModel
                                 if (item.min_to_read.isNotNullOrEmpty()) item.min_to_read else ""
                             val postViewCount =
                                 if (item.post_views.isNotNullOrEmpty()) item.post_views else ""
-                            val tag =
-                                if (item.acf != null && item.acf.category_name.isNotNullOrEmpty()) item.acf.category_name else "N.A"
+                            var tag = ""
+                            if (item.acf!= null && item.acf !is Boolean) {
+                                tag = try {
+                                    val categoryName: String = (item.acf as Map<*, *>)["category_name"] as String
+                                    if (categoryName.isNotNullOrEmpty()) categoryName else ""
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                    ""
+                                }
+                            }
                             var imageUrl = ""
                             try {
                                 if (item._embedded != null && item._embedded.featuredmedia != null && item._embedded.featuredmedia.size > 0) {
@@ -295,12 +309,15 @@ class MarketFragmentViewModel
                             formattedArticlesData.post_views = postViewCount
                             formattedArticlesData.tag = tag
                             formattedArticlesData.image_url = imageUrl
+                            formattedArticlesData.articleTye = Constants.FEATURED_ARTICLES
                             featuredArticlesList.add(formattedArticlesData)
                         }
                     }
-                    notifyAdapter()
+                    articlesData[Constants.FEATURED_ARTICLES] = featuredArticlesList
                 }
+                getTrendingArticles()
             } catch (ex: Exception) {
+                getTrendingArticles()
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
                     else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
@@ -309,10 +326,118 @@ class MarketFragmentViewModel
         }
     }
 
+    private fun getTrendingArticles() {
+        viewModelScope.launch {
+            try {
+                val response = articlesRepository.getTrendingArticles()
+                if (response.isSuccessful) {
+                    val featuredArticleResponse = response.body()
+                    val trendingArticlesList = ArrayList<FormattedArticlesData>()
+
+                    if (featuredArticleResponse != null) {
+                        for (item in featuredArticleResponse) {
+                            val id = item.id
+                            val title =
+                                if (item.title != null && item.title.rendered.isNotNullOrEmpty()) item.title.rendered else ""
+                            val minToRead =
+                                if (item.min_to_read.isNotNullOrEmpty()) item.min_to_read else ""
+                            val postViewCount =
+                                if (item.post_views.isNotNullOrEmpty()) item.post_views else ""
+                            var tag = ""
+                            if (item.acf!= null && item.acf !is Boolean) {
+                                tag = try {
+                                    val categoryName: String = (item.acf as Map<*, *>)["category_name"] as String
+                                    if (categoryName.isNotNullOrEmpty()) categoryName else ""
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                    ""
+                                }
+                            }
+                            val imageUrl =
+                                if (item.featured_image.isNotNullOrEmpty()) item.featured_image else ""
+
+                            val formattedArticlesData = FormattedArticlesData()
+                            formattedArticlesData.id = id
+                            formattedArticlesData.title = title
+                            formattedArticlesData.min_to_read = minToRead
+                            formattedArticlesData.post_views = postViewCount
+                            formattedArticlesData.tag = tag
+                            formattedArticlesData.image_url = imageUrl
+                            formattedArticlesData.articleTye = Constants.TRENDING_ARTICLES
+                            trendingArticlesList.add(formattedArticlesData)
+                        }
+                    }
+                    articlesData[Constants.TRENDING_ARTICLES] = trendingArticlesList
+                }
+                getSuggestedArticles()
+            } catch (ex: Exception) {
+                getSuggestedArticles()
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
+
+    private fun getSuggestedArticles() {
+        viewModelScope.launch {
+            try {
+                val response = articlesRepository.getSuggestedArticles()
+                if (response.isSuccessful) {
+                    val featuredArticleResponse = response.body()
+                    val suggestedArticlesList = ArrayList<FormattedArticlesData>()
+
+                    if (featuredArticleResponse != null) {
+                        for (item in featuredArticleResponse) {
+                            val id = item.ID
+                            val title =
+                                if (item.post_title.isNotNullOrEmpty()) item.post_title else ""
+                            val minToRead =
+                                if (item.min_to_read.isNotNullOrEmpty()) item.min_to_read else ""
+                            val postViewCount =
+                                if (item.post_views.isNotNullOrEmpty()) item.post_views else ""
+                            var tag = ""
+                            if (item.acf!= null && item.acf !is Boolean) {
+                                tag = try {
+                                    val categoryName: String = (item.acf as Map<*, *>)["category_name"] as String
+                                    if (categoryName.isNotNullOrEmpty()) categoryName else ""
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                    ""
+                                }
+                            }
+                            val imageUrl =
+                                if (item.featured_image.isNotNullOrEmpty()) item.featured_image else ""
+
+                            val formattedArticlesData = FormattedArticlesData()
+                            formattedArticlesData.id = id
+                            formattedArticlesData.title = title
+                            formattedArticlesData.min_to_read = minToRead
+                            formattedArticlesData.post_views = postViewCount
+                            formattedArticlesData.tag = tag
+                            formattedArticlesData.image_url = imageUrl
+                            formattedArticlesData.articleTye = Constants.SUGGESTED_ARTICLES
+                            suggestedArticlesList.add(formattedArticlesData)
+                        }
+                    }
+                    articlesData[Constants.SUGGESTED_ARTICLES] = suggestedArticlesList
+                }
+                notifyAdapter()
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+                notifyAdapter()
+            }
+        }
+    }
+
     private fun notifyAdapter() {
         getNavigator()?.notifyHomeAdapter(
             allBannerResponse, categoryResponse, allProductsResponse,
             cropResponse,
-            storeResponse, companyResponse, cartList, farmResponse, featuredArticlesList)
+            storeResponse, companyResponse, cartList, farmResponse, articlesData)
     }
 }

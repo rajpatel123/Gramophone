@@ -8,6 +8,7 @@ import agstack.gramophone.ui.home.view.fragments.market.model.FeaturedArticlesRe
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 
 interface MarketFragmentNavigator : BaseNavigator {
+    fun showAppTourDialog()
 
     fun setHomeAdapter(
         adapter: HomeAdapter,
@@ -18,6 +19,8 @@ interface MarketFragmentNavigator : BaseNavigator {
         allBannerResponse: BannerResponse?, categoryResponse: CategoryResponse?,
         allProductsResponse: AllProductsResponse?, cropResponse: CropResponse?,
         storeResponse: StoreResponse?, companyResponse: CompanyResponse?,
-        cartList: List<CartItem>?, farmResponse: FarmResponse?, featuredArticlesList: ArrayList<FormattedArticlesData>
+        cartList: List<CartItem>?, farmResponse: FarmResponse?, articlesData: HashMap<String, ArrayList<FormattedArticlesData>>
     )
+
+    fun launchCommunityFragment()
 }

@@ -146,6 +146,7 @@
     </FrameLayout>
 
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_8sdp"
         android:layout_below="@+id/viewAllArticles"
