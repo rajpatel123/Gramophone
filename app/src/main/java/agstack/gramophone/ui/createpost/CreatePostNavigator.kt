@@ -2,6 +2,8 @@ package agstack.gramophone.ui.createpost
 
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.ui.createnewpost.model.PostDetailsModel
+import agstack.gramophone.ui.home.view.fragments.market.model.CropData
+import agstack.gramophone.ui.postdetails.model.Image
 import agstack.gramophone.ui.tagandmention.Tag
 
 interface CreatePostNavigator : BaseNavigator {
@@ -13,4 +15,7 @@ interface CreatePostNavigator : BaseNavigator {
     fun disablePostButton()
     fun gotoSocialPage(post: PostDetailsModel)
     fun populatePostDetails(postDetailsModel: PostDetailsModel)
+    fun showTags(selectedTagList: MutableList<CropData>)
+    fun getPostDetails()
+    fun loadImages(images: List<Image>)
 }

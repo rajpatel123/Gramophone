@@ -20,6 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.Part
 import javax.inject.Inject
@@ -97,7 +98,7 @@ class CommunityRepositoryImpl @Inject constructor(
             appData
         }
 
-    override suspend fun deletePost(id: String): Response<CommentsResponseModel> =
+    override suspend fun deletePost(id: String): Response<JSONObject> =
         withContext(
             Dispatchers.IO
         ) {
@@ -177,6 +178,20 @@ class CommunityRepositoryImpl @Inject constructor(
     ): Response<CreatePostResponseModel> = withContext(
         Dispatchers.IO) {
         val userData = communityApiService.createPost(image_1 = postImage1,image_2 = postImage2,image_3 = postImage3,text = description, tags=tags)
+        userData
+    }
+
+    override suspend fun updatePost(
+        description: RequestBody?,
+        tags: RequestBody?,
+        removedImages: RequestBody?,
+        postId: RequestBody?,
+        postImage1: MultipartBody.Part?,
+        postImage2: MultipartBody.Part?,
+        postImage3: MultipartBody.Part?
+    ): Response<CreatePostResponseModel> = withContext(
+        Dispatchers.IO) {
+        val userData = communityApiService.updatePost(image_1 = postImage1,image_2 = postImage2,image_3 = postImage3,text = description, tags=tags,removedImages=removedImages,postId)
         userData
     }
 
