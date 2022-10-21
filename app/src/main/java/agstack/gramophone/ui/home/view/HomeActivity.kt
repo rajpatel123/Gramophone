@@ -7,8 +7,8 @@ import agstack.gramophone.databinding.ActivityHomeBinding
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.ui.home.view.fragments.community.CommunityFragment
+import agstack.gramophone.ui.home.view.fragments.gramophone.MyGramophoneFragment
 import agstack.gramophone.ui.home.view.fragments.market.MarketFragment
-import agstack.gramophone.ui.home.view.fragments.profile.ProfileFragment
 import agstack.gramophone.ui.home.view.fragments.trading.TradeFragment
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.language.view.LanguageActivity
@@ -47,7 +47,7 @@ class HomeActivity :
     private lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
     private lateinit var marketFragment: MarketFragment
     private lateinit var communityFragment: CommunityFragment
-    private lateinit var profileFragment: ProfileFragment
+    private lateinit var profileFragment: MyGramophoneFragment
     private lateinit var tradeFragment: TradeFragment
     private lateinit var activeFragment: Fragment
     var drawer: DrawerLayout? = null
@@ -109,7 +109,7 @@ class HomeActivity :
     private fun setupUi() {
         marketFragment = MarketFragment()
         communityFragment = CommunityFragment()
-        profileFragment = ProfileFragment()
+        profileFragment = MyGramophoneFragment()
         tradeFragment = TradeFragment()
         activeFragment = marketFragment
 
@@ -117,7 +117,7 @@ class HomeActivity :
             .add(R.id.fragment_container, tradeFragment, TradeFragment::class.java.simpleName)
             .hide(tradeFragment).commit()
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, profileFragment, ProfileFragment::class.java.simpleName)
+            .add(R.id.fragment_container, profileFragment, MyGramophoneFragment::class.java.simpleName)
             .hide(profileFragment).commit()
         supportFragmentManager.beginTransaction().add(R.id.fragment_container,
             communityFragment,
@@ -158,7 +158,7 @@ class HomeActivity :
                     viewDataBinding.toolbar.myToolbar.title =
                         "  " + resources.getString(R.string.my_gramophone)
 
-                    updateMenuItemVisibility(false, false)
+                    updateMenuItemVisibility(false, true)
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(profileFragment).commit()
                     activeFragment = profileFragment

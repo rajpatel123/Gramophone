@@ -356,7 +356,7 @@
     <string name="_1_290">\u20B91,290</string>
     <string name="_799_00">\u20B9799.00</string>
     <string name="get_accurate_information_nabout_your_farm_for_better_nharvest">Get accurate information\nabout your farm for better\nharvest</string>
-    <string name="add_you_farm">+ Add you Farm</string>
+    <string name="add_you_farm">+ Add your Farm</string>
     <string name="know_more_about_my_farm"><![CDATA[Know more about My Farm >]]></string>
     <string name="checkout">Checkout</string>
     <string name="sub_text_will_be_displayed_here"> </string>
@@ -552,4 +552,21 @@
     <string name="please_try_another_way">We\'re sorry what you are looking for. Please try another way.</string>
     <string name="edit_post">Edit Post</string>
     <string name="update_post">Update Post</string>
+    <string name="view_profile">View Profile</string>
+    <string name="my_farms">My Farms</string>
+    <string name="view_farm">View your farms</string>
+    <string name="go_to_farm">Go to my farms  </string>
+    <string name="view_latest_orders">View latest orders and more</string>
+    <string name="go_to_orders">Go to my orders</string>
+    <string name="my_gram_cash">My Gram Cash</string>
+    <string name="history">Get gram cash info and transaction history</string>
+    <string name="total_balance">Total Balance</string>
+    <string name="view_my_post">View My Posts</string>
+    <string name="post_now">+  Post Now</string>
+    <string name="gramophone_post_desc_txt">your contribution to community</string>
+    <string name="know_more_about_referral">Know more about your referral and points</string>
+    <string name="referral_msg">Share Gramophone App and earn upto\n ₹ 150!</string>
+    <string name="my_favorite">My Favorites</string>
+    <string name="gramophone_favoritr_desc">One stop to see all your favourites</string>
+    <string name="products">Products</string>
 </resources>

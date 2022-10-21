@@ -1,11 +1,10 @@
-package agstack.gramophone.ui.home.view.fragments.profile
+package agstack.gramophone.ui.home.view.fragments.gramophone
 
 import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseFragment
-import agstack.gramophone.databinding.FragmentProfileBinding
-import agstack.gramophone.ui.home.view.HomeActivity
-import agstack.gramophone.ui.home.view.fragments.profile.viewmodel.ProfileFragmentViewModel
+import agstack.gramophone.databinding.FragmentMyGramophoneBinding
+import agstack.gramophone.ui.home.view.fragments.gramophone.viewmodel.ProfileFragmentViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +22,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 @AndroidEntryPoint
-class ProfileFragment : BaseFragment<FragmentProfileBinding,ProfileFragmentNavigator, ProfileFragmentViewModel>(),ProfileFragmentNavigator {
+class MyGramophoneFragment : BaseFragment<FragmentMyGramophoneBinding,ProfileFragmentNavigator, ProfileFragmentViewModel>(),ProfileFragmentNavigator {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -37,7 +36,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding,ProfileFragmentNavig
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): FragmentProfileBinding = FragmentProfileBinding.inflate(inflater, container, false)
+    ): FragmentMyGramophoneBinding = FragmentMyGramophoneBinding.inflate(inflater, container, false)
 
     /**
      * onCreate
@@ -63,7 +62,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding,ProfileFragmentNavig
     }
 
     override fun getLayoutID(): Int {
-        return R.layout.fragment_profile
+        return R.layout.fragment_my_gramophone
     }
 
     override fun getBindingVariable(): Int {

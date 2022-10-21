@@ -19,9 +19,9 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="agstack.gramophone.ui.home.view.fragments.profile.ProfileFragment"
+        android:name="agstack.gramophone.ui.home.view.fragments.gramophone.MyGramophoneFragment"
         android:label="@string/my_gramophone"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_my_gramophone" />
 
     <fragment
         android:id="@+id/navigation_trade"
