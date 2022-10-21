@@ -222,10 +222,11 @@
             android:name="com.canhub.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".ui.unitconverter.UnitConverterActivity" />
-        <activity
-            android:name=".ui.feedback.FeedbackActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.offerslist.OffersListActivity" />
+        <activity android:name=".ui.feedback.FeedbackActivity"
+            android:windowSoftInputMode="adjustResize" />/>
+        <activity android:name=".ui.offerslist.OffersListActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.farm.view.WhyAddFarmActivity"
             android:screenOrientation="portrait" />

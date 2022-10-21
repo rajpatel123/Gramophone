@@ -65,6 +65,7 @@ data class OfferApplied(
     val valid_till: String,
     val t_c: String,
     val image: String,
+    var promotion_id:String?=null
 )
 
 data class ShippingDetails(

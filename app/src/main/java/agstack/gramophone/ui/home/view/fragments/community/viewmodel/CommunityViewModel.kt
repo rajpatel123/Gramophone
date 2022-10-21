@@ -20,6 +20,7 @@ import agstack.gramophone.utils.Constants.POST_ID
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.Utility
+import agstack.gramophone.view.activity.EditPostActivity
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.TextUtils
@@ -343,7 +344,9 @@ getNavigator()?.stopRefresh()
 
                                 }
                                 Constants.EDIT_POST -> {
-                               //TODO will be done once cretae post implemented
+                                getNavigator()?.openActivity(EditPostActivity::class.java, Bundle().apply {
+                                    putString(POST_ID,it._id)
+                                })
                                 }
                             }
 

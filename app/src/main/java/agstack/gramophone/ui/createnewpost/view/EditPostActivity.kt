@@ -4,14 +4,15 @@ package agstack.gramophone.view.activity
 import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
-import agstack.gramophone.databinding.ActivityEditPostBinding
 import agstack.gramophone.databinding.CreatePostsActivityBinding
+import agstack.gramophone.databinding.EditPostsActivityBinding
 import agstack.gramophone.ui.createnewpost.adapter.TagsCropAdapter
 import agstack.gramophone.ui.createnewpost.model.AgriTag
 import agstack.gramophone.ui.createnewpost.model.AgriTagListResult
 import agstack.gramophone.ui.createnewpost.model.MySingleton
 import agstack.gramophone.ui.createnewpost.model.PostDetailsModel
 import agstack.gramophone.ui.createnewpost.view.*
+import agstack.gramophone.ui.createnewpost.view.model.create.Image
 import agstack.gramophone.ui.createpost.CreatePostNavigator
 import agstack.gramophone.ui.createpost.viewmodel.CreatePostViewModel
 import agstack.gramophone.ui.dialog.posts.BottomSheetCropsDialog
@@ -21,6 +22,7 @@ import agstack.gramophone.ui.tagandmention.ExpandableTextView
 import agstack.gramophone.ui.tagandmention.Tag
 import agstack.gramophone.ui.tagandmention.TagAdapter
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.Constants.POST_ID
 import agstack.gramophone.utils.ImagePicker
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
@@ -63,6 +65,9 @@ import com.leocardz.link.preview.library.SourceContent
 import com.leocardz.link.preview.library.TextCrawler
 import com.tokenautocomplete.TagTokenizer
 import com.tokenautocomplete.TokenCompleteTextView
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.card_items.*
+import kotlinx.android.synthetic.main.create_posts_activity.*
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -73,10 +78,11 @@ import java.net.URL
 import java.util.*
 import java.util.regex.Pattern
 
-class EditPostActivity: BaseActivityWrapper<CreatePostsActivityBinding, CreatePostNavigator, CreatePostViewModel>(),
+@AndroidEntryPoint
+class EditPostActivity: BaseActivityWrapper<EditPostsActivityBinding, CreatePostNavigator, CreatePostViewModel>(),
     CreatePostNavigator, View.OnClickListener, TokenCompleteTextView.TokenListener<Tag?>,
     BottomSheetCropsDialog.OnSelectionDone {
-    private val presenter: CreatePostViewModel by viewModels()
+    private val communityViewModel: CreatePostViewModel by viewModels()
     var layoutManager: LinearLayoutManager? = null
     var hashMap: HashMap<String?, String?> = HashMap<String?, String?>()
     protected var imageView: ImageView? = null
@@ -144,7 +150,7 @@ class EditPostActivity: BaseActivityWrapper<CreatePostsActivityBinding, CreatePo
         super.onCreate(savedInstanceState)
         setUpToolBar(
             enableBackButton = true,
-            getMessage(R.string.create_post),
+            getMessage(R.string.edit_post),
             R.drawable.ic_cross
         )
         if (MySingleton.getInstance().isOffTokenAutoComplete) {
@@ -158,8 +164,9 @@ class EditPostActivity: BaseActivityWrapper<CreatePostsActivityBinding, CreatePo
             viewDataBinding.hashSymbol?.visibility = View.VISIBLE
             viewDataBinding.atSymbol?.visibility = View.VISIBLE
         }
-        presenter.description.set("")
-        presenter.getCrops()
+
+        communityViewModel.description.set("")
+        communityViewModel.getCrops()
         // initReceiver()
         intiEasyImagePicker()
         //intent = getIntent()
@@ -170,7 +177,7 @@ class EditPostActivity: BaseActivityWrapper<CreatePostsActivityBinding, CreatePo
         txtUrlTitleDescriptionPreview = findViewById(R.id.urlTitleDescriptionText)
         addImageButton = findViewById(R.id.btnAddImageTitle)
         val actionBar = supportActionBar
-        actionBar!!.setTitle(getString(R.string.create_post))
+        actionBar!!.setTitle(getString(R.string.edit_post))
         if (intent.getExtras() != null) {
             if (intent.getExtras()!!.containsKey(Constants.sharedContent)) {
                 MySingleton.getInstance().shareIntent
@@ -315,7 +322,7 @@ class EditPostActivity: BaseActivityWrapper<CreatePostsActivityBinding, CreatePo
     }
 
     private fun saveFilePath(bitmap: Bitmap,key:String) {
-        val f = File(this.externalCacheDir!!.absolutePath, filename)
+        val f = File(this.externalCacheDir!!.absolutePath, key)
         try {
             f.createNewFile()
         } catch (e: IOException) {
@@ -336,11 +343,11 @@ class EditPostActivity: BaseActivityWrapper<CreatePostsActivityBinding, CreatePo
             externalCacheDir
             e.printStackTrace()
         }
-        presenter.listOfImages.put(key,f)
+        communityViewModel.listOfImages.put(key,f)
     }
 
     private fun launchTagList() {
-        val bottomSheet = BottomSheetCropsDialog(presenter.cropResponse, this)
+        val bottomSheet = BottomSheetCropsDialog(communityViewModel.cropResponse, this)
         bottomSheet.show(
             getSupportFragmentManager(),
             getMessage(R.string.bottomsheet_tag)
@@ -439,6 +446,50 @@ class EditPostActivity: BaseActivityWrapper<CreatePostsActivityBinding, CreatePo
     override fun populatePostDetails(postDetailsModel: PostDetailsModel) {
     }
 
+    override fun showTags(selectedTagList: MutableList<CropData>) {
+        val tagsCropAdapter = TagsCropAdapter(selectedTagList)
+        viewDataBinding.finalTagRecyclerView.adapter = tagsCropAdapter
+        viewDataBinding.finalTagRecyclerView.layoutManager =
+            StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL)
+    }
+
+    override fun getPostDetails() {
+        communityViewModel.getPostDetails(intent.extras?.getString(POST_ID)!!)
+    }
+
+    override fun loadImages(images: List<agstack.gramophone.ui.postdetails.model.Image>) {
+        communityViewModel.imageUrls = images
+        when(images.size){
+            1->{
+                Glide.with(this).load(images[0].url).into(viewDataBinding.iveOne)
+                viewDataBinding.ivPlusBig.visibility= View.GONE
+                viewDataBinding.ivDeletBig.visibility= View.VISIBLE
+
+            }
+
+            2->{
+                Glide.with(this).load(images[0].url).into(viewDataBinding.iveOne)
+                Glide.with(this).load(images[1].url).into(viewDataBinding.ivTwo)
+                viewDataBinding.ivPlusBig.visibility= View.GONE
+                viewDataBinding.ivDeletBig.visibility= View.VISIBLE
+                viewDataBinding.ivPlusSmall1.visibility= View.GONE
+                viewDataBinding.ivDeleteSmall1.visibility= View.VISIBLE
+            }
+            3->{
+                Glide.with(this).load(images[0].url).into(viewDataBinding.iveOne)
+                Glide.with(this).load(images[1].url).into(viewDataBinding.ivTwo)
+                Glide.with(this).load(images[2].url).into(viewDataBinding.ivThree)
+                viewDataBinding.ivPlusBig.visibility= View.GONE
+                viewDataBinding.ivDeletBig.visibility= View.VISIBLE
+                viewDataBinding.ivPlusSmall1.visibility= View.GONE
+                viewDataBinding.ivDeleteSmall1.visibility= View.VISIBLE
+                viewDataBinding.ivPlusSmall2.visibility= View.GONE
+                viewDataBinding.ivDeleteSmall2.visibility= View.VISIBLE
+
+            }
+        }
+    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
@@ -451,7 +502,7 @@ class EditPostActivity: BaseActivityWrapper<CreatePostsActivityBinding, CreatePo
         }
     }
     override fun openCameraToCapture() {
-        this.imageNo = presenter.imageNo
+        this.imageNo = communityViewModel.imageNo
         val cameraIntent = ImagePicker.getCameraIntent(this)
         cameraIntentLauncher.launch(cameraIntent)
     }
@@ -496,7 +547,7 @@ class EditPostActivity: BaseActivityWrapper<CreatePostsActivityBinding, CreatePo
     }
 
 
-    fun showTag(selectedTagList: MutableList<CropData>) {
+      fun showTag(selectedTagList: MutableList<CropData>) {
         val tagsCropAdapter = TagsCropAdapter(selectedTagList)
         viewDataBinding.finalTagRecyclerView.adapter = tagsCropAdapter
         viewDataBinding.finalTagRecyclerView.layoutManager =
@@ -589,9 +640,9 @@ class EditPostActivity: BaseActivityWrapper<CreatePostsActivityBinding, CreatePo
                         if (startPosition != null && text?.length > startPosition!!) searchText =
                             text?.substring(startPosition!!)
                         if (searchText != null && searchText!![0] == '@' && searchText!!.length > 1) {
-                            presenter!!.getMentionSuggestion(searchText!!.substring(1))
+                            communityViewModel!!.getMentionSuggestion(searchText!!.substring(1))
                         } else if (searchText != null && searchText!![0] == '#' && searchText!!.length > 1) {
-                            presenter!!.getSearchSuggestion(searchText!!.substring(1))
+                            communityViewModel!!.getSearchSuggestion(searchText!!.substring(1))
                         }
                     } else {
                         timer = null
@@ -930,7 +981,7 @@ class EditPostActivity: BaseActivityWrapper<CreatePostsActivityBinding, CreatePo
     override fun onTokenRemoved(token: Tag?) {}
     override fun onTokenIgnored(token: Tag?) {}
     override fun getLayoutID(): Int {
-        return R.layout.create_posts_activity
+        return R.layout.edit_posts_activity
     }
 
     override fun getBindingVariable(): Int {
@@ -938,7 +989,7 @@ class EditPostActivity: BaseActivityWrapper<CreatePostsActivityBinding, CreatePo
     }
 
     override fun getViewModel(): CreatePostViewModel {
-        return presenter
+        return communityViewModel
     }
 
     override fun onCropSelectionDone(cropList: MutableList<CropData>) {
@@ -948,7 +999,7 @@ class EditPostActivity: BaseActivityWrapper<CreatePostsActivityBinding, CreatePo
                 val tagMap = JSONObject()
                 // tagMap.put("_id",it.cropId.toString())
                 tagMap.put("tag", it.cropName.toString())
-                presenter.tags.add(tagMap)
+                communityViewModel.tags.add(tagMap)
 
             }
         }

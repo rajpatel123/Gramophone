@@ -70,7 +70,8 @@
                             android:id="@+id/tv_referral_points"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:layout_gravity="end"
+                            tools:text="0"
                             android:fontFamily="@font/manrope_bold"
                             android:text="@{viewModel.gramCashResponseDataFromBundle.gramcashTotal.toString()}"
                             android:textColor="@color/white"
@@ -322,6 +323,7 @@
                         android:paddingTop="@dimen/_8sdp"
                         android:paddingRight="@dimen/_16sdp"
                         android:paddingBottom="@dimen/_8sdp"
+                        android:textAllCaps="false"
                         android:text="@string/refer_a_friend"
                         android:textColor="@color/white" />
                 </LinearLayout>

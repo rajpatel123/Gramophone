@@ -342,7 +342,7 @@
     <string name="my_referrals">My Referrals</string>
     <string name="you_have_no_referral">You have no referral yet!</string>
     <string name="share_earn_referral_msg">To earn more points please refer app to your friends.</string>
-    <string name="refer_a_friend">Refer a friend</string>
+    <string name="refer_a_friend">Refer A Friend</string>
     <string name="available">Available</string>
     <string name="pending">Pending</string>
     <string name="all">All</string>
@@ -527,6 +527,9 @@
     <string name="order_has_been_assigned">has been assigned to deliver your order!</string>
     <string name="feedback_submit_success_alert_title">Success !</string>
     <string name="feedback_submit_success_alert_message">Feedback successfully submitted.</string>
+    <string name="no_connection">No Connection!</string>
+    <string name="no_internet_message">There seems to be no internet connection. Try checking things out</string>
+    <string name="copied">Copied</string>
     <string name="suggestions">Suggestions</string>
     <string name="search_here">Search here</string>
     <string name="please_select_date">Please select showing date</string>
@@ -548,4 +551,6 @@
     <string name="go_to_community">Go To Community</string>
     <string name="sorry_no_result_found">Sorry!No result found!</string>
     <string name="please_try_another_way">We\'re sorry what you are looking for. Please try another way.</string>
+    <string name="edit_post">Edit Post</string>
+    <string name="update_post">Update Post</string>
 </resources>
