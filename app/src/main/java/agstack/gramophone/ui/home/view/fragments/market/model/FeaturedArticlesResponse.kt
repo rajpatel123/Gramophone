@@ -9,7 +9,7 @@ data class FeaturedArticlesResponseItem(
     val title: TitleX? = null,
     val min_to_read: String? = null,
     val post_views: String? = null,
-    val acf: Acf? = null,
+    val acf: Any? = null,
     val _embedded: Embedded? = null,
 )
 

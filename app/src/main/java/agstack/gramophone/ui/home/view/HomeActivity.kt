@@ -168,7 +168,7 @@ class HomeActivity :
                 }
                 R.id.navigation_trade -> {
                     viewDataBinding.toolbar.myToolbar.title =
-                        "  " + resources.getString(R.string.trade)
+                        "  " + resources.getString(R.string.vyapar)
 
                     updateMenuItemVisibility(false, false)
                     supportFragmentManager.beginTransaction().hide(activeFragment)

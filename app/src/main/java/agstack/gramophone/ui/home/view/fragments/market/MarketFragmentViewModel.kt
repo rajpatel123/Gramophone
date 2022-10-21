@@ -275,8 +275,16 @@ class MarketFragmentViewModel
                                 if (item.min_to_read.isNotNullOrEmpty()) item.min_to_read else ""
                             val postViewCount =
                                 if (item.post_views.isNotNullOrEmpty()) item.post_views else ""
-                            val tag =
-                                if (item.acf != null && item.acf.category_name.isNotNullOrEmpty()) item.acf.category_name else "N.A"
+                            var tag = ""
+                            if (item.acf!= null && item.acf !is Boolean) {
+                                tag = try {
+                                    val categoryName: String = (item.acf as Map<*, *>)["category_name"] as String
+                                    if (categoryName.isNotNullOrEmpty()) categoryName else ""
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                    ""
+                                }
+                            }
                             var imageUrl = ""
                             try {
                                 if (item._embedded != null && item._embedded.featuredmedia != null && item._embedded.featuredmedia.size > 0) {
@@ -335,8 +343,16 @@ class MarketFragmentViewModel
                                 if (item.min_to_read.isNotNullOrEmpty()) item.min_to_read else ""
                             val postViewCount =
                                 if (item.post_views.isNotNullOrEmpty()) item.post_views else ""
-                            val tag =
-                                if (item.acf != null && item.acf.category_name.isNotNullOrEmpty()) item.acf.category_name else "N.A"
+                            var tag = ""
+                            if (item.acf!= null && item.acf !is Boolean) {
+                                tag = try {
+                                    val categoryName: String = (item.acf as Map<*, *>)["category_name"] as String
+                                    if (categoryName.isNotNullOrEmpty()) categoryName else ""
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                    ""
+                                }
+                            }
                             val imageUrl =
                                 if (item.featured_image.isNotNullOrEmpty()) item.featured_image else ""
 
@@ -381,8 +397,16 @@ class MarketFragmentViewModel
                                 if (item.min_to_read.isNotNullOrEmpty()) item.min_to_read else ""
                             val postViewCount =
                                 if (item.post_views.isNotNullOrEmpty()) item.post_views else ""
-                            val tag =
-                                if (item.acf != null && item.acf.category_name.isNotNullOrEmpty()) item.acf.category_name else "N.A"
+                            var tag = ""
+                            if (item.acf!= null && item.acf !is Boolean) {
+                                tag = try {
+                                    val categoryName: String = (item.acf as Map<*, *>)["category_name"] as String
+                                    if (categoryName.isNotNullOrEmpty()) categoryName else ""
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                    ""
+                                }
+                            }
                             val imageUrl =
                                 if (item.featured_image.isNotNullOrEmpty()) item.featured_image else ""
 
