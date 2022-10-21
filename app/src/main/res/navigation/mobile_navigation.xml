@@ -26,6 +26,6 @@
     <fragment
         android:id="@+id/navigation_trade"
         android:name="agstack.gramophone.ui.home.view.fragments.trading.TradeFragment"
-        android:label="@string/trade"
+        android:label="@string/vyapar"
         tools:layout="@layout/fragment_trade" />
 </navigation>
