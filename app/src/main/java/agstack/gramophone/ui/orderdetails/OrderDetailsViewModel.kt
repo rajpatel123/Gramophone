@@ -96,10 +96,14 @@ class OrderDetailsViewModel @Inject constructor(
                             responseData.products.size.toString()
                         this@OrderDetailsViewModel.username.value =
                             responseData.delivery_address.name
-                        this@OrderDetailsViewModel.address.value =
-                            responseData.delivery_address.address
                         this@OrderDetailsViewModel.mobile.value =
                             responseData.delivery_address.mobile
+
+
+                       /* this@OrderDetailsViewModel.address.value =
+                            responseData.delivery_address.address*/
+
+
                         this@OrderDetailsViewModel.subTotalPrice.value =
                             responseData.pricing_details.sub_total_price.toString()
                         this@OrderDetailsViewModel.totalPrice.value =

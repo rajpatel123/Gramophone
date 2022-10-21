@@ -93,7 +93,9 @@
             android:lineSpacingExtra="1sp"
             android:textColor="@color/blakish"
             android:textSize="16sp"
-            app:reformatFloatPriceToInt="@{model.discount_price}"
+            app:discount_price="@{model.discount_price}"
+            app:promotional_discount="@{model.promotional_discount}"
+            app:quantity="@{model.quantity}"
             tools:text="₹ 900" />
 
         <TextView
@@ -109,8 +111,8 @@
             android:lineSpacingExtra="1sp"
             android:textColor="@color/gray_strike_through"
             android:textSize="13sp"
-            app:mrp_price_equal="@{model.cost_price}"
-            app:to_sales_price="@{model.discount_price}"
+            app:mrp_price_equal="@{model.cost_price == 0f ? model.discount_price:model.cost_price}"
+            app:to_sales_price="@{model.discount_price - model.promotional_discount/model.quantity}"
             tools:text="₹ 1290" />
 
         <TextView
@@ -125,8 +127,8 @@
             android:lineSpacingExtra="1sp"
             android:textColor="@color/green_dark"
             android:textSize="13sp"
-            app:mrp_price="@{model.cost_price}"
-            app:sales_price="@{model.discount_price}"
+            app:mrp_price="@{model.cost_price == 0f ? model.discount_price:model.cost_price}"
+            app:sales_price="@{model.discount_price - model.promotional_discount/model.quantity}"
             tools:text="@string/_0_off" />
 
         <TextView

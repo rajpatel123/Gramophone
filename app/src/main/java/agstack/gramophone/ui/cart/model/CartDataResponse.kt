@@ -34,6 +34,7 @@ data class GpApiTrace(
 
 data class CartItem(
     val brand_name: String,
+    val promotional_discount: Float,
     val cart_product_price: String,
     val cgst_percent: String,
     val company_name: String,

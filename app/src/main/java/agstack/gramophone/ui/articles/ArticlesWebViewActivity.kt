@@ -1,33 +1,35 @@
 package agstack.gramophone.ui.articles
 
-import agstack.gramophone.BuildConfig
+import agstack.gramophone.BR
 import agstack.gramophone.R
-import agstack.gramophone.utils.Constants
-import android.app.Activity
+import agstack.gramophone.base.BaseActivityWrapper
+import agstack.gramophone.databinding.ActivityArticlesBinding
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.amnix.xtension.extensions.isNotNullOrEmpty
+import androidx.activity.viewModels
+import com.amnix.xtension.extensions.isNotNull
 import kotlinx.android.synthetic.main.activity_articles.*
 
-class ArticlesWebViewActivity : Activity() {
+class ArticlesWebViewActivity :
+    BaseActivityWrapper<ActivityArticlesBinding, ArticlesWebViewNavigator, ArticlesWebViewModel>(),
+    ArticlesWebViewNavigator {
+
+    private val articlesWebViewModel: ArticlesWebViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_articles)
-        setUp()
+        setupUi()
+        articlesWebViewModel.getBundleData()
     }
 
-    private fun setUp() {
+    private fun setupUi() {
         val webSettings: WebSettings = webView.settings
-        val bundle = intent.extras
-        if (bundle?.containsKey(Constants.PAGE_URL)!! && bundle.getString(Constants.PAGE_URL) != null) {
-            val pageURL = bundle.getString(Constants.PAGE_URL, "")
+        if (webSettings.isNotNull()) {
             webSettings.javaScriptEnabled = true
             webSettings.domStorageEnabled = true
             webSettings.loadWithOverviewMode = true
@@ -59,11 +61,8 @@ class ArticlesWebViewActivity : Activity() {
                     progressBar.visibility = View.GONE
                 }
             }
-
-            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
-            if (pageURL.isNotNullOrEmpty())
-                webView.loadUrl(pageURL)
         }
+        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
 
         viewBack.setOnClickListener {
             val keyEvent = KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK)
@@ -81,5 +80,25 @@ class ArticlesWebViewActivity : Activity() {
         // If it wasn't the Back key or there's no webpage history, bubble up to the default
         // system behavior (probably exit the activity)
         return super.onKeyDown(keyCode, event)
+    }
+
+    override fun loadUrl(url: String) {
+        webView.loadUrl(url)
+    }
+
+    override fun getBundle(): Bundle? {
+        return intent?.extras
+    }
+
+    override fun getLayoutID(): Int {
+        return R.layout.activity_articles
+    }
+
+    override fun getBindingVariable(): Int {
+        return BR.viewModel
+    }
+
+    override fun getViewModel(): ArticlesWebViewModel {
+        return articlesWebViewModel
     }
 }
