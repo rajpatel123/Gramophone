@@ -89,7 +89,7 @@ class MarketFragmentViewModel
                     SharedPreferencesKeys.BANNER_DATA, BannerResponse::class.java
                 )
                 allBannerResponse = bannerResponse
-                if (bannerResponse?.gpApiStatus != Constants.GP_API_STATUS) {
+                if (bannerResponse?.gpApiStatus == Constants.GP_API_STATUS) {
                     val response = productRepository.getBanners()
                     if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS) {
                         bannerResponse = response.body()

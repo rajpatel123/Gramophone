@@ -35,7 +35,7 @@ class CropGroupExplorerActivity :
     }
 
     override fun setToolbarTitle(title: String) {
-        setUpToolBar(true, title, R.drawable.ic_action_navigation_arrow_back)
+        setUpToolBar(true, title, R.drawable.ic_action_navigation_arrow_back, true)
     }
 
     override fun getLayoutID(): Int {

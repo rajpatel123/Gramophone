@@ -8,13 +8,11 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.location.Geocoder
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
@@ -153,7 +151,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         }
     }
 
-    fun setUpToolBar(enableBackButton: Boolean, title: String, @DrawableRes drawable: Int? = null) {
+    fun setUpToolBar(enableBackButton: Boolean, title: String, @DrawableRes drawable: Int? = null, elevation : Boolean = false) {
         val toolbar = findViewById<Toolbar>(R.id.myToolbar)
         if (toolbar != null) {
             setSupportActionBar(toolbar)
@@ -163,6 +161,11 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
                 toolbar.setNavigationIcon(drawable)
             }
             toolbar.setNavigationOnClickListener { onBackPressed() }
+            if (elevation) {
+                toolbar.elevation = 24f
+            } else {
+                toolbar.elevation = 0f
+            }
         }
     }
 

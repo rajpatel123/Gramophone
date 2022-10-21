@@ -443,5 +443,10 @@
     <string name="search_here">Search here</string>
     <string name="sorry_no_result_found">Sorry!No result found!</string>
     <string name="please_try_another_way">We\'re sorry what you are looking for. Please try another way.</string>
+    <string name="farmer_image">farmer image</string>
+    <string name="date_of_sowing">Date of sowing</string>
+    <string name="area">Area</string>
+    <string name="old_farms">पुराने खेत देखे</string>
+    <string name="old_farms_title">पुराने खेत</string>
 
 </resources>
