@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/productDetailsContainer"
+            android:layout_width="@dimen/_144sdp"
+            android:layout_height="@dimen/_196sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_6sdp"
+            android:background="@drawable/rounded_corner_12_solid_white_stroke_gray"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_68sdp"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/rounded_corner_top_16_solid_light_green_stroke_gray"
+                android:orientation="vertical" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgProfile"
+                android:layout_width="@dimen/_86sdp"
+                android:layout_height="@dimen/_86sdp"
+                android:scaleType="centerCrop"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_24sdp"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                android:contentDescription="@string/image"
+                android:elevation="@dimen/_1sdp"
+                android:layout_gravity="center_horizontal"
+                tools:src="@drawable/piyush" />
+
+
+            <TextView
+                android:layout_below="@+id/imgProfile"
+                android:id="@+id/txtName"
+                android:layout_centerHorizontal="true"
+                android:layout_width="@dimen/_96sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="center"
+                android:maxLines="2"
+                tools:text="Naveen Sharma"
+                android:textColor="@color/blakish"
+                android:textSize="@dimen/_13ssp" />
+
+
+            <TextView
+                android:id="@+id/txthint"
+                android:layout_width="@dimen/_96sdp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtName"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:fontFamily="@font/manrope_regular"
+                android:gravity="center"
+                android:maxLines="2"
+                android:textColor="@color/blakish"
+                android:textSize="@dimen/_11ssp"
+                tools:text="Pewdaay" />
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

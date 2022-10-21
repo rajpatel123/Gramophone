@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.home.view.fragments.market.model.ProductData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/_196sdp"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/productDetailsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:layout_marginBottom="@dimen/_10ssp"
+            android:background="@drawable/rounded_corner_12_solid_white_stroke_gray"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/rounded_corner_6_light_green"
+                android:fontFamily="@font/manrope_bold"
+                android:paddingStart="@dimen/_6sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingEnd="@dimen/_6sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:text="20% Off"
+                android:textColor="@color/order_approved_text"
+                android:textSize="@dimen/_11ssp" />
+
+            <ImageView
+                android:id="@+id/iv_productimage"
+                android:layout_width="@dimen/_110sdp"
+                android:layout_height="@dimen/_110sdp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/dummy_feature_product" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_1sdp"
+                android:layout_marginBottom="@dimen/_1sdp"
+                android:background="@drawable/rounded_corner_bottom_12_solid_gray"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvProductDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/manrope_medium"
+                    android:gravity="top"
+                    android:lineSpacingExtra="-2sp"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/_12sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_12sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="fungicides Crystal Bavistin 50% WP Fun gicide Carbe ..."
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_11ssp" />
+
+                <RatingBar
+                    android:visibility="gone"
+                    style="@style/CustomRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:numStars="5"
+                    android:rating="3"
+                    android:stepSize="1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/_12sdp"
+                    android:paddingEnd="@dimen/_10sdp">
+
+                    <TextView
+                        style="@style/heading_title_bold_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:text="₹ 900"
+                        android:textColor="@color/blakish"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        style="@style/regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:background="@drawable/strike_through_mutegrey"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:text="₹ 1800"
+                        android:textColor="@color/gray_strike_through"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

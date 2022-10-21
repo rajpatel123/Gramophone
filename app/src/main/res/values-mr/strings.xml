@@ -439,5 +439,13 @@
     <string name="search_here">Search here</string>
     <string name="sorry_no_result_found">Sorry!No result found!</string>
     <string name="please_try_another_way">We\'re sorry what you are looking for. Please try another way.</string>
+    <string name="products">Products</string>
+    <string name="crops">Crops</string>
+    <string name="profile">Profile</string>
+    <string name="crop_problems">Crop Problems</string>
+    <string name="companies">Companies</string>
+    <string name="crop_category">Crop Category</string>
+    <string name="product_category">Product Category</string>
+    <string name="posts">Posts</string>
 
 </resources>

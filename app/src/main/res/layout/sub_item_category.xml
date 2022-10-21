@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_4sdp">
+
+        <FrameLayout
+            android:id="@+id/itemView"
+            android:layout_width="@dimen/_72sdp"
+            android:layout_height="@dimen/_72sdp"
+            android:background="@drawable/circle_solid_white"
+            android:backgroundTint="@color/green_transparent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/image"
+                tools:src="@drawable/dummy_shop_by_crop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvCatName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center_horizontal|center_vertical"
+            android:lineSpacingExtra="-2sp"
+            tools:text="Onion"
+            android:textColor="@color/green_dark"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+</layout>
