@@ -41,7 +41,7 @@ data class CartItem(
     val cost_price: Float,
     val discount: String,
     val discount_percent: String,
-    val discount_price: Float,
+    var discount_price: Float,
     val gramcash_redeemable: Boolean,
     val image: String,
     val item_product_discount: String,

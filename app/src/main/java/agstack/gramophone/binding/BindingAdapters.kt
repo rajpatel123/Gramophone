@@ -318,29 +318,6 @@ fun setReformattedIntPrice(textView: TextView, price: Float) {
     }
 }
 
-@BindingAdapter(value = ["discount_price", "promotional_discount", "quantity"], requireAll = true)
-fun setSalesPriceAfterDiscount(
-    textView: TextView,
-    price: Float,
-    promotional_discount: Float,
-    quantity: Int,
-) {
-    try {
-        val pricePerUnitAfterDiscount = price - promotional_discount / quantity
-
-        if (pricePerUnitAfterDiscount.toString()
-                .contains(".0") || pricePerUnitAfterDiscount.toString().contains(".00")
-        )
-            textView.text =
-                textView.context.getString(R.string.rupee_symbol_with_space) + pricePerUnitAfterDiscount.roundToInt()
-                    .toString()
-        else textView.text =
-            textView.context.getString(R.string.rupee_symbol_with_space) + pricePerUnitAfterDiscount.toString()
-    } catch (e: Exception) {
-        textView.text = textView.context.getString(R.string.rupee_0)
-    }
-}
-
 @BindingAdapter(value = ["mrp_price", "sales_price"], requireAll = true)
 fun calculateDiscount(
     textView: TextView, mrp_price: Float, sales_price: Float,

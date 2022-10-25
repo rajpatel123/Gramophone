@@ -8,6 +8,7 @@ import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.ui.orderdetails.adapter.OrderedProductsAdapter
+import agstack.gramophone.ui.orderdetails.model.Address
 import agstack.gramophone.ui.orderdetails.model.GpApiResponseData
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.utils.Constants
@@ -62,7 +63,8 @@ class OrderDetailsViewModel @Inject constructor(
     fun getBundleData() {
         val bundle = getNavigator()?.getBundle()
         if (bundle?.containsKey(Constants.ORDER_ID)!! && bundle.getString(Constants.ORDER_ID) != null) {
-            getOrderDetails(bundle.getString(Constants.ORDER_ID) as String, bundle.getString(Constants.ORDER_TYPE) as String)
+            getOrderDetails(bundle.getString(Constants.ORDER_ID) as String,
+                bundle.getString(Constants.ORDER_TYPE) as String)
         }
     }
 
@@ -77,7 +79,7 @@ class OrderDetailsViewModel @Inject constructor(
                     orderDetailRequest.type = orderType
 
                     val response = productRepository.getOrderDetails(orderDetailRequest)
-                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS && response.body()?.gp_api_response_data != null
                         && response.body()?.gp_api_response_data?.products != null && response.body()?.gp_api_response_data?.products?.size!! > 0
                     ) {
                         val responseData: GpApiResponseData =
@@ -98,23 +100,24 @@ class OrderDetailsViewModel @Inject constructor(
                             responseData.delivery_address.name
                         this@OrderDetailsViewModel.mobile.value =
                             responseData.delivery_address.mobile
+                        val address: Address = responseData.delivery_address.address
+                        if (address.isNotNull()) {
+                            val fullAddress = StringBuilder("")
+                            fullAddress.append(if (address.village.isNotNullOrEmpty()) address.village + ", " else "")
+                            fullAddress.append(if (address.tehsil.isNotNullOrEmpty()) address.tehsil + ", " else "")
+                            fullAddress.append(if (address.district.isNotNullOrEmpty()) address.district + ", " else "")
+                            fullAddress.append(if (address.state.isNotNullOrEmpty()) address.state + ", " else "")
+                            fullAddress.append(if (address.pincode.isNotNullOrEmpty()) address.pincode else "")
 
-
-                       /* this@OrderDetailsViewModel.address.value =
-                            responseData.delivery_address.address*/
-
-
+                            this@OrderDetailsViewModel.address.value = fullAddress.toString()
+                        }
                         this@OrderDetailsViewModel.subTotalPrice.value =
                             responseData.pricing_details.sub_total_price.toString()
                         this@OrderDetailsViewModel.totalPrice.value =
                             responseData.pricing_details.total_price.toString()
 
                         val totalDiscount =
-                            /*responseData.pricing_details.product_discount +
-                                    responseData.pricing_details.promotional_discount +
-                                    responseData.pricing_details.coupon_discount +
-                                    responseData.pricing_details.additional_discount*/
-                            responseData.pricing_details.additional_discount
+                            responseData.pricing_details.promotional_discount
 
                         this@OrderDetailsViewModel.discount.value = totalDiscount.toString()
 
@@ -126,7 +129,7 @@ class OrderDetailsViewModel @Inject constructor(
                         ) {
                             val orderStatusMessage =
                                 responseData.vr_info.name + ";<br>" + getNavigator()?.getMessage(R.string.phone) + " <font color = '#10203E'>" + if (responseData.vr_info.mobile_no.isNotNullOrEmpty())
-                                    responseData.vr_info.mobile_no else getNavigator()?.getMessage(R.string.not_available) + "</font></b> " +getNavigator()?.getMessage(
+                                    responseData.vr_info.mobile_no else getNavigator()?.getMessage(R.string.not_available) + "</font></b> " + getNavigator()?.getMessage(
                                     R.string.order_has_been_assigned)
                             this@OrderDetailsViewModel.orderStatusMessage.value = orderStatusMessage
                         } else {
