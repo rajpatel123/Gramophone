@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.view.ViewTreeObserver
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -20,7 +21,7 @@ class ArticlesWebViewActivity :
     ArticlesWebViewNavigator {
 
     private val articlesWebViewModel: ArticlesWebViewModel by viewModels()
-
+    private var mOnScrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
@@ -28,7 +29,7 @@ class ArticlesWebViewActivity :
     }
 
     private fun setupUi() {
-        val webSettings: WebSettings = webView.settings
+        val webSettings: WebSettings = viewDataBinding.webView.settings
         if (webSettings.isNotNull()) {
             webSettings.javaScriptEnabled = true
             webSettings.domStorageEnabled = true
@@ -41,7 +42,7 @@ class ArticlesWebViewActivity :
             webSettings.loadWithOverviewMode = true
             webSettings.setSupportMultipleWindows(true)
             webSettings.javaScriptCanOpenWindowsAutomatically = false
-            webView.webViewClient = object : WebViewClient() {
+            viewDataBinding.webView.webViewClient = object : WebViewClient() {
 
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                     super.onPageStarted(view, url, favicon)
@@ -62,17 +63,28 @@ class ArticlesWebViewActivity :
                 }
             }
         }
-        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+        viewDataBinding.webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+        viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
 
-        viewBack.setOnClickListener {
-            val keyEvent = KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK)
-            onKeyDown(KeyEvent.KEYCODE_BACK, keyEvent)
+        viewDataBinding.viewBack.setOnClickListener {
+            onKeyDown(KeyEvent.KEYCODE_BACK, KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK))
+        }
+
+        viewDataBinding.swipeRefresh.viewTreeObserver
+            .addOnScrollChangedListener(ViewTreeObserver.OnScrollChangedListener {
+                viewDataBinding.swipeRefresh.isEnabled = viewDataBinding.webView.scrollY == 0
+            }
+                .also { mOnScrollChangedListener = it })
+
+        viewDataBinding.swipeRefresh.setOnRefreshListener {
+            viewDataBinding.webView.reload()
+            viewDataBinding.swipeRefresh.isRefreshing = false
         }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-            webView.goBack()
+        if (keyCode == KeyEvent.KEYCODE_BACK && viewDataBinding.webView.canGoBack()) {
+            viewDataBinding.webView.goBack()
             return true
         } else {
             finish()
@@ -83,7 +95,13 @@ class ArticlesWebViewActivity :
     }
 
     override fun loadUrl(url: String) {
-        webView.loadUrl(url)
+        viewDataBinding.webView.loadUrl(url)
+    }
+
+    override fun onStop() {
+        viewDataBinding.swipeRefresh.viewTreeObserver.removeOnScrollChangedListener(
+            mOnScrollChangedListener)
+        super.onStop()
     }
 
     override fun getBundle(): Bundle? {

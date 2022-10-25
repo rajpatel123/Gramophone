@@ -22,19 +22,12 @@ class ArticlesWebViewModel @Inject constructor(
                 Constants.PAGE_URL) != null
         ) {
             webUrl = bundle.get(Constants.PAGE_URL).toString()
-            if (webUrl.isNotNullOrEmpty() && !webUrl.contains("?")) {
-                webUrl += "?" + Constants.LANG + "=" + getNavigator()?.getLanguage() + Constants.GP_TOKEN + "=" + SharedPreferencesHelper.instance?.getString(
+            if (webUrl.isNotNullOrEmpty() && !webUrl.contains("single-article") && !webUrl.contains("?")) {
+                webUrl += "?" + Constants.LANG + "=" + getNavigator()?.getLanguage() + "&" + Constants.GP_TOKEN + "=" + SharedPreferencesHelper.instance?.getString(
                     SharedPreferencesKeys.session_token)!!
             }
         }
         if (webUrl.isNotNullOrEmpty())
             getNavigator()?.loadUrl(webUrl)
     }
-
-    @BindingAdapter("loadUrl")
-    fun WebView.setUrl(url: String) {
-        this.loadUrl(url)
-    }
-
-
 }

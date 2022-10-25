@@ -19,7 +19,6 @@ import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.shop.ShopByActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.*
-import agstack.gramophone.ui.webview.view.WebViewActivity
 import agstack.gramophone.utils.Constants
 import android.content.Context
 import android.content.Intent
@@ -469,7 +468,7 @@ class HomeAdapter(
                                     ArticlesWebViewActivity::class.java,
                                     Bundle().apply {
                                         putString(Constants.PAGE_URL,
-                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + it)
+                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + "/" + it)
                                     }
                                 )
                             }
@@ -485,7 +484,7 @@ class HomeAdapter(
                                     ArticlesWebViewActivity::class.java,
                                     Bundle().apply {
                                         putString(Constants.PAGE_URL,
-                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + it)
+                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + "/" + it)
                                     }
                                 )
                             }
@@ -501,7 +500,7 @@ class HomeAdapter(
                                     ArticlesWebViewActivity::class.java,
                                     Bundle().apply {
                                         putString(Constants.PAGE_URL,
-                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + it)
+                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + "/" + it)
                                     }
                                 )
                             }
