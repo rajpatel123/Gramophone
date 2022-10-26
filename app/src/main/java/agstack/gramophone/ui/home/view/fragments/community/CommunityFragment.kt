@@ -45,17 +45,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     private val communityViewModel: CommunityViewModel by viewModels()
     private var recyclerView: RecyclerView? = null
 
-    private lateinit var mActivity: HomeActivity
-
-    override fun onAttach(activity: Activity) {
-        super.onAttach(activity = activity)
-        mActivity = activity as HomeActivity
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         shareSheetPresenter = this?.let { ShareSheetPresenter(requireActivity()) }
         communityViewModel.sorting.set("latest")
+
     }
 
 
@@ -76,7 +71,9 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         super.onResume()
     }
 
-
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+    }
     override fun updatePostList(
         communityPostAdapter: CommunityPostAdapter,
         onItemDetailClicked: (postId: String) -> Unit,
@@ -226,6 +223,15 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     override fun onImageSet(imageUrl: String, iv: ImageView) {
         activity?.let { Glide.with(it).load(imageUrl).into(iv) }
+    }
+
+    fun selectTab(from: String) {
+        if (from.equals("gramophone")){
+           // communityViewModel.loadData("self")
+            val tab = binding?.tabLayout?.getTabAt(4)
+            tab!!.select()
+        }
+
     }
 
 

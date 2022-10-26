@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.home.view.fragments.gramophone.viewmodel.MyGramophoneFragmentViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.home.view.fragments.gramophone.ProfileFragment">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/_20sdp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:textColor="@color/brand_color"
+                            android:textSize="@dimen/_16ssp"
+                            tools:text="Uday Setty" />
+
+                        <TextView
+                            android:id="@+id/tvLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:drawableStart="@drawable/ic_location"
+                            android:fontFamily="@font/manrope_regular"
+                            android:textColor="@color/gray"
+                            android:textSize="@dimen/_12ssp"
+                            tools:text=" Sawer, Madhya Pradesh" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/manrope_regular"
+                            android:text="@string/view_profile"
+                            android:onClick="@{ ()-> viewModel.onViewProfileClicked() }"
+                            android:textColor="@color/weather_orange"
+                            android:textSize="@dimen/_14ssp"
+                            tools:text="@string/view_profile" />
+                    </LinearLayout>
+
+
+                    <agstack.gramophone.widget.CircularImageView
+                        android:id="@+id/ivUserProfile"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:layout_marginBottom="@dimen/_20sdp"
+                        android:background="@drawable/dummy_profile" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:background="@color/gray_stroke" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp">
+
+                    <ImageView
+                        android:id="@+id/ivOrders"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/ic_my_farm" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_toEndOf="@+id/ivOrders"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/myFarmsTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_semibold"
+                            android:text="@string/my_farms"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14ssp" />
+
+                        <TextView
+                            android:id="@+id/tvViewFarm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:fontFamily="@font/manrope_regular"
+                            android:text="@string/view_farm"
+                            android:textColor="@color/gray"
+                            android:textSize="@dimen/_12ssp"
+                            tools:text="@string/view_farm" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <include
+                    android:id="@+id/layoutFarm"
+                    layout="@layout/card_gramo_farm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp">
+
+                    <TextView
+                        android:id="@+id/tvGoToFarms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/ivNext"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/go_to_farm"
+                        android:textColor="@color/weather_orange"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <ImageView
+                        android:id="@+id/ivNext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        app:srcCompat="@drawable/ic_arrow_right" />
+
+                    <TextView
+                        android:id="@+id/btnAddfarm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_corner_8_solid_orange"
+                        android:fontFamily="@font/manrope_semibold"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:text="@string/add_you_farm"
+                        android:textColor="@color/orange" />
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:background="@color/gray_stroke" />
+
+                <include
+                    android:id="@+id/layoutOrder"
+                    layout="@layout/gramophone_order"/>
+                <include
+                    android:id="@+id/layoutGramCash"
+                    layout="@layout/section_gram_cash"/>
+                <include
+                    android:id="@+id/layoutMyPost"
+                    layout="@layout/gramophone_my_post"/>
+                <include layout="@layout/gramophone_my_referral"/>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_18sdp">
+
+                    <ImageView
+                        android:id="@+id/ivFavorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/ic_bookmarked" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_toEndOf="@+id/ivFavorite"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/myFarmTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_semibold"
+                            android:text="@string/my_favorite"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14ssp" />
+
+                        <TextView
+                            android:id="@+id/tvViewOrder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:fontFamily="@font/manrope_regular"
+                            android:text="@string/gramophone_favoritr_desc"
+                            android:textColor="@color/gray"
+                            android:textSize="@dimen/_12ssp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <include
+                    android:id="@+id/layoutFavorite"
+                    layout="@layout/gramophone_my_favorite" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+</layout>

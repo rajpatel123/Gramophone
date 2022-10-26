@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_18sdp">
+
+            <ImageView
+                android:id="@+id/ivFarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_order" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_toEndOf="@+id/ivFarm"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/myPostTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:text="@string/tab_my_post"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    android:id="@+id/tvViewOrder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:text="@string/gramophone_post_desc_txt"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_12ssp"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/grey_outline"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/item_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_12sdp"
+                android:paddingTop="@dimen/_24sdp"
+                android:paddingEnd="@dimen/_12sdp">
+
+                <RelativeLayout
+                    android:id="@+id/rlContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/flMyPost"
+                        android:layout_width="@dimen/_74sdp"
+                        android:layout_height="@dimen/_74sdp"
+                        app:cardCornerRadius="@dimen/_10sdp"
+                        android:clipToPadding="false"
+                       >
+
+                        <ImageView
+                            android:id="@+id/ivPost"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:scaleType="fitXY"
+                            android:contentDescription="@string/image"
+                            />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/tvPostDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_toEndOf="@+id/flMyPost"
+                        android:fontFamily="@font/manrope_bold"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="1sp"
+                        android:text="@{@string/hash_sign.concat(String.valueOf(model.order_id))}"
+                        android:textColor="@color/blakish"
+                        android:textSize="16sp"
+                        tools:text="Which is the system of farming in which the farmer is directly related to the state?" />
+
+                    <TextView
+                        android:id="@+id/dateTime"
+                        android:layout_width="205dp"
+                        android:layout_height="16dp"
+                        android:layout_below="@+id/tvPostDesc"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_toEndOf="@+id/flMyPost"
+                        android:fontFamily="@font/manrope_regular"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="-2sp"
+                        android:textColor="@color/gray_strike_through"
+                        android:textSize="13sp"
+                        tools:text="Posted on: 15 Jul 2018" />
+                </RelativeLayout>
+
+
+                <View
+                    android:id="@+id/order_date_separator"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.4dp"
+                    android:layout_below="@+id/rlContent"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/line_dotted" />
+
+                <RelativeLayout
+                    android:id="@+id/llActions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/order_date_separator"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/rlLikes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".8">
+
+                        <ImageView
+                            android:id="@+id/ivLike"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/ic_like" />
+
+                        <TextView
+                            android:id="@+id/tvLikes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/_2sdp"
+                            android:layout_toEndOf="@+id/ivLike"
+                            android:text="2 Likes"
+                            android:textColor="@color/gray" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlComments"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_weight="1.2">
+
+                        <ImageView
+                            android:id="@+id/ivComment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/ic_comment" />
+
+                        <TextView
+                            android:id="@+id/tvComment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/_2sdp"
+                            android:layout_toEndOf="@+id/ivComment"
+                            android:textColor="@color/gray"
+                            tools:text="1132 Comments" />
+                    </RelativeLayout>
+
+
+
+                </RelativeLayout>
+
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp">
+
+            <TextView
+                android:id="@+id/tvGoToPosts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/ivNext1"
+                android:fontFamily="@font/manrope_regular"
+                android:text="@string/view_my_post"
+                android:textColor="@color/weather_orange"
+                android:textSize="@dimen/_12ssp" />
+
+            <ImageView
+                android:id="@+id/ivNext1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_5sdp"
+                app:srcCompat="@drawable/ic_arrow_right" />
+
+            <LinearLayout
+                android:id="@+id/llCreatePost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner_8_solid_orange"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_8sdp">
+
+                <TextView
+                    android:id="@+id/btnShopNowPlus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:gravity="center_vertical"
+                    android:text="+ "
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    android:id="@+id/btnShopNow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/btnShopNowPlus"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:gravity="center_vertical"
+                    android:text="@string/post_now"
+                    android:textColor="@color/orange" />
+            </LinearLayout>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:background="@color/gray_stroke" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
