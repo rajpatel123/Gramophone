@@ -130,7 +130,6 @@ class ProductSKUOfferAdapter(
             mBinding.tvFreebietext.visibility = View.GONE
         }
 
-
         mBinding.radioBtn.setOnClickListener {
             mSKUOfferList[lastSelectPosition]?.selected = false
             lastSelectPosition = position
