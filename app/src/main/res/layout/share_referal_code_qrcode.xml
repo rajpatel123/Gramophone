@@ -94,7 +94,7 @@
                             android:onClick="@{()->rvm.onDownloadQRClick()}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:scaleType="fitCenter"
+                            android:scaleType="fitXY"
                             android:src="@drawable/ic_download_new" />
                     </androidx.cardview.widget.CardView>
 
