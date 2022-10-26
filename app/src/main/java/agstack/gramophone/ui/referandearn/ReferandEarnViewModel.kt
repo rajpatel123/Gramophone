@@ -77,6 +77,15 @@ class ReferandEarnViewModel @Inject constructor(
         getNavigator()?.share(currentShareOption,gramCashResponseData.get()?.share_message)
     }
 
+    fun onShareReferalClick(){
+        currentShareOption = IntentKeys.OtherShareKey
+        getNavigator()?.shareReferalCode(currentShareOption,gramCashResponseData.get()?.share_message,gramCashResponseData.get()?.referral_code)
+    }
+
+    fun onReferralCodeClick(){
+getNavigator()?.onReferralCodeClick(gramCashResponseData.get()?.referral_code!!)
+    }
+
     fun onWhatsappShareClick(){
         currentShareOption = IntentKeys.WhatsAppShareKey
         getNavigator()?.share(currentShareOption,gramCashResponseData.get()?.share_message)
@@ -96,7 +105,7 @@ class ReferandEarnViewModel @Inject constructor(
                 gramCashResponseData.set(gramCashResponse)
                generateQrCode(gramCashResponsefromAPI.body()?.gpApiResponseData?.referral_code!!)
 
-                getNavigator()?.showToast(gramCashResponsefromAPI.body()?.gpApiMessage)
+              //  getNavigator()?.showToast(gramCashResponsefromAPI.body()?.gpApiMessage)
             } else {
                 progressLoader.set(false)
                 getNavigator()?.showToast(gramCashResponsefromAPI.body()?.gpApiMessage)

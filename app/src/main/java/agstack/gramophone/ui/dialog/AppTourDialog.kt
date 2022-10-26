@@ -104,10 +104,6 @@ class AppTourDialog : DialogFragment() {
 
         binding?.tvNextMenu?.setOnClickListener {
             binding?.llMenu?.visibility = View.GONE
-            binding?.llHome?.visibility = View.VISIBLE
-        }
-
-        binding?.tvNextHome?.setOnClickListener {
             binding?.llHome?.visibility = View.GONE
             binding?.llOthers?.visibility = View.VISIBLE
             binding?.llCommunity?.visibility = View.VISIBLE
@@ -116,6 +112,16 @@ class AppTourDialog : DialogFragment() {
             binding?.tvTitleCommon?.text = getString(R.string.community)
             binding?.tvDescriptionCommon?.text = getString(R.string.app_tour_descrition_community)
         }
+
+        /*binding?.tvNextHome?.setOnClickListener {
+            binding?.llHome?.visibility = View.GONE
+            binding?.llOthers?.visibility = View.VISIBLE
+            binding?.llCommunity?.visibility = View.VISIBLE
+
+            binding?.ivThumbCommon?.setImageResource(R.drawable.ic_app_tour_community)
+            binding?.tvTitleCommon?.text = getString(R.string.community)
+            binding?.tvDescriptionCommon?.text = getString(R.string.app_tour_descrition_community)
+        }*/
 
         binding?.tvNextCommunity?.setOnClickListener {
             when {
@@ -137,7 +143,7 @@ class AppTourDialog : DialogFragment() {
 
                     binding?.ivThumbCommon?.setImageResource(R.drawable.ic_app_tour_trade)
                     binding?.tvNextCommunity?.text = getString(R.string.app_tour_done)
-                    binding?.tvTitleCommon?.text = getString(R.string.app_tour_title_trade)
+                    binding?.tvTitleCommon?.text = getString(R.string.vyapar)
                     binding?.tvDescriptionCommon?.text =
                         getString(R.string.app_tour_descrition_trade)
                 }

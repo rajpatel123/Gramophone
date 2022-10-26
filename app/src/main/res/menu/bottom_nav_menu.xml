@@ -19,6 +19,6 @@
     <item
         android:id="@+id/navigation_trade"
         android:icon="@drawable/ic_menu_trade"
-        android:title="@string/trade" />
+        android:title="@string/vyapar" />
 
 </menu>

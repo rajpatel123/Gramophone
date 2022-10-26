@@ -17,8 +17,7 @@ import kotlin.math.roundToInt
 class ProductSKUOfferAdapter(
     SKUOfferList: ArrayList<PromotionListItem?>,
     val selectedSku: ProductSkuListItem,
-    val selectedOfferProduct: ((PromotionListItem) -> Unit)?,
-    val onOfferDetailClicked: ((PromotionListItem) -> Unit)?,
+    quantity : Int
 ) :
     RecyclerView.Adapter<ProductSKUOfferAdapter.CustomViewHolder>() {
     var mSKUOfferList = SKUOfferList
@@ -26,6 +25,7 @@ class ProductSKUOfferAdapter(
     var selectedProduct: ((PromotionListItem) -> Unit)? = null
     var onViewAllClicked: ((PromotionListItem) -> Unit)? = null
     var lastSelectPosition: Int = 0
+    var quantitySelected =quantity
 
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
@@ -54,10 +54,10 @@ class ProductSKUOfferAdapter(
 
         var selectedSKUMrpPrice = 0.0f
         if (selectedSku.mrpPrice != null) {
-            selectedSKUMrpPrice = selectedSku.mrpPrice.toFloat()
+            selectedSKUMrpPrice = selectedSku.mrpPrice.toFloat() *quantitySelected
         } else {
             if (selectedSku.salesPrice != null) {
-                selectedSKUMrpPrice = selectedSku.salesPrice.toFloat()
+                selectedSKUMrpPrice = selectedSku.salesPrice.toFloat() *quantitySelected
             }
         }
         if (model.benefit != null && model.benefit?.promotionType.equals(Constants.DISCOUNT)) {
@@ -125,11 +125,11 @@ class ProductSKUOfferAdapter(
         mBinding.radioBtn.setOnClickListener {
 
             selectedProduct?.invoke(model)
-            selectedOfferProduct?.invoke(model)
+
         }
         mBinding.tvViewdetail.setOnClickListener {
             onViewAllClicked?.invoke(model)
-            onOfferDetailClicked?.invoke(model)
+
         }
 
 

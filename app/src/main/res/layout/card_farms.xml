@@ -126,7 +126,7 @@
                         android:lines="1"
                         android:maxLength="50"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp"
+                        android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
                         android:text='@{item[0].farm_ref_id}'
                         android:visibility='@{item[0].farm_ref_id == null ? View.GONE : View.VISIBLE}'
@@ -143,7 +143,7 @@
                         android:fontFamily="@font/manrope_medium"
                         tools:text='बुआई की तारीख : Jul 15, 2022'
                         android:textColor="@color/oldmrpcolor"
-                        android:textSize="@dimen/_12ssp"
+                        android:textSize="@dimen/_10ssp"
                         android:text='@{@string/crop_sowing_date(item[0].crop_sowing_date)}'
                         android:visibility='@{item[0].crop_sowing_date == null ? View.GONE : View.VISIBLE}' />
 
@@ -158,7 +158,7 @@
                         android:fontFamily="@font/manrope_medium"
                         tools:text='बुआई का समय : Jul 15, 2022 To Jul 25, 2022'
                         android:textColor="@color/oldmrpcolor"
-                        android:textSize="@dimen/_12ssp"
+                        android:textSize="@dimen/_10ssp"
                         android:text='@{@string/crop_duration(item[0].duration)}'
                         android:visibility='@{item[0].duration == null ? View.GONE : View.VISIBLE}' />
 
@@ -173,7 +173,7 @@
                         android:fontFamily="@font/manrope_medium"
                         tools:text='खेत का एरिया : 22 Acre'
                         android:textColor="@color/oldmrpcolor"
-                        android:textSize="@dimen/_12ssp"
+                        android:textSize="@dimen/_10ssp"
                         android:text='@{@string/farm_area(item[0].farm_area)}'
                         android:visibility='@{item[0].farm_area == null ? View.GONE : View.VISIBLE}' />
 
@@ -188,9 +188,9 @@
                         android:fontFamily="@font/manrope_medium"
                         tools:text='वर्तमान चरण: 22 Days'
                         android:textColor="@color/oldmrpcolor"
-                        android:textSize="@dimen/_12ssp"
-                        android:text='@{@string/stage_name(item[0].days, item[0].stage_name)}'
-                        android:visibility='@{item[0].stage_name == null ? View.GONE : View.VISIBLE}' />
+                        android:textSize="@dimen/_10ssp"
+                        android:visibility='@{item[0].stage_name == null ? View.GONE : View.VISIBLE}'
+                        android:text='@{(item[0].farm_ref_id != null) ? @string/stage_name(item[0].days, item[0].stage_name) : @string/stage_name_modal_farm(item[0].days, item[0].stage_name) }' />
 
                 </LinearLayout>
 

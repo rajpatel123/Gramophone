@@ -36,7 +36,7 @@
     <string name="new_articles">New Articles</string>
     <string name="popular_products_in_indore">Popular Products in Indore</string>
     <string name="home">Home</string>
-    <string name="trade">Trade</string>
+    <string name="vyapar">Vyapar</string>
     <string name="community">Community</string>
     <string name="me">Me</string>
     <string name="back">Back</string>
@@ -344,7 +344,7 @@
     <string name="my_referrals">My Referrals</string>
     <string name="you_have_no_referral">You have no referral yet!</string>
     <string name="share_earn_referral_msg">To earn more points please refer app to your friends.</string>
-    <string name="refer_a_friend">Refer a friend</string>
+    <string name="refer_a_friend">Refer A Friend</string>
     <string name="available">Available</string>
     <string name="pending">Pending</string>
     <string name="all">All</string>
@@ -421,11 +421,10 @@
     <string name="app_tour_descrition_menu">Direct access to most used App functionalities and features</string>
     <string name="app_tour_descrition_youtube">Watch the video to learn how to use Gramophone App</string>
     <string name="app_tour_descrition_community">Connect &amp; engage with farmers and Agri experts via social media posts</string>
-    <string name="app_tour_descrition_profile">Sell/Buy your crop easily by connecting with the right buyers/sellers</string>
+    <string name="app_tour_descrition_profile">View all features &amp; activities specific to your Gramophone account</string>
     <string name="app_tour_descrition_trade">Sell/Buy your crop easily by connecting with the right buyers/sellers</string>
     <string name="app_tour_title_menu">Menu</string>
     <string name="app_tour_title_youtube">App demo</string>
-    <string name="app_tour_title_trade">Vyapar</string>
     <string name="app_tour_done">DONE</string>
     <string name="update">Update</string>
     <string name="enter_6_digit_code">Enter 6 digit code we have sent on</string>
@@ -488,10 +487,11 @@
     <string name="no_orders_yet">No orders yet!</string>
     <string name="download_invoice">Download Invoice</string>
 
-    <string name="crop_duration">"बुआई का समय : %1$s"</string>
-    <string name="crop_sowing_date">"बुआई की तारीख : %1$s"</string>
-    <string name="farm_area">"खेत का एरिया : %1$s"</string>
-    <string name="stage_name">"वर्तमान चरण : %1$s days &#8226; %2$s"</string>
+    <string name="crop_duration">"बुआई का समय: %1$s"</string>
+    <string name="crop_sowing_date">"बुआई की तारीख: %1$s"</string>
+    <string name="farm_area">"खेत का एरिया: %1$s"</string>
+    <string name="stage_name">"वर्तमान चरण: %1$s &#8226; %2$s"</string>
+    <string name="stage_name_modal_farm">"अनुमानित चरण: %1$s &#8226; %2$s"</string>
     <string name="added_one_farm">"1 खेत जोड़ा गया है"</string>
     <string name="added_farm_count">"%1$s खेत जोड़े गये है"</string>
     <string name="message_select_crop">Please select a crop</string>
@@ -531,6 +531,9 @@
     <string name="order_has_been_assigned">has been assigned to deliver your order!</string>
     <string name="feedback_submit_success_alert_title">Success !</string>
     <string name="feedback_submit_success_alert_message">Feedback successfully submitted.</string>
+    <string name="no_connection">No Connection!</string>
+    <string name="no_internet_message">There seems to be no internet connection. Try checking things out</string>
+    <string name="copied">Copied</string>
     <string name="suggestions">Suggestions</string>
     <string name="search_here">Search here</string>
     <string name="please_select_date">Please select showing date</string>
@@ -544,6 +547,11 @@
     <string name="trending_articles">Trending Articles</string>
     <string name="article_read">&#160;Read</string>
     <string name="article_views">&#160;Views</string>
+    <string name="farmer_image">farmer image</string>
+    <string name="date_of_sowing">Date of sowing</string>
+    <string name="area">Area</string>
+    <string name="old_farms">पुराने खेत देखे</string>
+    <string name="old_farms_title">पुराने खेत</string>
     <string name="join_community">Join 5000+ farmers\nand get quick solution\nfrom agri experts</string>
     <string name="get_advise">Get Expert advice quickly</string>
     <string name="connect_farmer">Connect with farmers around you</string>
