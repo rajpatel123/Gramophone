@@ -27,6 +27,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_tags.view.*
 import java.util.*
@@ -161,8 +162,14 @@ class CommunityPostAdapter(val dataList: List<Data>?, isOther: Boolean) : Recycl
         }
 
         if (data.liked) {
+            holder.itemPostBinding.tvLikes.setTextColor(
+                ContextCompat.getColor(holder.itemPostBinding.root.context,
+                R.color.red))
             holder.itemPostBinding.ivLike.setImageResource(R.drawable.ic_liked)
         } else {
+            holder.itemPostBinding.tvLikes.setTextColor(
+                ContextCompat.getColor(holder.itemPostBinding.root.context,
+                    R.color.gray))
             holder.itemPostBinding.ivLike.setImageResource(R.drawable.ic_like)
         }
 
@@ -207,7 +214,11 @@ class CommunityPostAdapter(val dataList: List<Data>?, isOther: Boolean) : Recycl
         }
 
         holder.itemPostBinding.ivMenu.setOnClickListener {
-            showHideMenu(data, show = true, position)
+            if (dataList?.get(position)?.isSelected == true){
+                showHideMenu(data, show = false, position)
+            }else{
+                showHideMenu(data, show = true, position)
+            }
 
         }
 

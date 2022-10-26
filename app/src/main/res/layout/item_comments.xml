@@ -111,8 +111,8 @@
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:layout_below="@+id/rel_expert"
-               android:layout_marginTop="@dimen/_8ssp"
-               android:layout_marginBottom="@dimen/_10sdp"
+               android:layout_marginTop="@dimen/_4ssp"
+               android:layout_marginBottom="@dimen/_15sdp"
                android:text="@{model.commentDuration}"
                android:textColor="@color/gray"
                android:textSize="@dimen/_15sdp" />
