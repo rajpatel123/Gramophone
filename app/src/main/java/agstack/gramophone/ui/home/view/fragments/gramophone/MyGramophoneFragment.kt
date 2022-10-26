@@ -293,6 +293,9 @@ class MyGramophoneFragment :
               openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
                   putString(Constants.PAGE_URL,
                       BuildConfig.BASE_URL_SINGLE_ARTICLE+"/")
+
+                  putString(Constants.PAGE_SOURCE,
+                      "gramo")
               })
         }
 

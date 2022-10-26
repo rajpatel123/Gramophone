@@ -34,7 +34,7 @@ class ArticlesWebViewModel @Inject constructor(
             getNavigator()?.loadUrl(webUrl)
 
 
-        if (webUrl.isNotNullOrEmpty()) {
+        if (webUrl.isNotNullOrEmpty() && bundle.isNotNull() && bundle?.containsKey(Constants.PAGE_SOURCE) == true) {
             viewModelScope.launch {
                 delay(1000)
                 getNavigator()?.reload()
