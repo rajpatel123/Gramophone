@@ -24,8 +24,8 @@
 
         <FrameLayout
             android:background="@drawable/rounded_corner_20_solid_white"
-            android:layout_width="@dimen/_80sdp"
-            android:layout_height="@dimen/_80sdp"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
             android:layout_gravity="center"
             android:padding="@dimen/_2sdp">
 
@@ -44,10 +44,9 @@
                 android:id="@+id/imgSelected"
                 android:layout_width="@dimen/_24sdp"
                 android:layout_height="@dimen/_24sdp"
-                android:layout_gravity="bottom"
-                android:layout_margin="@dimen/_4sdp"
+                android:layout_gravity="right"
                 android:contentDescription="@string/image"
-                android:src="@drawable/ic_selction_tick"
+                android:src="@drawable/ic_crop_selected"
                 android:visibility="@{model.selected? View.VISIBLE:View.GONE}" />
 
         </FrameLayout>

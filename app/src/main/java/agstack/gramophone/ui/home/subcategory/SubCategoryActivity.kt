@@ -105,11 +105,19 @@ class SubCategoryActivity :
                     subCategoryViewModel.subCategoryList,
                     subCategoryViewModel.brandsList,
                     subCategoryViewModel.cropsList,
-                    subCategoryViewModel.technicalDataList) { subCategoryIds, brandIds, cropIds, technicalIds ->
+                    subCategoryViewModel.technicalDataList) { subCategoryIds, brandIds, cropIds, technicalIds, totalFilterCount ->
                     subCategoryIdsArray = subCategoryIds
                     brandIdsArray = brandIds
                     cropIdsArray = cropIds
                     technicalIdsArray = technicalIds
+
+                    if (totalFilterCount > 0) {
+                        viewDataBinding.tvFilterCount.visibility = View.VISIBLE
+                        viewDataBinding.tvFilterCount.text = totalFilterCount.toString()
+                    } else {
+                        viewDataBinding.tvFilterCount.visibility = View.GONE
+                        viewDataBinding.tvFilterCount.text = ""
+                    }
 
                     subCategoryViewModel.getAllProducts(sortBy,
                         subCategoryIds,
@@ -233,7 +241,11 @@ class SubCategoryActivity :
         )
     }
 
-    override fun updateOfferApplicabilityOnDialog(isOfferApplicable: Boolean, promotionId: String?, message: String) {
+    override fun updateOfferApplicabilityOnDialog(
+        isOfferApplicable: Boolean,
+        promotionId: String?,
+        message: String,
+    ) {
         if (bottomSheet.isNotNull())
             bottomSheet?.updateDialog(isOfferApplicable, promotionId!!, message)
     }

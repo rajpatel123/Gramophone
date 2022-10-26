@@ -108,7 +108,7 @@
     <string name="new_articles">New Articles</string>
     <string name="popular_products_in_indore">Popular Products in Indore</string>
     <string name="home">Home</string>
-    <string name="trade">Trade</string>
+    <string name="vyapar">Vyapar</string>
     <string name="community">Community</string>
     <string name="me">Me</string>
     <string name="back">Back</string>
@@ -441,9 +441,20 @@
     <string name="search_here">Search here</string>
     <string name="sorry_no_result_found">Sorry!No result found!</string>
     <string name="please_try_another_way">We\'re sorry what you are looking for. Please try another way.</string>
+    <string name="myfarm">My Farms(%d)</string>
     <string name="no_connection">No Connection!</string>
     <string name="no_internet_message">There seems to be no internet connection. Try checking things out</string>
     <string name="copied">Copied</string>
+    <string name="farmer_image">farmer image</string>
+    <string name="date_of_sowing">Date of sowing</string>
+    <string name="area">Area</string>
+    <string name="old_farms">पुराने खेत देखे</string>
+    <string name="old_farms_title">पुराने खेत</string>
+    <string name="crop_duration">"बुआई का समय: %1$s"</string>
+    <string name="crop_sowing_date">"बुआई की तारीख: %1$s"</string>
+    <string name="farm_area">"खेत का एरिया: %1$s"</string>
+    <string name="stage_name">"वर्तमान चरण: %1$s &#8226; %2$s"</string>
+    <string name="posts">Posts</string>
 
 </resources>
 

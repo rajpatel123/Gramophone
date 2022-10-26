@@ -1,33 +1,36 @@
 package agstack.gramophone.ui.articles
 
-import agstack.gramophone.BuildConfig
+import agstack.gramophone.BR
 import agstack.gramophone.R
-import agstack.gramophone.utils.Constants
-import android.app.Activity
+import agstack.gramophone.base.BaseActivityWrapper
+import agstack.gramophone.databinding.ActivityArticlesBinding
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.webkit.WebResourceRequest
+import android.view.ViewTreeObserver
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.amnix.xtension.extensions.isNotNullOrEmpty
+import androidx.activity.viewModels
+import com.amnix.xtension.extensions.isNotNull
 import kotlinx.android.synthetic.main.activity_articles.*
 
-class ArticlesWebViewActivity : Activity() {
+class ArticlesWebViewActivity :
+    BaseActivityWrapper<ActivityArticlesBinding, ArticlesWebViewNavigator, ArticlesWebViewModel>(),
+    ArticlesWebViewNavigator {
 
+    private val articlesWebViewModel: ArticlesWebViewModel by viewModels()
+    private var mOnScrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_articles)
-        setUp()
+        setupUi()
+        articlesWebViewModel.getBundleData()
     }
 
-    private fun setUp() {
-        val webSettings: WebSettings = webView.settings
-        val bundle = intent.extras
-        if (bundle?.containsKey(Constants.PAGE_URL)!! && bundle.getString(Constants.PAGE_URL) != null) {
-            val pageURL = bundle.getString(Constants.PAGE_URL, "")
+    private fun setupUi() {
+        val webSettings: WebSettings = viewDataBinding.webView.settings
+        if (webSettings.isNotNull()) {
             webSettings.javaScriptEnabled = true
             webSettings.domStorageEnabled = true
             webSettings.loadWithOverviewMode = true
@@ -39,7 +42,7 @@ class ArticlesWebViewActivity : Activity() {
             webSettings.loadWithOverviewMode = true
             webSettings.setSupportMultipleWindows(true)
             webSettings.javaScriptCanOpenWindowsAutomatically = false
-            webView.webViewClient = object : WebViewClient() {
+            viewDataBinding.webView.webViewClient = object : WebViewClient() {
 
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                     super.onPageStarted(view, url, favicon)
@@ -59,21 +62,29 @@ class ArticlesWebViewActivity : Activity() {
                     progressBar.visibility = View.GONE
                 }
             }
+        }
+        viewDataBinding.webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+        viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
 
-            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
-            if (pageURL.isNotNullOrEmpty())
-                webView.loadUrl(pageURL)
+        viewDataBinding.viewBack.setOnClickListener {
+            onKeyDown(KeyEvent.KEYCODE_BACK, KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK))
         }
 
-        viewBack.setOnClickListener {
-            val keyEvent = KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK)
-            onKeyDown(KeyEvent.KEYCODE_BACK, keyEvent)
+        viewDataBinding.swipeRefresh.viewTreeObserver
+            .addOnScrollChangedListener(ViewTreeObserver.OnScrollChangedListener {
+                viewDataBinding.swipeRefresh.isEnabled = viewDataBinding.webView.scrollY == 0
+            }
+                .also { mOnScrollChangedListener = it })
+
+        viewDataBinding.swipeRefresh.setOnRefreshListener {
+            viewDataBinding.webView.reload()
+            viewDataBinding.swipeRefresh.isRefreshing = false
         }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-            webView.goBack()
+        if (keyCode == KeyEvent.KEYCODE_BACK && viewDataBinding.webView.canGoBack()) {
+            viewDataBinding.webView.goBack()
             return true
         } else {
             finish()
@@ -82,4 +93,36 @@ class ArticlesWebViewActivity : Activity() {
         // system behavior (probably exit the activity)
         return super.onKeyDown(keyCode, event)
     }
+
+    override fun loadUrl(url: String) {
+        viewDataBinding.webView.loadUrl(url)
+    }
+
+    override fun reload() {
+        viewDataBinding.webView.reload()
+    }
+
+    override fun onStop() {
+        viewDataBinding.swipeRefresh.viewTreeObserver.removeOnScrollChangedListener(
+            mOnScrollChangedListener)
+        super.onStop()
+    }
+
+    override fun getBundle(): Bundle? {
+        return intent?.extras
+    }
+
+    override fun getLayoutID(): Int {
+        return R.layout.activity_articles
+    }
+
+    override fun getBindingVariable(): Int {
+        return BR.viewModel
+    }
+
+    override fun getViewModel(): ArticlesWebViewModel {
+        return articlesWebViewModel
+    }
+
+
 }

@@ -309,6 +309,19 @@
                             android:textSize="14sp" />
 
                         <TextView
+                            android:layout_toStartOf="@+id/tvDiscount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="42dp"
+                            android:layout_below="@+id/tvPrice"
+                            android:fontFamily="@font/manrope_bold"
+                            android:gravity="center_vertical"
+                            android:lineSpacingExtra="1sp"
+                            android:text="@string/minus"
+                            android:textColor="@color/green_medium"
+                            android:textSize="16sp"
+                            tools:text="-" />
+
+                        <TextView
                             android:id="@+id/tvDiscount"
                             android:layout_width="wrap_content"
                             android:layout_height="42dp"
@@ -317,12 +330,12 @@
                             android:fontFamily="@font/manrope_bold"
                             android:gravity="center_vertical"
                             android:lineSpacingExtra="1sp"
-                            android:paddingStart="16dp"
                             android:paddingEnd="16dp"
-                            android:text="@{@string/minus_rupee_symbol.concat(String.valueOf(viewModel.discount))}"
+                            android:paddingStart="0dp"
+                            app:reformatFloatPriceToInt="@{viewModel.discount}"
                             android:textColor="@color/green_medium"
                             android:textSize="16sp"
-                            tools:text="-₹ 0" />
+                            tools:text="₹ 0" />
 
                         <RelativeLayout
                             android:id="@+id/rlGramCoins"
@@ -662,7 +675,8 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{viewModel.progress == true ? View.VISIBLE : View.GONE}">
+            android:visibility="@{viewModel.progress == true ? View.VISIBLE : View.GONE}"
+            app:bg_color="@{viewModel.isProgressBgTransparent}">
 
             <ProgressBar
                 android:id="@+id/progress"

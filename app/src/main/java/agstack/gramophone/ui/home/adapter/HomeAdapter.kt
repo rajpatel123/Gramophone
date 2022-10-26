@@ -19,7 +19,6 @@ import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.shop.ShopByActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.*
-import agstack.gramophone.ui.webview.view.WebViewActivity
 import agstack.gramophone.utils.Constants
 import android.content.Context
 import android.content.Intent
@@ -414,11 +413,17 @@ class HomeAdapter(
 
                         },
                         {
+                            val selectedCrop = CropData(
+                                cropId = it[0].crop_id,
+                                cropName = it[0].crop_name,
+                                cropImage = it[0].crop_image,
+                            )
                             openActivity(
                                 holder.binding.itemView.context,
-                                SelectCropActivity::class.java,
-                                null
-                            )
+                                AddFarmActivity::class.java,
+                                Bundle().apply {
+                                    putParcelable("selectedCrop", selectedCrop)
+                                })
                         },
                     )
 
@@ -437,11 +442,19 @@ class HomeAdapter(
                         )
                     }
                 } else {
-                    holder.binding.itemView.visibility = View.GONE
+                    holder.binding.itemView.visibility = View.VISIBLE
                 }
 
                 holder.binding.viewAllFarms.setOnClickListener {
                     openActivity(holder.itemView.context, ViewAllFarmsActivity::class.java, null)
+                }
+
+                holder.binding.addFarmWrapper.addFarmTitleLayout.setOnClickListener {
+                    openActivity(holder.itemView.context, SelectCropActivity::class.java, null)
+                }
+
+                holder.binding.addFarmWrapper.txtWhyAddFarm.setOnClickListener {
+                    openActivity(holder.itemView.context, WhyAddFarmActivity::class.java, null)
                 }
             }
             is ArticlesViewHolder -> {
@@ -455,7 +468,7 @@ class HomeAdapter(
                                     ArticlesWebViewActivity::class.java,
                                     Bundle().apply {
                                         putString(Constants.PAGE_URL,
-                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + it)
+                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + "/" + it)
                                     }
                                 )
                             }
@@ -471,7 +484,7 @@ class HomeAdapter(
                                     ArticlesWebViewActivity::class.java,
                                     Bundle().apply {
                                         putString(Constants.PAGE_URL,
-                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + it)
+                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + "/" + it)
                                     }
                                 )
                             }
@@ -487,7 +500,7 @@ class HomeAdapter(
                                     ArticlesWebViewActivity::class.java,
                                     Bundle().apply {
                                         putString(Constants.PAGE_URL,
-                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + it)
+                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + "/" + it)
                                     }
                                 )
                             }

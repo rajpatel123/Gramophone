@@ -8,22 +8,32 @@
             name="viewModel"
             type="agstack.gramophone.ui.home.view.fragments.trading.viewmodel.TradingViewModel" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="@dimen/_16sdp"
+        android:orientation="vertical"
+        android:gravity="center"
         tools:context=".ui.home.view.fragments.TradeFragment">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/manrope_medium"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/gray"
+            android:text="Upcoming soon!!" />
 
         <TextView
-            android:id="@+id/textView"
+            android:layout_marginTop="@dimen/_4sdp"
             android:layout_width="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/manrope_regular"
             android:layout_height="wrap_content"
-            android:text="Trade Fragment"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:textSize="@dimen/_11ssp"
+            android:text="Vyapar will enable you to sell/buy your crop easily by connecting with the right buyers/sellers" />
+    </LinearLayout>
 </layout>

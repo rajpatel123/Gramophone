@@ -14,7 +14,9 @@ import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
+import com.amnix.xtension.extensions.isNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -85,27 +87,22 @@ class MarketFragmentViewModel
     fun getBanners() {
         viewModelScope.launch {
             try {
-                var bannerResponse = SharedPreferencesHelper.instance?.getParcelable(
+                allBannerResponse = SharedPreferencesHelper.instance?.getParcelable(
                     SharedPreferencesKeys.BANNER_DATA, BannerResponse::class.java
                 )
-                allBannerResponse = bannerResponse
-                if (bannerResponse?.gpApiStatus != Constants.GP_API_STATUS) {
+                if (allBannerResponse.isNull() || allBannerResponse?.gpApiStatus != Constants.GP_API_STATUS) {
                     val response = productRepository.getBanners()
                     if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS) {
-                        bannerResponse = response.body()
-                        allBannerResponse = bannerResponse
+                        allBannerResponse = response.body()
                         SharedPreferencesHelper.instance?.putParcelable(
                             SharedPreferencesKeys.BANNER_DATA,
-                            bannerResponse!!
+                            allBannerResponse!!
                         )
                     }
                 }
                 notifyAdapter()
             } catch (ex: Exception) {
-                when (ex) {
-                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
-                }
+                ex.printStackTrace()
             }
         }
     }
@@ -130,11 +127,6 @@ class MarketFragmentViewModel
             try {
                 val response = productRepository.getCategories()
                 categoryResponse = response.body()
-                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS &&
-                    response.body()?.gp_api_response_data?.product_app_categories_list != null
-                ) {
-
-                }
                 notifyAdapter()
             } catch (ex: Exception) {
                 when (ex) {
@@ -275,8 +267,17 @@ class MarketFragmentViewModel
                                 if (item.min_to_read.isNotNullOrEmpty()) item.min_to_read else ""
                             val postViewCount =
                                 if (item.post_views.isNotNullOrEmpty()) item.post_views else ""
-                            val tag =
-                                if (item.acf != null && item.acf.category_name.isNotNullOrEmpty()) item.acf.category_name else "N.A"
+                            var tag = ""
+                            if (item.acf != null && item.acf !is Boolean) {
+                                tag = try {
+                                    val categoryName: String =
+                                        (item.acf as Map<*, *>)["category_name"] as String
+                                    if (categoryName.isNotNullOrEmpty()) categoryName else ""
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                    ""
+                                }
+                            }
                             var imageUrl = ""
                             try {
                                 if (item._embedded != null && item._embedded.featuredmedia != null && item._embedded.featuredmedia.size > 0) {
@@ -335,8 +336,17 @@ class MarketFragmentViewModel
                                 if (item.min_to_read.isNotNullOrEmpty()) item.min_to_read else ""
                             val postViewCount =
                                 if (item.post_views.isNotNullOrEmpty()) item.post_views else ""
-                            val tag =
-                                if (item.acf != null && item.acf.category_name.isNotNullOrEmpty()) item.acf.category_name else "N.A"
+                            var tag = ""
+                            if (item.acf != null && item.acf !is Boolean) {
+                                tag = try {
+                                    val categoryName: String =
+                                        (item.acf as Map<*, *>)["category_name"] as String
+                                    if (categoryName.isNotNullOrEmpty()) categoryName else ""
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                    ""
+                                }
+                            }
                             val imageUrl =
                                 if (item.featured_image.isNotNullOrEmpty()) item.featured_image else ""
 
@@ -381,8 +391,17 @@ class MarketFragmentViewModel
                                 if (item.min_to_read.isNotNullOrEmpty()) item.min_to_read else ""
                             val postViewCount =
                                 if (item.post_views.isNotNullOrEmpty()) item.post_views else ""
-                            val tag =
-                                if (item.acf != null && item.acf.category_name.isNotNullOrEmpty()) item.acf.category_name else "N.A"
+                            var tag = ""
+                            if (item.acf != null && item.acf !is Boolean) {
+                                tag = try {
+                                    val categoryName: String =
+                                        (item.acf as Map<*, *>)["category_name"] as String
+                                    if (categoryName.isNotNullOrEmpty()) categoryName else ""
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                    ""
+                                }
+                            }
                             val imageUrl =
                                 if (item.featured_image.isNotNullOrEmpty()) item.featured_image else ""
 

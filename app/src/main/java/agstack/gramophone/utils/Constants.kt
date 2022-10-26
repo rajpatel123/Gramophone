@@ -7,6 +7,7 @@ import android.content.Context
 
 object Constants {
 
+    val PAGE_SOURCE : String="gram"
     val GET_SELECTED_TAGS: Int= 32
     val IsUrlForPlayStore: String="play.google.com"
     val sharedContent: String="sharedContent"
@@ -128,6 +129,7 @@ object Constants {
     const val PAST = "past"
     const val HELP_PHONE_NUMBER: String = "customer_support_no"
     const val LANG: String = "lang"
+    const val GP_TOKEN: String = "gp_token"
     const val PAGE_URL: String = "url"
     const val PAGE_TITLE: String = "title"
     const val FEATURED_ARTICLES = "featured_articles"
