@@ -188,7 +188,9 @@
                 <include
                     android:id="@+id/layoutMyPost"
                     layout="@layout/gramophone_my_post"/>
-                <include layout="@layout/gramophone_my_referral"/>
+                <include
+                    android:id="@+id/layoutReferral"
+                    layout="@layout/gramophone_my_referral"/>
 
 
                 <RelativeLayout
