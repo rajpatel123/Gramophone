@@ -4,6 +4,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentMyGramophoneBinding
+import agstack.gramophone.ui.articles.ArticlesWebViewActivity
 import agstack.gramophone.ui.comments.view.CommentsActivity
 import agstack.gramophone.ui.farm.model.FarmResponse
 import agstack.gramophone.ui.farm.view.AddFarmActivity
@@ -13,6 +14,7 @@ import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActivity
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikeUpdate
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityHomeResponseModel
+import agstack.gramophone.ui.home.view.fragments.gramophone.model.MyGramophoneResponseModel
 import agstack.gramophone.ui.home.view.fragments.gramophone.viewmodel.MyGramophoneFragmentViewModel
 import agstack.gramophone.ui.order.model.Data
 import agstack.gramophone.ui.order.view.OrderListActivity
@@ -23,15 +25,15 @@ import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.view.activity.CreatePostActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.ArrayList
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -84,6 +86,7 @@ class MyGramophoneFragment :
         myGramophoneFragmentViewModel.getMyPost()
         myGramophoneFragmentViewModel.getPlacedOrder()
         myGramophoneFragmentViewModel.getFarms()
+        myGramophoneFragmentViewModel.getMyGramophoneData()
     }
 
     override fun getLayoutID(): Int {
@@ -129,13 +132,23 @@ class MyGramophoneFragment :
     }
 
     override fun updateCommunity(communityHomeResponseModel: CommunityHomeResponseModel) {
-        binding?.layoutMyPost?.myPostTitle?.text = String.format(getMessage(R.string.my_post),communityHomeResponseModel.data.size)
+        binding?.layoutMyPost?.myPostTitle?.text =
+            String.format(getMessage(R.string.my_post), communityHomeResponseModel.data.size)
         binding?.layoutMyPost?.tvPostDesc?.text = communityHomeResponseModel.data[0].description
-        binding?.layoutMyPost?.dateTime?.text = getMessage(R.string.posted_on).plus(" ").plus(communityHomeResponseModel.data[0].createdDate)
-        binding?.layoutMyPost?.tvLikes?.text = communityHomeResponseModel.data[0].likesCount.toString().plus(" ").plus(getMessage(R.string.like))
-        binding?.layoutMyPost?.tvComment?.text = communityHomeResponseModel.data[0].commentsCount.toString().plus(" ").plus(getMessage(R.string.comment_count))
-        if (communityHomeResponseModel.data[0].images!=null && communityHomeResponseModel.data[0].images.size>0)
-            Glide.with(this).load(communityHomeResponseModel.data[0].images[0].url).into(binding?.layoutMyPost?.ivPost!!)
+        binding?.layoutMyPost?.dateTime?.text = getMessage(R.string.posted_on).plus(" ")
+            .plus(communityHomeResponseModel.data[0].createdDate)
+        binding?.layoutMyPost?.tvLikes?.text =
+            communityHomeResponseModel.data[0].likesCount.toString().plus(" ")
+                .plus(getMessage(R.string.like))
+        binding?.layoutMyPost?.tvComment?.text =
+            communityHomeResponseModel.data[0].commentsCount.toString().plus(" ")
+                .plus(getMessage(R.string.comment_count))
+
+        binding?.layoutFavorite?.tvPostCount?.text = communityHomeResponseModel.data.size.toString()
+
+        if (communityHomeResponseModel.data[0].images != null && communityHomeResponseModel.data[0].images.size > 0)
+            Glide.with(this).load(communityHomeResponseModel.data[0].images[0].url)
+                .into(binding?.layoutMyPost?.ivPost!!)
 
         binding?.layoutMyPost?.llCreatePost?.setOnClickListener {
             openActivity(CreatePostActivity::class.java)
@@ -212,16 +225,40 @@ class MyGramophoneFragment :
     }
 
     override fun updateFarms(farms: FarmResponse) {
-        binding?.myFarmsTitle?.text = String.format(getMessage(R.string.myfarm),farms.gp_api_response_data.customer_farm.data.size)
-        binding?.layoutFarm?.txtCropCode?.text = farms.gp_api_response_data.customer_farm.data[0][0].farm_ref_id
-        binding?.layoutFarm?.txtDate?.text = String.format(getMessage(R.string.crop_sowing_date),farms.gp_api_response_data.customer_farm.data[0][0].crop_sowing_date)
-        binding?.layoutFarm?.txtArea?.text = String.format(getMessage(R.string.farm_area),farms.gp_api_response_data.customer_farm.data[0][0].farm_area)
-        binding?.layoutFarm?.txtDuration?.text = String.format(getMessage(R.string.crop_duration),farms.gp_api_response_data.customer_farm.data[0][0].duration)
-        binding?.layoutFarm?.txtStage?.text = String.format(getMessage(R.string.stage_name),farms.gp_api_response_data.customer_farm.data[0][0].stage_name)
+        Log.d("Raj", farms.toString())
+        binding?.myFarmsTitle?.text = String.format(
+            getMessage(R.string.myfarm),
+            farms.gp_api_response_data.customer_farm.data.size
+        )
+        binding?.layoutFarm?.txtCropName?.text =
+            farms.gp_api_response_data.customer_farm.data[0][0].crop_name
+        binding?.layoutFarm?.txtCropCode?.text =
+            farms.gp_api_response_data.customer_farm.data[0][0].farm_ref_id
+        binding?.layoutFarm?.txtDate?.text = String.format(
+            getMessage(R.string.crop_sowing_date),
+            farms.gp_api_response_data.customer_farm.data[0][0].crop_sowing_date
+        )
+        binding?.layoutFarm?.txtArea?.text = String.format(
+            getMessage(R.string.farm_area),
+            farms.gp_api_response_data.customer_farm.data[0][0].farm_area
+        )
 
-
-        if (farms.gp_api_response_data.customer_farm.data[0][0].crop_image!=null){
-            Glide.with(this).load(farms.gp_api_response_data.customer_farm.data[0][0].crop_image).into(binding?.layoutFarm?.imageSelectCorpItem!!)
+        if (farms.gp_api_response_data.customer_farm.data[0][0].duration != null)
+            binding?.layoutFarm?.txtDuration?.text = String.format(
+                getMessage(R.string.crop_duration),
+                farms.gp_api_response_data.customer_farm.data[0][0].duration
+            )
+        else {
+            binding?.layoutFarm?.txtDuration?.visibility = GONE
+        }
+        binding?.layoutFarm?.txtStage?.text = String.format(
+            getMessage(R.string.stage_name),
+            farms.gp_api_response_data.customer_farm.data[0][0].days,
+            farms.gp_api_response_data.customer_farm.data[0][0].stage_name
+        )
+        if (farms.gp_api_response_data.customer_farm.data[0][0].crop_image != null) {
+            Glide.with(this).load(farms.gp_api_response_data.customer_farm.data[0][0].crop_image)
+                .into(binding?.layoutFarm?.imageSelectCorpItem!!)
         }
 
         binding?.tvGoToFarms?.setOnClickListener {
@@ -231,6 +268,40 @@ class MyGramophoneFragment :
         binding?.btnAddfarm?.setOnClickListener {
             openActivity(AddFarmActivity::class.java)
         }
+
+        binding?.layoutFarm?.txtAddFarm?.setOnClickListener {
+            openActivity(AddFarmActivity::class.java)
+        }
+    }
+
+    override fun updateMyFavoriteSection(myGramophoneResponseModel: MyGramophoneResponseModel) {
+        binding?.layoutFavorite?.tvProductCount?.text =
+            myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.products.toString()
+        binding?.layoutFavorite?.tvArticleCount?.text =
+            myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles.toString()
+        binding?.layoutFavorite?.tvTVCount?.text =
+            myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.gramophone_tv.toString()
+
+        binding?.layoutFavorite?.llPostLinearLayout?.setOnClickListener {
+            if (activity is HomeActivity) {
+                (activity as HomeActivity).showCommunityFragment("gramophone")
+            }
+        }
+
+        binding?.layoutFavorite?.llArticleLinearLayout?.setOnClickListener {
+              openActivity(ArticlesWebViewActivity::class.java)
+        }
+
+        binding?.layoutFavorite?.llProductLinearLayout?.setOnClickListener {
+            if (activity is HomeActivity) {
+                (activity as HomeActivity).showHomeFragment()
+            }
+        }
+
+        binding?.layoutFavorite?.llTVLinearLayout?.setOnClickListener {
+
+        }
+
     }
 
 

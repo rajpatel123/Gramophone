@@ -3,6 +3,7 @@ package agstack.gramophone.ui.home.view.fragments.gramophone.viewmodel
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.community.CommunityRepository
+import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.data.repository.settings.SettingsRepository
 import agstack.gramophone.ui.farm.model.FarmRequest
@@ -25,7 +26,8 @@ class MyGramophoneFragmentViewModel
 @Inject constructor(
     private val productRepository: ProductRepository,
     private val settingsRepository: SettingsRepository,
-    private val communityRepository: CommunityRepository
+    private val communityRepository: CommunityRepository,
+    private val onBoardingRepository: OnBoardingRepository
 ) : BaseViewModel<MyGramophoneFragmentNavigator>() {
 
     fun onViewProfileClicked() {
@@ -160,6 +162,26 @@ class MyGramophoneFragmentViewModel
                 val response = productRepository.getFarmsData("active", FarmRequest("3", "1"))
                 if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS && response.body()?.gp_api_response_data != null ) {
                     getNavigator()?.updateFarms(response.body()!!)
+                }else{
+
+                }
+
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
+
+
+    fun getMyGramophoneData() {
+        viewModelScope.launch {
+            try {
+                val response = onBoardingRepository.getMyGramophoneData()
+                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS && response.body()?.gp_api_response_data != null ) {
+                    getNavigator()?.updateMyFavoriteSection(response.body()!!)
                 }else{
 
                 }

@@ -131,7 +131,7 @@
 
                 <include
                     android:id="@+id/layoutFarm"
-                    layout="@layout/card_farms"
+                    layout="@layout/card_gramo_farm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -229,19 +229,13 @@
                             android:fontFamily="@font/manrope_regular"
                             android:text="@string/gramophone_favoritr_desc"
                             android:textColor="@color/gray"
-                            android:textSize="@dimen/_12ssp"
-                            />
+                            android:textSize="@dimen/_12ssp" />
                     </LinearLayout>
                 </RelativeLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_10sdp"
-                    tools:listitem="@layout/item_favourite"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="2"
-                    android:id="@+id/rvFavotrite"/>
+                <include
+                    android:id="@+id/layoutFavorite"
+                    layout="@layout/gramophone_my_favorite" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

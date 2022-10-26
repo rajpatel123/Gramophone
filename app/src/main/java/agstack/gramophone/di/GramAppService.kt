@@ -19,6 +19,7 @@ import agstack.gramophone.ui.farm.model.*
 import agstack.gramophone.ui.farm.model.unit.FarmUnitResponse
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
+import agstack.gramophone.ui.home.view.fragments.gramophone.model.MyGramophoneResponseModel
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
@@ -306,4 +307,8 @@ interface GramAppService {
 
     @POST("api/v5/search/suggestions")
     suspend fun getSuggestions(@Body body : SuggestionsRequest): Response<SuggestionsResponse>
+
+
+    @GET("api/v5/customer/my-gramophone")
+    suspend fun getMyGramophoneData(): Response<MyGramophoneResponseModel>
 }
