@@ -210,6 +210,7 @@
     <string name="dialing_code">+91&#160;</string>
     <string name="my_orders">My Orders</string>
     <string name="my_order">My Order</string>
+    <string name="total_orders">My Order(%d)</string>
     <string name="address_note"><![CDATA[<b>Note: </b>Address will be taken from you after placing the order]]></string>
     <string name="no_recent_order">When you place your first order, it will appear here</string>
     <string name="no_past_order">Orders older than 6 months will be displayed here, check \"Recent Orders\" for recent orders.</string>
@@ -374,6 +375,7 @@
     <string name="tab_following">Following</string>
     <string name="tab_expert">Expert</string>
     <string name="tab_my_post">My Post</string>
+    <string name="my_post">My Post(%d)</string>
     <string name="tab_saved_post">Saved Post</string>
     <string name="starts_from_99">Starts from \u20B9 99</string>
     <string name="shop_by_sub_category">Shop by Sub Category</string>
@@ -554,19 +556,21 @@
     <string name="update_post">Update Post</string>
     <string name="view_profile">View Profile</string>
     <string name="my_farms">My Farms</string>
+    <string name="myfarm">My Farms(%d)</string>
     <string name="view_farm">View your farms</string>
-    <string name="go_to_farm">Go to my farms  </string>
+    <string name="go_to_farm">Go to my farms</string>
     <string name="view_latest_orders">View latest orders and more</string>
     <string name="go_to_orders">Go to my orders</string>
     <string name="my_gram_cash">My Gram Cash</string>
     <string name="history">Get gram cash info and transaction history</string>
     <string name="total_balance">Total Balance</string>
     <string name="view_my_post">View My Posts</string>
-    <string name="post_now">+  Post Now</string>
+    <string name="post_now">Post Now</string>
     <string name="gramophone_post_desc_txt">your contribution to community</string>
     <string name="know_more_about_referral">Know more about your referral and points</string>
     <string name="referral_msg">Share Gramophone App and earn upto\n ₹ 150!</string>
     <string name="my_favorite">My Favorites</string>
     <string name="gramophone_favoritr_desc">One stop to see all your favourites</string>
     <string name="products">Products</string>
+    <string name="posted_on">"Posted on: "</string>
 </resources>

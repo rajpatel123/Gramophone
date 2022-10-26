@@ -43,6 +43,7 @@ class HomeActivity :
     BaseActivityWrapper<ActivityHomeBinding, HomeActivityNavigator, HomeViewModel>(),
     HomeActivityNavigator {
 
+    var from: String = "home"
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
     private lateinit var marketFragment: MarketFragment
@@ -183,8 +184,14 @@ class HomeActivity :
         }
     }
 
-    fun showCommunityFragment() {
+    fun showCommunityFragment(from:String) {
+        this.from = from
         viewDataBinding.navView.selectedItemId = R.id.navigation_community
+        communityFragment.selectTab(from)
+    }
+    
+    fun showHomeFragment() {
+        viewDataBinding.navView.selectedItemId = R.id.navigation_home
     }
 
     private fun setUpNavigationDrawer() {

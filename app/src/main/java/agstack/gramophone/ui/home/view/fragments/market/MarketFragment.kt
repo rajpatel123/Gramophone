@@ -112,7 +112,7 @@ class MarketFragment :
 
     override fun launchCommunityFragment() {
         if (activity is HomeActivity) {
-            (activity as HomeActivity).showCommunityFragment()
+            (activity as HomeActivity).showCommunityFragment("home")
         }
     }
 

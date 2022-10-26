@@ -44,7 +44,6 @@
                             android:fontFamily="@font/manrope_bold"
                             android:textColor="@color/brand_color"
                             android:textSize="@dimen/_16ssp"
-                            android:text="@={viewModel.tvName}"
                             tools:text="Uday Setty" />
 
                         <TextView
@@ -54,18 +53,17 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             android:drawableStart="@drawable/ic_location"
                             android:fontFamily="@font/manrope_regular"
-                            android:text="@={viewModel.tvLocation}"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/_12ssp"
                             tools:text=" Sawer, Madhya Pradesh" />
 
                         <TextView
-                            android:id="@+id/tvViewProfile"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:fontFamily="@font/manrope_regular"
                             android:text="@string/view_profile"
+                            android:onClick="@{ ()-> viewModel.onViewProfileClicked() }"
                             android:textColor="@color/weather_orange"
                             android:textSize="@dimen/_14ssp"
                             tools:text="@string/view_profile" />
@@ -110,7 +108,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/myOrderTitle"
+                            android:id="@+id/myFarmsTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/manrope_semibold"
@@ -132,6 +130,7 @@
                 </RelativeLayout>
 
                 <include
+                    android:id="@+id/layoutFarm"
                     layout="@layout/card_farms"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -150,8 +149,7 @@
                         android:fontFamily="@font/manrope_regular"
                         android:text="@string/go_to_farm"
                         android:textColor="@color/weather_orange"
-                        android:textSize="@dimen/_12ssp"
-                         />
+                        android:textSize="@dimen/_12ssp" />
 
                     <ImageView
                         android:id="@+id/ivNext"
@@ -181,9 +179,15 @@
                     android:layout_marginTop="@dimen/_16sdp"
                     android:background="@color/gray_stroke" />
 
-                <include layout="@layout/gramophone_order"/>
-                <include layout="@layout/section_gram_cash"/>
-                <include layout="@layout/my_gramophone_farm"/>
+                <include
+                    android:id="@+id/layoutOrder"
+                    layout="@layout/gramophone_order"/>
+                <include
+                    android:id="@+id/layoutGramCash"
+                    layout="@layout/section_gram_cash"/>
+                <include
+                    android:id="@+id/layoutMyPost"
+                    layout="@layout/gramophone_my_post"/>
                 <include layout="@layout/gramophone_my_referral"/>
 
 

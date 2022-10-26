@@ -37,7 +37,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/myFarmTitle"
+                        android:id="@+id/myOrderTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/manrope_semibold"
@@ -74,21 +74,21 @@
                     android:paddingTop="@dimen/_24sdp"
                     android:paddingEnd="@dimen/_12sdp">
 
-                    <FrameLayout
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/frame_product"
-                        android:layout_width="@dimen/_44sdp"
-                        android:layout_height="@dimen/_44sdp"
+                        android:layout_width="@dimen/_64sdp"
+                        android:layout_height="@dimen/_64sdp"
                         android:background="@drawable/rounded_corner_8_solid_white_stroke_gray">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/productImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:contentDescription="@string/image"
-                            android:padding="@dimen/_4sdp"
-                            />
+                        />
 
-                    </FrameLayout>
+                    </androidx.cardview.widget.CardView>
 
                     <TextView
                         android:id="@+id/tv_order_number"

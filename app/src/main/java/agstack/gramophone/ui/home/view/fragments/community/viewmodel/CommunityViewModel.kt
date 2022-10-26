@@ -106,41 +106,41 @@ class CommunityViewModel @Inject constructor(
         this.mAlertDialog = mAlertDialog!!
     }
 
-    fun onCancel(){
+    fun onCancel() {
         mAlertDialog?.dismiss()
     }
 
-    fun onDelete(){
+    fun onDelete() {
         mAlertDialog?.dismiss()
         deletePost()
     }
 
     private fun deletePost() {
         showProgress.set(true)
-            viewModelScope.launch {
+        viewModelScope.launch {
 
-                try {
-                    if (getNavigator()?.isNetworkAvailable() == true) {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
 
-                        val response = communityRepository.deletePost(menuClickedData._id)
-                        showProgress.set(false)
-                        if (response.isSuccessful) {
-                            getPost(sorting = sorting.get().toString())
-                        }else{
-                            getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
-                        }
-                    } else
-                        getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
-                } catch (ex: Exception) {
+                    val response = communityRepository.deletePost(menuClickedData._id)
                     showProgress.set(false)
-                    when (ex) {
-                        is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                        else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                    if (response.isSuccessful) {
+                        getPost(sorting = sorting.get().toString())
+                    } else {
+                        getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                     }
+                } else
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+            } catch (ex: Exception) {
+                showProgress.set(false)
+                when (ex) {
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
-
-
             }
+
+
+        }
     }
 
     fun getProfile() {
@@ -259,10 +259,16 @@ class CommunityViewModel @Inject constructor(
 
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
-                    val response = communityRepository.blockUser(BlockUserRequestModel("block",menuClickedData.author._id,menuClickedData._id))
+                    val response = communityRepository.blockUser(
+                        BlockUserRequestModel(
+                            "block",
+                            menuClickedData.author._id,
+                            menuClickedData._id
+                        )
+                    )
                     if (response.isSuccessful) {
                         getPost(sorting = sorting.get().toString())
-                    }else{
+                    } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                     }
                 } else
@@ -279,17 +285,21 @@ class CommunityViewModel @Inject constructor(
     }
 
 
-
     private suspend fun getPost(sorting: String) {
 
         getNavigator()?.onLoading()
         try {
             if (getNavigator()?.isNetworkAvailable() == true) {
-                val response = communityRepository.getCommunityPost(CommunityRequestModel(sorting,limit.get()))
+                val response = communityRepository.getCommunityPost(
+                    CommunityRequestModel(
+                        sorting,
+                        limit.get()
+                    )
+                )
                 if (response.isSuccessful) {
                     val data = response.body()?.data
-getNavigator()?.stopRefresh()
-                    communityPostAdapter =  CommunityPostAdapter(data, false)
+                    getNavigator()?.stopRefresh()
+                    communityPostAdapter = CommunityPostAdapter(data, false)
 
                     getNavigator()?.updatePostList(communityPostAdapter,
                         {//postDetail click
@@ -344,9 +354,11 @@ getNavigator()?.stopRefresh()
 
                                 }
                                 Constants.EDIT_POST -> {
-                                getNavigator()?.openActivity(EditPostActivity::class.java, Bundle().apply {
-                                    putString(POST_ID,it._id)
-                                })
+                                    getNavigator()?.openActivity(
+                                        EditPostActivity::class.java,
+                                        Bundle().apply {
+                                            putString(POST_ID, it._id)
+                                        })
                                 }
                             }
 
@@ -414,7 +426,7 @@ getNavigator()?.stopRefresh()
                     if (response.isSuccessful) {
                         val data = response.body()?.data
 
-                        communityPostAdapter = CommunityPostAdapter(data,true)
+                        communityPostAdapter = CommunityPostAdapter(data, true)
 
                         getNavigator()?.updatePostList(communityPostAdapter,
                             {//postDetail click
@@ -605,18 +617,19 @@ getNavigator()?.stopRefresh()
 
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
-                    val response = communityRepository.bookmarkPost(PostRequestModel(postData._id,bookmark))
+                    val response =
+                        communityRepository.bookmarkPost(PostRequestModel(postData._id, bookmark))
                     if (response.isSuccessful) {
                         val data = response.body()?.data
                         var post = communityPostAdapter.getItem(postData.position!!)
-                        if (bookmark.equals("bookmark")){
+                        if (bookmark.equals("bookmark")) {
                             post?.bookMarked = true
-                        }else{
+                        } else {
                             post?.bookMarked = false
                         }
-                        if (sorting.get().equals("bookmark")){
+                        if (sorting.get().equals("bookmark")) {
                             getPost(sorting.get().toString())
-                        }else{
+                        } else {
                             communityPostAdapter.notifyItemChanged(postData.position!!)
                         }
 
@@ -640,7 +653,7 @@ getNavigator()?.stopRefresh()
 
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
-                    val response = communityRepository.likePost(PostRequestModel(_id,""))
+                    val response = communityRepository.likePost(PostRequestModel(_id, ""))
                     if (response.isSuccessful) {
                         val data = response.body()?.data
                         var post = communityPostAdapter.getItem(position!!)
