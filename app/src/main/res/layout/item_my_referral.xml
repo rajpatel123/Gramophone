@@ -29,8 +29,8 @@
             <ImageView
                 android:id="@+id/iv_profileImage"
                 app:srcCompat = "@drawable/ic_person_standing"
-                android:layout_width="@dimen/_48sdp"
-                android:layout_height="@dimen/_48sdp"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_55sdp"
                 android:layout_gravity="center"
                 android:padding="@dimen/_4sdp"
                  />
@@ -50,7 +50,7 @@
             android:text="@{model.mobileNo}"
             android:textColor="@color/blakish"
             android:textSize="16sp"
-            tools:text="+91 99260 04941" />
+            tools:text=" +9199260 04941" />
 
 
 

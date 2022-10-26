@@ -63,7 +63,9 @@ class ProductSKUOfferAdapter(
         if (model.benefit != null && model.benefit?.promotionType.equals(Constants.DISCOUNT)) {
             mBinding.tvFreebietext.visibility = View.GONE
             if (model.benefit?.amount_saved.isNotNull() && model.benefit?.amount_saved!! > 0.0 && selectedSKUMrpPrice > amountSaved) {
-                val payOnly = selectedSKUMrpPrice - model.benefit?.amount_saved!!.toFloat()
+               // val payOnly = selectedSKUMrpPrice - model.benefit?.amount_saved!!.toFloat()
+                var payOnly = selectedSKUMrpPrice - model.benefit?.amount_saved!!.toFloat()
+
                 val payOnlyString: String =
                     if (payOnly.toString().contains(".0") || payOnly.toString().contains(".00")) {
                         payOnly.roundToInt().toString()
