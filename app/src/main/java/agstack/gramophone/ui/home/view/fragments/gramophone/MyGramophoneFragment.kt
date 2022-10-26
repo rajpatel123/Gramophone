@@ -20,11 +20,12 @@ import agstack.gramophone.ui.home.view.fragments.gramophone.viewmodel.MyGramopho
 import agstack.gramophone.ui.order.model.Data
 import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.orderdetails.OrderDetailsActivity
+import agstack.gramophone.ui.referandearn.ReferAndEarnActivity
 import agstack.gramophone.ui.referandearn.model.GramCashResponseModel
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.*
 import agstack.gramophone.view.activity.CreatePostActivity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -33,6 +34,7 @@ import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.amnix.xtension.extensions.append
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,11 +49,12 @@ private const val ARG_PARAM2 = "param2"
 @AndroidEntryPoint
 class MyGramophoneFragment :
     BaseFragment<FragmentMyGramophoneBinding, MyGramophoneFragmentNavigator, MyGramophoneFragmentViewModel>(),
-    MyGramophoneFragmentNavigator {
+    MyGramophoneFragmentNavigator ,ShareSheetPresenter.GenericUriHandler{
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private val myGramophoneFragmentViewModel: MyGramophoneFragmentViewModel by viewModels()
+    private var shareSheetPresenter: ShareSheetPresenter? = null
 
     /**
      * Create Binding
@@ -82,6 +85,8 @@ class MyGramophoneFragment :
     }
 
     private fun setUpUI() {
+        shareSheetPresenter = this.let { ShareSheetPresenter(activity as HomeActivity, it) }
+        shareSheetPresenter!!.shareDynamicLink()
         myGramophoneFragmentViewModel.initProfile()
         myGramophoneFragmentViewModel.getGramCash()
         myGramophoneFragmentViewModel.getMyPost()
@@ -129,6 +134,25 @@ class MyGramophoneFragment :
             gramCashResponseModel.gpApiResponseData?.gramcashPending.toString()
         binding?.layoutGramCash?.tvCashDetails?.setOnClickListener {
             openActivity(GramCashActivity::class.java, null)
+        }
+        binding?.layoutReferral?.tvReferralCount?.text = gramCashResponseModel.gpApiResponseData?.myReferrals?.size.toString()
+        binding?.layoutReferral?.ivNext1?.setOnClickListener {
+            openActivity(ReferAndEarnActivity::class.java, null)
+        }
+
+        binding?.layoutReferral?.itemReferral?.setOnClickListener {
+            openActivity(ReferAndEarnActivity::class.java, null)
+        }
+
+        binding?.layoutReferral?.btnShareApp?.setOnClickListener {
+            var shareMessage = gramCashResponseModel.gpApiResponseData?.share_message!!+"\n"+getMessage(R.string.app_url)
+
+
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.type="text/plain"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+            startActivity(Intent.createChooser(shareIntent,""))
         }
     }
 
@@ -309,6 +333,9 @@ class MyGramophoneFragment :
 
         }
 
+    }
+
+    override fun processGenericUri(genericUri: Uri) {
     }
 
 
