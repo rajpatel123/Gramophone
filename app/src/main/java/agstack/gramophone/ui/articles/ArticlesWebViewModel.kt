@@ -6,9 +6,12 @@ import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.webkit.WebView
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,5 +32,14 @@ class ArticlesWebViewModel @Inject constructor(
         }
         if (webUrl.isNotNullOrEmpty())
             getNavigator()?.loadUrl(webUrl)
+
+
+        if (webUrl.isNotNullOrEmpty()) {
+            viewModelScope.launch {
+                delay(1000)
+                getNavigator()?.reload()
+
+            }
+        }
     }
 }

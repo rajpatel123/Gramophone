@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.home.view.fragments.gramophone
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentMyGramophoneBinding
@@ -289,7 +290,10 @@ class MyGramophoneFragment :
         }
 
         binding?.layoutFavorite?.llArticleLinearLayout?.setOnClickListener {
-              openActivity(ArticlesWebViewActivity::class.java)
+              openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
+                  putString(Constants.PAGE_URL,
+                      BuildConfig.BASE_URL_SINGLE_ARTICLE+"/")
+              })
         }
 
         binding?.layoutFavorite?.llProductLinearLayout?.setOnClickListener {
