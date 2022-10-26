@@ -129,6 +129,7 @@ object Constants {
     const val PAST = "past"
     const val HELP_PHONE_NUMBER: String = "customer_support_no"
     const val LANG: String = "lang"
+    const val GP_TOKEN: String = "gp_token"
     const val PAGE_URL: String = "url"
     const val PAGE_TITLE: String = "title"
     const val FEATURED_ARTICLES = "featured_articles"

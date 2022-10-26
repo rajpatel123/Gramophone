@@ -107,7 +107,7 @@
 
                     </FrameLayout>
 
-                    <FrameLayout
+                    <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
@@ -116,6 +116,7 @@
                             android:id="@+id/tvFilter"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
                             android:layout_gravity="center"
                             android:drawablePadding="8dp"
                             android:fontFamily="@font/manrope_medium"
@@ -126,7 +127,24 @@
                             android:textSize="14sp"
                             app:drawableStartCompat="@drawable/ic_filter" />
 
-                    </FrameLayout>
+                        <TextView
+                            android:id="@+id/tvFilterCount"
+                            android:layout_width="30dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_toEndOf="@+id/tvFilter"
+                            android:background="@drawable/btn_rounded_corner_16_solid_orange"
+                            android:backgroundTint="@color/orange"
+                            android:fontFamily="@font/manrope_bold"
+                            android:gravity="center"
+                            android:lineSpacingExtra="0sp"
+                            android:textColor="@color/white"
+                            android:textSize="13sp"
+                            android:visibility="gone"
+                            tools:text="2"
+                            tools:visibility="visible" />
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
@@ -134,6 +152,52 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_6sdp"
                     android:background="@color/gray_stroke" />
+
+                <RelativeLayout
+                    android:id="@+id/rlStoreBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_160sdp"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/view_pager"
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <RelativeLayout
+                        android:id="@+id/rlDotsIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_16sdp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="@dimen/_16sdp"
+                        android:background="@drawable/rounded_corner_24_solid_white">
+
+                        <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+                            android:id="@+id/dots_indicator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            app:dotsColor="@color/blue"
+                            app:dotsSize="10dp"
+                            app:dotsSpacing="2dp"
+                            app:dotsStrokeColor="@color/gray_stroke"
+                            app:progressMode="false"
+                            app:stiffness="300" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/viewBannerSeparator"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_6sdp"
+                    android:background="@color/gray_stroke"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvProduct"
