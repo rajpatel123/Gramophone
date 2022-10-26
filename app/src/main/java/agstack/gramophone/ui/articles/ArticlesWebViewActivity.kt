@@ -98,6 +98,10 @@ class ArticlesWebViewActivity :
         viewDataBinding.webView.loadUrl(url)
     }
 
+    override fun reload() {
+        viewDataBinding.webView.reload()
+    }
+
     override fun onStop() {
         viewDataBinding.swipeRefresh.viewTreeObserver.removeOnScrollChangedListener(
             mOnScrollChangedListener)
@@ -119,4 +123,6 @@ class ArticlesWebViewActivity :
     override fun getViewModel(): ArticlesWebViewModel {
         return articlesWebViewModel
     }
+
+
 }
