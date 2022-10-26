@@ -10,6 +10,7 @@ import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.dialog.filter.BottomSheetFilterDialog
 import agstack.gramophone.ui.dialog.sortby.BottomSheetSortByDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
+import agstack.gramophone.ui.home.adapter.ViewPagerAdapter
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.subcategory.ProductListAdapter
 import agstack.gramophone.ui.home.subcategory.SubCategoryNavigator
@@ -27,6 +28,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.amnix.xtension.extensions.isNotNull
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
@@ -105,11 +107,19 @@ class FeaturedProductActivity :
                     subCategoryViewModel.subCategoryList,
                     subCategoryViewModel.brandsList,
                     subCategoryViewModel.cropsList,
-                    subCategoryViewModel.technicalDataList) { subCategoryIds, brandIds, cropIds, technicalIds ->
+                    subCategoryViewModel.technicalDataList) { subCategoryIds, brandIds, cropIds, technicalIds, totalFilterCount ->
                     subCategoryIdsArray = subCategoryIds
                     brandIdsArray = brandIds
                     cropIdsArray = cropIds
                     technicalIdsArray = technicalIds
+
+                    if (totalFilterCount > 0) {
+                        viewDataBinding.tvFilterCount.visibility = View.VISIBLE
+                        viewDataBinding.tvFilterCount.text = totalFilterCount.toString()
+                    } else {
+                        viewDataBinding.tvFilterCount.visibility = View.GONE
+                        viewDataBinding.tvFilterCount.text = ""
+                    }
 
                     subCategoryViewModel.getAllProducts(sortBy,
                         subCategoryIds,
@@ -174,7 +184,21 @@ class FeaturedProductActivity :
     }
 
     override fun setViewPagerAdapter(bannerList: List<Banner>?) {
-
+        if (bannerList.isNotNullOrEmpty()) {
+            val adapter = ViewPagerAdapter(bannerList!!)
+            viewDataBinding.viewPager.adapter = adapter
+            if (bannerList.size > 1) {
+                viewDataBinding.dotsIndicator.attachTo(viewDataBinding.viewPager)
+                viewDataBinding.rlDotsIndicator.visibility = View.VISIBLE
+            } else {
+                viewDataBinding.rlDotsIndicator.visibility = View.GONE
+            }
+            viewDataBinding.rlStoreBanner.visibility = View.VISIBLE
+            viewDataBinding.viewBannerSeparator.visibility = View.VISIBLE
+        } else {
+            viewDataBinding.rlStoreBanner.visibility = View.GONE
+            viewDataBinding.viewBannerSeparator.visibility = View.GONE
+        }
     }
 
     override fun setSubCategoryAdapter(subCategoryAdapter: ShopByCategoryAdapter) {

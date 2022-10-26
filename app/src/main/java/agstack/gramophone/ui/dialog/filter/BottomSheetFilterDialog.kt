@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.amnix.xtension.extensions.isNull
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
@@ -20,7 +21,7 @@ class BottomSheetFilterDialog(
     private val brandsList: List<Brands>?,
     private val cropsList: List<Crops>?,
     private val technicalDataList: List<TechnicalData>?,
-    private val listener: (ArrayList<String>, ArrayList<String>, ArrayList<String>, ArrayList<String>) -> Unit,
+    private val listener: (ArrayList<String>, ArrayList<String>, ArrayList<String>, ArrayList<String>, Int) -> Unit,
 ) : BottomSheetDialogFragment() {
     var binding: BottomSheetDialogFilterBinding? = null
     private var mainFilterAdapter: MainFilterAdapter? = null
@@ -82,10 +83,11 @@ class BottomSheetFilterDialog(
                 for (item in technicalDataList) {
                     item.isChecked = false
                 }
-            listener.invoke(ArrayList(), ArrayList(), ArrayList(), ArrayList())
+            listener.invoke(ArrayList(), ArrayList(), ArrayList(), ArrayList(), 0)
             dismiss()
         }
         binding?.tvApply?.setOnClickListener {
+            var totalFilterCount = 0
             val subCategoryIds = ArrayList<String>()
             val brandIds = ArrayList<String>()
             val cropIds = ArrayList<String>()
@@ -93,6 +95,7 @@ class BottomSheetFilterDialog(
             if (!mainFilterList.isNullOrEmpty()) {
                 for (i in mainFilterList!!.indices) {
                     mainFilterList!![i].isSelected = i == 0
+                    totalFilterCount += mainFilterList!![i].count
                 }
             }
             if (!subCategoryList.isNullOrEmpty()) {
@@ -119,7 +122,7 @@ class BottomSheetFilterDialog(
                         technicalIds.add(technicalDataList[i].technical_code.toString())
                 }
             }
-            listener.invoke(subCategoryIds, brandIds, cropIds, technicalIds)
+            listener.invoke(subCategoryIds, brandIds, cropIds, technicalIds, totalFilterCount)
             dismiss()
         }
     }
