@@ -567,10 +567,14 @@ class ProductDetailsViewModel @Inject constructor(
                             {
                                 //When RadioButton is clicked
                                 selectedOfferItem = it
+                                if(selectedOfferItem.selected==true){
                                 checkPromotionApplicable(
                                     selectedOfferItem, selectedSkuListItem.get()!!,
                                     qtySelected.get()!!
-                                )
+                                )}
+                                else{
+                                    setPercentage_mrpVisibility(selectedSkuListItem.get()!!, null)
+                                }
 
 
                             },
@@ -630,6 +634,9 @@ class ProductDetailsViewModel @Inject constructor(
                     selectedOfferItem
                 )
             } else {
+                for (item in mSkuOfferList) {
+                    item?.selected =false
+                }
                 getNavigator()?.refreshOfferAdapter()
                 getNavigator()?.showToast(offersOnProductResponse.body()?.gpApiMessage)
             }
