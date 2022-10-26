@@ -32,9 +32,18 @@ data class GpApiTrace(
 )
 
 data class DeliveryAddress(
-    val address: String,
+    val address: Address,
     val mobile: String,
     val name: String,
+)
+
+data class Address(
+    val state: String,
+    val tehsil: String,
+    val district: String,
+    val village: String,
+    val pincode: String,
+    val address_line_1: String,
 )
 
 data class PricingDetails(

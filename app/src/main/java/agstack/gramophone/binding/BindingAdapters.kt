@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.amnix.xtension.extensions.isNotNullOrEmpty
@@ -306,8 +307,11 @@ fun setReformattedIntPrice(textView: TextView, price: Float) {
             textView.text = textView.context.getString(R.string.rupee_0)
         } else {
             if (price.toString().contains(".0") || price.toString().contains(".00"))
-                textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + price.roundToInt().toString()
-            else textView.text = textView.context.getString(R.string.rupee_symbol_with_space) + price.toString()
+                textView.text =
+                    textView.context.getString(R.string.rupee_symbol_with_space) + price.roundToInt()
+                        .toString()
+            else textView.text =
+                textView.context.getString(R.string.rupee_symbol_with_space) + price.toString()
         }
     } catch (e: Exception) {
         textView.text = textView.context.getString(R.string.rupee_0)
@@ -397,18 +401,19 @@ fun setPriceAndVisibility(
 
 @BindingAdapter(value = ["salesprice_", "qtySelected"], requireAll = true)
 fun calculateSalesPrice(
-    textView: AppCompatTextView, salesprice: String?, qty: Int
+    textView: AppCompatTextView, salesprice: String?, qty: Int,
 ) {
     if (salesprice != null)
 
-        textView.text =  textView.context.getString(R.string.rupee_symbol_with_space) +(salesprice?.toFloat()!! * qty).toString()
+        textView.text =
+            textView.context.getString(R.string.rupee_symbol_with_space) + (salesprice?.toFloat()!! * qty).toString()
 
 }
 
 
 @BindingAdapter(value = ["mrpprice_", "qtySelected"], requireAll = true)
 fun calculateMRPPrice(
-    textView: AppCompatTextView, mrpPrice: String?, qty: Int
+    textView: AppCompatTextView, mrpPrice: String?, qty: Int,
 ) {
     if (mrpPrice != null) {
         textView.visibility = View.VISIBLE
@@ -424,17 +429,31 @@ fun calculateMRPPrice(
 @BindingAdapter("readTime")
 fun setArticleReadTime(textView: TextView, readTime: String) {
     try {
-        if(readTime.isNullOrEmpty()) {
+        if (readTime.isNullOrEmpty()) {
             textView.text = ""
-        } else{
+        } else {
             var formattedTime = readTime
-            if (formattedTime.startsWith("0 minutes,")) formattedTime = formattedTime.replace("0 minutes,", "")
+            if (formattedTime.startsWith("0 minutes,")) formattedTime =
+                formattedTime.replace("0 minutes,", "")
             formattedTime = formattedTime.replace("minutes", "Min")
             formattedTime = formattedTime.replace("seconds", "Sec")
             textView.text = formattedTime + textView.context.getString(R.string.article_read)
         }
     } catch (e: Exception) {
         textView.text = textView.context.getString(R.string.rupee_0)
+    }
+}
+
+@BindingAdapter("bg_color")
+fun setBackgroundColor(
+    view: View, isCartViewShowing: Boolean,
+) {
+    if (isCartViewShowing) {
+        view.setBackgroundColor(ContextCompat.getColor(view.context,
+            android.R.color.transparent))
+    } else {
+        view.setBackgroundColor(ContextCompat.getColor(view.context,
+            android.R.color.white))
     }
 }
 

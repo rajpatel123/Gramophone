@@ -35,6 +35,7 @@ class CartViewModel @Inject constructor(
     var progress = MutableLiveData<Boolean>()
     var showGramCashCoinView = MutableLiveData<Boolean>()
     var showCartView = MutableLiveData<Boolean>()
+    var isProgressBgTransparent = MutableLiveData<Boolean>()
 
     init {
         itemCount.value = 0
@@ -45,6 +46,7 @@ class CartViewModel @Inject constructor(
         progress.value = false
         showGramCashCoinView.value = true
         showCartView.value = true
+        isProgressBgTransparent.value = false
     }
 
     fun onCheckedChange(button: CompoundButton, check: Boolean) {
@@ -103,6 +105,7 @@ class CartViewModel @Inject constructor(
                         && response.body()?.gp_api_response_data?.cart_items != null && response.body()?.gp_api_response_data?.cart_items?.size!! > 0
                     ) {
                         showCartView.value = true
+                        isProgressBgTransparent.value = true
                         itemCount.value = response.body()?.gp_api_response_data?.cart_items?.size
                         discount.value = response.body()?.gp_api_response_data?.total_discount
                         gramCash.value = response.body()?.gp_api_response_data?.gramcash_coins
