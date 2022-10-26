@@ -42,7 +42,8 @@ data class GpApiResponseData(
 
 	@field:SerializedName("referral_code")
 	val referral_code: String? = null,
-	@field:SerializedName("share_message")
+
+	@field:SerializedName("referral_share_msg")
 	val share_message: String? = null,
 
 

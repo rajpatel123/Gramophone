@@ -17,7 +17,7 @@ import kotlin.math.roundToInt
 class ProductSKUOfferAdapter(
     SKUOfferList: ArrayList<PromotionListItem?>,
     val selectedSku: ProductSkuListItem,
-    quantity : Int
+    quantity: Int
 ) :
     RecyclerView.Adapter<ProductSKUOfferAdapter.CustomViewHolder>() {
     var mSKUOfferList = SKUOfferList
@@ -25,7 +25,7 @@ class ProductSKUOfferAdapter(
     var selectedProduct: ((PromotionListItem) -> Unit)? = null
     var onViewAllClicked: ((PromotionListItem) -> Unit)? = null
     var lastSelectPosition: Int = 0
-    var quantitySelected =quantity
+    var quantitySelected = quantity
 
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
@@ -54,16 +54,25 @@ class ProductSKUOfferAdapter(
 
         var selectedSKUMrpPrice = 0.0f
         if (selectedSku.mrpPrice != null) {
-            selectedSKUMrpPrice = selectedSku.mrpPrice.toFloat() *quantitySelected
+            selectedSKUMrpPrice = selectedSku.mrpPrice.toFloat() * quantitySelected
         } else {
             if (selectedSku.salesPrice != null) {
-                selectedSKUMrpPrice = selectedSku.salesPrice.toFloat() *quantitySelected
+                selectedSKUMrpPrice = selectedSku.salesPrice.toFloat() * quantitySelected
             }
         }
         if (model.benefit != null && model.benefit?.promotionType.equals(Constants.DISCOUNT)) {
             mBinding.tvFreebietext.visibility = View.GONE
             if (model.benefit?.amount_saved.isNotNull() && model.benefit?.amount_saved!! > 0.0 && selectedSKUMrpPrice > amountSaved) {
-                val payOnly = selectedSKUMrpPrice - model.benefit?.amount_saved!!.toFloat()
+                // val payOnly = selectedSKUMrpPrice - model.benefit?.amount_saved!!.toFloat()
+                var payOnly: Float = 0.0f
+                if (selectedSku.mrpPrice != null) {
+                    payOnly =
+                        selectedSku.mrpPrice?.toFloat()!! * quantitySelected - selectedSku.salesPrice?.toFloat()!! * quantitySelected - model.benefit?.amount_saved!!.toFloat()
+                } else {
+                    payOnly =
+                        selectedSku.salesPrice?.toFloat()!! * quantitySelected - model.benefit?.amount_saved!!.toFloat()
+                }
+
                 val payOnlyString: String =
                     if (payOnly.toString().contains(".0") || payOnly.toString().contains(".00")) {
                         payOnly.roundToInt().toString()
@@ -121,11 +130,21 @@ class ProductSKUOfferAdapter(
             mBinding.tvFreebietext.visibility = View.GONE
         }
 
-
         mBinding.radioBtn.setOnClickListener {
-
+            mSKUOfferList[lastSelectPosition]?.selected = false
+            lastSelectPosition = position
+            model.selected = !(model.selected!!)
+            notifyDataSetChanged()
             selectedProduct?.invoke(model)
 
+        }
+        mBinding.ivCheck.setOnClickListener {
+            mSKUOfferList[lastSelectPosition]?.selected = false
+          //  lastSelectPosition = position
+            model.selected = false
+            notifyDataSetChanged()
+
+            selectedProduct?.invoke(model)
         }
         mBinding.tvViewdetail.setOnClickListener {
             onViewAllClicked?.invoke(model)

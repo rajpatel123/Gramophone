@@ -37,11 +37,16 @@ class ShareSheetPresenter(
                 }
 
                 IntentKeys.FacebookShareKey -> {
-                    intent.setPackage("com.facebook")
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     intent.putExtra(Intent.EXTRA_STREAM,GENERIC_URI);
                     intent.setType("*/*")
                 }
+
+                IntentKeys.ShareKey -> {
+                    intent.setType("*/*")
+                }
+
+
                 IntentKeys.OtherShareKey -> {
                     intent.setType("*/*")
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
