@@ -57,6 +57,7 @@ data class CartItem(
     val sgst_percent: String,
     val shipping_details: ShippingDetails,
     val unit_selling_price: String,
+    val applicable_gramcash: Int,
 )
 
 data class OfferApplied(

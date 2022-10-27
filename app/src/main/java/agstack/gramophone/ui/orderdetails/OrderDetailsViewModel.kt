@@ -145,18 +145,20 @@ class OrderDetailsViewModel @Inject constructor(
                                 //on cartItem clicked for details page
                                 getNavigator()?.openProductDetailsActivity(ProductData(it.toInt()))
                             },
-                            { freeProduct, productSku ->
-
+                            { offerApplied, productName, productSku ->
                                 getNavigator()?.openActivity(
                                     OfferDetailActivity::class.java,
                                     Bundle().apply {
-
                                         val offersDataItem = DataItem()
-                                        offersDataItem.endDate = ""
-                                        offersDataItem.productName = freeProduct.product_name
+                                        offersDataItem.name = offerApplied.offer_name
+                                        offersDataItem.endDate =
+                                            if (offerApplied.valid_till.isNotNullOrEmpty()) offerApplied.valid_till.replace(
+                                                "Valid till ",
+                                                "") else null
+                                        offersDataItem.productName = productName
                                         offersDataItem.productsku = productSku
-                                        offersDataItem.image = freeProduct.product_image
-                                        offersDataItem.termsConditions = ""
+                                        offersDataItem.image = offerApplied.image
+                                        offersDataItem.termsConditions = offerApplied.t_c
                                         putParcelable(Constants.OFFERSDATA, offersDataItem)
 
                                     })
