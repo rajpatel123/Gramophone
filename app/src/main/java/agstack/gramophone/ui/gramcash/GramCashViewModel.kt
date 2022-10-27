@@ -47,7 +47,7 @@ class GramCashViewModel @Inject constructor(
 
                     getNavigator()?.setGramCashRulesAdapter(FAQAdapter(gramCashResponse?.gramcashRules as ArrayList<GramcashFaqItem>))
 
-                    getNavigator()?.showToast(gramCashResponsefromAPI.body()?.gpApiMessage)
+                  //  getNavigator()?.showToast(gramCashResponsefromAPI.body()?.gpApiMessage)
                 } else {
                     progressLoader.set(false)
                     getNavigator()?.showToast(gramCashResponsefromAPI.body()?.gpApiMessage)
