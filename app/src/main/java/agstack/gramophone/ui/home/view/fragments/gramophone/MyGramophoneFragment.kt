@@ -27,14 +27,13 @@ import agstack.gramophone.view.activity.CreatePostActivity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.amnix.xtension.extensions.append
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -93,6 +92,10 @@ class MyGramophoneFragment :
         myGramophoneFragmentViewModel.getPlacedOrder()
         myGramophoneFragmentViewModel.getFarms()
         myGramophoneFragmentViewModel.getMyGramophoneData()
+
+        binding?.tvViewProfile?.setOnClickListener {
+            myGramophoneFragmentViewModel.onViewProfileClicked()
+        }
     }
 
     override fun getLayoutID(): Int {
@@ -249,14 +252,36 @@ class MyGramophoneFragment :
 
     }
 
-    override fun updateFarms(farms: FarmResponse) {
-        Log.d("Raj", farms.toString())
+    override fun updateFarms(farms: FarmResponse?) {
+
+        if (farms==null){
+           binding?.llNoFarm?.visibility= VISIBLE
+           binding?.tvGoToFarms?.visibility= GONE
+           binding?.ivNext?.visibility= GONE
+           binding?.llLayoutFarm?.visibility= GONE
+        }else{
+            binding?.llNoFarm?.visibility= GONE
+            binding?.tvGoToFarms?.visibility= VISIBLE
+            binding?.ivNext?.visibility= VISIBLE
+            binding?.llLayoutFarm?.visibility= VISIBLE
+        }
+        binding?.tvGoToFarms?.setOnClickListener {
+            openActivity(ViewAllFarmsActivity::class.java)
+        }
+
+        binding?.btnAddfarm?.setOnClickListener {
+            openActivity(AddFarmActivity::class.java)
+        }
+
+        binding?.layoutFarm?.txtAddFarm?.setOnClickListener {
+            openActivity(AddFarmActivity::class.java)
+        }
         binding?.myFarmsTitle?.text = String.format(
             getMessage(R.string.myfarm),
-            farms.gp_api_response_data.customer_farm.data.size
+            farms?.gp_api_response_data?.customer_farm?.data?.size
         )
         binding?.layoutFarm?.txtCropName?.text =
-            farms.gp_api_response_data.customer_farm.data[0][0].crop_name
+            farms?.gp_api_response_data?.customer_farm?.data!![0][0].crop_name
         binding?.layoutFarm?.txtCropCode?.text =
             farms.gp_api_response_data.customer_farm.data[0][0].farm_ref_id
         binding?.layoutFarm?.txtDate?.text = String.format(

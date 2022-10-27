@@ -17,6 +17,6 @@ interface MyGramophoneFragmentNavigator :BaseNavigator {
     fun updateCommunity(communityHomeResponseModel: CommunityHomeResponseModel)
     fun updateLike(data: LikeUpdate?)
     fun updateOrderSection(placedList: ArrayList<Data>)
-    fun updateFarms(body: FarmResponse)
+    fun updateFarms(body: FarmResponse?)
     fun updateMyFavoriteSection(body: MyGramophoneResponseModel)
 }
