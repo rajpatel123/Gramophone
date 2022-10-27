@@ -12,7 +12,6 @@ import javax.inject.Singleton
 @Singleton
 interface SettingsRepository {
     suspend fun optInOutForWhatsappUpdates(s: String): Response<WhatsAppOptInResponseModel>
-    suspend fun getBlockedUsersList(): Response<BlockedUsersListResponseModel>
     suspend fun unBlockUser(customerId: Int): Response<BlockedUsersListResponseModel>
 
     suspend fun getGramCash():Response<GramCashResponseModel>

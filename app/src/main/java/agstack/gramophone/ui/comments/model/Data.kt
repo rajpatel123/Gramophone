@@ -9,5 +9,6 @@ data class Data(
     val postId: String,
     val tags: List<Any>,
     val text: String,
-    val commentDuration: String
+    val commentDuration: String,
+    var isSelected : Boolean
 )

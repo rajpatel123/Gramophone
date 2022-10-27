@@ -1,11 +1,9 @@
-package agstack.gramophone.ui.settings.model.blockedusers
+package agstack.gramophone.ui.settings.model.blockmodels
 
-import agstack.gramophone.ui.settings.model.blockmodels.Location
-
-data class BlockedUser(
+data class Data(
     val __v: Int,
     val _id: String,
-    val address: String,
+    val address: Any,
     val androidId: String,
     val badge: Any,
     val communityUserType: String,

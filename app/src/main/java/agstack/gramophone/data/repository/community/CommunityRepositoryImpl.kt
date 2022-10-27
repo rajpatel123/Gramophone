@@ -15,6 +15,8 @@ import agstack.gramophone.ui.comments.model.sendcomment.SendCommentResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.create.CreatePostResponseModel
 import agstack.gramophone.ui.othersporfile.model.CommunityUserPostRequestModel
 import agstack.gramophone.ui.othersporfile.model.ProfileDataResponse
+import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
+import agstack.gramophone.ui.settings.model.blockedusers.UnblockRequestModel
 import agstack.gramophone.ui.userprofile.model.TestUserModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -131,6 +133,14 @@ class CommunityRepositoryImpl @Inject constructor(
             appData
         }
 
+    override suspend fun unBlockUser(post: UnblockRequestModel): Response<BlockResponseModel> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val appData = communityApiService.unBlockUser(post)
+            appData
+        }
+
     override suspend fun followPost(post: FollowRequestModel): Response<FollowResponseModel> =
         withContext(
             Dispatchers.IO
@@ -206,5 +216,9 @@ class CommunityRepositoryImpl @Inject constructor(
         userData
     }
 
-
+    override suspend fun getBlockedUsersList(): Response<BlockedUsersListResponseModel> = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = communityApiService.getBlockedUsersList()
+        blockedUsers
+    }
 }

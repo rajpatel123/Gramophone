@@ -49,9 +49,13 @@ class CommentsViewModel @Inject constructor(
                         commentsCount.set(getNavigator()?.getMessage(R.string.comments)
                             ?.let { String.format(it,data?.size) })
                           var commentsAdapter = CommentsAdapter(data)
-                        getNavigator()?.updateCommentsList(commentsAdapter){
+                        getNavigator()?.updateCommentsList(commentsAdapter,
+                            {
 
-                        }
+                            },
+                            {
+
+                            })
                     }
                 } else
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)

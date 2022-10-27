@@ -207,6 +207,11 @@ class CommunityPostAdapter(val dataList: List<Data>?, isOther: Boolean) : Recycl
             holder.itemPostBinding.llPinPost.visibility = GONE
         }
 
+        if (!TextUtils.isEmpty(data.author.communityUserType) && "admin".equals(data.author.communityUserType,true)){
+            holder.itemPostBinding.llBlock.visibility = GONE
+        }else{
+            holder.itemPostBinding.llBlock.visibility = VISIBLE
+        }
         if (data.bookMarked) {
             holder.itemPostBinding.ivBookmark.setImageResource(R.drawable.ic_bookmarked)
         } else {

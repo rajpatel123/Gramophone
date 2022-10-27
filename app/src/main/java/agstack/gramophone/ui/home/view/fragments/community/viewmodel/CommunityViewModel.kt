@@ -95,7 +95,7 @@ class CommunityViewModel @Inject constructor(
 
 
     fun loadData(sorting: String) {
-        limit.set(50)
+        limit.set(1250)
         viewModelScope.launch(Dispatchers.Default) {
             getPost(sorting)
         }
@@ -251,7 +251,7 @@ class CommunityViewModel @Inject constructor(
 
 
     private fun blockUser() {
-        if (menuClickedData.author.communityUserType.equals("admin")) {
+        if ("admin".equals(menuClickedData.author.communityUserType)) {
             getNavigator()?.showToast(getNavigator()?.getMessage(R.string.can_not_block))
             return
         }
