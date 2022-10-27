@@ -92,7 +92,7 @@
                         <View
                             android:id="@+id/v1"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_2sdp"
+                            android:layout_height="@dimen/_1sdp"
                             android:layout_marginTop="@dimen/_17sdp"
                             android:background="@color/viewcolor"
                             app:layout_constraintTop_toBottomOf="@id/ll_totalbal" />
@@ -102,15 +102,16 @@
                             android:layout_height="@dimen/_36sdp"
                             android:layout_marginTop="@dimen/_12sdp"
                             android:orientation="horizontal"
-                            android:weightSum="3"
+                            android:weightSum="5"
                             app:layout_constraintTop_toBottomOf="@id/v1">
 
                             <TextView
-                                style="@style/TextSize16Sp"
+                           android:textSize="@dimen/_12ssp"
+                                style="@style/bold"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_weight="2.5"
+                                android:layout_weight="3.2"
                                 android:onClick="@{()->viewModel.manageaboutgramcash()}"
                                 android:text="@string/about_gram_cash_balance"
                                 android:textColor="@color/orange" />
@@ -119,14 +120,15 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginHorizontal="@dimen/_7ssp"
-                                android:layout_weight=".5"
+                                android:layout_marginHorizontal="@dimen/_6ssp"
+                                android:layout_weight=".2"
                                 app:srcCompat="@drawable/ic_arrow_orange_right" />
 
 
                             <androidx.appcompat.widget.AppCompatButton
+                                android:layout_weight="1.5"
                                 android:onClick="@{()->viewModel.onRedeemNowClicked()}"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
@@ -137,6 +139,7 @@
                                 android:gravity="center"
                                 android:padding="@dimen/_7sdp"
                                 android:text="@string/redeem"
+                                android:textAllCaps="false"
                                 android:textColor="@color/white"
                                 android:textSize="14sp"
                                 android:textStyle="normal" />
