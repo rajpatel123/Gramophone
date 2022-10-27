@@ -5,6 +5,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityOrderDetailsBinding
+import agstack.gramophone.ui.cart.model.OfferApplied
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.orderdetails.adapter.OrderedProductsAdapter
@@ -128,7 +129,7 @@ class OrderDetailsActivity :
     override fun setOrderListAdapter(
         orderedProductsAdapter: OrderedProductsAdapter,
         onOrderItemClicked: (Int) -> Unit,
-        onOfferClicked: (freeProduct: FreeProduct, sku: String) -> Unit,
+        onOfferClicked: (OfferApplied, String, String) -> Unit,
     ) {
         orderedProductsAdapter.onItemDetailClicked = onOrderItemClicked
         orderedProductsAdapter.onOfferClicked = onOfferClicked

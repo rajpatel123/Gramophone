@@ -1,5 +1,7 @@
 package agstack.gramophone.ui.orderdetails.model
 
+import agstack.gramophone.ui.cart.model.OfferApplied
+
 
 data class OrderDetailResponse(
     val gp_api_error_data: GpApiErrorData,
@@ -60,6 +62,7 @@ data class PricingDetails(
 data class Product(
     val discounted_price: Int,
     val free_products: List<FreeProduct>,
+    val offer_applied: OfferApplied,
     val is_offer_applied: String,
     val price: Int,
     val product_id: Int,

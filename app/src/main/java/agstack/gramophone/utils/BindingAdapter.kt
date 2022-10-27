@@ -16,6 +16,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.bumptech.glide.Glide
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import kotlinx.android.synthetic.main.product_detail.view.*
@@ -198,20 +199,21 @@ class BindingAdapter {
         @BindingAdapter("formatDateValidTil")
         @JvmStatic
         fun formatDateValidTil(view: TextView, date: String) {
-            val input = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-            val output = SimpleDateFormat("MMM dd,yyyy", Locale.US)
+            if (date.isNotNullOrEmpty()) {
+                val input = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                val output = SimpleDateFormat("MMM dd,yyyy", Locale.US)
 
-            var d: Date? = null
-            try {
+                var d: Date? = null
+                try {
 
-                d = input.parse(date)
-                val formatted = output.format(d)
-                view.setText("Valid Till " + formatted)
-            } catch (e: ParseException) {
-                e.printStackTrace()
+                    d = input.parse(date)
+                    val formatted = output.format(d)
+                    view.setText("Valid Till " + formatted)
+                } catch (e: ParseException) {
+                    e.printStackTrace()
+                }
+
             }
-
-
         }
 
 
