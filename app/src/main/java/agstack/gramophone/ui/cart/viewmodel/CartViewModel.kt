@@ -15,6 +15,7 @@ import android.os.Bundle
 import android.widget.CompoundButton
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -131,7 +132,11 @@ class CartViewModel @Inject constructor(
                                     OfferDetailActivity::class.java,
                                     Bundle().apply {
                                         val offersDataItem = DataItem()
-                                        offersDataItem.endDate = offerApplied.valid_till
+                                        offersDataItem.name = offerApplied.offer_name
+                                        offersDataItem.endDate =
+                                            if (offerApplied.valid_till.isNotNullOrEmpty()) offerApplied.valid_till.replace(
+                                                "Valid till ",
+                                                "") else null
                                         offersDataItem.productName = productName
                                         offersDataItem.productsku = productSku
                                         offersDataItem.image = offerApplied.image

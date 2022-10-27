@@ -34,7 +34,6 @@ class GCExpiringSoonActivity :
                 GC_Expiring_soon_amount   = bundle.getString(Constants.GC_Expiring_soon)
             }
         }
-
         mViewModel?.getGramCashTxnExpiringSoon(GC_Expiring_soon_amount)
     }
     fun getBundle(): Bundle? {

@@ -33,7 +33,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/ic_arrow_left" />
+                app:srcCompat="@drawable/ic_cross" />
 
             <TextView
                 android:layout_width="wrap_content"

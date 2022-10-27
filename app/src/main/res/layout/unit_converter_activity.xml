@@ -85,6 +85,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:weightSum="2"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -103,6 +104,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
+
                     android:id="@+id/editTextUnit1"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -113,7 +115,7 @@
                     android:hint="0.00"
                     android:inputType="numberDecimal"
                     android:maxLength="15"
-                    android:textSize="@dimen/_40ssp"
+                    android:textSize="@dimen/_25ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/spinnerUnit1"
                     app:layout_constraintRight_toRightOf="parent"
@@ -184,7 +186,7 @@
                     android:hint="0.00"
                     android:inputType="numberDecimal"
                     android:maxLength="15"
-                    android:textSize="@dimen/_40ssp"
+                    android:textSize="@dimen/_25ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/spinnerUnit2"
                     app:layout_constraintRight_toRightOf="parent"
