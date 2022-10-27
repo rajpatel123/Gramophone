@@ -64,7 +64,6 @@
                             android:layout_marginTop="@dimen/_10sdp"
                             android:fontFamily="@font/manrope_regular"
                             android:text="@string/view_profile"
-                            android:onClick="@{ ()-> viewModel.onViewProfileClicked() }"
                             android:textColor="@color/weather_orange"
                             android:textSize="@dimen/_14ssp"
                             tools:text="@string/view_profile" />
@@ -263,7 +262,6 @@
                         android:id="@+id/ivFavorite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
                         app:srcCompat="@drawable/ic_bookmarked" />
 
                     <LinearLayout

@@ -84,6 +84,9 @@ class MyGramophoneFragment :
     }
 
     private fun setUpUI() {
+        binding?.tvViewProfile?.setOnClickListener {
+            myGramophoneFragmentViewModel.onViewProfileClicked()
+        }
         shareSheetPresenter = this.let { ShareSheetPresenter(activity as HomeActivity, it) }
         shareSheetPresenter!!.shareDynamicLink()
         myGramophoneFragmentViewModel.initProfile()
@@ -93,9 +96,7 @@ class MyGramophoneFragment :
         myGramophoneFragmentViewModel.getFarms()
         myGramophoneFragmentViewModel.getMyGramophoneData()
 
-        binding?.tvViewProfile?.setOnClickListener {
-            myGramophoneFragmentViewModel.onViewProfileClicked()
-        }
+
     }
 
     override fun getLayoutID(): Int {
