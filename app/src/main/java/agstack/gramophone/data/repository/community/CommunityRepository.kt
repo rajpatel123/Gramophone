@@ -1,6 +1,7 @@
 package agstack.gramophone.data.repository.community
 
 import agstack.gramophone.ui.comments.model.CommentsResponseModel
+import agstack.gramophone.ui.comments.model.DeleteCommentResponseModel
 import agstack.gramophone.ui.comments.model.sendcomment.GetCommentRequestModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.BookmarkPostResponse
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikePostResponseModel
@@ -60,7 +61,11 @@ interface CommunityRepository {
 
     suspend fun postComment(postId: RequestBody, text: RequestBody, tags: RequestBody): Response<SendCommentResponseModel>
 
+    suspend fun updateComment(postId: RequestBody,commentId: RequestBody, text: RequestBody, tags: RequestBody): Response<SendCommentResponseModel>
+
     suspend fun postComment(postId: RequestBody,text: RequestBody,tags: RequestBody,postImage: MultipartBody.Part): Response<SendCommentResponseModel>
+
+    suspend fun updateComment(postId: RequestBody,commentId: RequestBody,text: RequestBody,tags: RequestBody,postImage: MultipartBody.Part): Response<SendCommentResponseModel>
 
     suspend fun createPost(description: RequestBody?,tags: RequestBody?,postImage1: MultipartBody.Part?,postImage2: MultipartBody.Part?,postImage3: MultipartBody.Part?): Response<CreatePostResponseModel>
 
@@ -74,5 +79,7 @@ interface CommunityRepository {
        ): Response<CreatePostResponseModel>
 
     suspend fun getBlockedUsersList(): Response<BlockedUsersListResponseModel>
+
+    suspend fun deleteComment(postID:String, commentId:String):Response<DeleteCommentResponseModel>
 
 }

@@ -40,26 +40,34 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.othersporfile.view.OtherUserProfileActivity"
+            android:screenOrientation="portrait"
+
             android:exported="false" />
         <activity
             android:name=".ui.comments.view.CommentsActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.createpost.view.CreatePostActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
 
         <activity
             android:name=".view.activity.EditPostActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
 
         <activity
             android:name=".view.activity.CreatePostActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.postdetails.view.PostDetailsActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".ui.home.view.fragments.community.LikedPostUserListActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".ui.settings.view.BlockedUsersActivity"
