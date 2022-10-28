@@ -61,7 +61,7 @@ class AllTransactionsListViewModel @Inject constructor(
                     mAllTxnList =
                         allGramCashTxnResponse.body()?.gpApiResponseData?.gramcashTxn as ArrayList<GramcashTxnItem?>
                     getNavigator()?.setAllTxnListAdapter(GramCashTransactionListAdapter(mAllTxnList))
-                    getNavigator()?.showToast(allGramCashTxnResponse.body()?.gpApiMessage)
+                   // getNavigator()?.showToast(allGramCashTxnResponse.body()?.gpApiMessage)
                 } else {
                     progressLoader.set(false)
                     getNavigator()?.showToast(allGramCashTxnResponse.body()?.gpApiMessage)
@@ -80,7 +80,7 @@ class AllTransactionsListViewModel @Inject constructor(
                             mReferralTxnList
                         )
                     )
-                    getNavigator()?.showToast(referralGramCashResponse.body()?.gpApiMessage)
+                    //getNavigator()?.showToast(referralGramCashResponse.body()?.gpApiMessage)
 
                 } else {
                     progressLoader.set(false)

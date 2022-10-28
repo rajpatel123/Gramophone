@@ -107,4 +107,5 @@ public abstract class SharedPreferencesKeys {
     public static final String USER_MOBILE="user_mobile";
     public static final String USER_IMAGE="user_image";
     public static final String CUSTOMER_ID="CUSTOMER_ID";
+    public static final String CUSTOMER_ADDRESS="CUSTOMER_ADDRESS";
 }

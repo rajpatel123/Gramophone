@@ -27,54 +27,52 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:background="@drawable/ic_stripe_bg">
+                    android:background="@drawable/ic_stripe_bg"
+                    android:gravity="center_vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/_100sdp"
                         android:layout_marginLeft="@dimen/_13sdp"
-                        android:paddingTop="@dimen/_10sdp"
-                        android:paddingBottom="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginRight="@dimen/_13sdp"
                         android:layout_marginBottom="@dimen/_15sdp"
-                        android:background="@drawable/ic_offer_cards">
+                        android:background="@drawable/ic_offer_cards"
+                        android:minHeight="@dimen/_100sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
+                            android:weightSum="4"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:weightSum="4">
+                            app:layout_constraintTop_toTopOf="parent">
 
                             <LinearLayout
                                 android:id="@+id/ll_details"
                                 android:layout_width="0dp"
-                                android:layout_weight="3"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/_48sdp"
-                                android:orientation="vertical"
-                                >
+                                android:layout_marginStart="@dimen/_48sdp"
+                                android:layout_weight="3"
+                                android:orientation="vertical">
 
                                 <TextView
                                     android:id="@+id/tv_title"
                                     style="@style/TextSize16Sp"
-                                    android:minLines="2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/manrope_bold"
-                                    android:hint="50% Off on Pesticide"
-                                    android:text="@{viewModel.MOffersItem.name}" />
+                                    android:text="@{viewModel.MOffersItem.name}"
+                                    tools:text="50% Off on Pesticide" />
 
                                 <TextView
                                     android:id="@+id/tv_valid_till"
@@ -82,9 +80,9 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/manrope_bold"
+                                    android:textColor="@color/gray_strike_through"
                                     android:visibility="@{viewModel.MOffersItem.endDate!=null?View.VISIBLE:View.GONE}"
-                                    app:formatDateValidTil='@{viewModel.MOffersItem.endDate ?? ""}'
-                                    android:textColor="@color/gray_strike_through" />
+                                    app:formatDateValidTil='@{viewModel.MOffersItem.endDate ?? ""}' />
 
 
                                 <TextView
@@ -93,39 +91,36 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/manrope_bold"
-                                    tools:text="On UPL_PHOSKILL 1 Ltr."
                                     android:text="@{@string/on.concat(viewModel.MOffersItem.productName).concat(@string/space).concat(viewModel.MOffersItem.productsku)}"
                                     android:textColor="@color/gray_strike_through"
                                     app:layout_constraintLeft_toLeftOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/tv_valid_till" />
+                                    app:layout_constraintTop_toBottomOf="@+id/tv_valid_till"
+                                    tools:text="On UPL_PHOSKILL 1 Ltr." />
                             </LinearLayout>
-
 
                             <ImageView
                                 android:id="@+id/imageView2"
                                 loadUri="@{viewModel.MOffersItem.image}"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_marginLeft="@dimen/_2sdp"
-                                android:layout_marginRight="@dimen/_11sdp"
                                 android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/_2sdp"
+                                android:layout_marginEnd="@dimen/_11sdp"
+                                android:layout_weight="1"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintLeft_toRightOf="@id/ll_details"
                                 app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"></ImageView>
+                                app:layout_constraintTop_toTopOf="parent" />
 
                         </LinearLayout>
-
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
 
-
                 <LinearLayout
-                    android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
+                    android:background="@color/white"
                     android:orientation="vertical">
 
                     <TextView
@@ -135,33 +130,13 @@
                         android:layout_height="wrap_content"
                         android:text="@string/offers_tnc" />
 
-
-                    <!-- <TextView
-                         android:id="@+id/tv_redemptionsteps_label"
-                         android:layout_marginTop="@dimen/_20sdp"
-                         style="@style/TextSize16Sp"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="@string/redemption_steps" />-->
-
-                  <!--  <TextView
-                        android:id="@+id/tv_tnc_label"
-                        android:layout_marginTop="@dimen/_20sdp"
-                        style="@style/TextSize16Sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{@string/terms_n_conditions+` : `}" />-->
-
                     <TextView
                         android:id="@+id/tv_tnc"
-                        android:layout_marginTop="@dimen/_20sdp"
                         style="@style/TextSize16Sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:htmlText="@{viewModel.MOffersItem.termsConditions}"/>
-
-
-
+                        android:layout_marginTop="@dimen/_20sdp"
+                        app:htmlText="@{viewModel.MOffersItem.termsConditions}" />
 
                 </LinearLayout>
 

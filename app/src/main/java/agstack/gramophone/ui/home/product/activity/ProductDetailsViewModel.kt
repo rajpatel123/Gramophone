@@ -347,6 +347,7 @@ class ProductDetailsViewModel @Inject constructor(
     ) {
         var isOffersLayoutVisible = true
         var priceDiff: Float = 0.0f
+        var discount :Float=0.0f
         var finalSalePrice: Double = 0.0
         var finaldiscount = "0"
         var isMRPVisibile = false
@@ -371,22 +372,27 @@ class ProductDetailsViewModel @Inject constructor(
                 if (model.mrpPrice != null) {
 
                     priceDiff = (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat())
+                    discount = model.mrpPrice!!.toFloat() - priceDiff
                 } else {
                     priceDiff = (model.salesPrice)!!.toFloat()
+                    discount = model.salesPrice!!.toFloat() - priceDiff
                 }
             } else if (amountSaved > 0f) {
                 if (model.mrpPrice != null && model.salesPrice != null) {
                     priceDiff =
                         (model.mrpPrice.toFloat()  - (model.salesPrice).toFloat()) - amountSaved
+                    discount = (model.mrpPrice!!.toFloat()) - priceDiff
                 } else if (model.mrpPrice == null && model.salesPrice != null) {
                     priceDiff =
                         (model.salesPrice)!!.toFloat() - amountSaved
+
+                    discount = (model.salesPrice).toFloat() - priceDiff
 
                 }
 
             }
 
-            val numarator = (priceDiff * 100)
+            val numarator = (discount * 100)
             var denominator: Float = 1f
             if (model.mrpPrice != null) {
                 denominator = model.mrpPrice.toFloat()
@@ -561,10 +567,14 @@ class ProductDetailsViewModel @Inject constructor(
                             {
                                 //When RadioButton is clicked
                                 selectedOfferItem = it
+                                if(selectedOfferItem.selected==true){
                                 checkPromotionApplicable(
                                     selectedOfferItem, selectedSkuListItem.get()!!,
                                     qtySelected.get()!!
-                                )
+                                )}
+                                else{
+                                    setPercentage_mrpVisibility(selectedSkuListItem.get()!!, null)
+                                }
 
 
                             },
@@ -624,6 +634,9 @@ class ProductDetailsViewModel @Inject constructor(
                     selectedOfferItem
                 )
             } else {
+                for (item in mSkuOfferList) {
+                    item?.selected =false
+                }
                 getNavigator()?.refreshOfferAdapter()
                 getNavigator()?.showToast(offersOnProductResponse.body()?.gpApiMessage)
             }

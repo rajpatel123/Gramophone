@@ -37,7 +37,7 @@
                 android:layout_weight="5"
                 android:text="@{model.question}"
                 android:textColor="@color/blakish"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_12ssp"
                 android:fontFamily="@font/manrope_bold"
                 tools:text="Question" />
 
@@ -77,7 +77,7 @@
                 android:layout_weight="5"
                 android:text="@{model.answer.get(0)}"
                 android:textColor="@color/blakish"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_12ssp"
                 android:fontFamily="@font/manrope_regular"
                 tools:text="Answer" />
 

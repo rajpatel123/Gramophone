@@ -128,8 +128,6 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
-                        android:text='@{item[0].farm_ref_id}'
-                        android:visibility='@{item[0].farm_ref_id == null ? View.GONE : View.VISIBLE}'
                         tools:text='F3456' />
 
                     <TextView
@@ -246,9 +244,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/_16sdp"
                     android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
                     android:drawablePadding="@dimen/_8sdp"
                     android:fontFamily="@font/manrope_medium"
                     android:text='@{item.size == 1 ? @string/added_one_farm :  @string/added_farm_count(item.size)}'

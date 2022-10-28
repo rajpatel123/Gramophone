@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/itemView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <TextView
+            android:id="@+id/tvTodayForecast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/manrope_medium"
+            android:text="@string/today_s_weather"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_10ssp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/tvWeather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTodayForecast"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:textColor="@color/weather_orange"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="normal"
+            android:text="Sunny-43°c-29°c" />
+
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvWeather"
+            android:layout_marginStart="@dimen/_14sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_toStartOf="@+id/rlWeatherImage"
+            android:drawablePadding="@dimen/_4sdp"
+            android:fontFamily="@font/manrope_medium"
+            android:gravity="center_vertical"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_10ssp"
+            android:textStyle="normal"
+            app:drawableStartCompat="@drawable/ic_location_orange"
+            android:text="Ashok Nagar, New Delhi" />
+
+        <RelativeLayout
+            android:id="@+id/rlWeatherImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_2sdp">
+
+            <RelativeLayout
+                android:id="@+id/rlOuterCircle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="@dimen/_110sdp"
+                    android:layout_height="@dimen/_76sdp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/ic_home_weather_bg"
+                    android:contentDescription="@string/image" />
+
+                <RelativeLayout
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_centerInParent="true"
+                    android:padding="@dimen/_8sdp"
+                    android:background="@drawable/circle_solid_gray"
+                    android:backgroundTint="#F8D11C">
+
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:id="@+id/ivWeather"
+                        android:layout_width="wrap_content"
+                        android:src="@drawable/ic_weather_clear"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/image" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_minus44sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_toEndOf="@+id/rlOuterCircle"
+                android:gravity="center"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="@dimen/_6sdp"
+                    android:layout_height="@dimen/_6sdp"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/ic_accuweather" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_1sdp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="1sp"
+                    android:text="@string/accuweather"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_6ssp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_8sdp"
+            android:layout_below="@+id/rlWeatherImage"
+            android:background="@color/gray_stroke" />
+
+    </RelativeLayout>
+</RelativeLayout>
