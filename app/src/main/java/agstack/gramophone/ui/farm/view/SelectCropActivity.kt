@@ -5,20 +5,25 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivitySelectCropBinding
 import agstack.gramophone.ui.farm.adapter.SelectCropAdapter
+import agstack.gramophone.ui.farm.model.FarmEvent
 import agstack.gramophone.ui.farm.navigator.SelectCropNavigator
 import agstack.gramophone.ui.farm.viewmodel.SelectCropViewModel
-import android.annotation.SuppressLint
+import agstack.gramophone.utils.EventBus
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.Disposable
 
 @AndroidEntryPoint
 class SelectCropActivity :
     BaseActivityWrapper<ActivitySelectCropBinding, SelectCropNavigator, SelectCropViewModel>(),
     SelectCropNavigator {
+
+    private var disposable: Disposable? = null
 
     companion object {
         fun start(activity : AppCompatActivity){
@@ -37,6 +42,12 @@ class SelectCropActivity :
             getViewModel().getCrops()
             viewDataBinding.swipeRefresh.isRefreshing = false
         }
+
+        disposable =  EventBus.subscribe<FarmEvent>()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    finishActivity()
+                }
     }
 
     override fun setToolbarTitle(title: String) {
@@ -59,6 +70,10 @@ class SelectCropActivity :
         viewDataBinding.rvSelectCrop.adapter?.notifyItemChanged(position)
     }
 
+    override fun finishActivity() {
+        finish()
+    }
+
     override fun getLayoutID(): Int {
         return R.layout.activity_select_crop
     }
@@ -70,6 +85,11 @@ class SelectCropActivity :
     override fun getViewModel(): SelectCropViewModel {
         val viewModel: SelectCropViewModel by viewModels()
         return viewModel
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable?.let { if(!it.isDisposed) it.dispose() }
     }
 
 }
