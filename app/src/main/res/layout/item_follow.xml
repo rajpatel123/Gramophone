@@ -54,12 +54,14 @@
 
         <TextView
             android:id="@+id/tv_follow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_25sdp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/_16sdp"
             android:background="@drawable/following_bg"
+            android:fontFamily="@font/manrope_semibold"
+            android:gravity="center"
             android:paddingStart="@dimen/_6sdp"
             android:paddingTop="@dimen/_3sdp"
             android:paddingEnd="@dimen/_6sdp"
@@ -67,7 +69,8 @@
             android:text="@{model.following?@string/following:@string/follow}"
             android:textColor="@color/gjg"
             android:textSize="@dimen/_10ssp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="Follow" />
 
 
 

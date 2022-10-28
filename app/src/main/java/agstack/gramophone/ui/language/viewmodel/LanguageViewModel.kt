@@ -137,6 +137,8 @@ class LanguageViewModel @Inject constructor(
                     val langIsoCode = language?.language_code
                     if (langIsoCode != null && !langIsoCode.equals("", ignoreCase = true)) {
                         LocaleManagerClass.updateLocale(langIsoCode, getNavigator()?.getResource())
+                        SharedPreferencesHelper.instance?.putString(SharedPreferencesKeys.languageCode,langIsoCode)
+
                     }
                     getNavigator()?.initiateApp()
                 } else {
@@ -145,10 +147,7 @@ class LanguageViewModel @Inject constructor(
             }
             R.id.btnSave -> {
                 if (language != null) {
-                    val langIsoCode = language?.language_code
-                    if (langIsoCode != null && !langIsoCode.equals("", ignoreCase = true)) {
-                        LocaleManagerClass.updateLocale(langIsoCode, getNavigator()?.getResource())
-                    }
+
 
                     val updateLanguageRequestModel = UpdateLanguageRequestModel(getNavigator()?.getLanguage()!!)
                     viewModelScope.launch {
@@ -208,6 +207,12 @@ class LanguageViewModel @Inject constructor(
                         SharedPreferencesKeys.BANNER_DATA,
                         BannerResponse("")
                     )
+
+                    val langIsoCode = language?.language_code
+                    SharedPreferencesHelper.instance?.putString(SharedPreferencesKeys.languageCode,langIsoCode)
+                    if (langIsoCode != null && !langIsoCode.equals("", ignoreCase = true)) {
+                        LocaleManagerClass.updateLocale(langIsoCode, getNavigator()?.getResource())
+                    }
                     getNavigator()?.closeLanguageList()
                 } else {
                     getNavigator()?.onError(updateLanguageResponseModel?.gp_api_message)

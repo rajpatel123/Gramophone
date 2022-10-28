@@ -58,12 +58,12 @@
                             tools:text=" Sawer, Madhya Pradesh" />
 
                         <TextView
+                            android:id="@+id/tvViewProfile"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:fontFamily="@font/manrope_regular"
                             android:text="@string/view_profile"
-                            android:onClick="@{ ()-> viewModel.onViewProfileClicked() }"
                             android:textColor="@color/weather_orange"
                             android:textSize="@dimen/_14ssp"
                             tools:text="@string/view_profile" />
@@ -129,16 +129,76 @@
                     </LinearLayout>
                 </RelativeLayout>
 
-                <include
-                    android:id="@+id/layoutFarm"
-                    layout="@layout/card_gramo_farm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:id="@+id/llNoFarm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_2sdp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@color/grey" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:orientation="horizontal"
+                        >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            app:srcCompat="@drawable/ic_info" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:fontFamily="@font/manrope_semibold"
+                            android:text="@string/no_farm_added"
+                            android:textSize="@dimen/_14ssp"
+                            android:textColor="@color/brand_color" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_2sdp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@color/grey" />
+
+                </LinearLayout>
+
+               <LinearLayout
+                   android:id="@+id/llLayoutFarm"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   >
+                   <include
+                       android:id="@+id/layoutFarm"
+                       layout="@layout/card_gramo_farm"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:visibility="visible" />
+               </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_10sdp">
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_20sdp">
 
                     <TextView
                         android:id="@+id/tvGoToFarms"
@@ -204,7 +264,6 @@
                         android:id="@+id/ivFavorite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
                         app:srcCompat="@drawable/ic_bookmarked" />
 
                     <LinearLayout

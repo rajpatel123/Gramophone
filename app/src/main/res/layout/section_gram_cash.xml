@@ -21,14 +21,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp">
 
                 <ImageView
                     android:id="@+id/ivFarm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     app:srcCompat="@drawable/ic_gram_cash_gramophone" />
 
                 <LinearLayout
@@ -55,7 +54,7 @@
                         android:fontFamily="@font/manrope_regular"
                         android:text="@string/history"
                         android:textColor="@color/gray"
-                        android:textSize="@dimen/_12ssp" />
+                        android:textSize="@dimen/_11ssp" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -65,15 +64,15 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:background="@drawable/grey_outline"
+                android:background="@drawable/grey_outline_gram_cash"
                 android:orientation="vertical">
+
 
                 <RelativeLayout
                     android:id="@+id/item_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_12sdp"
-                    android:paddingTop="@dimen/_24sdp"
                     android:paddingEnd="@dimen/_12sdp">
 
                     <FrameLayout
@@ -86,7 +85,6 @@
                             android:layout_height="@dimen/_54sdp"
                             android:layout_gravity="center"
                             android:contentDescription="@string/image"
-                            android:padding="@dimen/_4sdp"
                             app:srcCompat="@drawable/ic_gramcashlogo" />
 
                     </FrameLayout>
@@ -97,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="@dimen/_16sdp"
-                        android:layout_marginTop="@dimen/_3sdp"
+                        android:layout_marginTop="@dimen/_13sdp"
                         android:fontFamily="@font/manrope_bold"
 
                         android:gravity="center_vertical"
@@ -109,7 +107,7 @@
                     <TextView
                         android:id="@+id/date_time"
                         android:layout_width="wrap_content"
-                        android:layout_height="16dp"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/tvTotalAmount"
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="@dimen/_16sdp"
@@ -119,11 +117,10 @@
                         android:lineSpacingExtra="-2sp"
                         android:text="@string/total_balance"
                         android:textColor="@color/gray_strike_through"
-                        android:textSize="13sp" />
+                        android:textSize="@dimen/_12ssp" />
 
 
                 </RelativeLayout>
-
 
                 <RelativeLayout
                     android:id="@+id/footerLayout"
@@ -131,7 +128,7 @@
                     android:layout_height="@dimen/_36sdp"
                     android:layout_below="@+id/contentLayout"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:background="@drawable/grey_outline_bottom"
+                    android:background="@drawable/grey_outline_bottom_gramcash"
                     android:backgroundTint="@color/green_transparent"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:paddingBottom="@dimen/_8sdp">

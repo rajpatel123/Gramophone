@@ -19,7 +19,6 @@
                 android:id="@+id/ivFarm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 app:srcCompat="@drawable/ic_order" />
 
             <LinearLayout
@@ -46,7 +45,7 @@
                     android:fontFamily="@font/manrope_regular"
                     android:text="@string/know_more_about_referral"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/_12ssp"
+                    android:textSize="@dimen/_11ssp"
                     />
             </LinearLayout>
         </RelativeLayout>
@@ -69,6 +68,7 @@
                 android:layout_toStartOf="@+id/ivNext1"
                 android:fontFamily="@font/manrope_regular"
                 android:hint="00"
+                android:background="@drawable/rounded_corner_8_solid_orange_light_gram_cash"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp" />
 

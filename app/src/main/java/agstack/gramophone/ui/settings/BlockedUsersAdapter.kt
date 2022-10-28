@@ -7,6 +7,7 @@ import agstack.gramophone.ui.settings.model.blockedusers.BlockedUser
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 /**
  * binding will be replaced later
@@ -29,6 +30,7 @@ class BlockedUsersAdapter(private val blockedUsers: List<BlockedUser>) :
         holder.binding.setVariable(BR.model, blockedUser)
         val mBinding = holder.binding
 
+        Glide.with(holder.binding.root.context).load(blockedUser.photoUrl).into(holder.binding.ivProfileImage)
         mBinding.tvBlockUser.setOnClickListener {
             lastSelectPosition = position
             selectedUser?.invoke(blockedUser)

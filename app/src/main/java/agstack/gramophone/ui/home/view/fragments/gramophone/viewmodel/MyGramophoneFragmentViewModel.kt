@@ -138,10 +138,9 @@ class MyGramophoneFragmentViewModel
                     ) {
                         val placedList = ArrayList<Data>()
                         placedList.addAll(placeOrderResponse.body()?.gp_api_response_data?.data as ArrayList<Data>)
-
                         getNavigator()?.updateOrderSection(placedList)
-
-
+                    }else{
+                        getNavigator()?.updateOrderSection(null)
                     }
 
                 } else {
@@ -163,7 +162,7 @@ class MyGramophoneFragmentViewModel
                 if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS && response.body()?.gp_api_response_data != null ) {
                     getNavigator()?.updateFarms(response.body()!!)
                 }else{
-
+                    getNavigator()?.updateFarms(null)
                 }
 
             } catch (ex: Exception) {

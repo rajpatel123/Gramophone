@@ -14,6 +14,8 @@ import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodel
 import agstack.gramophone.ui.othersporfile.model.CommunityUserPostRequestModel
 import agstack.gramophone.ui.othersporfile.model.ProfileDataResponse
 import agstack.gramophone.ui.postdetails.model.PostDetailResponseModel
+import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
+import agstack.gramophone.ui.settings.model.blockedusers.UnblockRequestModel
 import agstack.gramophone.ui.userprofile.model.TestUserModel
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -58,6 +60,10 @@ interface CommunityApiService {
 
     @PUT("/api/v2/posts/update-blocked-user")
     suspend fun blockUser(@Body post: BlockUserRequestModel): Response<BlockResponseModel>
+
+
+    @PUT("/api/v2/posts/update-blocked-user")
+    suspend fun unBlockUser(@Body post: UnblockRequestModel): Response<BlockResponseModel>
 
     @PUT("/api/v2/profiles/update-follow")
     suspend fun followPost(@Body post: FollowRequestModel): Response<FollowResponseModel>
@@ -117,6 +123,10 @@ interface CommunityApiService {
         @Part("postId") postId: RequestBody?,
         @Part("tags") tags: RequestBody?,
         @Part("farmArea") farmArea: RequestBody?,
-        @Part("showingDate") showingDate : RequestBody?,
+        @Part("showingDate") showingDate: RequestBody?,
     ): Response<CreatePostResponseModel>
+
+    @GET("/api/v2/posts/get-blocked-user")
+    suspend fun getBlockedUsersList(): Response<BlockedUsersListResponseModel>
+
 }

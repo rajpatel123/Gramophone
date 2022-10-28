@@ -5,6 +5,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityCommentsBinding
 import agstack.gramophone.ui.comments.CommentNavigator
+import agstack.gramophone.ui.comments.model.Data
 import agstack.gramophone.ui.comments.viewModel.CommentsViewModel
 import agstack.gramophone.ui.home.adapter.CommentsAdapter
 import agstack.gramophone.utils.Constants.POST_ID
@@ -186,9 +187,11 @@ class CommentsActivity :
 
     override fun updateCommentsList(
         commentsAdapter: CommentsAdapter,
-        onItemCommentsClicked: (commentId: String) -> Unit
+        onItemCommentsClicked: (commentId: String) -> Unit,
+        onTripleDotMenuClicked: (data: Data) -> Unit
     ) {
         commentsAdapter.onItemCommentsClicked = onItemCommentsClicked
+        commentsAdapter.onTripleDotMenuClicked = onTripleDotMenuClicked
         rvCommentsDialog?.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvCommentsDialog?.setHasFixedSize(false)

@@ -439,7 +439,7 @@
                 android:layout_below="@+id/rel_expert"
                 android:layout_marginLeft="@dimen/_40sdp"
                 android:layout_marginTop="@dimen/_8ssp"
-                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_1sdp"
                 android:fontFamily="@font/manrope_regular"
                 android:text="@{model.lastComment.commentDuration}"
                 android:textColor="@color/gray_strike_through"
@@ -462,9 +462,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/llChat"
             android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:minHeight="@dimen/_30sdp"
-            android:layout_marginBottom="@dimen/_5sdp">
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:minHeight="@dimen/_30sdp">
 
             <ImageView
                 android:id="@+id/ivCommentBottom"
