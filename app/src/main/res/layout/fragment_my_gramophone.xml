@@ -133,6 +133,7 @@
                     android:id="@+id/llNoFarm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:orientation="vertical">
 
                     <View
@@ -155,6 +156,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
                             app:srcCompat="@drawable/ic_info" />
 
                         <TextView
