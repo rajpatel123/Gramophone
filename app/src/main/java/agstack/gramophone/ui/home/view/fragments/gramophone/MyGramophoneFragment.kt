@@ -8,7 +8,7 @@ import agstack.gramophone.databinding.FragmentMyGramophoneBinding
 import agstack.gramophone.ui.articles.ArticlesWebViewActivity
 import agstack.gramophone.ui.comments.view.CommentsActivity
 import agstack.gramophone.ui.farm.model.FarmResponse
-import agstack.gramophone.ui.farm.view.AddFarmActivity
+import agstack.gramophone.ui.farm.view.SelectCropActivity
 import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
 import agstack.gramophone.ui.gramcash.GramCashActivity
 import agstack.gramophone.ui.home.view.HomeActivity
@@ -27,16 +27,16 @@ import agstack.gramophone.view.activity.CreatePostActivity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.amnix.xtension.extensions.append
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.ArrayList
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -85,6 +85,9 @@ class MyGramophoneFragment :
     }
 
     private fun setUpUI() {
+        binding?.tvViewProfile?.setOnClickListener {
+            myGramophoneFragmentViewModel.onViewProfileClicked()
+        }
         shareSheetPresenter = this.let { ShareSheetPresenter(activity as HomeActivity, it) }
         shareSheetPresenter!!.shareDynamicLink()
         myGramophoneFragmentViewModel.initProfile()
@@ -93,6 +96,8 @@ class MyGramophoneFragment :
         myGramophoneFragmentViewModel.getPlacedOrder()
         myGramophoneFragmentViewModel.getFarms()
         myGramophoneFragmentViewModel.getMyGramophoneData()
+
+
     }
 
     override fun getLayoutID(): Int {
@@ -218,25 +223,35 @@ class MyGramophoneFragment :
         }
     }
 
-    override fun updateOrderSection(placedList: ArrayList<Data>) {
-        binding?.layoutOrder?.myOrderTitle?.text = String.format(getMessage(R.string.total_orders),placedList.size)
-        binding?.layoutOrder?.tvOrderNumber?.text = "#".plus(placedList[0].order_id.toString())
-        binding?.layoutOrder?.tvTotalAmount?.text = getMessage(R.string.rupee).plus(placedList[0].price.toString())
-        binding?.layoutOrder?.dateTime?.text = placedList[0].order_date.toString().plus("/").plus(placedList[0].quantity).plus("Items")
-        binding?.layoutOrder?.tvOrderStatus?.text = placedList[0].order_status_name.toString()
+    override fun updateOrderSection(placedList: ArrayList<Data>?) {
 
-        if (placedList[0].product_image!=null)
-            Glide.with(this).load(placedList[0].product_image).into(binding?.layoutOrder?.productImage!!)
+        if (placedList==null){
+            binding?.layoutOrder?.llNoOrder?.visibility= VISIBLE
+            binding?.layoutOrder?.rlOrder?.visibility= GONE
+            binding?.layoutOrder?.tvGoToOrders?.visibility= GONE
+            binding?.layoutOrder?.ivNext1?.visibility= GONE
+        }else{
+            binding?.layoutOrder?.llNoOrder?.visibility= GONE
+            binding?.layoutOrder?.rlOrder?.visibility= VISIBLE
+            binding?.layoutOrder?.myOrderTitle?.text = String.format(getMessage(R.string.total_orders),placedList.size)
+            binding?.layoutOrder?.tvOrderNumber?.text = "#".plus(placedList[0].order_id.toString())
+            binding?.layoutOrder?.tvTotalAmount?.text = getMessage(R.string.rupee).plus(placedList[0].price.toString())
+            binding?.layoutOrder?.dateTime?.text = placedList[0].order_date.toString().plus("/").plus(placedList[0].quantity).plus("Items")
+            binding?.layoutOrder?.tvOrderStatus?.text = placedList[0].order_status_name.toString()
 
-        binding?.layoutOrder?.tvDetail?.setOnClickListener {
-          openActivity(OrderDetailsActivity::class.java,Bundle().apply {
-                putString(Constants.ORDER_ID, placedList[0].order_id.toString())
-                putString(Constants.ORDER_TYPE, Constants.RECENT)
-            })
-        }
+            if (placedList[0].product_image!=null)
+                Glide.with(this).load(placedList[0].product_image).into(binding?.layoutOrder?.productImage!!)
 
-        binding?.layoutOrder?.tvGoToOrders?.setOnClickListener {
-          openActivity(OrderListActivity::class.java)
+            binding?.layoutOrder?.tvDetail?.setOnClickListener {
+                openActivity(OrderDetailsActivity::class.java,Bundle().apply {
+                    putString(Constants.ORDER_ID, placedList[0].order_id.toString())
+                    putString(Constants.ORDER_TYPE, Constants.RECENT)
+                })
+            }
+
+            binding?.layoutOrder?.tvGoToOrders?.setOnClickListener {
+                openActivity(OrderListActivity::class.java)
+            }
         }
 
 
@@ -249,54 +264,71 @@ class MyGramophoneFragment :
 
     }
 
-    override fun updateFarms(farms: FarmResponse) {
-        Log.d("Raj", farms.toString())
-        binding?.myFarmsTitle?.text = String.format(
-            getMessage(R.string.myfarm),
-            farms.gp_api_response_data.customer_farm.data.size
-        )
-        binding?.layoutFarm?.txtCropName?.text =
-            farms.gp_api_response_data.customer_farm.data[0][0].crop_name
-        binding?.layoutFarm?.txtCropCode?.text =
-            farms.gp_api_response_data.customer_farm.data[0][0].farm_ref_id
-        binding?.layoutFarm?.txtDate?.text = String.format(
-            getMessage(R.string.crop_sowing_date),
-            farms.gp_api_response_data.customer_farm.data[0][0].crop_sowing_date
-        )
-        binding?.layoutFarm?.txtArea?.text = String.format(
-            getMessage(R.string.farm_area),
-            farms.gp_api_response_data.customer_farm.data[0][0].farm_area
-        )
+    override fun updateFarms(farms: FarmResponse?) {
 
-        if (farms.gp_api_response_data.customer_farm.data[0][0].duration != null)
-            binding?.layoutFarm?.txtDuration?.text = String.format(
-                getMessage(R.string.crop_duration),
-                farms.gp_api_response_data.customer_farm.data[0][0].duration
+        if (farms?.gp_api_response_data?.customer_farm?.data==null){
+           binding?.llNoFarm?.visibility= VISIBLE
+           binding?.tvGoToFarms?.visibility= GONE
+           binding?.ivNext?.visibility= GONE
+           binding?.llLayoutFarm?.visibility= GONE
+            binding?.myFarmsTitle?.text = String.format(
+                getMessage(R.string.myfarm),
+                0
             )
-        else {
-            binding?.layoutFarm?.txtDuration?.visibility = GONE
-        }
-        binding?.layoutFarm?.txtStage?.text = String.format(
-            getMessage(R.string.stage_name),
-            farms.gp_api_response_data.customer_farm.data[0][0].days,
-            farms.gp_api_response_data.customer_farm.data[0][0].stage_name
-        )
-        if (farms.gp_api_response_data.customer_farm.data[0][0].crop_image != null) {
-            Glide.with(this).load(farms.gp_api_response_data.customer_farm.data[0][0].crop_image)
-                .into(binding?.layoutFarm?.imageSelectCorpItem!!)
-        }
+        }else{
+            binding?.llNoFarm?.visibility= GONE
+            binding?.tvGoToFarms?.visibility= VISIBLE
+            binding?.ivNext?.visibility= VISIBLE
+            binding?.llLayoutFarm?.visibility= VISIBLE
 
+            binding?.myFarmsTitle?.text = String.format(
+                getMessage(R.string.myfarm),
+                farms.gp_api_response_data.customer_farm.data.size
+            )
+            binding?.layoutFarm?.txtCropName?.text =
+                farms.gp_api_response_data.customer_farm.data[0][0].crop_name
+            binding?.layoutFarm?.txtCropCode?.text =
+                farms.gp_api_response_data.customer_farm.data[0][0].farm_ref_id
+            binding?.layoutFarm?.txtDate?.text = String.format(
+                getMessage(R.string.crop_sowing_date),
+                farms.gp_api_response_data.customer_farm.data[0][0].crop_sowing_date
+            )
+            binding?.layoutFarm?.txtArea?.text = String.format(
+                getMessage(R.string.farm_area),
+                farms.gp_api_response_data.customer_farm.data[0][0].farm_area
+            )
+
+            if (farms.gp_api_response_data.customer_farm.data[0][0].duration != null)
+                binding?.layoutFarm?.txtDuration?.text = String.format(
+                    getMessage(R.string.crop_duration),
+                    farms.gp_api_response_data.customer_farm.data[0][0].duration
+                )
+            else {
+                binding?.layoutFarm?.txtDuration?.visibility = GONE
+            }
+            binding?.layoutFarm?.txtStage?.text = String.format(
+                getMessage(R.string.stage_name),
+                farms.gp_api_response_data.customer_farm.data[0][0].days,
+                farms.gp_api_response_data.customer_farm.data[0][0].stage_name
+            )
+            if (farms.gp_api_response_data.customer_farm.data[0][0].crop_image != null) {
+                Glide.with(this).load(farms.gp_api_response_data.customer_farm.data[0][0].crop_image)
+                    .into(binding?.layoutFarm?.imageSelectCorpItem!!)
+            }
+        }
         binding?.tvGoToFarms?.setOnClickListener {
             openActivity(ViewAllFarmsActivity::class.java)
         }
 
         binding?.btnAddfarm?.setOnClickListener {
-            openActivity(AddFarmActivity::class.java)
+            openActivity(SelectCropActivity::class.java)
         }
 
         binding?.layoutFarm?.txtAddFarm?.setOnClickListener {
-            openActivity(AddFarmActivity::class.java)
+            openActivity(SelectCropActivity::class.java)
         }
+
+
     }
 
     override fun updateMyFavoriteSection(myGramophoneResponseModel: MyGramophoneResponseModel) {

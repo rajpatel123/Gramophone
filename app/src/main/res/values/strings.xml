@@ -297,6 +297,7 @@
     <string name="crop_stage_detail">CroOn the young seedlings initially, water soaked areas developed at the collar region and a brown sunken lesion which soon appeared as girdled resulting in seeding collapse.\n\nOn adult plant initially, slight drooping of leaves which led to drying of leaves starting from lower ones extended from root to stem region and plants exhibited wilting symptom.p Protection</string>
     <string name="gramophone_tv">Gramophone TV</string>
     <string name="my_profile">My Profile</string>
+    <string name="my_gramophone">My Gramophone</string>
     <string name="resend">Didn’t recieved OTP? Retry via</string>
     <string name="call">Call</string>
     <string name="sms">SMS</string>
@@ -374,7 +375,7 @@
     <string name="tab_following">Following</string>
     <string name="tab_expert">Expert</string>
     <string name="tab_my_post">My Post</string>
-    <string name="my_post">My Post(%d)</string>
+    <string name="my_post">My Posts(%d)</string>
     <string name="tab_saved_post">Saved Post</string>
     <string name="starts_from_99">Starts from \u20B9 99</string>
     <string name="shop_by_sub_category">Shop by Sub Category</string>
@@ -581,5 +582,6 @@
     <string name="products">Products</string>
     <string name="posted_on">"Posted on: "</string>
     <string name="posts">Posts</string>
+    <string name="no_farm_added">No Farm Added Yet!</string>
     <string name="today_s_weather">Today\'s Weather</string>
 </resources>

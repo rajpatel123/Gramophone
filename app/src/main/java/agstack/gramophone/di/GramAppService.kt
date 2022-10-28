@@ -178,8 +178,6 @@ interface GramAppService {
     @POST("api/v5/cart/place-order")
     suspend fun placeOrder(): Response<PlaceOrderResponse>
 
-    @GET("api/v5/setting/user-blocked-list")
-    suspend fun getBlockedUsersList(): Response<BlockedUsersListResponseModel>
 
 
     @PUT("api/v5/setting/whatsapp/{opt-in}")

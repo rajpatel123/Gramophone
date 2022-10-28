@@ -64,6 +64,7 @@ class LanguageBottomSheetFragment : BottomSheetDialogFragment(),
         binding?.tvContinue?.setOnClickListener {
             if (language != null) {
                 val langIsoCode = language?.language_code
+                SharedPreferencesHelper.instance?.putString(SharedPreferencesKeys.languageCode,langIsoCode)
                 if (langIsoCode != null && !langIsoCode.equals("", ignoreCase = true)) {
                     LocaleManagerClass.updateLocale(langIsoCode, activity?.resources)
                 }
