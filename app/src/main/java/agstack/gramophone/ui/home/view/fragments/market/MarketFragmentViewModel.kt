@@ -4,12 +4,15 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.articles.ArticlesRepository
 import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.data.repository.weather.WeatherRepository
 import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.farm.model.FarmRequest
 import agstack.gramophone.ui.farm.model.FarmResponse
 import agstack.gramophone.ui.home.adapter.HomeAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.order.model.PageLimitRequest
+import agstack.gramophone.ui.weather.model.WeatherRequest
+import agstack.gramophone.ui.weather.model.WeatherResponse
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
@@ -27,6 +30,7 @@ class MarketFragmentViewModel
 @Inject constructor(
     private val productRepository: ProductRepository,
     private val articlesRepository: ArticlesRepository,
+    private val weatherRepository: WeatherRepository,
 ) : BaseViewModel<MarketFragmentNavigator>() {
 
     var allProductsResponse: AllProductsResponse? = null
@@ -37,6 +41,7 @@ class MarketFragmentViewModel
     var categoryResponse: CategoryResponse? = null
     var cartList: List<CartItem>? = arrayListOf()
     var farmResponse: FarmResponse? = null
+    var weatherResponse: WeatherResponse? = null
     var articlesData: HashMap<String, ArrayList<FormattedArticlesData>> = HashMap()
 
     fun showAppTourDialogIfApplicable() {
@@ -71,7 +76,8 @@ class MarketFragmentViewModel
                         companyResponse,
                         cartList,
                         farmResponse,
-                        articlesData)) {
+                        articlesData,
+                        weatherResponse)) {
                         getNavigator()?.launchCommunityFragment()
                     }
                 }
@@ -84,13 +90,21 @@ class MarketFragmentViewModel
         }
     }
 
-    fun getBanners() {
+    /*
+    * Don't remove the logic for getting banners in below method
+    * OR If any discussion happened to change the logic then mention here
+    */
+    fun getBanners(refreshFromApi: Boolean) {
+        var isRefreshFromApi = refreshFromApi
         viewModelScope.launch {
             try {
                 allBannerResponse = SharedPreferencesHelper.instance?.getParcelable(
                     SharedPreferencesKeys.BANNER_DATA, BannerResponse::class.java
                 )
                 if (allBannerResponse.isNull() || allBannerResponse?.gpApiStatus != Constants.GP_API_STATUS) {
+                    isRefreshFromApi = true
+                }
+                if (isRefreshFromApi) {
                     val response = productRepository.getBanners()
                     if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS) {
                         allBannerResponse = response.body()
@@ -183,6 +197,26 @@ class MarketFragmentViewModel
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
                     else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
+            }
+        }
+    }
+
+    fun getWeatherDetail() {
+        val weatherRequest = WeatherRequest(null, null)
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    val response = weatherRepository.getWeatherDetail(weatherRequest)
+                    if (response.body()?.gp_api_status.equals(Constants.GP_API_STATUS)
+                        && response.body()?.gp_api_response_data.isNotNullOrEmpty()
+                        && response.body()?.gp_api_response_data?.get(0).isNotNull()
+                    ) {
+                        weatherResponse = response.body()
+                    }
+                    notifyAdapter()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -433,6 +467,6 @@ class MarketFragmentViewModel
         getNavigator()?.notifyHomeAdapter(
             allBannerResponse, categoryResponse, allProductsResponse,
             cropResponse,
-            storeResponse, companyResponse, cartList, farmResponse, articlesData)
+            storeResponse, companyResponse, cartList, farmResponse, articlesData, weatherResponse)
     }
 }

@@ -469,6 +469,7 @@
     <string name="old_farms_title">पुराने खेत</string>
     <string name="posts">Posts</string>
     <string name="today_s_weather">Today\'s Weather</string>
+    <string name="default_city_name">New Delhi</string>
 
 
 </resources>

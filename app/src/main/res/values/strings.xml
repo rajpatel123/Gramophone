@@ -480,6 +480,7 @@
     <string name="_01_quantity">01</string>
     <string name="degee_temp">°</string>
     <string name="degee_temp_centigrade">°C</string>
+    <string name="degee_temp_centigrade_lower_case">°c</string>
     <string name="comma_with_space">", "</string>
     <string name="others">Others</string>
     <string name="order_placed">Order Placed</string>
@@ -582,4 +583,5 @@
     <string name="posted_on">"Posted on: "</string>
     <string name="posts">Posts</string>
     <string name="today_s_weather">Today\'s Weather</string>
+    <string name="default_city_name">New Delhi</string>
 </resources>

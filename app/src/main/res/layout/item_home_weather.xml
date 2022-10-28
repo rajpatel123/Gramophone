@@ -32,11 +32,12 @@
             android:layout_below="@+id/tvTodayForecast"
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_2sdp"
+            android:layout_toStartOf="@+id/rlWeatherImage"
             android:fontFamily="@font/manrope_bold"
             android:textColor="@color/weather_orange"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_11ssp"
             android:textStyle="normal"
-            android:text="Sunny-43°c-29°c" />
+            tools:text="Sunny-43°c-29°c" />
 
         <TextView
             android:id="@+id/tvLocation"
@@ -46,14 +47,14 @@
             android:layout_marginStart="@dimen/_14sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_toStartOf="@+id/rlWeatherImage"
-            android:drawablePadding="@dimen/_4sdp"
+            android:drawablePadding="@dimen/_3sdp"
             android:fontFamily="@font/manrope_medium"
             android:gravity="center_vertical"
             android:textColor="@color/gray"
             android:textSize="@dimen/_10ssp"
             android:textStyle="normal"
             app:drawableStartCompat="@drawable/ic_location_orange"
-            android:text="Ashok Nagar, New Delhi" />
+            tools:text="Ashok Nagar, New Delhi" />
 
         <RelativeLayout
             android:id="@+id/rlWeatherImage"
@@ -78,17 +79,17 @@
                     android:layout_width="@dimen/_60sdp"
                     android:layout_height="@dimen/_60sdp"
                     android:layout_centerInParent="true"
-                    android:padding="@dimen/_8sdp"
                     android:background="@drawable/circle_solid_gray"
-                    android:backgroundTint="#F8D11C">
+                    android:backgroundTint="#F8D11C"
+                    android:padding="@dimen/_8sdp">
 
                     <ImageView
-                        android:layout_centerInParent="true"
                         android:id="@+id/ivWeather"
                         android:layout_width="wrap_content"
-                        android:src="@drawable/ic_weather_clear"
                         android:layout_height="wrap_content"
-                        android:contentDescription="@string/image" />
+                        android:layout_centerInParent="true"
+                        android:contentDescription="@string/image"
+                        android:src="@drawable/ic_weather_clear" />
 
                 </RelativeLayout>
 

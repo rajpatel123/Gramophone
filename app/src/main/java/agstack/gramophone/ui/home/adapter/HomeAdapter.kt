@@ -19,6 +19,8 @@ import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.shop.ShopByActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.*
+import agstack.gramophone.ui.weather.WeatherActivity
+import agstack.gramophone.ui.weather.model.WeatherResponse
 import agstack.gramophone.utils.Constants
 import android.content.Context
 import android.content.Intent
@@ -27,8 +29,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.bumptech.glide.Glide
+import java.lang.StringBuilder
 
 
 class HomeAdapter(
@@ -42,6 +46,7 @@ class HomeAdapter(
     private var cartList: List<CartItem>?,
     private var farmResponse: FarmResponse?,
     private var articlesData: HashMap<String, ArrayList<FormattedArticlesData>>,
+    private var weatherResponse: WeatherResponse?,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onItemClicked: ((String) -> Unit)? = null
@@ -52,6 +57,7 @@ class HomeAdapter(
         storeResponse: StoreResponse?, companyResponse: CompanyResponse?,
         cartList: List<CartItem>?, farmResponse: FarmResponse?,
         articlesData: HashMap<String, ArrayList<FormattedArticlesData>>,
+        weatherResponse: WeatherResponse?,
     ) {
         this.allBannerResponse = allBannerResponse
         this.categoryResponse = categoryResponse
@@ -62,6 +68,7 @@ class HomeAdapter(
         this.cartList = cartList
         this.farmResponse = farmResponse
         this.articlesData = articlesData
+        this.weatherResponse = weatherResponse
         notifyDataSetChanged()
     }
 
@@ -118,6 +125,10 @@ class HomeAdapter(
             }
             Constants.HOME_COMMUNITY_VIEW_TYPE -> {
                 return CommunityViewHolder(ItemHomeCommunityBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
+            }
+            Constants.HOME_WEATHER_VIEW_TYPE -> {
+                return WeatherViewHolder(ItemHomeWeatherBinding.inflate(LayoutInflater.from(
                     viewGroup.context)))
             }
         }
@@ -531,6 +542,43 @@ class HomeAdapter(
                     onItemClicked?.invoke("")
                 }
             }
+            is WeatherViewHolder -> {
+                if (weatherResponse.isNotNull() && weatherResponse?.gp_api_response_data.isNotNullOrEmpty()) {
+                    holder.binding.itemView.visibility = View.VISIBLE
+                    val data = weatherResponse?.gp_api_response_data?.get(0)
+                    when {
+                        data?.address.isNotNullOrEmpty() -> holder.binding.tvLocation.text =
+                            data?.address
+                        else -> holder.binding.tvLocation.text = holder.binding.tvLocation.context.getString(R.string.default_city_name)
+                    }
+                    val temp = StringBuilder("")
+                    if (data?.temperature.isNotNull()) {
+                        if (data?.temperature?.weather_condition.isNotNullOrEmpty())
+                            temp.append(data?.temperature?.weather_condition)
+                        if (data?.temperature?.min.isNotNullOrEmpty())
+                            temp.append("-").append(data?.temperature?.min)
+                                .append(R.string.degee_temp_centigrade_lower_case)
+                        if (data?.temperature?.max.isNotNullOrEmpty())
+                            temp.append("-").append(data?.temperature?.max)
+                                .append(R.string.degee_temp_centigrade_lower_case)
+                        holder.binding.tvWeather.text = temp.toString()
+                        if (data?.temperature?.weather_icon.isNotNullOrEmpty())
+                            Glide.with(holder.itemView.context)
+                                .load(data?.temperature?.weather_icon)
+                                .into(holder.binding.ivWeather)
+                    }
+
+                } else {
+                    holder.binding.itemView.visibility = View.GONE
+                }
+                holder.binding.itemView.setOnClickListener {
+                    openActivity(
+                        holder.binding.itemView.context,
+                        WeatherActivity::class.java,
+                        null
+                    )
+                }
+            }
         }
     }
 
@@ -574,6 +622,9 @@ class HomeAdapter(
             }
             Constants.HOME_COMMUNITY -> {
                 return Constants.HOME_COMMUNITY_VIEW_TYPE
+            }
+            Constants.HOME_WEATHER -> {
+                return Constants.HOME_WEATHER_VIEW_TYPE
             }
         }
         return Constants.HOME_EMPTY_VIEW_TYPE
@@ -619,6 +670,9 @@ class HomeAdapter(
             }
             Constants.HOME_COMMUNITY -> {
                 return Constants.HOME_COMMUNITY_VIEW_TYPE.toLong()
+            }
+            Constants.HOME_WEATHER -> {
+                return Constants.HOME_WEATHER_VIEW_TYPE.toLong()
             }
         }
         return Constants.HOME_EMPTY_VIEW_TYPE.toLong()
@@ -676,5 +730,8 @@ class HomeAdapter(
         RecyclerView.ViewHolder(binding.root)
 
     inner class CommunityViewHolder(var binding: ItemHomeCommunityBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    inner class WeatherViewHolder(var binding: ItemHomeWeatherBinding) :
         RecyclerView.ViewHolder(binding.root)
 }
