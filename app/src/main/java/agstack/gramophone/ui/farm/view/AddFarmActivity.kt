@@ -4,9 +4,11 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.AddFarmActivityBinding
+import agstack.gramophone.ui.farm.model.FarmEvent
 import agstack.gramophone.ui.farm.model.unit.GpApiResponseData
 import agstack.gramophone.ui.farm.navigator.AddFarmNavigator
 import agstack.gramophone.ui.farm.viewmodel.AddFarmViewModel
+import agstack.gramophone.utils.EventBus
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Intent
@@ -76,6 +78,7 @@ class AddFarmActivity :
     }
 
     override fun onFarmAdded() {
+        EventBus.post(FarmEvent("added"))
         showToast(getMessage(R.string.message_farm_added))
         finish()
     }
