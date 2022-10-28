@@ -15,4 +15,10 @@
     <string name="trending_articles">Trending Articles</string>
     <string name="article_read">&#160;Read</string>
     <string name="article_views">&#160;Views</string>
+    <string name="crop_duration">"बुआई का समय: %1$s"</string>
+    <string name="crop_sowing_date">"बुआई की तारीख: %1$s"</string>
+    <string name="farm_area">"खेत का एरिया: %1$s"</string>
+    <string name="stage_name">"वर्तमान चरण: %1$s &#8226; %2$s"</string>
+    <string name="posts">Posts</string>
+    <string name="today_s_weather">Today\'s Weather</string>
 </resources>

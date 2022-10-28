@@ -191,7 +191,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_11sdp"
             android:layout_toStartOf="@+id/ivMenu"
-            android:visibility="@{model.pinned?View.VISIBLE:View.GONE}"
+            android:visibility="@{model.pinned?View.VISIBLE:View.INVISIBLE}"
             app:srcCompat="@drawable/ic_pin" />
 
         <ImageView
@@ -201,9 +201,9 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="@dimen/_14sdp"
             android:layout_marginTop="@dimen/_14sdp"
-            android:minWidth="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_14sdp"
             android:layout_marginBottom="@dimen/_14sdp"
+            android:minWidth="@dimen/_20sdp"
             app:srcCompat="@drawable/ic_menu_tripple_dot" />
 
 
@@ -439,7 +439,7 @@
                 android:layout_below="@+id/rel_expert"
                 android:layout_marginLeft="@dimen/_40sdp"
                 android:layout_marginTop="@dimen/_8ssp"
-                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_1sdp"
                 android:fontFamily="@font/manrope_regular"
                 android:text="@{model.lastComment.commentDuration}"
                 android:textColor="@color/gray_strike_through"
@@ -462,9 +462,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/llChat"
             android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:minHeight="@dimen/_30sdp"
-            android:layout_marginBottom="@dimen/_5sdp">
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:minHeight="@dimen/_30sdp">
 
             <ImageView
                 android:id="@+id/ivCommentBottom"
@@ -504,7 +504,6 @@
             android:background="@color/white"
             android:elevation="@dimen/_2sdp"
             android:minWidth="@dimen/_140sdp"
-
             android:orientation="vertical"
             android:padding="@dimen/_12sdp"
             android:visibility="@{model.selected? View.VISIBLE:View.GONE}"
@@ -521,7 +520,8 @@
                     android:id="@+id/llEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -543,7 +543,9 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -556,6 +558,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         android:fontFamily="@font/manrope_regular"
                         android:text="@{model.pinned?@string/unpin_post:@string/pin_post}" />
                 </LinearLayout>
@@ -564,7 +567,8 @@
                     android:id="@+id/llDelete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:gravity="center_vertical"
 
                     android:orientation="horizontal">
@@ -592,10 +596,10 @@
 
                 <LinearLayout
                     android:id="@+id/llReport"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -617,7 +621,7 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 

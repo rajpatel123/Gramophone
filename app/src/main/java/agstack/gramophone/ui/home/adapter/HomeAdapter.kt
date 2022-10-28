@@ -1,8 +1,10 @@
 package agstack.gramophone.ui.home.adapter
 
 
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.databinding.*
+import agstack.gramophone.ui.articles.ArticlesWebViewActivity
 import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.farm.adapter.FarmAdapter
@@ -39,17 +41,17 @@ class HomeAdapter(
     private var companyResponse: CompanyResponse?,
     private var cartList: List<CartItem>?,
     private var farmResponse: FarmResponse?,
-    private var featuredArticlesList: ArrayList<FormattedArticlesData>,
+    private var articlesData: HashMap<String, ArrayList<FormattedArticlesData>>,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var onItemClicked: ((id: String) -> Unit)? = null
+    var onItemClicked: ((String) -> Unit)? = null
 
     fun notifyAdapterOnDataChange(
         allBannerResponse: BannerResponse?, categoryResponse: CategoryResponse?,
         allProductsResponse: AllProductsResponse?, cropResponse: CropResponse?,
         storeResponse: StoreResponse?, companyResponse: CompanyResponse?,
         cartList: List<CartItem>?, farmResponse: FarmResponse?,
-        featuredArticlesList: ArrayList<FormattedArticlesData>,
+        articlesData: HashMap<String, ArrayList<FormattedArticlesData>>,
     ) {
         this.allBannerResponse = allBannerResponse
         this.categoryResponse = categoryResponse
@@ -59,7 +61,7 @@ class HomeAdapter(
         this.companyResponse = companyResponse
         this.cartList = cartList
         this.farmResponse = farmResponse
-        this.featuredArticlesList = featuredArticlesList
+        this.articlesData = articlesData
         notifyDataSetChanged()
     }
 
@@ -69,101 +71,54 @@ class HomeAdapter(
                 return Banner1ViewHolder(ItemHomeBannerBinding.inflate(LayoutInflater.from(viewGroup.context)))
             }
             Constants.HOME_BANNER_EXCLUSIVE_VIEW_TYPE -> {
-                return ExclusiveBannerViewHolder(
-                    ItemHomeExclusiveBannerBinding.inflate(
-                        LayoutInflater.from(
-                            viewGroup.context
-                        )
-                    )
-                )
+                return ExclusiveBannerViewHolder(ItemHomeExclusiveBannerBinding.inflate(
+                    LayoutInflater.from(
+                        viewGroup.context)))
             }
             Constants.HOME_BANNER_REFERRAL_VIEW_TYPE -> {
-                return ReferralBannerViewHolder(
-                    ItemHomeBannerBinding.inflate(
-                        LayoutInflater.from(
-                            viewGroup.context
-                        )
-                    )
-                )
+                return ReferralBannerViewHolder(ItemHomeBannerBinding.inflate(
+                    LayoutInflater.from(
+                        viewGroup.context)))
             }
             Constants.HOME_SHOP_BY_CATEGORY_VIEW_TYPE -> {
-                return ShopByCategoryViewHolder(
-                    ItemHomeShopByCategoryBinding.inflate(
-                        LayoutInflater.from(
-                            viewGroup.context
-                        )
-                    )
-                )
+                return ShopByCategoryViewHolder(ItemHomeShopByCategoryBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
             }
             Constants.HOME_FEATURED_PRODUCTS_VIEW_TYPE -> {
-                return FeaturedProductsViewHolder(
-                    ItemHomeFeaturedProductBinding.inflate(
-                        LayoutInflater.from(viewGroup.context)
-                    )
-                )
+                return FeaturedProductsViewHolder(ItemHomeFeaturedProductBinding.inflate(
+                    LayoutInflater.from(viewGroup.context)))
             }
             Constants.HOME_SHOP_BY_CROP_VIEW_TYPE -> {
-                return ShopByCropViewHolder(
-                    ItemHomeShopByCropBinding.inflate(
-                        LayoutInflater.from(
-                            viewGroup.context
-                        )
-                    )
-                )
+                return ShopByCropViewHolder(ItemHomeShopByCropBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
             }
             Constants.HOME_SHOP_BY_STORE_VIEW_TYPE -> {
-                return ShopByStoreViewHolder(
-                    ItemHomeShopByStoreBinding.inflate(
-                        LayoutInflater.from(
-                            viewGroup.context
-                        )
-                    )
-                )
+                return ShopByStoreViewHolder(ItemHomeShopByStoreBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
             }
             Constants.HOME_SHOP_BY_COMPANY_VIEW_TYPE -> {
-                return ShopByCompanyViewHolder(
-                    ItemHomeShopByCompanyBinding.inflate(
-                        LayoutInflater.from(
-                            viewGroup.context
-                        )
-                    )
-                )
+                return ShopByCompanyViewHolder(ItemHomeShopByCompanyBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
             }
             Constants.HOME_GRAMOPHONE_PROMISE_VIEW_TYPE -> {
-                return PromiseBannerViewHolder(
-                    ItemHomePromiseBannerBinding.inflate(
-                        LayoutInflater.from(
-                            viewGroup.context
-                        )
-                    )
-                )
+                return PromiseBannerViewHolder(ItemHomePromiseBannerBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
             }
             Constants.HOME_CART_VIEW_TYPE -> {
-                return CartViewHolder(
-                    ItemHomeCartBinding.inflate(
-                        LayoutInflater.from(
-                            viewGroup.context
-                        )
-                    )
-                )
+                return CartViewHolder(ItemHomeCartBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
             }
             Constants.HOME_FARMS_VIEW_TYPE -> {
-                return FarmsViewHolder(
-                    ItemHomeFarmsViewBinding.inflate(
-                        LayoutInflater.from(
-                            viewGroup.context
-                        )
-                    )
-                )
+                return FarmsViewHolder(ItemHomeFarmsViewBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
             }
             Constants.HOME_ARTICLES_VIEW_TYPE -> {
-                return ArticlesViewHolder(
-                    ItemHomeArticlesBinding.inflate(
-                        LayoutInflater.from(
-                            viewGroup.context
-                        )
-                    )
-                )
+                return ArticlesViewHolder(ItemHomeArticlesBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
+            }
+            Constants.HOME_COMMUNITY_VIEW_TYPE -> {
+                return CommunityViewHolder(ItemHomeCommunityBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
             }
         }
         return EmptyViewHolder(
@@ -225,10 +180,8 @@ class HomeAdapter(
                         openActivity(holder.itemView.context,
                             ProductDetailsActivity::class.java,
                             Bundle().apply {
-                                putParcelable(
-                                    Constants.PRODUCT,
-                                    productData
-                                )
+                                putParcelable(Constants.PRODUCT,
+                                    productData)
                             })
                     }
                     holder.binding.rvFeatureProduct.adapter = featuredAdapter
@@ -236,10 +189,8 @@ class HomeAdapter(
                         openActivity(holder.itemView.context,
                             FeaturedProductActivity::class.java,
                             Bundle().apply {
-                                putString(
-                                    Constants.HOME_FEATURED_PRODUCTS,
-                                    Constants.HOME_FEATURED_PRODUCTS
-                                )
+                                putString(Constants.HOME_FEATURED_PRODUCTS,
+                                    Constants.HOME_FEATURED_PRODUCTS)
                             })
                     }
                 } else {
@@ -270,10 +221,8 @@ class HomeAdapter(
                             ShopByActivity::class.java,
                             Bundle().apply {
                                 putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
-                                putParcelable(
-                                    Constants.SHOP_BY_CROP,
-                                    cropResponse
-                                )
+                                putParcelable(Constants.SHOP_BY_CROP,
+                                    cropResponse)
                             })
                     }
                 } else {
@@ -325,11 +274,9 @@ class HomeAdapter(
                         companyList.subList(0, 6)
                     else companyList
                     val companyAdapter = ShopByCompanyAdapter(tempCompanyList) {
-                        openActivity(
-                            holder.itemView.context,
+                        openActivity(holder.itemView.context,
                             FeaturedProductActivity::class.java,
-                            null
-                        )
+                            null)
                     }
                     holder.binding.rvShopByCompany.adapter = companyAdapter
                     holder.binding.viewAllCompanies.setOnClickListener {
@@ -337,10 +284,8 @@ class HomeAdapter(
                             ShopByActivity::class.java,
                             Bundle().apply {
                                 putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_COMPANY)
-                                putParcelable(
-                                    Constants.SHOP_BY_COMPANY,
-                                    companyResponse
-                                )
+                                putParcelable(Constants.SHOP_BY_COMPANY,
+                                    companyResponse)
                             })
                     }
                 } else {
@@ -406,10 +351,8 @@ class HomeAdapter(
                         openActivity(holder.itemView.context,
                             ProductDetailsActivity::class.java,
                             Bundle().apply {
-                                putParcelable(
-                                    Constants.PRODUCT,
-                                    ProductData(it.toInt())
-                                )
+                                putParcelable(Constants.PRODUCT,
+                                    ProductData(it.toInt()))
                             })
                     }
                     holder.binding.frameCheckout.setOnClickListener {
@@ -470,11 +413,17 @@ class HomeAdapter(
 
                         },
                         {
+                            val selectedCrop = CropData(
+                                cropId = it[0].crop_id,
+                                cropName = it[0].crop_name,
+                                cropImage = it[0].crop_image,
+                            )
                             openActivity(
                                 holder.binding.itemView.context,
-                                SelectCropActivity::class.java,
-                                null
-                            )
+                                AddFarmActivity::class.java,
+                                Bundle().apply {
+                                    putParcelable("selectedCrop", selectedCrop)
+                                })
                         },
                     )
 
@@ -493,24 +442,94 @@ class HomeAdapter(
                         )
                     }
                 } else {
-                    holder.binding.itemView.visibility = View.GONE
+                    holder.binding.itemView.visibility = View.VISIBLE
                 }
 
                 holder.binding.viewAllFarms.setOnClickListener {
                     openActivity(holder.itemView.context, ViewAllFarmsActivity::class.java, null)
                 }
-            }
-            is ArticlesViewHolder -> {
-                if (featuredArticlesList.size > 0) {
-                    holder.binding.rvFeaturedArticles.adapter =
-                        ArticlesAdapter(featuredArticlesList)
-                    holder.binding.rvTrendingArticles.adapter =
-                        ArticlesAdapter(featuredArticlesList)
-                    holder.binding.rvSuggestedArticles.adapter =
-                        ArticlesAdapter(featuredArticlesList)
+
+                holder.binding.addFarmWrapper.addFarmTitleLayout.setOnClickListener {
+                    openActivity(holder.itemView.context, SelectCropActivity::class.java, null)
                 }
 
-
+                holder.binding.addFarmWrapper.txtWhyAddFarm.setOnClickListener {
+                    openActivity(holder.itemView.context, WhyAddFarmActivity::class.java, null)
+                }
+            }
+            is ArticlesViewHolder -> {
+                if (articlesData.size > 0) {
+                    if (articlesData.containsKey(Constants.FEATURED_ARTICLES) && articlesData[Constants.FEATURED_ARTICLES].isNotNullOrEmpty()) {
+                        holder.binding.itemViewFeatured.visibility = View.VISIBLE
+                        holder.binding.rvFeaturedArticles.adapter =
+                            ArticlesAdapter(articlesData[Constants.FEATURED_ARTICLES]!!) {
+                                openActivity(
+                                    holder.binding.viewAllArticles.context,
+                                    ArticlesWebViewActivity::class.java,
+                                    Bundle().apply {
+                                        putString(Constants.PAGE_URL,
+                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + "/" + it)
+                                    }
+                                )
+                            }
+                    } else {
+                        holder.binding.itemViewFeatured.visibility = View.GONE
+                    }
+                    if (articlesData.containsKey(Constants.TRENDING_ARTICLES) && articlesData[Constants.TRENDING_ARTICLES].isNotNullOrEmpty()) {
+                        holder.binding.itemViewTrending.visibility = View.VISIBLE
+                        holder.binding.rvTrendingArticles.adapter =
+                            ArticlesAdapter(articlesData[Constants.TRENDING_ARTICLES]!!) {
+                                openActivity(
+                                    holder.binding.viewAllArticles.context,
+                                    ArticlesWebViewActivity::class.java,
+                                    Bundle().apply {
+                                        putString(Constants.PAGE_URL,
+                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + "/" + it)
+                                    }
+                                )
+                            }
+                    } else {
+                        holder.binding.itemViewTrending.visibility = View.GONE
+                    }
+                    if (articlesData.containsKey(Constants.SUGGESTED_ARTICLES) && articlesData[Constants.SUGGESTED_ARTICLES].isNotNullOrEmpty()) {
+                        holder.binding.itemViewSuggested.visibility = View.VISIBLE
+                        holder.binding.rvSuggestedArticles.adapter =
+                            ArticlesAdapter(articlesData[Constants.SUGGESTED_ARTICLES]!!) {
+                                openActivity(
+                                    holder.binding.viewAllArticles.context,
+                                    ArticlesWebViewActivity::class.java,
+                                    Bundle().apply {
+                                        putString(Constants.PAGE_URL,
+                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + "/" + it)
+                                    }
+                                )
+                            }
+                    } else {
+                        holder.binding.itemViewSuggested.visibility = View.GONE
+                    }
+                    holder.binding.viewAllArticles.setOnClickListener {
+                        openActivity(
+                            holder.binding.viewAllArticles.context,
+                            ArticlesWebViewActivity::class.java,
+                            Bundle().apply {
+                                putString(Constants.PAGE_URL, BuildConfig.BASE_URL_ARTICLES)
+                            }
+                        )
+                    }
+                    holder.binding.viewAllArticles.visibility = View.VISIBLE
+                    holder.binding.view.visibility = View.VISIBLE
+                } else {
+                    holder.binding.itemViewFeatured.visibility = View.GONE
+                    holder.binding.itemViewTrending.visibility = View.GONE
+                    holder.binding.itemViewSuggested.visibility = View.GONE
+                    holder.binding.viewAllArticles.visibility = View.GONE
+                    holder.binding.view.visibility = View.GONE
+                }
+            }
+            is CommunityViewHolder -> {
+                holder.binding.rlGoToCommunity.setOnClickListener {
+                    onItemClicked?.invoke("")
+                }
             }
         }
     }
@@ -553,6 +572,9 @@ class HomeAdapter(
             Constants.HOME_ARTICLES -> {
                 return Constants.HOME_ARTICLES_VIEW_TYPE
             }
+            Constants.HOME_COMMUNITY -> {
+                return Constants.HOME_COMMUNITY_VIEW_TYPE
+            }
         }
         return Constants.HOME_EMPTY_VIEW_TYPE
     }
@@ -594,6 +616,9 @@ class HomeAdapter(
             }
             Constants.HOME_ARTICLES -> {
                 return Constants.HOME_ARTICLES_VIEW_TYPE.toLong()
+            }
+            Constants.HOME_COMMUNITY -> {
+                return Constants.HOME_COMMUNITY_VIEW_TYPE.toLong()
             }
         }
         return Constants.HOME_EMPTY_VIEW_TYPE.toLong()
@@ -648,5 +673,8 @@ class HomeAdapter(
         RecyclerView.ViewHolder(binding.root)
 
     inner class ArticlesViewHolder(var binding: ItemHomeArticlesBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    inner class CommunityViewHolder(var binding: ItemHomeCommunityBinding) :
         RecyclerView.ViewHolder(binding.root)
 }

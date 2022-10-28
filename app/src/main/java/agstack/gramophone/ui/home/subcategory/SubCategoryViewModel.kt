@@ -74,6 +74,7 @@ class SubCategoryViewModel @Inject constructor(
             toolbarTitle.value = bundle.getString(Constants.STORE_NAME)!!
             toolbarImage.value = bundle.getString(Constants.STORE_IMAGE)!!
             getStoresFilterData()
+            getShopByStoreBanner()
         } else if (bundle.containsKey(Constants.CATEGORY_ID) && bundle.getString(Constants.CATEGORY_ID) != null) {
             categoryId = bundle.get(Constants.CATEGORY_ID) as String
             toolbarTitle.value = bundle.get(Constants.CATEGORY_NAME) as String
@@ -129,6 +130,21 @@ class SubCategoryViewModel @Inject constructor(
                 )
                 if (bannerResponse?.gpApiStatus == Constants.GP_API_STATUS) {
                     getNavigator()?.setViewPagerAdapter(bannerResponse.gpApiResponseData?.homeBanner1)
+                }
+            } catch (ex: Exception) {
+                // do nothing
+            }
+        }
+    }
+
+    fun getShopByStoreBanner() {
+        viewModelScope.launch {
+            try {
+                val bannerResponse = SharedPreferencesHelper.instance?.getParcelable(
+                    SharedPreferencesKeys.BANNER_DATA, BannerResponse::class.java
+                )
+                if (bannerResponse?.gpApiStatus == Constants.GP_API_STATUS) {
+                    getNavigator()?.setViewPagerAdapter(bannerResponse.gpApiResponseData?.shopByStore)
                 }
             } catch (ex: Exception) {
                 // do nothing

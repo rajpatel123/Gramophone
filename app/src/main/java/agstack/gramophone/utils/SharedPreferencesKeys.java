@@ -56,6 +56,7 @@ public abstract class SharedPreferencesKeys {
     public static final String session_token = "session_token";
     public static final String logged_in = "logged_in";
     public static final String language = "language";
+    public static final String languageCode = "languageCode";
     public static final String FirebaseTokenKey = "firebaseToken";
     public static final String IsFirebaseTokenUpdatedKey = "firebaseTokenUpdated";
     public static final String CustomerSupportNo = "customer_support_no";
@@ -100,9 +101,12 @@ public abstract class SharedPreferencesKeys {
     @Nullable
     public static final String APP_TOUR_ENABLED="app_tour_enabled";
     @Nullable
+    public static final String APP_TOUR_SKIP_COUNT="app_tour_skip_count";
+    @Nullable
     public static final String BANNER_DATA="banner_data";
     public static final String USERNAME="username";
     public static final String USER_MOBILE="user_mobile";
     public static final String USER_IMAGE="user_image";
     public static final String CUSTOMER_ID="CUSTOMER_ID";
+    public static final String CUSTOMER_ADDRESS="CUSTOMER_ADDRESS";
 }

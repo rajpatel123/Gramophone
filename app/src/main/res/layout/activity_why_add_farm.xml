@@ -85,7 +85,7 @@
             android:layout_marginTop="@dimen/_24sdp"
             android:fontFamily="@font/manrope_bold"
             android:text='Get personalised expert advice for your farm'
-            android:textColor="@color/black"
+            android:textColor="@color/yellow_dark"
             android:textSize="@dimen/_18ssp" />
 
         <include

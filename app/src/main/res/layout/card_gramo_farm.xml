@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_8sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="@dimen/_2sdp"
+            android:background="@drawable/grey_outline">
+
+            <RelativeLayout
+                android:id="@+id/headerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_56sdp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <FrameLayout
+                    android:id="@+id/imageCorpWrapper"
+                    android:layout_width="@dimen/_42sdp"
+                    android:layout_height="@dimen/_42sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/_4sdp"
+                    android:background="@drawable/rounded_corner_20_solid_white"
+                    android:padding="@dimen/_2sdp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imageSelectCorpItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/image"
+                        android:scaleType="centerCrop"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize20Percent"
+                        tools:src="@drawable/dummy_crop" />
+
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/imageArow"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:contentDescription="@string/image"
+                    android:padding="@dimen/_6sdp"
+                    android:src="@drawable/ic_right_head_arrow" />
+
+                <TextView
+                    android:id="@+id/txtCropName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_toEndOf="@+id/imageCorpWrapper"
+                    android:fontFamily="@font/manrope_bold"
+                    android:lines="1"
+                    android:maxLength="50"
+                    android:textColor="@color/brand_color"
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="bold"
+                    tools:text="मक्का" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_2sdp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:background="@color/blue_area" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/contentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/headerLayout"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/singleFarmLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtCropCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:lines="1"
+                        android:maxLength="50"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_15ssp"
+                        android:textStyle="bold"
+                        tools:text='F3456' />
+
+                    <TextView
+                        android:id="@+id/txtDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:drawableStart="@drawable/ic_date_picker"
+                        android:fontFamily="@font/manrope_medium"
+                        tools:text='बुआई की तारीख : Jul 15, 2022'
+                        android:textColor="@color/oldmrpcolor"
+                        android:textSize="@dimen/_10ssp"
+                        />
+
+                    <TextView
+                        android:id="@+id/txtDuration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:drawableStart="@drawable/ic_date_picker"
+                        android:fontFamily="@font/manrope_medium"
+                        tools:text='बुआई का समय : Jul 15, 2022 To Jul 25, 2022'
+                        android:textColor="@color/oldmrpcolor"
+                        android:textSize="@dimen/_10ssp"
+                        />
+
+                    <TextView
+                        android:id="@+id/txtArea"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:drawableStart="@drawable/ic_info_para"
+                        android:fontFamily="@font/manrope_medium"
+                        tools:text='खेत का एरिया : 22 Acre'
+                        android:textColor="@color/oldmrpcolor"
+                        android:textSize="@dimen/_10ssp"
+                        />
+
+                    <TextView
+                        android:id="@+id/txtStage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:drawableStart="@drawable/ic_info_para"
+                        android:fontFamily="@font/manrope_medium"
+                        tools:text='वर्तमान चरण: 22 Days'
+                        android:textColor="@color/oldmrpcolor"
+                        android:textSize="@dimen/_10ssp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/multiFarmLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    >
+
+                    <TextView
+                        android:id="@+id/txtMultipleFarms"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:text='अपने खेतों को देखें'
+                        android:textColor="@color/oldmrpcolor"
+                        android:textSize="@dimen/_12ssp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/footerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_36sdp"
+                android:layout_below="@+id/contentLayout"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:background="@drawable/grey_outline_bottom"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:paddingBottom="@dimen/_8sdp">
+
+                <TextView
+                    android:id="@+id/txtAddFarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:fontFamily="@font/manrope_medium"
+                    android:text="+ अपना खेत जोड़े"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_13ssp" />
+
+                <TextView
+                    android:id="@+id/txtAddedFarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:fontFamily="@font/manrope_medium"
+                    android:textColor="@color/oldmrpcolor"
+                    android:textSize="@dimen/_13ssp"
+                    tools:text="1 खेत जोड़ा गया है" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

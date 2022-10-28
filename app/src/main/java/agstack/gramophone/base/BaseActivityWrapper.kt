@@ -154,7 +154,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         }
     }
 
-    fun setUpToolBar(enableBackButton: Boolean, title: String, @DrawableRes drawable: Int? = null) {
+    fun setUpToolBar(enableBackButton: Boolean, title: String, @DrawableRes drawable: Int? = null, elevation : Boolean = false) {
         val toolbar = findViewById<Toolbar>(R.id.myToolbar)
         if (toolbar != null) {
             setSupportActionBar(toolbar)
@@ -164,6 +164,11 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
                 toolbar.setNavigationIcon(drawable)
             }
             toolbar.setNavigationOnClickListener { onBackPressed() }
+            if (elevation) {
+                toolbar.elevation = 24f
+            } else {
+                toolbar.elevation = 0f
+            }
         }
     }
 

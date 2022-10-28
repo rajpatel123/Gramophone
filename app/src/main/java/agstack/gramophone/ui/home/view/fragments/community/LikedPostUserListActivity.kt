@@ -24,6 +24,11 @@ class LikedPostUserListActivity :
     private val likedUserViewModel: LikedUserViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setUpToolBar(
+            enableBackButton = true,
+            getString(R.string.likes, 0),
+            R.drawable.ic_arrow_left
+        )
         intent.extras?.getString(POST_ID)?.let { likedUserViewModel.loadUsers(it) }
     }
 

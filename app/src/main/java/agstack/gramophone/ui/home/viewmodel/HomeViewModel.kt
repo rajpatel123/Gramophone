@@ -1,12 +1,15 @@
 package agstack.gramophone.ui.home.viewmodel
 
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
-import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
+import agstack.gramophone.ui.articles.ArticlesWebViewActivity
+import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
 
 import agstack.gramophone.ui.feedback.FeedbackActivity
 import agstack.gramophone.ui.gramcash.GramCashActivity
+import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.ui.offerslist.OffersListActivity
 import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.profile.model.GpApiResponseProfileData
@@ -22,9 +25,9 @@ import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.view.activity.CreatePostActivity
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.databinding.ObservableField
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNull
@@ -69,11 +72,16 @@ class HomeViewModel @Inject constructor(
                                     if (gpApiResponseData.gramcashpoints.isNull()) "" else gpApiResponseData.gramcashpoints.toString()
                                 val customerId =
                                     if (gpApiResponseData.customer_id.isNullOrEmpty()) "" else gpApiResponseData.customer_id
+                                val customerAddress=
+                                    if (gpApiResponseData.address_data?.address.isNullOrEmpty()) "" else gpApiResponseData.address_data?.address
 
-                                getNavigator()?.setImageNameMobile(name,
+
+                                getNavigator()?.setImageNameMobile(
+                                    name,
                                     mobile,
                                     image,
-                                    gramCash)
+                                    gramCash
+                                )
 
                                 SharedPreferencesHelper.instance?.putString(
                                     SharedPreferencesKeys.USERNAME,
@@ -91,6 +99,11 @@ class HomeViewModel @Inject constructor(
                                 SharedPreferencesHelper.instance?.putString(
                                     SharedPreferencesKeys.CUSTOMER_ID,
                                     customerId
+                                )
+
+                                SharedPreferencesHelper.instance?.putString(
+                                    SharedPreferencesKeys.CUSTOMER_ADDRESS,
+                                    customerAddress
                                 )
                             }
                         }
@@ -128,7 +141,7 @@ class HomeViewModel @Inject constructor(
                             SharedPreferencesKeys.logged_in,
                             false
                         )
-                      //  getNavigator()?.onSuccess(logoutResponseModel?.gp_api_message)
+                        //  getNavigator()?.onSuccess(logoutResponseModel?.gp_api_message)
                         getNavigator()?.logout()
 
                     } else {
@@ -173,6 +186,11 @@ class HomeViewModel @Inject constructor(
         getNavigator()?.openActivity(WeatherActivity::class.java, null)
     }
 
+    fun openCropsNFarms() {
+        getNavigator()?.closeDrawer()
+        getNavigator()?.openActivity(ViewAllFarmsActivity::class.java, null)
+    }
+
     fun shareApp() {
         getNavigator()?.shareApp(Intent(Intent.ACTION_SEND).apply {
             type = "text/plain";
@@ -199,6 +217,13 @@ class HomeViewModel @Inject constructor(
         getNavigator()?.openActivity(OffersListActivity::class.java, null)
     }
 
+    fun openArticlesClicked() {
+        getNavigator()?.closeDrawer()
+        getNavigator()?.openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
+            putString(Constants.PAGE_URL, BuildConfig.BASE_URL_ARTICLES)
+        })
+    }
+
     fun ReferandEarnClicked() {
         getNavigator()?.openActivity(ReferAndEarnActivity::class.java, null)
     }
@@ -207,7 +232,7 @@ class HomeViewModel @Inject constructor(
         getNavigator()?.openActivity(GramCashActivity::class.java, null)
     }
 
-    fun onCreatePostClicked(){
-        getNavigator()?.openActivity(CreatePostActivity::class.java,null)
+    fun onCreatePostClicked() {
+        getNavigator()?.openActivity(CreatePostActivity::class.java, null)
     }
 }

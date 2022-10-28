@@ -34,7 +34,7 @@ class OffersListViewModel @Inject constructor(
     var isLastPage = false
     var offerListRequestModel = OfferListRequestModel()
     var searchedString: String? = ""
-    var noResultFound = ObservableField<Boolean>(false)
+    var noInternetFound = ObservableField<Boolean>(false)
 
     fun getAllOffersData() {
 
@@ -76,14 +76,14 @@ class OffersListViewModel @Inject constructor(
                                 })
                         }
                     }
-                    if(allOfferslist?.size==0){
+                    if (allOfferslist?.size == 0) {
                         getNavigator()?.ShowNoListView(true)
 
-                    }else{
+                    } else {
                         getNavigator()?.ShowNoListView(false)
                     }
 
-                   // getNavigator()?.showToast(offersListResponse.body()?.gpApiMessage)
+                    // getNavigator()?.showToast(offersListResponse.body()?.gpApiMessage)
 
                 } else {
 
@@ -198,11 +198,20 @@ class OffersListViewModel @Inject constructor(
                     runCode.invoke()
                 } else {
                     getNavigator()?.showToast(R.string.nointernet)
+                    noInternetFound.set(true)
                 }
             } catch (e: Exception) {
                 Log.d("Exception", e.toString())
             }
         }
+    }
+
+    fun onRetryButtonClick() {
+        if (getNavigator()?.isNetworkAvailable() == true) {
+            noInternetFound.set(false)
+        }
+        getAllOffersData()
+
     }
 
 

@@ -91,7 +91,7 @@ class SelectCropViewModel @Inject constructor(
 
     fun onClickSaveAndContinue() {
         if (selectedCrop != null) {
-            getNavigator()?.openActivity(
+            getNavigator()?.openAndFinishActivity(
                 AddFarmActivity::class.java,
                 Bundle().apply {
                     putParcelable("selectedCrop", selectedCrop)
@@ -99,5 +99,9 @@ class SelectCropViewModel @Inject constructor(
         } else {
             getNavigator()?.showToast(getNavigator()?.getMessage(R.string.message_select_crop))
         }
+    }
+
+    fun clearSelection(){
+        selectedCrop = null
     }
 }

@@ -8,14 +8,13 @@ import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.ui.splash.SplashNavigator
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
-import agstack.gramophone.utils.Utils
+import agstack.gramophone.utils.LocaleManagerClass
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_splash.*
-import org.json.JSONObject
 
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
@@ -28,7 +27,7 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
     }
 
     private fun startApp() {
-        splashViewModel.initSplash()
+        splashViewModel.initSplash(resources)
     }
 
     override fun getLayoutID(): Int {

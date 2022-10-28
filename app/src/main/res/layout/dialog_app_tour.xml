@@ -17,27 +17,34 @@
 
             <LinearLayout
                 android:id="@+id/llCircle"
-                android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_70sdp"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
                 android:layout_alignParentStart="true"
-                android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/_minus6sdp"
                 android:background="@drawable/circle_solid_white"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/_16sdp">
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_burger_menu" />
 
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginStart="@dimen/_minus10sdp"
+                android:layout_toEndOf="@+id/llCircle">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@string/image"
                     android:src="@drawable/ic_union" />
-
-            </LinearLayout>
+            </FrameLayout>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -120,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/rounded_corner_8_solid_orange_light"
+                    android:background="@drawable/rounded_corner_4_solid_green"
                     android:backgroundTint="@color/orange"
                     android:fontFamily="@font/manrope_bold"
                     android:paddingStart="12dp"
@@ -221,7 +228,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/rounded_corner_8_solid_orange_light"
+                        android:background="@drawable/rounded_corner_4_solid_green"
                         android:backgroundTint="@color/orange"
                         android:fontFamily="@font/manrope_bold"
                         android:paddingStart="12dp"
@@ -358,7 +365,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/rounded_corner_8_solid_orange_light"
+                        android:background="@drawable/rounded_corner_4_solid_green"
                         android:backgroundTint="@color/orange"
                         android:fontFamily="@font/manrope_bold"
                         android:paddingStart="12dp"
@@ -515,7 +522,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/trade"
+                            android:text="@string/vyapar"
                             android:textColor="@color/gray_strike_through" />
 
                     </LinearLayout>

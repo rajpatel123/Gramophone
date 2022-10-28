@@ -13,6 +13,7 @@
     <string name="select_language_hi">हिन्दी</string>
     <string name="select_language_marathi">मराठी</string>
     <string name="select_language_gujarati">ગુજરાતી</string>
+    <string name="myfarm">My Farms(%d)</string>
 
 
     <string name="skip">Skip</string>
@@ -72,6 +73,7 @@
     <string name="address">पता</string>
     <string name="pincode">पिन कोड</string>
     <string name="go_to_app">ऐप पर जाएं</string>
+    <string name="logout">लॉगआउट</string>
     <string name="state_required">कृपया राज्य का चयन करें</string>
     <string name="district_required">Please enter your district name.</string>
     <string name="tehsil_required">कृपया तहसील का चयन करें</string>
@@ -169,7 +171,7 @@
     <string name="new_articles">New Articles</string>
     <string name="popular_products_in_indore">Popular Products in Indore</string>
     <string name="home">Home</string>
-    <string name="trade">Trade</string>
+    <string name="vyapar">Vyapar</string>
     <string name="community">Community</string>
     <string name="me">Me</string>
     <string name="back">Back</string>
@@ -252,20 +254,20 @@
     <string name="invite_and_earn">Invite your friends and earn ...</string>
     <string name="order_desc">all orders will be managed here</string>
     <string name="tv">Gramophone TV</string>
-    <string name="settings">Settings</string>
-    <string name="manage_settings">Manage your app settings here</string>
+    <string name="settings">सेटिंग</string>
+    <string name="manage_settings">अपनी ऐप सेटिंग यहां से मैनेज करें</string>
     <string name="tools">TOOLS</string>
-    <string name="language">Language</string>
+    <string name="language">भाषा</string>
     <string name="english">English</string>
-    <string name="opt_in">Whatsapp opt-in</string>
-    <string name="app_tour">App Tour</string>
-    <string name="blocked_users">Blocked Users</string>
-    <string name="more">More</string>
-    <string name="app_feature">App Features</string>
-    <string name="terms_of_service">Terms of Service</string>
-    <string name="save_language">Save Language</string>
+    <string name="opt_in">वाट्सऐप पर हमसे जुड़ें</string>
+    <string name="app_tour">ऐप का टूर करें </string>
+    <string name="blocked_users">ब्लॉक किये गए यूजर</string>
+    <string name="more">और देखें</string>
+    <string name="app_feature">ऐप की विशेषताएं</string>
+    <string name="terms_of_service">सेवा की शर्तें</string>
+    <string name="save_language">भाषा सेव करें</string>
     <string name="offers">Offers</string>
-    <string name="share_app">Share App</string>
+    <string name="share_app">ऐप शेयर करें</string>
     <string name="app_url"><![CDATA[https://play.google.com/store/apps/details?id=agstack.gramophone&hl=en_IN&gl=US]]></string>
     <string name="share_app_link">Share App link!</string>
     <string name="whatsapp">Whatsapp</string>
@@ -431,11 +433,15 @@
     <string name="order_has_been_assigned">has been assigned to deliver your order!</string>
     <string name="feedback_submit_success_alert_title">सफलता!</string>
     <string name="feedback_submit_success_alert_message">आपकी राय सफलतापूर्वक दर्ज हुई!</string>
+    <string name="no_connection">No Connection!</string>
+    <string name="no_internet_message">There seems to be no internet connection. Try checking things out</string>
+    <string name="copied">Copied</string>
 
-    <string name="crop_duration">"बुआई का समय : %1$s"</string>
-    <string name="crop_sowing_date">"बुआई की तारीख : %1$s"</string>
-    <string name="farm_area">"खेत का एरिया : %1$s"</string>
-    <string name="stage_name">"वर्तमान चरण : %1$s days &#8226; %2$s"</string>
+    <string name="crop_duration">"बुआई का समय: %1$s"</string>
+    <string name="crop_sowing_date">"बुआई की तारीख: %1$s"</string>
+    <string name="farm_area">"खेत का एरिया: %1$s"</string>
+    <string name="stage_name">"वर्तमान चरण: %1$s &#8226; %2$s"</string>
+    <string name="stage_name_modal_farm">"अनुमानित चरण: %1$s &#8226; %2$s"</string>
     <string name="added_one_farm">"1 खेत जोड़ा गया है"</string>
     <string name="added_farm_count">"%1$s खेत जोड़े गये है"</string>
     <string name="message_select_crop">कृपया एक फसल चुनें</string>
@@ -452,10 +458,18 @@
     <string name="trending_articles">Trending Articles</string>
     <string name="article_read">&#160;Read</string>
     <string name="article_views">&#160;Views</string>
+    <string name="join_community">Join 5000+ farmers\nand get quick solution\nfrom agri experts</string>
     <string name="suggestions">Suggestions</string>
     <string name="search_here">Search here</string>
     <string name="sorry_no_result_found">Sorry!No result found!</string>
     <string name="please_try_another_way">We\'re sorry what you are looking for. Please try another way.</string>
+    <string name="farmer_image">farmer image</string>
+    <string name="date_of_sowing">Date of sowing</string>
+    <string name="area">Area</string>
+    <string name="old_farms">पुराने खेत देखे</string>
+    <string name="old_farms_title">पुराने खेत</string>
+    <string name="posts">Posts</string>
+    <string name="today_s_weather">Today\'s Weather</string>
     <string name="products">Products</string>
     <string name="crops">Crops</string>
     <string name="profile">Profile</string>

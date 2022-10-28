@@ -2,6 +2,8 @@ package agstack.gramophone.ui.dialog
 
 import agstack.gramophone.R
 import agstack.gramophone.databinding.DialogAppTourBinding
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -57,16 +59,51 @@ class AppTourDialog : DialogFragment() {
     }
 
     private fun setupUi() {
-        binding?.tvSkip?.setOnClickListener { dismiss() }
-        binding?.tvSkip2?.setOnClickListener { dismiss() }
-        binding?.tvSkip3?.setOnClickListener { dismiss() }
+        var skipCount: Int = SharedPreferencesHelper.instance?.getInteger(
+            SharedPreferencesKeys.APP_TOUR_SKIP_COUNT)!!
+
+        binding?.tvSkip?.setOnClickListener {
+            skipCount += 1
+            if (skipCount >= 2) {
+                SharedPreferencesHelper.instance?.putBoolean(
+                    SharedPreferencesKeys.APP_TOUR_ENABLED, false)
+                SharedPreferencesHelper.instance?.putInteger(
+                    SharedPreferencesKeys.APP_TOUR_SKIP_COUNT, 0)
+            } else {
+                SharedPreferencesHelper.instance?.putInteger(
+                    SharedPreferencesKeys.APP_TOUR_SKIP_COUNT, skipCount)
+            }
+            dismiss()
+        }
+        binding?.tvSkip2?.setOnClickListener {
+            skipCount += 1
+            if (skipCount >= 2) {
+                SharedPreferencesHelper.instance?.putBoolean(
+                    SharedPreferencesKeys.APP_TOUR_ENABLED, false)
+                SharedPreferencesHelper.instance?.putInteger(
+                    SharedPreferencesKeys.APP_TOUR_SKIP_COUNT, 0)
+            } else {
+                SharedPreferencesHelper.instance?.putInteger(
+                    SharedPreferencesKeys.APP_TOUR_SKIP_COUNT, skipCount)
+            }
+            dismiss()
+        }
+        binding?.tvSkip3?.setOnClickListener {
+            skipCount += 1
+            if (skipCount >= 2) {
+                SharedPreferencesHelper.instance?.putBoolean(
+                    SharedPreferencesKeys.APP_TOUR_ENABLED, false)
+                SharedPreferencesHelper.instance?.putInteger(
+                    SharedPreferencesKeys.APP_TOUR_SKIP_COUNT, 0)
+            } else {
+                SharedPreferencesHelper.instance?.putInteger(
+                    SharedPreferencesKeys.APP_TOUR_SKIP_COUNT, skipCount)
+            }
+            dismiss()
+        }
 
         binding?.tvNextMenu?.setOnClickListener {
             binding?.llMenu?.visibility = View.GONE
-            binding?.llHome?.visibility = View.VISIBLE
-        }
-
-        binding?.tvNextHome?.setOnClickListener {
             binding?.llHome?.visibility = View.GONE
             binding?.llOthers?.visibility = View.VISIBLE
             binding?.llCommunity?.visibility = View.VISIBLE
@@ -75,6 +112,16 @@ class AppTourDialog : DialogFragment() {
             binding?.tvTitleCommon?.text = getString(R.string.community)
             binding?.tvDescriptionCommon?.text = getString(R.string.app_tour_descrition_community)
         }
+
+        /*binding?.tvNextHome?.setOnClickListener {
+            binding?.llHome?.visibility = View.GONE
+            binding?.llOthers?.visibility = View.VISIBLE
+            binding?.llCommunity?.visibility = View.VISIBLE
+
+            binding?.ivThumbCommon?.setImageResource(R.drawable.ic_app_tour_community)
+            binding?.tvTitleCommon?.text = getString(R.string.community)
+            binding?.tvDescriptionCommon?.text = getString(R.string.app_tour_descrition_community)
+        }*/
 
         binding?.tvNextCommunity?.setOnClickListener {
             when {
@@ -85,7 +132,8 @@ class AppTourDialog : DialogFragment() {
 
                     binding?.ivThumbCommon?.setImageResource(R.drawable.ic_app_tour_profile)
                     binding?.tvTitleCommon?.text = getString(R.string.my_profile)
-                    binding?.tvDescriptionCommon?.text = getString(R.string.app_tour_descrition_profile)
+                    binding?.tvDescriptionCommon?.text =
+                        getString(R.string.app_tour_descrition_profile)
                 }
                 binding?.llProfile?.visibility == View.VISIBLE -> {
                     binding?.llCommunity?.visibility = View.INVISIBLE
@@ -95,10 +143,15 @@ class AppTourDialog : DialogFragment() {
 
                     binding?.ivThumbCommon?.setImageResource(R.drawable.ic_app_tour_trade)
                     binding?.tvNextCommunity?.text = getString(R.string.app_tour_done)
-                    binding?.tvTitleCommon?.text = getString(R.string.app_tour_title_trade)
-                    binding?.tvDescriptionCommon?.text = getString(R.string.app_tour_descrition_trade)
+                    binding?.tvTitleCommon?.text = getString(R.string.vyapar)
+                    binding?.tvDescriptionCommon?.text =
+                        getString(R.string.app_tour_descrition_trade)
                 }
                 binding?.llTrade?.visibility == View.VISIBLE -> {
+                    SharedPreferencesHelper.instance?.putBoolean(
+                        SharedPreferencesKeys.APP_TOUR_ENABLED, false)
+                    SharedPreferencesHelper.instance?.putInteger(
+                        SharedPreferencesKeys.APP_TOUR_SKIP_COUNT, 0)
                     dismiss()
                 }
             }

@@ -77,7 +77,7 @@ data class DataItem(
 	val availableOnGs: Boolean? = null,
 
 	@field:SerializedName("name")
-	val name: String? = null,
+	var name: String? = null,
 
 	@field:SerializedName("b2b_applicable")
 	val b2bApplicable: Boolean? = null,

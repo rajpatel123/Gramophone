@@ -82,8 +82,8 @@
             android:text="@{@string/rupee_symbol_with_space.concat(String.valueOf(model.price))}"
             android:textColor="@color/blakish"
             android:textSize="18sp"
-            tools:text="₹4320"
-            tools:ignore="RelativeOverlap" />
+            tools:ignore="RelativeOverlap"
+            tools:text="₹4320" />
 
         <View
             android:id="@+id/order_date_separator"

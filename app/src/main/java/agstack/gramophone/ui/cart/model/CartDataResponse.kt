@@ -34,13 +34,14 @@ data class GpApiTrace(
 
 data class CartItem(
     val brand_name: String,
+    val promotional_discount: Float,
     val cart_product_price: String,
     val cgst_percent: String,
     val company_name: String,
     val cost_price: Float,
     val discount: String,
     val discount_percent: String,
-    val discount_price: Float,
+    var discount_price: Float,
     val gramcash_redeemable: Boolean,
     val image: String,
     val item_product_discount: String,
@@ -56,6 +57,7 @@ data class CartItem(
     val sgst_percent: String,
     val shipping_details: ShippingDetails,
     val unit_selling_price: String,
+    val applicable_gramcash: Int,
 )
 
 data class OfferApplied(
@@ -65,6 +67,7 @@ data class OfferApplied(
     val valid_till: String,
     val t_c: String,
     val image: String,
+    var promotion_id:String?=null
 )
 
 data class ShippingDetails(

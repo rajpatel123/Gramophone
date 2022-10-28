@@ -14,9 +14,12 @@ import agstack.gramophone.ui.comments.model.sendcomment.SendCommentResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.create.CreatePostResponseModel
 import agstack.gramophone.ui.othersporfile.model.CommunityUserPostRequestModel
 import agstack.gramophone.ui.othersporfile.model.ProfileDataResponse
+import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
+import agstack.gramophone.ui.settings.model.blockedusers.UnblockRequestModel
 import agstack.gramophone.ui.userprofile.model.TestUserModel
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.Part
 import javax.inject.Singleton
@@ -39,13 +42,15 @@ interface CommunityRepository {
 
     suspend fun getPostComments(post: GetCommentRequestModel): Response<CommentsResponseModel>
 
-    suspend fun deletePost(post: String): Response<CommentsResponseModel>
+    suspend fun deletePost(id: String): Response<JSONObject>
 
     suspend fun deletePostComment(post: PostRequestModel): Response<CommentsResponseModel>
 
     suspend fun reportPost(post: ReportUserRequestModel): Response<CommentsResponseModel>
 
     suspend fun blockUser(post: BlockUserRequestModel): Response<BlockResponseModel>
+
+    suspend fun unBlockUser(post: UnblockRequestModel): Response<BlockResponseModel>
 
     suspend fun followPost(post: FollowRequestModel): Response<FollowResponseModel>
 
@@ -59,10 +64,15 @@ interface CommunityRepository {
 
     suspend fun createPost(description: RequestBody?,tags: RequestBody?,postImage1: MultipartBody.Part?,postImage2: MultipartBody.Part?,postImage3: MultipartBody.Part?): Response<CreatePostResponseModel>
 
+    suspend fun updatePost(description: RequestBody?,tags: RequestBody?,removedImages: RequestBody?,postId: RequestBody?,postImage1: MultipartBody.Part?,postImage2: MultipartBody.Part?,postImage3: MultipartBody.Part?): Response<CreatePostResponseModel>
+
     suspend fun updatePost(
         postId: RequestBody,
         tags: RequestBody?,
         area: RequestBody?,
         date: RequestBody?
        ): Response<CreatePostResponseModel>
+
+    suspend fun getBlockedUsersList(): Response<BlockedUsersListResponseModel>
+
 }

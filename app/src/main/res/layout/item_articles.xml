@@ -6,7 +6,9 @@
     <data>
 
         <import type="android.view.View" />
-
+        <variable
+            name="constants"
+            type="agstack.gramophone.utils.Constants" />
         <variable
             name="model"
             type="agstack.gramophone.ui.home.view.fragments.market.model.FormattedArticlesData" />
@@ -17,6 +19,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/llArticlesItem"
             android:layout_width="@dimen/_250sdp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
@@ -42,6 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_18sdp"
                     android:contentDescription="@string/image"
+                    android:visibility="@{model.articleTye.equals(constants.FEATURED_ARTICLES)  ? View.VISIBLE : View.GONE}"
                     android:src="@drawable/ic_article_featured" />
 
             </RelativeLayout>

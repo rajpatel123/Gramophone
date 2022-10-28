@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.orderdetails
 
 import agstack.gramophone.base.BaseNavigator
+import agstack.gramophone.ui.cart.model.OfferApplied
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.orderdetails.adapter.OrderedProductsAdapter
 import agstack.gramophone.ui.orderdetails.model.FreeProduct
@@ -12,7 +13,7 @@ interface OrderDetailsNavigator : BaseNavigator {
     fun setOrderListAdapter(
         orderedProductsAdapter: OrderedProductsAdapter,
         onOrderItemClicked: (Int) -> Unit,
-        onOfferClicked: (FreeProduct, String) -> Unit,
+        onOfferClicked: (OfferApplied, String, String) -> Unit,
     )
 
     fun openProductDetailsActivity(productData: ProductData)

@@ -3,6 +3,8 @@ package agstack.gramophone.ui.home.product.activity
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.ui.cart.adapter.CartAdapter
+import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
 import agstack.gramophone.ui.home.product.activity.productreview.AddEditProductReviewActivity
@@ -23,6 +25,7 @@ import com.amnix.xtension.extensions.isNotNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -59,6 +62,7 @@ class ProductDetailsViewModel @Inject constructor(
     var selectedSkuListItem = ObservableField<ProductSkuListItem>()
     var selectedOfferItem = PromotionListItem()
     var addToCartEnabled = NonNullObservableField<Boolean>(true)
+    var promotionId_applied_fromgetCart: String? = null
     fun onHeartIconClicked() {
         isHeartSelected.set(!isHeartSelected.get())
         updateProductFavoriteJob.cancelIfActive()
@@ -84,6 +88,10 @@ class ProductDetailsViewModel @Inject constructor(
     fun onAddQtyClicked() {
         qtySelected.set(qtySelected.get()!! + 1)
         loadOffersData(productDetailstoBeFetched, qtySelected.get())
+        setPercentage_mrpVisibility(
+            selectedSkuListItem.get()!!,
+            null
+        )
 
     }
 
@@ -91,6 +99,28 @@ class ProductDetailsViewModel @Inject constructor(
         if (qtySelected.get()!! >= 2)
             qtySelected.set(qtySelected.get()!! - 1)
         loadOffersData(productDetailstoBeFetched, qtySelected.get())
+        setPercentage_mrpVisibility(
+            selectedSkuListItem.get()!!,
+            null
+        )
+        //check if available in getCartAPI , if yes then call addtocart
+        /*    var cartItemsList = getCartData()
+            if (cartItemsList != null && cartItemsList.size>0) {
+                for (cartItem in cartItemsList) {
+
+                    if(cartItem.product_id.equals(selectedSkuListItem.get()?.productId)){
+                        //call addtocart API
+
+                        val productData = ProductData()
+                        productData.product_id = cartItem.product_id.toInt()
+                        productData.quantity =qtySelected.get()
+                        updateCart(productData)
+                    }
+                }
+
+
+                }*/
+
     }
 
     fun getBundleData() {
@@ -187,8 +217,16 @@ class ProductDetailsViewModel @Inject constructor(
                             ) {
                                 Log.d("productSKUItemSelected", it.productId.toString())
                                 selectedSkuListItem.set(it)
+                                qtySelected.set(1)
+                                getNavigator()?.updateAddToCartButtonText(
+                                    getNavigator()?.getMessage(
+                                        R.string.add_to_cart
+                                    )!!
+                                )
+                                checkIfSelectedSKUPresentInCart_UpdateQty(selectedSkuListItem)
                                 productDetailstoBeFetched.product_id =
                                     selectedSkuListItem.get()?.productId!!.toInt()
+
                                 //Refresh offerList when product SKU is selected
 
 
@@ -221,6 +259,10 @@ class ProductDetailsViewModel @Inject constructor(
 
                                 }
                             }
+                            qtySelected.set(1)
+                            checkIfSelectedSKUPresentInCart_UpdateQty(selectedSkuListItem)
+
+
                             getNavigator()?.refreshSKUAdapter()
 
                         }
@@ -239,27 +281,85 @@ class ProductDetailsViewModel @Inject constructor(
         }
     }
 
+    private fun checkIfSelectedSKUPresentInCart_UpdateQty(selectedSkuListItem: ObservableField<ProductSkuListItem>) {
+
+        var cartItemsList = getCartData()
+        if (cartItemsList != null && cartItemsList?.size!! > 0) {
+            for (cartItem in cartItemsList!!) {
+                if (cartItem.product_id.equals(selectedSkuListItem.get()?.productId)) {
+                    qtySelected.set(cartItem.quantity)
+                    promotionId_applied_fromgetCart = cartItem.offer_applied.promotion_id
+                    //select the Promotion/OfferItem from the main offerlist with  promotion ID = promotionIdCartItem
+
+
+                    //change add to cart to go toCart
+                    getNavigator()?.updateAddToCartButtonText(
+                        getNavigator()?.getMessage(
+                            R.string.gotocart
+                        )!!
+                    )
+                }
+
+            }
+
+
+        }
+
+    }
+
+    private fun getCartData(): List<CartItem>? {
+        var cartItemsList: List<CartItem>? = null
+        viewModelScope.launch {
+            try {
+
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progressLoader.set(true)
+                    val response = productRepository.getCartData()
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                        && response.body()?.gp_api_response_data?.cart_items != null && response.body()?.gp_api_response_data?.cart_items?.size!! > 0
+                    ) {
+
+                        cartItemsList = response.body()?.gp_api_response_data?.cart_items
+
+                    } else {
+
+                    }
+
+                    progressLoader.set(false)
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
+                progressLoader.set(false)
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+        return cartItemsList
+    }
+
+
     private fun setPercentage_mrpVisibility(
         model: ProductSkuListItem,
         offerModel: PromotionListItem? = null,
     ) {
         var isOffersLayoutVisible = true
         var priceDiff: Float = 0.0f
+        var discount :Float=0.0f
         var finalSalePrice: Double = 0.0
         var finaldiscount = "0"
         var isMRPVisibile = false
         var isContactforPriceVisible = false
         if (model.mrpPrice == null && model.salesPrice == null) {
 
-            isOffersLayoutVisible = false
             isContactforPriceVisible = true
             addToCartEnabled.set(false)
-        } else if (model.mrpPrice == null && model.salesPrice != null) {
-            isContactforPriceVisible = false
-            addToCartEnabled.set(true)
-            finalSalePrice = model.salesPrice?.toDouble()!!
-
+            isOffersLayoutVisible = false
         } else {
+
+            // in this condition , model.mrpPrice != null && model.salesPrice != null
             isContactforPriceVisible = false
             addToCartEnabled.set(true)
 
@@ -269,31 +369,57 @@ class ProductDetailsViewModel @Inject constructor(
             }
 
             if (offerModel == null || amountSaved == 0f) {
-                priceDiff = (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat())
-            } else if (offerModel != null && amountSaved > 0f) {
-                priceDiff =
-                    (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat()) - amountSaved
+                if (model.mrpPrice != null) {
+
+                    priceDiff = (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat())
+                    discount = model.mrpPrice!!.toFloat() - priceDiff
+                } else {
+                    priceDiff = (model.salesPrice)!!.toFloat()
+                    discount = model.salesPrice!!.toFloat() - priceDiff
+                }
+            } else if (amountSaved > 0f) {
+                if (model.mrpPrice != null && model.salesPrice != null) {
+                    priceDiff =
+                        (model.mrpPrice.toFloat()  - (model.salesPrice).toFloat()) - amountSaved
+                    discount = (model.mrpPrice!!.toFloat()) - priceDiff
+                } else if (model.mrpPrice == null && model.salesPrice != null) {
+                    priceDiff =
+                        (model.salesPrice)!!.toFloat() - amountSaved
+
+                    discount = (model.salesPrice).toFloat() - priceDiff
+
+                }
+
             }
 
-            val numarator = (priceDiff * 100)
-            val denominator = model.mrpPrice!!.toFloat()
+            val numarator = (discount * 100)
+            var denominator: Float = 1f
+            if (model.mrpPrice != null) {
+                denominator = model.mrpPrice.toFloat()
+            } else {
+                denominator = model.salesPrice!!.toFloat()
+            }
             val percentage = numarator / denominator
-            val formatted_percentage = String.format("%.02f", percentage);
+            val formatted_percentage = String.format("%.0f", percentage);
             finaldiscount = (formatted_percentage + " % off")
-            isMRPVisibile = priceDiff > 0
+            isMRPVisibile = priceDiff > 0 && model.mrpPrice!=null
 
 
             offerModel?.let {
-                if(offerModel?.benefit?.promotionType.equals(Constants.DISCOUNT) && offerModel?.benefit?.amount_saved!=null )
-                if (offerModel?.benefit?.amount_saved!! > 0) {
-                    finalSalePrice = model.salesPrice?.toDouble()!! - offerModel?.benefit?.amount_saved
-                }
+                if (offerModel.benefit?.promotionType.equals(Constants.DISCOUNT) && offerModel?.benefit?.amount_saved != null)
+                    if (offerModel?.benefit?.amount_saved!! > 0) {
+                        finalSalePrice =
+                            ( model.salesPrice?.toDouble()!! *qtySelected.get()!! )- offerModel?.benefit?.amount_saved
+                    }
             }
             if (offerModel == null || offerModel?.benefit?.amount_saved == 0.0) {
-                finalSalePrice = model.salesPrice?.toDouble()!!
+                finalSalePrice = model.salesPrice?.toDouble()!!*qtySelected.get()!!
             }
-// set offer detailsLayout visibility
-            isOffersLayoutVisible = !model.mrpPrice.equals(null)
+
+            // set offer detailsLayout visibility
+            isOffersLayoutVisible = true
+
+
 
         }
 
@@ -416,6 +542,20 @@ class ProductDetailsViewModel @Inject constructor(
                                 }
 
                             } else {
+
+                                promotionId_applied_fromgetCart?.let {
+                                    for (offerItem in mSkuOfferList) {
+                                        if (offerItem?.promotion_id!!.equals(
+                                                promotionId_applied_fromgetCart
+                                            )
+                                        ) {
+                                            offerItem.selected = true
+                                            selectedOfferItem = offerItem
+                                            getNavigator()?.refreshOfferAdapter()
+                                        }
+
+                                    }
+                                }
                                 //do nothing as a new list is loaded with selected = false
                             }
                         }
@@ -423,32 +563,19 @@ class ProductDetailsViewModel @Inject constructor(
                             ProductSKUOfferAdapter(
                                 mSkuOfferList,
                                 selectedSkuListItem.get()!!,
-                                {},
-                                {}),
+                                qtySelected.get()!!),
                             {
                                 //When RadioButton is clicked
                                 selectedOfferItem = it
+                                if(selectedOfferItem.selected==true){
                                 checkPromotionApplicable(
                                     selectedOfferItem, selectedSkuListItem.get()!!,
                                     qtySelected.get()!!
-                                )
-                                /*{
-                                   //Selected Offer is Applicable on selectedSKU
-*//*
-                                    for (item in mSkuOfferList) {
-                                        item?.selected =
-                                            selectedOfferItem.promotion_id!!.equals(item?.promotion_id)
+                                )}
+                                else{
+                                    setPercentage_mrpVisibility(selectedSkuListItem.get()!!, null)
+                                }
 
-                                    }
-                                    getNavigator()?.refreshOfferAdapter()
-
-
-
-                                    setPercentage_mrpVisibility(
-                                        selectedSkuListItem.get()!!,
-                                        selectedOfferItem
-                                    )*//*
-                                }*/
 
                             },
                             {
@@ -492,7 +619,7 @@ class ProductDetailsViewModel @Inject constructor(
             val offersOnProductResponse =
                 productRepository.checkPromotionOnProduct(verifyPromotionsModel)
             isApplicable =
-                ( offersOnProductResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS) &&  offersOnProductResponse.body()?.gpApiResponseData?.promotionApplicable!!)
+                (offersOnProductResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS) && offersOnProductResponse.body()?.gpApiResponseData?.promotionApplicable!!)
 
             if (isApplicable) {
                 for (item in mSkuOfferList) {
@@ -507,6 +634,9 @@ class ProductDetailsViewModel @Inject constructor(
                     selectedOfferItem
                 )
             } else {
+                for (item in mSkuOfferList) {
+                    item?.selected =false
+                }
                 getNavigator()?.refreshOfferAdapter()
                 getNavigator()?.showToast(offersOnProductResponse.body()?.gpApiMessage)
             }
@@ -679,6 +809,31 @@ class ProductDetailsViewModel @Inject constructor(
 
 
     }
+
+
+    private fun updateCart(productData: ProductData) {
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progressLoader.set(true)
+                    val response = productRepository.updateCartItem(productData)
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
+                        getCartData()
+                    }
+                    progressLoader.set(false)
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
+                progressLoader.set(false)
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
+
 
 }
 

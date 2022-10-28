@@ -52,7 +52,7 @@
                         android:layout_width="0dp"
                         android:layout_height="26dp"
                         android:layout_marginRight="10dp"
-                        android:layout_weight=".5"
+                        android:layout_weight=".3"
                         app:srcCompat="@drawable/ic_coin" />
 
                     <TextView
@@ -60,9 +60,9 @@
                         style="@style/TextSize13Sp"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="3.5"
+                        android:layout_weight="3.7"
                         android:text="@string/check_referral_points"
-                        android:textSize="@dimen/_13ssp" />
+                        android:textSize="@dimen/_12ssp" />
 
                     <LinearLayout
                         android:layout_width="0dp"

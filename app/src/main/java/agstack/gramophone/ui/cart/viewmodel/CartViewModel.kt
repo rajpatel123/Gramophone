@@ -15,6 +15,7 @@ import android.os.Bundle
 import android.widget.CompoundButton
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -35,6 +36,7 @@ class CartViewModel @Inject constructor(
     var progress = MutableLiveData<Boolean>()
     var showGramCashCoinView = MutableLiveData<Boolean>()
     var showCartView = MutableLiveData<Boolean>()
+    var isProgressBgTransparent = MutableLiveData<Boolean>()
 
     init {
         itemCount.value = 0
@@ -45,6 +47,7 @@ class CartViewModel @Inject constructor(
         progress.value = false
         showGramCashCoinView.value = true
         showCartView.value = true
+        isProgressBgTransparent.value = false
     }
 
     fun onCheckedChange(button: CompoundButton, check: Boolean) {
@@ -103,6 +106,7 @@ class CartViewModel @Inject constructor(
                         && response.body()?.gp_api_response_data?.cart_items != null && response.body()?.gp_api_response_data?.cart_items?.size!! > 0
                     ) {
                         showCartView.value = true
+                        isProgressBgTransparent.value = true
                         itemCount.value = response.body()?.gp_api_response_data?.cart_items?.size
                         discount.value = response.body()?.gp_api_response_data?.total_discount
                         gramCash.value = response.body()?.gp_api_response_data?.gramcash_coins
@@ -128,7 +132,11 @@ class CartViewModel @Inject constructor(
                                     OfferDetailActivity::class.java,
                                     Bundle().apply {
                                         val offersDataItem = DataItem()
-                                        offersDataItem.endDate = offerApplied.valid_till
+                                        offersDataItem.name = offerApplied.offer_name
+                                        offersDataItem.endDate =
+                                            if (offerApplied.valid_till.isNotNullOrEmpty()) offerApplied.valid_till.replace(
+                                                "Valid till ",
+                                                "") else null
                                         offersDataItem.productName = productName
                                         offersDataItem.productsku = productSku
                                         offersDataItem.image = offerApplied.image
@@ -169,8 +177,9 @@ class CartViewModel @Inject constructor(
                     val response = productRepository.removeCartItem(productId)
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
                         getCartData()
+                    } else {
+                        progress.value = false
                     }
-                    progress.value = false
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }
@@ -192,8 +201,9 @@ class CartViewModel @Inject constructor(
                     val response = productRepository.updateCartItem(productData)
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
                         getCartData()
+                    } else {
+                        progress.value = false
                     }
-                    progress.value = false
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }

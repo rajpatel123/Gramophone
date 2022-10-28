@@ -7,4 +7,5 @@ data class FormattedArticlesData(
     var post_views: String? = null,
     var tag: String? = null,
     var image_url: String? = null,
+    var articleTye: String? = null,
 )

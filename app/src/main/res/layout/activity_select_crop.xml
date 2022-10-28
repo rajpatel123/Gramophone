@@ -50,14 +50,14 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:background="@color/orange"
+                android:elevation="@dimen/_8sdp"
                 android:fontFamily="@font/manrope_bold"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="center"
+                android:onClick="@{() -> viewModel.onClickSaveAndContinue()}"
                 android:padding="@dimen/_13sdp"
                 android:text="@string/save_continue"
-                android:textColor="@color/white"
-                android:onClick="@{() -> viewModel.onClickSaveAndContinue()}"
-                android:elevation="@dimen/_8sdp" />
+                android:textColor="@color/white" />
         </RelativeLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

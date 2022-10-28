@@ -87,7 +87,7 @@
         <item name="tabRippleColor">@null</item>
         <item name="singleLine">true</item>
         <item name="tabSelectedTextColor">@color/brand_color</item>
-        <item name="tabTextColor">@color/gray</item>
+        <item name="tabTextColor">@color/blakish</item>
         <item name="tabTextAppearance">@style/bold</item>
     </style>
     <style name="AppBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">

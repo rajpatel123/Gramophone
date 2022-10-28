@@ -24,30 +24,31 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/farmerImg"
                 android:layout_width="@dimen/_120sdp"
                 android:layout_height="@dimen/_120sdp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/_1sdp"
                 android:layout_marginTop="@dimen/_16sdp"
-                android:contentDescription="@string/image"
+                android:contentDescription="@string/farmer_image"
                 android:elevation="@dimen/_2sdp"
-                app:srcCompat="@drawable/farmer" />
+                app:srcCompat="@drawable/add_farmer_image" />
 
             <RelativeLayout
                 android:layout_width="@dimen/_90sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_78sdp"
+                android:layout_marginTop="@dimen/_70sdp"
                 android:elevation="@dimen/_2sdp"
                 tools:ignore="RelativeOverlap">
 
                 <FrameLayout
                     android:id="@+id/imageCorpWrapper"
-                    android:background="@drawable/rounded_corner_20_solid_white"
-                    android:layout_width="@dimen/_80sdp"
-                    android:layout_height="@dimen/_80sdp"
-                    android:layout_gravity="center"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
                     android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:background="@drawable/rounded_corner_20_solid_white"
                     android:padding="@dimen/_2sdp">
 
                     <com.google.android.material.imageview.ShapeableImageView
@@ -55,10 +56,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:scaleType="centerCrop"
                         android:contentDescription="@string/image"
-                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize20Percent"
+                        android:scaleType="centerCrop"
                         app:product_image='@{viewModel.selectedCrop.cropImage ?? ""}'
+                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize20Percent"
                         tools:srcCompat="@drawable/dummy_crop" />
 
                 </FrameLayout>
@@ -74,7 +75,7 @@
                     android:lines="2"
                     android:maxLength="50"
                     android:text='@{viewModel.selectedCrop.cropName ?? ""}'
-                    android:textColor="@color/black"
+                    android:textColor="@color/blakish"
                     android:textStyle="bold"
                     tools:text='Maize' />
 
@@ -88,7 +89,7 @@
                 <View
                     android:id="@+id/rectangle_3"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_54sdp"
+                    android:layout_height="@dimen/_48sdp"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentTop="false"
                     android:background="@drawable/bg_farm_one" />
@@ -129,7 +130,7 @@
             android:layout_below="@+id/flBannerFrameLayout"
             android:layout_marginEnd="@dimen/_16sdp"
             android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_24sdp">
+            android:layout_marginTop="@dimen/_8sdp">
 
             <RelativeLayout
                 android:id="@+id/rlFarmDatePickerWrapper"
@@ -184,9 +185,9 @@
                 android:id="@+id/txtDatePickerTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:text="Date of sowing"
-                android:textColor="@color/black" />
+                android:layout_marginTop="@dimen/_1sdp"
+                android:text="@string/date_of_sowing"
+                android:textColor="@color/blakish" />
 
         </RelativeLayout>
 
@@ -196,12 +197,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/orange"
+            android:enabled="@{viewModel.enableSaveButton, default=true}"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center"
             android:onClick="@{() -> viewModel.onClickSaveAndContinue()}"
             android:padding="@dimen/_13sdp"
             android:text="@string/save_continue"
-            android:enabled="@{viewModel.enableSaveButton, default=true}"
             android:textColor="@color/white" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -210,7 +211,7 @@
             android:layout_alignEnd="@+id/date_picker"
             android:layout_alignStart="@+id/date_picker"
             android:layout_below="@+id/date_picker"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_4sdp"
             android:orientation="horizontal"
             android:weightSum="10">
 
@@ -258,11 +259,10 @@
 
                 <TextView
                     android:id="@+id/txtAreaTitle"
-                    style="@style/small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"
-                    android:text="Area"
+                    android:text="@string/area"
                     android:textColor="@color/blakish" />
 
             </RelativeLayout>
@@ -281,18 +281,29 @@
 
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/edtAreaUnit"
-                        style="@style/small"
+                        android:theme="@style/ThemeOverlay.AppCompat.Light"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_38sdp"
                         android:background="@drawable/rounded_corner"
                         android:backgroundTint="@color/mute_grey"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:paddingBottom="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_2sdp"
                         android:paddingStart="@dimen/_5sdp"
+                        android:drawableStart="@drawable/ic_comment"
                         android:paddingTop="@dimen/_8sdp"
+                        android:spinnerMode="dropdown"
                         android:textSize="@dimen/_12ssp"
-                        tools:hint="Bigha"
-                        android:foreground="?android:attr/selectableItemBackground"/>
+                        tools:hint="Bigha" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@+id/edtAreaUnit"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/image"
+                        android:src="@drawable/ic_arrow_down" />
 
                     <ImageView
                         android:layout_width="wrap_content"
