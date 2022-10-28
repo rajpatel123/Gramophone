@@ -11,7 +11,6 @@ import agstack.gramophone.ui.farm.view.AddFarmActivity
 import agstack.gramophone.ui.farm.view.SelectCropActivity
 import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
 import agstack.gramophone.ui.farm.view.WhyAddFarmActivity
-import agstack.gramophone.ui.home.view.fragments.market.model.FeaturedArticlesResponse
 import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
@@ -70,50 +69,101 @@ class HomeAdapter(
                 return Banner1ViewHolder(ItemHomeBannerBinding.inflate(LayoutInflater.from(viewGroup.context)))
             }
             Constants.HOME_BANNER_EXCLUSIVE_VIEW_TYPE -> {
-                return ExclusiveBannerViewHolder(ItemHomeExclusiveBannerBinding.inflate(
-                    LayoutInflater.from(
-                        viewGroup.context)))
+                return ExclusiveBannerViewHolder(
+                    ItemHomeExclusiveBannerBinding.inflate(
+                        LayoutInflater.from(
+                            viewGroup.context
+                        )
+                    )
+                )
             }
             Constants.HOME_BANNER_REFERRAL_VIEW_TYPE -> {
-                return ReferralBannerViewHolder(ItemHomeBannerBinding.inflate(
-                    LayoutInflater.from(
-                        viewGroup.context)))
+                return ReferralBannerViewHolder(
+                    ItemHomeBannerBinding.inflate(
+                        LayoutInflater.from(
+                            viewGroup.context
+                        )
+                    )
+                )
             }
             Constants.HOME_SHOP_BY_CATEGORY_VIEW_TYPE -> {
-                return ShopByCategoryViewHolder(ItemHomeShopByCategoryBinding.inflate(LayoutInflater.from(
-                    viewGroup.context)))
+                return ShopByCategoryViewHolder(
+                    ItemHomeShopByCategoryBinding.inflate(
+                        LayoutInflater.from(
+                            viewGroup.context
+                        )
+                    )
+                )
             }
             Constants.HOME_FEATURED_PRODUCTS_VIEW_TYPE -> {
-                return FeaturedProductsViewHolder(ItemHomeFeaturedProductBinding.inflate(
-                    LayoutInflater.from(viewGroup.context)))
+                return FeaturedProductsViewHolder(
+                    ItemHomeFeaturedProductBinding.inflate(
+                        LayoutInflater.from(viewGroup.context)
+                    )
+                )
             }
             Constants.HOME_SHOP_BY_CROP_VIEW_TYPE -> {
-                return ShopByCropViewHolder(ItemHomeShopByCropBinding.inflate(LayoutInflater.from(
-                    viewGroup.context)))
+                return ShopByCropViewHolder(
+                    ItemHomeShopByCropBinding.inflate(
+                        LayoutInflater.from(
+                            viewGroup.context
+                        )
+                    )
+                )
             }
             Constants.HOME_SHOP_BY_STORE_VIEW_TYPE -> {
-                return ShopByStoreViewHolder(ItemHomeShopByStoreBinding.inflate(LayoutInflater.from(
-                    viewGroup.context)))
+                return ShopByStoreViewHolder(
+                    ItemHomeShopByStoreBinding.inflate(
+                        LayoutInflater.from(
+                            viewGroup.context
+                        )
+                    )
+                )
             }
             Constants.HOME_SHOP_BY_COMPANY_VIEW_TYPE -> {
-                return ShopByCompanyViewHolder(ItemHomeShopByCompanyBinding.inflate(LayoutInflater.from(
-                    viewGroup.context)))
+                return ShopByCompanyViewHolder(
+                    ItemHomeShopByCompanyBinding.inflate(
+                        LayoutInflater.from(
+                            viewGroup.context
+                        )
+                    )
+                )
             }
             Constants.HOME_GRAMOPHONE_PROMISE_VIEW_TYPE -> {
-                return PromiseBannerViewHolder(ItemHomePromiseBannerBinding.inflate(LayoutInflater.from(
-                    viewGroup.context)))
+                return PromiseBannerViewHolder(
+                    ItemHomePromiseBannerBinding.inflate(
+                        LayoutInflater.from(
+                            viewGroup.context
+                        )
+                    )
+                )
             }
             Constants.HOME_CART_VIEW_TYPE -> {
-                return CartViewHolder(ItemHomeCartBinding.inflate(LayoutInflater.from(
-                    viewGroup.context)))
+                return CartViewHolder(
+                    ItemHomeCartBinding.inflate(
+                        LayoutInflater.from(
+                            viewGroup.context
+                        )
+                    )
+                )
             }
             Constants.HOME_FARMS_VIEW_TYPE -> {
-                return FarmsViewHolder(ItemHomeFarmsViewBinding.inflate(LayoutInflater.from(
-                    viewGroup.context)))
+                return FarmsViewHolder(
+                    ItemHomeFarmsViewBinding.inflate(
+                        LayoutInflater.from(
+                            viewGroup.context
+                        )
+                    )
+                )
             }
             Constants.HOME_ARTICLES_VIEW_TYPE -> {
-                return ArticlesViewHolder(ItemHomeArticlesBinding.inflate(LayoutInflater.from(
-                    viewGroup.context)))
+                return ArticlesViewHolder(
+                    ItemHomeArticlesBinding.inflate(
+                        LayoutInflater.from(
+                            viewGroup.context
+                        )
+                    )
+                )
             }
         }
         return EmptyViewHolder(
@@ -175,8 +225,10 @@ class HomeAdapter(
                         openActivity(holder.itemView.context,
                             ProductDetailsActivity::class.java,
                             Bundle().apply {
-                                putParcelable(Constants.PRODUCT,
-                                    productData)
+                                putParcelable(
+                                    Constants.PRODUCT,
+                                    productData
+                                )
                             })
                     }
                     holder.binding.rvFeatureProduct.adapter = featuredAdapter
@@ -184,8 +236,10 @@ class HomeAdapter(
                         openActivity(holder.itemView.context,
                             FeaturedProductActivity::class.java,
                             Bundle().apply {
-                                putString(Constants.HOME_FEATURED_PRODUCTS,
-                                    Constants.HOME_FEATURED_PRODUCTS)
+                                putString(
+                                    Constants.HOME_FEATURED_PRODUCTS,
+                                    Constants.HOME_FEATURED_PRODUCTS
+                                )
                             })
                     }
                 } else {
@@ -216,8 +270,10 @@ class HomeAdapter(
                             ShopByActivity::class.java,
                             Bundle().apply {
                                 putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
-                                putParcelable(Constants.SHOP_BY_CROP,
-                                    cropResponse)
+                                putParcelable(
+                                    Constants.SHOP_BY_CROP,
+                                    cropResponse
+                                )
                             })
                     }
                 } else {
@@ -269,9 +325,11 @@ class HomeAdapter(
                         companyList.subList(0, 6)
                     else companyList
                     val companyAdapter = ShopByCompanyAdapter(tempCompanyList) {
-                        openActivity(holder.itemView.context,
+                        openActivity(
+                            holder.itemView.context,
                             FeaturedProductActivity::class.java,
-                            null)
+                            null
+                        )
                     }
                     holder.binding.rvShopByCompany.adapter = companyAdapter
                     holder.binding.viewAllCompanies.setOnClickListener {
@@ -279,8 +337,10 @@ class HomeAdapter(
                             ShopByActivity::class.java,
                             Bundle().apply {
                                 putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_COMPANY)
-                                putParcelable(Constants.SHOP_BY_COMPANY,
-                                    companyResponse)
+                                putParcelable(
+                                    Constants.SHOP_BY_COMPANY,
+                                    companyResponse
+                                )
                             })
                     }
                 } else {
@@ -346,8 +406,10 @@ class HomeAdapter(
                         openActivity(holder.itemView.context,
                             ProductDetailsActivity::class.java,
                             Bundle().apply {
-                                putParcelable(Constants.PRODUCT,
-                                    ProductData(it.toInt()))
+                                putParcelable(
+                                    Constants.PRODUCT,
+                                    ProductData(it.toInt())
+                                )
                             })
                     }
                     holder.binding.frameCheckout.setOnClickListener {
@@ -440,9 +502,12 @@ class HomeAdapter(
             }
             is ArticlesViewHolder -> {
                 if (featuredArticlesList.size > 0) {
-                    holder.binding.rvFeaturedArticles.adapter = ArticlesAdapter(featuredArticlesList)
-                    holder.binding.rvTrendingArticles.adapter = ArticlesAdapter(featuredArticlesList)
-                    holder.binding.rvSuggestedArticles.adapter = ArticlesAdapter(featuredArticlesList)
+                    holder.binding.rvFeaturedArticles.adapter =
+                        ArticlesAdapter(featuredArticlesList)
+                    holder.binding.rvTrendingArticles.adapter =
+                        ArticlesAdapter(featuredArticlesList)
+                    holder.binding.rvSuggestedArticles.adapter =
+                        ArticlesAdapter(featuredArticlesList)
                 }
 
 

@@ -37,6 +37,8 @@ import agstack.gramophone.ui.profileselection.model.UpdateProfileTypeRes
 import agstack.gramophone.ui.referandearn.model.GramCashResponseModel
 import agstack.gramophone.ui.referandearn.transaction.TransactionRequestModel
 import agstack.gramophone.ui.referandearn.transaction.model.GramCashTxnResponseModel
+import agstack.gramophone.ui.search.model.GlobalSearchRequest
+import agstack.gramophone.ui.search.model.GlobalSearchResponse
 import agstack.gramophone.ui.search.model.SuggestionsRequest
 import agstack.gramophone.ui.search.model.SuggestionsResponse
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
@@ -306,4 +308,10 @@ interface GramAppService {
 
     @POST("api/v5/search/suggestions")
     suspend fun getSuggestions(@Body body : SuggestionsRequest): Response<SuggestionsResponse>
+
+    @POST("api/v5/search/global-search")
+    suspend fun searchByKeyword(@Body body : GlobalSearchRequest): Response<GlobalSearchResponse>
+
+    @POST("api/v5/search/community-search")
+    suspend fun searchByKeywordInCommunity(@Body body : GlobalSearchRequest): Response<GlobalSearchResponse>
 }

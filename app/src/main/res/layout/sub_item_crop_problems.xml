@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="item"
+            type="agstack.gramophone.ui.search.model.Item" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
@@ -44,7 +51,8 @@
                     android:layout_marginTop="1dp"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerTopOnly20"
-                    tools:src="@drawable/dummy_crop" />
+                    tools:src="@drawable/dummy_crop"
+                    app:product_image='@{item.image ?? ""}'/>
 
             </RelativeLayout>
 
@@ -67,7 +75,8 @@
                     android:paddingEnd="@dimen/_4sdp"
                     android:textColor="@color/blakish"
                     android:textSize="@dimen/_11ssp"
-                    tools:text="Late Blight" />
+                    tools:text="Late Blight"
+                    android:text='@{item.name ?? "" }'/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -80,7 +89,8 @@
                     android:paddingBottom="@dimen/_12sdp"
                     tools:text="Nutritional issue"
                     android:textColor="@color/green_dark"
-                    android:textSize="@dimen/_11ssp" />
+                    android:textSize="@dimen/_11ssp"
+                    android:text='@{item.category_type ?? ""}'/>
 
             </LinearLayout>
 

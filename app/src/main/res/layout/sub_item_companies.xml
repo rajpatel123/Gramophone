@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
 
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="agstack.gramophone.ui.search.model.Item" />
+    </data>
 
     <LinearLayout
+        android:id="@+id/companyContainer"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <FrameLayout
             android:id="@+id/flCompany"
-            android:layout_width="@dimen/_96sdp"
-            android:layout_height="@dimen/_96sdp"
+            android:layout_width="@dimen/_82sdp"
+            android:layout_height="@dimen/_82sdp"
             android:layout_marginBottom="@dimen/_16sdp"
             android:layout_marginStart="@dimen/_16sdp"
-            android:background="@drawable/rounded_corner_16_solid_white_stroke_gray"
-            android:padding="@dimen/_6sdp">
+            android:background="@drawable/rounded_corner_16_solid_white_stroke_gray">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_64sdp"
+                android:layout_height="@dimen/_64sdp"
                 android:layout_gravity="center"
                 android:contentDescription="@string/image"
-                android:src="@drawable/dummy_shop_by_company" />
+                android:src="@drawable/dummy_shop_by_company"
+                app:product_image='@{item.image ?? ""}' />
 
         </FrameLayout>
 

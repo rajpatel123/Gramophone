@@ -7,50 +7,50 @@
     <data>
 
         <variable
-            name="model"
-            type="agstack.gramophone.ui.home.view.fragments.market.model.ProductData" />
+            name="item"
+            type="agstack.gramophone.ui.search.model.ProductSku" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="@dimen/_196sdp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/productDetailsContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_144sdp"
+            android:layout_height="@dimen/_216sdp"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_6sdp"
             android:layout_marginEnd="@dimen/_6sdp"
             android:layout_marginBottom="@dimen/_10ssp"
+            android:paddingTop="@dimen/_1sdp"
             android:background="@drawable/rounded_corner_12_solid_white_stroke_gray"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:background="@drawable/rounded_corner_6_light_green"
                 android:fontFamily="@font/manrope_bold"
                 android:paddingStart="@dimen/_6sdp"
                 android:paddingTop="@dimen/_4sdp"
                 android:paddingEnd="@dimen/_6sdp"
                 android:paddingBottom="@dimen/_4sdp"
-                android:text="20% Off"
+                tools:text="20% Off"
                 android:textColor="@color/order_approved_text"
-                android:textSize="@dimen/_11ssp" />
+                android:textSize="@dimen/_11ssp"
+                app:mrp_price="@{item.selling_price}"
+                app:sales_price="@{item.discount_price}"/>
 
             <ImageView
                 android:id="@+id/iv_productimage"
                 android:layout_width="@dimen/_110sdp"
                 android:layout_height="@dimen/_110sdp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/dummy_feature_product" />
+                tools:src="@drawable/dummy_feature_product"
+                app:product_image='@{item.product_image ?? ""}'/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -64,20 +64,21 @@
 
                 <TextView
                     android:id="@+id/tvProductDescription"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
                     android:ellipsize="end"
                     android:fontFamily="@font/manrope_medium"
                     android:gravity="top"
                     android:lineSpacingExtra="-2sp"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:paddingStart="@dimen/_12sdp"
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_12sdp"
                     android:paddingBottom="@dimen/_5sdp"
-                    android:text="fungicides Crystal Bavistin 50% WP Fun gicide Carbe ..."
+                    tools:text="fungicides Crystal Bavistin 50% WP Fun gicide Carbe ..."
                     android:textColor="@color/blakish"
+                    android:text='@{item.product_app_name ?? ""}'
                     android:textSize="@dimen/_11ssp" />
 
                 <RatingBar
@@ -104,9 +105,10 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="3"
-                        android:text="₹ 900"
+                        tools:text="₹ 900"
                         android:textColor="@color/blakish"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        app:reformatFloatPriceToInt="@{item.discount_price}"/>
 
                     <TextView
                         style="@style/regular"
@@ -116,14 +118,18 @@
                         android:background="@drawable/strike_through_mutegrey"
                         android:ellipsize="end"
                         android:maxLines="3"
-                        android:text="₹ 1800"
+                        tools:text="₹ 1800"
                         android:textColor="@color/gray_strike_through"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        app:mrp_price_equal="@{item.selling_price}"
+                        app:to_sales_price="@{item.discount_price}"/>
 
                 </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
 </layout>

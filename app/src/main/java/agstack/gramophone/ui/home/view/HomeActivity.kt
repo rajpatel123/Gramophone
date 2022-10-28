@@ -248,7 +248,9 @@ class HomeActivity :
                 openActivity(CartActivity::class.java)
             }
             R.id.item_search -> {
-                openActivity(GlobalSearchActivity::class.java)
+                openActivity(GlobalSearchActivity::class.java, Bundle().apply {
+                    putBoolean("searchInCommunity", (activeFragment is CommunityFragment))
+                })
             }
         }
         return true

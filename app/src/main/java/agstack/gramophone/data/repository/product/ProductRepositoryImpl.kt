@@ -19,6 +19,8 @@ import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
+import agstack.gramophone.ui.search.model.GlobalSearchRequest
+import agstack.gramophone.ui.search.model.GlobalSearchResponse
 import agstack.gramophone.ui.search.model.SuggestionsRequest
 import agstack.gramophone.ui.search.model.SuggestionsResponse
 import kotlinx.coroutines.Dispatchers
@@ -279,6 +281,22 @@ class ProductRepositoryImpl @Inject constructor(
             Dispatchers.IO
         ) {
             val response = gramoAppService.getSuggestions(body)
+            response
+        }
+
+    override suspend fun searchByKeyword(body: GlobalSearchRequest): Response<GlobalSearchResponse> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val response = gramoAppService.searchByKeyword(body)
+            response
+        }
+
+    override suspend fun searchByKeywordInCommunity(body: GlobalSearchRequest): Response<GlobalSearchResponse> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val response = gramoAppService.searchByKeywordInCommunity(body)
             response
         }
 }

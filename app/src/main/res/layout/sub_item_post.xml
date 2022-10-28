@@ -1,122 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
 
-    <LinearLayout
+        <variable
+            name="item"
+            type="agstack.gramophone.ui.search.model.Item" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_6sdp"
-        android:layout_marginEnd="@dimen/_6sdp"
-        android:layout_marginBottom="@dimen/_10ssp"
-        android:background="@drawable/rounded_corner_12_solid_white_stroke_gray"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <LinearLayout android:id="@+id/postContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="@dimen/_12sdp"
-            android:layout_marginRight="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_12sdp">
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:layout_marginBottom="@dimen/_10ssp"
+            android:background="@drawable/rounded_corner_12_solid_white_stroke_gray"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <FrameLayout
-                android:id="@+id/imageWrapper"
-                android:background="@drawable/rounded_corner_20_solid_white"
-                android:layout_width="@dimen/_80sdp"
-                android:padding="@dimen/_2sdp"
-                android:layout_height="@dimen/_80sdp">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:scaleType="centerCrop"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize20Percent"
-                    android:contentDescription="@string/image"
-                    app:product_image='@{model.cropImage ?? ""}'
-                    tools:src="@drawable/dummy_crop" />
-
-            </FrameLayout>
-
-            <TextView
-                android:id="@+id/txtPost"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_marginLeft="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:layout_toRightOf="@+id/imageWrapper"
-                android:fontFamily="@font/manrope_bold"
-                android:text='@{model.cropName ?? ""}'
-                android:textColor="@color/gray"
-                android:textSize="@dimen/_13ssp"
-                tools:text="Which is the system of farming in which the framer is related to the state?" />
+                android:layout_marginRight="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:layout_below="@+id/txtPost"
-                android:layout_toRightOf="@+id/imageWrapper"
+                <FrameLayout
+                    android:id="@+id/imageWrapper"
+                    android:background="@drawable/rounded_corner_20_solid_white"
+                    android:layout_width="@dimen/_56sdp"
+                    android:padding="@dimen/_2sdp"
+                    android:layout_height="@dimen/_56sdp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize20Percent"
+                        android:contentDescription="@string/image"
+                        tools:src="@drawable/dummy_crop"
+                        app:product_image='@{item.image ?? ""}'
+                        />
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/txtPost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_toRightOf="@+id/imageWrapper"
+                    android:fontFamily="@font/manrope_bold"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_11ssp"
+                    android:text='@{item.description ?? ""}'
+                    tools:text="Which is the system of farming in which the framer is related to the state?" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtPost"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_toRightOf="@+id/imageWrapper"
+                    android:fontFamily="@font/manrope_regular"
+                    android:gravity="center"
+                    android:text='@{item.actionTimeStamp.toString() ?? ""}'
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_10ssp"
+                    tools:text="Posted on: 15 July 2018" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/gray_stroke"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:fontFamily="@font/manrope_regular"
-                android:text='@{model.cropName ?? ""}'
-                android:textColor="@color/gray"
                 android:layout_marginLeft="@dimen/_16sdp"
-                android:textSize="@dimen/_11ssp"
-                tools:text="Posted on: 15 July 2018" />
+                android:layout_marginRight="@dimen/_16sdp" />
 
-        </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_38sdp">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:background="@color/gray_stroke"
-            android:layout_marginLeft="@dimen/_16sdp"
-            android:layout_marginRight="@dimen/_16sdp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/manrope_regular"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_10ssp"
+                    tools:text="2 Likes"
+                    android:text='@{item.likesCount + " Likes" ?? "Likes" }'
+                    android:paddingStart="@dimen/_16sdp"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:layout_weight="1"
+                    app:drawableStartCompat="@drawable/ic_like" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_56sdp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:fontFamily="@font/manrope_medium"
-                android:text='@{model.cropName ?? ""}'
-                android:textColor="@color/gray"
-                android:textSize="@dimen/_12ssp"
-                tools:text="2 Likes"
-                android:paddingStart="@dimen/_16sdp"
-                android:drawablePadding="@dimen/_4sdp"
-                android:layout_weight="1"
-                app:drawableStartCompat="@drawable/ic_like" />
-            <TextView  android:paddingStart="@dimen/_16sdp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:fontFamily="@font/manrope_medium"
-                android:text='@{model.cropName ?? ""}'
-                android:textColor="@color/gray"
-                android:layout_weight="1"
-                android:drawablePadding="@dimen/_4sdp"
-                android:textSize="@dimen/_12ssp"
-                tools:text="2 Comments"
-                app:drawableStartCompat="@drawable/ic_comment" />
+                <TextView
+                    android:paddingStart="@dimen/_16sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/manrope_regular"
+                    android:textColor="@color/gray"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:textSize="@dimen/_10ssp"
+                    tools:text="2 Comments"
+                    android:text='@{item.commentsCount + " Comments" ?? "Comments" }'
+                    app:drawableStartCompat="@drawable/ic_comment" />
+
+            </LinearLayout>
 
         </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

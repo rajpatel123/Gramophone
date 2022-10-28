@@ -187,7 +187,7 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".ui.unitconverter.UnitConverterActivity" />
         <activity android:name=".ui.feedback.FeedbackActivity"
-            android:windowSoftInputMode="adjustResize" />/>
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.offerslist.OffersListActivity" />
         <activity
             android:name=".ui.farm.view.WhyAddFarmActivity"
@@ -207,6 +207,20 @@
         <activity
             android:name=".ui.search.view.GlobalSearchActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.search.view.ViewAllSearchProductsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.search.view.ViewAllSearchCropsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.search.view.ViewAllSearchProfilesActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.search.view.ViewAllSearchCropProblemsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.search.view.ViewAllSearchCompaniesActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.search.view.ViewAllSearchProductCategoriesActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.search.view.ViewAllSearchCropCategoriesActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".pushnotification.MyFirebaseMessagingService" />
         <service

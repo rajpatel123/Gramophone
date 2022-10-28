@@ -1,9 +1,11 @@
 package agstack.gramophone.ui.search.navigator
 
 import agstack.gramophone.base.BaseNavigator
+import agstack.gramophone.ui.search.model.Data
 
 interface GlobalSearchNavigator : BaseNavigator {
-    fun notifyAdapter(suggestions: List<String>)
+    fun notifySuggestionAdapter(suggestions: List<String>)
+    fun notifySearchResultAdapter(result: List<Data>)
     fun onBackPressClick()
     fun onClearSearchClick()
 }
