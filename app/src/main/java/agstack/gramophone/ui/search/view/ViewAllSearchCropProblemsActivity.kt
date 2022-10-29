@@ -28,7 +28,7 @@ class ViewAllSearchCropProblemsActivity :
         items?.let {
             val gridLayoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
             viewDataBinding.rvCropProblems.layoutManager = gridLayoutManager
-            viewDataBinding.rvCropProblems.adapter = CropProblemsAdapter(items){}
+            viewDataBinding.rvCropProblems.adapter = CropProblemsAdapter(items){id, name, image ->}
         }
     }
 

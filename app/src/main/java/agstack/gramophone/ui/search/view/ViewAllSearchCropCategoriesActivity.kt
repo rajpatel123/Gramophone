@@ -28,7 +28,7 @@ class ViewAllSearchCropCategoriesActivity :
         items?.let {
             val gridLayoutManager = GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
             viewDataBinding.rvCropCategory.layoutManager = gridLayoutManager
-            viewDataBinding.rvCropCategory.adapter = CropsCategoriesAdapter(items){}
+            viewDataBinding.rvCropCategory.adapter = CropsCategoriesAdapter(items){id, name, image -> }
         }
     }
 

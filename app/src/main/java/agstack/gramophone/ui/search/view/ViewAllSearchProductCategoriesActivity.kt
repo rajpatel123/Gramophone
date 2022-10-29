@@ -28,7 +28,7 @@ class ViewAllSearchProductCategoriesActivity :
         items?.let {
             val gridLayoutManager = GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
             viewDataBinding.rvProductCategory.layoutManager = gridLayoutManager
-            viewDataBinding.rvProductCategory.adapter = ProductCategoryAdapter(items){}
+            viewDataBinding.rvProductCategory.adapter = ProductCategoryAdapter(items){ _, _, _ -> run {} }
         }
     }
 

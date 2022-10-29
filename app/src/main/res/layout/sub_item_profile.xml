@@ -34,8 +34,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_68sdp"
                 android:layout_alignParentTop="true"
-                android:background="@drawable/rounded_corner_top_16_solid_light_green_stroke_gray"
-                android:orientation="vertical" />
+                android:layout_marginLeft="@dimen/_1sdp"
+                android:layout_marginRight="@dimen/_1sdp"
+                android:background="@drawable/ic_profile_mask_bg"
+                android:orientation="vertical"
+                android:layout_marginTop="1dp" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imgProfile"
@@ -80,7 +83,7 @@
                 android:textColor="@color/blakish"
                 android:textSize="@dimen/_11ssp"
                 tools:text="Pewdaay"
-                android:text='@{item.status ?? ""}'/>
+                android:text='@{item.status ?? ""}' />
 
         </RelativeLayout>
 

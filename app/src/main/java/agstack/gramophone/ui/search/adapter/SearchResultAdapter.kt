@@ -1,8 +1,15 @@
 package agstack.gramophone.ui.search.adapter
 
 import agstack.gramophone.databinding.*
+import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
+import agstack.gramophone.ui.home.featured.FeaturedProductActivity
+import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
+import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.postdetails.view.PostDetailsActivity
 import agstack.gramophone.ui.search.model.Data
 import agstack.gramophone.ui.search.view.*
+import agstack.gramophone.utils.Constants
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -47,8 +54,15 @@ class SearchResultAdapter(
             is ProductsViewHolder -> {
                 holder.binding.txtTile.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
                 val productList = list[position].items
-                holder.binding.recyclerViewProducts.adapter = ProductsAdapter(productList){
-                    listener.invoke(it.toString())
+                holder.binding.recyclerViewProducts.adapter = ProductsAdapter(productList) {
+                    openActivity(holder.itemView.context,
+                        ProductDetailsActivity::class.java,
+                        Bundle().apply {
+                            putParcelable(
+                                Constants.PRODUCT,
+                                ProductData(it)
+                            )
+                        })
                 }
                 holder.binding.viewAllProducts.setOnClickListener {
                     openActivity(
@@ -63,7 +77,11 @@ class SearchResultAdapter(
                 holder.binding.txtTile.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
                 val dataList = list[position].items
                 holder.binding.rvCrops.adapter = CropsAdapter(dataList){
-                    listener.invoke(it)
+                    openActivity(holder.itemView.context,
+                        CropDetailActivity::class.java,
+                        Bundle().apply {
+                            putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
+                        })
                 }
                 holder.binding.viewAllCrops.setOnClickListener {
                     openActivity(
@@ -92,8 +110,14 @@ class SearchResultAdapter(
             is CropProblemsViewHolder ->{
                 holder.binding.txtTitle.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
                 val dataList = list[position].items
-                holder.binding.rvCropProblems.adapter = CropProblemsAdapter(dataList){
-                    listener.invoke(it)
+                holder.binding.rvCropProblems.adapter = CropProblemsAdapter(dataList){ id, name, image ->
+                    openActivity(holder.itemView.context,
+                        SubCategoryActivity::class.java,
+                        Bundle().apply {
+                            putString(Constants.CATEGORY_ID, id)
+                            putString(Constants.CATEGORY_NAME, name)
+                            putString(Constants.CATEGORY_IMAGE, image)
+                        })
                 }
                 holder.binding.viewAll.setOnClickListener {
                     openActivity(
@@ -108,7 +132,14 @@ class SearchResultAdapter(
                 holder.binding.txtTitle.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
                 val dataList = list[position].items
                 holder.binding.rvCompanies.adapter = CompaniesAdapter(dataList){
-                    listener.invoke(it)
+                    openActivity(holder.itemView.context,
+                        FeaturedProductActivity::class.java,
+                        Bundle().apply {
+                            putString(
+                                Constants.HOME_FEATURED_PRODUCTS,
+                                Constants.HOME_FEATURED_PRODUCTS
+                            )
+                        })
                 }
                 holder.binding.viewAll.setOnClickListener {
                     openActivity(
@@ -122,9 +153,16 @@ class SearchResultAdapter(
             is ProductCategoryViewHolder ->{
                 holder.binding.tvTitleProductCategory.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
                 val dataList = list[position].items
-                holder.binding.rvProductCategory.adapter = ProductCategoryAdapter(dataList){
-                    listener.invoke(it)
+                holder.binding.rvProductCategory.adapter = ProductCategoryAdapter(dataList){ id, name, image ->
+                    openActivity(holder.itemView.context,
+                        SubCategoryActivity::class.java,
+                        Bundle().apply {
+                            putString(Constants.CATEGORY_ID, id)
+                            putString(Constants.CATEGORY_NAME, name)
+                            putString(Constants.CATEGORY_IMAGE, image)
+                        })
                 }
+
                 holder.binding.viewAll.setOnClickListener {
                     openActivity(
                         holder.itemView.context,
@@ -137,8 +175,14 @@ class SearchResultAdapter(
             is CropCategoryViewHolder-> {
                 holder.binding.tvTitle.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
                 val dataList = list[position].items
-                holder.binding.rvCropCategory.adapter = CropsCategoriesAdapter(dataList){
-                    listener.invoke(it)
+                holder.binding.rvCropCategory.adapter = CropsCategoriesAdapter(dataList){ id, name, image ->
+                    openActivity(holder.itemView.context,
+                        SubCategoryActivity::class.java,
+                        Bundle().apply {
+                            putString(Constants.CATEGORY_ID, id)
+                            putString(Constants.CATEGORY_NAME, name)
+                            putString(Constants.CATEGORY_IMAGE, image)
+                        })
                 }
                 holder.binding.viewAll.setOnClickListener {
                     openActivity(
@@ -156,7 +200,12 @@ class SearchResultAdapter(
                     postList = postList.subList(0, 3)
                 }
                 holder.binding.recyclerViewPosts.adapter = PostsAdapter(postList){
-                    listener.invoke(it)
+                    openActivity(
+                        holder.itemView.context,
+                        PostDetailsActivity::class.java,
+                        Bundle().apply {
+                            putString(Constants.POST_ID, it)
+                        })
                 }
                 holder.binding.viewAllPosts.setOnClickListener {
                     openActivity(

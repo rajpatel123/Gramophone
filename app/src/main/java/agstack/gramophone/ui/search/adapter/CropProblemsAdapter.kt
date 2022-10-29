@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class CropProblemsAdapter (
     val list: List<Item>,
-    private val listener: (String) -> Unit,
+    private val listener: (String, String?, String?) -> Unit,
 ) : RecyclerView.Adapter<CropProblemsAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -17,11 +17,11 @@ class CropProblemsAdapter (
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val category = list[position]
-        holder.binding.item = category
+        val crop = list[position]
+        holder.binding.item = crop
 
         holder.binding.itemView.setOnClickListener {
-            listener.invoke(category.id!!)
+            listener.invoke(crop.id!!, crop.name, crop.image)
         }
     }
 

@@ -16,11 +16,11 @@ class PostsAdapter  (
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val profile = list[position]
-        holder.binding.item = profile
+        val post = list[position]
+        holder.binding.item = post
 
         holder.binding.postContainer.setOnClickListener {
-            listener.invoke(profile.id!!)
+            listener.invoke(post.id!!)
         }
     }
 
