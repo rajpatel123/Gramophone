@@ -456,6 +456,13 @@
     <string name="stage_name">"वर्तमान चरण: %1$s &#8226; %2$s"</string>
     <string name="posts">Posts</string>
     <string name="today_s_weather">Today\'s Weather</string>
+    <string name="products">Products</string>
+    <string name="crops">Crops</string>
+    <string name="profile">Profile</string>
+    <string name="crop_problems">Crop Problems</string>
+    <string name="companies">Companies</string>
+    <string name="crop_category">Crop Category</string>
+    <string name="product_category">Product Category</string>
 
 </resources>
 

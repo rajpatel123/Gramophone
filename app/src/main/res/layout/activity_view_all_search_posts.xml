@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <include
+            android:id="@+id/myToolbar"
+            layout="@layout/layout_toolbar" />
+
+        <View
+            android:layout_below="@+id/myToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_8sdp"
+            android:background="@color/gray_stroke"
+            android:id="@+id/section" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@+id/section"
+            android:paddingTop="@dimen/_8sdp"
+            android:id="@+id/recyclerViewPosts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_5ssp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="2"
+            tools:listitem="@layout/sub_item_post" />
+
+    </RelativeLayout>
+
+</layout>

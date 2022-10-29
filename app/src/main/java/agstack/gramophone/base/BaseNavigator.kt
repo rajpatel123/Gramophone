@@ -4,6 +4,7 @@ import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
 import android.app.Activity
 import android.location.Geocoder
 import android.os.Bundle
+import android.view.View
 
 /*
 
@@ -56,4 +57,6 @@ interface BaseNavigator {
     fun getGeoCoder(): Geocoder?
 
     fun checkPermission(permission: String): Boolean
+
+    fun hideSoftKeyboard(view : View){}
 }
