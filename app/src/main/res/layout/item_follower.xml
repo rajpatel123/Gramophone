@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.followings.model.Data" />
+    </data>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/frame_86"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:background="@drawable/circle_solid_white">
+
+        <agstack.gramophone.widget.CircularImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/_44sdp"
+            android:layout_height="@dimen/_44sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_3sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
+            app:srcCompat="@drawable/dummy_profile" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_toEndOf="@+id/imageView"
+            android:text="@{model.username}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            tools:text="Raj patel" />
+
+        <TextView
+            android:id="@+id/tv_address_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_below="@+id/name"
+            android:layout_toEndOf="@+id/imageView"
+            android:textSize="@dimen/_10ssp"
+            tools:text="Utter Pradesh" />
+
+        <TextView
+            android:id="@+id/tv_follow"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:background="@drawable/following_bg"
+            android:fontFamily="@font/manrope_semibold"
+            android:gravity="center"
+            android:paddingStart="@dimen/_6sdp"
+            android:paddingTop="@dimen/_3sdp"
+            android:paddingEnd="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_3sdp"
+            android:text="@{model.following?@string/following:@string/follow}"
+            android:textColor="@color/gjg"
+            android:textSize="@dimen/_10ssp"
+            android:textStyle="bold"
+            tools:text="Follow" />
+
+
+
+
+
+    </RelativeLayout>
+
+</layout>

@@ -5,12 +5,15 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.community.CommunityRepository
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.address.view.AddOrUpdateAddressActivity
+import agstack.gramophone.ui.followings.view.FollowerFollowedActivity
 import agstack.gramophone.ui.profile.model.GpApiResponseProfileData
 import agstack.gramophone.ui.userprofile.firm.AddFirmActivity
 import agstack.gramophone.ui.userprofile.model.TestUserModel
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Constants.CAMERA_PERMISSION
+import agstack.gramophone.utils.Constants.PAGE
+import agstack.gramophone.utils.Constants.PAGE_SOURCE
 import agstack.gramophone.utils.FileUploadRequestBody
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
@@ -202,4 +205,16 @@ class UserProfileViewModel @Inject constructor(
             }
         }
     }
+
+    fun onFollowerClicked(){
+     getNavigator()?.openActivity(FollowerFollowedActivity::class.java, Bundle().apply {
+         putString(PAGE, PAGE)
+     })
+    }
+
+  fun  onFollowingClicked(){
+      getNavigator()?.openActivity(FollowerFollowedActivity::class.java, Bundle().apply {
+          putString(PAGE,"")
+      })
+  }
 }

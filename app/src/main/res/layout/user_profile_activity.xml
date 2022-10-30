@@ -216,6 +216,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_4sdp"
+                        android:onClick="@{()->viewModel.onFollowerClicked()}"
                         android:fontFamily="@font/manrope_regular"
                         android:text="@string/followers"
                         android:textColor="@color/gray" />
@@ -247,6 +248,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_4sdp"
                         android:fontFamily="@font/manrope_regular"
+                        android:onClick="@{()->viewModel.onFollowingClicked()}"
+
                         android:text="@string/following"
                         android:textColor="@color/gray" />
                 </LinearLayout>
@@ -495,7 +498,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

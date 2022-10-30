@@ -39,36 +39,36 @@
         android:theme="@style/SplashTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.othersporfile.view.OtherUserProfileActivity"
-            android:screenOrientation="portrait"
-
+            android:name=".ui.followings.view.FollowerFollowedActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.othersporfile.view.OtherUserProfileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.comments.view.CommentsActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.createpost.view.CreatePostActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
-
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.EditPostActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
-
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.CreatePostActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.postdetails.view.PostDetailsActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.view.fragments.community.LikedPostUserListActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.settings.view.BlockedUsersActivity"
             android:exported="false"
@@ -230,11 +230,12 @@
             android:name="com.canhub.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".ui.unitconverter.UnitConverterActivity" />
-        <activity android:name=".ui.feedback.FeedbackActivity"
-            android:windowSoftInputMode="adjustResize" />/>
-        <activity android:name=".ui.offerslist.OffersListActivity"
+        <activity
+            android:name=".ui.feedback.FeedbackActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.offerslist.OffersListActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.farm.view.WhyAddFarmActivity"
             android:screenOrientation="portrait" />
@@ -244,7 +245,7 @@
         <activity
             android:name=".ui.farm.view.AddFarmActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.farm.view.ViewAllFarmsActivity"
             android:screenOrientation="portrait" />
