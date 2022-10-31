@@ -1,9 +1,11 @@
 package agstack.gramophone.di
 
 import agstack.gramophone.ui.comments.model.CommentsResponseModel
+import agstack.gramophone.ui.comments.model.DeleteCommentResponseModel
 import agstack.gramophone.ui.comments.model.sendcomment.GetCommentRequestModel
 import agstack.gramophone.ui.comments.model.sendcomment.SendCommentResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.create.CreatePostResponseModel
+import agstack.gramophone.ui.followings.model.FollowerResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.BookmarkPostResponse
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikePostResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedusersResponseModel
@@ -77,22 +79,39 @@ interface CommunityApiService {
 
 
     @Multipart
-    @POST(" /api/v2/comments/add-comment")
-    suspend fun postComment(
+    @PUT("/api/v2/comments/update-comment")
+    suspend fun updateComment(
         @Part("postId") postId: RequestBody,
+        @Part("commentId") commentId: RequestBody,
         @Part("text") text: RequestBody,
         @Part("tags") tags: RequestBody,
         @Part postImage: MultipartBody.Part
     ): Response<SendCommentResponseModel>
 
     @Multipart
-    @POST(" /api/v2/comments/add-comment")
+    @POST("/api/v2/comments/add-comment")
+    suspend fun postComment(
+        @Part("postId") postId: RequestBody,
+        @Part("text") text: RequestBody,
+        @Part("tags") tags: RequestBody,
+        @Part postImage: MultipartBody.Part
+    ): Response<SendCommentResponseModel>
+    @Multipart
+    @POST("/api/v2/comments/add-comment")
     suspend fun postComment(
         @Part("postId") postId: RequestBody,
         @Part("text") text: RequestBody,
         @Part("tags") tags: RequestBody,
     ): Response<SendCommentResponseModel>
 
+    @Multipart
+    @PUT(" /api/v2/comments/update-comment")
+    suspend fun updateComment(
+        @Part("postId") postId: RequestBody,
+        @Part("commentId") commentId: RequestBody,
+        @Part("text") text: RequestBody,
+        @Part("tags") tags: RequestBody,
+    ): Response<SendCommentResponseModel>
 
     @Multipart
     @POST("/api/v2/posts/create-post")
@@ -128,5 +147,17 @@ interface CommunityApiService {
 
     @GET("/api/v2/posts/get-blocked-user")
     suspend fun getBlockedUsersList(): Response<BlockedUsersListResponseModel>
+
+
+    @DELETE("/api/v2/comments/delete-comment/{postId}/{commentId}")
+    suspend fun deleteComment(@Path("postId") postID:String, @Path("commentId") commentId:String):Response<DeleteCommentResponseModel>
+
+
+  @POST("/api/v2/profiles/get-followings")
+    suspend fun getFollowings(@Body followRequestModel: FollowRequestModel):Response<FollowerResponseModel>
+
+
+    @POST("/api/v2/profiles/get-followers")
+    suspend fun getFollowers(@Body followRequestModel: FollowRequestModel):Response<FollowerResponseModel>
 
 }

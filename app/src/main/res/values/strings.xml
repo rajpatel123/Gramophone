@@ -311,6 +311,8 @@
     <string name="inclusiveoftaxes">(Inclusive of all taxes)</string>
     <string name="edit">Edit</string>
     <string name="followers">Followers</string>
+    <string name="followers_with_count">Followers(%d)</string>
+    <string name="following_with_count">Following(%d)</string>
     <string name="following">Following</string>
     <string name="follow">Follow</string>
     <string name="selectyourrole">Select your role</string>
@@ -502,7 +504,6 @@
     <string name="message_farm_added">you successfully added the farm</string>
     <string name="message_buy_your_crop">अपनी फसलों द्वारा खरीदारी करें</string>
     <string name="message_why_add_farm">Why Add Farm</string>
-
 
 
     <string name="hint_add_new_post">Write your question about your crop eg. how do I prevent this bug?</string>

@@ -4,6 +4,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityPostDetailsBinding
+import agstack.gramophone.ui.comments.model.Data
 import agstack.gramophone.ui.dialog.posts.BottomSheetShowPostDateDialog
 import agstack.gramophone.ui.home.adapter.CommentsAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.CropData
@@ -94,6 +95,10 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
         )
     }
 
+    override fun populateCommentData(data: Data) {
+        viewDataBinding.tvCommentBottomBox.setText(data.text)
+    }
+
     var cameraIntentLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -169,14 +174,16 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
     override fun getBindingVariable(): Int = BR.viewModel
 
     override fun getViewModel(): PostDetailViewModel = postDetailViewModel
-    override fun updatePostList(
-        comments: CommentsAdapter,
-        postDetailClicked: (commentId: String) -> Unit
+    override fun updateCommentsList(
+        commentsAdapter: CommentsAdapter,
+        onDeleteComment: (data: Data) -> Unit,
+        onEditCommentMenuClicked: (data: Data) -> Unit
     ) {
-
+        commentsAdapter.onDeleteComment = onDeleteComment
+        commentsAdapter.onEditCommentMenuClicked = onEditCommentMenuClicked
         rvComments.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvComments.setHasFixedSize(false)
-        rvComments.adapter = comments
+        rvComments.adapter = commentsAdapter
     }
 
     override fun onImageSet(url: String) {
@@ -228,6 +235,8 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
             }
         }
     }
+
+
     override fun sharePost(link: String) {
 
         val whatsappIntent = Intent(Intent.ACTION_SEND)

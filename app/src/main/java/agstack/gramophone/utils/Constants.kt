@@ -7,6 +7,7 @@ import android.content.Context
 
 object Constants {
 
+    val PAGE : String="follower"
     val PAGE_SOURCE : String="gram"
     val GET_SELECTED_TAGS: Int= 32
     val IsUrlForPlayStore: String="play.google.com"

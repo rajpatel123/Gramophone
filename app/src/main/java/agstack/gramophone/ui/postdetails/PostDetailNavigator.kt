@@ -1,14 +1,15 @@
 package agstack.gramophone.ui.postdetails
 
 import agstack.gramophone.base.BaseNavigator
+import agstack.gramophone.ui.comments.model.Data
 import agstack.gramophone.ui.home.adapter.CommentsAdapter
 import agstack.gramophone.ui.postdetails.model.Tag
 import agstack.gramophone.widget.FilePicker
 
 interface PostDetailNavigator :BaseNavigator {
-    fun updatePostList(
-        comments: CommentsAdapter,
-        postDetailClicked: (commentId: String) -> Unit)
+    fun updateCommentsList(commentsAdapter: CommentsAdapter,
+                           onDeleteComment: (data : Data) -> Unit,
+                           onEditCommentMenuClicked: (data : Data) -> Unit)
     fun sharePost(link: String)
      fun onImageSet(url: String)
      fun setLikeImage(icLiked: Int)
@@ -18,4 +19,5 @@ interface PostDetailNavigator :BaseNavigator {
     fun clearImage()
     fun setTags(tags: List<Tag>)
     fun showBottomSheet()
+    fun populateCommentData(data: Data)
 }

@@ -18,6 +18,71 @@
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_7sdp">
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvMenu"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginStart="@dimen/_110sdp"
+            android:layout_marginTop="@dimen/_55sdp"
+            android:background="@color/red"
+            android:layout_above="@+id/rlTime"
+            android:elevation="@dimen/_5sdp"
+            android:padding="@dimen/_10sdp"
+            app:cardElevation="@dimen/_2sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp">
+
+                <LinearLayout
+                    android:id="@+id/llEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_post_edit" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/edit" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_delete" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/delete" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivProfileImage1"
             android:layout_width="@dimen/_25sdp"
@@ -32,18 +97,21 @@
             app:civ_border_width="2dp" />
 
        <RelativeLayout
+           android:id="@+id/rlTopComments"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:orientation="vertical"
            android:layout_marginStart="@dimen/_30sdp"
            android:layout_alignLeft="@+id/ivProfileImage1"
            >
+
            <RelativeLayout
                android:id="@+id/rel_expert"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:background="@drawable/expert_rel_bg"
                android:padding="@dimen/_4ssp">
+
 
                <TextView
                    android:id="@+id/tvName"
@@ -85,130 +153,71 @@
 
                    android:textSize="@dimen/_14sdp" />
 
-               <ImageView
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_below="@+id/tv_long_desc"
-                   android:layout_marginTop="@dimen/_10sdp"
-                   android:adjustViewBounds="true" />
-
 
            </RelativeLayout>
 
-           <LinearLayout
-               android:layout_width="match_parent"
+           <RelativeLayout
+               android:id="@+id/imageContainer"
+               android:layout_width="wrap_content"
                android:layout_height="wrap_content"
+               android:layout_marginTop="@dimen/_10sdp"
+               android:layout_marginBottom="@dimen/_5sdp"
                android:layout_below="@+id/rel_expert"
+               app:cardCornerRadius="@dimen/_10sdp">
 
-               android:orientation="vertical">
+               <ImageView
+                   android:id="@+id/commentImage"
+                   android:layout_width="@dimen/_90sdp"
+                   android:layout_height="@dimen/_90sdp"
+                   android:visibility="visible" />
 
-               <RelativeLayout
-                   android:id="@+id/imageContainer"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="@dimen/_10sdp"
-                   android:layout_marginBottom="@dimen/_5sdp"
-                   app:cardCornerRadius="@dimen/_10sdp">
-
-                   <ImageView
-                       android:id="@+id/commentImage"
-                       android:layout_width="@dimen/_90sdp"
-                       android:layout_height="@dimen/_90sdp"
-                       android:visibility="gone"/>
-
-                   <androidx.cardview.widget.CardView
-                       android:layout_width="@dimen/_100sdp"
-                       android:layout_height="@dimen/_60sdp"
-                       android:layout_marginStart="@dimen/_90sdp"
-                       android:layout_marginTop="@dimen/_45sdp"
-                       android:background="@color/red"
-                       android:elevation="@dimen/_5sdp"
-                       android:padding="@dimen/_10sdp"
-                       app:cardElevation="@dimen/_2sdp">
-
-                       <LinearLayout
-                           android:layout_width="match_parent"
-                           android:layout_height="wrap_content"
-                           android:orientation="vertical"
-                           android:paddingStart="@dimen/_10sdp"
-                           android:paddingTop="@dimen/_5sdp">
-
-                           <LinearLayout
-                               android:id="@+id/llEdit"
-                               android:layout_width="wrap_content"
-                               android:layout_height="wrap_content"
-                               android:layout_marginTop="@dimen/_5sdp"
-                               android:layout_marginBottom="@dimen/_5sdp"
-                               android:gravity="center_vertical"
-                               android:orientation="horizontal">
-
-                               <ImageView
-                                   android:layout_width="wrap_content"
-                                   android:layout_height="wrap_content"
-                                   app:srcCompat="@drawable/ic_post_edit" />
-
-                               <TextView
-                                   android:layout_width="wrap_content"
-                                   android:layout_height="wrap_content"
-                                   android:layout_marginStart="@dimen/_10sdp"
-                                   android:fontFamily="@font/manrope_regular"
-                                   android:text="@string/edit" />
-                           </LinearLayout>
-
-                           <LinearLayout
-                               android:id="@+id/llDelete"
-                               android:layout_width="wrap_content"
-                               android:layout_height="wrap_content"
-                               android:layout_marginTop="@dimen/_10sdp"
-                               android:layout_marginBottom="@dimen/_8sdp"
-                               android:gravity="center_vertical"
-                               android:orientation="horizontal">
-
-                               <ImageView
-                                   android:layout_width="wrap_content"
-                                   android:layout_height="wrap_content"
-                                   app:srcCompat="@drawable/ic_delete" />
-
-                               <TextView
-                                   android:layout_width="wrap_content"
-                                   android:layout_height="wrap_content"
-                                   android:layout_marginStart="@dimen/_10sdp"
-                                   android:fontFamily="@font/manrope_regular"
-                                   android:text="@string/delete" />
-                           </LinearLayout>
-                       </LinearLayout>
-                   </androidx.cardview.widget.CardView>
-               </RelativeLayout>
+           </RelativeLayout>
 
 
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="@dimen/_4ssp"
-                   android:layout_marginBottom="@dimen/_15sdp"
-                   android:gravity="center_vertical"
-                   android:orientation="horizontal">
-
-                   <TextView
-                       android:id="@+id/tv_time"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="@{model.commentDuration}"
-                       android:textColor="@color/gray"
-                       android:textSize="@dimen/_15sdp"
-                       tools:text="3:40 PM" />
-
-                   <ImageView
-                       android:id="@+id/ivCommentsActions"
-                       android:layout_width="@dimen/_20sdp"
-                       android:layout_height="@dimen/_20sdp"
-                       android:layout_marginStart="@dimen/_10sdp"
-                       app:srcCompat="@drawable/ic_triple_dot_horizontal"
-
-                       />
-               </LinearLayout>
-           </LinearLayout>
 
        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlTopComments"
+
+            android:orientation="vertical">
+
+
+
+
+            <LinearLayout
+                android:id="@+id/llTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4ssp"
+                android:layout_marginStart="@dimen/_30sdp"
+
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{model.commentDuration}"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_15sdp"
+                    tools:text="3:40 PM" />
+
+                <ImageView
+                    android:id="@+id/ivCommentsActions"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    app:srcCompat="@drawable/ic_triple_dot_horizontal"
+
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+
     </RelativeLayout>
 </layout>

@@ -470,6 +470,8 @@
     <string name="old_farms_title">पुराने खेत</string>
     <string name="posts">Posts</string>
     <string name="today_s_weather">Today\'s Weather</string>
+    <string name="followers_with_count">Followers(%d)</string>
+    <string name="following_with_count">Following(%d)</string>
     <string name="products">Products</string>
     <string name="crops">Crops</string>
     <string name="profile">Profile</string>
