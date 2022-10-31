@@ -10,13 +10,9 @@ import agstack.gramophone.ui.profile.model.GpApiResponseProfileData
 import agstack.gramophone.ui.userprofile.firm.AddFirmActivity
 import agstack.gramophone.ui.userprofile.model.TestUserModel
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
-import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.*
 import agstack.gramophone.utils.Constants.CAMERA_PERMISSION
 import agstack.gramophone.utils.Constants.PAGE
-import agstack.gramophone.utils.Constants.PAGE_SOURCE
-import agstack.gramophone.utils.FileUploadRequestBody
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
@@ -28,6 +24,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.File
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,6 +32,8 @@ class UserProfileViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository,
     private val communityRepository: CommunityRepository
 ) : BaseViewModel<UserProfileNavigator>() {
+    var followers = ObservableField<String>()
+    var followee = ObservableField<String>()
     var isFarmerSelected = ObservableField<Boolean>(false)
     var isTraderSelected = ObservableField<Boolean>(false)
     var profileImage = MutableLiveData<String>()
@@ -96,7 +95,7 @@ class UserProfileViewModel @Inject constructor(
                 isFarmerSelected.set(userProfileResponseData?.is_farmer)
                 isTraderSelected.set(userProfileResponseData?.is_trader)
 
-
+                getProfile(userProfileResponseData?.customer_id)
                 //getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)
             } else {
                 progressLoader.set(false)
@@ -217,4 +216,32 @@ class UserProfileViewModel @Inject constructor(
           putString(PAGE,"")
       })
   }
+
+    fun getProfile(customerId: String?) {
+        viewModelScope.launch {
+
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+
+                    val response = communityRepository.getProfileData(SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.UUIdKey)!!)
+                    if (response.isSuccessful) {
+
+                        followers.set(response.body()?.data!!.totalFollowers.toString())
+                        followee.set(response.body()?.data!!.totalFollowees.toString())
+                    } else {
+                        getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+                    }
+                } else
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                }
+            }
+
+
+        }
+    }
+
 }

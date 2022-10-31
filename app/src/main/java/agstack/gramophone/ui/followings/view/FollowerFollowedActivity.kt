@@ -37,15 +37,13 @@ class FollowerFollowedActivity :
 
                 when (tab.position) {
                     0 -> {
-                        followerFollowingViewModel.getFollowing()
-                        viewDataBinding.rvFollowerFollowed.visibility=VISIBLE
-                        viewDataBinding.rvFollower.visibility= GONE
+                        followerFollowingViewModel.getFollowers()
+                        viewDataBinding.rvFollowerFollowed.visibility= GONE
                     }
 
                     1 -> {
-                        viewDataBinding.rvFollowerFollowed.visibility= GONE
-                        viewDataBinding.rvFollower.visibility= VISIBLE
-                        followerFollowingViewModel.getFollowers()
+                        viewDataBinding.rvFollower.visibility= GONE
+                        followerFollowingViewModel.getFollowing()
                     }
                 }
             }
@@ -68,8 +66,9 @@ class FollowerFollowedActivity :
         return followerFollowingViewModel
     }
 
-    override fun updateList(followsAdapter: FollowsAdapter, followClciked: (Data) -> Unit) {
+    override fun updateList(followsAdapter: FollowsAdapter, followClciked: (Data) -> Unit,profileClciked: (Data) -> Unit) {
         followsAdapter.followClicked = followClciked
+        followsAdapter.profileClicked = profileClciked
         followsAdapter.setImage = this
         viewDataBinding.rvFollower.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -77,11 +76,14 @@ class FollowerFollowedActivity :
         viewDataBinding.rvFollower.adapter = followsAdapter
         viewDataBinding.rvFollowerFollowed.visibility= GONE
         viewDataBinding.rvFollower.visibility= VISIBLE
+        val tab = viewDataBinding?.tabLayout?.getTabAt(0)
+        tab!!.select()
 
     }
 
-    override fun updateListFollowee(followsAdapter: FollowsAdapter, followClciked: (Data) -> Unit) {
+    override fun updateListFollowee(followsAdapter: FollowsAdapter, followClciked: (Data) -> Unit,profileClciked: (Data) -> Unit) {
         followsAdapter.followClicked = followClciked
+        followsAdapter.profileClicked = profileClciked
         followsAdapter.setImage = this
         viewDataBinding.rvFollowerFollowed.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -89,6 +91,8 @@ class FollowerFollowedActivity :
         viewDataBinding.rvFollowerFollowed.adapter = followsAdapter
         viewDataBinding.rvFollowerFollowed.visibility= VISIBLE
         viewDataBinding.rvFollower.visibility= GONE
+        val tab = viewDataBinding?.tabLayout?.getTabAt(1)
+        tab!!.select()
     }
 
     override fun getBundle(): Bundle {

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 class FollowsAdapter(private val dataList: List<Data>) :
     RecyclerView.Adapter<FollowsAdapter.DeveloperViewHolder>() {
     var followClicked: ((Data) -> Unit)? = null
+    var profileClicked: ((Data) -> Unit)? = null
     lateinit var setImage: SetImage
 
     interface SetImage {
@@ -38,7 +39,9 @@ class FollowsAdapter(private val dataList: List<Data>) :
             followClicked?.invoke(user)
         }
 
-
+        mBinding.imageView.setOnClickListener{
+            profileClicked?.invoke(user)
+        }
 
     }
 
