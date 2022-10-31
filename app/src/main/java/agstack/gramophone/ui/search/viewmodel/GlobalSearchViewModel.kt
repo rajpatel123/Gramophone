@@ -4,6 +4,8 @@ package agstack.gramophone.ui.search.viewmodel
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.ui.search.model.GlobalSearchRequest
+import agstack.gramophone.ui.search.model.GlobalSearchResponse
 import agstack.gramophone.ui.search.model.SuggestionsRequest
 import agstack.gramophone.ui.search.navigator.GlobalSearchNavigator
 import agstack.gramophone.utils.Constants
@@ -11,6 +13,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
 
@@ -19,11 +22,9 @@ class GlobalSearchViewModel @Inject constructor(
     private val productRepository: ProductRepository,
 ) : BaseViewModel<GlobalSearchNavigator>() {
     var progress = MutableLiveData<Boolean>()
-    var showEmptyView = MutableLiveData<Boolean>()
 
     init {
         progress.value = false
-        showEmptyView.value = false
     }
 
     fun onBackPressClick(){
@@ -43,16 +44,43 @@ class GlobalSearchViewModel @Inject constructor(
                     && response.body()?.gp_api_response_data != null
                 ) {
                     val suggestionsResponse = response.body()
-                    showEmptyView.value = false
-                    getNavigator()?.notifyAdapter(suggestionsResponse?.gp_api_response_data!!)
+                    getNavigator()?.notifySuggestionAdapter(suggestionsResponse?.gp_api_response_data!!)
                 } else {
-                    showEmptyView.value = true
-                    getNavigator()?.notifyAdapter(arrayListOf())
+                    getNavigator()?.notifySuggestionAdapter(arrayListOf())
                 }
                 progress.value = false
             } catch (ex: Exception) {
                 progress.value = false
-                showEmptyView.value = true
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
+
+
+    fun searchByKeyword(body: GlobalSearchRequest, searchInCommunity : Boolean = false) {
+        progress.value = true
+        viewModelScope.launch {
+            try {
+                val response : Response<GlobalSearchResponse> = if(searchInCommunity){
+                    productRepository.searchByKeywordInCommunity(body)
+                }else{
+                    productRepository.searchByKeyword(body)
+                }
+
+                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                    && response.body()?.gp_api_response_data != null
+                ) {
+                    val searchResponse = response.body()
+                    getNavigator()?.notifySearchResultAdapter(searchResponse?.gp_api_response_data!!.data)
+                } else {
+                    getNavigator()?.notifySearchResultAdapter(arrayListOf())
+                }
+                progress.value = false
+            } catch (ex: Exception) {
+                progress.value = false
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
                     else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
