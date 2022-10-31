@@ -50,7 +50,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         super.onCreate(savedInstanceState)
         shareSheetPresenter = this?.let { ShareSheetPresenter(requireActivity()) }
         communityViewModel.sorting.set("latest")
-
+        communityViewModel.getQuiz()
     }
 
 

@@ -8,6 +8,7 @@ import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
 import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActivity
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.GpApiResponseData
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.*
 import agstack.gramophone.ui.othersporfile.model.CommunityUserPostRequestModel
 import agstack.gramophone.ui.othersporfile.model.ProfileData
@@ -36,7 +37,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CommunityViewModel @Inject constructor(
-    private val communityRepository: CommunityRepository
+    private val communityRepository: CommunityRepository,
+    var quizPoll: List<List<GpApiResponseData>>
 ) : BaseViewModel<CommunityFragmentNavigator>() {
     var profileData = ObservableField<ProfileData>()
     lateinit var postId: String
@@ -299,7 +301,7 @@ class CommunityViewModel @Inject constructor(
                 if (response.isSuccessful) {
                     val data = response.body()?.data
                     getNavigator()?.stopRefresh()
-                    communityPostAdapter = CommunityPostAdapter(data, false)
+                    communityPostAdapter = CommunityPostAdapter(data, false,quizPoll)
 
                     getNavigator()?.updatePostList(communityPostAdapter,
                         {//postDetail click
@@ -426,7 +428,7 @@ class CommunityViewModel @Inject constructor(
                     if (response.isSuccessful) {
                         val data = response.body()?.data
 
-                        communityPostAdapter = CommunityPostAdapter(data, true)
+                        communityPostAdapter = CommunityPostAdapter(data, true, quizPoll)
 
                         getNavigator()?.updatePostList(communityPostAdapter,
                             {//postDetail click
@@ -766,6 +768,34 @@ class CommunityViewModel @Inject constructor(
                     if (response.isSuccessful && response.body() != null && response.body()!!.data.following) {
                         following.set(true)
                         showProgress.set(false)
+
+                    } else {
+                        following.set(false)
+                        showProgress.set(false)
+                    }
+                } else
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+            } catch (ex: Exception) {
+                showProgress.set(false)
+                when (ex) {
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                }
+            }
+
+
+        }
+
+    }
+
+    fun getQuiz() {
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    val response =
+                        communityRepository.getQuiz()
+                    if (response.isSuccessful && response.body() != null && response.body()!!.gp_api_response_data!=null) {
+                        quizPoll = response.body()!!.gp_api_response_data
 
                     } else {
                         following.set(false)

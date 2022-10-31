@@ -10,6 +10,7 @@ import agstack.gramophone.ui.home.view.fragments.community.model.likes.BookmarkP
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikePostResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedusersResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.*
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.block.BlockResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.follow.FollowResponseModel
@@ -150,14 +151,21 @@ interface CommunityApiService {
 
 
     @DELETE("/api/v2/comments/delete-comment/{postId}/{commentId}")
-    suspend fun deleteComment(@Path("postId") postID:String, @Path("commentId") commentId:String):Response<DeleteCommentResponseModel>
+    suspend fun deleteComment(
+        @Path("postId") postID: String,
+        @Path("commentId") commentId: String
+    ): Response<DeleteCommentResponseModel>
 
 
-  @POST("/api/v2/profiles/get-followings")
-    suspend fun getFollowings(@Body followRequestModel: FollowRequestModel):Response<FollowerResponseModel>
+    @POST("/api/v2/profiles/get-followings")
+    suspend fun getFollowings(@Body followRequestModel: FollowRequestModel): Response<FollowerResponseModel>
 
 
     @POST("/api/v2/profiles/get-followers")
-    suspend fun getFollowers(@Body followRequestModel: FollowRequestModel):Response<FollowerResponseModel>
+    suspend fun getFollowers(@Body followRequestModel: FollowRequestModel): Response<FollowerResponseModel>
+
+
+    @GET("/api/v5/quiz/get-quiz")
+    suspend fun getQuiz(): Response<QuizPollResponseModel>
 
 }

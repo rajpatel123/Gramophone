@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -10,7 +10,7 @@
             type="agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:id="@+id/rel_poll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,8 +20,11 @@
             android:id="@+id/poll_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:adjustViewBounds="true"
-            android:layout_margin="@dimen/_10sdp"
             android:src="@drawable/poll_image_horizontal" />
 
         <LinearLayout
@@ -35,10 +38,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
                 android:fontFamily="@font/manrope_bold"
                 android:text="Who is the prime minister of india? "
                 android:textAlignment="center"
-                android:layout_margin="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp"
                 android:textStyle="bold" />
@@ -46,12 +49,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_13sdp"
                 android:background="@drawable/poll_rectangle_bg"
                 android:fontFamily="@font/manrope_medium"
                 android:paddingTop="@dimen/_12sdp"
                 android:text="Narendra Modi"
-                android:layout_margin="@dimen/_10sdp"
 
                 android:textAlignment="center"
                 android:textColor="@color/black"
@@ -61,11 +64,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/poll_rectangle_bg"
                 android:fontFamily="@font/manrope_medium"
                 android:paddingTop="@dimen/_12sdp"
-                android:layout_margin="@dimen/_10sdp"
 
                 android:text="Ram nath Kovind"
                 android:textAlignment="center"
@@ -76,12 +79,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/poll_rectangle_bg"
                 android:fontFamily="@font/manrope_medium"
                 android:paddingTop="@dimen/_12sdp"
-                android:layout_margin="@dimen/_10sdp"
-
                 android:text="Arvind kejriwal"
                 android:textAlignment="center"
                 android:textColor="@color/black"
@@ -94,6 +96,7 @@
                 android:layout_height="@dimen/_50sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:background="@drawable/poll_rectangle_bg"
                 android:fontFamily="@font/manrope_medium"
                 android:paddingTop="@dimen/_12sdp"
@@ -136,20 +139,25 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/poll_ll2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/poll_ll1"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
 
             <ImageView
+                android:id="@+id/ivWhatsapp"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
                 android:adjustViewBounds="true"
+                android:layout_centerVertical="true"
                 android:src="@drawable/ic_whatsapp" />
 
             <TextView
@@ -157,7 +165,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_4ssp"
                 android:fontFamily="@font/manrope_regular"
-                android:text="Share"
+                android:text="@string/share"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/ivWhatsapp"
                 android:textAlignment="center"
                 android:textColor="@color/blakish"
                 android:textSize="@dimen/_12sdp" />
@@ -165,22 +175,27 @@
             <ImageView
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
-                android:layout_marginStart="@dimen/_170sdp"
+                android:layout_marginStart="@dimen/_150sdp"
                 android:adjustViewBounds="true"
+                android:layout_toStartOf="@+id/tvShare"
+                android:layout_centerVertical="true"
                 android:src="@drawable/ic_facebook"
                 android:textColor="@color/blakish" />
 
             <TextView
+                android:id="@+id/tvShare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:fontFamily="@font/manrope_regular"
-                android:text="Share "
+                android:text="@string/share"
+                android:layout_centerVertical="true"
                 android:textAlignment="center"
                 android:textColor="@color/blakish"
-                android:textSize="@dimen/_12sdp" />
+                android:textSize="@dimen/_11sdp" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
