@@ -591,4 +591,6 @@
     <string name="companies">Companies</string>
     <string name="crop_category">Crop Category</string>
     <string name="product_category">Product Category</string>
+    <string name="txt_checkout">Checkout special offers for you</string>
+    <string name="no_post_yet">No Post Yet!</string>
 </resources>

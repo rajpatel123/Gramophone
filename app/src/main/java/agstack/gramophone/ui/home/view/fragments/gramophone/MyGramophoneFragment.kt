@@ -8,6 +8,7 @@ import agstack.gramophone.databinding.FragmentMyGramophoneBinding
 import agstack.gramophone.ui.articles.ArticlesWebViewActivity
 import agstack.gramophone.ui.comments.view.CommentsActivity
 import agstack.gramophone.ui.farm.model.FarmResponse
+import agstack.gramophone.ui.farm.view.AddFarmActivity
 import agstack.gramophone.ui.farm.view.SelectCropActivity
 import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
 import agstack.gramophone.ui.gramcash.GramCashActivity
@@ -17,6 +18,8 @@ import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikeUpdat
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityHomeResponseModel
 import agstack.gramophone.ui.home.view.fragments.gramophone.model.MyGramophoneResponseModel
 import agstack.gramophone.ui.home.view.fragments.gramophone.viewmodel.MyGramophoneFragmentViewModel
+import agstack.gramophone.ui.home.view.fragments.market.model.CropData
+import agstack.gramophone.ui.offerslist.OffersListActivity
 import agstack.gramophone.ui.order.model.Data
 import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.orderdetails.OrderDetailsActivity
@@ -162,23 +165,60 @@ class MyGramophoneFragment :
     }
 
     override fun updateCommunity(communityHomeResponseModel: CommunityHomeResponseModel) {
+       if (communityHomeResponseModel.data.size>0){
+           binding?.layoutMyPost?.itemPost?.visibility= VISIBLE
+           binding?.layoutMyPost?.tvGoToPosts?.visibility= VISIBLE
+           binding?.layoutMyPost?.ivNext1?.visibility= VISIBLE
+           binding?.layoutMyPost?.llNoPost?.visibility= GONE
+
+
+           binding?.layoutMyPost?.tvPostDesc?.text = communityHomeResponseModel.data[0].description
+           binding?.layoutMyPost?.dateTime?.text = getMessage(R.string.posted_on).plus(" ")
+               .plus(communityHomeResponseModel.data[0].createdDate)
+           binding?.layoutMyPost?.tvLikes?.text =
+               communityHomeResponseModel.data[0].likesCount.toString().plus(" ")
+                   .plus(getMessage(R.string.like))
+           binding?.layoutMyPost?.tvComment?.text =
+               communityHomeResponseModel.data[0].commentsCount.toString().plus(" ")
+                   .plus(getMessage(R.string.comment_count))
+
+           binding?.layoutFavorite?.tvPostCount?.text = communityHomeResponseModel.data.size.toString()
+
+           if (communityHomeResponseModel.data[0].images != null && communityHomeResponseModel.data[0].images.size > 0)
+               Glide.with(this).load(communityHomeResponseModel.data[0].images[0].url)
+                   .into(binding?.layoutMyPost?.ivPost!!)
+
+           binding?.layoutMyPost?.tvGoToPosts?.setOnClickListener {
+               if (activity is HomeActivity) {
+                   (activity as HomeActivity).showCommunityFragment("gramophone")
+               }
+           }
+
+           binding?.layoutMyPost?.tvLikes?.setOnClickListener {
+               openActivity(
+                   LikedPostUserListActivity::class.java,
+                   Bundle().apply {
+                       putString(Constants.POST_ID, communityHomeResponseModel.data[0]._id)
+                   })
+           }
+
+           binding?.layoutMyPost?.tvComment?.setOnClickListener {
+               openActivity(
+                   CommentsActivity::class.java,
+                   Bundle().apply {
+                       putString(Constants.POST_ID, communityHomeResponseModel.data[0]._id)
+                   })
+           }
+
+       }else{
+           binding?.layoutMyPost?.itemPost?.visibility= GONE
+           binding?.layoutMyPost?.tvGoToPosts?.visibility= GONE
+           binding?.layoutMyPost?.ivNext1?.visibility= GONE
+           binding?.layoutMyPost?.llNoPost?.visibility= VISIBLE
+
+       }
         binding?.layoutMyPost?.myPostTitle?.text =
             String.format(getMessage(R.string.my_post), communityHomeResponseModel.data.size)
-        binding?.layoutMyPost?.tvPostDesc?.text = communityHomeResponseModel.data[0].description
-        binding?.layoutMyPost?.dateTime?.text = getMessage(R.string.posted_on).plus(" ")
-            .plus(communityHomeResponseModel.data[0].createdDate)
-        binding?.layoutMyPost?.tvLikes?.text =
-            communityHomeResponseModel.data[0].likesCount.toString().plus(" ")
-                .plus(getMessage(R.string.like))
-        binding?.layoutMyPost?.tvComment?.text =
-            communityHomeResponseModel.data[0].commentsCount.toString().plus(" ")
-                .plus(getMessage(R.string.comment_count))
-
-        binding?.layoutFavorite?.tvPostCount?.text = communityHomeResponseModel.data.size.toString()
-
-        if (communityHomeResponseModel.data[0].images != null && communityHomeResponseModel.data[0].images.size > 0)
-            Glide.with(this).load(communityHomeResponseModel.data[0].images[0].url)
-                .into(binding?.layoutMyPost?.ivPost!!)
 
         binding?.layoutMyPost?.llCreatePost?.setOnClickListener {
             openActivity(CreatePostActivity::class.java)
@@ -188,27 +228,6 @@ class MyGramophoneFragment :
             myGramophoneFragmentViewModel.likePost(communityHomeResponseModel.data[0]._id)
         }
 
-        binding?.layoutMyPost?.tvGoToPosts?.setOnClickListener {
-                if (activity is HomeActivity) {
-                    (activity as HomeActivity).showCommunityFragment("gramophone")
-                }
-        }
-
-        binding?.layoutMyPost?.tvLikes?.setOnClickListener {
-            openActivity(
-                LikedPostUserListActivity::class.java,
-                Bundle().apply {
-                    putString(Constants.POST_ID, communityHomeResponseModel.data[0]._id)
-                })
-        }
-
-        binding?.layoutMyPost?.tvComment?.setOnClickListener {
-            openActivity(
-                CommentsActivity::class.java,
-                Bundle().apply {
-                    putString(Constants.POST_ID, communityHomeResponseModel.data[0]._id)
-                })
-        }
 
 
     }
@@ -227,9 +246,14 @@ class MyGramophoneFragment :
 
         if (placedList==null){
             binding?.layoutOrder?.llNoOrder?.visibility= VISIBLE
+            binding?.layoutOrder?.rlCheckoutOffer?.visibility= VISIBLE
             binding?.layoutOrder?.rlOrder?.visibility= GONE
             binding?.layoutOrder?.tvGoToOrders?.visibility= GONE
             binding?.layoutOrder?.ivNext1?.visibility= GONE
+
+            binding?.layoutOrder?.rlCheckoutOffer?.setOnClickListener {
+                openActivity(OffersListActivity::class.java)
+            }
         }else{
             binding?.layoutOrder?.llNoOrder?.visibility= GONE
             binding?.layoutOrder?.rlOrder?.visibility= VISIBLE
@@ -245,7 +269,7 @@ class MyGramophoneFragment :
             binding?.layoutOrder?.tvDetail?.setOnClickListener {
                 openActivity(OrderDetailsActivity::class.java,Bundle().apply {
                     putString(Constants.ORDER_ID, placedList[0].order_id.toString())
-                    putString(Constants.ORDER_TYPE, Constants.RECENT)
+                    putString(Constants.ORDER_TYPE, Constants.PLACED)
                 })
             }
 
@@ -325,7 +349,13 @@ class MyGramophoneFragment :
         }
 
         binding?.layoutFarm?.txtAddFarm?.setOnClickListener {
-            openActivity(SelectCropActivity::class.java)
+            openActivity(AddFarmActivity::class.java, Bundle().apply {
+                putParcelable("selectedCrop", CropData().apply {
+                    cropImage= farms?.gp_api_response_data?.customer_farm?.data!![0][0].crop_image
+                    cropId = farms?.gp_api_response_data?.customer_farm?.data!![0][0].crop_id
+                    cropName = farms?.gp_api_response_data?.customer_farm?.data!![0][0].crop_name
+                })
+            })
         }
 
 

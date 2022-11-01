@@ -37,9 +37,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CommunityViewModel @Inject constructor(
-    private val communityRepository: CommunityRepository,
-    var quizPoll: List<List<GpApiResponseData>>
+    private val communityRepository: CommunityRepository
 ) : BaseViewModel<CommunityFragmentNavigator>() {
+    lateinit var quizPoll: List<List<GpApiResponseData>>
     var profileData = ObservableField<ProfileData>()
     lateinit var postId: String
     var block = "block"
@@ -301,7 +301,7 @@ class CommunityViewModel @Inject constructor(
                 if (response.isSuccessful) {
                     val data = response.body()?.data
                     getNavigator()?.stopRefresh()
-                    communityPostAdapter = CommunityPostAdapter(data, false,quizPoll)
+                    communityPostAdapter = CommunityPostAdapter(data, false)
 
                     getNavigator()?.updatePostList(communityPostAdapter,
                         {//postDetail click
@@ -428,7 +428,7 @@ class CommunityViewModel @Inject constructor(
                     if (response.isSuccessful) {
                         val data = response.body()?.data
 
-                        communityPostAdapter = CommunityPostAdapter(data, true, quizPoll)
+                        communityPostAdapter = CommunityPostAdapter(data, true)
 
                         getNavigator()?.updatePostList(communityPostAdapter,
                             {//postDetail click
@@ -794,9 +794,8 @@ class CommunityViewModel @Inject constructor(
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     val response =
                         communityRepository.getQuiz()
-                    if (response.isSuccessful && response.body() != null && response.body()!!.gp_api_response_data!=null) {
+                    if (response.isSuccessful && response.body() != null) {
                         quizPoll = response.body()!!.gp_api_response_data
-
                     } else {
                         following.set(false)
                         showProgress.set(false)

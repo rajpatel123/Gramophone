@@ -48,7 +48,7 @@
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_below="@+id/name"
             android:layout_toEndOf="@+id/imageView"
-            android:text="@{model.author.location_name}"
+            android:text="@{model.author.address}"
             android:textSize="@dimen/_10ssp"
             tools:text="Utter Pradesh" />
 

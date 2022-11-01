@@ -66,10 +66,16 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/ivNext1"
-                android:fontFamily="@font/manrope_regular"
-                android:hint="00"
                 android:background="@drawable/rounded_corner_8_solid_orange_light_gram_cash"
-                android:textColor="@color/black"
+                android:fontFamily="@font/manrope_regular"
+                android:gravity="center"
+                android:hint="00"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_2sdp"
+
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp" />
 
             <ImageView
@@ -99,7 +105,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/grey_outline"
+            android:background="@drawable/grey_outline_gram_cash"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_5sdp"
@@ -127,7 +133,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/_6sdp"
                     android:layout_toEndOf="@+id/ivImage"
                     android:fontFamily="@font/manrope_bold"
                     android:gravity="center_vertical"

@@ -53,8 +53,9 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             android:drawableStart="@drawable/ic_location"
                             android:fontFamily="@font/manrope_regular"
+                            android:gravity="center_vertical"
                             android:textColor="@color/gray"
-                            android:textSize="@dimen/_12ssp"
+                            android:textSize="@dimen/_10ssp"
                             tools:text=" Sawer, Madhya Pradesh" />
 
                         <TextView
@@ -97,7 +98,6 @@
                         android:id="@+id/ivOrders"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
                         app:srcCompat="@drawable/ic_my_farm" />
 
                     <LinearLayout

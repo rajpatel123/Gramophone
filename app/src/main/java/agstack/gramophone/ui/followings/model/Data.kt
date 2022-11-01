@@ -6,5 +6,6 @@ data class Data(
     val following: Boolean,
     val photoUrl: String,
     val username: String,
-    val uuid: String
+    val uuid: String,
+    val address_short:String
 )

@@ -39,8 +39,8 @@ import java.util.*
  */
 class CommunityPostAdapter(
     val dataList: List<Data>?,
-    isOther: Boolean,
-    quizPoll: List<List<GpApiResponseData>>
+    isOther: Boolean
+//    quizPoll: List<List<GpApiResponseData>>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val viewPageStates = HashMap<Int, Int>()
@@ -78,9 +78,6 @@ class CommunityPostAdapter(
             holder.itemPostBinding.pollLayoutLL.visibility= VISIBLE
             holder.itemPostBinding.rlPosts.visibility= GONE
             holder.itemPostBinding.rlPosts.visibility= GONE
-
-
-
 
             return
         }else{

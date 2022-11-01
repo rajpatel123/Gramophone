@@ -26,6 +26,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.forEach
 import androidx.drawerlayout.widget.DrawerLayout
@@ -134,6 +135,10 @@ class HomeActivity :
         viewDataBinding.navView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_home -> {
+                    viewDataBinding.toolbar.myToolbar.setBackgroundResource(R.color.white)
+                    viewDataBinding.toolbar.myToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.blakish))
+                    viewDataBinding.toolbar.myToolbar.navigationIcon =
+                        ResourcesCompat.getDrawable(resources, R.drawable.ic_burger_menu, null)
                     viewDataBinding.toolbar.myToolbar.title =
                         "  " + resources.getString(R.string.app_name)
                     updateMenuItemVisibility(showHomeItems = false, showCommunityItems = true)
@@ -145,6 +150,11 @@ class HomeActivity :
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_community -> {
+
+                    viewDataBinding.toolbar.myToolbar.setBackgroundResource(R.color.white)
+                    viewDataBinding.toolbar.myToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.blakish))
+                    viewDataBinding.toolbar.myToolbar.navigationIcon =
+                        ResourcesCompat.getDrawable(resources, R.drawable.ic_burger_menu, null)
                     viewDataBinding.llCreateAPost.visibility=VISIBLE
                     viewDataBinding.toolbar.myToolbar.title =
                         "  " + resources.getString(R.string.community)
@@ -158,7 +168,10 @@ class HomeActivity :
                 R.id.navigation_profile -> {
                     viewDataBinding.toolbar.myToolbar.title =
                         "  " + resources.getString(R.string.my_profile)
-
+                    viewDataBinding.toolbar.myToolbar.setBackgroundResource(R.color.brand_color)
+                    viewDataBinding.toolbar.myToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
+                    viewDataBinding.toolbar.myToolbar.navigationIcon =
+                        ResourcesCompat.getDrawable(resources, R.drawable.ic_burger_menu_white, null)
                     updateMenuItemVisibility(false, true)
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(profileFragment).commit()
@@ -168,6 +181,10 @@ class HomeActivity :
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_trade -> {
+                    viewDataBinding.toolbar.myToolbar.setBackgroundResource(R.color.white)
+                    viewDataBinding.toolbar.myToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.blakish))
+                    viewDataBinding.toolbar.myToolbar.navigationIcon =
+                        ResourcesCompat.getDrawable(resources, R.drawable.ic_burger_menu, null)
                     viewDataBinding.toolbar.myToolbar.title =
                         "  " + resources.getString(R.string.vyapar)
 
