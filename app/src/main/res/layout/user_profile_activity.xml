@@ -148,7 +148,7 @@
                         android:fontFamily="@font/manrope_regular"
                         android:hint="Sawer, Madhya pradesh"
                         android:maxLines="3"
-                        android:text="@{ viewModel.userProfileData.address_data.address +`, ` +viewModel.userProfileData.address_data.village+`, ` +viewModel.userProfileData.address_data.tehsil+`, ` +viewModel.userProfileData.address_data.district+`, ` +viewModel.userProfileData.address_data.state+`, ` +viewModel.userProfileData.address_data.pincode}"
+                        android:text="@{ viewModel.userProfileData.address_data.address +`, ` +viewModel.userProfileData.address_data.village+`, ` +viewModel.userProfileData.address_data.tehsil+`, ` +viewModel.userProfileData.address_data.district+`, ` +viewModel.userProfileData.address_data.state}"
                         android:textColor="@color/gray"
                         tools:text="Sawer, Madhya pradesh" />
 

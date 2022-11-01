@@ -52,6 +52,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.amnix.xtension.extensions.inflater
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.canhub.cropper.CropImageContract
@@ -68,6 +69,7 @@ import com.tokenautocomplete.TokenCompleteTextView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.card_items.*
 import kotlinx.android.synthetic.main.create_posts_activity.*
+import kotlinx.android.synthetic.main.item_tags.view.*
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -447,10 +449,14 @@ class EditPostActivity: BaseActivityWrapper<EditPostsActivityBinding, CreatePost
     }
 
     override fun showTags(selectedTagList: MutableList<CropData>) {
-        val tagsCropAdapter = TagsCropAdapter(selectedTagList)
-        viewDataBinding.finalTagRecyclerView.adapter = tagsCropAdapter
-        viewDataBinding.finalTagRecyclerView.layoutManager =
-            StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL)
+        if (selectedTagList != null && selectedTagList?.size > 0) {
+            viewDataBinding.finalTagLL.removeAllViews()
+            selectedTagList.forEach {
+                val view = inflater.inflate(R.layout.item_tags, null)
+                view.tvTag.setText(it.cropName)
+                viewDataBinding.finalTagLL.addView(view)
+            }
+        }
     }
 
     override fun getPostDetails() {
@@ -548,11 +554,14 @@ class EditPostActivity: BaseActivityWrapper<EditPostsActivityBinding, CreatePost
 
 
       fun showTag(selectedTagList: MutableList<CropData>) {
-        val tagsCropAdapter = TagsCropAdapter(selectedTagList)
-        viewDataBinding.finalTagRecyclerView.adapter = tagsCropAdapter
-        viewDataBinding.finalTagRecyclerView.layoutManager =
-            StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL)
-        //    getSelectedTagList(selectedTagList, createOnSelectedTagChangedListner());
+          if (selectedTagList != null && selectedTagList?.size > 0) {
+              viewDataBinding.finalTagLL.removeAllViews()
+              selectedTagList.forEach {
+                  val view = inflater.inflate(R.layout.item_tags, null)
+                  view.tvTag.setText(it.cropName)
+                  viewDataBinding.finalTagLL.addView(view)
+              }
+          }
     }
 
     fun initiateTextWatcher() {

@@ -93,22 +93,30 @@
                                         android:visibility="visible" />
 
 
-                                    <androidx.recyclerview.widget.RecyclerView
-                                        android:id="@+id/finalTagRecyclerView"
+                                    <HorizontalScrollView
+                                        android:id="@+id/hScrollView"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_below="@+id/descriptionEditText"
                                         android:layout_marginStart="8dp"
                                         android:layout_marginLeft="8dp"
                                         android:layout_marginTop="8dp"
+                                        android:scrollbars="none"
                                         android:layout_marginEnd="8dp"
                                         android:layout_marginRight="10dp"
-                                        android:layout_marginBottom="8dp"
-                                        android:lineSpacingExtra="@dimen/_5sdp"
-                                        android:orientation="horizontal"
-                                        android:padding="@dimen/_10sdp"
-                                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                        tools:listitem="@layout/final_tag_list_item" />
+                                        android:layout_marginBottom="8dp">
+
+                                        <LinearLayout
+                                            android:id="@+id/finalTagLL"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:lineSpacingExtra="@dimen/_5sdp"
+                                            android:orientation="horizontal"
+                                            android:padding="@dimen/_10sdp"
+                                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                            tools:listitem="@layout/final_tag_list_item" />
+
+                                    </HorizontalScrollView>
                                     <EditText
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -136,7 +144,7 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_below="@+id/finalTagRecyclerView"
+                                        android:layout_below="@+id/hScrollView"
                                         android:layout_alignParentBottom="true"
                                         android:layout_marginStart="@dimen/_10sdp"
                                         android:layout_marginBottom="@dimen/_10sdp"

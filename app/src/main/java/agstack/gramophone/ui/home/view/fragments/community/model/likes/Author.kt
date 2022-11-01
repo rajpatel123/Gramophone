@@ -12,5 +12,6 @@ data class Author(
     val totalFollowees: Int,
     val totalFollowers: Int,
     val username: String,
-    val uuid: String
+    val uuid: String,
+    val address_short: String
 )

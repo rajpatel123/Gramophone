@@ -166,7 +166,7 @@ class OtherUserProfileActivity :
     }
 
     override fun getReportReason(): String {
-        TODO("Not yet implemented")
+        return ""
     }
 
     override fun setProfileImage(profileImage: String) {
@@ -177,6 +177,9 @@ class OtherUserProfileActivity :
     }
 
     override fun hideViews() {
+    }
+
+    override fun selecttab(i: Int) {
     }
 
     override fun onImageSet(imageUrl: String, iv: ImageView) {

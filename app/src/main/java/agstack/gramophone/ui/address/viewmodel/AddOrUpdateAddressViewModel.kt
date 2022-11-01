@@ -550,6 +550,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
         if (userAddress?.district != null) districtName.set(userAddress.district)
         if (userAddress?.tehsil != null) tehsilName.set(userAddress.tehsil)
         if (userAddress?.village != null) villageName.set(userAddress.village)
+        if (userAddress?.address != null) address.set(userAddress.address)
         if (userAddress?.pincode != null) pinCode.set(userAddress.pincode)
 
 

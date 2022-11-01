@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/manrope_semibold"
-                    android:text="@string/tab_my_post"
+                    android:text="@string/my_post"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14ssp" />
 
@@ -53,24 +53,77 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/grey_outline"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/llNoPost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@color/grey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        app:srcCompat="@drawable/ic_info" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_semibold"
+                        android:text="@string/no_post_yet"
+                        android:textColor="@color/brand_color"
+                        android:textSize="@dimen/_14ssp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_2sdp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
             <RelativeLayout
-                android:id="@+id/item_order"
+                android:id="@+id/itemPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/_12sdp"
                 android:paddingTop="@dimen/_24sdp"
+                android:background="@drawable/grey_outline"
+                android:visibility="gone"
                 android:paddingEnd="@dimen/_12sdp">
 
                 <RelativeLayout
                     android:id="@+id/rlContent"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_height="wrap_content">
+
                     <androidx.cardview.widget.CardView
                         android:id="@+id/flMyPost"
                         android:layout_width="@dimen/_74sdp"
@@ -99,7 +152,7 @@
                         android:fontFamily="@font/manrope_bold"
                         android:gravity="center_vertical"
                         android:lineSpacingExtra="1sp"
-                        android:text="@{@string/hash_sign.concat(String.valueOf(model.order_id))}"
+
                         android:textColor="@color/blakish"
                         android:textSize="16sp"
                         tools:text="Which is the system of farming in which the farmer is directly related to the state?" />
@@ -160,9 +213,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:fontFamily="@font/manrope_regular"
                             android:layout_marginStart="@dimen/_2sdp"
                             android:layout_toEndOf="@+id/ivLike"
+
+                            android:fontFamily="@font/manrope_regular"
                             android:text="2 Likes"
                             android:textColor="@color/gray" />
                     </RelativeLayout>
@@ -207,7 +261,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp">
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp">
 
             <TextView
                 android:id="@+id/tvGoToPosts"

@@ -10,6 +10,7 @@ import agstack.gramophone.ui.home.adapter.CommentsAdapter
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.FileUploadRequestBody
 import agstack.gramophone.utils.Utility
+import android.os.SystemClock
 import android.text.TextUtils
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -27,6 +28,7 @@ import javax.inject.Inject
 class CommentsViewModel @Inject constructor(
     private val communityRepository: CommunityRepository
 ):BaseViewModel<CommentNavigator> (){
+    var mLastClickTime: Long = 0
     var commentsCount = ObservableField<String>()
     var commentInput = ObservableField<String>()
     var postImage = ObservableField<File>()
@@ -76,6 +78,11 @@ class CommentsViewModel @Inject constructor(
     }
 
     fun sendComment(){
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 2000){
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
+
         if (comment!=null){
             updateComment()
             return
@@ -113,6 +120,7 @@ class CommentsViewModel @Inject constructor(
 
                             getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                         }
+
                     }else{
                         val response = communityRepository.postComment(postID,text,tags)
                         if (response.isSuccessful) {
@@ -125,6 +133,8 @@ class CommentsViewModel @Inject constructor(
 
                             getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                         }
+
+
                     }
 
                 } else

@@ -467,6 +467,7 @@
     <string name="product_category">Product Category</string>
     <string name="default_city_name">New Delhi</string>
     <string name="gram_cash_not_applicable">Gram cash not applicable here</string>
+    <string name="txt_checkout">Checkout special offers for you</string>
 
 </resources>
 
