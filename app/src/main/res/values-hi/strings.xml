@@ -87,8 +87,8 @@
     <string name="complete_action_using">Complete Action Using</string>
     <string name="select_image_title">फोटो का चयन कर</string>
     <string name="crop_image_title_text">Crop</string>
-    <string name="unit_convertor">Unit Converter</string>
-    <string name="feedback">Feedback</string>
+    <string name="unit_convertor">इकाई कनवर्टर</string>
+    <string name="feedback">फीडबैक</string>
     <string name="leave_feedback">Leave Feedback</string>
     <string name="whatcanweimprove">What can we improve?</string>
     <string name="send">Send</string>
@@ -250,13 +250,13 @@
     <string name="unable_to_get_number">Unable to get phone number</string>
     <string name="referral_code">"Referral Code "</string>
     <string name="applied">" Applied"</string>
-    <string name="refer_n_earn">Refer and Earn</string>
-    <string name="invite_and_earn">Invite your friends and earn ...</string>
-    <string name="order_desc">all orders will be managed here</string>
-    <string name="tv">Gramophone TV</string>
+    <string name="refer_n_earn">रेफर करें और कमाएं</string>
+    <string name="invite_and_earn">अपने मित्रों को आमंत्रित करें और कमाएं ...</string>
+    <string name="order_desc">आपके सभी ऑर्डर यहां से मैनेज होंगे</string>
+    <string name="tv">ग्रामोफ़ोन टीवी</string>
     <string name="settings">सेटिंग</string>
     <string name="manage_settings">अपनी ऐप सेटिंग यहां से मैनेज करें</string>
-    <string name="tools">TOOLS</string>
+    <string name="tools">टूल्स</string>
     <string name="language">भाषा</string>
     <string name="english">English</string>
     <string name="opt_in">वाट्सऐप पर हमसे जुड़ें</string>
@@ -266,7 +266,7 @@
     <string name="app_feature">ऐप की विशेषताएं</string>
     <string name="terms_of_service">सेवा की शर्तें</string>
     <string name="save_language">भाषा सेव करें</string>
-    <string name="offers">Offers</string>
+    <string name="offers">ऑफर</string>
     <string name="share_app">ऐप शेयर करें</string>
     <string name="app_url"><![CDATA[https://play.google.com/store/apps/details?id=agstack.gramophone&hl=en_IN&gl=US]]></string>
     <string name="share_app_link">Share App link!</string>
@@ -281,7 +281,7 @@
     <string name="price_close_bracket">&#160;Items)</string>
     <string name="cash_on_delivery">Cash on Delivery</string>
     <string name="dialing_code">+91&#160;</string>
-    <string name="my_orders">My Orders</string>
+    <string name="my_orders">मेरे ऑर्डर</string>
     <string name="my_order">My Order</string>
     <string name="address_note"><![CDATA[<b>Note: </b>Address will be taken from you after placing the order]]></string>
     <string name="no_recent_order">When you place your first order, it will appear here</string>
@@ -338,8 +338,7 @@
     <string name="please_enter_6_digit_otp">Please enter 6 digit OTP</string>
     <string name="enter_10_digit_mob">Enter 10 digit mobile number</string>
 
-    <string name="weather">Weather</string>
-    <string name="weather_city">Weather</string>
+    <string name="weather">मौसम</string>
     <string name="powered_by">Powered by</string>
     <string name="accuweather">AccuWeather</string>
     <string name="forecast_for_the_next_days">Forecast for the next few days</string>
@@ -482,7 +481,15 @@
     <string name="default_city_name">New Delhi</string>
     <string name="gram_cash_not_applicable">Gram cash not applicable here</string>
 
-
+    <!--                     Menu strings                -->
+    <string name="gram_cash_without_extra_space">ग्रामकैश</string>
+    <string name="my_crop_farms">मेरी फसलें और खेत</string>
+    <string name="manage_all_your_crops_and_farms">अपनी सभी फसलों और खेतों का प्रबंधन करें</string>
+    <string name="new_text">नया</string>
+    <string name="for_you">आपके लिए</string>
+    <string name="articles">सामग्री</string>
+    <string name="mandi_bhav">बाजार भाव</string>
+    <string name="watch_app_demo">ऐप का डेमो देखें</string>
 </resources>
 
 
