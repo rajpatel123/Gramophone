@@ -311,6 +311,8 @@
     <string name="inclusiveoftaxes">(Inclusive of all taxes)</string>
     <string name="edit">Edit</string>
     <string name="followers">Followers</string>
+    <string name="followers_with_count">Followers(%d)</string>
+    <string name="following_with_count">Following(%d)</string>
     <string name="following">Following</string>
     <string name="follow">Follow</string>
     <string name="selectyourrole">Select your role</string>
@@ -505,7 +507,6 @@
     <string name="message_why_add_farm">Why Add Farm</string>
 
 
-
     <string name="hint_add_new_post">Write your question about your crop eg. how do I prevent this bug?</string>
     <string name="collapse_text_label">show less</string>
     <string name="expand_text_label">show more</string>
@@ -585,6 +586,12 @@
     <string name="posts">Posts</string>
     <string name="no_farm_added">No Farm Added Yet!</string>
     <string name="today_s_weather">Today\'s Weather</string>
+    <string name="crops">Crops</string>
+    <string name="profile">Profile</string>
+    <string name="crop_problems">Crop Problems</string>
+    <string name="companies">Companies</string>
+    <string name="crop_category">Crop Category</string>
+    <string name="product_category">Product Category</string>
     <string name="default_city_name">New Delhi</string>
     <string name="gram_cash_not_applicable">Gram cash not applicable here</string>
 </resources>

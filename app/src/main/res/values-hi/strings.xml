@@ -470,6 +470,15 @@
     <string name="old_farms_title">पुराने खेत</string>
     <string name="posts">Posts</string>
     <string name="today_s_weather">Today\'s Weather</string>
+    <string name="followers_with_count">Followers(%d)</string>
+    <string name="following_with_count">Following(%d)</string>
+    <string name="products">Products</string>
+    <string name="crops">Crops</string>
+    <string name="profile">Profile</string>
+    <string name="crop_problems">Crop Problems</string>
+    <string name="companies">Companies</string>
+    <string name="crop_category">Crop Category</string>
+    <string name="product_category">Product Category</string>
     <string name="default_city_name">New Delhi</string>
     <string name="gram_cash_not_applicable">Gram cash not applicable here</string>
 

@@ -87,6 +87,42 @@
 
             <View
                 android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_stroke" />
+
+            <HorizontalScrollView
+                android:id="@+id/tabBarContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_1sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="-162dp"
+                android:visibility="gone">
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayout"
+                    style="@style/SearchTabIndicatorStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_36sdp"
+                    app:tabBackground="@drawable/rounded_tab"
+                    app:tabIndicatorColor="@color/orange"
+                    app:tabMode="scrollable"
+                    app:tabIndicator="@null"
+                    app:tabSelectedTextColor="@color/white"
+                    app:tabTextColor="@color/grey">
+
+<!--                    <com.google.android.material.tabs.TabItem
+                        android:id="@+id/tabAll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/all"/>-->
+
+                </com.google.android.material.tabs.TabLayout>
+
+            </HorizontalScrollView>
+
+            <View
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_8sdp"
                 android:background="@color/gray_stroke" />
 
@@ -95,8 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="@{viewModel.showEmptyView == false ? View.VISIBLE : View.GONE, default = visible}"
-                tools:visibility="visible">
+                tools:visibility="gone">
 
                 <TextView
                     android:id="@+id/txtSuggestionsTitle"
@@ -112,7 +147,7 @@
                     android:gravity="center_vertical" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewSearch"
+                    android:id="@+id/recyclerViewSuggestions"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/_4sdp"
@@ -131,8 +166,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="@{viewModel.showEmptyView == true ? View.VISIBLE : View.GONE, default = gone}"
-                tools:visibility="visible">
+                tools:visibility="gone">
 
                 <LinearLayout
                     android:layout_centerInParent="true"
@@ -177,6 +211,17 @@
                 </LinearLayout>
 
             </RelativeLayout>
+
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerViewSearchResult"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/item_home_banner" />
+
 
         </LinearLayout>
 

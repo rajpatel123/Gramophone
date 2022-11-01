@@ -17,6 +17,8 @@ import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
+import agstack.gramophone.ui.search.model.GlobalSearchRequest
+import agstack.gramophone.ui.search.model.GlobalSearchResponse
 import agstack.gramophone.ui.search.model.SuggestionsRequest
 import agstack.gramophone.ui.search.model.SuggestionsResponse
 import retrofit2.Response
@@ -94,4 +96,7 @@ interface ProductRepository {
 
     suspend fun getSuggestions(body: SuggestionsRequest): Response<SuggestionsResponse>
 
+    suspend fun searchByKeyword(body: GlobalSearchRequest): Response<GlobalSearchResponse>
+
+    suspend fun searchByKeywordInCommunity(body: GlobalSearchRequest): Response<GlobalSearchResponse>
 }

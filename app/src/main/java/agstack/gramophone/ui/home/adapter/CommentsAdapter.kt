@@ -3,6 +3,8 @@ package agstack.gramophone.ui.home.adapter
 import agstack.gramophone.BR
 import agstack.gramophone.databinding.ItemCommentsBinding
 import agstack.gramophone.ui.comments.model.Data
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
@@ -16,8 +18,8 @@ class CommentsAdapter(val items:List<Data>?) :
     RecyclerView.Adapter<CommentsAdapter.CardViewHolder>() {
     private var lastSelectPosition: Int = 0
     lateinit var context: Context
-    var onItemCommentsClicked: ((commentId: String) -> Unit)? = null
-    var onTripleDotMenuClicked: ((data: Data) -> Unit)? = null
+    var onDeleteComment: ((data: Data) -> Unit)? = null
+    var onEditCommentMenuClicked: ((data: Data) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         context = parent.context
@@ -29,30 +31,52 @@ class CommentsAdapter(val items:List<Data>?) :
     override fun getItemCount(): Int = items?.size!!
 
     override fun onBindViewHolder(holder: CardViewHolder, @SuppressLint("RecyclerView") position: Int) {
-        val comment = items?.get(holder.adapterPosition)
+        val comment = items?.get(holder.absoluteAdapterPosition)
         holder.binding.setVariable(BR.model, comment)
         if (comment?.author?.photoUrl != null) {
             Glide.with(context).load(comment?.author?.photoUrl).into(holder.binding.ivProfileImage1)
 
         }
 
-
-        holder.binding.ivCommentsActions.setOnClickListener {
-            items?.get(lastSelectPosition)?.isSelected = false
-            lastSelectPosition = holder.adapterPosition
-            comment?.isSelected = true
-            notifyDataSetChanged()
-            onTripleDotMenuClicked?.invoke(comment!!)
+        if (comment?.author?.uuid.equals(SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.UUIdKey))){
+            holder.binding.ivCommentsActions.visibility= VISIBLE
+        }else{
+            holder.binding.ivCommentsActions.visibility= GONE
+        }
+        if (comment?.isSelected == true){
+           holder.binding.cvMenu.visibility= VISIBLE
+        }else{
+            holder.binding.cvMenu.visibility= GONE
         }
 
+        holder.binding.ivCommentsActions.setOnClickListener {
+            if (holder.binding.cvMenu.visibility== VISIBLE){
+                holder.binding.cvMenu.visibility= GONE
+                return@setOnClickListener
+            }
+
+            holder.binding.cvMenu.visibility= GONE
+            items?.get(lastSelectPosition)?.isSelected = false
+            lastSelectPosition = holder.absoluteAdapterPosition
+            comment?.isSelected = true
+            notifyDataSetChanged()
+        }
+
+        holder.binding.llEdit.setOnClickListener {
+            onEditCommentMenuClicked?.invoke(comment!!)
+            holder.binding.cvMenu.visibility= GONE
+        }
+
+        holder.binding.llDelete.setOnClickListener {
+            onDeleteComment?.invoke(comment!!)
+            holder.binding.cvMenu.visibility= GONE
+        }
         if (comment?.image != null) {
             Glide.with(context).load(comment?.image).into(holder.binding.commentImage)
             holder.binding.imageContainer.visibility=VISIBLE
         }else{
             holder.binding.imageContainer.visibility= GONE
         }
-
-
 
 
     }

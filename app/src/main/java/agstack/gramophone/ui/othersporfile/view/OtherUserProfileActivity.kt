@@ -22,6 +22,7 @@ import android.widget.ImageView
 import android.widget.RadioGroup
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.amnix.xtension.extensions.runOnUIThread
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +39,9 @@ class OtherUserProfileActivity :
         super.onCreate(savedInstanceState)
         otherProfileViewModel.uuid = intent.extras?.getString(Constants.AUTHER_UUID)!!
         otherProfileViewModel.id = intent.extras?.getString(Constants.AUTHER_ID)!!
+        if (intent.extras?.getString(Constants.POST_ID).isNotNullOrEmpty())
         otherProfileViewModel.postId = intent.extras?.getString(Constants.POST_ID)!!
+
         otherProfileViewModel.getProfile()
         otherProfileViewModel.getPostByUUID(otherProfileViewModel.uuid)
 

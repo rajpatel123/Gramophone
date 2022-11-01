@@ -33,6 +33,8 @@ fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
         Glide.with(view.context)
             .load(R.drawable.ic_gramophone_leaf)
             .transition(DrawableTransitionOptions.withCrossFade())
+            .placeholder(R.drawable.ic_gramophone_leaf)
+            .error(R.drawable.ic_gramophone_leaf)
             .into(view)
     } else {
         Glide.with(view.context)
