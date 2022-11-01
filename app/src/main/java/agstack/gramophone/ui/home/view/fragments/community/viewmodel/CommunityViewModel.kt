@@ -39,6 +39,8 @@ import javax.inject.Inject
 class CommunityViewModel @Inject constructor(
     private val communityRepository: CommunityRepository
 ) : BaseViewModel<CommunityFragmentNavigator>() {
+    lateinit var from: String
+    var myFavoriteCount: Int? = null
     lateinit var quizPoll: List<List<GpApiResponseData>>
     var profileData = ObservableField<ProfileData>()
     lateinit var postId: String
@@ -92,6 +94,7 @@ class CommunityViewModel @Inject constructor(
             }
         }
 
+        from = ""
         loadData(sorting.get()!!)
     }
 
@@ -295,15 +298,19 @@ class CommunityViewModel @Inject constructor(
                 val response = communityRepository.getCommunityPost(
                     CommunityRequestModel(
                         sorting,
-                        limit.get()
+                        limit.get(),
+                        Constants.API_DATA_LIMITS_IN_ONE_TIME.toInt()
+
                     )
                 )
                 if (response.isSuccessful) {
                     val data = response.body()?.data
+                    myFavoriteCount = response.body()?.data?.size!!
                     getNavigator()?.stopRefresh()
                     communityPostAdapter = CommunityPostAdapter(data, false)
 
-                    getNavigator()?.updatePostList(communityPostAdapter,
+                    getNavigator()?.updatePostList(
+                        communityPostAdapter,
                         {//postDetail click
                             getNavigator()?.openActivity(
                                 PostDetailsActivity::class.java,

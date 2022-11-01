@@ -20,7 +20,7 @@ import agstack.gramophone.ui.home.view.fragments.gramophone.model.MyGramophoneRe
 import agstack.gramophone.ui.home.view.fragments.gramophone.viewmodel.MyGramophoneFragmentViewModel
 import agstack.gramophone.ui.home.view.fragments.market.model.CropData
 import agstack.gramophone.ui.offerslist.OffersListActivity
-import agstack.gramophone.ui.order.model.Data
+import agstack.gramophone.ui.order.model.GpApiResponseData
 import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.orderdetails.OrderDetailsActivity
 import agstack.gramophone.ui.referandearn.ReferAndEarnActivity
@@ -40,7 +40,6 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_community.*
-import java.util.ArrayList
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -89,6 +88,8 @@ class MyGramophoneFragment :
             swipeRefresh.isRefreshing=true
             setUpUI()
         }
+        setUpUI()
+
     }
 
     private fun setUpUI() {
@@ -108,12 +109,7 @@ class MyGramophoneFragment :
 
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser){
-         setUpUI()
-        }
-    }
+
     override fun getLayoutID(): Int {
         return R.layout.fragment_my_gramophone
     }
@@ -193,7 +189,7 @@ class MyGramophoneFragment :
                communityHomeResponseModel.data[0].commentsCount.toString().plus(" ")
                    .plus(getMessage(R.string.comment_count))
 
-           binding?.layoutFavorite?.tvPostCount?.text = communityHomeResponseModel.data.size.toString()
+           binding?.layoutFavorite?.tvPostCount?.text =  communityHomeResponseModel.meta.pages.toString()
 
            if (communityHomeResponseModel.data[0].images != null && communityHomeResponseModel.data[0].images.size > 0)
                Glide.with(this).load(communityHomeResponseModel.data[0].images[0].url)
@@ -229,7 +225,7 @@ class MyGramophoneFragment :
 
        }
         binding?.layoutMyPost?.myPostTitle?.text =
-            String.format(getMessage(R.string.my_post), communityHomeResponseModel.data.size)
+            String.format(getMessage(R.string.my_post), communityHomeResponseModel.meta.pages)
 
         binding?.layoutMyPost?.llCreatePost?.setOnClickListener {
             openActivity(CreatePostActivity::class.java)
@@ -253,7 +249,7 @@ class MyGramophoneFragment :
         }
     }
 
-    override fun updateOrderSection(placedList: ArrayList<Data>?) {
+    override fun updateOrderSection(placedList: GpApiResponseData?) {
 
         if (placedList==null){
             binding?.layoutOrder?.llNoOrder?.visibility= VISIBLE
@@ -268,18 +264,18 @@ class MyGramophoneFragment :
         }else{
             binding?.layoutOrder?.llNoOrder?.visibility= GONE
             binding?.layoutOrder?.rlOrder?.visibility= VISIBLE
-            binding?.layoutOrder?.myOrderTitle?.text = String.format(getMessage(R.string.total_orders),placedList.size)
-            binding?.layoutOrder?.tvOrderNumber?.text = "#".plus(placedList[0].order_id.toString())
-            binding?.layoutOrder?.tvTotalAmount?.text = getMessage(R.string.rupee).plus(placedList[0].price.toString())
-            binding?.layoutOrder?.dateTime?.text = placedList[0].order_date.toString().plus("/").plus(placedList[0].quantity).plus("Items")
-            binding?.layoutOrder?.tvOrderStatus?.text = placedList[0].order_status_name.toString()
+            binding?.layoutOrder?.myOrderTitle?.text = String.format(getMessage(R.string.total_orders),placedList.total)
+            binding?.layoutOrder?.tvOrderNumber?.text = "#".plus(placedList.data[0].order_id.toString())
+            binding?.layoutOrder?.tvTotalAmount?.text = getMessage(R.string.rupee).plus(placedList.data[0].price.toString())
+            binding?.layoutOrder?.dateTime?.text = placedList.data[0].order_date.toString().plus("/").plus(placedList.data[0].quantity).plus("Items")
+            binding?.layoutOrder?.tvOrderStatus?.text = placedList.data[0].order_status_name.toString()
 
-            if (placedList[0].product_image!=null)
-                Glide.with(this).load(placedList[0].product_image).into(binding?.layoutOrder?.productImage!!)
+            if (placedList.data[0].product_image!=null)
+                Glide.with(this).load(placedList.data[0].product_image).into(binding?.layoutOrder?.productImage!!)
 
             binding?.layoutOrder?.tvDetail?.setOnClickListener {
                 openActivity(OrderDetailsActivity::class.java,Bundle().apply {
-                    putString(Constants.ORDER_ID, placedList[0].order_id.toString())
+                    putString(Constants.ORDER_ID, placedList.data[0].order_id.toString())
                     putString(Constants.ORDER_TYPE, Constants.PLACED)
                 })
             }

@@ -75,7 +75,8 @@ class MyGramophoneFragmentViewModel
                         val response = communityRepository.getCommunityPost(
                             CommunityRequestModel(
                                 "self",
-                                1000
+                                1,
+                                1
                             )
                         )
                         if (response.body() != null) {
@@ -136,9 +137,7 @@ class MyGramophoneFragmentViewModel
                     if (placeOrderResponse.isSuccessful && placeOrderResponse.body()?.gp_api_status == Constants.GP_API_STATUS
                         && placeOrderResponse.body()?.gp_api_response_data?.data != null && placeOrderResponse.body()?.gp_api_response_data?.data?.size!! > 0
                     ) {
-                        val placedList = ArrayList<Data>()
-                        placedList.addAll(placeOrderResponse.body()?.gp_api_response_data?.data as ArrayList<Data>)
-                        getNavigator()?.updateOrderSection(placedList)
+                        getNavigator()?.updateOrderSection(placeOrderResponse.body()?.gp_api_response_data)
                     }else{
                         getNavigator()?.updateOrderSection(null)
                     }
