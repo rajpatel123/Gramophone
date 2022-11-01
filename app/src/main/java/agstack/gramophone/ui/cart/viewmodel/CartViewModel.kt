@@ -5,6 +5,7 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.cart.CartNavigator
 import agstack.gramophone.ui.cart.adapter.CartAdapter
+import agstack.gramophone.ui.cart.model.PlaceOrderRequest
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
@@ -17,6 +18,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
@@ -31,6 +33,7 @@ class CartViewModel @Inject constructor(
     var itemCount = MutableLiveData<Int>()
     var discount = MutableLiveData<Float>()
     var gramCash = MutableLiveData<Int>()
+    var applicableGramCash = MutableLiveData<Int>()
     var subTotal = MutableLiveData<String>()
     var totalAmount = MutableLiveData<Float>()
     var progress = MutableLiveData<Boolean>()
@@ -42,27 +45,41 @@ class CartViewModel @Inject constructor(
         itemCount.value = 0
         discount.value = 0f
         gramCash.value = 0
+        applicableGramCash.value = 0
         totalAmount.value = 0f
         subTotal.value = "0"
         progress.value = false
-        showGramCashCoinView.value = true
+        showGramCashCoinView.value = false
         showCartView.value = true
         isProgressBgTransparent.value = false
     }
 
     fun onCheckedChange(button: CompoundButton, check: Boolean) {
-        showGramCashCoinView.value = check
-        if (check) {
-            val total = totalAmount.value
-            val gramCashCoin = gramCash.value
-            val amount = total!! - gramCashCoin!!
-            totalAmount.value = amount
+        if (applicableGramCash.value!! > 0) {
+            showGramCashCoinView.value = check
+            if (check) {
+                val total = totalAmount.value
+                val gramCashCoin = applicableGramCash.value
+                val amount = total!! - gramCashCoin!!
+                totalAmount.value = amount
+            } else {
+                val total = totalAmount.value
+                val gramCashCoin = applicableGramCash.value
+                val amount = total!! + gramCashCoin!!
+                totalAmount.value = amount
+            }
         } else {
-            val total = totalAmount.value
-            val gramCashCoin = gramCash.value
-            val amount = total!! + gramCashCoin!!
-            totalAmount.value = amount
+            if (check) {
+                getNavigator()?.showToast(R.string.gram_cash_not_applicable)
+                button.isChecked = false
+                /*viewModelScope.launch {
+                    delay(100)
+                    button.isChecked = false
+                }*/
+
+            }
         }
+
     }
 
     fun onClickPlaceOrder() {
@@ -70,7 +87,13 @@ class CartViewModel @Inject constructor(
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
-                    val response = productRepository.placeOrder()
+                    val placeOrderRequest = if (applicableGramCash.value!! > 0) {
+                        PlaceOrderRequest(applicableGramCash.value.toString())
+                    } else {
+                        PlaceOrderRequest(null)
+                    }
+
+                    val response = productRepository.placeOrder(placeOrderRequest)
                     progress.value = false
                     getNavigator()?.showToast(response.body()?.gp_api_message)
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
@@ -109,14 +132,26 @@ class CartViewModel @Inject constructor(
                         isProgressBgTransparent.value = true
                         itemCount.value = response.body()?.gp_api_response_data?.cart_items?.size
                         discount.value = response.body()?.gp_api_response_data?.total_discount
-                        gramCash.value = response.body()?.gp_api_response_data?.gramcash_coins
                         subTotal.value = response.body()?.gp_api_response_data?.sub_total
+                        totalAmount.value = response.body()?.gp_api_response_data?.total
+                        gramCash.value = response.body()?.gp_api_response_data?.gramcash_coins
 
-                        val total = response.body()?.gp_api_response_data?.total
-                        val gramCashCoin = response.body()?.gp_api_response_data?.gramcash_coins
+                        val applicableGramCashCoins: Int = 10
+                            //response.body()?.gp_api_response_data?.applicable_gramcash!!
+                        val gramCashCoins: Int =
+                            response.body()?.gp_api_response_data?.gramcash_coins!!
 
-                        val amount = total!! - gramCashCoin!!
-                        totalAmount.value = amount
+                        when {
+                            applicableGramCashCoins < gramCashCoins -> {
+                                applicableGramCash.value = applicableGramCashCoins
+                            }
+                            applicableGramCashCoins > gramCashCoins -> {
+                                applicableGramCash.value = gramCashCoins
+                            }
+                            else -> {
+                                applicableGramCash.value = applicableGramCashCoins
+                            }
+                        }
 
                         getNavigator()?.setCartAdapter(CartAdapter(response.body()?.gp_api_response_data?.cart_items!!),
                             {

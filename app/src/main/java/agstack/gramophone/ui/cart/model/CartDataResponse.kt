@@ -18,12 +18,13 @@ data class GpApiResponseData(
     val cart_reference_id: String,
     val count: Int,
     val free_or_offer_product_discount_total: Float,
-    val gramcash_coins: Int,
+    val gramcash_coins: Int = 0,
     val product_discount_total: Float,
     val promotional_discount_total: Float,
     val sub_total: String,
     val total: Float,
     val total_discount: Float,
+    val applicable_gramcash: Int = 0,
 )
 
 data class GpApiTrace(
@@ -57,7 +58,6 @@ data class CartItem(
     val sgst_percent: String,
     val shipping_details: ShippingDetails,
     val unit_selling_price: String,
-    val applicable_gramcash: Int,
 )
 
 data class OfferApplied(

@@ -471,6 +471,7 @@
     <string name="posts">Posts</string>
     <string name="today_s_weather">Today\'s Weather</string>
     <string name="default_city_name">New Delhi</string>
+    <string name="gram_cash_not_applicable">Gram cash not applicable here</string>
 
 
 </resources>

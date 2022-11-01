@@ -4,6 +4,7 @@ package agstack.gramophone.data.repository.product
 import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.di.GramAppService
 import agstack.gramophone.ui.cart.model.CartDataResponse
+import agstack.gramophone.ui.cart.model.PlaceOrderRequest
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.farm.model.AddFarmRequest
 import agstack.gramophone.ui.farm.model.AddFarmResponse
@@ -147,10 +148,10 @@ class ProductRepositoryImpl @Inject constructor(
             orderDetails
         }
 
-    override suspend fun placeOrder(): Response<PlaceOrderResponse> = withContext(
+    override suspend fun placeOrder(placeOrderRequest: PlaceOrderRequest): Response<PlaceOrderResponse> = withContext(
         Dispatchers.IO
     ) {
-        val placeOrderResponse = gramoAppService.placeOrder()
+        val placeOrderResponse = gramoAppService.placeOrder(placeOrderRequest)
         placeOrderResponse
     }
 

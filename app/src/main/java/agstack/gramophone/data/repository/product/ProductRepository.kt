@@ -3,6 +3,7 @@ package agstack.gramophone.data.repository.product
 
 import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.ui.cart.model.CartDataResponse
+import agstack.gramophone.ui.cart.model.PlaceOrderRequest
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.farm.model.*
 import agstack.gramophone.ui.farm.model.unit.FarmUnitResponse
@@ -55,7 +56,7 @@ interface ProductRepository {
 
     suspend fun getOrderDetails(orderDetailRequest: OrderDetailRequest): Response<OrderDetailResponse>
 
-    suspend fun placeOrder(): Response<PlaceOrderResponse>
+    suspend fun placeOrder(placeOrderRequest: PlaceOrderRequest): Response<PlaceOrderResponse>
 
     suspend fun getExpertAdvice(productData: ProductData): Response<SuccessStatusResponse>
 

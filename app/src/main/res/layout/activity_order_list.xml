@@ -156,6 +156,7 @@
                     android:background="@color/white"
                     android:visibility="gone"
                     app:pastSize="@{viewModel.pastOrderSize}"
+                    app:placedSize="@{viewModel.placedOrderSize}"
                     app:recentSize="@{viewModel.recentOrderSize}"
                     app:selectedTab="@{viewModel.selectedTab}">
 
