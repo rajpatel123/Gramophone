@@ -210,7 +210,7 @@
     <string name="dialing_code">+91&#160;</string>
     <string name="my_orders">My Orders</string>
     <string name="my_order">My Order</string>
-    <string name="total_orders">My Order(%d)</string>
+    <string name="total_orders">My Orders(%d)</string>
     <string name="address_note"><![CDATA[<b>Note: </b>Address will be taken from you after placing the order]]></string>
     <string name="no_recent_order">When you place your first order, it will appear here</string>
     <string name="no_past_order">Orders older than 6 months will be displayed here, check \"Recent Orders\" for recent orders.</string>

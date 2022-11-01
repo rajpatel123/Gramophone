@@ -130,7 +130,7 @@ class MyGramophoneFragmentViewModel
                     val placeOrderResponse =
                         productRepository.getOrderData(
                             Constants.PLACED,
-                            Constants.API_DATA_LIMITS_IN_ONE_TIME,
+                            1.toString(),
                             "1"
                         )
                     if (placeOrderResponse.isSuccessful && placeOrderResponse.body()?.gp_api_status == Constants.GP_API_STATUS

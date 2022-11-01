@@ -221,7 +221,7 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
         val tagsCropAdapter = DisplayTagAdapter(tags)
         viewDataBinding.rvTag.adapter = tagsCropAdapter
         viewDataBinding.rvTag.layoutManager =
-            StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL)
+            StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
     }
 
 

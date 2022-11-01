@@ -39,6 +39,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_community.*
 import java.util.ArrayList
 
 private const val ARG_PARAM1 = "param1"
@@ -84,7 +85,10 @@ class MyGramophoneFragment :
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpUI()
+        swipeRefresh.setOnRefreshListener {
+            swipeRefresh.isRefreshing=true
+            setUpUI()
+        }
     }
 
     private fun setUpUI() {
@@ -100,9 +104,16 @@ class MyGramophoneFragment :
         myGramophoneFragmentViewModel.getFarms()
         myGramophoneFragmentViewModel.getMyGramophoneData()
 
+        swipeRefresh.isRefreshing=false
 
     }
 
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (isVisibleToUser){
+         setUpUI()
+        }
+    }
     override fun getLayoutID(): Int {
         return R.layout.fragment_my_gramophone
     }
@@ -307,7 +318,7 @@ class MyGramophoneFragment :
 
             binding?.myFarmsTitle?.text = String.format(
                 getMessage(R.string.myfarm),
-                farms.gp_api_response_data.customer_farm.data.size
+                farms.gp_api_response_data.customer_farm.total
             )
             binding?.layoutFarm?.txtCropName?.text =
                 farms.gp_api_response_data.customer_farm.data[0][0].crop_name
