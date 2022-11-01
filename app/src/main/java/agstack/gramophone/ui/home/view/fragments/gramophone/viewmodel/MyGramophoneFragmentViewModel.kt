@@ -157,7 +157,7 @@ class MyGramophoneFragmentViewModel
     fun getFarms() {
         viewModelScope.launch {
             try {
-                val response = productRepository.getFarmsData("active", FarmRequest("3", "1"))
+                val response = productRepository.getFarmsData("active", FarmRequest("1", "1"))
                 if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS && response.body()?.gp_api_response_data != null ) {
                     getNavigator()?.updateFarms(response.body()!!)
                 }else{

@@ -100,7 +100,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:fontFamily="@font/manrope_semibold"
-                            android:text="@string/no_farm_added"
+                            android:text="@string/no_orders_yet"
                             android:textSize="@dimen/_14ssp"
                             android:textColor="@color/brand_color" />
                     </LinearLayout>

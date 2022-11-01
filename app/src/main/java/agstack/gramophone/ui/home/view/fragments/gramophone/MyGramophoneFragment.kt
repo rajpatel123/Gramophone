@@ -7,8 +7,10 @@ import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentMyGramophoneBinding
 import agstack.gramophone.ui.articles.ArticlesWebViewActivity
 import agstack.gramophone.ui.comments.view.CommentsActivity
+import agstack.gramophone.ui.farm.model.Data
 import agstack.gramophone.ui.farm.model.FarmResponse
 import agstack.gramophone.ui.farm.view.AddFarmActivity
+import agstack.gramophone.ui.farm.view.CropGroupExplorerActivity
 import agstack.gramophone.ui.farm.view.SelectCropActivity
 import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
 import agstack.gramophone.ui.gramcash.GramCashActivity
@@ -37,6 +39,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_community.*
@@ -173,12 +176,13 @@ class MyGramophoneFragment :
 
     override fun updateCommunity(communityHomeResponseModel: CommunityHomeResponseModel) {
        if (communityHomeResponseModel.data.size>0){
-           binding?.layoutMyPost?.itemPost?.visibility= VISIBLE
-           binding?.layoutMyPost?.tvGoToPosts?.visibility= VISIBLE
-           binding?.layoutMyPost?.ivNext1?.visibility= VISIBLE
-           binding?.layoutMyPost?.llNoPost?.visibility= GONE
+           binding?.layoutMyPost?.itemPost?.visibility = VISIBLE
+           binding?.layoutMyPost?.tvGoToPosts?.visibility = VISIBLE
+           binding?.layoutMyPost?.ivNext1?.visibility = VISIBLE
+           binding?.layoutMyPost?.llNoPost?.visibility = GONE
 
-
+           binding?.layoutMyPost?.myPostTitle?.text =
+               String.format(getMessage(R.string.my_post), communityHomeResponseModel.meta.pages)
            binding?.layoutMyPost?.tvPostDesc?.text = communityHomeResponseModel.data[0].description
            binding?.layoutMyPost?.dateTime?.text = getMessage(R.string.posted_on).plus(" ")
                .plus(communityHomeResponseModel.data[0].createdDate)
@@ -217,15 +221,16 @@ class MyGramophoneFragment :
                    })
            }
 
-       }else{
-           binding?.layoutMyPost?.itemPost?.visibility= GONE
-           binding?.layoutMyPost?.tvGoToPosts?.visibility= GONE
-           binding?.layoutMyPost?.ivNext1?.visibility= GONE
-           binding?.layoutMyPost?.llNoPost?.visibility= VISIBLE
+       }else {
+           binding?.layoutMyPost?.myPostTitle?.text =
+               String.format(getMessage(R.string.my_posts), communityHomeResponseModel.meta.pages)
+           binding?.layoutMyPost?.itemPost?.visibility = GONE
+           binding?.layoutMyPost?.tvGoToPosts?.visibility = GONE
+           binding?.layoutMyPost?.ivNext1?.visibility = GONE
+           binding?.layoutMyPost?.llNoPost?.visibility = VISIBLE
 
        }
-        binding?.layoutMyPost?.myPostTitle?.text =
-            String.format(getMessage(R.string.my_post), communityHomeResponseModel.meta.pages)
+
 
         binding?.layoutMyPost?.llCreatePost?.setOnClickListener {
             openActivity(CreatePostActivity::class.java)
@@ -256,8 +261,8 @@ class MyGramophoneFragment :
             binding?.layoutOrder?.rlCheckoutOffer?.visibility= VISIBLE
             binding?.layoutOrder?.rlOrder?.visibility= GONE
             binding?.layoutOrder?.tvGoToOrders?.visibility= GONE
-            binding?.layoutOrder?.ivNext1?.visibility= GONE
-
+            binding?.layoutOrder?.ivNext1?.visibility = GONE
+            binding?.layoutOrder?.myOrderTitle?.text = getMessage(R.string.my_orders)
             binding?.layoutOrder?.rlCheckoutOffer?.setOnClickListener {
                 openActivity(OffersListActivity::class.java)
             }
@@ -301,16 +306,13 @@ class MyGramophoneFragment :
            binding?.llNoFarm?.visibility= VISIBLE
            binding?.tvGoToFarms?.visibility= GONE
            binding?.ivNext?.visibility= GONE
-           binding?.llLayoutFarm?.visibility= GONE
-            binding?.myFarmsTitle?.text = String.format(
-                getMessage(R.string.myfarm),
-                0
-            )
+            binding?.llLayoutFarm?.visibility = GONE
+            binding?.myFarmsTitle?.text = getMessage(R.string.my_farms)
         }else{
             binding?.llNoFarm?.visibility= GONE
             binding?.tvGoToFarms?.visibility= VISIBLE
             binding?.ivNext?.visibility= VISIBLE
-            binding?.llLayoutFarm?.visibility= VISIBLE
+            binding?.llLayoutFarm?.visibility = VISIBLE
 
             binding?.myFarmsTitle?.text = String.format(
                 getMessage(R.string.myfarm),
@@ -320,35 +322,48 @@ class MyGramophoneFragment :
                 farms.gp_api_response_data.customer_farm.data[0][0].crop_name
             binding?.layoutFarm?.txtCropCode?.text =
                 farms.gp_api_response_data.customer_farm.data[0][0].farm_ref_id
-            binding?.layoutFarm?.txtDate?.text = String.format(
-                getMessage(R.string.crop_sowing_date),
-                farms.gp_api_response_data.customer_farm.data[0][0].crop_sowing_date
-            )
-            binding?.layoutFarm?.txtArea?.text = String.format(
-                getMessage(R.string.farm_area),
-                farms.gp_api_response_data.customer_farm.data[0][0].farm_area
-            )
 
-            if (farms.gp_api_response_data.customer_farm.data[0][0].duration != null)
-                binding?.layoutFarm?.txtDuration?.text = String.format(
-                    getMessage(R.string.crop_duration),
+            binding?.layoutFarm?.txtDateDesc?.text = " ".plus(getMessage(R.string.crop_sowing_dates)).plus(" ")
+            binding?.layoutFarm?.txtDate?.text =
+                farms.gp_api_response_data.customer_farm.data[0][0].crop_sowing_date
+
+            binding?.layoutFarm?.txtAreaDesc?.text = " ".plus(getMessage(R.string.farm_areass))
+            binding?.layoutFarm?.txtAreas?.text =  ""+farms.gp_api_response_data.customer_farm.data[0][0].farm_area
+
+            if (farms.gp_api_response_data.customer_farm.data[0][0].duration != null) {
+                binding?.layoutFarm?.txtDurationDesc?.text = getMessage(R.string.crop_duration)
+
+                binding?.layoutFarm?.txtDuration?.text =
                     farms.gp_api_response_data.customer_farm.data[0][0].duration
-                )
-            else {
-                binding?.layoutFarm?.txtDuration?.visibility = GONE
+            } else {
+                binding?.layoutFarm?.rlDurationDesc?.visibility = GONE
             }
-            binding?.layoutFarm?.txtStage?.text = String.format(
-                getMessage(R.string.stage_name),
-                farms.gp_api_response_data.customer_farm.data[0][0].days,
-                farms.gp_api_response_data.customer_farm.data[0][0].stage_name
-            )
+
+
+            binding?.layoutFarm?.txtStageDesc?.text = getMessage(R.string.stage_names).plus(" ")
+
+            binding?.layoutFarm?.txtStage?.text =
+                farms.gp_api_response_data.customer_farm.data[0][0].days.plus(", ").plus(
+                    farms.gp_api_response_data.customer_farm.data[0][0].stage_name
+                )
+
+
             if (farms.gp_api_response_data.customer_farm.data[0][0].crop_image != null) {
-                Glide.with(this).load(farms.gp_api_response_data.customer_farm.data[0][0].crop_image)
+                Glide.with(this)
+                    .load(farms.gp_api_response_data.customer_farm.data[0][0].crop_image)
                     .into(binding?.layoutFarm?.imageSelectCorpItem!!)
             }
         }
         binding?.tvGoToFarms?.setOnClickListener {
             openActivity(ViewAllFarmsActivity::class.java)
+        }
+
+        binding?.layoutFarm?.txtMultipleFarms?.setOnClickListener {
+            openActivity(CropGroupExplorerActivity::class.java, Bundle().apply {
+                putParcelableArrayList(
+                    "cropList", farms?.gp_api_response_data?.customer_farm?.data as ArrayList<Data>
+                )
+            })
         }
 
         binding?.btnAddfarm?.setOnClickListener {
@@ -405,6 +420,10 @@ class MyGramophoneFragment :
     }
 
     override fun processGenericUri(genericUri: Uri) {
+    }
+
+    fun refreshProfile() {
+        myGramophoneFragmentViewModel.initProfile()
     }
 
 

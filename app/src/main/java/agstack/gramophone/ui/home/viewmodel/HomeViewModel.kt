@@ -78,12 +78,7 @@ class HomeViewModel @Inject constructor(
                                     ).plus(gpApiResponseData.address_data?.state))
 
 
-                                getNavigator()?.setImageNameMobile(
-                                    name,
-                                    mobile,
-                                    image,
-                                    gramCash
-                                )
+
 
                                 SharedPreferencesHelper.instance?.putString(
                                     SharedPreferencesKeys.USERNAME,
@@ -106,6 +101,14 @@ class HomeViewModel @Inject constructor(
                                 SharedPreferencesHelper.instance?.putString(
                                     SharedPreferencesKeys.CUSTOMER_ADDRESS,
                                     customerAddress
+                                )
+
+
+                                getNavigator()?.setImageNameMobile(
+                                    name,
+                                    mobile,
+                                    image,
+                                    gramCash
                                 )
                             }
                         }

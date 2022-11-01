@@ -115,61 +115,131 @@
                         android:textStyle="bold"
                         tools:text='F3456' />
 
-                    <TextView
-                        android:id="@+id/txtDate"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:drawablePadding="@dimen/_8sdp">
+
+                        <TextView
+                            android:id="@+id/txtDateDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_date_picker"
+                            android:fontFamily="@font/manrope_medium"
+                            android:textColor="@color/oldmrpcolor"
+                            android:textSize="@dimen/_10ssp"
+                            tools:text='  बुआई की तारीख: ' />
+
+                        <TextView
+                            android:id="@+id/txtDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_3sdp"
+                            android:layout_toEndOf="@+id/txtDateDesc"
+                            android:fontFamily="@font/manrope_bold"
+                            android:textColor="@color/blakish"
+                            android:textSize="@dimen/_10ssp"
+                            tools:text="Jul 15, 2022" />
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlDurationDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:drawablePadding="@dimen/_8sdp"
-                        android:drawableStart="@drawable/ic_date_picker"
-                        android:fontFamily="@font/manrope_medium"
-                        tools:text='बुआई की तारीख : Jul 15, 2022'
-                        android:textColor="@color/oldmrpcolor"
-                        android:textSize="@dimen/_10ssp"
-                        />
+                        >
 
-                    <TextView
-                        android:id="@+id/txtDuration"
+                        <TextView
+                            android:id="@+id/txtDurationDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_date_picker"
+                            android:fontFamily="@font/manrope_medium"
+                            android:textColor="@color/oldmrpcolor"
+                            android:textSize="@dimen/_10ssp"
+                            tools:text='बुआई का समय :' />
+
+                        <TextView
+                            android:id="@+id/txtDuration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/txtDurationDesc"
+                            android:fontFamily="@font/manrope_bold"
+                            tools:text=' Jul 15, 2022 To Jul 25, 2022'
+                            android:textColor="@color/blakish"
+                            android:textSize="@dimen/_10ssp"
+                            />
+                    </RelativeLayout>
+
+
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:drawablePadding="@dimen/_8sdp"
-                        android:drawableStart="@drawable/ic_date_picker"
-                        android:fontFamily="@font/manrope_medium"
-                        tools:text='बुआई का समय : Jul 15, 2022 To Jul 25, 2022'
-                        android:textColor="@color/oldmrpcolor"
-                        android:textSize="@dimen/_10ssp"
-                        />
+                        >
 
-                    <TextView
-                        android:id="@+id/txtArea"
+                        <TextView
+                            android:id="@+id/txtAreaDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_date_picker"
+                            android:fontFamily="@font/manrope_medium"
+                            android:textColor="@color/oldmrpcolor"
+                            android:textSize="@dimen/_10ssp"
+                            tools:text='बुआई का समय :' />
+
+                        <TextView
+                            android:id="@+id/txtAreas"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/txtAreaDesc"
+                            android:fontFamily="@font/manrope_bold"
+                            tools:text=' 22 Acre'
+                            android:textColor="@color/blakish"
+                            android:textSize="@dimen/_10ssp"
+                            />
+                    </RelativeLayout>
+
+
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:drawablePadding="@dimen/_8sdp"
-                        android:drawableStart="@drawable/ic_info_para"
-                        android:fontFamily="@font/manrope_medium"
-                        tools:text='खेत का एरिया : 22 Acre'
-                        android:textColor="@color/oldmrpcolor"
-                        android:textSize="@dimen/_10ssp"
-                        />
+                        >
+                        <TextView
+                            android:id="@+id/txtStageDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_info_para"
+                            android:fontFamily="@font/manrope_medium"
+                           android:text="@string/stage_names"
+                            android:textColor="@color/oldmrpcolor"
+                            android:textSize="@dimen/_10ssp"
+                            />
 
-                    <TextView
-                        android:id="@+id/txtStage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_marginTop="@dimen/_6sdp"
-                        android:drawablePadding="@dimen/_8sdp"
-                        android:drawableStart="@drawable/ic_info_para"
-                        android:fontFamily="@font/manrope_medium"
-                        tools:text='वर्तमान चरण: 22 Days'
-                        android:textColor="@color/oldmrpcolor"
-                        android:textSize="@dimen/_10ssp"
-                        />
+                        <TextView
+                            android:id="@+id/txtStage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/txtStageDesc"
+                            android:fontFamily="@font/manrope_bold"
+                            tools:text=' 22 Acre'
+                            android:textColor="@color/blakish"
+                            android:textSize="@dimen/_10ssp"
+                            />
+                    </RelativeLayout>
+
 
                 </LinearLayout>
 
@@ -188,7 +258,7 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/_8sdp"
                         android:fontFamily="@font/manrope_medium"
-                        android:text='अपने खेतों को देखें'
+                        android:text="@string/view_farms"
                         android:textColor="@color/oldmrpcolor"
                         android:textSize="@dimen/_12ssp" />
 
@@ -227,12 +297,12 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginEnd="18dp"
                     android:drawablePadding="@dimen/_8sdp"
                     android:fontFamily="@font/manrope_medium"
+                    android:text="@string/addedfarms"
                     android:textColor="@color/oldmrpcolor"
-                    android:textSize="@dimen/_13ssp"
-                    tools:text="1 खेत जोड़ा गया है" />
+                    android:textSize="@dimen/_13ssp" />
 
             </RelativeLayout>
 
