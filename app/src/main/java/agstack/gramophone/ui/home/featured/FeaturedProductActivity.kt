@@ -7,7 +7,7 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityFeaturedProductsBinding
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
-import agstack.gramophone.ui.dialog.filter.BottomSheetFilterDialog
+import agstack.gramophone.ui.dialog.filter.FilterDialog
 import agstack.gramophone.ui.dialog.sortby.BottomSheetSortByDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.adapter.ViewPagerAdapter
@@ -103,7 +103,7 @@ class FeaturedProductActivity :
                 )
             }
             R.id.tvFilter -> {
-                val bottomSheet = BottomSheetFilterDialog(subCategoryViewModel.mainFilterList,
+                val bottomSheet = FilterDialog(subCategoryViewModel.mainFilterList,
                     subCategoryViewModel.subCategoryList,
                     subCategoryViewModel.brandsList,
                     subCategoryViewModel.cropsList,

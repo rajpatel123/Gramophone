@@ -483,6 +483,7 @@
     <string name="_01_quantity">01</string>
     <string name="degee_temp">°</string>
     <string name="degee_temp_centigrade">°C</string>
+    <string name="degee_temp_centigrade_lower_case">°c</string>
     <string name="comma_with_space">", "</string>
     <string name="others">Others</string>
     <string name="order_placed">Order Placed</string>
@@ -591,4 +592,6 @@
     <string name="companies">Companies</string>
     <string name="crop_category">Crop Category</string>
     <string name="product_category">Product Category</string>
+    <string name="default_city_name">New Delhi</string>
+    <string name="gram_cash_not_applicable">Gram cash not applicable here</string>
 </resources>

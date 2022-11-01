@@ -178,6 +178,28 @@ fun orderEmptyViewHandling(
     }
 }
 
+@BindingAdapter(value = ["selectedTab", "recentSize", "placedSize", "pastSize"], requireAll = true)
+fun orderEmptyViewHandling(
+    emptyView: View, selectedTab: Int, recentSize: Int, placedSize: Int, pastSize: Int,
+) {
+    when (selectedTab) {
+        0 -> {
+            if (recentSize == 0 && placedSize == 0) {
+                emptyView.visibility = View.VISIBLE
+            } else {
+                emptyView.visibility = View.GONE
+            }
+        }
+        1 -> {
+            if (pastSize > 0) {
+                emptyView.visibility = View.GONE
+            } else {
+                emptyView.visibility = View.VISIBLE
+            }
+        }
+    }
+}
+
 @BindingAdapter(value = ["selectedTab", "placeSize"], requireAll = true)
 fun placedOrderRecyclerHandling(
     view: View, selectedTab: Int, placedSize: Int,

@@ -11,6 +11,7 @@ import agstack.gramophone.ui.home.adapter.HomeAdapter
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.FeaturedArticlesResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
+import agstack.gramophone.ui.weather.model.WeatherResponse
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -91,11 +92,11 @@ class MarketFragment :
 
     private fun callApi() {
         marketFragmentViewModel.getHomeData()
-        marketFragmentViewModel.getBanners()
         marketFragmentViewModel.getFeaturedProducts()
         marketFragmentViewModel.getCategories()
         marketFragmentViewModel.getCrops()
         marketFragmentViewModel.getStores()
+        marketFragmentViewModel.getWeatherDetail()
         marketFragmentViewModel.getCompanies()
         marketFragmentViewModel.getCartProducts()
         marketFragmentViewModel.getFarms()
@@ -105,6 +106,7 @@ class MarketFragment :
     private fun setUpUI() {
         binding?.swipeRefresh?.setColorSchemeResources(R.color.blue)
         binding?.swipeRefresh?.setOnRefreshListener {
+            marketFragmentViewModel.getBanners(true)
             callApi()
             binding?.swipeRefresh?.isRefreshing = false
         }
@@ -136,6 +138,7 @@ class MarketFragment :
         cartList: List<CartItem>?,
         farmResponse: FarmResponse?,
         articlesData: HashMap<String, ArrayList<FormattedArticlesData>>,
+        weatherResponse: WeatherResponse?,
     ) {
         homeAdapter?.notifyAdapterOnDataChange(allBannerResponse,
             categoryResponse,
@@ -145,12 +148,13 @@ class MarketFragment :
             companyResponse,
             cartList,
             farmResponse,
-            articlesData)
+            articlesData,
+            weatherResponse)
     }
 
     override fun onResume() {
         super.onResume()
-        marketFragmentViewModel.getBanners()
+        marketFragmentViewModel.getBanners(false)
     }
 
     override fun getLayoutID(): Int {
