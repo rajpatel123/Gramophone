@@ -13,11 +13,8 @@ import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.GpApiResponseData
 import agstack.gramophone.ui.language.model.languagelist.Language
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
-import agstack.gramophone.utils.ApiResponse
+import agstack.gramophone.utils.*
 import agstack.gramophone.utils.Constants.GP_API_STATUS
-import agstack.gramophone.utils.LocaleManagerClass
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -147,9 +144,7 @@ class LanguageViewModel @Inject constructor(
             }
             R.id.btnSave -> {
                 if (language != null) {
-
-
-                    val updateLanguageRequestModel = UpdateLanguageRequestModel(getNavigator()?.getLanguage()!!)
+                    val updateLanguageRequestModel = UpdateLanguageRequestModel(language!!.language_code)
                     viewModelScope.launch {
                         updateLanguage(updateLanguageRequestModel)
                     }
@@ -215,7 +210,7 @@ class LanguageViewModel @Inject constructor(
                     }
                     getNavigator()?.closeLanguageList()
                 } else {
-                    getNavigator()?.onError(updateLanguageResponseModel?.gp_api_message)
+                    getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                 }
 
             } else

@@ -18,6 +18,8 @@ import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
 import agstack.gramophone.ui.farm.model.*
 import agstack.gramophone.ui.farm.model.unit.FarmUnitResponse
+import agstack.gramophone.ui.favourite.model.FavouriteRequestModel
+import agstack.gramophone.ui.favourite.model.FeaturedProductResponseModel
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.gramophone.model.MyGramophoneResponseModel
@@ -318,4 +320,7 @@ interface GramAppService {
 
     @POST("api/v5/search/community-search")
     suspend fun searchByKeywordInCommunity(@Body body : GlobalSearchRequest): Response<GlobalSearchResponse>
+
+    @POST("api/v5/category/product-favourite-data")
+    suspend fun getFavouriteProduct(@Body body : FavouriteRequestModel): Response<FeaturedProductResponseModel>
 }

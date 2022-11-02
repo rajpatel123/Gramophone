@@ -13,6 +13,7 @@ import agstack.gramophone.ui.farm.view.AddFarmActivity
 import agstack.gramophone.ui.farm.view.CropGroupExplorerActivity
 import agstack.gramophone.ui.farm.view.SelectCropActivity
 import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
+import agstack.gramophone.ui.favourite.view.FavouriteProductActivity
 import agstack.gramophone.ui.gramcash.GramCashActivity
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActivity
@@ -268,8 +269,14 @@ class MyGramophoneFragment :
 
         if (data?.liked == true){
             binding?.layoutMyPost?.ivLike?.setImageResource(R.drawable.ic_liked)
+            binding?.layoutMyPost?.tvLikes?.setTextColor(
+                ContextCompat.getColor(activity as HomeActivity,
+                    R.color.red))
         }else{
             binding?.layoutMyPost?.ivLike?.setImageResource(R.drawable.ic_like)
+            binding?.layoutMyPost?.tvLikes?.setTextColor(
+                ContextCompat.getColor(activity as HomeActivity,
+                    R.color.gray))
         }
     }
 
@@ -358,8 +365,9 @@ class MyGramophoneFragment :
                 binding?.layoutFarm?.rlDurationDesc?.visibility = GONE
             }
 
-
             binding?.layoutFarm?.txtStageDesc?.text = getMessage(R.string.stage_names).plus(" ")
+
+            binding?.layoutFarm?.txtAddedFarm?.text = "".plus(farms.gp_api_response_data.customer_farm.data[0].size).plus(" ").plus(getMessage(R.string.addedfarms)).plus(" ")
 
             binding?.layoutFarm?.txtStage?.text =
                 farms.gp_api_response_data.customer_farm.data[0][0].days.plus(getString(R.string.days))
@@ -443,7 +451,7 @@ class MyGramophoneFragment :
             openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
                 putString(
                     Constants.PAGE_URL,
-                      BuildConfig.BASE_URL_SINGLE_ARTICLE+"/")
+                      BuildConfig.BASE_URL_ARTICLES+Constants.FAVOURITE_ARTICLES)
 
                   putString(Constants.PAGE_SOURCE,
                       "gramo")
@@ -451,9 +459,11 @@ class MyGramophoneFragment :
         }
 
         binding?.layoutFavorite?.llProductLinearLayout?.setOnClickListener {
-            if (activity is HomeActivity) {
-                (activity as HomeActivity).showHomeFragment()
-            }
+            openActivity(FavouriteProductActivity::class.java)
+
+//            if (activity is HomeActivity) {
+//                (activity as HomeActivity).showHomeFragment()
+//            }
         }
 
         binding?.layoutFavorite?.llTVLinearLayout?.setOnClickListener {

@@ -3,19 +3,32 @@ package agstack.gramophone.ui.favourite.view
 import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
+import agstack.gramophone.databinding.ActivityFavouriteProductBinding
 import agstack.gramophone.databinding.ActivityFeaturedProductsBinding
 import agstack.gramophone.databinding.ActivityFeaturedProductsBindingImpl
+import agstack.gramophone.ui.favourite.FavouriteProductAdapter
 import agstack.gramophone.ui.favourite.FavouriteProductNavigator
+import agstack.gramophone.ui.favourite.model.Data
 import agstack.gramophone.ui.favourite.viewmodel.FavouriteProductViewModel
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_community.*
 
-class FavouriteProductActivity : BaseActivityWrapper<ActivityFeaturedProductsBinding, FavouriteProductNavigator, FavouriteProductViewModel>(), FavouriteProductNavigator {
+@AndroidEntryPoint
+class FavouriteProductActivity : BaseActivityWrapper<ActivityFavouriteProductBinding, FavouriteProductNavigator, FavouriteProductViewModel>(), FavouriteProductNavigator {
 
     private val favouriteProductViewModel : FavouriteProductViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setUpToolBar(
+            enableBackButton = true,
+            getMessage(R.string.favourite_products),
+            R.drawable.ic_arrow_left
+        )
+        favouriteProductViewModel.getFavouriteProduct()
     }
 
     override fun getLayoutID(): Int {
@@ -27,6 +40,15 @@ class FavouriteProductActivity : BaseActivityWrapper<ActivityFeaturedProductsBin
     }
 
     override fun getViewModel(): FavouriteProductViewModel {
-        TODO("Not yet implemented")
+       return favouriteProductViewModel
+    }
+
+    override fun updateProductList(
+        favouriteProductAdapter: FavouriteProductAdapter,
+        onProductClicked: (Data) -> Unit
+    ) {
+        favouriteProductAdapter.onProductClicked = onProductClicked
+        viewDataBinding.rvProducts.setHasFixedSize(false)
+        viewDataBinding.rvProducts.adapter = favouriteProductAdapter
     }
 }

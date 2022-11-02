@@ -108,7 +108,6 @@ class MyGramophoneFragmentViewModel
                     if (response.isSuccessful) {
                         val data = response.body()?.data
                         getNavigator()?.updateLike(data)
-
                     }
                 } else
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
