@@ -37,6 +37,7 @@ class SubCategoryViewModel @Inject constructor(
     var mSKUList = ArrayList<ProductSkuListItem?>()
     var showSubCategoryView = MutableLiveData<Boolean>()
     var showSortFilterView = MutableLiveData<Boolean>()
+    var showSortFilterInToolbar = MutableLiveData<Boolean>()
     var toolbarTitle = MutableLiveData<String>()
     var toolbarImage = MutableLiveData<String>()
     var mainFilterList: ArrayList<MainFilterData>? = null
@@ -47,6 +48,7 @@ class SubCategoryViewModel @Inject constructor(
     var technicalDataList: List<TechnicalData>? = null
     var progress = MutableLiveData<Boolean>()
     val subCategoryIds = ArrayList<String>()
+    val companyIds = ArrayList<String>()
     var categoryId: String? = null
     var storeId: String? = null
     private var checkOfferApplicableJob: Job? = null
@@ -56,37 +58,55 @@ class SubCategoryViewModel @Inject constructor(
         toolbarTitle.value = ""
         toolbarImage.value = ""
         showSortFilterView.value = false
+        showSortFilterInToolbar.value = false
         showSubCategoryView.value = false
     }
 
     fun getBundleData() {
         subCategoryIds.clear()
+        companyIds.clear()
         val bundle = getNavigator()?.getBundle()
         initializeSortData()
-
-        if (bundle?.containsKey(Constants.HOME_FEATURED_PRODUCTS)!! && bundle.getString(Constants.HOME_FEATURED_PRODUCTS) != null) {
-            showSortFilterView.value = false
-            toolbarTitle.value = getNavigator()?.getMessage(R.string.featured_products)
-            getFeaturedProducts()
-        } else if (bundle.containsKey(Constants.STORE_ID) && bundle.getString(Constants.STORE_ID) != null) {
-            showSortFilterView.value = true
-            storeId = bundle.getString(Constants.STORE_ID)!!
-            toolbarTitle.value = bundle.getString(Constants.STORE_NAME)!!
-            toolbarImage.value = bundle.getString(Constants.STORE_IMAGE)!!
-            getStoresFilterData()
-            getShopByStoreBanner()
-        } else if (bundle.containsKey(Constants.CATEGORY_ID) && bundle.getString(Constants.CATEGORY_ID) != null) {
-            categoryId = bundle.get(Constants.CATEGORY_ID) as String
-            toolbarTitle.value = bundle.get(Constants.CATEGORY_NAME) as String
-            toolbarImage.value = bundle.get(Constants.CATEGORY_IMAGE) as String
-            getSubCategoryData()
-        } else if (bundle.containsKey(Constants.SUB_CATEGORY_ID) && bundle.getString(Constants.SUB_CATEGORY_ID) != null) {
-            showSortFilterView.value = true
-            categoryId = bundle.getString(Constants.SHOP_BY_SUB_CATEGORY)
-            subCategoryIds.add(bundle.getString(Constants.SUB_CATEGORY_ID, ""))
-            toolbarTitle.value = bundle.getString(Constants.SUB_CATEGORY_NAME)
-            toolbarImage.value = bundle.getString(Constants.SUB_CATEGORY_IMAGE)
-            getSubCategoryData()
+        if (bundle.isNotNull()) {
+            if (bundle?.containsKey(Constants.HOME_FEATURED_PRODUCTS)!! && bundle.getString(
+                    Constants.HOME_FEATURED_PRODUCTS) != null
+            ) {
+                showSortFilterView.value = false
+                toolbarTitle.value = getNavigator()?.getMessage(R.string.featured_products)
+                getFeaturedProducts()
+            } else if (bundle.containsKey(Constants.STORE_ID) && bundle.getString(Constants.STORE_ID) != null) {
+                showSortFilterView.value = true
+                storeId = bundle.getString(Constants.STORE_ID)!!
+                toolbarTitle.value = bundle.getString(Constants.STORE_NAME)!!
+                toolbarImage.value = bundle.getString(Constants.STORE_IMAGE)!!
+                getStoresFilterData()
+                getShopByStoreBanner()
+            } else if (bundle.containsKey(Constants.CATEGORY_ID) && bundle.getString(Constants.CATEGORY_ID) != null) {
+                categoryId = bundle.get(Constants.CATEGORY_ID) as String
+                toolbarTitle.value = bundle.get(Constants.CATEGORY_NAME) as String
+                toolbarImage.value = bundle.get(Constants.CATEGORY_IMAGE) as String
+                getSubCategoryData()
+            } else if (bundle.containsKey(Constants.SUB_CATEGORY_ID) && bundle.getString(Constants.SUB_CATEGORY_ID) != null) {
+                showSortFilterView.value = true
+                categoryId = bundle.getString(Constants.SHOP_BY_SUB_CATEGORY)
+                subCategoryIds.add(bundle.getString(Constants.SUB_CATEGORY_ID, ""))
+                toolbarTitle.value = bundle.getString(Constants.SUB_CATEGORY_NAME)
+                toolbarImage.value = bundle.getString(Constants.SUB_CATEGORY_IMAGE)
+                getSubCategoryData()
+            } else if (bundle.containsKey(Constants.COMPANY_ID) && bundle.getString(Constants.COMPANY_ID) != null) {
+                showSortFilterView.value = false
+                showSortFilterInToolbar.value = true
+                companyIds.add(bundle.getString(Constants.COMPANY_ID)!!)
+                toolbarTitle.value = bundle.getString(Constants.COMPANY_NAME)!!
+                toolbarImage.value = bundle.getString(Constants.COMPANY_IMAGE)!!
+                getAllProducts(Constants.RELAVENT_CODE,
+                    ArrayList(),
+                    ArrayList(),
+                    ArrayList(),
+                    ArrayList(),
+                    Constants.API_DATA_LIMITS_IN_ONE_TIME,
+                    "1")
+            }
         }
     }
 
@@ -271,6 +291,7 @@ class SubCategoryViewModel @Inject constructor(
             limit,
             page,
             if (storeId.isNullOrEmpty()) null else storeId,
+            if (companyIds.isNullOrEmpty()) null else companyIds,
             if (subCategoryIds.isNullOrEmpty()) null else subCategoryIds,
             if (brandIds.isNullOrEmpty()) null else brandIds,
             if (cropIds.isNullOrEmpty()) null else cropIds,

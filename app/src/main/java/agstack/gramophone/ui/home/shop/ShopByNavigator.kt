@@ -15,9 +15,11 @@ interface ShopByNavigator : BaseNavigator {
 
     fun setShopByStoresAdapter(shopByStoresAdapter: ShopByStoresAdapter)
 
-    fun setShopByCompanyAdapter(shopByCompanyAdapter: ShopByCompanyAdapter, id: (String) -> Unit)
+    fun setShopByCompanyAdapter(shopByCompanyAdapter: ShopByCompanyAdapter)
 
-    fun openShopByDetailActivity(storeId: String, storeName: String, storeImage: String)
+    fun openFeaturedActivityForShopByStore(storeId: String, storeName: String, storeImage: String)
+
+    fun openFeaturedActivityForShopByCompany(companyId: String, companyName: String, companyImage: String)
 
     fun openCropStageActivity(id: String)
 }

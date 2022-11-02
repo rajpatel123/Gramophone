@@ -85,7 +85,10 @@ class ViewAllFarmsActivity :
     override fun setViewAllFarmsAdapter(farmsList: List<List<Data>>, isCustomerFarm: Boolean) {
         viewDataBinding.rvFarms.adapter = ViewAllFarmsAdapter(
             farmsList,
-            {
+            headerListener = {
+
+            },
+            contentListener = {
                 if (isCustomerFarm) {
                     openActivity(CropGroupExplorerActivity::class.java, Bundle().apply {
                         putParcelableArrayList(
@@ -94,7 +97,7 @@ class ViewAllFarmsActivity :
                     })
                 }
             },
-            {
+            footerListener = {
                 val selectedCrop = CropData(
                     cropId = it[0].crop_id,
                     cropName = it[0].crop_name,

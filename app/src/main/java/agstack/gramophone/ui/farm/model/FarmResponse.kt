@@ -66,6 +66,7 @@ data class ModelFarm(
 
 @Parcelize
 data class Data(
+    val farm_id: String?,
     val crop_id: Int,
     val crop_image: String?,
     val crop_name: String?,

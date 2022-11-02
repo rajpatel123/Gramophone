@@ -9,9 +9,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewTreeObserver
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import androidx.activity.viewModels
 import com.amnix.xtension.extensions.isNotNull
 import kotlinx.android.synthetic.main.activity_articles.*
@@ -42,6 +40,7 @@ class ArticlesWebViewActivity :
             webSettings.loadWithOverviewMode = true
             webSettings.setSupportMultipleWindows(true)
             webSettings.javaScriptCanOpenWindowsAutomatically = false
+            viewDataBinding.webView.webChromeClient = MyWebChromeClient()
             viewDataBinding.webView.webViewClient = object : WebViewClient() {
 
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -64,6 +63,7 @@ class ArticlesWebViewActivity :
             }
         }
         viewDataBinding.webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+        viewDataBinding.webView.addJavascriptInterface(JavaScriptInterface(this), "AndroidArticleFunction");
         viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
 
         viewDataBinding.viewBack.setOnClickListener {
@@ -79,6 +79,33 @@ class ArticlesWebViewActivity :
         viewDataBinding.swipeRefresh.setOnRefreshListener {
             viewDataBinding.webView.reload()
             viewDataBinding.swipeRefresh.isRefreshing = false
+        }
+    }
+
+    private class MyWebChromeClient : WebChromeClient() {
+        override fun onJsAlert(
+            view: WebView,
+            url: String,
+            message: String,
+            result: JsResult,
+        ): Boolean {
+            return true
+        }
+
+        override fun onJsConfirm(
+            view: WebView,
+            url: String,
+            message: String,
+            result: JsResult,
+        ): Boolean {
+            return true
+        }
+
+        override fun onJsPrompt(
+            view: WebView, url: String, message: String, defaultValue: String,
+            result: JsPromptResult,
+        ): Boolean {
+            return true
         }
     }
 

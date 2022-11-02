@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ProfilesAdapter (
     val list: List<Item>,
-    private val listener: (String) -> Unit,
+    private val listener: (String, String?, String?) -> Unit,
 ): RecyclerView.Adapter<ProfilesAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -20,7 +20,7 @@ class ProfilesAdapter (
         holder.binding.item = profile
 
         holder.binding.productDetailsContainer.setOnClickListener {
-            listener.invoke(profile.id!!)
+            listener.invoke(profile.id!!, profile.name, profile.image)
         }
     }
 
