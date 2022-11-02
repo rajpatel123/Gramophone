@@ -6,6 +6,7 @@ import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.othersporfile.view.OtherUserProfileActivity
 import agstack.gramophone.ui.postdetails.view.PostDetailsActivity
 import agstack.gramophone.ui.search.model.Data
 import agstack.gramophone.ui.search.view.*
@@ -107,8 +108,14 @@ class SearchResultAdapter(
             is ProfilesViewHolder -> {
                 holder.binding.txtHeaderProfile.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
                 val profileList = list[position].items
-                holder.binding.recyclerViewProfiles.adapter = ProfilesAdapter(profileList){
-                    listener.invoke(it)
+                holder.binding.recyclerViewProfiles.adapter = ProfilesAdapter(profileList){id, authorId, authorUuid ->
+                    openActivity(holder.itemView.context,
+                        OtherUserProfileActivity::class.java,
+                        Bundle().apply {
+                            putString(Constants.POST_ID, id)
+                            putString(Constants.AUTHER_ID, authorId)
+                            putString(Constants.AUTHER_UUID, authorUuid)
+                        })
                 }
                 holder.binding.viewAllProfiles.setOnClickListener {
                     openActivity(
@@ -153,14 +160,13 @@ class SearchResultAdapter(
             is CompaniesViewHolder-> {
                 holder.binding.txtTitle.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
                 val dataList = list[position].items
-                holder.binding.rvCompanies.adapter = CompaniesAdapter(dataList){
+                holder.binding.rvCompanies.adapter = CompaniesAdapter(dataList){ id, name, image ->
                     openActivity(holder.itemView.context,
                         FeaturedProductActivity::class.java,
                         Bundle().apply {
-                            putString(
-                                Constants.HOME_FEATURED_PRODUCTS,
-                                Constants.HOME_FEATURED_PRODUCTS
-                            )
+                            putString(Constants.COMPANY_ID, id)
+                            putString(Constants.COMPANY_NAME, name)
+                            putString(Constants.COMPANY_IMAGE, image)
                         })
                 }
                 holder.binding.viewAll.setOnClickListener {

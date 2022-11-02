@@ -6,8 +6,12 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.databinding.ActivityViewAllSearchPostsBinding
+import agstack.gramophone.ui.postdetails.view.PostDetailsActivity
 import agstack.gramophone.ui.search.adapter.PostsAdapter
 import agstack.gramophone.ui.search.model.Data
+import agstack.gramophone.utils.Constants
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.amnix.xtension.extensions.toCamelCase
@@ -25,7 +29,14 @@ class ViewAllSearchPostsActivity :
 
         val items = dataList?.items
         items?.let {
-            viewDataBinding.recyclerViewPosts.adapter = PostsAdapter(items){}
+            viewDataBinding.recyclerViewPosts.adapter = PostsAdapter(items){
+                openActivity(
+                    this@ViewAllSearchPostsActivity,
+                    PostDetailsActivity::class.java,
+                    Bundle().apply {
+                        putString(Constants.POST_ID, it)
+                    })
+            }
         }
     }
 
@@ -48,5 +59,13 @@ class ViewAllSearchPostsActivity :
     override fun getViewModel(): BaseViewModel<BaseNavigator> {
         val viewModel: BaseViewModel<BaseNavigator> by viewModels()
         return viewModel
+    }
+
+    fun <T> openActivity(context: Context, cls: Class<T>, extras: Bundle?) {
+        Intent(context, cls).apply {
+            if (extras != null)
+                putExtras(extras)
+            context.startActivity(this)
+        }
     }
 }

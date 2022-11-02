@@ -6,8 +6,12 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.databinding.ActivityViewAllSearchProductCategoriesBinding
+import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.search.adapter.ProductCategoryAdapter
 import agstack.gramophone.ui.search.model.Data
+import agstack.gramophone.utils.Constants
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -28,7 +32,14 @@ class ViewAllSearchProductCategoriesActivity :
         items?.let {
             val gridLayoutManager = GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
             viewDataBinding.rvProductCategory.layoutManager = gridLayoutManager
-            viewDataBinding.rvProductCategory.adapter = ProductCategoryAdapter(items){ _, _, _ -> run {} }
+            viewDataBinding.rvProductCategory.adapter = ProductCategoryAdapter(items){ id, name, image ->
+                openActivity(this@ViewAllSearchProductCategoriesActivity,
+                SubCategoryActivity::class.java,
+                Bundle().apply {
+                    putString(Constants.CATEGORY_ID, id)
+                    putString(Constants.CATEGORY_NAME, name)
+                    putString(Constants.CATEGORY_IMAGE, image)
+                }) }
         }
     }
 
@@ -51,5 +62,13 @@ class ViewAllSearchProductCategoriesActivity :
     override fun getViewModel(): BaseViewModel<BaseNavigator> {
         val viewModel: BaseViewModel<BaseNavigator> by viewModels()
         return viewModel
+    }
+
+    fun <T> openActivity(context: Context, cls: Class<T>, extras: Bundle?) {
+        Intent(context, cls).apply {
+            if (extras != null)
+                putExtras(extras)
+            context.startActivity(this)
+        }
     }
 }

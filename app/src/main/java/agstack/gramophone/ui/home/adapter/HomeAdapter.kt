@@ -424,21 +424,6 @@ class HomeAdapter(
                     )
                 }
 
-                holder.binding.addFarmWrapper.addFarmTitleLayout.setOnClickListener {
-                    openActivity(
-                        holder.binding.itemView.context,
-                        SelectCropActivity::class.java,
-                        null
-                    )
-                }
-                holder.binding.addFarmWrapper.txtWhyAddFarm.setOnClickListener {
-                    openActivity(
-                        holder.binding.itemView.context,
-                        WhyAddFarmActivity::class.java,
-                        null
-                    )
-                }
-
                 holder.binding.viewAllFarms.setOnClickListener {
                     openActivity(holder.itemView.context, ViewAllFarmsActivity::class.java, null)
                 }
