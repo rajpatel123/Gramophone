@@ -3,6 +3,7 @@ package agstack.gramophone.ui.home.adapter
 import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.databinding.*
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.GpApiResponseData
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.profile.view.ProfileActivity
@@ -36,7 +37,11 @@ import java.util.*
 /**
  * [RecyclerView.Adapter] holding [NestedRecyclerFragment] view pager logic
  */
-class CommunityPostAdapter(val dataList: List<Data>?, isOther: Boolean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CommunityPostAdapter(
+    val dataList: List<Data>?,
+    isOther: Boolean
+//    quizPoll: List<List<GpApiResponseData>>
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val viewPageStates = HashMap<Int, Int>()
     private lateinit var context: Context
@@ -68,6 +73,16 @@ class CommunityPostAdapter(val dataList: List<Data>?, isOther: Boolean) : Recycl
 
         val textHolder = holder as TextItemHolder
 
+
+        if (position>5 && position%5==0 && position<20){
+            holder.itemPostBinding.pollLayoutLL.visibility= VISIBLE
+            holder.itemPostBinding.rlPosts.visibility= GONE
+            holder.itemPostBinding.rlPosts.visibility= GONE
+
+            return
+        }else{
+            holder.itemPostBinding.pollLayoutLL.visibility= GONE
+        }
 
         if (position >1 && (position==2 || position%5==0)){
             var bannerResponse = SharedPreferencesHelper.instance?.getParcelable(

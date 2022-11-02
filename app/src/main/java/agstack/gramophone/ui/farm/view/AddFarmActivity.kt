@@ -106,7 +106,7 @@ class AddFarmActivity :
     }
 
     private fun updateLabel() {
-        val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US)
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         viewDataBinding.txtDate.text = dateFormat.format(myCalendar.time)
     }
 

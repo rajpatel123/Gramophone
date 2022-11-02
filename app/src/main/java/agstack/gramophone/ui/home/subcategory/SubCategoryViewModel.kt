@@ -110,16 +110,16 @@ class SubCategoryViewModel @Inject constructor(
 
     private fun initMainFilterData() {
         mainFilterList = ArrayList()
-        if (!subCategoryList.isNullOrEmpty()) mainFilterList?.add(MainFilterData(true,
-            Constants.SUB_CATEGORY, 0))
-        if (!brandsList.isNullOrEmpty()) mainFilterList?.add(MainFilterData(false,
+        if (!subCategoryList.isNullOrEmpty()) mainFilterList?.add(MainFilterData(true, false,
+            Constants.SUB_CATEGORY, 0, 0))
+        if (!brandsList.isNullOrEmpty()) mainFilterList?.add(MainFilterData(false, false,
             Constants.BRAND,
-            0))
-        if (!cropsList.isNullOrEmpty()) mainFilterList?.add(MainFilterData(false,
+            0, 0))
+        if (!cropsList.isNullOrEmpty()) mainFilterList?.add(MainFilterData(false, false,
             Constants.CROP,
-            0))
-        if (!technicalDataList.isNullOrEmpty()) mainFilterList?.add(MainFilterData(false,
-            Constants.TECHNICAL, 0))
+            0, 0))
+        if (!technicalDataList.isNullOrEmpty()) mainFilterList?.add(MainFilterData(false, false,
+            Constants.TECHNICAL, 0, 0))
     }
 
     fun getBanners() {

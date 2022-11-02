@@ -11,7 +11,6 @@ import agstack.gramophone.ui.createnewpost.model.AgriTagListResult
 import agstack.gramophone.ui.createnewpost.model.MySingleton
 import agstack.gramophone.ui.createnewpost.model.PostDetailsModel
 import agstack.gramophone.ui.createnewpost.view.*
-import agstack.gramophone.ui.createnewpost.view.model.create.Image
 import agstack.gramophone.ui.createpost.CreatePostNavigator
 import agstack.gramophone.ui.createpost.viewmodel.CreatePostViewModel
 import agstack.gramophone.ui.dialog.posts.BottomSheetCropsDialog
@@ -32,6 +31,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.text.Editable
@@ -45,8 +45,12 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.amnix.xtension.extensions.inflater
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.canhub.cropper.CropImageContract
@@ -62,6 +66,7 @@ import com.tokenautocomplete.TagTokenizer
 import com.tokenautocomplete.TokenCompleteTextView
 import com.tokenautocomplete.TokenCompleteTextView.TokenListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.item_tags.view.*
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -150,7 +155,17 @@ class CreatePostActivity :
             getMessage(R.string.create_post),
             R.drawable.ic_cross
         )
-        if ( MySingleton.getInstance().isOffTokenAutoComplete) {
+
+        viewDataBinding.myToolbar.myToolbar.setBackgroundResource(R.color.brand_color)
+        viewDataBinding.myToolbar.myToolbar.setTitleTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.white
+            )
+        )
+        viewDataBinding.myToolbar.myToolbar.navigationIcon =
+            ResourcesCompat.getDrawable(resources, R.drawable.ic_cross_white, null)
+        if (MySingleton.getInstance().isOffTokenAutoComplete) {
             viewDataBinding?.descriptionEditText?.visibility = View.GONE
             viewDataBinding.hashSymbol?.visibility = View.GONE
             viewDataBinding.atSymbol?.visibility = View.GONE
@@ -339,7 +354,16 @@ class CreatePostActivity :
             externalCacheDir
             e.printStackTrace()
         }
-        presenter.listOfImages.put(key,f)
+        presenter.listOfImages.put(key, f)
+        viewDataBinding.postButton.setBackgroundResource(R.color.brand_color)
+        viewDataBinding.postButton.setTextColor(
+            ContextCompat.getColor(
+                this@CreatePostActivity,
+                R.color.white
+            )
+        )
+
+
     }
 
     private fun launchTagList() {
@@ -478,17 +502,30 @@ class CreatePostActivity :
             }
             Constants.IV_TWO->{
                 viewDataBinding.ivTwo.setImageResource(R.drawable.preview_frame)
-                viewDataBinding.ivPlusSmall1.visibility= View.VISIBLE
-                viewDataBinding.ivDeleteSmall1.visibility= View.GONE
+                viewDataBinding.ivPlusSmall1.visibility = View.VISIBLE
+                viewDataBinding.ivDeleteSmall1.visibility = View.GONE
             }
 
-            Constants.IV_THREE->{
+            Constants.IV_THREE -> {
                 viewDataBinding.ivThree.setImageResource(R.drawable.preview_frame)
-                viewDataBinding.ivPlusSmall2.visibility= View.VISIBLE
-                viewDataBinding.ivDeleteSmall2.visibility= View.GONE
+                viewDataBinding.ivPlusSmall2.visibility = View.VISIBLE
+                viewDataBinding.ivDeleteSmall2.visibility = View.GONE
+            }
+        }
+
+        if (presenter.listOfImages.size < 1) {
+            if (presenter.listOfImages.size < 1) {
+                viewDataBinding.postButton.setBackgroundResource(R.color.btn_disabled)
+                viewDataBinding.postButton.setTextColor(
+                    ContextCompat.getColor(
+                        this@CreatePostActivity,
+                        R.color.blakish
+                    )
+                )
             }
         }
     }
+
 
 
     override fun populateTagSuggestionList(tags: Array<Tag>) {
@@ -509,11 +546,21 @@ class CreatePostActivity :
 
 
     fun showTag(selectedTagList: MutableList<CropData>) {
-        val tagsCropAdapter = TagsCropAdapter(selectedTagList)
-        viewDataBinding.finalTagRecyclerView.adapter = tagsCropAdapter
-        viewDataBinding.finalTagRecyclerView.layoutManager =
-            StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL)
-        //    getSelectedTagList(selectedTagList, createOnSelectedTagChangedListner());
+        if (selectedTagList != null && selectedTagList?.size > 0) {
+            viewDataBinding.finalTagLL.removeAllViews()
+            selectedTagList.forEach {
+                val view = inflater.inflate(R.layout.item_tags, null)
+                view.tvTag.setText(it.cropName)
+                viewDataBinding.finalTagLL.addView(view)
+            }
+        }
+
+
+//        val tagsCropAdapter = TagsCropAdapter(selectedTagList)
+//        viewDataBinding.finalTagRecyclerView.adapter = tagsCropAdapter
+//        viewDataBinding.finalTagRecyclerView.layoutManager =
+//            StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL)
+//        //    getSelectedTagList(selectedTagList, createOnSelectedTagChangedListner());
     }
 
     fun initiateTextWatcher() {
@@ -567,9 +614,33 @@ class CreatePostActivity :
 
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                     var text = s.toString()
-                    if (text != null) {
-                        text = Html.fromHtml(text).toString()
+                    if (text.isNotNullOrEmpty()){
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            text = Html.fromHtml(text, 0).toString()
+                        } else {
+                            text = Html.fromHtml(text).toString()
+                        }
+                        viewDataBinding.postButton.setBackgroundResource(R.color.brand_color)
+                        viewDataBinding.postButton.setTextColor(
+                            ContextCompat.getColor(
+                                this@CreatePostActivity,
+                                R.color.white
+                            )
+                        )
+                    }else{
+                        if (presenter.listOfImages.size==0 ){
+                            viewDataBinding.postButton.setBackgroundResource(R.color.brand_color)
+                            viewDataBinding.postButton.setTextColor(
+                                ContextCompat.getColor(
+                                    this@CreatePostActivity,
+                                    R.color.white
+                                )
+                            )
+                        }
+
                     }
+
+
                     if (!startSuggestion) {
                         if (text != null && text?.length > 0 && (text[text?.length - 1] == '#' || text[text?.length - 1] == '@')) {
                             startSuggestion = true
@@ -596,7 +667,32 @@ class CreatePostActivity :
                 override fun afterTextChanged(s: Editable) {
                     //avoid triggering event when text is too short wait if he has paused typing
                     var text = s.toString()
-                    text = Html.fromHtml(text).toString()
+                    if (text.isNotNullOrEmpty()){
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            text = Html.fromHtml(text, 0).toString()
+                        } else {
+                            text = Html.fromHtml(text).toString()
+                        }
+                        viewDataBinding.postButton.setBackgroundResource(R.color.brand_color)
+                        viewDataBinding.postButton.setTextColor(
+                            ContextCompat.getColor(
+                                this@CreatePostActivity,
+                                R.color.white
+                            )
+                        )
+                    }else{
+                        if (presenter.listOfImages.size==0 ){
+                            viewDataBinding.postButton.setBackgroundResource(R.color.brand_color)
+                            viewDataBinding.postButton.setTextColor(
+                                ContextCompat.getColor(
+                                    this@CreatePostActivity,
+                                    R.color.white
+                                )
+                            )
+                        }
+
+                    }
+
                     if (startSuggestion) {
                         if (startPosition != null && text?.length > startPosition!!) searchText =
                             text?.substring(startPosition!!)

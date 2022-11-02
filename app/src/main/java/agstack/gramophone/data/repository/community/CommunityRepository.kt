@@ -1,6 +1,7 @@
 package agstack.gramophone.data.repository.community
 
 import agstack.gramophone.ui.comments.model.CommentsResponseModel
+import agstack.gramophone.ui.comments.model.DeleteCommentResponseModel
 import agstack.gramophone.ui.comments.model.sendcomment.GetCommentRequestModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.BookmarkPostResponse
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikePostResponseModel
@@ -12,6 +13,8 @@ import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodel
 import agstack.gramophone.ui.postdetails.model.PostDetailResponseModel
 import agstack.gramophone.ui.comments.model.sendcomment.SendCommentResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.create.CreatePostResponseModel
+import agstack.gramophone.ui.followings.model.FollowerResponseModel
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
 import agstack.gramophone.ui.othersporfile.model.CommunityUserPostRequestModel
 import agstack.gramophone.ui.othersporfile.model.ProfileDataResponse
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
@@ -60,7 +63,11 @@ interface CommunityRepository {
 
     suspend fun postComment(postId: RequestBody, text: RequestBody, tags: RequestBody): Response<SendCommentResponseModel>
 
+    suspend fun updateComment(postId: RequestBody,commentId: RequestBody, text: RequestBody, tags: RequestBody): Response<SendCommentResponseModel>
+
     suspend fun postComment(postId: RequestBody,text: RequestBody,tags: RequestBody,postImage: MultipartBody.Part): Response<SendCommentResponseModel>
+
+    suspend fun updateComment(postId: RequestBody,commentId: RequestBody,text: RequestBody,tags: RequestBody,postImage: MultipartBody.Part): Response<SendCommentResponseModel>
 
     suspend fun createPost(description: RequestBody?,tags: RequestBody?,postImage1: MultipartBody.Part?,postImage2: MultipartBody.Part?,postImage3: MultipartBody.Part?): Response<CreatePostResponseModel>
 
@@ -75,4 +82,11 @@ interface CommunityRepository {
 
     suspend fun getBlockedUsersList(): Response<BlockedUsersListResponseModel>
 
+    suspend fun deleteComment(postID:String, commentId:String):Response<DeleteCommentResponseModel>
+
+    suspend fun getFollowers(followRequestModel: FollowRequestModel):Response<FollowerResponseModel>
+
+    suspend fun getFollowings(followRequestModel: FollowRequestModel):Response<FollowerResponseModel>
+
+    suspend fun getQuiz(): Response<QuizPollResponseModel>
 }

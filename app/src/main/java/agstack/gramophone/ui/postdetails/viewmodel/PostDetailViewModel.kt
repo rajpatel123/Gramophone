@@ -12,6 +12,7 @@ import agstack.gramophone.ui.home.view.fragments.market.model.CropResponse
 import agstack.gramophone.ui.postdetails.PostDetailNavigator
 import agstack.gramophone.ui.postdetails.model.Data
 import agstack.gramophone.utils.*
+
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.databinding.ObservableField
@@ -47,6 +48,7 @@ class PostDetailViewModel @Inject constructor(
  var showingDate = ObservableField<String>()
  var showDateView = ObservableField<Boolean>()
  lateinit var cropResponse: CropResponse
+ var comment: agstack.gramophone.ui.comments.model.Data? = null
 
  var postImage = ObservableField<File>()
  var isLoading = ObservableField<Boolean>()
@@ -133,9 +135,13 @@ class PostDetailViewModel @Inject constructor(
      val data = response.body()?.data
      if (data != null) {
       val commentsAdapter = CommentsAdapter(data)
-      getNavigator()?.updatePostList(commentsAdapter){
-       //TODO
-      }
+      getNavigator()?.updateCommentsList(commentsAdapter,
+       {
+        deleteComment(it)
+      },{
+       comment = it
+       getNavigator()?.populateCommentData(it)
+      })
 
      }
 
@@ -223,7 +229,10 @@ class PostDetailViewModel @Inject constructor(
  }
 
  fun sendComment() {
-
+  if (comment!=null){
+   updateComment()
+   return
+  }
   if (TextUtils.isEmpty(commentInput.get())) {
    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.enter_description))
    return
@@ -344,4 +353,79 @@ class PostDetailViewModel @Inject constructor(
  getNavigator()?.showBottomSheet()
  }
 
+ fun updateComment(){
+
+  if (TextUtils.isEmpty(commentInput.get())){
+   getNavigator()?.showToast(getNavigator()?.getMessage(R.string.enter_description))
+   return
+  }
+  viewModelScope.launch {
+   try {
+    if (getNavigator()?.isNetworkAvailable() == true) {
+     isLoading.set(true)
+
+     val postID: RequestBody = data?._id!!.toRequestBody("text/plain".toMediaTypeOrNull())
+     val text: RequestBody = commentInput.get()!!.toRequestBody("text/plain".toMediaTypeOrNull())
+     val tags: RequestBody = tags.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+     val id: RequestBody = comment?._id.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+
+     if (postImage.get()!=null){
+      val imageUpoadRequestBody = FileUploadRequestBody(postImage.get()!!)
+      val content: MultipartBody.Part = MultipartBody.Part.createFormData(
+       "image",
+       postImage.get()!!.name,
+       imageUpoadRequestBody
+      )
+
+      val response = communityRepository.updateComment(postID,id,text,tags,content)
+      if (response.isSuccessful) {
+       isLoading.set(false)
+
+       commentInput.set("")
+       getPostComments(postId = data?._id!!)
+       getNavigator()?.clearImage()
+      }else{
+       isLoading.set(false)
+
+       getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+      }
+     }else{
+      val response = communityRepository.updateComment(postID,id,text,tags)
+      if (response.isSuccessful) {
+       isLoading.set(false)
+
+       commentInput.set("")
+       getPostComments(postId = data?._id!!)
+      }else{
+       isLoading.set(false)
+
+       getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+      }
+     }
+     comment = null
+    } else
+     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+   } catch (ex: Exception) {
+    isLoading.set(false)
+
+    when (ex) {
+     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+     else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+    }
+   }
+
+  }
+ }
+ fun deleteComment(comment: agstack.gramophone.ui.comments.model.Data) {
+  if (getNavigator()?.isNetworkAvailable()==true){
+   viewModelScope.launch {
+    val deleteCommentResponse = communityRepository.deleteComment(data?._id!!,comment._id)
+    if (deleteCommentResponse.isSuccessful && deleteCommentResponse.body()?.data == true){
+     getPostComments(data!!._id!!)
+    }else{
+     getNavigator()?.showToast(Utility.getErrorMessage(deleteCommentResponse.errorBody()))
+    }
+   }
+  }
+ }
 }

@@ -98,6 +98,7 @@ class HomeActivity :
         viewDataBinding.navigationlayout.tvContact.text =
             getString(R.string.dialing_code).plus(mobile)
         viewDataBinding.navigationlayout.tvGc.text = gramCash
+        profileFragment.refreshProfile()
         if (profileImage.isNotNullOrEmpty())
         Glide.with(this)
             .load(profileImage)

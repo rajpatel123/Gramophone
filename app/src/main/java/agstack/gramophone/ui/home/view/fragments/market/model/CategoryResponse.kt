@@ -14,5 +14,6 @@ data class CategoryData(
     val category_id: Int,
     val category_image: String,
     val category_name: String,
-    var isChecked: Boolean = false
+    var isChecked: Boolean = false,
+    var tempChecked: Boolean = false
 )

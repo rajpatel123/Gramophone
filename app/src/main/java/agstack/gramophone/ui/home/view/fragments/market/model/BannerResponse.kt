@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class BannerResponse(
+data class
+BannerResponse(
     @SerializedName("gp_api_status") var gpApiStatus: String? = null,
     @SerializedName("gp_api_message") var gpApiMessage: String? = null,
     @SerializedName("gp_api_response_data") var gpApiResponseData: GpApiResponseBannerData? = GpApiResponseBannerData(),

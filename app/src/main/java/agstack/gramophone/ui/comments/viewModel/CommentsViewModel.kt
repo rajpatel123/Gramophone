@@ -4,16 +4,16 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.community.CommunityRepository
 import agstack.gramophone.ui.comments.CommentNavigator
+import agstack.gramophone.ui.comments.model.Data
 import agstack.gramophone.ui.comments.model.sendcomment.GetCommentRequestModel
 import agstack.gramophone.ui.home.adapter.CommentsAdapter
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.FileUploadRequestBody
 import agstack.gramophone.utils.Utility
+import android.os.SystemClock
 import android.text.TextUtils
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -28,12 +28,14 @@ import javax.inject.Inject
 class CommentsViewModel @Inject constructor(
     private val communityRepository: CommunityRepository
 ):BaseViewModel<CommentNavigator> (){
+    var mLastClickTime: Long = 0
     var commentsCount = ObservableField<String>()
     var commentInput = ObservableField<String>()
     var postImage = ObservableField<File>()
     var isLoading = ObservableField<Boolean>()
     lateinit var tags:List<Map<String,String>>
     lateinit var postId: String
+    var comment:Data? = null
     fun getComments(postId: String) {
         this.postId = postId
         tags = ArrayList()
@@ -51,10 +53,11 @@ class CommentsViewModel @Inject constructor(
                           var commentsAdapter = CommentsAdapter(data)
                         getNavigator()?.updateCommentsList(commentsAdapter,
                             {
-
+                              deleteComment(it)
                             },
                             {
-
+                                comment = it
+                             getNavigator()?.populateCommentData(it)
                             })
                     }
                 } else
@@ -75,7 +78,15 @@ class CommentsViewModel @Inject constructor(
     }
 
     fun sendComment(){
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 2000){
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
 
+        if (comment!=null){
+            updateComment()
+            return
+        }
         if (TextUtils.isEmpty(commentInput.get())){
             getNavigator()?.showToast(getNavigator()?.getMessage(R.string.enter_description))
             return
@@ -109,6 +120,7 @@ class CommentsViewModel @Inject constructor(
 
                             getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                         }
+
                     }else{
                         val response = communityRepository.postComment(postID,text,tags)
                         if (response.isSuccessful) {
@@ -121,6 +133,8 @@ class CommentsViewModel @Inject constructor(
 
                             getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                         }
+
+
                     }
 
                 } else
@@ -135,6 +149,83 @@ class CommentsViewModel @Inject constructor(
             }
 
         }
+    }
+    fun updateComment(){
+
+        if (TextUtils.isEmpty(commentInput.get())){
+            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.enter_description))
+            return
+        }
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    isLoading.set(true)
+
+                    val postID: RequestBody = postId.toRequestBody("text/plain".toMediaTypeOrNull())
+                    val text: RequestBody = commentInput.get()!!.toRequestBody("text/plain".toMediaTypeOrNull())
+                    val tags: RequestBody = tags.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+                    val id: RequestBody = comment?._id.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+
+                    if (postImage.get()!=null){
+                        val imageUpoadRequestBody = FileUploadRequestBody(postImage.get()!!)
+                        val content: MultipartBody.Part = MultipartBody.Part.createFormData(
+                            "image",
+                            postImage.get()!!.name,
+                            imageUpoadRequestBody
+                        )
+
+                        val response = communityRepository.updateComment(postID,id,text,tags,content)
+                        if (response.isSuccessful) {
+                            isLoading.set(false)
+
+                            commentInput.set("")
+                            getComments(postId = postId)
+                            getNavigator()?.clearImage()
+                        }else{
+                            isLoading.set(false)
+
+                            getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+                        }
+                    }else{
+                        val response = communityRepository.updateComment(postID,id,text,tags)
+                        if (response.isSuccessful) {
+                            isLoading.set(false)
+
+                            commentInput.set("")
+                            getComments(postId = postId)
+                        }else{
+                            isLoading.set(false)
+
+                            getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+                        }
+                    }
+                  comment = null
+                } else
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+            } catch (ex: Exception) {
+                isLoading.set(false)
+
+                when (ex) {
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                }
+            }
+
+        }
+    }
+
+
+    fun deleteComment(data: Data) {
+    if (getNavigator()?.isNetworkAvailable()==true){
+        viewModelScope.launch {
+            val deleteCommentResponse = communityRepository.deleteComment(data.postId,data._id)
+            if (deleteCommentResponse.isSuccessful && deleteCommentResponse.body()?.data == true){
+                getComments(data.postId)
+            }else{
+                getNavigator()?.showToast(Utility.getErrorMessage(deleteCommentResponse.errorBody()))
+            }
+        }
+    }
     }
 
     fun captureImage(){

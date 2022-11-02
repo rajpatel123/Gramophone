@@ -166,6 +166,10 @@ class CommentsActivity :
         viewDataBinding.cvPostImage.visibility= GONE
     }
 
+    override fun populateCommentData(data: Data) {
+        viewDataBinding.tvCommentBottom.setText(data.text)
+    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
@@ -187,11 +191,11 @@ class CommentsActivity :
 
     override fun updateCommentsList(
         commentsAdapter: CommentsAdapter,
-        onItemCommentsClicked: (commentId: String) -> Unit,
-        onTripleDotMenuClicked: (data: Data) -> Unit
+        onDeleteComment: (data: Data) -> Unit,
+        onEditCommentMenuClicked: (data: Data) -> Unit
     ) {
-        commentsAdapter.onItemCommentsClicked = onItemCommentsClicked
-        commentsAdapter.onTripleDotMenuClicked = onTripleDotMenuClicked
+        commentsAdapter.onDeleteComment = onDeleteComment
+        commentsAdapter.onEditCommentMenuClicked = onEditCommentMenuClicked
         rvCommentsDialog?.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvCommentsDialog?.setHasFixedSize(false)

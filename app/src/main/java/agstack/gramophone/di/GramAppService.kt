@@ -10,6 +10,7 @@ import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
 import agstack.gramophone.ui.cart.model.CartDataResponse
+import agstack.gramophone.ui.cart.model.PlaceOrderRequest
 import agstack.gramophone.ui.createnewpost.model.MentionRequestModel
 import agstack.gramophone.ui.createnewpost.model.MentionTagResponsemodel
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
@@ -178,7 +179,7 @@ interface GramAppService {
     suspend fun getOrderDetails(@Body orderDetailRequest : OrderDetailRequest): Response<OrderDetailResponse>
 
     @POST("api/v5/cart/place-order")
-    suspend fun placeOrder(): Response<PlaceOrderResponse>
+    suspend fun placeOrder(@Body placeOrderRequest: PlaceOrderRequest): Response<PlaceOrderResponse>
 
 
 

@@ -26,7 +26,6 @@
                     android:id="@+id/ivFarm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     app:srcCompat="@drawable/ic_order" />
 
                 <LinearLayout
@@ -101,7 +100,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:fontFamily="@font/manrope_semibold"
-                            android:text="@string/no_farm_added"
+                            android:text="@string/no_orders_yet"
                             android:textSize="@dimen/_14ssp"
                             android:textColor="@color/brand_color" />
                     </LinearLayout>
@@ -269,6 +268,7 @@
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@+id/checkoutLL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp">
@@ -309,10 +309,49 @@
                     android:text="@string/shop_now"
                     android:textColor="@color/brand_color" />
             </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlCheckoutOffer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:background="@color/yellow_light"
+                >
+
+                <ImageView
+                    android:id="@+id/ivOffer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_ic_offer" />
+
+                <ImageView
+                    android:id="@+id/next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_arrow_right"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    app:tint="@color/blakish"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_toEndOf="@+id/ivOffer"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@string/txt_checkout"
+                    android:textColor="@color/blakish" />
+
+            </RelativeLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_16sdp"
                 android:background="@color/gray_stroke" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

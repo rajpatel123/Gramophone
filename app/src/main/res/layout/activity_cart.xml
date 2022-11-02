@@ -160,7 +160,6 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_marginTop="10dp"
                                 android:button="@drawable/custom_checkbox"
-                                android:checked="true"
                                 android:onCheckedChanged="@{(compoundButton, checked) -> viewModel.onCheckedChange(compoundButton, checked)}" />
 
                             <TextView
@@ -231,10 +230,10 @@
                             android:lineSpacingExtra="-2sp"
                             android:paddingStart="16dp"
                             android:paddingEnd="16dp"
-                            android:text="@{@string/save_extra_rupees.concat(String.valueOf(viewModel.gramCash)).concat(@string/using).concat(String.valueOf(viewModel.gramCash)).concat(@string/gram_cash)}"
+                            android:text="@{@string/save_extra_rupees.concat(String.valueOf(viewModel.applicableGramCash)).concat(@string/using).concat(String.valueOf(viewModel.applicableGramCash)).concat(@string/gram_cash)}"
                             android:textColor="@color/green_medium"
                             android:textSize="13sp"
-                            android:visibility="@{viewModel.gramCash>0 ? View.VISIBLE : View.GONE}"
+                            android:visibility="@{viewModel.applicableGramCash>0 ? View.VISIBLE : View.GONE}"
                             tools:text="Save extra ₹50 using 50 Gram Cash" />
 
                         <View
@@ -366,7 +365,7 @@
                                 android:fontFamily="@font/manrope_bold"
                                 android:gravity="center_vertical"
                                 android:lineSpacingExtra="1sp"
-                                android:text="@{@string/minus_rupee_symbol.concat(String.valueOf(viewModel.gramCash))}"
+                                android:text="@{@string/minus_rupee_symbol.concat(String.valueOf(viewModel.applicableGramCash))}"
                                 android:textColor="@color/green_medium"
                                 android:textSize="16sp"
                                 tools:text="-₹ 50" />

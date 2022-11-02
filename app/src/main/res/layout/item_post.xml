@@ -644,6 +644,20 @@
 
 
     </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pollLayoutLL"
+            android:visibility="gone"
+            android:orientation="vertical">
+            <include
+                android:id="@+id/pollLayout"
+                layout="@layout/item_poll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 </layout>

@@ -2,6 +2,7 @@ package agstack.gramophone.data.repository.community
 
 import agstack.gramophone.di.CommunityApiService
 import agstack.gramophone.ui.comments.model.CommentsResponseModel
+import agstack.gramophone.ui.comments.model.DeleteCommentResponseModel
 import agstack.gramophone.ui.comments.model.sendcomment.GetCommentRequestModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.BookmarkPostResponse
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikePostResponseModel
@@ -13,6 +14,8 @@ import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodel
 import agstack.gramophone.ui.postdetails.model.PostDetailResponseModel
 import agstack.gramophone.ui.comments.model.sendcomment.SendCommentResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.create.CreatePostResponseModel
+import agstack.gramophone.ui.followings.model.FollowerResponseModel
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
 import agstack.gramophone.ui.othersporfile.model.CommunityUserPostRequestModel
 import agstack.gramophone.ui.othersporfile.model.ProfileDataResponse
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
@@ -168,6 +171,12 @@ class CommunityRepositoryImpl @Inject constructor(
         userData
     }
 
+override suspend fun updateComment(postId: RequestBody, commentId: RequestBody, text: RequestBody, tags: RequestBody,): Response<SendCommentResponseModel> = withContext(
+        Dispatchers.IO) {
+        val userData = communityApiService.updateComment(postId,commentId,text,tags)
+        userData
+    }
+
     override suspend fun postComment(
         postId: RequestBody,
         text: RequestBody,
@@ -176,6 +185,17 @@ class CommunityRepositoryImpl @Inject constructor(
     ): Response<SendCommentResponseModel> = withContext(
         Dispatchers.IO) {
         val userData = communityApiService.postComment(postId,text,tags,postImage)
+        userData
+    }
+    override suspend fun updateComment(
+        postId: RequestBody,
+        commentId: RequestBody,
+        text: RequestBody,
+        tags: RequestBody,
+        postImage: MultipartBody.Part
+    ): Response<SendCommentResponseModel> = withContext(
+        Dispatchers.IO) {
+        val userData = communityApiService.updateComment(postId,commentId,text,tags,postImage)
         userData
     }
 
@@ -219,6 +239,31 @@ class CommunityRepositoryImpl @Inject constructor(
     override suspend fun getBlockedUsersList(): Response<BlockedUsersListResponseModel> = withContext(
         Dispatchers.IO) {
         val blockedUsers = communityApiService.getBlockedUsersList()
+        blockedUsers
+    }
+
+
+    override suspend fun deleteComment(postID:String, commentId:String): Response<DeleteCommentResponseModel> = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = communityApiService.deleteComment(postID,commentId)
+        blockedUsers
+    }
+
+    override suspend fun getFollowings(followRequestModel: FollowRequestModel): Response<FollowerResponseModel> = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = communityApiService.getFollowings(followRequestModel)
+        blockedUsers
+    }
+
+    override suspend fun getFollowers(followRequestModel: FollowRequestModel): Response<FollowerResponseModel> = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = communityApiService.getFollowers(followRequestModel)
+        blockedUsers
+    }
+
+    override suspend fun getQuiz(): Response<QuizPollResponseModel> = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = communityApiService.getQuiz()
         blockedUsers
     }
 }
