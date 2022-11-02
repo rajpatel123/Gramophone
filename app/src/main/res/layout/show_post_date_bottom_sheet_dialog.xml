@@ -175,7 +175,7 @@
                                     android:layout_height="wrap_content"
                                     android:background="@null"
                                     android:fontFamily="@font/manrope_regular"
-                                    android:hint="@string/farm_areas"
+                                    android:hint="@string/farm_area"
                                     android:inputType="numberDecimal"
                                     android:text=""
                                     android:textColor="@color/black"

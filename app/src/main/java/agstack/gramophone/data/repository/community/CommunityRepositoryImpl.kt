@@ -15,6 +15,7 @@ import agstack.gramophone.ui.postdetails.model.PostDetailResponseModel
 import agstack.gramophone.ui.comments.model.sendcomment.SendCommentResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.create.CreatePostResponseModel
 import agstack.gramophone.ui.followings.model.FollowerResponseModel
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
 import agstack.gramophone.ui.othersporfile.model.CommunityUserPostRequestModel
 import agstack.gramophone.ui.othersporfile.model.ProfileDataResponse
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
@@ -257,6 +258,12 @@ override suspend fun updateComment(postId: RequestBody, commentId: RequestBody, 
     override suspend fun getFollowers(followRequestModel: FollowRequestModel): Response<FollowerResponseModel> = withContext(
         Dispatchers.IO) {
         val blockedUsers = communityApiService.getFollowers(followRequestModel)
+        blockedUsers
+    }
+
+    override suspend fun getQuiz(): Response<QuizPollResponseModel> = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = communityApiService.getQuiz()
         blockedUsers
     }
 }

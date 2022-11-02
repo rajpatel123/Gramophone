@@ -73,15 +73,12 @@ class HomeViewModel @Inject constructor(
                                 val customerId =
                                     if (gpApiResponseData.customer_id.isNullOrEmpty()) "" else gpApiResponseData.customer_id
                                 val customerAddress=
-                                    if (gpApiResponseData.address_data?.address.isNullOrEmpty()) "" else gpApiResponseData.address_data?.address
+                                    if (gpApiResponseData.address_data?.address.isNullOrEmpty()) "" else (gpApiResponseData.address_data?.district.plus(
+                                        ", "
+                                    ).plus(gpApiResponseData.address_data?.state))
 
 
-                                getNavigator()?.setImageNameMobile(
-                                    name,
-                                    mobile,
-                                    image,
-                                    gramCash
-                                )
+
 
                                 SharedPreferencesHelper.instance?.putString(
                                     SharedPreferencesKeys.USERNAME,
@@ -104,6 +101,14 @@ class HomeViewModel @Inject constructor(
                                 SharedPreferencesHelper.instance?.putString(
                                     SharedPreferencesKeys.CUSTOMER_ADDRESS,
                                     customerAddress
+                                )
+
+
+                                getNavigator()?.setImageNameMobile(
+                                    name,
+                                    mobile,
+                                    image,
+                                    gramCash
                                 )
                             }
                         }
@@ -141,7 +146,7 @@ class HomeViewModel @Inject constructor(
                             SharedPreferencesKeys.logged_in,
                             false
                         )
-                        //  getNavigator()?.onSuccess(logoutResponseModel?.gp_api_message)
+                        SharedPreferencesHelper.instance?.clear()
                         getNavigator()?.logout()
 
                     } else {

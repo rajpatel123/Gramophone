@@ -480,6 +480,10 @@
     <string name="product_category">Product Category</string>
     <string name="default_city_name">New Delhi</string>
     <string name="gram_cash_not_applicable">Gram cash not applicable here</string>
+    <string name="txt_checkout">Checkout special offers for you</string>
+    <string name="no_post_yet">No Post Yet!</string>
+    <string name="addedfarms">1 खेत जोड़ा गया है</string>
+    <string name="view_farms">अपने खेतों को देखें</string>
 
     <!--                     Menu strings                -->
     <string name="gram_cash_without_extra_space">ग्रामकैश</string>

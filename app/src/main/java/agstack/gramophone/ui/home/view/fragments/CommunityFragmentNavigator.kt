@@ -27,4 +27,5 @@ interface CommunityFragmentNavigator: BaseNavigator {
     fun setProfileImage(url:String)
     fun stopRefresh()
     fun hideViews()
+    fun selecttab(i: Int)
 }

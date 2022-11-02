@@ -13,11 +13,11 @@ import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
 import agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel
 import agstack.gramophone.utils.ShareSheetPresenter
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -50,6 +50,8 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         super.onCreate(savedInstanceState)
         shareSheetPresenter = this?.let { ShareSheetPresenter(requireActivity()) }
         communityViewModel.sorting.set("latest")
+        communityViewModel.getQuiz()
+        communityViewModel.from=""
 
     }
 
@@ -213,12 +215,18 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     }
 
     override fun stopRefresh() {
-        swipeRefresh.isRefreshing=false
+        swipeRefresh.isRefreshing = false
     }
 
     override fun hideViews() {
-        tvNoPost.visibility=GONE
-        rvPost.visibility= GONE
+        tvNoPost.visibility = GONE
+        rvPost.visibility = GONE
+    }
+
+    override fun selecttab(tabIndex: Int) {
+//        val tab = binding?.tabLayout?.getTabAt(tabIndex)
+//        tab!!.select()
+
     }
 
     override fun onImageSet(imageUrl: String, iv: ImageView) {
@@ -226,11 +234,20 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     }
 
     fun selectTab(from: String) {
-        if (from.equals("gramophone")){
-           // communityViewModel.loadData("self")
-            val tab = binding?.tabLayout?.getTabAt(4)
-            tab!!.select()
+        if (from.equals("gramophone")) {
+            communityViewModel.loadData("bookmark")
+            Handler().postDelayed(Runnable {
+                if (communityViewModel.myFavoriteCount!! >0){
+                    val tab = binding?.tabLayout?.getTabAt(5)
+                    tab!!.select()
+                }else{
+                    val tab = binding?.tabLayout?.getTabAt(4)
+                    tab!!.select()
+                }
+            },300)
         }
+
+
 
     }
 
