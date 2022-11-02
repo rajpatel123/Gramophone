@@ -4,6 +4,7 @@ import agstack.gramophone.R
 import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.LocaleManagerClass
+import agstack.gramophone.utils.hasInternetConnection
 import android.Manifest
 import android.app.Activity
 import android.content.Context
@@ -127,7 +128,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
 
     override fun isNetworkAvailable(): Boolean {
-        return true
+        return hasInternetConnection(this)
     }
 
     /**
