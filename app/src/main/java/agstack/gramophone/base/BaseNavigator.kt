@@ -59,4 +59,6 @@ interface BaseNavigator {
     fun checkPermission(permission: String): Boolean
 
     fun hideSoftKeyboard(view : View){}
+
+    fun showSoftKeyboard(view : View){}
 }

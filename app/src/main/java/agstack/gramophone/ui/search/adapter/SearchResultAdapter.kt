@@ -14,6 +14,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.amnix.xtension.extensions.toCamelCase
@@ -72,6 +73,12 @@ class SearchResultAdapter(
                             putParcelable("dataList", list[position])
                         })
                 }
+
+                if(productList.size > 2){
+                    holder.binding.viewAllProducts.visibility = View.VISIBLE
+                }else{
+                    holder.binding.viewAllProducts.visibility = View.GONE
+                }
             }
             is CropsViewHolder ->{
                 holder.binding.txtTile.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
@@ -91,6 +98,11 @@ class SearchResultAdapter(
                             putParcelable("dataList", list[position])
                         })
                 }
+                if(dataList.size > 3){
+                    holder.binding.viewAllCrops.visibility = View.VISIBLE
+                }else{
+                    holder.binding.viewAllCrops.visibility = View.GONE
+                }
             }
             is ProfilesViewHolder -> {
                 holder.binding.txtHeaderProfile.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
@@ -105,6 +117,11 @@ class SearchResultAdapter(
                         Bundle().apply {
                             putParcelable("dataList", list[position])
                         })
+                }
+                if(profileList.size > 2){
+                    holder.binding.viewAllProfiles.visibility = View.VISIBLE
+                }else{
+                    holder.binding.viewAllProfiles.visibility = View.GONE
                 }
             }
             is CropProblemsViewHolder ->{
@@ -126,6 +143,11 @@ class SearchResultAdapter(
                         Bundle().apply {
                             putParcelable("dataList", list[position])
                         })
+                }
+                if(dataList.size > 2){
+                    holder.binding.viewAll.visibility = View.VISIBLE
+                }else{
+                    holder.binding.viewAll.visibility = View.GONE
                 }
             }
             is CompaniesViewHolder-> {
@@ -149,6 +171,11 @@ class SearchResultAdapter(
                             putParcelable("dataList", list[position])
                         })
                 }
+                if(dataList.size > 3){
+                    holder.binding.viewAll.visibility = View.VISIBLE
+                }else{
+                    holder.binding.viewAll.visibility = View.GONE
+                }
             }
             is ProductCategoryViewHolder ->{
                 holder.binding.tvTitleProductCategory.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
@@ -171,6 +198,11 @@ class SearchResultAdapter(
                             putParcelable("dataList", list[position])
                         })
                 }
+                if(dataList.size > 3){
+                    holder.binding.viewAll.visibility = View.VISIBLE
+                }else{
+                    holder.binding.viewAll.visibility = View.GONE
+                }
             }
             is CropCategoryViewHolder-> {
                 holder.binding.tvTitle.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
@@ -191,6 +223,11 @@ class SearchResultAdapter(
                         Bundle().apply {
                             putParcelable("dataList", list[position])
                         })
+                }
+                if(dataList.size > 3){
+                    holder.binding.viewAll.visibility = View.VISIBLE
+                }else{
+                    holder.binding.viewAll.visibility = View.GONE
                 }
             }
             is PostsViewHolder -> {
@@ -214,6 +251,11 @@ class SearchResultAdapter(
                         Bundle().apply {
                             putParcelable("dataList", list[position])
                         })
+                }
+                if(postList.size > 3){
+                    holder.binding.viewAllPosts.visibility = View.VISIBLE
+                }else{
+                    holder.binding.viewAllPosts.visibility = View.GONE
                 }
             }
         }

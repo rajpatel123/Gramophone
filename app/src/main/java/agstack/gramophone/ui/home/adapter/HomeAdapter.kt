@@ -9,10 +9,7 @@ import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.farm.adapter.FarmAdapter
 import agstack.gramophone.ui.farm.model.FarmResponse
-import agstack.gramophone.ui.farm.view.AddFarmActivity
-import agstack.gramophone.ui.farm.view.SelectCropActivity
-import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
-import agstack.gramophone.ui.farm.view.WhyAddFarmActivity
+import agstack.gramophone.ui.farm.view.*
 import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
@@ -365,54 +362,38 @@ class HomeAdapter(
             is FarmsViewHolder -> {
                 holder.binding.itemView.visibility = View.VISIBLE
 
+                var farmList: List<List<agstack.gramophone.ui.farm.model.Data>>? = null
+
                 if (farmResponse?.gp_api_response_data?.customer_farm != null &&
                     farmResponse?.gp_api_response_data?.customer_farm?.data?.isNotNullOrEmpty() == true
-                ) {
-                    val customerFarmList = farmResponse?.gp_api_response_data?.customer_farm?.data
-                    holder.binding.rvFarms.adapter = FarmAdapter(
-                        customerFarmList,
-                        {
-
-                        },
-                        {
-                            val selectedCrop = CropData(
-                                cropId = it[0].crop_id,
-                                cropName = it[0].crop_name,
-                                cropImage = it[0].crop_image,
-                            )
-                            openActivity(
-                                holder.binding.itemView.context,
-                                AddFarmActivity::class.java,
-                                Bundle().apply {
-                                    putParcelable("selectedCrop", selectedCrop)
-                                })
-                        },
-                    )
-                    holder.binding.addFarmWrapper.addFarmTitleLayout.setOnClickListener {
-                        openActivity(
-                            holder.binding.itemView.context,
-                            SelectCropActivity::class.java,
-                            null
-                        )
-                    }
-                    holder.binding.addFarmWrapper.txtWhyAddFarm.setOnClickListener {
-                        openActivity(
-                            holder.binding.itemView.context,
-                            WhyAddFarmActivity::class.java,
-                            null
-                        )
-                    }
-
-                } else if (farmResponse?.gp_api_response_data?.model_farm != null &&
+                ){
+                    farmList = farmResponse?.gp_api_response_data?.customer_farm?.data
+                }else if (farmResponse?.gp_api_response_data?.model_farm != null &&
                     farmResponse?.gp_api_response_data?.model_farm?.data?.isNotNullOrEmpty() == true
                 ) {
-                    val modelFarmList = farmResponse?.gp_api_response_data?.model_farm?.data
+                    farmList = farmResponse?.gp_api_response_data?.model_farm?.data
+                }else{
+                    holder.binding.itemView.visibility = View.VISIBLE
+                }
+
+                if (farmList != null && farmList.isNotEmpty()) {
                     holder.binding.rvFarms.adapter = FarmAdapter(
-                        modelFarmList,
-                        {
+                        farmList,
+                        headerListener = {
 
                         },
-                        {
+                        contentListener = {
+                            openActivity(
+                                holder.binding.itemView.context,
+                                CropGroupExplorerActivity::class.java,
+                                Bundle().apply {
+                                    putParcelableArrayList(
+                                        "cropList",
+                                        it as ArrayList<agstack.gramophone.ui.farm.model.Data>
+                                    )
+                                })
+                        },
+                        footerListener = {
                             val selectedCrop = CropData(
                                 cropId = it[0].crop_id,
                                 cropName = it[0].crop_name,
@@ -426,23 +407,21 @@ class HomeAdapter(
                                 })
                         },
                     )
+                }
 
-                    holder.binding.addFarmWrapper.addFarmTitleLayout.setOnClickListener {
-                        openActivity(
-                            holder.binding.itemView.context,
-                            SelectCropActivity::class.java,
-                            null
-                        )
-                    }
-                    holder.binding.addFarmWrapper.txtWhyAddFarm.setOnClickListener {
-                        openActivity(
-                            holder.binding.itemView.context,
-                            WhyAddFarmActivity::class.java,
-                            null
-                        )
-                    }
-                } else {
-                    holder.binding.itemView.visibility = View.VISIBLE
+                holder.binding.addFarmWrapper.addFarmTitleLayout.setOnClickListener {
+                    openActivity(
+                        holder.binding.itemView.context,
+                        SelectCropActivity::class.java,
+                        null
+                    )
+                }
+                holder.binding.addFarmWrapper.txtWhyAddFarm.setOnClickListener {
+                    openActivity(
+                        holder.binding.itemView.context,
+                        WhyAddFarmActivity::class.java,
+                        null
+                    )
                 }
 
                 holder.binding.viewAllFarms.setOnClickListener {
