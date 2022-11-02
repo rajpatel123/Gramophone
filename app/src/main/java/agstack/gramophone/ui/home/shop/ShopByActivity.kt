@@ -82,20 +82,26 @@ class ShopByActivity :
 
     override fun setShopByCompanyAdapter(
         shopByCompanyAdapter: ShopByCompanyAdapter,
-        id: (String) -> Unit,
     ) {
-        shopByCompanyAdapter.onItemClicked = id
         viewDataBinding.rvShopBy.layoutManager = GridLayoutManager(this, 3)
         viewDataBinding.rvShopBy.setHasFixedSize(true)
         viewDataBinding.rvShopBy.adapter = shopByCompanyAdapter
     }
 
 
-    override fun openShopByDetailActivity(storeId: String, storeName: String, storeImage: String) {
+    override fun openFeaturedActivityForShopByStore(storeId: String, storeName: String, storeImage: String) {
         openActivity(FeaturedProductActivity::class.java, Bundle().apply {
             putString(Constants.STORE_ID, storeId)
             putString(Constants.STORE_NAME, storeName)
             putString(Constants.STORE_IMAGE, storeImage)
+        })
+    }
+
+    override fun openFeaturedActivityForShopByCompany(companyId: String, companyName: String, companyImage: String) {
+        openActivity(FeaturedProductActivity::class.java, Bundle().apply {
+            putString(Constants.COMPANY_ID, companyId)
+            putString(Constants.COMPANY_NAME, companyName)
+            putString(Constants.COMPANY_IMAGE, companyImage)
         })
     }
 
