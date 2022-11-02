@@ -18,7 +18,7 @@ class SettingsActivity :
     SettingsNavigator {
 
     private val settingsViewModel: SettingsViewModel by viewModels()
-
+    var isUpdate: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         settingsViewModel.initData()
@@ -32,7 +32,16 @@ class SettingsActivity :
     override fun onResume() {
         super.onResume()
         settingsViewModel.setLanguageName()
+        if (isUpdate){
+            isUpdate=false
+            openAndFinishActivity(SettingsActivity::class.java)
+        }
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isUpdate=true
     }
 
     override fun getLayoutID(): Int = R.layout.activity_settings
