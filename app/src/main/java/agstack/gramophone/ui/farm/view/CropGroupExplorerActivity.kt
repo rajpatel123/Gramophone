@@ -52,19 +52,25 @@ class CropGroupExplorerActivity :
     }
 
     override fun setAdapter(cropList: List<Data>) {
-        viewDataBinding.rvCrops.adapter = CropGroupExplorerAdapter(cropList, {}, {
+        viewDataBinding.rvCrops.adapter = CropGroupExplorerAdapter(cropList,
+            headerListener = {
 
-            val selectedCrop = CropData(
-                cropId = it.crop_id,
-                cropName = it.crop_name,
-                cropImage = it.crop_image,
-            )
-            openActivity(
-                AddFarmActivity::class.java,
-                Bundle().apply {
-                    putParcelable("selectedCrop", selectedCrop)
-                })
-        })
+            },
+            contentListener = {
+
+            },
+            footerListener = {
+                val selectedCrop = CropData(
+                    cropId = it.crop_id,
+                    cropName = it.crop_name,
+                    cropImage = it.crop_image,
+                )
+                openActivity(
+                    AddFarmActivity::class.java,
+                    Bundle().apply {
+                        putParcelable("selectedCrop", selectedCrop)
+                    })
+            })
     }
 
 }

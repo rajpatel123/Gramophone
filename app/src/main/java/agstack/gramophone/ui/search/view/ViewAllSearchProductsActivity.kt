@@ -4,10 +4,15 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityViewAllSearchProductsBinding
+import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.search.adapter.ProductsAdapter
 import agstack.gramophone.ui.search.model.Data
 import agstack.gramophone.ui.search.navigator.ViewAllSearchProductsNavigator
 import agstack.gramophone.ui.search.viewmodel.ViewAllSearchProductsViewModel
+import agstack.gramophone.utils.Constants
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -29,7 +34,16 @@ class ViewAllSearchProductsActivity :
         productList?.let {
             val gridLayoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
             viewDataBinding.recyclerViewProducts.layoutManager = gridLayoutManager
-            viewDataBinding.recyclerViewProducts.adapter = ProductsAdapter(productList){}
+            viewDataBinding.recyclerViewProducts.adapter = ProductsAdapter(productList){
+                openActivity(this@ViewAllSearchProductsActivity,
+                    ProductDetailsActivity::class.java,
+                    Bundle().apply {
+                        putParcelable(
+                            Constants.PRODUCT,
+                            ProductData(it)
+                        )
+                    })
+            }
         }
     }
 
@@ -52,5 +66,13 @@ class ViewAllSearchProductsActivity :
     override fun getViewModel(): ViewAllSearchProductsViewModel {
         val viewModel: ViewAllSearchProductsViewModel by viewModels()
         return viewModel
+    }
+
+    fun <T> openActivity(context: Context, cls: Class<T>, extras: Bundle?) {
+        Intent(context, cls).apply {
+            if (extras != null)
+                putExtras(extras)
+            context.startActivity(this)
+        }
     }
 }

@@ -4,6 +4,7 @@ import agstack.gramophone.R
 import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.LocaleManagerClass
+import agstack.gramophone.utils.hasInternetConnection
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -85,8 +86,7 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     ): B
 
     override fun isNetworkAvailable(): Boolean {
-        //  val info = ConnectivityManager?.OnNetworkActiveListener {  }
-        return true
+        return hasInternetConnection(requireContext())
     }
 
     override fun <T> openActivity(cls: Class<T>, extras: Bundle?) {

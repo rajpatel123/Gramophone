@@ -6,8 +6,12 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.databinding.ActivityViewAllSearchCropProblemsBinding
+import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.search.adapter.CropProblemsAdapter
 import agstack.gramophone.ui.search.model.Data
+import agstack.gramophone.utils.Constants
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -28,7 +32,15 @@ class ViewAllSearchCropProblemsActivity :
         items?.let {
             val gridLayoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
             viewDataBinding.rvCropProblems.layoutManager = gridLayoutManager
-            viewDataBinding.rvCropProblems.adapter = CropProblemsAdapter(items){id, name, image ->}
+            viewDataBinding.rvCropProblems.adapter = CropProblemsAdapter(items){id, name, image ->
+                openActivity(this@ViewAllSearchCropProblemsActivity,
+                    SubCategoryActivity::class.java,
+                    Bundle().apply {
+                        putString(Constants.CATEGORY_ID, id)
+                        putString(Constants.CATEGORY_NAME, name)
+                        putString(Constants.CATEGORY_IMAGE, image)
+                    })
+            }
         }
     }
 
@@ -51,5 +63,13 @@ class ViewAllSearchCropProblemsActivity :
     override fun getViewModel(): BaseViewModel<BaseNavigator> {
         val viewModel: BaseViewModel<BaseNavigator> by viewModels()
         return viewModel
+    }
+
+    fun <T> openActivity(context: Context, cls: Class<T>, extras: Bundle?) {
+        Intent(context, cls).apply {
+            if (extras != null)
+                putExtras(extras)
+            context.startActivity(this)
+        }
     }
 }

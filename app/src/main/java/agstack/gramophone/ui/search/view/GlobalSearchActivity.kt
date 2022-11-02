@@ -14,6 +14,8 @@ import agstack.gramophone.ui.search.viewmodel.GlobalSearchViewModel
 import agstack.gramophone.utils.RxSearchObservable
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.activity.viewModels
 import com.amnix.xtension.extensions.toCamelCase
@@ -45,7 +47,19 @@ class GlobalSearchActivity :
         viewDataBinding.recyclerViewSearchResult.adapter = SearchResultAdapter(searchResultList) {
             showToast(it)
         }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            viewDataBinding.edtSearch.requestFocus();
+            showSoftKeyboard(viewDataBinding.edtSearch)
+        }, 300)
+
     }
+
+    override fun onPause() {
+        super.onPause()
+        hideSoftKeyboard(viewDataBinding.edtSearch)
+    }
+
     fun getBundle(): Bundle? {
         return intent.extras
     }
@@ -110,13 +124,25 @@ class GlobalSearchActivity :
         finishActivity()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onClearSearchClick() {
         viewDataBinding.edtSearch.text?.clear()
+
+        //clear suggestion list
+        suggestionList.clear()
+        viewDataBinding.recyclerViewSuggestions.adapter?.notifyDataSetChanged()
+        viewDataBinding.suggestionsResultWrapper.visibility = View.VISIBLE
+
+        // clear and hide search result
+        searchResultList.clear()
+        viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
+        viewDataBinding.recyclerViewSearchResult.visibility = View.GONE
+        removeTabs()
     }
 
     private fun searchSuggestions() {
         RxSearchObservable.fromView(viewDataBinding.edtSearch)
-            .debounce(500, TimeUnit.MILLISECONDS)
+            .debounce(800, TimeUnit.MILLISECONDS)
             .filter { !it.isNullOrEmpty() }
             .map { s -> s.toString().lowercase(Locale.getDefault()).trim() }
            /* .distinctUntilChanged()*/

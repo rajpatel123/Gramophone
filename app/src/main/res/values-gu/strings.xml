@@ -336,7 +336,6 @@
     <string name="enter_10_digit_mob">Enter 10 digit mobile number</string>
 
     <string name="weather">Weather</string>
-    <string name="weather_city">Weather</string>
     <string name="powered_by">Powered by</string>
     <string name="accuweather">AccuWeather</string>
     <string name="forecast_for_the_next_days">Forecast for the next few days</string>
@@ -439,8 +438,8 @@
     <string name="join_community">Join 5000+ farmers\nand get quick solution\nfrom agri experts</string>
     <string name="suggestions">Suggestions</string>
     <string name="search_here">Search here</string>
-    <string name="sorry_no_result_found">Sorry!No result found!</string>
-    <string name="please_try_another_way">We\'re sorry what you are looking for. Please try another way.</string>
+    <string name="sorry_no_result_found">Sorry! No result found!</string>
+    <string name="please_try_another_way">We\'re sorry what you are looking for.\nPlease try another way.</string>
     <string name="myfarm">My Farms(%d)</string>
     <string name="no_connection">No Connection!</string>
     <string name="no_internet_message">There seems to be no internet connection. Try checking things out</string>
@@ -453,7 +452,7 @@
     <string name="crop_duration">"बुआई का समय: %1$s"</string>
     <string name="crop_sowing_date">"बुआई की तारीख: %1$s"</string>
     <string name="farm_area">"खेत का एरिया: %1$s"</string>
-    <string name="stage_name">"वर्तमान चरण: %1$s &#8226; %2$s"</string>
+    <string name="stage_name">"वर्तमान चरण: %1$s Days &#8226; %2$s"</string>
     <string name="posts">Posts</string>
     <string name="today_s_weather">Today\'s Weather</string>
     <string name="followers_with_count">Followers(%d)</string>

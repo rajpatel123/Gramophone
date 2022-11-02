@@ -54,7 +54,7 @@ class ShopByViewModel @Inject constructor(
                         bundle.getParcelable<StoreResponse>(Constants.SHOP_BY_STORE) as StoreResponse
                     getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.shop_by_store)!!)
                     getNavigator()?.setShopByStoresAdapter(ShopByStoresAdapter(storeResponse.gpApiResponseData?.storeList) { id, name, image ->
-                        getNavigator()?.openShopByDetailActivity(id, name, image)
+                        getNavigator()?.openFeaturedActivityForShopByStore(id, name, image)
                     })
                 }
                 Constants.SHOP_BY_COMPANY -> {
@@ -62,11 +62,9 @@ class ShopByViewModel @Inject constructor(
                     val companyResponse: CompanyResponse =
                         bundle.getParcelable<CompanyResponse>(Constants.SHOP_BY_COMPANY) as CompanyResponse
                     getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.shop_by_company)!!)
-                    getNavigator()?.setShopByCompanyAdapter(ShopByCompanyAdapter(companyResponse.gpApiResponseData?.companiesList) {
-                        /* getNavigator()?.openShopByDetailActivity(it, "", "")*/
-                    }) {
-                        /*getNavigator()?.openShopByDetailActivity(it, "", "")*/
-                    }
+                    getNavigator()?.setShopByCompanyAdapter(ShopByCompanyAdapter(companyResponse.gpApiResponseData?.companiesList) { id, name, image ->
+                        getNavigator()?.openFeaturedActivityForShopByCompany(id, name, image)
+                    })
                 }
             }
         }
@@ -84,7 +82,7 @@ class ShopByViewModel @Inject constructor(
                         ) {
                             progress.value = false
                             getNavigator()?.setShopByStoresAdapter(ShopByStoresAdapter(response.body()?.gpApiResponseData?.storeList) { id, name, image ->
-                                getNavigator()?.openShopByDetailActivity(id, name, image)
+                                getNavigator()?.openFeaturedActivityForShopByStore(id, name, image)
                             })
                         }
                     }
