@@ -281,10 +281,14 @@ class HomeAdapter(
                     val tempCompanyList: List<CompanyData> = if (companyList.size >= 6)
                         companyList.subList(0, 6)
                     else companyList
-                    val companyAdapter = ShopByCompanyAdapter(tempCompanyList) {
+                    val companyAdapter = ShopByCompanyAdapter(tempCompanyList) { id, name, image ->
                         openActivity(holder.itemView.context,
                             FeaturedProductActivity::class.java,
-                            null)
+                            Bundle().apply {
+                                putString(Constants.COMPANY_ID, id)
+                                putString(Constants.COMPANY_NAME, name)
+                                putString(Constants.COMPANY_IMAGE, image)
+                            })
                     }
                     holder.binding.rvShopByCompany.adapter = companyAdapter
                     holder.binding.viewAllCompanies.setOnClickListener {

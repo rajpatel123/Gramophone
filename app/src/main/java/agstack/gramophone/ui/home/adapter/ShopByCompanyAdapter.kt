@@ -8,9 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class ShopByCompanyAdapter(private val companyList: List<CompanyData>?,
-                           private val listener: (String) -> Unit) :
+                           private val listener: (String, String, String) -> Unit) :
     RecyclerView.Adapter<ShopByCompanyAdapter.CustomViewHolder>() {
-    var onItemClicked: ((id: String) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         return CustomViewHolder(
@@ -21,8 +20,7 @@ class ShopByCompanyAdapter(private val companyList: List<CompanyData>?,
     override fun onBindViewHolder(holder: CustomViewHolder, i: Int) {
         holder.binding.model = companyList?.get(i)
         holder.binding.flCompany.setOnClickListener {
-            /*onItemClicked?.invoke(companyList?.get(i)?.companyId.toString())*/
-            listener.invoke(companyList?.get(i)?.companyId.toString())
+            listener.invoke(companyList?.get(i)?.companyId.toString(), companyList?.get(i)?.companyName!!, companyList[i].companyImage!!)
         }
     }
 
