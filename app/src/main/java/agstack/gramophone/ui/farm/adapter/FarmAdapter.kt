@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 open class FarmAdapter(
     farmItemList: List<List<Data>>?,
     private val headerListener: (List<Data>) -> Unit,
+    private val contentListener: (List<Data>) -> Unit,
     private val footerListener: (List<Data>) -> Unit,
 ) : RecyclerView.Adapter<FarmAdapter.FarmViewHolder>() {
     private var farmList = ArrayList<List<Data>>()
@@ -33,7 +34,7 @@ open class FarmAdapter(
         }
 
         holder.binding.contentLayout.setOnClickListener {
-            headerListener.invoke(farmList[position])
+            contentListener.invoke(farmList[position])
         }
 
         holder.binding.footerLayout.setOnClickListener {

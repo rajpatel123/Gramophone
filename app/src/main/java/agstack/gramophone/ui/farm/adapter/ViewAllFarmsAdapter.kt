@@ -4,6 +4,7 @@ import agstack.gramophone.ui.farm.model.Data
 
 class ViewAllFarmsAdapter(
     farmItemList: List<List<Data>>?,
-    listener: (List<Data>) -> Unit,
-    listener2: (List<Data>) -> Unit
-) : FarmAdapter(farmItemList, listener, listener2)
+    headerListener: (List<Data>) -> Unit,
+    contentListener: (List<Data>) -> Unit,
+    footerListener: (List<Data>) -> Unit,
+) : FarmAdapter(farmItemList, headerListener, contentListener, footerListener)

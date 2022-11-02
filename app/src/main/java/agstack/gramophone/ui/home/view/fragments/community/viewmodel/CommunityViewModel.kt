@@ -215,7 +215,7 @@ class CommunityViewModel @Inject constructor(
 
     private fun reportPost() {
 
-        if (menuClickedData.author.communityUserType.equals("admin")) {
+        if ("admin".equals(menuClickedData.author.communityUserType)) {
             getNavigator()?.showToast(getNavigator()?.getMessage(R.string.can_not_block))
             return
         }
