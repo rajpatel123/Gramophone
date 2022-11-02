@@ -39,6 +39,9 @@
         android:theme="@style/SplashTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.favourite.view.FavouriteProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.followings.view.FollowerFollowedActivity"
             android:exported="false" />
         <activity
@@ -258,20 +261,27 @@
         <activity
             android:name=".ui.articles.ArticlesWebViewActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.search.view.ViewAllSearchProductsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.search.view.ViewAllSearchCropsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.search.view.ViewAllSearchProfilesActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.search.view.ViewAllSearchCropProblemsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.search.view.ViewAllSearchCompaniesActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.search.view.ViewAllSearchProductCategoriesActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.search.view.ViewAllSearchCropCategoriesActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.search.view.ViewAllSearchProductsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.search.view.ViewAllSearchCropsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.search.view.ViewAllSearchProfilesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.search.view.ViewAllSearchCropProblemsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.search.view.ViewAllSearchCompaniesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.search.view.ViewAllSearchProductCategoriesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.search.view.ViewAllSearchCropCategoriesActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".pushnotification.MyFirebaseMessagingService" />
         <service
