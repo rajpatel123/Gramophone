@@ -272,6 +272,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.search.view.ViewAllSearchCropCategoriesActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".ui.tv.GramophoneTVActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".pushnotification.MyFirebaseMessagingService" />
         <service

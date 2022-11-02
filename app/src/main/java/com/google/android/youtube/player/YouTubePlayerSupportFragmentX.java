@@ -1,4 +1,8 @@
-package agstack.gramophone.utils;
+package com.google.android.youtube.player;
+
+/*
+ * Please create this directories schema com.google.android.youtube.player and post the file there
+ */
 
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -6,11 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.android.youtube.player.internal.ab;
 
 public class YouTubePlayerSupportFragmentX extends Fragment implements YouTubePlayer.Provider {
@@ -49,8 +52,8 @@ public class YouTubePlayerSupportFragmentX extends Fragment implements YouTubePl
         this.b = var1 != null ? var1.getBundle("YouTubePlayerSupportFragment.KEY_PLAYER_VIEW_STATE") : null;
     }
 
-    public View onCreateView(LayoutInflater var1, ViewGroup var2, Bundle var3) {
-        this.c = new YouTubePlayerView(this.getActivity(), (AttributeSet)null, 0, this.a);
+    public View onCreateView(@NonNull LayoutInflater var1, ViewGroup var2, Bundle var3) {
+        this.c = new YouTubePlayerView(getActivity(), (AttributeSet)null, 0, this.a);
         this.a();
         return this.c;
     }
