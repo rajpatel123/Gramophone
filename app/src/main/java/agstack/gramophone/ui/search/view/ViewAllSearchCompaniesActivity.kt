@@ -6,9 +6,13 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.databinding.ActivityViewAllSearchCompaniesBinding
+import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.search.adapter.CompaniesAdapter
 import agstack.gramophone.ui.search.adapter.CropProblemsAdapter
 import agstack.gramophone.ui.search.model.Data
+import agstack.gramophone.utils.Constants
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -29,7 +33,15 @@ class ViewAllSearchCompaniesActivity :
         items?.let {
             val gridLayoutManager = GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
             viewDataBinding.rvCompanies.layoutManager = gridLayoutManager
-            viewDataBinding.rvCompanies.adapter = CompaniesAdapter(items){}
+            viewDataBinding.rvCompanies.adapter = CompaniesAdapter(items){id, name, image ->
+                openActivity(this@ViewAllSearchCompaniesActivity,
+                    FeaturedProductActivity::class.java,
+                    Bundle().apply {
+                        putString(Constants.COMPANY_ID, id)
+                        putString(Constants.COMPANY_NAME, name)
+                        putString(Constants.COMPANY_IMAGE, image)
+                    })
+            }
         }
     }
 
@@ -52,5 +64,13 @@ class ViewAllSearchCompaniesActivity :
     override fun getViewModel(): BaseViewModel<BaseNavigator> {
         val viewModel: BaseViewModel<BaseNavigator> by viewModels()
         return viewModel
+    }
+
+    fun <T> openActivity(context: Context, cls: Class<T>, extras: Bundle?) {
+        Intent(context, cls).apply {
+            if (extras != null)
+                putExtras(extras)
+            context.startActivity(this)
+        }
     }
 }

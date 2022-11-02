@@ -20,8 +20,8 @@
     <string name="complete_action_using">Complete Action Using</string>
     <string name="select_image_title">Select image</string>
     <string name="crop_image_title_text">Crop</string>
-    <string name="unit_convertor">Unit Converter</string>
-    <string name="feedback">Feedback</string>
+    <string name="unit_convertor">युनिट कनवर्टर</string>
+    <string name="feedback">फिडबॅक</string>
     <string name="leave_feedback">Leave Feedback</string>
     <string name="whatcanweimprove">What can we improve?</string>
     <string name="send">Send</string>
@@ -175,7 +175,7 @@
 
     <string name="ratingandreviews"><![CDATA[Rating & Reviews]]></string>
     <string name="select_state">Select your state</string>
-    <string name="other">Other</string>
+    <string name="other">इतर</string>
     <string name="select_state_error">Please select state</string>
     <string name="_state">Select State</string>
     <string name="complete_address">Share your complete address</string>
@@ -245,13 +245,13 @@
     <string name="unable_to_get_number">Unable to get phone number</string>
     <string name="referral_code">"Referral Code "</string>
     <string name="applied">" Applied"</string>
-    <string name="refer_n_earn">Refer and Earn</string>
-    <string name="invite_and_earn">Invite your friends and earn ...</string>
-    <string name="order_desc">all orders will be managed here</string>
-    <string name="tv">Gramophone TV</string>
+    <string name="refer_n_earn">रेफर करा आणि कमवा</string>
+    <string name="invite_and_earn">आपल्या मित्रांना आमंत्रित करा आणि कमवा ...</string>
+    <string name="order_desc">तुमच्या सर्व ऑर्डर्स येथून मॅनेज केल्या जातील.</string>
+    <string name="tv">ग्रामोफोन टीव्ही</string>
     <string name="settings">सेटिंग</string>
     <string name="manage_settings">आपल्या अँपची सेटिंग इथून मॅनेज करा</string>
-    <string name="tools">TOOLS</string>
+    <string name="tools">साधने</string>
     <string name="language">भाषा</string>
     <string name="english">English</string>
     <string name="logout">लॉगआउट करा</string>
@@ -261,8 +261,8 @@
     <string name="more">अजून पहा</string>
     <string name="app_feature">अ‍ॅपची वैशिष्ट्ये</string>
     <string name="terms_of_service">सेवेच्या अटी</string>
-    <string name="save_language">Save Language</string>
-    <string name="offers">भाषा सेव करा</string>
+    <string name="save_language">भाषा सेव करा</string>
+    <string name="offers">ऑफर</string>
     <string name="share_app">अ‍ॅप शेअर करा</string>
     <string name="app_url"><![CDATA[https://play.google.com/store/apps/details?id=agstack.gramophone&hl=en_IN&gl=US]]></string>
     <string name="share_app_link">Share App link!</string>
@@ -277,7 +277,7 @@
     <string name="price_close_bracket">&#160;Items)</string>
     <string name="cash_on_delivery">Cash on Delivery</string>
     <string name="dialing_code">+91&#160;</string>
-    <string name="my_orders">My Orders</string>
+    <string name="my_orders">माझ्या ऑर्डर्स </string>
     <string name="my_order">My Order</string>
     <string name="address_note"><![CDATA[<b>Note: </b>Address will be taken from you after placing the order]]></string>
     <string name="no_recent_order">When you place your first order, it will appear here</string>
@@ -335,8 +335,7 @@
     <string name="please_enter_6_digit_otp">Please enter 6 digit OTP</string>
     <string name="enter_10_digit_mob">Enter 10 digit mobile number</string>
 
-    <string name="weather">Weather</string>
-    <string name="weather_city">Weather</string>
+    <string name="weather">हवामान</string>
     <string name="powered_by">Powered by</string>
     <string name="accuweather">AccuWeather</string>
     <string name="forecast_for_the_next_days">Forecast for the next few days</string>
@@ -442,8 +441,8 @@
     <string name="join_community">Join 5000+ farmers\nand get quick solution\nfrom agri experts</string>
     <string name="suggestions">Suggestions</string>
     <string name="search_here">Search here</string>
-    <string name="sorry_no_result_found">Sorry!No result found!</string>
-    <string name="please_try_another_way">We\'re sorry what you are looking for. Please try another way.</string>
+    <string name="sorry_no_result_found">Sorry! No result found!</string>
+    <string name="please_try_another_way">We\'re sorry what you are looking for.\Please try another way.</string>
     <string name="farmer_image">farmer image</string>
     <string name="date_of_sowing">Date of sowing</string>
     <string name="area">Area</string>
@@ -453,7 +452,7 @@
     <string name="crop_duration">"बुआई का समय: %1$s"</string>
     <string name="crop_sowing_date">"बुआई की तारीख: %1$s"</string>
     <string name="farm_area">"खेत का एरिया: %1$s"</string>
-    <string name="stage_name">"वर्तमान चरण: %1$s &#8226; %2$s"</string>
+    <string name="stage_name">"वर्तमान चरण: %1$s Days &#8226; %2$s"</string>
     <string name="posts">Posts</string>
     <string name="today_s_weather">Today\'s Weather</string>
     <string name="followers_with_count">Followers(%d)</string>
@@ -473,4 +472,13 @@
     <string name="view_farms">अपने खेतों को देखें</string>
     <string name="favourite_products">Favorite Products</string>
 
+    <!--                     Menu strings                -->
+    <string name="gram_cash_without_extra_space">ग्रामकॅश</string>
+    <string name="my_crop_farms">माझी पिके आणि शेत</string>
+    <string name="manage_all_your_crops_and_farms">तुमची सर्व पिके आणि शेतं व्यवस्थापित करा</string>
+    <string name="new_text">नवीन</string>
+    <string name="for_you">तुमच्यासाठी</string>
+    <string name="articles">लेख</string>
+    <string name="mandi_bhav">बाजारभाव</string>
+    <string name="watch_app_demo">अ‍ॅपचा डेमो पहा</string>
 </resources>

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class CompaniesAdapter  (
     val list: List<Item>,
-    private val listener: (String) -> Unit,
+    private val listener: (String, String?, String?) -> Unit,
 ): RecyclerView.Adapter<CompaniesAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -16,11 +16,11 @@ class CompaniesAdapter  (
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val category = list[position]
-        holder.binding.item = category
+        val item = list[position]
+        holder.binding.item = item
 
         holder.binding.companyContainer.setOnClickListener {
-            listener.invoke(category.id!!)
+            listener.invoke(item.id!!, item.name, item.image)
         }
     }
 

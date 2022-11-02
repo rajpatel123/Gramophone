@@ -27,6 +27,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.core.view.forEach
 import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.google.android.material.appbar.AppBarLayout
@@ -81,6 +82,17 @@ class FeaturedProductActivity :
                 viewDataBinding.collapsingToolbar.title = ""
             }
         })
+    }
+
+    /*
+    * showSortMenuInToolbarForShopByCompanyOnly
+    */
+    private fun showSortMenuInToolbar() {
+        viewDataBinding.toolbar.menu.forEach {
+            if (subCategoryViewModel.showSortFilterInToolbar.value == true && it.itemId == R.id.item_sort) {
+                it.isVisible = true
+            }
+        }
     }
 
     override fun onClick(view: View?) {
@@ -143,7 +155,23 @@ class FeaturedProductActivity :
             R.id.item_cart -> {
                 openActivity(CartActivity::class.java)
             }
-
+            R.id.item_sort -> {
+                val bottomSheet = BottomSheetSortByDialog(subCategoryViewModel.sortDataList) {
+                    sortBy = it
+                    subCategoryViewModel.getAllProducts(sortBy,
+                        subCategoryIdsArray,
+                        brandIdsArray,
+                        cropIdsArray,
+                        technicalIdsArray,
+                        Constants.API_DATA_LIMITS_IN_ONE_TIME,
+                        "1")
+                }
+                bottomSheet.isCancelable = false
+                bottomSheet.show(
+                    supportFragmentManager,
+                    "bottomSheet"
+                )
+            }
         }
         return true
     }
@@ -171,6 +199,7 @@ class FeaturedProductActivity :
         productListAdapter.onAddToCartClick = onAddToCartClick
         productListAdapter.onProductDetailClick = onProductDetailClick
         viewDataBinding.rvProduct.adapter = productListAdapter
+        showSortMenuInToolbar()
     }
 
     override fun openProductDetailsActivity(productData: ProductData) {
