@@ -136,8 +136,8 @@ class CartViewModel @Inject constructor(
                         totalAmount.value = response.body()?.gp_api_response_data?.total
                         gramCash.value = response.body()?.gp_api_response_data?.gramcash_coins
 
-                        val applicableGramCashCoins: Int = 10
-                            //response.body()?.gp_api_response_data?.applicable_gramcash!!
+                        val applicableGramCashCoins: Int =
+                            response.body()?.gp_api_response_data?.applicable_gramcash!!
                         val gramCashCoins: Int =
                             response.body()?.gp_api_response_data?.gramcash_coins!!
 
