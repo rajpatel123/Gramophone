@@ -16,6 +16,7 @@ import agstack.gramophone.ui.comments.model.sendcomment.SendCommentResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.create.CreatePostResponseModel
 import agstack.gramophone.ui.followings.model.FollowerResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
+import agstack.gramophone.ui.home.view.fragments.community.model.reportpost.ReportUserPostResponseModel
 import agstack.gramophone.ui.othersporfile.model.CommunityUserPostRequestModel
 import agstack.gramophone.ui.othersporfile.model.ProfileDataResponse
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
@@ -120,7 +121,7 @@ class CommunityRepositoryImpl @Inject constructor(
         }
 
 
-    override suspend fun reportPost(post: ReportUserRequestModel): Response<CommentsResponseModel> =
+    override suspend fun reportPost(post: ReportUserRequestModel): Response<ReportUserPostResponseModel> =
         withContext(
             Dispatchers.IO
         ) {
