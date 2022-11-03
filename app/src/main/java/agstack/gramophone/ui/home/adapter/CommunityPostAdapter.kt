@@ -150,7 +150,7 @@ class CommunityPostAdapter(
 
         holder.itemPostBinding.tvLikes.text=data.likesCount.toString()+" "+context.getString(R.string.like)
         holder.itemPostBinding.tvComment.text=data.commentsCount.toString()+" "+context.getString(R.string.comment_count)
-        if (data?.tags != null && data?.tags.size > 0) {
+        if (data.tags.isNotEmpty()) {
             holder.itemPostBinding.llTVTag.removeAllViews()
             data.tags.forEach {
                 val view = inflater.inflate(R.layout.item_tags, null)
@@ -159,8 +159,8 @@ class CommunityPostAdapter(
             }
         }
 
-        if (data?.lastComment != null && data.lastComment.author.size > 0) {
-            if (data.lastComment.author.size > 0 && data?.lastComment.author[0].photoUrl != null) {
+        if (data.lastComment.author.isNotEmpty()) {
+            if (data.lastComment.author.isNotEmpty() && data.lastComment.author[0].photoUrl != null) {
                 setImage.onImageSet(
                     data?.lastComment.author[0].photoUrl,
                     holder.itemPostBinding.ivCommentUsersProfile
