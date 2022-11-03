@@ -63,8 +63,8 @@
                     android:lineSpacingExtra="-2sp"
                     android:textColor="@color/gray_strike_through"
                     android:textSize="13sp"
-                    app:isEnglish="@{true}"
                     app:isDateAlreadyFormatted="@{false}"
+                    app:isEnglish="@{true}"
                     app:items="@{@string/items}"
                     app:orderDate="@{viewModel.orderDate}"
                     app:quantity="@{viewModel.quantity}"
@@ -124,9 +124,9 @@
                         android:layout_marginEnd="20dp"
                         android:fontFamily="@font/manrope_medium"
                         android:lineSpacingExtra="-2sp"
-                        app:htmlText='@{viewModel.orderStatusMessage ?? @string/order}'
                         android:textColor="@color/gray"
                         android:textSize="13sp"
+                        app:htmlText='@{viewModel.orderStatusMessage ?? @string/order}'
                         tools:text="@string/order_placed_msg" />
 
                     <View
@@ -450,7 +450,8 @@
                     android:paddingEnd="16dp"
                     android:text="@string/gram_cash_coins"
                     android:textColor="@color/gray"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="@{viewModel.gramCash > 0 ? View.VISIBLE : View.GONE}" />
 
                 <TextView
                     android:id="@+id/tvGramCashCoin"
@@ -463,9 +464,10 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="@{@string/minus_rupee_symbol.concat(viewModel.gramCash)}"
+                    android:text="@{@string/minus_rupee_symbol.concat(String.valueOf(viewModel.gramCash))}"
                     android:textColor="@color/green_medium"
                     android:textSize="16sp"
+                    android:visibility="@{viewModel.gramCash > 0 ? View.VISIBLE : View.GONE}"
                     tools:text="-₹ 50" />
 
                 <RelativeLayout
