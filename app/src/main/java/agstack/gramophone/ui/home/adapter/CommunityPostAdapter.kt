@@ -224,8 +224,10 @@ class CommunityPostAdapter(
 
         if (!TextUtils.isEmpty(data.author.communityUserType) && "admin".equals(data.author.communityUserType,true)){
             holder.itemPostBinding.llBlock.visibility = GONE
+            holder.itemPostBinding.rlAdminTag.visibility = VISIBLE
         }else{
             holder.itemPostBinding.llBlock.visibility = VISIBLE
+            holder.itemPostBinding.rlAdminTag.visibility = GONE
         }
         if (data.bookMarked) {
             holder.itemPostBinding.ivBookmark.setImageResource(R.drawable.ic_bookmarked)
