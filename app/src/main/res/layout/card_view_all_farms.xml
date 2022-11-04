@@ -13,6 +13,10 @@
         <import type="java.util.List" />
 
         <variable
+            name="isOldFarms"
+            type="java.lang.Boolean"/>
+
+        <variable
             name="item"
             type="List&lt;agstack.gramophone.ui.farm.model.Data&gt;" />
     </data>
@@ -189,8 +193,23 @@
                         tools:text='वर्तमान चरण: 22 Days'
                         android:textColor="@color/oldmrpcolor"
                         android:textSize="@dimen/_10ssp"
-                        android:visibility='@{item[0].stage_name == null ? View.GONE : View.VISIBLE}'
+                        android:visibility='@{(item[0].stage_name == null || isOldFarms) ? View.GONE : View.VISIBLE}'
                         android:text='@{(item[0].farm_ref_id != null) ? @string/stage_name(item[0].days, item[0].stage_name) : @string/stage_name_modal_farm(item[0].days, item[0].stage_name) }' />
+
+                    <TextView
+                        android:id="@+id/txtApproxEnd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:drawableStart="@drawable/ic_info_para"
+                        android:fontFamily="@font/manrope_medium"
+                        tools:text="@string/approx_end_date"
+                        android:textColor="@color/oldmrpcolor"
+                        android:textSize="@dimen/_10ssp"
+                        android:visibility='@{isOldFarms ? View.VISIBLE : View.GONE}'
+                        android:text='@{@string/approx_end_date(item[0].crop_anticipated_completed_date)}'/>
 
                 </LinearLayout>
 
@@ -236,9 +255,10 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:drawablePadding="@dimen/_8sdp"
                     android:fontFamily="@font/manrope_medium"
-                    android:text="@string/add_your_farm"
+                    android:text='@{isOldFarms ? @string/give_your_crop_details : @string/add_your_farm}'
                     android:textColor="@color/orange"
-                    android:textSize="@dimen/_13ssp"/>
+                    android:textSize="@dimen/_13ssp"
+                    tools:text="@string/add_your_farm" />
 
                 <TextView
                     android:id="@+id/txtAddedFarm"

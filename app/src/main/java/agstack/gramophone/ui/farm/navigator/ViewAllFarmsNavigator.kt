@@ -7,8 +7,11 @@ import agstack.gramophone.ui.farm.model.AddFarmResponse
 import agstack.gramophone.ui.farm.model.CustomerFarm
 import agstack.gramophone.ui.farm.model.Data
 import agstack.gramophone.ui.farm.model.FarmResponse
+import agstack.gramophone.ui.farm.model.unit.GpApiResponseData
 
 interface ViewAllFarmsNavigator : BaseNavigator {
     fun setToolbarTitle(title: String)
-    fun setViewAllFarmsAdapter(farmsList: List<List<Data>>, isCustomerFarm: Boolean)
+    fun setViewAllFarmsAdapter(farmsList: List<List<Data>>, isCustomerFarm: Boolean, isOldFarms: Boolean)
+    fun setFarmUnits(units: List<GpApiResponseData>)
+    fun onAddHarvestQues()
 }

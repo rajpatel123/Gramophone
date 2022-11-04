@@ -99,4 +99,7 @@ interface ProductRepository {
     suspend fun searchByKeyword(body: GlobalSearchRequest): Response<GlobalSearchResponse>
 
     suspend fun searchByKeywordInCommunity(body: GlobalSearchRequest): Response<GlobalSearchResponse>
+
+    suspend fun addHarvestQues(body: AddHarvestRequest): Response<MyGramophoneResponseModel>
+
 }

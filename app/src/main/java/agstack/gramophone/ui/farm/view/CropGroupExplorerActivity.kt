@@ -17,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CropGroupExplorerActivity :
     BaseActivityWrapper<ActivityCropGroupExplorerBinding, CropGroupExplorerNavigator, CropGroupExplorerViewModel>(),
     CropGroupExplorerNavigator {
+    var isOldFarms = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,11 +26,18 @@ class CropGroupExplorerActivity :
 
     private fun setUi(){
         intent.extras?.let {
+            if (it.containsKey("isOldFarms")) {
+                isOldFarms = it.getBoolean("isOldFarms")
+            }
+
             if (it.containsKey("cropList")) {
                 it.getParcelableArrayList<Data>("cropList")?.let { list ->
                     setToolbarTitle(list[0]?.crop_name ?: "")
                     setAdapter(list)
                 }
+            }
+            if (it.containsKey("isOldFarms")) {
+                isOldFarms = it.getBoolean("isOldFarms")
             }
         }
     }
@@ -70,7 +78,9 @@ class CropGroupExplorerActivity :
                     Bundle().apply {
                         putParcelable("selectedCrop", selectedCrop)
                     })
-            })
+            },
+            isOldFarms = isOldFarms
+        )
     }
 
 }
