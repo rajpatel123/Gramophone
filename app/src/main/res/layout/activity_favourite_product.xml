@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.favourite.viewmodel.FavouriteProductViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:id="@+id/itemView"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/myToolbar"
+                layout="@layout/layout_toolbar" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_8sdp"
+                android:background="@color/gray_stroke" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvProducts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:orientation="vertical"
+                tools:itemCount="4"
+                android:visibility="@{viewModel.isDataAvailable == true ? View.VISIBLE : View.GONE, default = gone}"
+
+                app:spanCount="2"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:listitem="@layout/item_feature_product" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="@{viewModel.isDataAvailable == true ? View.GONE : View.VISIBLE, default = gone}"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_favourite_product" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/manrope_bold"
+                android:text="@string/no_favourite_product"
+                android:textColor="@color/blakish" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_25sdp"
+                android:fontFamily="@font/manrope_regular"
+                android:gravity="center"
+                android:text="@string/no_favourite_desc"
+                android:textColor="@color/blakish" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+
+            android:visibility="@{viewModel.progress == true ? View.VISIBLE : View.GONE, default = gone}"
+            android:translationZ="@dimen/_4sdp"
+            tools:visibility="visible" />
+
+    </RelativeLayout>
+
+</layout>

@@ -143,7 +143,7 @@
                     android:onClick="@{()->navvm.ReferandEarnClicked()}"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingTop="@dimen/_15sdp"
-                    android:paddingEnd="@dimen/_26sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
@@ -190,7 +190,7 @@
                     android:onClick="@{ ()-> navvm.openOrderList()}"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingTop="@dimen/_15sdp"
-                    android:paddingEnd="@dimen/_26sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
@@ -251,6 +251,7 @@
                         android:src="@drawable/ic_my_crop_farms" />
 
                     <LinearLayout
+                        android:layout_toStartOf="@+id/tvNew"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
@@ -271,13 +272,14 @@
                             style="@style/regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/manage_all_your_crops_and_farms"
+                            android:text="@string/my_crop_farms_subtext"
                             android:textColor="@color/gray_strike_through"
                             android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/tvNew"
                         android:layout_width="@dimen/_38sdp"
                         android:layout_height="@dimen/_18sdp"
                         android:layout_alignParentEnd="true"
@@ -308,7 +310,7 @@
                     android:onClick="@{()->navvm.openOfferListClicked()}"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingTop="@dimen/_15sdp"
-                    android:paddingEnd="@dimen/_26sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
@@ -341,10 +343,9 @@
                             style="@style/regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/sub_text_will_be_displayed_here"
+                            android:text="@string/available_offers_and_discounts"
                             android:textColor="@color/gray_strike_through"
-                            android:textSize="@dimen/_8sdp"
-                            android:visibility="gone" />
+                            android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
 
@@ -357,7 +358,7 @@
                     android:onClick="@{()->navvm.openArticlesClicked()}"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingTop="@dimen/_15sdp"
-                    android:paddingEnd="@dimen/_26sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
@@ -390,10 +391,9 @@
                             style="@style/regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/sub_text_will_be_displayed_here"
+                            android:text="@string/latest_agri_news_amp_info"
                             android:textColor="@color/gray_strike_through"
-                            android:textSize="@dimen/_8sdp"
-                            android:visibility="gone" />
+                            android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
 
@@ -405,7 +405,7 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingTop="@dimen/_15sdp"
-                    android:paddingEnd="@dimen/_26sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
@@ -438,10 +438,9 @@
                             style="@style/regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/sub_text_will_be_displayed_here"
+                            android:text="@string/watch_latest_agri_videos"
                             android:textColor="@color/gray_strike_through"
-                            android:textSize="@dimen/_8sdp"
-                            android:visibility="gone" />
+                            android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
 
@@ -453,7 +452,7 @@
                     android:onClick="@{ ()-> navvm.openSettings()}"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingTop="@dimen/_15sdp"
-                    android:paddingEnd="@dimen/_26sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
@@ -513,7 +512,7 @@
                     android:onClick="@{ ()-> navvm.openWeather()}"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingTop="@dimen/_15sdp"
-                    android:paddingEnd="@dimen/_26sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
@@ -546,10 +545,9 @@
                             style="@style/regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/sub_text_will_be_displayed_here"
+                            android:text="@string/know_your_local_weather_updates"
                             android:textColor="@color/gray_strike_through"
-                            android:textSize="@dimen/_8sdp"
-                            android:visibility="gone" />
+                            android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
 
@@ -561,7 +559,7 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingTop="@dimen/_15sdp"
-                    android:paddingEnd="@dimen/_26sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
@@ -594,10 +592,9 @@
                             style="@style/regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/sub_text_will_be_displayed_here"
+                            android:text="@string/crop_rates_from_nearest_mandis"
                             android:textColor="@color/gray_strike_through"
-                            android:textSize="@dimen/_8sdp"
-                            android:visibility="gone" />
+                            android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
 
@@ -610,7 +607,7 @@
                     android:onClick="@{ ()-> navvm.openUnitConverter()}"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingTop="@dimen/_15sdp"
-                    android:paddingEnd="@dimen/_26sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
@@ -643,10 +640,9 @@
                             style="@style/regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/sub_text_will_be_displayed_here"
+                            android:text="@string/unit_converter_sub_text"
                             android:textColor="@color/gray_strike_through"
-                            android:textSize="@dimen/_8sdp"
-                            android:visibility="gone" />
+                            android:textSize="@dimen/_8sdp"/>
 
                     </LinearLayout>
 
@@ -669,7 +665,7 @@
                     android:layout_height="@dimen/_40sdp"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/_16sdp"
-                    android:paddingEnd="@dimen/_26sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:text="@string/watch_app_demo"
                     android:textColor="@color/blakish"
                     android:textSize="@dimen/_12ssp" />
@@ -681,7 +677,7 @@
                     android:gravity="center_vertical"
                     android:onClick="@{()->navvm.openLeaveFeedback()}"
                     android:paddingStart="@dimen/_16sdp"
-                    android:paddingEnd="@dimen/_26sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:text="@string/feedback"
                     android:textColor="@color/blakish"
                     android:textSize="@dimen/_12ssp" />
@@ -693,7 +689,7 @@
                     android:gravity="center_vertical"
                     android:onClick="@{ ()-> navvm.shareApp() }"
                     android:paddingStart="@dimen/_16sdp"
-                    android:paddingEnd="@dimen/_26sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:text="@string/share_app"
 
                     android:textColor="@color/blakish"
@@ -708,7 +704,7 @@
                     android:gravity="center_vertical"
                     android:onClick="@{ ()-> navvm.logout(tvLogout) }"
                     android:paddingStart="@dimen/_16sdp"
-                    android:paddingEnd="@dimen/_26sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:text="@string/logout"
                     android:textColor="@color/blakish"
                     android:textSize="@dimen/_12ssp" />

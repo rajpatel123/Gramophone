@@ -138,6 +138,7 @@ object Constants {
     const val FEATURED_ARTICLES = "featured_articles"
     const val TRENDING_ARTICLES = "trending_articles"
     const val SUGGESTED_ARTICLES = "suggested_articles"
+    const val FAVOURITE_ARTICLES = "/favourite-articles"
 
 val SHAREIMAGEURIStRING = "imageuriString"
 

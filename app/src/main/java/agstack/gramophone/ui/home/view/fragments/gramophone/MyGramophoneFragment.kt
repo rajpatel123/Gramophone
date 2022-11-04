@@ -13,6 +13,7 @@ import agstack.gramophone.ui.farm.view.AddFarmActivity
 import agstack.gramophone.ui.farm.view.CropGroupExplorerActivity
 import agstack.gramophone.ui.farm.view.SelectCropActivity
 import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
+import agstack.gramophone.ui.favourite.view.FavouriteProductActivity
 import agstack.gramophone.ui.gramcash.GramCashActivity
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActivity
@@ -37,9 +38,9 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_community.*
@@ -154,7 +155,7 @@ class MyGramophoneFragment :
             openActivity(GramCashActivity::class.java, null)
         }
         binding?.layoutReferral?.tvReferralCount?.text = gramCashResponseModel.gpApiResponseData?.myReferrals?.size.toString()
-        binding?.layoutReferral?.ivNext1?.setOnClickListener {
+        binding?.layoutReferral?.rlReferral?.setOnClickListener {
             openActivity(ReferAndEarnActivity::class.java, null)
         }
 
@@ -186,14 +187,33 @@ class MyGramophoneFragment :
            binding?.layoutMyPost?.tvPostDesc?.text = communityHomeResponseModel.data[0].description
            binding?.layoutMyPost?.dateTime?.text = getMessage(R.string.posted_on).plus(" ")
                .plus(communityHomeResponseModel.data[0].createdDate)
+
+
            binding?.layoutMyPost?.tvLikes?.text =
                communityHomeResponseModel.data[0].likesCount.toString().plus(" ")
                    .plus(getMessage(R.string.like))
+
+           val data = communityHomeResponseModel.data[0]
+           if (data.liked) {
+               binding?.layoutMyPost?.tvLikes?.setTextColor(
+                   ContextCompat.getColor(activity as HomeActivity,
+                       R.color.red))
+               binding?.layoutMyPost?.ivLike?.setImageResource(R.drawable.ic_liked)
+           } else {
+               binding?.layoutMyPost?.tvLikes?.setTextColor(
+                   ContextCompat.getColor(activity as HomeActivity,
+                       R.color.gray))
+               binding?.layoutMyPost?.ivLike?.setImageResource(R.drawable.ic_like)
+           }
+
            binding?.layoutMyPost?.tvComment?.text =
                communityHomeResponseModel.data[0].commentsCount.toString().plus(" ")
                    .plus(getMessage(R.string.comment_count))
 
-           binding?.layoutFavorite?.tvPostCount?.text =  communityHomeResponseModel.meta.pages.toString()
+           if (communityHomeResponseModel.meta.pages > 0)
+               binding?.layoutFavorite?.tvPostCount?.text =
+                   communityHomeResponseModel.meta.pages.toString()
+           else binding?.layoutFavorite?.tvPostCount?.text = "--"
 
            if (communityHomeResponseModel.data[0].images != null && communityHomeResponseModel.data[0].images.size > 0)
                Glide.with(this).load(communityHomeResponseModel.data[0].images[0].url)
@@ -249,8 +269,14 @@ class MyGramophoneFragment :
 
         if (data?.liked == true){
             binding?.layoutMyPost?.ivLike?.setImageResource(R.drawable.ic_liked)
+            binding?.layoutMyPost?.tvLikes?.setTextColor(
+                ContextCompat.getColor(activity as HomeActivity,
+                    R.color.red))
         }else{
             binding?.layoutMyPost?.ivLike?.setImageResource(R.drawable.ic_like)
+            binding?.layoutMyPost?.tvLikes?.setTextColor(
+                ContextCompat.getColor(activity as HomeActivity,
+                    R.color.gray))
         }
     }
 
@@ -339,11 +365,13 @@ class MyGramophoneFragment :
                 binding?.layoutFarm?.rlDurationDesc?.visibility = GONE
             }
 
-
             binding?.layoutFarm?.txtStageDesc?.text = getMessage(R.string.stage_names).plus(" ")
 
+            binding?.layoutFarm?.txtAddedFarm?.text = "".plus(farms.gp_api_response_data.customer_farm.data[0].size).plus(" ").plus(getMessage(R.string.addedfarms)).plus(" ")
+
             binding?.layoutFarm?.txtStage?.text =
-                farms.gp_api_response_data.customer_farm.data[0][0].days.plus(", ").plus(
+                farms.gp_api_response_data.customer_farm.data[0][0].days.plus(getString(R.string.days))
+                    .plus(", ").plus(
                     farms.gp_api_response_data.customer_farm.data[0][0].stage_name
                 )
 
@@ -359,9 +387,12 @@ class MyGramophoneFragment :
         }
 
         binding?.layoutFarm?.txtMultipleFarms?.setOnClickListener {
+
+
             openActivity(CropGroupExplorerActivity::class.java, Bundle().apply {
                 putParcelableArrayList(
-                    "cropList", farms?.gp_api_response_data?.customer_farm?.data as ArrayList<Data>
+                    "cropList",
+                    farms?.gp_api_response_data?.customer_farm?.data?.get(0) as ArrayList<Data>
                 )
             })
         }
@@ -373,7 +404,17 @@ class MyGramophoneFragment :
         binding?.layoutFarm?.txtAddFarm?.setOnClickListener {
             openActivity(AddFarmActivity::class.java, Bundle().apply {
                 putParcelable("selectedCrop", CropData().apply {
-                    cropImage= farms?.gp_api_response_data?.customer_farm?.data!![0][0].crop_image
+                    cropImage = farms?.gp_api_response_data?.customer_farm?.data!![0][0].crop_image
+                    cropId = farms?.gp_api_response_data?.customer_farm?.data!![0][0].crop_id
+                    cropName = farms?.gp_api_response_data?.customer_farm?.data!![0][0].crop_name
+                })
+            })
+        }
+
+        binding?.layoutFarm?.txtAddedFarm?.setOnClickListener {
+            openActivity(AddFarmActivity::class.java, Bundle().apply {
+                putParcelable("selectedCrop", CropData().apply {
+                    cropImage = farms?.gp_api_response_data?.customer_farm?.data!![0][0].crop_image
                     cropId = farms?.gp_api_response_data?.customer_farm?.data!![0][0].crop_id
                     cropName = farms?.gp_api_response_data?.customer_farm?.data!![0][0].crop_name
                 })
@@ -384,12 +425,21 @@ class MyGramophoneFragment :
     }
 
     override fun updateMyFavoriteSection(myGramophoneResponseModel: MyGramophoneResponseModel) {
-        binding?.layoutFavorite?.tvProductCount?.text =
-            myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.products.toString()
-        binding?.layoutFavorite?.tvArticleCount?.text =
-            myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles.toString()
-        binding?.layoutFavorite?.tvTVCount?.text =
-            myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.gramophone_tv.toString()
+
+        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.products > 0)
+            binding?.layoutFavorite?.tvProductCount?.text =
+                myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.products.toString()
+        else binding?.layoutFavorite?.tvProductCount?.text = "--"
+
+        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles > 0)
+            binding?.layoutFavorite?.tvArticleCount?.text =
+                myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles.toString()
+        else binding?.layoutFavorite?.tvArticleCount?.text = "--"
+
+        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.gramophone_tv > 0)
+            binding?.layoutFavorite?.tvTVCount?.text =
+                myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.gramophone_tv.toString()
+        else binding?.layoutFavorite?.tvTVCount?.text = "--"
 
         binding?.layoutFavorite?.llPostLinearLayout?.setOnClickListener {
             if (activity is HomeActivity) {
@@ -398,9 +448,10 @@ class MyGramophoneFragment :
         }
 
         binding?.layoutFavorite?.llArticleLinearLayout?.setOnClickListener {
-              openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
-                  putString(Constants.PAGE_URL,
-                      BuildConfig.BASE_URL_SINGLE_ARTICLE+"/")
+            openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
+                putString(
+                    Constants.PAGE_URL,
+                      BuildConfig.BASE_URL_ARTICLES+Constants.FAVOURITE_ARTICLES)
 
                   putString(Constants.PAGE_SOURCE,
                       "gramo")
@@ -408,9 +459,11 @@ class MyGramophoneFragment :
         }
 
         binding?.layoutFavorite?.llProductLinearLayout?.setOnClickListener {
-            if (activity is HomeActivity) {
-                (activity as HomeActivity).showHomeFragment()
-            }
+            openActivity(FavouriteProductActivity::class.java)
+
+//            if (activity is HomeActivity) {
+//                (activity as HomeActivity).showHomeFragment()
+//            }
         }
 
         binding?.layoutFavorite?.llTVLinearLayout?.setOnClickListener {

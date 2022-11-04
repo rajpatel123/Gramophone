@@ -14,6 +14,8 @@ import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressRespon
 import agstack.gramophone.ui.createnewpost.model.MentionRequestModel
 import agstack.gramophone.ui.createnewpost.model.MentionTagResponsemodel
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
+import agstack.gramophone.ui.favourite.model.FavouriteRequestModel
+import agstack.gramophone.ui.favourite.model.FeaturedProductResponseModel
 import agstack.gramophone.ui.home.view.fragments.gramophone.model.MyGramophoneResponseModel
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
@@ -177,6 +179,14 @@ class OnBoardingRepositoryImpl @Inject constructor(
             Dispatchers.IO
         ) {
             val response = gramAppService.getMyGramophoneData()
+            response
+        }
+
+    override suspend fun getFavouriteProduct(favouriteRequestModel: FavouriteRequestModel): Response<FeaturedProductResponseModel> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val response = gramAppService.getFavouriteProduct(favouriteRequestModel)
             response
         }
 

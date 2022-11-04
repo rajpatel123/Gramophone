@@ -40,7 +40,7 @@ class OrderDetailsViewModel @Inject constructor(
     var address = MutableLiveData<String>()
     var mobile = MutableLiveData<String>()
     var discount = MutableLiveData<String>()
-    var gramCash = MutableLiveData<String>()
+    var gramCash = MutableLiveData<Int>()
 
     init {
         progress.value = false
@@ -57,7 +57,7 @@ class OrderDetailsViewModel @Inject constructor(
         address.value = ""
         mobile.value = ""
         discount.value = "0"
-        gramCash.value = "0"
+        gramCash.value = 0
     }
 
     fun getBundleData() {
@@ -122,7 +122,7 @@ class OrderDetailsViewModel @Inject constructor(
                         this@OrderDetailsViewModel.discount.value = totalDiscount.toString()
 
                         this@OrderDetailsViewModel.gramCash.value =
-                            responseData.pricing_details.gram_cash.toString()
+                            responseData.pricing_details.gram_cash
 
                         if (responseData.vr_info.name.isNotNullOrEmpty() && orderStatus.value.equals(
                                 "Order Dispatched")

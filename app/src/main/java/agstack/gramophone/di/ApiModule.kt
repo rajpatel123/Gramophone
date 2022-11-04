@@ -85,6 +85,17 @@ object ApiModule {
 
     @Provides
     @Singleton
+    @Named("gramophoneTV")
+    fun provideRetrofitGramophoneTV(client: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL_YOUTUBE)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+    }
+
+    @Provides
+    @Singleton
     fun provideGramAppService(@Named("mobility") retrofit: Retrofit): GramAppService {
         return retrofit.create(GramAppService::class.java)
     }
@@ -106,6 +117,12 @@ object ApiModule {
     @Singleton
     fun provideGramAppArticlesService(@Named("articles") retrofit: Retrofit): ArticlesApiService {
         return retrofit.create(ArticlesApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGramAppTVService(@Named("gramophoneTV") retrofit: Retrofit): GramophoneTVApiService {
+        return retrofit.create(GramophoneTVApiService::class.java)
     }
 
     private fun getHeaderInterceptor(): Interceptor {

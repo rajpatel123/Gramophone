@@ -215,7 +215,7 @@ class CommunityViewModel @Inject constructor(
 
     private fun reportPost() {
 
-        if (menuClickedData.author.communityUserType.equals("admin")) {
+        if ("admin".equals(menuClickedData.author.communityUserType)) {
             getNavigator()?.showToast(getNavigator()?.getMessage(R.string.can_not_block))
             return
         }
@@ -232,6 +232,7 @@ class CommunityViewModel @Inject constructor(
                     showProgress.set(false)
                     if (response.isSuccessful) {
                         getPost(sorting = sorting.get().toString())
+                        getNavigator()?.showToast(getNavigator()?.getMessage(R.string.complain_logged))
                     } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                     }
@@ -623,7 +624,6 @@ class CommunityViewModel @Inject constructor(
 
     private fun bookmarkPost(postData: Data, bookmark: String) {
         viewModelScope.launch {
-
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     val response =
