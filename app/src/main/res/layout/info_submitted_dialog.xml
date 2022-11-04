@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/rounder_corner_32_white">
+
+        <ImageView
+            android:layout_width="@dimen/_116sdp"
+            android:layout_height="@dimen/_116sdp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/thanks_you"
+            android:layout_marginTop="@dimen/_2sdp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_minus16sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:lineSpacingExtra="0sp"
+            android:text="@string/next_crop_desc"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16ssp"
+            android:gravity="center_horizontal"
+            android:translationY="-0.24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:gravity="center_horizontal"
+            android:fontFamily="@font/manrope_medium"
+            android:lineSpacingExtra="0sp"
+            android:text="@string/take_suggestions_text"
+            android:textColor="@color/blakish"
+            android:textSize="@dimen/_13ssp"
+            android:translationY="-0.24sp" />
+
+
+        <TextView
+            android:id="@+id/addFarmText"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_42sdp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:paddingRight="@dimen/_20sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:background="@color/orange"
+            android:fontFamily="@font/manrope_medium"
+            android:gravity="center"
+            android:lineSpacingExtra="-1sp"
+            android:text="@string/add_your_farm"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp" />
+
+        <TextView android:id="@+id/notNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:gravity="center_horizontal"
+            android:fontFamily="@font/manrope_medium"
+            android:lineSpacingExtra="0sp"
+            android:text="@string/not_now"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/blakish"
+            android:textSize="@dimen/_13ssp"
+            android:translationY="-0.24sp"
+            android:layout_marginBottom="@dimen/_24sdp"/>
+
+
+    </LinearLayout>
+
+</layout>

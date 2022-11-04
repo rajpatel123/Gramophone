@@ -501,6 +501,14 @@
     <string name="crop_rates_from_nearest_mandis">निकटतम मंडियों से फसल दरें</string>
     <string name="unit_converter_sub_text">माप की सामान्य इकाइयों को परिवर्तित करें</string>
     <string name="complain_logged">Complain logged successfully</string>
+    <string name="add_your_farm">+ अपना खेत जोड़े</string>
+    <string name="give_your_crop_details">उपज की जानकारी देवे</string>
+    <string name="approx_end_date">"अनुमानित समाप्ति: %1$s"</string>
+    <string name="quantity">Quantity</string>
+    <string name="bigha">Bigha</string>
+    <string name="next_crop_desc">आप अपनी अगली फसल कौनसी लगाने वाले है</string>
+    <string name="take_suggestions_text">आज ही अपना नया फॉर्म जोड़ें और कृषि एक्सपर्ट द्वारा पाइये उचित सलाह</string>
+    <string name="not_now">अभी नहीं</string>
 </resources>
 
 

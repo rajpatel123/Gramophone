@@ -11,6 +11,7 @@ class CropGroupExplorerAdapter (
     private val headerListener: (Data) -> Unit,
     private val contentListener: (Data) -> Unit,
     private val footerListener: (Data) -> Unit,
+    private val isOldFarms : Boolean = false,
 ) : RecyclerView.Adapter<CropGroupExplorerAdapter.CropGroupExplorerViewHolder>() {
     private var list = ArrayList<Data>()
 
@@ -28,6 +29,7 @@ class CropGroupExplorerAdapter (
 
     override fun onBindViewHolder(holder: CropGroupExplorerViewHolder, position: Int) {
         holder.binding.item = list[position]
+        holder.binding.isOldFarms = isOldFarms
 
         holder.binding.headerLayout.setOnClickListener {
             headerListener.invoke(list[position])

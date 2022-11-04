@@ -29,13 +29,18 @@ import kotlin.math.roundToInt
 
 @BindingAdapter("product_image")
 fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
-    if (imageUrl.isNullOrEmpty()) {
         Glide.with(view.context)
-            .load(R.drawable.ic_gramophone_leaf)
+            .load(imageUrl)
             .transition(DrawableTransitionOptions.withCrossFade())
             .placeholder(R.drawable.ic_gramophone_leaf)
             .error(R.drawable.ic_gramophone_leaf)
             .into(view)
+}
+
+@BindingAdapter("product_image_farm")
+fun bindImage(view: ImageView, imageUrl: String?) {
+    if (imageUrl.isNullOrEmpty()) {
+        view.setImageResource(R.drawable.ic_gramophone_leaf)
     } else {
         Glide.with(view.context)
             .load(imageUrl)

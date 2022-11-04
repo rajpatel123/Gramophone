@@ -55,7 +55,10 @@ class SearchResultAdapter(
         when (holder) {
             is ProductsViewHolder -> {
                 holder.binding.txtTile.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
-                val productList = list[position].items
+                var productList = list[position].items
+                if(productList.size > 3){
+                    productList = productList.subList(0, 3)
+                }
                 holder.binding.recyclerViewProducts.adapter = ProductsAdapter(productList) {
                     openActivity(holder.itemView.context,
                         ProductDetailsActivity::class.java,
@@ -75,7 +78,7 @@ class SearchResultAdapter(
                         })
                 }
 
-                if(productList.size > 2){
+                if(productList.size > 3){
                     holder.binding.viewAllProducts.visibility = View.VISIBLE
                 }else{
                     holder.binding.viewAllProducts.visibility = View.GONE
@@ -83,7 +86,10 @@ class SearchResultAdapter(
             }
             is CropsViewHolder ->{
                 holder.binding.txtTile.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
-                val dataList = list[position].items
+                var dataList = list[position].items
+                if(dataList.size > 3){
+                    dataList = dataList.subList(0, 3)
+                }
                 holder.binding.rvCrops.adapter = CropsAdapter(dataList){
                     openActivity(holder.itemView.context,
                         CropDetailActivity::class.java,
@@ -107,7 +113,10 @@ class SearchResultAdapter(
             }
             is ProfilesViewHolder -> {
                 holder.binding.txtHeaderProfile.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
-                val profileList = list[position].items
+                var profileList = list[position].items
+                if(profileList.size > 3){
+                    profileList = profileList.subList(0, 3)
+                }
                 holder.binding.recyclerViewProfiles.adapter = ProfilesAdapter(profileList){id, authorId, authorUuid ->
                     openActivity(holder.itemView.context,
                         OtherUserProfileActivity::class.java,
@@ -125,7 +134,7 @@ class SearchResultAdapter(
                             putParcelable("dataList", list[position])
                         })
                 }
-                if(profileList.size > 2){
+                if(profileList.size > 3){
                     holder.binding.viewAllProfiles.visibility = View.VISIBLE
                 }else{
                     holder.binding.viewAllProfiles.visibility = View.GONE
@@ -133,7 +142,10 @@ class SearchResultAdapter(
             }
             is CropProblemsViewHolder ->{
                 holder.binding.txtTitle.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
-                val dataList = list[position].items
+                var dataList = list[position].items
+                if(dataList.size > 3){
+                    dataList = dataList.subList(0, 3)
+                }
                 holder.binding.rvCropProblems.adapter = CropProblemsAdapter(dataList){ id, name, image ->
                     openActivity(holder.itemView.context,
                         SubCategoryActivity::class.java,
@@ -151,7 +163,7 @@ class SearchResultAdapter(
                             putParcelable("dataList", list[position])
                         })
                 }
-                if(dataList.size > 2){
+                if(dataList.size > 3){
                     holder.binding.viewAll.visibility = View.VISIBLE
                 }else{
                     holder.binding.viewAll.visibility = View.GONE
@@ -159,7 +171,10 @@ class SearchResultAdapter(
             }
             is CompaniesViewHolder-> {
                 holder.binding.txtTitle.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
-                val dataList = list[position].items
+                var dataList = list[position].items
+                if(dataList.size > 3){
+                    dataList = dataList.subList(0, 3)
+                }
                 holder.binding.rvCompanies.adapter = CompaniesAdapter(dataList){ id, name, image ->
                     openActivity(holder.itemView.context,
                         FeaturedProductActivity::class.java,
@@ -185,7 +200,10 @@ class SearchResultAdapter(
             }
             is ProductCategoryViewHolder ->{
                 holder.binding.tvTitleProductCategory.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
-                val dataList = list[position].items
+                var dataList = list[position].items
+                if(dataList.size > 3){
+                    dataList = dataList.subList(0, 3)
+                }
                 holder.binding.rvProductCategory.adapter = ProductCategoryAdapter(dataList){ id, name, image ->
                     openActivity(holder.itemView.context,
                         SubCategoryActivity::class.java,
@@ -212,7 +230,10 @@ class SearchResultAdapter(
             }
             is CropCategoryViewHolder-> {
                 holder.binding.tvTitle.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
-                val dataList = list[position].items
+                var dataList = list[position].items
+                if(dataList.size > 3){
+                    dataList = dataList.subList(0, 3)
+                }
                 holder.binding.rvCropCategory.adapter = CropsCategoriesAdapter(dataList){ id, name, image ->
                     openActivity(holder.itemView.context,
                         SubCategoryActivity::class.java,

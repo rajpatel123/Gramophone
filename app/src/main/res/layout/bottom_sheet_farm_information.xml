@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:fontFamily="@font/manrope_bold"
+                android:lineSpacingExtra="0sp"
+                android:text="उपज की जानकारी"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:translationY="-0.24sp" />
+
+            <ImageView
+                android:id="@+id/ivCloseDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:contentDescription="@string/image"
+                android:clickable="true"
+                android:padding="@dimen/_2sdp"
+                android:src="@drawable/ic_cross"
+                android:focusable="true" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="18dp"
+            android:background="@color/gray_stroke" />
+
+        <TextView
+            android:id="@+id/txtHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:text="How much output did you produce from this farm?"
+            android:textColor="@color/black" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_weight="4">
+
+                <RelativeLayout
+                    android:id="@+id/rlAreaWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp">
+
+                    <EditText
+                        android:id="@+id/edtArea"
+                        style="@style/small"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_38sdp"
+                        android:background="@drawable/rounded_corner"
+                        android:backgroundTint="@color/mute_grey"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:hint="@string/quantity"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:letterSpacing=".05"
+                        android:maxLength="5"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_2sdp"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:singleLine="true"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@+id/edtArea"
+                        android:layout_margin="@dimen/_4sdp"
+                        android:contentDescription="@string/image"
+                        android:src="@drawable/ic_astrick" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="6">
+
+                <RelativeLayout
+                    android:id="@+id/rledtAreaUnitWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp">
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/edtAreaUnit"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_38sdp"
+                        android:background="@drawable/rounded_corner"
+                        android:backgroundTint="@color/mute_grey"
+                        android:drawableStart="@drawable/ic_comment"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_2sdp"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:spinnerMode="dropdown"
+                        android:textSize="@dimen/_12ssp"
+                        android:theme="@style/ThemeOverlay.AppCompat.Light"
+                        tools:hint="@string/bigha" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@+id/edtAreaUnit"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/image"
+                        android:src="@drawable/ic_arrow_down" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@+id/edtAreaUnit"
+                        android:layout_margin="@dimen/_4sdp"
+                        android:contentDescription="@string/image"
+                        android:src="@drawable/ic_astrick" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <TextView
+            android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="28dp"
+            android:background="@color/brand_color"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center"
+            android:lineSpacingExtra="-1sp"
+            android:text="@string/submit"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</layout>
