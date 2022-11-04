@@ -369,7 +369,6 @@
     <string name="add_you_farm">+ Add you Farm</string>
     <string name="know_more_about_my_farm"><![CDATA[Know more about My Farm >]]></string>
     <string name="checkout">Checkout</string>
-    <string name="sub_text_will_be_displayed_here"> </string>
     <string name="receive_order_related_information_on_whatsapp">Receive order related information on whatsapp</string>
     <string name="gramophone_promise">Gramophone Promise</string>
     <string name="_100_genuine_nproducts">100% Genuine\nProducts</string>
@@ -489,12 +488,18 @@
     <!--                     Menu strings                -->
     <string name="gram_cash_without_extra_space">ग्रामकैश</string>
     <string name="my_crop_farms">मेरी फसलें और खेत</string>
-    <string name="manage_all_your_crops_and_farms">अपनी सभी फसलों और खेतों का प्रबंधन करें</string>
+    <string name="my_crop_farms_subtext">अपनी फसलों के बारे में नियमित अपडेट/जानकारी प्राप्त करें।ं</string>
     <string name="new_text">नया</string>
     <string name="for_you">आपके लिए</string>
     <string name="articles">सामग्री</string>
     <string name="mandi_bhav">बाजार भाव</string>
     <string name="watch_app_demo">ऐप का डेमो देखें</string>
+    <string name="available_offers_and_discounts">उपलब्ध ऑफ़र और डिस्काउंट</string>
+    <string name="latest_agri_news_amp_info">नवीनतम कृषि समाचार व अन्य जानकारी</string>
+    <string name="watch_latest_agri_videos">नवीनतम खेती के वीडियो देखें</string>
+    <string name="know_your_local_weather_updates">जानिए अपना क्षेत्रीय मौसम अपडेट</string>
+    <string name="crop_rates_from_nearest_mandis">निकटतम मंडियों से फसल दरें</string>
+    <string name="unit_converter_sub_text">माप की सामान्य इकाइयों को परिवर्तित करें</string>
 </resources>
 
 
