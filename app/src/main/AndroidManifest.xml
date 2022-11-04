@@ -262,6 +262,9 @@
             android:name=".ui.articles.ArticlesWebViewActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.tv.GramophoneTVActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.search.view.ViewAllSearchProductsActivity"
             android:screenOrientation="portrait" />
         <activity

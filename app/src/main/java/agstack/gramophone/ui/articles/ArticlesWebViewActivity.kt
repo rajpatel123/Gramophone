@@ -4,26 +4,45 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityArticlesBinding
+import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
+import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
+import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
+import agstack.gramophone.ui.home.subcategory.ProductListAdapter
+import agstack.gramophone.ui.home.subcategory.SubCategoryNavigator
+import agstack.gramophone.ui.home.subcategory.SubCategoryViewModel
+import agstack.gramophone.ui.home.subcategory.model.Offer
+import agstack.gramophone.ui.home.view.fragments.market.model.Banner
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
+import agstack.gramophone.ui.offer.OfferDetailActivity
+import agstack.gramophone.ui.offerslist.model.DataItem
+import agstack.gramophone.utils.Constants
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewTreeObserver
 import android.webkit.*
 import androidx.activity.viewModels
 import com.amnix.xtension.extensions.isNotNull
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_articles.*
 
+@AndroidEntryPoint
 class ArticlesWebViewActivity :
-    BaseActivityWrapper<ActivityArticlesBinding, ArticlesWebViewNavigator, ArticlesWebViewModel>(),
-    ArticlesWebViewNavigator {
+    BaseActivityWrapper<ActivityArticlesBinding, SubCategoryNavigator, SubCategoryViewModel>(),
+    SubCategoryNavigator {
 
-    private val articlesWebViewModel: ArticlesWebViewModel by viewModels()
+    private val subCategoryViewModel: SubCategoryViewModel by viewModels()
+    var bottomSheet: AddToCartBottomSheetDialog? = null
+    private var lastTimeClicked: Long = 0
     private var mOnScrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
-        articlesWebViewModel.getBundleData()
+        subCategoryViewModel.getBundleData()
     }
 
     private fun setupUi() {
@@ -45,7 +64,7 @@ class ArticlesWebViewActivity :
 
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                     super.onPageStarted(view, url, favicon)
-                    progressBar.visibility = View.VISIBLE
+                    subCategoryViewModel.progress.value = true
                 }
 
                 override fun doUpdateVisitedHistory(
@@ -58,12 +77,35 @@ class ArticlesWebViewActivity :
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
-                    progressBar.visibility = View.GONE
+                    subCategoryViewModel.progress.value = false
                 }
             }
         }
         viewDataBinding.webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
-        viewDataBinding.webView.addJavascriptInterface(JavaScriptInterface(this), "AndroidArticleFunction");
+        viewDataBinding.webView.addJavascriptInterface(object : JavaScriptInterface() {
+            @JavascriptInterface
+            override fun goToProduct(productId: String) {
+                try {
+                    if (SystemClock.elapsedRealtime() - lastTimeClicked < 2000) {
+                        return
+                    }
+                    lastTimeClicked = SystemClock.elapsedRealtime()
+                    subCategoryViewModel.fetchProductDetail(productId.toInt())
+                    /*val productData = ProductData()
+                    productData.product_id = productId.toInt()
+                    val bundle = Bundle()
+                    bundle.putParcelable(Constants.PRODUCT, productData)
+                    openActivity(ProductDetailsActivity::class.java,
+                        Bundle().apply {
+                            putParcelable(Constants.PRODUCT,
+                                productData)
+                        })*/
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+        }, "Android")
         viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
 
         viewDataBinding.viewBack.setOnClickListener {
@@ -129,6 +171,86 @@ class ArticlesWebViewActivity :
         viewDataBinding.webView.reload()
     }
 
+    override fun setViewPagerAdapter(bannerList: List<Banner>?) {
+        // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
+    }
+
+    override fun setSubCategoryAdapter(subCategoryAdapter: ShopByCategoryAdapter) {
+        // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
+    }
+
+    override fun getSubCategoryDetail(
+        categoryId: String,
+        subCategoryId: String,
+        subCategoryName: String,
+        subCategoryImage: String,
+    ) {
+        // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
+    }
+
+    override fun setProductListAdapter(
+        productListAdapter: ProductListAdapter,
+        onAddToCartClick: (productId: Int) -> Unit,
+        onProductDetailClick: (productId: Int) -> Unit,
+    ) {
+        // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
+    }
+
+    override fun openAddToCartDialog(
+        mSKUList: ArrayList<ProductSkuListItem?>,
+        mSkuOfferList: ArrayList<Offer>,
+        productData: ProductData,
+    ) {
+        bottomSheet = AddToCartBottomSheetDialog({
+            //Offer detail activity from here
+            openActivity(
+                OfferDetailActivity::class.java,
+                Bundle().apply {
+
+                    val offersDataItem = DataItem()
+                    offersDataItem.endDate = it.end_date
+                    offersDataItem.productName = it.title
+                    offersDataItem.productsku = it.applicable_on_sku
+                    offersDataItem.image = it.image
+                    offersDataItem.termsConditions = it.t_c
+                    putParcelable(Constants.OFFERSDATA, offersDataItem)
+
+                })
+        }, {
+            subCategoryViewModel.checkOfferApplicability(it)
+        }, {
+            subCategoryViewModel.onAddToCartClicked(it)
+        })
+        bottomSheet?.mSKUList = mSKUList
+        bottomSheet?.productData = productData
+        bottomSheet?.mSkuOfferList = mSkuOfferList
+        bottomSheet?.show(
+            supportFragmentManager,
+            Constants.BOTTOM_SHEET
+        )
+    }
+
+    override fun openProductDetailsActivity(productData: ProductData) {
+        // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
+    }
+
+    override fun updateOfferApplicabilityOnDialog(
+        isOfferApplicable: Boolean,
+        promotionId: String?,
+        message: String,
+    ) {
+        if (bottomSheet.isNotNull())
+            bottomSheet?.updateDialog(isOfferApplicable, promotionId!!, message)
+    }
+
+    override fun disableSortAndFilter() {
+        // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
+    }
+
+    override fun enableSortAndFilter() {
+        // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
+    }
+
     override fun onStop() {
         viewDataBinding.swipeRefresh.viewTreeObserver.removeOnScrollChangedListener(
             mOnScrollChangedListener)
@@ -147,8 +269,8 @@ class ArticlesWebViewActivity :
         return BR.viewModel
     }
 
-    override fun getViewModel(): ArticlesWebViewModel {
-        return articlesWebViewModel
+    override fun getViewModel(): SubCategoryViewModel {
+        return subCategoryViewModel
     }
 
 

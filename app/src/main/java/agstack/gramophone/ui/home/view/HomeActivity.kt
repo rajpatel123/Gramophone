@@ -9,11 +9,13 @@ import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.ui.home.view.fragments.community.CommunityFragment
 import agstack.gramophone.ui.home.view.fragments.gramophone.MyGramophoneFragment
 import agstack.gramophone.ui.home.view.fragments.market.MarketFragment
+import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.home.view.fragments.trading.TradeFragment
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.ui.search.view.GlobalSearchActivity
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.content.Intent
@@ -295,5 +297,17 @@ class HomeActivity :
     fun setToolbarTitle(title:String){
         viewDataBinding.toolbar.myToolbar.title = title
 
+    }
+
+    override fun onDestroy() {
+        try {
+            SharedPreferencesHelper.instance?.putParcelable(
+                SharedPreferencesKeys.BANNER_DATA,
+                BannerResponse("")
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        super.onDestroy()
     }
 }
