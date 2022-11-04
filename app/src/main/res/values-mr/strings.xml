@@ -480,4 +480,12 @@
     <string name="articles">लेख</string>
     <string name="mandi_bhav">बाजारभाव</string>
     <string name="watch_app_demo">अ‍ॅपचा डेमो पहा</string>
+    <string name="add_your_farm">+ अपना खेत जोड़े</string>
+    <string name="give_your_crop_details">उपज की जानकारी देवे</string>
+    <string name="approx_end_date">"अनुमानित समाप्ति: %1$s"</string>
+    <string name="quantity">Quantity</string>
+    <string name="bigha">Bigha</string>
+    <string name="next_crop_desc">आप अपनी अगली फसल कौनसी लगाने वाले है</string>
+    <string name="take_suggestions_text">आज ही अपना नया फॉर्म जोड़ें और कृषि एक्सपर्ट द्वारा पाइये उचित सलाह</string>
+    <string name="not_now">अभी नहीं</string>
 </resources>

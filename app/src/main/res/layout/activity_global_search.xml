@@ -72,17 +72,6 @@
                     android:onClick="@{() -> viewModel.onClearSearchClick()}"
                     android:src="@drawable/ic_close_circle" />
 
-                <ProgressBar
-                    android:layout_width="@dimen/_42sdp"
-                    android:layout_height="@dimen/_42sdp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/image"
-                    android:paddingEnd="@dimen/_8sdp"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:visibility="@{viewModel.progress == true ? View.VISIBLE : View.GONE, default = gone}"
-                    tools:visibility="visible" />
-
             </RelativeLayout>
 
             <View

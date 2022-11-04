@@ -6,10 +6,7 @@ import agstack.gramophone.di.GramAppService
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.cart.model.PlaceOrderRequest
 import agstack.gramophone.ui.dialog.filter.FilterRequest
-import agstack.gramophone.ui.farm.model.AddFarmRequest
-import agstack.gramophone.ui.farm.model.AddFarmResponse
-import agstack.gramophone.ui.farm.model.FarmRequest
-import agstack.gramophone.ui.farm.model.FarmResponse
+import agstack.gramophone.ui.farm.model.*
 import agstack.gramophone.ui.farm.model.unit.FarmUnitResponse
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
@@ -28,6 +25,7 @@ import agstack.gramophone.ui.search.model.SuggestionsResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import retrofit2.http.Body
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -299,6 +297,14 @@ class ProductRepositoryImpl @Inject constructor(
             Dispatchers.IO
         ) {
             val response = gramoAppService.searchByKeywordInCommunity(body)
+            response
+        }
+
+    override suspend fun addHarvestQues(body: AddHarvestRequest): Response<MyGramophoneResponseModel> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val response = gramoAppService.addHarvestQues(body)
             response
         }
 }

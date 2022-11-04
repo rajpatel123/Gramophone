@@ -1,17 +1,17 @@
 package agstack.gramophone.ui.farm.adapter
 
+import agstack.gramophone.R
 import agstack.gramophone.databinding.CardFarmsBinding
 import agstack.gramophone.ui.farm.model.Data
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-
-open class FarmAdapter(
+class FarmAdapter(
     farmItemList: List<List<Data>>?,
     private val headerListener: (List<Data>) -> Unit,
     private val contentListener: (List<Data>) -> Unit,
-    private val footerListener: (List<Data>) -> Unit,
+    private val footerListener: (List<Data>) -> Unit
 ) : RecyclerView.Adapter<FarmAdapter.FarmViewHolder>() {
     private var farmList = ArrayList<List<Data>>()
     init {

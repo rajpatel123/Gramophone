@@ -318,4 +318,7 @@ interface GramAppService {
 
     @POST("api/v5/search/community-search")
     suspend fun searchByKeywordInCommunity(@Body body : GlobalSearchRequest): Response<GlobalSearchResponse>
+
+    @POST("api/v5/farm/add-harvest-ques")
+    suspend fun addHarvestQues(@Body body : AddHarvestRequest) : Response<MyGramophoneResponseModel>
 }
