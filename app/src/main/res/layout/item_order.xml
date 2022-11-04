@@ -126,7 +126,6 @@
                     android:drawablePadding="@dimen/_6sdp"
                     android:fontFamily="@font/manrope_medium"
                     android:lineSpacingExtra="0sp"
-                    android:text='@{model.order_status_name ?? ""}'
                     android:textColor="@color/yellow_dark"
                     android:textSize="14sp"
                     app:drawableStartCompat="@drawable/ic_order_placed"
