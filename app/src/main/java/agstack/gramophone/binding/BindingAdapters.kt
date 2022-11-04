@@ -335,12 +335,30 @@ fun setReformattedIntPrice(textView: TextView, price: Float) {
         if (price.isNaN() || price.isInfinite()) {
             textView.text = textView.context.getString(R.string.rupee_0)
         } else {
-            if (price.toString().contains(".0") || price.toString().contains(".00"))
+            if (price.toString().endsWith(".0") || price.toString().contains(".00"))
                 textView.text =
                     textView.context.getString(R.string.rupee_symbol_with_space) + price.roundToInt()
                         .toString()
             else textView.text =
                 textView.context.getString(R.string.rupee_symbol_with_space) + price.toString()
+        }
+    } catch (e: Exception) {
+        textView.text = textView.context.getString(R.string.rupee_0)
+    }
+}
+
+@BindingAdapter("reformatPromotionalDiscountInt")
+fun setReformatPromotionalDiscountInt(textView: TextView, price: Float) {
+    try {
+        if (price.isNaN() || price.isInfinite()) {
+            textView.text = textView.context.getString(R.string.rupee_0)
+        } else {
+            if (price.toString().endsWith(".0") || price.toString().contains(".00"))
+                textView.text =
+                    textView.context.getString(R.string.minus_rupee_symbol) + price.roundToInt()
+                        .toString()
+            else textView.text =
+                textView.context.getString(R.string.minus_rupee_symbol) + price.toString()
         }
     } catch (e: Exception) {
         textView.text = textView.context.getString(R.string.rupee_0)
@@ -384,7 +402,7 @@ fun mrpPriceVisibility(
             textView.visibility = View.GONE
         } else {
             textView.visibility = View.VISIBLE
-            if (mrp_price.toString().contains(".0") || mrp_price.toString().contains(".00"))
+            if (mrp_price.toString().endsWith(".0") || mrp_price.toString().contains(".00"))
                 textView.text =
                     textView.context.getString(R.string.rupee_symbol_with_space) + mrp_price.roundToInt()
                         .toString()

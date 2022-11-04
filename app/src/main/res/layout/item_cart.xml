@@ -241,7 +241,7 @@
             android:paddingEnd="14dp"
             android:text="@string/item_added_as_a_free_giveaway"
             android:textSize="11sp"
-            android:visibility="gone"
+            android:visibility="@{model.free_giveaway != null ? View.VISIBLE : View.GONE}"
             app:drawableStartCompat="@drawable/ic_offer"
             tools:visibility="visible" />
 
@@ -253,7 +253,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/rounded_corner_bottom_16_solid_white_stroke_gray"
-            android:visibility="gone"
+            android:visibility="@{model.free_giveaway != null ? View.VISIBLE : View.GONE}"
             tools:visibility="visible">
 
             <FrameLayout
@@ -269,6 +269,7 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/image"
                     android:padding="4dp"
+                    app:product_image='@{model.free_giveaway.image ?? ""}'
                     android:src="@drawable/dummy_feature_product" />
 
             </FrameLayout>
@@ -286,7 +287,7 @@
                 android:gravity="top"
                 android:lineSpacingExtra="1sp"
                 android:maxLines="2"
-                android:text="@string/daily_object_backpack"
+                android:text='@{model.free_giveaway.name ?? ""}'
                 android:textColor="@color/brand_color"
                 android:textSize="16sp"
                 android:translationY="-0.27sp" />
@@ -298,6 +299,7 @@
                 android:layout_below="@+id/tvGiftName"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_toEndOf="@+id/frFreeGive"
+                app:reformatFloatPriceToInt="@{model.free_giveaway.price}"
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="1sp"
@@ -309,6 +311,7 @@
                 android:id="@+id/tvGiftActualPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_22sdp"
+                app:reformatFloatPriceToInt="@{model.free_giveaway.base_price}"
                 android:layout_below="@+id/tvGiftName"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_toEndOf="@+id/tvGiftPrice"
