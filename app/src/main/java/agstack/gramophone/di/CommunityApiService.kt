@@ -11,6 +11,7 @@ import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikePostR
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedusersResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
+import agstack.gramophone.ui.home.view.fragments.community.model.reportpost.ReportUserPostResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.*
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.block.BlockResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.follow.FollowResponseModel
@@ -59,7 +60,7 @@ interface CommunityApiService {
     suspend fun deletePostComment(@Body post: PostRequestModel): Response<CommentsResponseModel>
 
     @POST("/api/v2/posts/add-complain")//change response model
-    suspend fun reportPost(@Body post: ReportUserRequestModel): Response<CommentsResponseModel>
+    suspend fun reportPost(@Body post: ReportUserRequestModel): Response<ReportUserPostResponseModel>
 
     @PUT("/api/v2/posts/update-blocked-user")
     suspend fun blockUser(@Body post: BlockUserRequestModel): Response<BlockResponseModel>

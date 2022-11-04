@@ -500,6 +500,7 @@
     <string name="know_your_local_weather_updates">जानिए अपना क्षेत्रीय मौसम अपडेट</string>
     <string name="crop_rates_from_nearest_mandis">निकटतम मंडियों से फसल दरें</string>
     <string name="unit_converter_sub_text">माप की सामान्य इकाइयों को परिवर्तित करें</string>
+    <string name="complain_logged">Complain logged successfully</string>
 </resources>
 
 

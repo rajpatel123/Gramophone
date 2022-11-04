@@ -486,4 +486,5 @@
     <string name="know_your_local_weather_updates">आपल्या क्षेत्राचे हवामान अपडेट जाणून घ्या</string>
     <string name="crop_rates_from_nearest_mandis">जवळच्या मंडईतील पीक दर</string>
     <string name="unit_converter_sub_text">मापनाची सामान्य एकके रूपांतरित करा</string>
+    <string name="complain_logged">Complain logged successfully</string>
 </resources>

@@ -611,4 +611,5 @@
     <string name="know_your_local_weather_updates">Know your local weather updates</string>
     <string name="crop_rates_from_nearest_mandis">Crop rates from nearest Mandis</string>
     <string name="unit_converter_sub_text">Convert common units of measurement</string>
+    <string name="complain_logged">Complain logged successfully</string>
 </resources>
