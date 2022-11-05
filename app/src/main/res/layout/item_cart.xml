@@ -269,8 +269,8 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/image"
                     android:padding="4dp"
-                    app:product_image='@{model.free_giveaway.image ?? ""}'
-                    android:src="@drawable/dummy_feature_product" />
+                    android:src="@drawable/dummy_feature_product"
+                    app:product_image='@{model.free_giveaway.image ?? ""}' />
 
             </FrameLayout>
 
@@ -290,7 +290,8 @@
                 android:text='@{model.free_giveaway.name ?? ""}'
                 android:textColor="@color/brand_color"
                 android:textSize="16sp"
-                android:translationY="-0.27sp" />
+                android:translationY="-0.27sp"
+                tools:text="@string/daily_object_backpack" />
 
             <TextView
                 android:id="@+id/tvGiftPrice"
@@ -299,19 +300,18 @@
                 android:layout_below="@+id/tvGiftName"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_toEndOf="@+id/frFreeGive"
-                app:reformatFloatPriceToInt="@{model.free_giveaway.price}"
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="1sp"
                 android:text="@string/rupee_0"
                 android:textColor="@color/blakish"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:reformatFloatPriceToInt="@{model.free_giveaway.price}" />
 
             <TextView
                 android:id="@+id/tvGiftActualPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_22sdp"
-                app:reformatFloatPriceToInt="@{model.free_giveaway.base_price}"
                 android:layout_below="@+id/tvGiftName"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_toEndOf="@+id/tvGiftPrice"
@@ -321,7 +321,8 @@
                 android:lineSpacingExtra="1sp"
                 android:text="@string/dummy_price"
                 android:textColor="@color/gray_strike_through"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:reformatFloatPriceToInt="@{model.free_giveaway.base_price}" />
 
             <TextView
                 android:id="@+id/tvGiftStatus"
