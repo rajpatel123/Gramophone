@@ -17,6 +17,7 @@ import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,6 +27,9 @@ class GramophoneTVActivity :
 
     //initialise ViewModel
     private val gramophoneTVViewModel: GramophoneTVViewModel by viewModels()
+    var layoutManager: LinearLayoutManager? = null
+    private val currentPlayingPlayListId: String? = null
+    private var nextPageJump = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +38,38 @@ class GramophoneTVActivity :
 
     private fun setupUi() {
         setToolbarTitle(getString(R.string.tv))
+        layoutManager = LinearLayoutManager(this)
+        viewDataBinding.showMoreButton.isSelected = false
+        viewDataBinding.videoListRecyclerView.visibility = View.GONE
+        viewDataBinding.showMoreIcon.setImageDrawable(resources.getDrawable(R.drawable.ic_arrow_down))
+        viewDataBinding.playlistContainer.visibility = View.VISIBLE
+
+        viewDataBinding.showMoreButtonContainer.setOnClickListener(View.OnClickListener {
+            if (viewDataBinding.showMoreButton.isSelected) {
+                viewDataBinding.showMoreButton.isSelected = false
+                viewDataBinding.videoListRecyclerView.setVisibility(View.GONE)
+                viewDataBinding.showMoreIcon.setImageDrawable(resources.getDrawable(R.drawable.ic_arrow_down))
+            } else {
+                viewDataBinding.showMoreButton.isSelected = true
+                viewDataBinding.videoListRecyclerView.visibility = View.VISIBLE
+                viewDataBinding.showMoreIcon.setImageDrawable(resources.getDrawable(R.drawable.ic_arrow_up))
+            }
+        })
+
+        getPlayLists()
+    }
+
+    private fun getPlayLists() {
+        val googleApiKey = getString(R.string.google_api)
+        gramophoneTVViewModel.getPlayLists("snippet,contentDetails",
+            6,
+            getString(R.string.channel_id),
+            googleApiKey)
     }
 
     override fun setToolbarTitle(title: String) {
         setUpToolBar(true, title, R.drawable.ic_arrow_left)
     }
-
 
     override fun getLayoutID(): Int {
         return R.layout.activity_gramophone_tv

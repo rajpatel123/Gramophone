@@ -2,29 +2,26 @@ package agstack.gramophone.ui.tv
 
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
-import agstack.gramophone.data.repository.tv.GramophoneTVRepository
-import agstack.gramophone.ui.cart.model.PlaceOrderRequest
-import agstack.gramophone.ui.tv.model.PlayListItemModels
-import agstack.gramophone.ui.tv.model.YoutubeChannelItem
-import agstack.gramophone.utils.Constants
-import android.os.Bundle
+import agstack.gramophone.di.GramophoneTVApiService
+import agstack.gramophone.di.RetrofitInstanceForYoutube
+import agstack.gramophone.ui.tv.model.YoutubePlayListResponse
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
 
 
 @HiltViewModel
 class GramophoneTVViewModel @Inject constructor(
-    private val gramophoneTVRepository: GramophoneTVRepository,
 ) : BaseViewModel<GramophoneTVNavigator>() {
 
     var progress = MutableLiveData<Boolean>()
-    val playlistIds: List<YoutubeChannelItem> = ArrayList()
-    val videoIds: List<PlayListItemModels> = ArrayList()
+
 
     init {
         progress.value = false
@@ -36,12 +33,23 @@ class GramophoneTVViewModel @Inject constructor(
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
 
-                    val response =
-                        gramophoneTVRepository.getPlayLists(part, channelId, key, maxResults)
-                    progress.value = false
-                    if (response.isSuccessful && response.body()?.items.isNotNullOrEmpty()) {
+                    val service: GramophoneTVApiService =
+                        RetrofitInstanceForYoutube.getInstance()!!.create(
+                            GramophoneTVApiService::class.java)
 
-                    }
+                    val call: Call<YoutubePlayListResponse> = service.getPlayLists(part, channelId, key, maxResults)
+                    call.enqueue(object : Callback<YoutubePlayListResponse?> {
+                        override fun onResponse(
+                            call: Call<YoutubePlayListResponse?>,
+                            response: Response<YoutubePlayListResponse?>,
+                        ) {
+                            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                        }
+
+                        override fun onFailure(call: Call<YoutubePlayListResponse?>, t: Throwable) {
+                            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                        }
+                    })
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }
@@ -67,15 +75,7 @@ class GramophoneTVViewModel @Inject constructor(
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
 
-                    val response = gramophoneTVRepository.getPlayListsNextPage(part,
-                        channelId,
-                        key,
-                        pageToken,
-                        maxResults)
-                    progress.value = false
-                    if (response.isSuccessful && response.body()?.items.isNotNullOrEmpty()) {
 
-                    }
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }
@@ -95,12 +95,7 @@ class GramophoneTVViewModel @Inject constructor(
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
 
-                    val response =
-                        gramophoneTVRepository.getVideoIds(part, maxResults, playListId, key)
-                    progress.value = false
-                    if (response.isSuccessful && response.body()?.playListItemModelsList.isNotNullOrEmpty()) {
 
-                    }
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }
@@ -126,16 +121,7 @@ class GramophoneTVViewModel @Inject constructor(
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
 
-                    val response =
-                        gramophoneTVRepository.getVideoIdsNextPage(part,
-                            maxResults,
-                            playListId,
-                            key,
-                            pageToken)
-                    progress.value = false
-                    if (response.isSuccessful && response.body()?.playListItemModelsList.isNotNullOrEmpty()) {
 
-                    }
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }

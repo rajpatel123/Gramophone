@@ -16,6 +16,7 @@ import agstack.gramophone.ui.profile.model.GpApiResponseProfileData
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.referandearn.ReferAndEarnActivity
 import agstack.gramophone.ui.settings.view.SettingsActivity
+import agstack.gramophone.ui.tv.GramophoneTVActivity
 import agstack.gramophone.ui.unitconverter.UnitConverterActivity
 import agstack.gramophone.ui.userprofile.UserProfileActivity
 import agstack.gramophone.ui.weather.WeatherActivity
@@ -227,6 +228,11 @@ class HomeViewModel @Inject constructor(
         getNavigator()?.openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
             putString(Constants.PAGE_URL, BuildConfig.BASE_URL_ARTICLES)
         })
+    }
+
+    fun openGramophoneTVClicked() {
+        getNavigator()?.closeDrawer()
+        getNavigator()?.openActivity(GramophoneTVActivity::class.java, null)
     }
 
     fun ReferandEarnClicked() {
