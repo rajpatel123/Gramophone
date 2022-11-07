@@ -249,4 +249,23 @@ class MyGramophoneFragmentViewModel
         }
     }
 
+    fun getFavouritePostCount() {
+        viewModelScope.launch {
+            try {
+                val response = communityRepository.getFavouriteCount()
+                if (response.isSuccessful ) {
+                   getNavigator()?.updateMyFavoritePostCount(response.body()!!.data.bookMarkedPostCounts)
+                }else{
+
+                }
+
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
+
 }

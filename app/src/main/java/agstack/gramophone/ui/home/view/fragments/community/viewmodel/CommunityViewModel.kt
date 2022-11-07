@@ -300,6 +300,7 @@ class CommunityViewModel @Inject constructor(
 
 
     private suspend fun getPost(sorting: String) {
+        showProgress.set(true)
 
         getNavigator()?.onLoading()
         try {

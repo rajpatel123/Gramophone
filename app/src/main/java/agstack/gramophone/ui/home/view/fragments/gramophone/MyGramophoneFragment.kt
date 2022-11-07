@@ -105,6 +105,7 @@ class MyGramophoneFragment :
         myGramophoneFragmentViewModel.initProfile()
         myGramophoneFragmentViewModel.getGramCash()
         myGramophoneFragmentViewModel.getMyPost()
+        myGramophoneFragmentViewModel.getFavouritePostCount()
         myGramophoneFragmentViewModel.getPlacedOrder()
         myGramophoneFragmentViewModel.getFarms()
         myGramophoneFragmentViewModel.getMyGramophoneData()
@@ -210,10 +211,7 @@ class MyGramophoneFragment :
                communityHomeResponseModel.data[0].commentsCount.toString().plus(" ")
                    .plus(getMessage(R.string.comment_count))
 
-           if (communityHomeResponseModel.meta.pages > 0)
-               binding?.layoutFavorite?.tvPostCount?.text =
-                   communityHomeResponseModel.meta.pages.toString()
-           else binding?.layoutFavorite?.tvPostCount?.text = "--"
+
 
            if (communityHomeResponseModel.data[0].images != null && communityHomeResponseModel.data[0].images.size > 0)
                Glide.with(this).load(communityHomeResponseModel.data[0].images[0].url)
@@ -296,7 +294,6 @@ class MyGramophoneFragment :
             binding?.layoutOrder?.rlOrder?.visibility= VISIBLE
             binding?.layoutOrder?.btnShopNow?.visibility = VISIBLE
             binding?.layoutOrder?.btnShopNowOrrange?.visibility = GONE
-            binding?.layoutOrder?.myOrderTitle?.text = String.format(getMessage(R.string.total_orders),placedList.total)
             binding?.layoutOrder?.tvOrderNumber?.text = "#".plus(placedList.data[0].order_id.toString())
             binding?.layoutOrder?.tvTotalAmount?.text = getMessage(R.string.rupee).plus(placedList.data[0].price.toString())
             binding?.layoutOrder?.dateTime?.text = placedList.data[0].order_date.toString().plus("/").plus(placedList.data[0].quantity).plus("Items")
@@ -450,6 +447,11 @@ class MyGramophoneFragment :
                 myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.products.toString()
         else binding?.layoutFavorite?.tvProductCount?.text = "--"
 
+        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.orders > 0)
+            binding?.layoutOrder?.myOrderTitle?.text =
+                String.format(getMessage(R.string.total_orders),myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.orders)
+        else binding?.layoutOrder?.myOrderTitle?.text = getMessage(R.string.my_orders)
+
         if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles > 0)
             binding?.layoutFavorite?.tvArticleCount?.text =
                 myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles.toString()
@@ -489,6 +491,13 @@ class MyGramophoneFragment :
 
         }
 
+    }
+
+    override fun updateMyFavoritePostCount(bookMarkedPostCounts: Int) {
+        if (bookMarkedPostCounts > 0)
+            binding?.layoutFavorite?.tvPostCount?.text =
+                bookMarkedPostCounts.toString()
+        else binding?.layoutFavorite?.tvPostCount?.text = "--"
     }
 
     override fun processGenericUri(genericUri: Uri) {

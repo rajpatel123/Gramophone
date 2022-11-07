@@ -248,6 +248,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
                     val tab = binding?.tabLayout?.getTabAt(5)
                     tab!!.select()
                 } else {
+                    communityViewModel.loadData("latest")
                     val tab = binding?.tabLayout?.getTabAt(0)
                     tab!!.select()
                 }

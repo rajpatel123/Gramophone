@@ -5,6 +5,7 @@ import agstack.gramophone.ui.comments.model.DeleteCommentResponseModel
 import agstack.gramophone.ui.comments.model.sendcomment.GetCommentRequestModel
 import agstack.gramophone.ui.comments.model.sendcomment.SendCommentResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.create.CreatePostResponseModel
+import agstack.gramophone.ui.favourite.model.favouritecount.FavouriteCountResponseModel
 import agstack.gramophone.ui.followings.model.FollowerResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.BookmarkPostResponse
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikePostResponseModel
@@ -165,6 +166,9 @@ interface CommunityApiService {
 
     @POST("/api/v2/profiles/get-followers")
     suspend fun getFollowers(@Body followRequestModel: FollowRequestModel): Response<FollowerResponseModel>
+
+    @GET("/api/v2/posts/total-post-count")
+    suspend fun getFavouriteCount(): Response<FavouriteCountResponseModel>
 
 
 
