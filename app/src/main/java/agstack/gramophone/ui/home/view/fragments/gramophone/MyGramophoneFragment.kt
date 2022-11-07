@@ -221,7 +221,7 @@ class MyGramophoneFragment :
 
            binding?.layoutMyPost?.tvGoToPosts?.setOnClickListener {
                if (activity is HomeActivity) {
-                   (activity as HomeActivity).showCommunityFragment("gramophone")
+                   (activity as HomeActivity).showCommunityFragment("gramophone_my_post")
                }
            }
 
@@ -242,8 +242,7 @@ class MyGramophoneFragment :
            }
 
        }else {
-           binding?.layoutMyPost?.myPostTitle?.text =
-               String.format(getMessage(R.string.my_posts), communityHomeResponseModel.meta.pages)
+           binding?.layoutMyPost?.myPostTitle?.text =getMessage(R.string.postss)
            binding?.layoutMyPost?.itemPost?.visibility = GONE
            binding?.layoutMyPost?.tvGoToPosts?.visibility = GONE
            binding?.layoutMyPost?.ivNext1?.visibility = GONE
@@ -280,20 +279,18 @@ class MyGramophoneFragment :
         }
     }
 
-    override fun updateOrderSection(placedList: GpApiResponseData?) {
+    override fun updateOrderSection(placedList: GpApiResponseData?, type: String) {
 
         if (placedList==null){
             binding?.layoutOrder?.llNoOrder?.visibility= VISIBLE
-            binding?.layoutOrder?.rlCheckoutOffer?.visibility= VISIBLE
+            //binding?.layoutOrder?.rlCheckoutOffer?.visibility= VISIBLE
             binding?.layoutOrder?.rlOrder?.visibility= GONE
             binding?.layoutOrder?.tvGoToOrders?.visibility= GONE
             binding?.layoutOrder?.ivNext1?.visibility = GONE
             binding?.layoutOrder?.btnShopNow?.visibility = GONE
             binding?.layoutOrder?.btnShopNowOrrange?.visibility = VISIBLE
             binding?.layoutOrder?.myOrderTitle?.text = getMessage(R.string.my_orders)
-            binding?.layoutOrder?.rlCheckoutOffer?.setOnClickListener {
-                openActivity(OffersListActivity::class.java)
-            }
+
         }else{
             binding?.layoutOrder?.llNoOrder?.visibility= GONE
             binding?.layoutOrder?.rlOrder?.visibility= VISIBLE
@@ -311,7 +308,7 @@ class MyGramophoneFragment :
             binding?.layoutOrder?.tvDetail?.setOnClickListener {
                 openActivity(OrderDetailsActivity::class.java,Bundle().apply {
                     putString(Constants.ORDER_ID, placedList.data[0].order_id.toString())
-                    putString(Constants.ORDER_TYPE, Constants.PLACED)
+                    putString(Constants.ORDER_TYPE, type)
                 })
             }
 
@@ -320,7 +317,9 @@ class MyGramophoneFragment :
             }
         }
 
-
+        binding?.layoutOrder?.rlCheckoutOffer?.setOnClickListener {
+            openActivity(OffersListActivity::class.java)
+        }
         binding?.layoutOrder?.btnShopNow?.setOnClickListener {
             if (activity is HomeActivity) {
                 (activity as HomeActivity).showHomeFragment()
@@ -352,8 +351,11 @@ class MyGramophoneFragment :
 
             if (farms.gp_api_response_data.customer_farm.data[0].size>1){
                 binding?.layoutFarm?.singleFarmLayout?.visibility= GONE
+                binding?.layoutFarm?.txtMultipleFarms?.visibility= VISIBLE
             }else{
                 binding?.layoutFarm?.singleFarmLayout?.visibility= VISIBLE
+                binding?.layoutFarm?.txtMultipleFarms?.visibility= GONE
+
             }
 
 

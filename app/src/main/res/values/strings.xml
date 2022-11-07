@@ -376,6 +376,7 @@
     <string name="tab_expert">Expert</string>
     <string name="tab_my_post">My Post</string>
     <string name="my_post">My Posts(%d)</string>
+    <string name="postss">My Posts</string>
     <string name="my_posts">My Posts(%d)</string>
     <string name="tab_saved_post">Saved Post</string>
     <string name="starts_from_99">Starts from \u20B9 99</string>

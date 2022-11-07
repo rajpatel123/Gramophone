@@ -16,6 +16,7 @@ import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -118,6 +119,9 @@ class SubCategoryViewModel @Inject constructor(
                             SharedPreferencesKeys.session_token)!!
                     }
                 }
+
+                Log.d("URL","".plus(webUrl.isNotNullOrEmpty() && !webUrl.contains("single-article") && !webUrl.contains(
+                    "?")).plus(webUrl))
                 if (webUrl.isNotNullOrEmpty())
                     getNavigator()?.loadUrl(webUrl)
 

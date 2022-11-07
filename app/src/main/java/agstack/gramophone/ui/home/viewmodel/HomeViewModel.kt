@@ -24,6 +24,7 @@ import agstack.gramophone.utils.*
 import agstack.gramophone.view.activity.CreatePostActivity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -72,9 +73,11 @@ class HomeViewModel @Inject constructor(
                                 val customerId =
                                     if (gpApiResponseData.customer_id.isNullOrEmpty()) "" else gpApiResponseData.customer_id
                                 val customerAddress=
-                                    if (gpApiResponseData.address_data?.address.isNullOrEmpty()) "" else (gpApiResponseData.address_data?.district.plus(
+                                    if (gpApiResponseData.address_data==null) "" else (gpApiResponseData.address_data?.district.plus(
                                         ", "
                                     ).plus(gpApiResponseData.address_data?.state))
+
+                                Log.d("Address",customerAddress)
 
 
 
@@ -102,6 +105,7 @@ class HomeViewModel @Inject constructor(
                                     customerAddress
                                 )
 
+                                Log.d("Address",customerAddress)
 
                                 getNavigator()?.setImageNameMobile(
                                     name,

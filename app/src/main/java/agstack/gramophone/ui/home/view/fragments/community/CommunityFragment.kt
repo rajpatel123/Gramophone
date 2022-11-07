@@ -8,7 +8,6 @@ import agstack.gramophone.databinding.DeletePostDailogueBinding
 import agstack.gramophone.databinding.FragmentCommunityBinding
 import agstack.gramophone.databinding.ReportPostDailogueBinding
 import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
-import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.Option
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
@@ -245,14 +244,19 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         if (from.equals("gramophone")) {
             communityViewModel.loadData("bookmark")
             Handler().postDelayed(Runnable {
-                if (communityViewModel.myFavoriteCount!! >0){
+                if (communityViewModel.myFavoriteCount!! > 0) {
                     val tab = binding?.tabLayout?.getTabAt(5)
                     tab!!.select()
-                }else{
-                    val tab = binding?.tabLayout?.getTabAt(4)
+                } else {
+                    val tab = binding?.tabLayout?.getTabAt(0)
                     tab!!.select()
                 }
-            },300)
+            }, 300)
+        } else if (from.equals("gramophone_my_post")) {
+            Handler().postDelayed(Runnable {
+                val tab = binding?.tabLayout?.getTabAt(4)
+                tab!!.select()
+            }, 300)
         }
 
 
