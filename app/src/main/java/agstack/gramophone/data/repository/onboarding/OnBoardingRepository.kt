@@ -15,6 +15,8 @@ import agstack.gramophone.ui.createnewpost.model.MentionTagResponsemodel
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
 import agstack.gramophone.ui.favourite.model.FavouriteRequestModel
 import agstack.gramophone.ui.favourite.model.FeaturedProductResponseModel
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.AnsweredQuizPollRequestModel
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
 import agstack.gramophone.ui.home.view.fragments.gramophone.model.MyGramophoneResponseModel
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
@@ -82,6 +84,10 @@ interface OnBoardingRepository {
     suspend fun getMyGramophoneData(): Response<MyGramophoneResponseModel>
 
     suspend fun getFavouriteProduct(favouriteRequestModel: FavouriteRequestModel): Response<FeaturedProductResponseModel>
+
+    suspend fun getQuiz(): Response<QuizPollResponseModel>
+
+    suspend fun answerQuiz(answeredQuizPollRequestModel: AnsweredQuizPollRequestModel): Response<AnsweredQuizPollRequestModel>
 
 
 }

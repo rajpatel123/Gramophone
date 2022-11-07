@@ -269,6 +269,7 @@ class HomeActivity :
     override fun onResume() {
         super.onResume()
         mViewModel?.getProfile()
+        mViewModel?.getCrops()
     }
 
     override fun getLayoutID(): Int {

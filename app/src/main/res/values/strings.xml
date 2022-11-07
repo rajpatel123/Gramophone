@@ -607,4 +607,9 @@
     <string name="no_favourite_product">No Favorite Products!</string>
     <string name="no_favourite_desc">You haven\'t added any product yet in your favourite products list.</string>
     <string name="complain_logged">Complain logged successfully</string>
+    <string name="gramophone_poll">GRAMOPHONE POLL</string>
+    <string name="gramophone_quiz">GRAMOPHONE QUIZ</string>
+    <string name="day_remaining">Day Remaining</string>
+    <string name="people_answered">Farmers answered</string>
+    <string name="browsw_post_by_crops">Browse Posts By Crops</string>
 </resources>

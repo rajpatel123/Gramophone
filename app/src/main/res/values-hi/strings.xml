@@ -496,6 +496,9 @@
     <string name="mandi_bhav">बाजार भाव</string>
     <string name="watch_app_demo">ऐप का डेमो देखें</string>
     <string name="complain_logged">Complain logged successfully</string>
+    <string name="gramophone_poll">GRAMOPHONE POLL</string>
+    <string name="gramophone_quiz">GRAMOPHONE QUIZ</string>
+    <string name="day_remaining">Day Remaining</string>
 </resources>
 
 

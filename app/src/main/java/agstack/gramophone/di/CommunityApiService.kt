@@ -10,6 +10,7 @@ import agstack.gramophone.ui.home.view.fragments.community.model.likes.BookmarkP
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikePostResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedusersResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
+import agstack.gramophone.ui.home.view.fragments.community.model.pin.UpdatePinResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.reportpost.ReportUserPostResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.*
@@ -45,7 +46,7 @@ interface CommunityApiService {
     suspend fun bookmarkPost(@Body likedUsersRequestModel: PostRequestModel?): Response<BookmarkPostResponse>
 
     @PUT("/api/v2/posts/update-pin")
-    suspend fun pinPost(@Body likedUsersRequestModel: PostRequestModel?): Response<BlockResponseModel>
+    suspend fun pinPost(@Body likedUsersRequestModel: PostRequestModel?): Response<UpdatePinResponseModel>
 
     @GET("/api/v2/posts/{id}")
     suspend fun getPostDetails(@Path("id") id: String): Response<PostDetailResponseModel>
@@ -166,7 +167,6 @@ interface CommunityApiService {
     suspend fun getFollowers(@Body followRequestModel: FollowRequestModel): Response<FollowerResponseModel>
 
 
-    @GET("/api/v5/quiz/get-quiz")
-    suspend fun getQuiz(): Response<QuizPollResponseModel>
+
 
 }

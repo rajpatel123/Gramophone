@@ -9,6 +9,7 @@ import agstack.gramophone.databinding.DeletePostDailogueBinding
 import agstack.gramophone.databinding.ReportPostDailogueBinding
 import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.Option
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
 import agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel
 import agstack.gramophone.utils.Constants
@@ -55,6 +56,7 @@ class OtherUserProfileActivity :
     override fun getViewModel(): CommunityViewModel = otherProfileViewModel
     override fun updatePostList(
         communityPostAdapter: CommunityPostAdapter,
+        quizPollAnswered: (option: Option) -> Unit,
         onItemDetailClicked: (postId: String) -> Unit,
         onItemLikesClicked: (postId: String) -> Unit,
         onItemCommentsClicked: (postId: String) -> Unit,

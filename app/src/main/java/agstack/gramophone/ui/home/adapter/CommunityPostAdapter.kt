@@ -3,11 +3,15 @@ package agstack.gramophone.ui.home.adapter
 import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.databinding.*
+import agstack.gramophone.ui.home.view.fragments.community.PostByCropsAdapter
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.GpApiResponseData
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.Option
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
-import agstack.gramophone.ui.profile.view.ProfileActivity
+import agstack.gramophone.ui.home.view.fragments.market.model.CropData
+import agstack.gramophone.ui.home.view.fragments.market.model.CropResponse
 import agstack.gramophone.ui.userprofile.UserProfileActivity
+import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Constants.BLOCK_USER
 import agstack.gramophone.utils.Constants.DELETE_POST
 import agstack.gramophone.utils.Constants.EDIT_POST
@@ -21,6 +25,7 @@ import android.content.Intent
 import android.os.Build
 import android.text.Html
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View.*
 import android.view.ViewGroup
@@ -29,7 +34,15 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.amnix.xtension.extensions.isNotNull
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.item_poll.view.*
+import kotlinx.android.synthetic.main.item_poll_option.view.*
+import kotlinx.android.synthetic.main.item_poll_option.view.tvQuizOption
+import kotlinx.android.synthetic.main.item_quiz_layout.view.*
+import kotlinx.android.synthetic.main.item_quiz_options.view.*
 import kotlinx.android.synthetic.main.item_tags.view.*
 import java.util.*
 
@@ -39,10 +52,10 @@ import java.util.*
  */
 class CommunityPostAdapter(
     val dataList: List<Data>?,
-    isOther: Boolean
-//    quizPoll: List<List<GpApiResponseData>>
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    val isOther: Boolean,
+    val quizPoll: List<GpApiResponseData>?
 
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val viewPageStates = HashMap<Int, Int>()
     private lateinit var context: Context
     var onItemDetailClicked: ((postId: String) -> Unit)? = null
@@ -54,14 +67,18 @@ class CommunityPostAdapter(
     var onMenuOptionClicked: ((type: Data) -> Unit)? = null
     var onLikeClicked: ((post: Data) -> Unit)? = null
     var onBookMarkClicked: ((post: Data) -> Unit)? = null
+    var quizPollAnswered: ((post: Option) -> Unit)? = null
+    var onCropSelection: ((cropData: CropData) -> Unit)? = null
     var onProfileImageClicked: ((post: Data) -> Unit)? = null
     lateinit var setImage: SetImage
     var lastSelectPosition: Int = 0
+    var postByCropsVisible :Boolean = false
+   lateinit var inflater: LayoutInflater
 
-    lateinit var inflater: LayoutInflater
     interface SetImage {
         fun onImageSet(imageUrl: String, iv: ImageView)
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         this.context = parent.context
@@ -73,32 +90,189 @@ class CommunityPostAdapter(
 
         val textHolder = holder as TextItemHolder
 
+//
+//        if (position == 5 || position == 20) {
+//            if (quizPoll.isNotNull() && quizPoll?.size!! > 0) {
+//                quizPoll.forEach {
+//                    when (it.quiz_type) {
+//                        Constants.POLL -> {
+//                            holder.itemPostBinding.pollLayoutLL.removeAllViews()
+//                            val itemPollLayout = inflater.inflate(R.layout.item_poll, null)
+//                            itemPollLayout.pollRemaining.text =
+//                                "".plus(it.total_days_remaining).plus(" ")
+//                                    .plus(context.applicationContext.getString(R.string.day_remaining))
+//                            itemPollLayout.tvAnsweredFarmer.text =
+//                                "".plus(it.total_people_answered).plus(" ")
+//                                    .plus(context.applicationContext.getString(R.string.people_answered))
+//
+//                            holder.itemPostBinding.pollLayoutLL.addView(itemPollLayout)
+//
+//                            holder.itemPostBinding.pollLayoutLL.visibility = VISIBLE
+//                            holder.itemPostBinding.rlPosts.visibility = GONE
+//                            holder.itemPostBinding.rlPosts.visibility = GONE
+//
+//                            holder.itemPostBinding.pollLayoutLL.tvPollQuestion.text = it.question
+//                            if (!TextUtils.isEmpty(it.image)) {
+//                                Glide.with(context)
+//                                    .load(it.image)
+//                                    .into(holder.itemPostBinding.pollLayoutLL.poll_banner)
+//                            }
+//
+//                            if (it.answered) {
+//                                holder.itemPostBinding.pollLayoutLL.llOptions.removeAllViews()
+//                                it.options.forEach { option ->
+//                                    val view = inflater.inflate(R.layout.item_poll_option, null)
+//                                    view.fmLayout.visibility = VISIBLE
+//                                    view.tvOption.visibility = GONE
+//                                    view.tvQuizOption.setText(option.answer)
+//                                    view.progress.progress = option.votes_percent!!
+//                                    view.tvQuizOptionPercent.setText(
+//                                        "".plus(option.votes_percent).plus("%")
+//                                    )
+//                                    view.progress.setPadding(0, 0, 0, 0)
+//                                    holder.itemPostBinding.pollLayoutLL.llOptions.addView(view)
+//
+//                                }
+//                            } else {
+//                                holder.itemPostBinding.pollLayoutLL.llOptions.removeAllViews()
+//                                it.options.forEach { option ->
+//                                    val view = inflater.inflate(R.layout.item_poll_option, null)
+//                                    view.tvOption.visibility = VISIBLE
+//                                    view.fmLayout.visibility = GONE
+//
+//                                    view.tvOption.setText(option.answer)
+//                                    holder.itemPostBinding.pollLayoutLL.llOptions.addView(view)
+//
+//                                    view.setOnClickListener { view ->
+//                                        option.position = position
+//                                        option.question_id = it.question_id
+//                                        quizPollAnswered?.invoke(option)
+//                                    }
+//                                }
+//                            }
+//
+//
+//                        }
+//                        Constants.QUIZ -> {
+//                            holder.itemPostBinding.quizLayoutLL.removeAllViews()
+//                            val itemQquizLayout = inflater.inflate(R.layout.item_quiz_layout, null)
+//
+//                            itemQquizLayout.quizRemaining.text =
+//                                "".plus(it.total_days_remaining).plus(" ")
+//                                    .plus(context.applicationContext.getString(R.string.day_remaining))
+//                            holder.itemPostBinding.quizLayoutLL.addView(itemQquizLayout)
+//
+//                            itemQquizLayout.llQuizOptions.removeAllViews()
+//
+//                            holder.itemPostBinding.quizLayoutLL.visibility = VISIBLE
+//                            holder.itemPostBinding.rlPosts.visibility = GONE
+//                            holder.itemPostBinding.rlPosts.visibility = GONE
+//
+//                            itemQquizLayout.tvQuizQuestion.text =
+//                                "".plus(it.question)
+//                            if (!TextUtils.isEmpty(it.image)) {
+//                                Glide.with(context)
+//                                    .load(it.image)
+//                                    .into(itemQquizLayout.quizBanner)
+//                            }
+//
+//                            if (it.answered) {
+//                                it.options.forEach { option ->
+//                                    val view = inflater.inflate(R.layout.item_quiz_options, null)
+//                                    view.tvQuizOption.setText(option.answer)
+//                                    itemQquizLayout.llQuizOptions.addView(view)
+//
+//                                    if (option.valid_answer && option.option_selected) {
+//                                        view.rlOption.setBackgroundResource(R.drawable.correct_answer)
+//                                        view.ivAnswer.setImageResource(R.drawable.ic_tick_check)
+//                                        view.ivAnswer.visibility = VISIBLE
+//
+//                                    } else {
+//                                        view.ivAnswer.visibility = VISIBLE
+//                                        view.rlOption.setBackgroundResource(R.drawable.wrong_answer)
+//                                        view.ivAnswer.setImageResource(R.drawable.ic_error)
+//                                    }
+//                                }
+//
+//                            } else {
+//                                it.options.forEach { option ->
+//                                    val view = inflater.inflate(R.layout.item_quiz_options, null)
+//                                    view.tvQuizOption.setText(option.answer)
+//                                    holder.itemPostBinding.quizLayoutLL.llQuizOptions.addView(view)
+//
+//                                    view.setOnClickListener { view ->
+//                                        option.position = position
+//                                        option.question_id = it.question_id
+//                                        quizPollAnswered?.invoke(option)
+//                                    }
+//                                }
+//                            }
+//
+//
+//                        }
+//                    }
+//                }
+//
+//
+//            }
+//
+//        } else {
+//            holder.itemPostBinding.quizLayoutLL.visibility = GONE
+//
+//            holder.itemPostBinding.pollLayoutLL.visibility = GONE
+//        }
 
-        if (position>5 && position%5==0 && position<20){
-            holder.itemPostBinding.pollLayoutLL.visibility= VISIBLE
-            holder.itemPostBinding.rlPosts.visibility= GONE
-            holder.itemPostBinding.rlPosts.visibility= GONE
 
-            return
-        }else{
-            holder.itemPostBinding.pollLayoutLL.visibility= GONE
-        }
-
-        if (position >1 && (position==2 || position%5==0)){
+        if (position > 1 && (position == 2 || (position>4 && (position-2)%6 == 0))) {
+          //  Log.d("positionCount","".plus(positionCount).plus("  position  =").plus(position).plus("  Count  =").plus(count))
+            //positionCount++
             var bannerResponse = SharedPreferencesHelper.instance?.getParcelable(
                 SharedPreferencesKeys.BANNER_DATA, BannerResponse::class.java
             )
-            if (bannerResponse?.gpApiResponseData?.communityBanner!=null && bannerResponse?.gpApiResponseData?.communityBanner!!.size>0 ){
-                holder.itemPostBinding.rlBanner.visibility= VISIBLE
-                holder.itemPostBinding.rlPosts.visibility= GONE
-                configurePagerHolder(textHolder,position,bannerResponse)
+            if (bannerResponse?.gpApiResponseData?.communityBanner != null && bannerResponse?.gpApiResponseData?.communityBanner!!.size > 0) {
+                holder.itemPostBinding.rlBanner.visibility = VISIBLE
+                holder.itemPostBinding.rlPosts.visibility = GONE
+                configurePagerHolder(textHolder, position, bannerResponse)
+                if (!postByCropsVisible){
+                    holder.itemPostBinding.cropLL.visibility = VISIBLE
+                    Log.d("Crop","true")
+                    try {
+
+                        val cropResponse = SharedPreferencesHelper.instance?.getParcelable(SharedPreferencesKeys.CROPS, CropResponse::class.java)
+                        if (cropResponse!=null) {
+                            val linearLayoutManager =
+                                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                            holder.itemPostBinding.rvPostByCrops.layoutManager = linearLayoutManager
+                            holder.itemPostBinding.rvPostByCrops.adapter =
+                                PostByCropsAdapter(cropResponse?.gpApiResponseData!!.cropsList) {
+                                    onCropSelection?.invoke(it)
+                                }
+
+                            holder.itemPostBinding.cropLL.visibility = VISIBLE
+                        }else{
+                            holder.itemPostBinding.cropLL.visibility = GONE
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+
+                    }
+                    postByCropsVisible=true
+                }else{
+                    holder.itemPostBinding.cropLL.visibility = GONE
+                }
+
                 return
             }
+        }else{
+            holder.itemPostBinding.rlBanner.visibility = GONE
         }
 
+
         configureItem(textHolder, position)
-        holder.itemPostBinding.rlBanner.visibility= GONE
-        holder.itemPostBinding.rlPosts.visibility= VISIBLE
+        holder.itemPostBinding.rlBanner.visibility = GONE
+        holder.itemPostBinding.rlPosts.visibility = VISIBLE
+        holder.itemPostBinding.cropLL.visibility = GONE
+
     }
 
     private fun configureItem(holder: TextItemHolder, position: Int) {
@@ -151,11 +325,11 @@ class CommunityPostAdapter(
         holder.itemPostBinding.tvLikes.text=data.likesCount.toString()+" "+context.getString(R.string.like)
         holder.itemPostBinding.tvComment.text=data.commentsCount.toString()+" "+context.getString(R.string.comment_count)
         if (data.tags.isNotEmpty()) {
-            holder.itemPostBinding.llTVTag.removeAllViews()
+            holder.itemPostBinding.finalTagLL.removeAllViews()
             data.tags.forEach {
                 val view = inflater.inflate(R.layout.item_tags, null)
                 view.tvTag.setText(it.tag)
-                holder.itemPostBinding.llTVTag.addView(view)
+                holder.itemPostBinding.finalTagLL.addView(view)
             }
         }
 
@@ -192,21 +366,25 @@ class CommunityPostAdapter(
                 SharedPreferencesHelper.instance?.getString(UUIdKey)
             )
         ) {
+
+            holder.itemPostBinding.llFollowing.visibility = GONE
             holder.itemPostBinding.llEdit.visibility = VISIBLE
             holder.itemPostBinding.llDelete.visibility = VISIBLE
             holder.itemPostBinding.llReport.visibility = GONE
             holder.itemPostBinding.llBlock.visibility = GONE
-            if (data.author.address==null){
-               holder.itemPostBinding.tvCity.visibility= VISIBLE
+            if (data.author.address == null) {
+                holder.itemPostBinding.tvCity.visibility = VISIBLE
                 holder.itemPostBinding.tvCity.setOnClickListener {
                     context.startActivity(Intent(context, UserProfileActivity::class.java))
                 }
             }
 
         } else {
-            if (data.author.address==null){
-                holder.itemPostBinding.tvCity.visibility= GONE
+            if (data.author.address == null) {
+                holder.itemPostBinding.tvCity.visibility = GONE
             }
+            holder.itemPostBinding.llFollowing.visibility = VISIBLE
+
             holder.itemPostBinding.llReport.visibility = VISIBLE
             holder.itemPostBinding.llBlock.visibility = VISIBLE
             holder.itemPostBinding.llDelete.visibility = GONE
@@ -215,12 +393,6 @@ class CommunityPostAdapter(
 
         }
 
-        if (data.pinned  && SharedPreferencesHelper.instance?.getString(
-                SharedPreferencesKeys.IS_ADMIN).equals("admin")) {
-            holder.itemPostBinding.llPinPost.visibility = VISIBLE
-        } else {
-            holder.itemPostBinding.llPinPost.visibility = GONE
-        }
 
         if (!TextUtils.isEmpty(data.author.communityUserType) && "admin".equals(data.author.communityUserType,true)){
             holder.itemPostBinding.llBlock.visibility = GONE

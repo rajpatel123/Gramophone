@@ -14,6 +14,7 @@ import agstack.gramophone.ui.postdetails.model.PostDetailResponseModel
 import agstack.gramophone.ui.comments.model.sendcomment.SendCommentResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.create.CreatePostResponseModel
 import agstack.gramophone.ui.followings.model.FollowerResponseModel
+import agstack.gramophone.ui.home.view.fragments.community.model.pin.UpdatePinResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.reportpost.ReportUserPostResponseModel
 import agstack.gramophone.ui.othersporfile.model.CommunityUserPostRequestModel
@@ -40,7 +41,7 @@ interface CommunityRepository {
 
     suspend fun bookmarkPost(post: PostRequestModel): Response<BookmarkPostResponse>
 
-    suspend fun pinPost(post: PostRequestModel): Response<BlockResponseModel>
+    suspend fun pinPost(post: PostRequestModel): Response<UpdatePinResponseModel>
 
     suspend fun getPostDetails(post: String): Response<PostDetailResponseModel>
 
@@ -89,5 +90,4 @@ interface CommunityRepository {
 
     suspend fun getFollowings(followRequestModel: FollowRequestModel):Response<FollowerResponseModel>
 
-    suspend fun getQuiz(): Response<QuizPollResponseModel>
 }

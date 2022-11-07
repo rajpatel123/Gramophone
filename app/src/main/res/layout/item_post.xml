@@ -49,12 +49,12 @@
 
 
             </FrameLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_below="@+id/frameLayout"
-                android:background="@color/grey" />
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="@dimen/_5sdp"-->
+<!--                android:layout_marginTop="@dimen/_5sdp"-->
+<!--                android:layout_below="@+id/frameLayout"-->
+<!--                android:background="@color/grey" />-->
         </RelativeLayout>
 
     <RelativeLayout
@@ -93,7 +93,7 @@
                 android:fontFamily="@font/manrope_bold"
                 android:text="@{model.author.username}"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_11ssp"
+                android:textSize="@dimen/_12ssp"
                 tools:text="gkjfdgksfksfskf" />
 
             <TextView
@@ -105,8 +105,9 @@
                 android:fontFamily="@font/manrope_medium"
                 android:text="@{model.author.address!=null?model.author.address:@string/add_address}"
                 android:textColor="@{model.author.address!=null?@color/gray:@color/red}"
-                android:textSize="@dimen/_10ssp"
-                android:visibility="visible" />
+                android:textSize="@dimen/_8ssp"
+                android:visibility="visible"
+                tools:text="Utter pradesh" />
         </LinearLayout>
 
 
@@ -115,15 +116,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/llName"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_toEndOf="@+id/ivProfileImage"
             android:fontFamily="@font/manrope_medium"
             android:text="@{model.createdDate}"
             android:textColor="@color/gray"
-            android:textSize="@dimen/_10ssp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:textSize="@dimen/_8ssp"
             tools:text="Datefhjd" />
 
        <LinearLayout
+           android:id="@+id/llFollowing"
+
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:orientation="horizontal"
@@ -147,7 +150,7 @@
                android:fontFamily="@font/manrope_bold"
                android:text="@{model.following?@string/following:@string/follow}"
                android:textColor="@{model.following?@color/gray:@color/red}"
-               android:textSize="@dimen/_10ssp"
+               android:textSize="@dimen/_9ssp"
                android:layout_marginStart="@dimen/_5sdp"
                tools:text="Dated" />
        </LinearLayout>
@@ -254,22 +257,38 @@
             android:minHeight="@dimen/_26sdp" />
 
 
-        <LinearLayout
-            android:id="@+id/llTVTag"
+        <HorizontalScrollView
+            android:id="@+id/hScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_below="@+id/tvSpace"
-            >
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="8dp"
+            android:scrollbars="none">
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/finalTagLL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="@dimen/_5sdp"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/final_tag_list_item" />
+
+        </HorizontalScrollView>
+
 
 
         <LinearLayout
             android:id="@+id/llActions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/llTVTag"
+            android:layout_below="@+id/hScrollView"
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_12sdp"
             android:layout_marginEnd="@dimen/_12sdp"
@@ -487,12 +506,7 @@
         </RelativeLayout>
 
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_below="@+id/llComment"
-            android:background="@color/grey" />
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -540,12 +554,10 @@
 
                 <LinearLayout
                     android:id="@+id/llPinPost"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -558,7 +570,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
                         android:fontFamily="@font/manrope_regular"
                         android:text="@{model.pinned?@string/unpin_post:@string/pin_post}" />
                 </LinearLayout>
@@ -570,7 +581,6 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:gravity="center_vertical"
-
                     android:orientation="horizontal">
 
                     <ImageView
@@ -644,19 +654,60 @@
 
 
     </RelativeLayout>
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_5sdp"
+            android:layout_below="@+id/llComment"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@color/grey" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/pollLayoutLL"
             android:visibility="gone"
             android:orientation="vertical">
-            <include
-                android:id="@+id/pollLayout"
-                layout="@layout/item_poll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/quizLayoutLL"
+            android:visibility="gone"
+            android:layout_margin="@dimen/_10sdp"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cropLL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:text="@string/browsw_post_by_crops"
+                android:fontFamily="@font/manrope_bold"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/black"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:id="@+id/rvPostByCrops"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_5sdp"
+                android:layout_below="@+id/frameLayout"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/grey" />
+        </LinearLayout>
+
 
     </LinearLayout>
 
