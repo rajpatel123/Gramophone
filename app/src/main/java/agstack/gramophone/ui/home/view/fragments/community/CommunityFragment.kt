@@ -10,6 +10,7 @@ import agstack.gramophone.databinding.ReportPostDailogueBinding
 import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.Option
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
 import agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel
 import agstack.gramophone.utils.ShareSheetPresenter
@@ -48,10 +49,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        shareSheetPresenter = this?.let { ShareSheetPresenter(requireActivity()) }
-        communityViewModel.sorting.set("latest")
-        communityViewModel.getQuiz()
-        communityViewModel.from=""
+
+
+        binding?.swipeRefresh?.setOnRefreshListener {
+            binding?.swipeRefresh?.isRefreshing=true
+            communityViewModel.loadData(communityViewModel.sorting.get().toString())
+        }
 
     }
 
@@ -71,6 +74,9 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     override fun onResume() {
         super.onResume()
+        shareSheetPresenter = this?.let { ShareSheetPresenter(requireActivity()) }
+        communityViewModel.sorting.set("latest")
+        communityViewModel.getQuiz()
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -78,6 +84,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     }
     override fun updatePostList(
         communityPostAdapter: CommunityPostAdapter,
+        quizPollAnswered: (option: Option) -> Unit,
         onItemDetailClicked: (postId: String) -> Unit,
         onItemLikesClicked: (postId: String) -> Unit,
         onItemCommentsClicked: (postId: String) -> Unit,
@@ -91,6 +98,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     ) {
         runOnUIThread {//will be removed while api integrations
+            communityPostAdapter.quizPollAnswered=quizPollAnswered
             communityPostAdapter.onItemCommentsClicked=onItemCommentsClicked
             communityPostAdapter.onItemLikesClicked=onItemLikesClicked
             communityPostAdapter.onItemDetailClicked=onItemDetailClicked
@@ -125,7 +133,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        communityViewModel.loadData(communityViewModel.sorting.get().toString())
+       // communityViewModel.loadData(communityViewModel.sorting.get().toString())
         tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 progress.visibility= VISIBLE

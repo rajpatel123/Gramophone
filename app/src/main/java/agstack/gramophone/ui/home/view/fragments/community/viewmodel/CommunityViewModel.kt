@@ -3,13 +3,18 @@ package agstack.gramophone.ui.home.view.fragments.community.viewmodel
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.community.CommunityRepository
+import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
+import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.comments.view.CommentsActivity
 import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
 import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActivity
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.AnsweredQuizPollRequestModel
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.GpApiResponseData
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.Option
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.*
+import agstack.gramophone.ui.home.view.fragments.market.model.CropResponse
 import agstack.gramophone.ui.othersporfile.model.CommunityUserPostRequestModel
 import agstack.gramophone.ui.othersporfile.model.ProfileData
 import agstack.gramophone.ui.othersporfile.view.OtherUserProfileActivity
@@ -25,11 +30,13 @@ import agstack.gramophone.view.activity.EditPostActivity
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
@@ -37,11 +44,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CommunityViewModel @Inject constructor(
-    private val communityRepository: CommunityRepository
+    private val communityRepository: CommunityRepository,
+    private val onBoardingRepository: OnBoardingRepository,
+    private val productRepository: ProductRepository
 ) : BaseViewModel<CommunityFragmentNavigator>() {
-    lateinit var from: String
+    var cropResponse: CropResponse?=null
     var myFavoriteCount: Int? = null
-    lateinit var quizPoll: List<List<GpApiResponseData>>
+    var quizPoll: List<GpApiResponseData>? = null
     var profileData = ObservableField<ProfileData>()
     lateinit var postId: String
     var block = "block"
@@ -94,13 +103,12 @@ class CommunityViewModel @Inject constructor(
             }
         }
 
-        from = ""
         loadData(sorting.get()!!)
     }
 
 
     fun loadData(sorting: String) {
-        limit.set(1250)
+        limit.set(99)
         viewModelScope.launch(Dispatchers.Default) {
             getPost(sorting)
         }
@@ -308,10 +316,14 @@ class CommunityViewModel @Inject constructor(
                     val data = response.body()?.data
                     myFavoriteCount = response.body()?.data?.size!!
                     getNavigator()?.stopRefresh()
-                    communityPostAdapter = CommunityPostAdapter(data, false)
+                    communityPostAdapter = CommunityPostAdapter(data, false,quizPoll,
+                    )
 
                     getNavigator()?.updatePostList(
                         communityPostAdapter,
+                        {
+                          answerQuizPoll(it)
+                        },
                         {//postDetail click
                             getNavigator()?.openActivity(
                                 PostDetailsActivity::class.java,
@@ -436,9 +448,16 @@ class CommunityViewModel @Inject constructor(
                     if (response.isSuccessful) {
                         val data = response.body()?.data
 
-                        communityPostAdapter = CommunityPostAdapter(data, true)
+                        communityPostAdapter = CommunityPostAdapter(
+                            data,
+                            true,
+                            quizPoll
+                        )
 
                         getNavigator()?.updatePostList(communityPostAdapter,
+                            {
+                              answerQuizPoll(it)
+                            },
                             {//postDetail click
                                 getNavigator()?.openActivity(
                                     PostDetailsActivity::class.java,
@@ -545,6 +564,38 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
+    private fun answerQuizPoll(it: Option) {
+        showProgress.set(true)
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+
+                    val response =
+                        onBoardingRepository.answerQuiz(AnsweredQuizPollRequestModel(it.question_id,it.option_id))
+                    if (response.isSuccessful) {
+                        showProgress.set(false)
+                        getPost(sorting.get()!!)
+
+                    } else {
+                        showProgress.set(false)
+
+                        getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+                    }
+                } else
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+            } catch (ex: Exception) {
+                showProgress.set(false)
+                when (ex) {
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                }
+            }
+
+
+        }
+
+    }
+
     private fun followPost(it: Data) {
         showProgress.set(true)
         viewModelScope.launch {
@@ -598,11 +649,7 @@ class CommunityViewModel @Inject constructor(
                         communityRepository.pinPost(PostRequestModel(it._id, status))
                     if (response.isSuccessful) {
                         var post = communityPostAdapter.getItem(it.position!!)
-                        if (it.equals("pin")) {
-                            post?.pinned = true
-                        } else {
-                            post?.pinned = false
-                        }
+                        post?.pinned = status.equals("pin")
                         communityPostAdapter.notifyItemChanged(it.position!!)
 
 
@@ -797,19 +844,25 @@ class CommunityViewModel @Inject constructor(
 
     fun getQuiz() {
         viewModelScope.launch {
+            delay(3000)
             try {
+
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     val response =
-                        communityRepository.getQuiz()
+                        onBoardingRepository.getQuiz()
                     if (response.isSuccessful && response.body() != null) {
                         quizPoll = response.body()!!.gp_api_response_data
                     } else {
-                        following.set(false)
                         showProgress.set(false)
                     }
+
+                    Log.d("PostCall","true")
+                    sorting.get()?.let { loadData(it) }
                 } else
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
             } catch (ex: Exception) {
+                Log.d("PostCall","false")
+
                 showProgress.set(false)
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
@@ -821,5 +874,6 @@ class CommunityViewModel @Inject constructor(
         }
 
     }
+
 
 }

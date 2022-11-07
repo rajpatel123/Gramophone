@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="agstack.gramophone.ui.home.view.fragments.market.model.CropData" />
+    </data>
+
+    <LinearLayout android:id="@+id/cropContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
+        tools:ignore="RtlSymmetry">
+
+        <FrameLayout
+            android:id="@+id/itemView"
+            android:background="@drawable/rounded_corner_20_solid_gray"
+            android:layout_width="@dimen/_72sdp"
+            android:layout_height="@dimen/_72sdp"
+            android:padding="@dimen/_2sdp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:padding="@dimen/_10sdp"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+                android:contentDescription="@string/image"
+                app:product_image='@{item.cropImage ?? ""}'
+                tools:src="@drawable/dummy_crop" />
+
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:text='@{item.cropName ?? ""}'
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            tools:text="Tomato" />
+
+    </LinearLayout>
+
+</layout>

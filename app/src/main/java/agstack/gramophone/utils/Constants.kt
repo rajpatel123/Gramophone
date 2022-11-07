@@ -7,6 +7,8 @@ import android.content.Context
 
 object Constants {
 
+    val POLL: String = "poll"
+    val QUIZ: String = "quiz"
     val PAGE : String="follower"
     val PAGE_SOURCE : String="gram"
     val GET_SELECTED_TAGS: Int= 32

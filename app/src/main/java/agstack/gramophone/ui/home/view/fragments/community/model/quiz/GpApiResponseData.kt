@@ -10,5 +10,7 @@ data class GpApiResponseData(
     val question_type: String,
     val quiz_id: Int,
     val quiz_title: String,
-    val quiz_type: String
+    val quiz_type: String,
+    val total_days_remaining: Int?,
+    val total_people_answered: Int?
 )

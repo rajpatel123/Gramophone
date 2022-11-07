@@ -13,82 +13,16 @@
     <string name="select_language_hi">हिन्दी</string>
     <string name="select_language_marathi">मराठी</string>
     <string name="select_language_gujarati">ગુજરાતી</string>
-    <string name="myfarm">My Farms(%d)</string>
-
-
-    <string name="skip">Skip</string>
-    <string name="next">Next</string>
-    <string name="resource_img_icon">resource_img_icon</string>
-    <string name="welcome_msg">ग्रामोफोन में आपका स्वागत है</string>
-    <string name="start_msg">युक्ति: अधिसूचना के लिए अपने व्हाट्सएप नंबर का प्रयोग करें</string>
-    <string name="enter_mobile_lebel">मोबाइल नंबर दर्ज करें</string>
-    <string name="policy_txt">आप हमारी सहमति से सहमत हैं जारी रखें</string>
-    <string name="policy">नीति</string>
-    <string name="submit">प्रस्तुत करना</string>
-    <string name="changeno">फ़ोन नंबर बदलें</string>
-    <string name="connected">जुड़े रहें</string>
-    <string name="connected_sub_msg"><![CDATA[सर्वोत्तम कृषि तकनीक प्राप्त करें कृषि विशेषज्ञों और किसानों से जुड़ें]]></string>
-    <string name="delivery_sub_msg"><![CDATA[सर्वोत्तम गुणवत्ता वाले बीज, फसल सुरक्षा, फसल पोषण और कृषि उपकरण खरीदें]]></string>
-    <string name="delivery">आपके दरवाजे पर डिलीवरी</string>
-    <string name="midea">नवीनतम अपडेट प्राप्त करें</string>
-    <string name="midea_sub_msg"><![CDATA[एक ही स्थान पर मौसम की अपडेट, मंडी की कीमतें और अन्य कृषि समाचार प्राप्त करें]]></string>
-    <string name="finish">समाप्त</string>
-    <string name="_continue">इसे जारी रखें</string>
-    <string name="enter_your_name">अपना नाम दर्ज करें</string>
-    <string name="login">लॉग इन करें</string>
-    <string name="eng">भाषा</string>
-    <string name="terms">शर्तें</string>
-    <string name="and"><![CDATA[और]]></string>
-    <string name="otp_hint">"6 अंकों का कोड दर्ज करें जिसे हमने भेजा है"</string>
-    <string name="enter_otp">ओटीपी दर्ज करें</string>
-    <string name="please_enter_otp">कृपया ओटीपी दर्ज करें</string>
-    <string name="resend_otp">"फिर से %1$s के माध्यम से ओटीपी प्राप्त करें"</string>
-    <string name="no_internet">"कोई इंटरनेट कनेक्शन नहीं है "</string>
-    <string name="seconds">सेकंड</string>
-
-    <string name="privacy">गोपनीयता नीति</string>
-    <string name="talk_to_customer_care">हमारे कस्टमर केयर एक्जीक्यूटिव से बात करें</string>
-    <string name="call_now">अभी कॉल करें</string>
-    <string name="apply_referral">रेफरल कोड लागू करें</string>
-    <string name="terms_n_conditions"><![CDATA[नियम एवं शर्तें]]></string>
-    <string name="get_help_call">कॉल के माध्यम से सहायता प्राप्त करें</string>
-    <string name="apply">इसे लागू करें</string>
-    <string name="terms_of_use">उपयोग की शर्तें</string>
-    <string name="have_referral">क्या आपके पास रेफरल कोड है?</string>
-    <string name="select_language">अपनी भाषा का चयन करें</string>
-    <string name="enter_referral_code">रेफ़रल कोड दर्ज करें (वैकल्पिक)</string>
-    <string name="enter_referral_code_hint">रेफरल कोड दर्ज करें</string>
-    <string name="help">सहायता</string>
-    <string name="get_help">सहायता लें</string>
-    <string name="select_state">अपना राज्य चुनें</string>
-    <string name="other">अन्य</string>
-    <string name="select_state_error">कृपया राज्य का चयन करें</string>
-    <string name="_state">राज्य चुनें</string>
-    <string name="complete_address">अपना पूरा पता साझा करें</string>
-    <string name="get_apporopriate_solution">धिक सटीक समाधान प्राप्त करने के लिए</string>
-    <string name="change">परिवर्तन करें</string>
-    <string name="_district">ज़िला</string>
-    <string name="_tahsil">तहसील</string>
-    <string name="_village">गांव</string>
-    <string name="address">पता</string>
-    <string name="pincode">पिन कोड</string>
-    <string name="go_to_app">ऐप पर जाएं</string>
-    <string name="logout">लॉगआउट</string>
-    <string name="state_required">कृपया राज्य का चयन करें</string>
-    <string name="district_required">Please enter your district name.</string>
-    <string name="tehsil_required">कृपया तहसील का चयन करें</string>
-    <string name="village_required">कृपया गांव में प्रवेश करें</string>
-    <string name="address_required">कृपया अपना पता भरें</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
     <string name="cancel">Cancel</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
     <string name="complete_action_using">Complete Action Using</string>
-    <string name="select_image_title">फोटो का चयन कर</string>
+    <string name="select_image_title">Select image</string>
     <string name="crop_image_title_text">Crop</string>
-    <string name="unit_convertor">इकाई कनवर्टर</string>
-    <string name="feedback">फीडबैक</string>
+    <string name="unit_convertor">Unit Converter</string>
+    <string name="feedback">Feedback</string>
     <string name="leave_feedback">Leave Feedback</string>
     <string name="whatcanweimprove">What can we improve?</string>
     <string name="send">Send</string>
@@ -126,7 +60,7 @@
     <string name="view_all_referral_transactions">View All Referral Transactions</string>
     <string name="my_referrals">My Referrals</string>
     <string name="you_have_no_referral">You have no referral yet!</string>
-    <string name="share_earn_referral_msg">" To earn more points please refer app to your friends."</string>
+    <string name="share_earn_referral_msg">To earn more points please refer app to your friends.</string>
     <string name="refer_a_friend">Refer a friend</string>
     <string name="available">Available</string>
     <string name="pending">Pending</string>
@@ -135,20 +69,23 @@
     <string name="no_transactions">No transactions done</string>
     <string name="earned">Earned</string>
     <string name="all_transactions">All Transactions</string>
+
     <string-array name="units_array">
-        <item>बीघा</item>
-        <item>एकड़</item>
-        <item>हैक्टर</item>
-        <item>वर्ग फुट</item>
+        <item>Bigha</item>
+        <item>Acre</item>
+        <item>Hectare</item>
+        <item>Square Feet</item>
     </string-array>
+
     <string-array name="units_kind_array">
-        <item>क्षेत्रफल</item>
+        <item>Area</item>
     </string-array>
 
     <string name="aaa">All Tran_1111</string>
     <string name="download_to_gallery">Downloaded to Gallery</string>
-    <string name="home_share_subject">बेहतर गुणवत्ता वाले कृषि उत्पाद खरीदें, ग्रामोफ़ोन एप्प से!</string>
+    <string name="home_share_subject">Get best quality agriculture products from Gramophone App</string>
     <string name="about_referral_point_balance">About Referral Points balance</string>
+
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -193,11 +130,69 @@
     <string name="related_products">Related Products</string>
 
 
-
+    <!--    OnBoarding strings-->
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="resource_img_icon">resource_img_icon</string>
+    <string name="welcome_msg">Welcome to Gramophone</string>
+    <string name="start_msg">TIP: Use your whatsapp number for notification</string>
+    <string name="enter_mobile_lebel">Enter Mobile Number</string>
+    <string name="policy_txt">By Continue you agree to our</string>
+    <string name="policy">Policy</string>
+    <string name="submit">Submit</string>
+    <string name="changeno">Change No.</string>
+    <string name="connected">Stay Connected</string>
+    <string name="connected_sub_msg"><![CDATA[Get best agriculture techniques Connect with Agri Experts & Farmers]]></string>
+    <string name="delivery_sub_msg"><![CDATA[Buy best quality seeds, crop protection, crop nutrition & agri equipments]]></string>
+    <string name="delivery">Deliver on your doorstep</string>
+    <string name="midea">Get Latest Updates</string>
+    <string name="midea_sub_msg"><![CDATA[Get weather updates, mandi prices & other agriculture news at one place]]></string>
+    <string name="finish">FINISH</string>
+    <string name="_continue">Continue</string>
+    <string name="enter_your_name">Enter your Name</string>
+    <string name="login">Login</string>
+    <string name="eng">Eng</string>
+    <string name="terms">Terms</string>
+    <string name="and"><![CDATA[&]]></string>
+    <string name="otp_hint">"Enter 6 Digit code we have sent on "</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="please_enter_otp">Please enter OTP</string>
+    <string name="resend_otp">"Getting OTP via %1$s, Resend in "</string>
+    <string name="privacy">Privacy Policy</string>
+    <string name="talk_to_customer_care">Talk to our customer care executive</string>
+    <string name="call_now">Call Now</string>
+    <string name="apply_referral">Apply Referral Code</string>
+    <string name="terms_n_conditions"><![CDATA[Terms & Conditions]]></string>
+    <string name="get_help_call">Get Help via Call</string>
+    <string name="apply">Apply</string>
+    <string name="terms_of_use">Terms of use</string>
+    <string name="have_referral">Do you have referral code?</string>
+    <string name="select_language">Select your Language</string>
+    <string name="enter_referral_code">Enter Referral code</string>
+    <string name="enter_referral_code_hint">Enter referral code</string>
+    <string name="help">Help</string>
+    <string name="get_help">Get Help</string>
     <!--    OnBoarding strings-->
 
     <string name="ratingandreviews"><![CDATA[Rating & Reviews]]></string>
-
+    <string name="select_state">Select your state</string>
+    <string name="other">Other</string>
+    <string name="select_state_error">Please select state</string>
+    <string name="_state">Select State</string>
+    <string name="complete_address">Share your complete address</string>
+    <string name="get_apporopriate_solution">To get more accurate solution</string>
+    <string name="change">Change</string>
+    <string name="_district">District</string>
+    <string name="_tahsil">Tehsil</string>
+    <string name="_village">Village</string>
+    <string name="address">Address</string>
+    <string name="pincode">Pincode</string>
+    <string name="go_to_app">Go to the app</string>
+    <string name="state_required">Please select state</string>
+    <string name="district_required">Please enter your district name.</string>
+    <string name="tehsil_required">Please enter your tehsil name.</string>
+    <string name="village_required">Please enter your village name</string>
+    <string name="address_required">Please enter your address</string>
 
     <!--    OnBoarding strings-->
 
@@ -230,6 +225,7 @@
     <string name="onlyGenuineBuyerCanRate">Only genuine buyer can rate this product</string>
     <string name="gramophone_allows_disclaimer">Gramophone only allows certified buyers to rate the product for your better shopping experience.</string>
 
+    <string name="no_internet">"No internet connection "</string>
     <string name="sku">SKU:&#160;</string>
     <string name="offers_applied">&#160;Offers applied</string>
     <string name="rupee_symbol_with_space">\u20B9&#160;</string>
@@ -250,24 +246,24 @@
     <string name="unable_to_get_number">Unable to get phone number</string>
     <string name="referral_code">"Referral Code "</string>
     <string name="applied">" Applied"</string>
-    <string name="refer_n_earn">रेफर करें और कमाएं</string>
-    <string name="invite_and_earn">अपने मित्रों को आमंत्रित करें और कमाएं ...</string>
-    <string name="order_desc">आपके सभी ऑर्डर यहां से मैनेज होंगे</string>
-    <string name="tv">ग्रामोफ़ोन टीवी</string>
-    <string name="settings">सेटिंग</string>
-    <string name="manage_settings">अपनी ऐप सेटिंग यहां से मैनेज करें</string>
-    <string name="tools">टूल्स</string>
-    <string name="language">भाषा</string>
+    <string name="refer_n_earn">Refer and Earn</string>
+    <string name="invite_and_earn">Invite your friends and earn ...</string>
+    <string name="order_desc">all orders will be managed here</string>
+    <string name="tv">Gramophone TV</string>
+    <string name="settings">Settings</string>
+    <string name="manage_settings">Manage your app settings here</string>
+    <string name="tools">TOOLS</string>
+    <string name="language">Language</string>
     <string name="english">English</string>
-    <string name="opt_in">वाट्सऐप पर हमसे जुड़ें</string>
-    <string name="app_tour">ऐप का टूर करें </string>
-    <string name="blocked_users">ब्लॉक किये गए यूजर</string>
-    <string name="more">और देखें</string>
-    <string name="app_feature">ऐप की विशेषताएं</string>
-    <string name="terms_of_service">सेवा की शर्तें</string>
-    <string name="save_language">भाषा सेव करें</string>
-    <string name="offers">ऑफर</string>
-    <string name="share_app">ऐप शेयर करें</string>
+    <string name="opt_in">Whatsapp opt-in</string>
+    <string name="app_tour">App Tour</string>
+    <string name="blocked_users">Blocked Users</string>
+    <string name="more">More</string>
+    <string name="app_feature">App Features</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="save_language">Save Language</string>
+    <string name="offers">Offers</string>
+    <string name="share_app">Share App</string>
     <string name="app_url"><![CDATA[https://play.google.com/store/apps/details?id=agstack.gramophone&hl=en_IN&gl=US]]></string>
     <string name="share_app_link">Share App link!</string>
     <string name="whatsapp">Whatsapp</string>
@@ -276,12 +272,12 @@
     <string name="recieve_del">Recieve delivery updates and reminders from Gramophone with WhatsApp, Feel free to contact us too!</string>
     <string name="unblock">Unblock</string>
     <string name="payment_method">Payment Method</string>
-    <string name="product">Products&#160;(</string>
+    <string name="product">Product&#160;(</string>
     <string name="price_open_bracket">Price (</string>
     <string name="price_close_bracket">&#160;Items)</string>
     <string name="cash_on_delivery">Cash on Delivery</string>
     <string name="dialing_code">+91&#160;</string>
-    <string name="my_orders">मेरे ऑर्डर</string>
+    <string name="my_orders">My Orders</string>
     <string name="my_order">My Order</string>
     <string name="address_note"><![CDATA[<b>Note: </b>Address will be taken from you after placing the order]]></string>
     <string name="no_recent_order">When you place your first order, it will appear here</string>
@@ -298,6 +294,7 @@
     <string name="turn_on_location">Please turn on location</string>
     <string name="opt_out">Opt-Out Now</string>
     <string name="opt_in_now">Opt-In Now</string>
+    <string name="seconds">Sec</string>
     <string name="bottomsheet_tag">bottomSheet</string>
     <string name="payment_mode">Payment Mode</string>
     <string name="pay_using_gram_cash">Pay Using Gram Cash</string>
@@ -338,7 +335,7 @@
     <string name="please_enter_6_digit_otp">Please enter 6 digit OTP</string>
     <string name="enter_10_digit_mob">Enter 10 digit mobile number</string>
 
-    <string name="weather">मौसम</string>
+    <string name="weather">Weather</string>
     <string name="powered_by">Powered by</string>
     <string name="accuweather">AccuWeather</string>
     <string name="forecast_for_the_next_days">Forecast for the next few days</string>
@@ -369,6 +366,7 @@
     <string name="add_you_farm">+ Add you Farm</string>
     <string name="know_more_about_my_farm"><![CDATA[Know more about My Farm >]]></string>
     <string name="checkout">Checkout</string>
+    <string name="sub_text_will_be_displayed_here"> </string>
     <string name="receive_order_related_information_on_whatsapp">Receive order related information on whatsapp</string>
     <string name="gramophone_promise">Gramophone Promise</string>
     <string name="_100_genuine_nproducts">100% Genuine\nProducts</string>
@@ -407,13 +405,13 @@
     <string name="gramcashexpiringin30days">Gram Cash Expiring in 30 days -</string>
     <string name="view_all_transactions">View All Transactions</string>
     <string name="gram_cash_rules">Gram Cash Rules</string>
-    <string name="about_gram_cash_bal">ग्राम कैश पॉइंट  से सम्बंधित जानकारी</string>
-    <string name="total_gramcash_balance">कुल ग्राम कैश पॉइंट:</string>
-    <string name="total_balance_gc_description">आपने अबतक कुल कितने ग्राम कैश पॉइंट अर्जित किये हैं।</string>
+    <string name="about_gram_cash_bal">About Gram Cash Balance</string>
+    <string name="total_gramcash_balance">Total Gram Cash Points:</string>
+    <string name="total_balance_gc_description">How many Gram Cash Points have you earned till date that are active</string>
     <string name="available_gram_cash_points">Available Gram Cash points:</string>
     <string name="available_balance_gc_description">How many Gram Cash Points are available with you at present which you can use to purchase agricultural products from Market Section.</string>
     <string name="gramcash_points">Locked Gram Cash Points:</string>
-    <string name="pending_balance_gc_description">आपके पास वर्तमान में कितने ग्राम कैश पॉइंट लॉक अवस्था में हैं, आपके द्वारा रेफर किये गए किसान मित्र जब ग्रामोफ़ोन एप सफलतापूर्वक इंस्टॉल करेंगे और पहली खरीदी करेंगे तब आपको ये लॉक रेफरल ग्राम कैश पॉइंट उपलब्ध हो जाएंगे। </string>
+    <string name="pending_balance_gc_description">How many Gram Cash Points do you have currently in a locked state? when the farmers referred by you will successfully install the Gramophone app and make the first purchase, then you will get these locked Referral Gram Cash Points.</string>
     <string name="points_expiring">Points Expiring</string>
     <string name="redeem_now">Redeem Now</string>
     <string name="expiring_in30days">Expiring in 30 days</string>
@@ -429,27 +427,8 @@
     <string name="phone">Phone</string>
     <string name="not_available">N.A</string>
     <string name="order_has_been_assigned">has been assigned to deliver your order!</string>
-    <string name="feedback_submit_success_alert_title">सफलता!</string>
-    <string name="feedback_submit_success_alert_message">आपकी राय सफलतापूर्वक दर्ज हुई!</string>
-    <string name="no_connection">No Connection!</string>
-    <string name="no_internet_message">There seems to be no internet connection. Try checking things out</string>
-    <string name="copied">Copied</string>
-
-    <string name="crop_duration">"बुआई का समय: %1$s"</string>
-    <string name="crop_sowing_date">"बुआई की तारीख: %1$s"</string>
-    <string name="farm_area">"खेत का एरिया: %1$s"</string>
-    <string name="stage_name">"वर्तमान चरण: %1$s Days &#8226; %2$s"</string>
-    <string name="stage_name_modal_farm">"अनुमानित चरण: %1$s Days &#8226; %2$s"</string>
-    <string name="added_one_farm">"1 खेत जोड़ा गया है"</string>
-    <string name="added_farm_count">"%1$s खेत जोड़े गये है"</string>
-    <string name="message_select_crop">कृपया एक फसल चुनें</string>
-    <string name="message_enter_area">कृपया क्षेत्रफल दर्ज करें</string>
-    <string name="message_valid_area_upper_bound">The area should not be larger than 500</string>
-    <string name="message_sowing_date">कृपया बुआई की तारीख चुनें</string>
-    <string name="message_area_unit">कृपया क्षेत्रफल की इकाई चुनें</string>
-    <string name="message_farm_added">आपने सफलतापूर्वक खेत जोड़ा</string>
-    <string name="message_buy_your_crop">अपनी फसलों द्वारा खरीदारी करें</string>
-    <string name="message_why_add_farm">Why Add Farm</string>
+    <string name="feedback_submit_success_alert_title">Success !</string>
+    <string name="feedback_submit_success_alert_message">Feedback successfully submitted.</string>
     <string name="featured_articles">Featured Articles</string>
     <string name="farming">FARMING</string>
     <string name="suggested_articles">Suggested Articles</string>
@@ -461,11 +440,19 @@
     <string name="search_here">Search here</string>
     <string name="sorry_no_result_found">Sorry! No result found!</string>
     <string name="please_try_another_way">We\'re sorry what you are looking for.\nPlease try another way.</string>
+    <string name="myfarm">My Farms(%d)</string>
+    <string name="no_connection">No Connection!</string>
+    <string name="no_internet_message">There seems to be no internet connection. Try checking things out</string>
+    <string name="copied">Copied</string>
     <string name="farmer_image">farmer image</string>
     <string name="date_of_sowing">Date of sowing</string>
     <string name="area">Area</string>
     <string name="old_farms">पुराने खेत देखे</string>
     <string name="old_farms_title">पुराने खेत</string>
+    <string name="crop_duration">"बुआई का समय: %1$s"</string>
+    <string name="crop_sowing_date">"बुआई की तारीख: %1$s"</string>
+    <string name="farm_area">"खेत का एरिया: %1$s"</string>
+    <string name="stage_name">"वर्तमान चरण: %1$s Days &#8226; %2$s"</string>
     <string name="posts">Posts</string>
     <string name="today_s_weather">Today\'s Weather</string>
     <string name="followers_with_count">Followers(%d)</string>
@@ -480,38 +467,7 @@
     <string name="default_city_name">New Delhi</string>
     <string name="gram_cash_not_applicable">Gram cash not applicable here</string>
     <string name="txt_checkout">Checkout special offers for you</string>
-    <string name="no_post_yet">No Post Yet!</string>
-    <string name="addedfarms"> खेत जोड़ा गया है</string>
-    <string name="view_farms">अपने खेतों को देखें</string>
-    <string name="favourite_products">Favorite Products</string>
 
-    <!--                     Menu strings                -->
-    <string name="gram_cash_without_extra_space">ग्रामकैश</string>
-    <string name="my_crop_farms">मेरी फसलें और खेत</string>
-    <string name="my_crop_farms_subtext">अपनी फसलों के बारे में नियमित अपडेट/जानकारी प्राप्त करें।ं</string>
-    <string name="new_text">नया</string>
-    <string name="for_you">आपके लिए</string>
-    <string name="articles">सामग्री</string>
-    <string name="mandi_bhav">बाजार भाव</string>
-    <string name="watch_app_demo">ऐप का डेमो देखें</string>
-    <string name="available_offers_and_discounts">उपलब्ध ऑफ़र और डिस्काउंट</string>
-    <string name="latest_agri_news_amp_info">नवीनतम कृषि समाचार व अन्य जानकारी</string>
-    <string name="watch_latest_agri_videos">नवीनतम खेती के वीडियो देखें</string>
-    <string name="know_your_local_weather_updates">जानिए अपना क्षेत्रीय मौसम अपडेट</string>
-    <string name="crop_rates_from_nearest_mandis">निकटतम मंडियों से फसल दरें</string>
-    <string name="unit_converter_sub_text">माप की सामान्य इकाइयों को परिवर्तित करें</string>
-    <string name="complain_logged">Complain logged successfully</string>
-    <string name="gramophone_poll">GRAMOPHONE POLL</string>
-    <string name="gramophone_quiz">GRAMOPHONE QUIZ</string>
-    <string name="day_remaining">Day Remaining</string>
-    <string name="add_your_farm">+ अपना खेत जोड़े</string>
-    <string name="give_your_crop_details">उपज की जानकारी देवे</string>
-    <string name="approx_end_date">"अनुमानित समाप्ति: %1$s"</string>
-    <string name="quantity">Quantity</string>
-    <string name="bigha">Bigha</string>
-    <string name="next_crop_desc">आप अपनी अगली फसल कौनसी लगाने वाले है</string>
-    <string name="take_suggestions_text">आज ही अपना नया फॉर्म जोड़ें और कृषि एक्सपर्ट द्वारा पाइये उचित सलाह</string>
-    <string name="not_now">अभी नहीं</string>
 </resources>
 
 

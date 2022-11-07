@@ -486,7 +486,7 @@
     <string name="comma_with_space">", "</string>
     <string name="others">Others</string>
     <string name="order_placed">Order Placed</string>
-    <string name="no_orders_yet">No orders yet!</string>
+    <string name="no_orders_yet">No Orders Yet!</string>
     <string name="download_invoice">Download Invoice</string>
 
     <string name="crop_duration">"बुआई का समय: %1$s"</string>
@@ -612,6 +612,11 @@
     <string name="crop_rates_from_nearest_mandis">Crop rates from nearest Mandis</string>
     <string name="unit_converter_sub_text">Convert common units of measurement</string>
     <string name="complain_logged">Complain logged successfully</string>
+    <string name="gramophone_poll">GRAMOPHONE POLL</string>
+    <string name="gramophone_quiz">GRAMOPHONE QUIZ</string>
+    <string name="day_remaining">Day Remaining</string>
+    <string name="people_answered">Farmers answered</string>
+    <string name="browsw_post_by_crops">Browse Posts By Crops</string>
     <string name="add_your_farm">+ अपना खेत जोड़े</string>
     <string name="give_your_crop_details">उपज की जानकारी देवे</string>
     <string name="approx_end_date">अनुमानित समाप्ति: %1$s</string>

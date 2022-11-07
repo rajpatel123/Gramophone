@@ -24,7 +24,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/poll_banner"
+                android:id="@+id/quizBanner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
@@ -44,7 +44,7 @@
                     android:background="@color/orange"
                     android:fontFamily="@font/manrope_bold"
                     android:padding="@dimen/_3sdp"
-                    android:text="@string/gramophone_poll"
+                    android:text="@string/gramophone_quiz"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12ssp"
 
@@ -57,29 +57,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageContainer"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_margin="@dimen/_10sdp"
             android:orientation="vertical">
 
             <TextView
 
-                android:id="@+id/tvPollQuestion"
+                android:id="@+id/tvQuizQuestion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_10sdp"
                 android:fontFamily="@font/manrope_bold"
-                tools:text="Who is the prime minister of india? "
-                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp"
-                android:textStyle="bold" />
+                android:gravity="start"
+                android:textStyle="bold"
+                tools:text="Who is the prime minister of india? " />
 
-          <LinearLayout
-              android:id="@+id/llOptions"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/llQuizOptions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-          </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -92,27 +91,19 @@
 
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/tvAnsweredFarmer"
-                android:fontFamily="@font/manrope_medium"
-                android:gravity="start"
-                android:text="23 farmer answered "
-                android:textColor="@color/blakish"
-                android:textSize="@dimen/_9ssp" />
+
 
             <TextView
-                android:id="@+id/pollRemaining"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/manrope_medium"
-                android:gravity="end"
+                android:fontFamily="@font/manrope_regular"
+                android:gravity="center"
+                android:id="@+id/quizRemaining"
                 android:text="1 Day remaining "
                 android:textColor="@color/blakish"
-                android:textSize="@dimen/_9ssp" />
+                android:textSize="@dimen/_10ssp" />
 
         </LinearLayout>
 
@@ -133,18 +124,19 @@
                 android:id="@+id/ivWhatsapp"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
-                android:adjustViewBounds="true"
                 android:layout_centerVertical="true"
+                android:adjustViewBounds="true"
                 android:src="@drawable/ic_whatsapp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_4ssp"
-                android:fontFamily="@font/manrope_regular"
-                android:text="@string/share"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_4ssp"
                 android:layout_toEndOf="@+id/ivWhatsapp"
+                android:fontFamily="@font/manrope_regular"
+                android:id="@+id/shareWhatsAppQuiz"
+                android:text="@string/share"
                 android:textAlignment="center"
                 android:textColor="@color/blakish"
                 android:textSize="@dimen/_12sdp" />
@@ -154,13 +146,12 @@
                 android:layout_height="@dimen/_20sdp"
                 android:layout_marginStart="@dimen/_150sdp"
                 android:adjustViewBounds="true"
-                android:layout_toStartOf="@+id/tvShare"
+                android:layout_toStartOf="@+id/shareFbQuiz"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_facebook"
                 android:textColor="@color/blakish" />
 
             <TextView
-                android:id="@+id/tvShare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -168,6 +159,7 @@
                 android:fontFamily="@font/manrope_regular"
                 android:text="@string/share"
                 android:layout_centerVertical="true"
+                android:id="@+id/shareFbQuiz"
                 android:textAlignment="center"
                 android:textColor="@color/blakish"
                 android:textSize="@dimen/_11sdp" />

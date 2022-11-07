@@ -16,6 +16,8 @@ import agstack.gramophone.ui.createnewpost.model.MentionTagResponsemodel
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
 import agstack.gramophone.ui.favourite.model.FavouriteRequestModel
 import agstack.gramophone.ui.favourite.model.FeaturedProductResponseModel
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.AnsweredQuizPollRequestModel
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
 import agstack.gramophone.ui.home.view.fragments.gramophone.model.MyGramophoneResponseModel
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
@@ -189,5 +191,20 @@ class OnBoardingRepositoryImpl @Inject constructor(
             val response = gramAppService.getFavouriteProduct(favouriteRequestModel)
             response
         }
+
+
+    override suspend fun getQuiz(): Response<QuizPollResponseModel> = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = gramAppService.getQuiz()
+        blockedUsers
+    }
+
+
+    override suspend fun answerQuiz(answeredQuizPollRequestModel :AnsweredQuizPollRequestModel): Response<AnsweredQuizPollRequestModel> = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = gramAppService.answerQuiz(answeredQuizPollRequestModel)
+        blockedUsers
+    }
+
 
 }
