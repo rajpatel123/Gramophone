@@ -225,8 +225,10 @@ val SHAREIMAGEURIStRING = "imageuriString"
     const val CROP_ID = "crop_id"
     const val BOTTOM_SHEET = "bottom_sheet"
     const val LOCATION_ACCESS_DIALOG = "location_access_dialog"
-
+    const val DEVELOPER_KEY = "525118102961-uv60hb4hl2kdrnofh39crb9fq47dqjmo.apps.googleusercontent.com"
     const val postShareRequestKey = 7001
+    const val ITEM = 0
+    const val LOADING = 1
 
     /**
      * For Broadcast
