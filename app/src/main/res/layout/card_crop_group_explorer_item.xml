@@ -13,6 +13,10 @@
         <import type="java.util.List" />
 
         <variable
+            name="isOldFarms"
+            type="java.lang.Boolean"/>
+
+        <variable
             name="item"
             type="agstack.gramophone.ui.farm.model.Data" />
     </data>
@@ -189,7 +193,23 @@
                         android:textColor="@color/oldmrpcolor"
                         android:textSize="@dimen/_12ssp"
                         android:text='@{@string/stage_name(item.days, item.stage_name)}'
-                        android:visibility='@{item.stage_name == null ? View.GONE : View.VISIBLE}' />
+                        android:visibility='@{(item.stage_name == null || isOldFarms) ? View.GONE : View.VISIBLE}' />
+
+                    <TextView
+                        android:id="@+id/txtApproxEnd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:drawableStart="@drawable/ic_info_para"
+                        android:fontFamily="@font/manrope_medium"
+                        tools:text="@string/approx_end_date"
+                        android:textColor="@color/oldmrpcolor"
+                        android:textSize="@dimen/_10ssp"
+                        android:visibility='@{isOldFarms ? View.VISIBLE : View.GONE}'
+                        android:text='@{@string/approx_end_date(item.crop_anticipated_completed_date)}'/>
+
 
                 </LinearLayout>
 
@@ -213,6 +233,7 @@
                     android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:drawablePadding="@dimen/_8sdp"
+                    android:visibility='@{isOldFarms ? View.GONE : View.VISIBLE}'
                     android:fontFamily="@font/manrope_medium"
                     android:text="+ अपना खेत जोड़े"
                     android:textColor="@color/orange"

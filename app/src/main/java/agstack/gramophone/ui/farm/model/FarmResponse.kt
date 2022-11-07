@@ -71,6 +71,7 @@ data class Data(
     val crop_image: String?,
     val crop_name: String?,
     val crop_sowing_date: String?,
+    val crop_anticipated_completed_date: String?,
     val days: String?,
     val duration: String?,
     val farm_area: String?,

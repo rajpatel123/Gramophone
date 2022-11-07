@@ -24,6 +24,7 @@ import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.amnix.xtension.extensions.isNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -106,6 +107,28 @@ class SubCategoryViewModel @Inject constructor(
                     ArrayList(),
                     Constants.API_DATA_LIMITS_IN_ONE_TIME,
                     "1")
+            } else if (bundle.containsKey(Constants.PAGE_URL) || bundle.containsKey(Constants.PAGE_SOURCE)) {
+                var webUrl = ""
+                if (bundle.containsKey(Constants.PAGE_URL) && bundle.getString(Constants.PAGE_URL) != null) {
+                    webUrl = bundle.get(Constants.PAGE_URL).toString()
+                    if (webUrl.isNotNullOrEmpty() && !webUrl.contains("single-article") && !webUrl.contains(
+                            "?")
+                    ) {
+                        webUrl += "?" + Constants.LANG + "=" + getNavigator()?.getLanguage() + "&" + Constants.GP_TOKEN + "=" + SharedPreferencesHelper.instance?.getString(
+                            SharedPreferencesKeys.session_token)!!
+                    }
+                }
+                if (webUrl.isNotNullOrEmpty())
+                    getNavigator()?.loadUrl(webUrl)
+
+
+                if (webUrl.isNotNullOrEmpty() && bundle.containsKey(Constants.PAGE_SOURCE)) {
+                    viewModelScope.launch {
+                        delay(1000)
+                        getNavigator()?.reload()
+
+                    }
+                }
             }
         }
     }
@@ -324,7 +347,7 @@ class SubCategoryViewModel @Inject constructor(
         }
     }
 
-    private fun fetchProductDetail(productId: Int) {
+    fun fetchProductDetail(productId: Int) {
         val product = ProductData(productId)
         viewModelScope.launch {
             try {

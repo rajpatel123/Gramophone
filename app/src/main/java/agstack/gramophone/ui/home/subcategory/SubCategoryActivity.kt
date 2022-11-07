@@ -256,6 +256,14 @@ class SubCategoryActivity :
         openActivity(ProductDetailsActivity::class.java, bundle)
     }
 
+    override fun loadUrl(url: String) {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+    }
+
+    override fun reload() {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+    }
+
     override fun getBundle(): Bundle? {
         return intent?.extras
     }

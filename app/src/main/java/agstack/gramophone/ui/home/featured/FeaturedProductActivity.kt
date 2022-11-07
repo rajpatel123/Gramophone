@@ -296,6 +296,14 @@ class FeaturedProductActivity :
         viewDataBinding.tvFilter.isEnabled = true
     }
 
+    override fun loadUrl(url: String) {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+    }
+
+    override fun reload() {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+    }
+
     override fun getLayoutID(): Int {
         return R.layout.activity_featured_products
     }

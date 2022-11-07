@@ -323,6 +323,9 @@ interface GramAppService {
     @POST("api/v5/search/community-search")
     suspend fun searchByKeywordInCommunity(@Body body : GlobalSearchRequest): Response<GlobalSearchResponse>
 
+    @POST("api/v5/farm/add-harvest-ques")
+    suspend fun addHarvestQues(@Body body : AddHarvestRequest) : Response<MyGramophoneResponseModel>
+
     @POST("api/v5/category/product-favourite-data")
     suspend fun getFavouriteProduct(@Body body : FavouriteRequestModel): Response<FeaturedProductResponseModel>
 

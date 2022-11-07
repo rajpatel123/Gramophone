@@ -44,8 +44,8 @@ class CartAdapter(cartItemList: List<CartItem>) :
                 quantity -= 1
                 cartList[position].quantity = quantity
                 notifyDataSetChanged()
+                onQuantityClicked?.invoke(cartList[position])
             }
-            onQuantityClicked?.invoke(cartList[position])
         }
         holder.binding.ivAdd.setOnClickListener {
             quantity += 1

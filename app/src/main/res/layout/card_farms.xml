@@ -129,7 +129,7 @@
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
                         tools:text='F3456'
-                        android:text='@{item[0].farm_id}'
+                        android:text='@{item[0].farm_ref_id}'
                         android:visibility='@{(item.size > 0 &amp;&amp; item[0].farm_ref_id != null) ? View.VISIBLE : View.GONE }'/>
 
                     <TextView
@@ -236,9 +236,9 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:drawablePadding="@dimen/_8sdp"
                     android:fontFamily="@font/manrope_medium"
-                    android:text="+ अपना खेत जोड़े"
+                    android:text="@string/add_your_farm"
                     android:textColor="@color/orange"
-                    android:textSize="@dimen/_13ssp" />
+                    android:textSize="@dimen/_13ssp"/>
 
                 <TextView
                     android:id="@+id/txtAddedFarm"

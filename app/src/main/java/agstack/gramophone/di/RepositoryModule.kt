@@ -13,6 +13,8 @@ import agstack.gramophone.data.repository.promotions.PromotionsRepository
 import agstack.gramophone.data.repository.promotions.PromotionsRepositoryImpl
 import agstack.gramophone.data.repository.settings.SettingsRepository
 import agstack.gramophone.data.repository.settings.SettingsRepositoryImpl
+import agstack.gramophone.data.repository.tv.GramophoneTVRepository
+import agstack.gramophone.data.repository.tv.GramophoneTVRepositoryImpl
 import agstack.gramophone.data.repository.weather.WeatherRepository
 import agstack.gramophone.data.repository.weather.WeatherRepositoryImpl
 import dagger.Binds
@@ -46,4 +48,7 @@ interface RepositoryModule {
 
     @Binds
     fun bindArticlesRepository(impl: ArticlesRepositoryImpl): ArticlesRepository
+
+    @Binds
+    fun bindGramophoneTVRepository(impl: GramophoneTVRepositoryImpl): GramophoneTVRepository
 }
