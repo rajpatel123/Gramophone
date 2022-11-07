@@ -25,7 +25,6 @@ import android.content.Intent
 import android.os.Build
 import android.text.Html
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View.*
 import android.view.ViewGroup
@@ -73,7 +72,8 @@ class CommunityPostAdapter(
     lateinit var setImage: SetImage
     var lastSelectPosition: Int = 0
     var postByCropsVisible :Boolean = false
-   lateinit var inflater: LayoutInflater
+
+    lateinit var inflater: LayoutInflater
 
     interface SetImage {
         fun onImageSet(imageUrl: String, iv: ImageView)
@@ -90,7 +90,7 @@ class CommunityPostAdapter(
 
         val textHolder = holder as TextItemHolder
 
-//
+
 //        if (position == 5 || position == 20) {
 //            if (quizPoll.isNotNull() && quizPoll?.size!! > 0) {
 //                quizPoll.forEach {
@@ -125,7 +125,7 @@ class CommunityPostAdapter(
 //                                    view.fmLayout.visibility = VISIBLE
 //                                    view.tvOption.visibility = GONE
 //                                    view.tvQuizOption.setText(option.answer)
-//                                    view.progress.progress = option.votes_percent!!
+//                                    view.progress.progress = option.votes_percent!!.toInt()
 //                                    view.tvQuizOptionPercent.setText(
 //                                        "".plus(option.votes_percent).plus("%")
 //                                    )
@@ -222,10 +222,7 @@ class CommunityPostAdapter(
 //            holder.itemPostBinding.pollLayoutLL.visibility = GONE
 //        }
 
-
         if (position > 1 && (position == 2 || (position>4 && (position-2)%6 == 0))) {
-          //  Log.d("positionCount","".plus(positionCount).plus("  position  =").plus(position).plus("  Count  =").plus(count))
-            //positionCount++
             var bannerResponse = SharedPreferencesHelper.instance?.getParcelable(
                 SharedPreferencesKeys.BANNER_DATA, BannerResponse::class.java
             )
@@ -235,7 +232,6 @@ class CommunityPostAdapter(
                 configurePagerHolder(textHolder, position, bannerResponse)
                 if (!postByCropsVisible){
                     holder.itemPostBinding.cropLL.visibility = VISIBLE
-                    Log.d("Crop","true")
                     try {
 
                         val cropResponse = SharedPreferencesHelper.instance?.getParcelable(SharedPreferencesKeys.CROPS, CropResponse::class.java)
@@ -263,16 +259,12 @@ class CommunityPostAdapter(
 
                 return
             }
-        }else{
-            holder.itemPostBinding.rlBanner.visibility = GONE
         }
 
 
         configureItem(textHolder, position)
         holder.itemPostBinding.rlBanner.visibility = GONE
         holder.itemPostBinding.rlPosts.visibility = VISIBLE
-        holder.itemPostBinding.cropLL.visibility = GONE
-
     }
 
     private fun configureItem(holder: TextItemHolder, position: Int) {

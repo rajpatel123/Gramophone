@@ -7,7 +7,7 @@ data class Option(
     var question_id: String,
     val valid_answer: Boolean,
     var position: Int?,
-    val votes_percent: Int?,
+    val votes_percent: Double?,
 
 
     )

@@ -99,6 +99,7 @@
                     android:id="@+id/singleFarmLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <TextView
@@ -190,7 +191,7 @@
                             android:id="@+id/txtAreaDesc"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_date_picker"
+                            android:drawableStart="@drawable/ic_info_para"
                             android:fontFamily="@font/manrope_medium"
                             android:textColor="@color/oldmrpcolor"
                             android:textSize="@dimen/_10ssp"

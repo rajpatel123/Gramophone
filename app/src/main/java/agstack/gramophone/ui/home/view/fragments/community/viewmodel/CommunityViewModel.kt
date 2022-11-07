@@ -30,6 +30,7 @@ import agstack.gramophone.view.activity.EditPostActivity
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.tabs.TabLayout
@@ -855,12 +856,13 @@ class CommunityViewModel @Inject constructor(
                         showProgress.set(false)
                     }
 
+                    Log.d("PostCall","true")
                     sorting.get()?.let { loadData(it) }
-
-
                 } else
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
             } catch (ex: Exception) {
+                Log.d("PostCall","false")
+
                 showProgress.set(false)
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)

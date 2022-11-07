@@ -6,6 +6,7 @@ import agstack.gramophone.ui.favourite.FavouriteProductAdapter
 import agstack.gramophone.ui.favourite.FavouriteProductNavigator
 import agstack.gramophone.ui.favourite.model.FavouriteRequestModel
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Utility
 import android.os.Bundle
@@ -34,9 +35,11 @@ class FavouriteProductViewModel @Inject constructor(
                   if (response.body()!!.gp_api_response_data.data.size>0){
                       isDataAvailable.set(true)
                       getNavigator()?.updateProductList(FavouriteProductAdapter(response.body()!!.gp_api_response_data.data)) {
-//                      getNavigator()?.openActivity(ProductDetailsActivity::class.java, Bundle().apply {
-//                          //putParcelable(Constants.PRODUCT, productData
-//                      })
+                      getNavigator()?.openActivity(ProductDetailsActivity::class.java, Bundle().apply {
+                          putParcelable(Constants.PRODUCT, ProductData().apply {
+                              product_id = it.product_id
+                          })
+                      })
                       }
                   }else{
                       isDataAvailable.set(false)

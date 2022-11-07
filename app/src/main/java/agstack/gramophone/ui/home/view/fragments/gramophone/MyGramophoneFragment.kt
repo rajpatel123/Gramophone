@@ -288,6 +288,8 @@ class MyGramophoneFragment :
             binding?.layoutOrder?.rlOrder?.visibility= GONE
             binding?.layoutOrder?.tvGoToOrders?.visibility= GONE
             binding?.layoutOrder?.ivNext1?.visibility = GONE
+            binding?.layoutOrder?.btnShopNow?.visibility = GONE
+            binding?.layoutOrder?.btnShopNowOrrange?.visibility = VISIBLE
             binding?.layoutOrder?.myOrderTitle?.text = getMessage(R.string.my_orders)
             binding?.layoutOrder?.rlCheckoutOffer?.setOnClickListener {
                 openActivity(OffersListActivity::class.java)
@@ -295,6 +297,8 @@ class MyGramophoneFragment :
         }else{
             binding?.layoutOrder?.llNoOrder?.visibility= GONE
             binding?.layoutOrder?.rlOrder?.visibility= VISIBLE
+            binding?.layoutOrder?.btnShopNow?.visibility = VISIBLE
+            binding?.layoutOrder?.btnShopNowOrrange?.visibility = GONE
             binding?.layoutOrder?.myOrderTitle?.text = String.format(getMessage(R.string.total_orders),placedList.total)
             binding?.layoutOrder?.tvOrderNumber?.text = "#".plus(placedList.data[0].order_id.toString())
             binding?.layoutOrder?.tvTotalAmount?.text = getMessage(R.string.rupee).plus(placedList.data[0].price.toString())
@@ -322,6 +326,11 @@ class MyGramophoneFragment :
                 (activity as HomeActivity).showHomeFragment()
             }
         }
+        binding?.layoutOrder?.btnShopNowOrrange?.setOnClickListener {
+            if (activity is HomeActivity) {
+                (activity as HomeActivity).showHomeFragment()
+            }
+        }
 
 
     }
@@ -335,10 +344,18 @@ class MyGramophoneFragment :
             binding?.llLayoutFarm?.visibility = GONE
             binding?.myFarmsTitle?.text = getMessage(R.string.my_farms)
         }else{
+
             binding?.llNoFarm?.visibility= GONE
             binding?.tvGoToFarms?.visibility= VISIBLE
             binding?.ivNext?.visibility= VISIBLE
             binding?.llLayoutFarm?.visibility = VISIBLE
+
+            if (farms.gp_api_response_data.customer_farm.data[0].size>1){
+                binding?.layoutFarm?.singleFarmLayout?.visibility= GONE
+            }else{
+                binding?.layoutFarm?.singleFarmLayout?.visibility= VISIBLE
+            }
+
 
             binding?.myFarmsTitle?.text = String.format(
                 getMessage(R.string.myfarm),
@@ -353,11 +370,11 @@ class MyGramophoneFragment :
             binding?.layoutFarm?.txtDate?.text =
                 farms.gp_api_response_data.customer_farm.data[0][0].crop_sowing_date
 
-            binding?.layoutFarm?.txtAreaDesc?.text = " ".plus(getMessage(R.string.farm_areass))
+            binding?.layoutFarm?.txtAreaDesc?.text = " ".plus(getMessage(R.string.farm_areass).plus(" "))
             binding?.layoutFarm?.txtAreas?.text =  ""+farms.gp_api_response_data.customer_farm.data[0][0].farm_area
 
             if (farms.gp_api_response_data.customer_farm.data[0][0].duration != null) {
-                binding?.layoutFarm?.txtDurationDesc?.text = getMessage(R.string.crop_duration)
+                binding?.layoutFarm?.txtDurationDesc?.text = getMessage(R.string.crop_duration).plus(" ")
 
                 binding?.layoutFarm?.txtDuration?.text =
                     farms.gp_api_response_data.customer_farm.data[0][0].duration
@@ -370,7 +387,7 @@ class MyGramophoneFragment :
             binding?.layoutFarm?.txtAddedFarm?.text = "".plus(farms.gp_api_response_data.customer_farm.data[0].size).plus(" ").plus(getMessage(R.string.addedfarms)).plus(" ")
 
             binding?.layoutFarm?.txtStage?.text =
-                farms.gp_api_response_data.customer_farm.data[0][0].days.plus(getString(R.string.days))
+                farms.gp_api_response_data.customer_farm.data[0][0].days.plus(" ").plus(getString(R.string.days))
                     .plus(", ").plus(
                     farms.gp_api_response_data.customer_farm.data[0][0].stage_name
                 )
