@@ -13,6 +13,7 @@ import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodel
 import agstack.gramophone.ui.postdetails.model.PostDetailResponseModel
 import agstack.gramophone.ui.comments.model.sendcomment.SendCommentResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.create.CreatePostResponseModel
+import agstack.gramophone.ui.favourite.model.favouritecount.FavouriteCountResponseModel
 import agstack.gramophone.ui.followings.model.FollowerResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.pin.UpdatePinResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
@@ -89,5 +90,7 @@ interface CommunityRepository {
     suspend fun getFollowers(followRequestModel: FollowRequestModel):Response<FollowerResponseModel>
 
     suspend fun getFollowings(followRequestModel: FollowRequestModel):Response<FollowerResponseModel>
+
+    suspend fun getFavouriteCount():Response<FavouriteCountResponseModel>
 
 }
