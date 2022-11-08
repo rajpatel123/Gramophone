@@ -66,18 +66,22 @@ class GramophoneTVActivity :
         setToolbarTitle(getString(R.string.tv))
         layoutManager = LinearLayoutManager(this)
         viewDataBinding.showMoreButton.isSelected = false
-        viewDataBinding.videoListRecyclerView.visibility = View.GONE
+        viewDataBinding.linearVideoList.visibility = View.GONE
         viewDataBinding.playlistContainer.visibility = View.VISIBLE
 
         viewDataBinding.showMoreButtonContainer.setOnClickListener(View.OnClickListener {
             if (viewDataBinding.showMoreButton.isSelected) {
                 viewDataBinding.showMoreButton.isSelected = false
-                viewDataBinding.videoListRecyclerView.setVisibility(View.GONE)
+                viewDataBinding.linearVideoList.visibility = View.GONE
             } else {
                 viewDataBinding.showMoreButton.isSelected = true
-                viewDataBinding.videoListRecyclerView.visibility = View.VISIBLE
+                viewDataBinding.linearVideoList.visibility = View.VISIBLE
             }
         })
+
+        viewDataBinding.frameHidePlayList.setOnClickListener {
+            viewDataBinding.linearVideoList.visibility = View.GONE
+        }
 
         getPlayLists()
     }
@@ -223,8 +227,8 @@ class GramophoneTVActivity :
                 getVideoList()
             }
         })
-        viewDataBinding.playListView.setLayoutManager(layoutManager)
-        viewDataBinding.playListView.setAdapter(playListAdapter)
+        viewDataBinding.playListView.layoutManager = layoutManager
+        viewDataBinding.playListView.adapter = playListAdapter
         playListAdapter!!.setList(playLists)
         initPaginationListener()
     }
@@ -259,7 +263,9 @@ class GramophoneTVActivity :
             try {
                 viewDataBinding.videoListContainer.visibility = View.VISIBLE
                 viewDataBinding.titleTextView.text = currentPlayingPlayListName
-                videoListAdapter = VideoListAdapter(applicationContext, videoIds)
+                viewDataBinding.tvPlayListName.text = currentPlayingPlayListName
+                videoListAdapter =
+                    VideoListAdapter(applicationContext, videoIds, currentPlayingPlayListName)
 
 
                 // initYoutubePlayer();
@@ -274,6 +280,7 @@ class GramophoneTVActivity :
                         videoListAdapter!!.setSelectedPosition(position)
                         if (youTubePlayer != null) {
                             try {
+                                viewDataBinding.linearVideoList.visibility = View.GONE
                                 youTubePlayer!!.loadPlaylist(currentPlayingPlayListId, position, 0)
                             } catch (e: IllegalStateException) {
                                 e.printStackTrace()
@@ -440,4 +447,11 @@ class GramophoneTVActivity :
         return gramophoneTVViewModel
     }
 
+    override fun onBackPressed() {
+        if (viewDataBinding.linearVideoList.visibility == View.VISIBLE) {
+            viewDataBinding.linearVideoList.visibility = View.GONE
+        } else {
+            super.onBackPressed()
+        }
+    }
 }

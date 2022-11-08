@@ -1,8 +1,10 @@
 package agstack.gramophone.ui.tv.adapter;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,15 +26,16 @@ public class VideoListViewHolder extends RecyclerView.ViewHolder {
     YouTubeThumbnailView youTubeThumbnailView;
     RelativeLayout relativeLayoutOverYouTubeThumbnailView;
     private Context context;
-    private Boolean isThumbnailLoaded=false;
+    private Boolean isThumbnailLoaded = false;
+
     public VideoListViewHolder(@NonNull View itemView, final VideoListAdapter.Callback callback) {
         super(itemView);
         initViews(itemView);
-        this.context=itemView.getContext();
+        this.context = itemView.getContext();
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(callback != null) {
+                if (callback != null) {
                     callback.onListItemClick(v, getAdapterPosition());
                 }
             }
@@ -41,29 +44,32 @@ public class VideoListViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void initViews(View itemView) {
-        videoName = (TextView)itemView.findViewById(R.id.videoTitleTextView);
-        videoDescription = (TextView)itemView.findViewById(R.id.videoDescriptionTextView);
+        videoName = (TextView) itemView.findViewById(R.id.videoTitleTextView);
+        videoDescription = (TextView) itemView.findViewById(R.id.videoDescriptionTextView);
         listItemContainer = (LinearLayout) itemView.findViewById(R.id.listItemTitleContainer);
         youTubeThumbnailView = (YouTubeThumbnailView) itemView.findViewById(R.id.youtube_thumbnail);
 
     }
 
-    public void bindData(final PlayListItemModels youtubeChannelItem, int selectedPosition) {
+    public void bindData(final PlayListItemModels youtubeChannelItem, int selectedPosition, String currentPlayingPlayListName) {
 
         videoName.setText(youtubeChannelItem.getSnippet().getTitle());
-        videoDescription.setText(youtubeChannelItem.getSnippet().getDescription());
-        if(selectedPosition==getAdapterPosition())
-        {
+        if (currentPlayingPlayListName != null && !currentPlayingPlayListName.trim().isEmpty()) {
+            videoDescription.setVisibility(View.VISIBLE);
+            videoDescription.setText(currentPlayingPlayListName);
+        } else {
+            videoDescription.setVisibility(View.GONE);
+        }
+        if (selectedPosition == getAdapterPosition()) {
 
-            listItemContainer.setBackgroundColor(context.getResources().getColor(R.color.gray));
-            videoName.setTextColor(context.getResources().getColor(R.color.gray_stroke));
-        }else{
-            listItemContainer.setBackgroundColor(context.getResources().getColor(R.color.blakish));
+            listItemContainer.setBackgroundColor(context.getResources().getColor(R.color.gray_strike_through));
+        } else {
+            listItemContainer.setBackgroundColor(context.getResources().getColor(R.color.white));
 
         }
 
 
-        final YouTubeThumbnailLoader.OnThumbnailLoadedListener  onThumbnailLoadedListener = new YouTubeThumbnailLoader.OnThumbnailLoadedListener(){
+        final YouTubeThumbnailLoader.OnThumbnailLoadedListener onThumbnailLoadedListener = new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
             @Override
             public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
 
@@ -72,24 +78,24 @@ public class VideoListViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
                 youTubeThumbnailView.setVisibility(View.VISIBLE);
-              //  relativeLayoutOverYouTubeThumbnailView.setVisibility(View.VISIBLE);
+                //  relativeLayoutOverYouTubeThumbnailView.setVisibility(View.VISIBLE);
             }
         };
-        if(!isThumbnailLoaded) {
-            isThumbnailLoaded=true;
+        if (!isThumbnailLoaded) {
+            isThumbnailLoaded = true;
             youTubeThumbnailView.initialize(Constants.DEVELOPER_KEY, new YouTubeThumbnailView.OnInitializedListener() {
                 @Override
                 public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
 
                     youTubeThumbnailLoader.setVideo(youtubeChannelItem.getContentDetails().getVideoId());
                     youTubeThumbnailLoader.setOnThumbnailLoadedListener(onThumbnailLoadedListener);
-               isThumbnailLoaded=false;
+                    isThumbnailLoaded = false;
                 }
 
                 @Override
                 public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
                     //write something for failure
-                    isThumbnailLoaded=false;
+                    isThumbnailLoaded = false;
                 }
             });
 //

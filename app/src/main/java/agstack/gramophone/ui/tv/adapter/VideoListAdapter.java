@@ -27,12 +27,14 @@ public class VideoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     int selectedPosition = 0;
     private Callback callback;
     private boolean isLoadingAdded = false;
+    private String currentPlayingPlayListName;
 
 
-    public VideoListAdapter(Context context, List<PlayListItemModels> data) {
+    public VideoListAdapter(Context context, List<PlayListItemModels> data, String currentPlayingPlayListName) {
         this.context = context;
         LayoutInflater inflater = LayoutInflater.from(context);
         this.data = data;
+        this.currentPlayingPlayListName = currentPlayingPlayListName;
     }
 
     @Override
@@ -63,7 +65,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         switch (getItemViewType(position)) {
             case Constants.ITEM:
-                ((VideoListViewHolder) viewHolder).bindData(getItemByPosition(position), selectedPosition);
+                ((VideoListViewHolder) viewHolder).bindData(getItemByPosition(position), selectedPosition, currentPlayingPlayListName);
                 break;
 
             case Constants.LOADING:

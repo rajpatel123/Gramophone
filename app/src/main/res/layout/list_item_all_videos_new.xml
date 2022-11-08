@@ -1,92 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#99000000"
-    android:layout_marginTop="3dp"
     android:orientation="vertical">
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardUseCompatPadding="false"
+        app:cardUseCompatPadding="false">
 
-        >
         <LinearLayout
+            android:id="@+id/listItemTitleContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="96dp"
             android:orientation="horizontal"
-            android:padding="6dp"
-            android:id="@+id/listItemTitleContainer">
+            android:padding="6dp">
 
-            <RelativeLayout
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:visibility="visible">
-
-                <com.google.android.youtube.player.YouTubeThumbnailView
-                    android:id="@+id/youtube_thumbnail"
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:background="@color/blakish"
-                    android:layout_gravity="center_vertical"
-                    android:visibility="visible"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:gravity="center|center_horizontal"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:visibility="gone"
-                        android:src="@drawable/gramophone_video_play_button" />
-                </LinearLayout>
-            </RelativeLayout>
-
+            <com.google.android.youtube.player.YouTubeThumbnailView
+                android:id="@+id/youtube_thumbnail"
+                android:layout_width="126dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/blakish"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_gravity="center_vertical"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
+                android:orientation="vertical"
                 android:paddingVertical="3dp"
-                >
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp">
+
                 <TextView
                     android:id="@+id/videoTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gramophone TV jgfgref fgrefgr gfrefref frehfrhf hfhrfhrehfhrhf"
-                    android:textColor="#fff"
+                    android:layout_marginBottom="2dp"
+                    android:fontFamily="@font/manrope_bold"
                     android:gravity="center_vertical"
+                    android:textColor="@color/blakish"
                     android:textSize="13sp"
                     android:textStyle="normal"
-                    android:layout_marginBottom="2dp"/>
+                    tools:text="Video Title" />
+
                 <TextView
                     android:id="@+id/videoDescriptionTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ghghyhj thhyh gnnhnmmurrtrrttr ddbvc gdggd hgdgdgeegdghggf hggfgfgfr ggegf"
-                    android:textColor="@color/brand_color"
-                    android:textSize="11sp"
-                    android:maxLines="2"
                     android:ellipsize="end"
-                    android:visibility="gone"
-                    android:layout_marginBottom="2dp"
-                    />
+                    android:fontFamily="@font/manrope_medium"
+                    android:maxLines="2"
+                    android:textColor="@color/gray_strike_through"
+                    android:textSize="13sp"
+                    android:visibility="visible"
+                    tools:text="Video Description" />
             </LinearLayout>
 
         </LinearLayout>
-        <!--<FrameLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/youtubePlayerContainer"></FrameLayout>-->
 
     </androidx.cardview.widget.CardView>
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_stroke" />
 
 </LinearLayout>

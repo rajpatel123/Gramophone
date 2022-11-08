@@ -54,10 +54,12 @@ class GramophoneTVViewModel @Inject constructor(
                             }
                             getNavigator()?.populatePlayLists(playlistIds)
                             getNavigator()?.setNextPageToken(youtubeModel.nextPageToken)
+                            progress.value = false
                         }
 
                         override fun onFailure(call: Call<YoutubeModel?>, t: Throwable) {
                             getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                            progress.value = false
                         }
                     })
                 } else {
@@ -83,7 +85,6 @@ class GramophoneTVViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
-                    progress.value = true
 
                     val service: GramophoneTVApiService =
                         RetrofitInstanceForYoutube.getInstance()!!.create(
@@ -101,8 +102,8 @@ class GramophoneTVViewModel @Inject constructor(
                                 val playlist: YoutubeChannelItem = youtubeModel.items[i]
                                 playlistIds.add(playlist)
                             }
-                            getNavigator()?.populatePlayListsNextPage(playlistIds)
                             getNavigator()?.setNextPageToken(youtubeModel.nextPageToken)
+                            getNavigator()?.populatePlayListsNextPage(playlistIds)
                         }
 
                         override fun onFailure(call: Call<YoutubeModel?>, t: Throwable) {
@@ -113,7 +114,6 @@ class GramophoneTVViewModel @Inject constructor(
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }
             } catch (ex: Exception) {
-                progress.value = false
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
                     else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
@@ -126,7 +126,6 @@ class GramophoneTVViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
-                    progress.value = true
 
                     val service: GramophoneTVApiService =
                         RetrofitInstanceForYoutube.getInstance()!!.create(
@@ -152,7 +151,6 @@ class GramophoneTVViewModel @Inject constructor(
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }
             } catch (ex: Exception) {
-                progress.value = false
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
                     else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
@@ -171,7 +169,6 @@ class GramophoneTVViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
-                    progress.value = true
 
                     val service: GramophoneTVApiService =
                         RetrofitInstanceForYoutube.getInstance()!!.create(
@@ -189,8 +186,8 @@ class GramophoneTVViewModel @Inject constructor(
                                 val videoId: PlayListItemModels = itemsModelResponse.items[i]
                                 videoIds.add(videoId)
                             }
-                            getNavigator()?.populateVideosNextPage(videoIds)
                             getNavigator()?.setVideosNextPageToken(response.body()!!.nextPageToken)
+                            getNavigator()?.populateVideosNextPage(videoIds)
                         }
 
                         override fun onFailure(call: Call<ItemsModelResponse?>, t: Throwable) {
@@ -201,7 +198,6 @@ class GramophoneTVViewModel @Inject constructor(
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }
             } catch (ex: Exception) {
-                progress.value = false
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
                     else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
