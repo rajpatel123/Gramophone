@@ -2,11 +2,13 @@ package agstack.gramophone.ui.home.view.fragments
 
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.Option
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
 
 interface CommunityFragmentNavigator: BaseNavigator {
     fun updatePostList(
         postList: CommunityPostAdapter,
+        quizPollAnswered: (option: Option) -> Unit,
         postDetailClicked: (postId: String) -> Unit,
         onItemLikesClicked: (postId: String) -> Unit,
         onItemCommentsClicked: (postId: String) -> Unit,

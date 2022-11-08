@@ -300,29 +300,37 @@
                         android:layout_below="@+id/llDetails"
                         android:minHeight="@dimen/_26sdp" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvTag"
+                    <HorizontalScrollView
+                        android:id="@+id/hScrollView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tvSpace"
-                        android:layout_marginStart="@dimen/_12sdp"
-                        android:layout_marginTop="@dimen/_14sdp"
-                        android:fontFamily="@font/manrope_medium"
-                        android:orientation="horizontal"
-                        android:paddingStart="@dimen/_7sdp"
-                        android:paddingTop="@dimen/_2sdp"
-                        android:paddingEnd="@dimen/_7sdp"
-                        android:paddingBottom="@dimen/_3sdp"
-                        android:textColor="@color/blakish"
-                        android:textSize="@dimen/_10ssp"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/final_tag_list_item" />
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="8dp"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:id="@+id/finalTagLL"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="@dimen/_5sdp"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/_10sdp"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/final_tag_list_item" />
+
+                    </HorizontalScrollView>
+
 
                     <LinearLayout
                         android:id="@+id/llActions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/rvTag"
+                        android:layout_below="@+id/hScrollView"
                         android:layout_marginStart="@dimen/_12sdp"
                         android:layout_marginTop="@dimen/_12sdp"
                         android:layout_marginEnd="@dimen/_12sdp"

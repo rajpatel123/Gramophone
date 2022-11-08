@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:id="@+id/tvOption"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_13sdp"
+        android:background="@drawable/poll_rectangle_bg"
+        android:fontFamily="@font/manrope_medium"
+        android:text="Narendra Modi"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14sdp"
+        android:visibility="gone"
+        android:textStyle="bold" />
+
+
+    <FrameLayout
+        android:id="@+id/fmLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:visibility="gone"
+        android:minHeight="@dimen/_40sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/grey_outline_progress_bar">
+        <ProgressBar
+            android:id="@+id/progress"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:progress="70"
+            android:padding="0dp"
+            style="@style/CustomProgressBar"/>
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center_vertical"
+           android:paddingStart="@dimen/_10sdp"
+           android:paddingEnd="@dimen/_10sdp"
+           >
+           <TextView
+               android:id="@+id/tvQuizOption"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:fontFamily="@font/manrope_semibold"
+               android:textSize="@dimen/_12ssp"
+               android:textColor="@color/black"
+               tools:text="Test data is displayed"/>
+
+           <TextView
+               android:id="@+id/tvQuizOptionPercent"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentEnd="true"
+               android:fontFamily="@font/manrope_semibold"
+               android:textSize="@dimen/_12ssp"
+               android:textColor="@color/black"
+               tools:text="50%" />
+       </RelativeLayout>
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
