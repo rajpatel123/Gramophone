@@ -1,5 +1,6 @@
 package agstack.gramophone.ui.farm.view
 
+import agstack.gramophone.R
 import agstack.gramophone.databinding.BottomSheetFarmInformationBinding
 import agstack.gramophone.ui.farm.model.unit.GpApiResponseData
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class BottomSheetFarmInformation(
@@ -21,6 +23,11 @@ class BottomSheetFarmInformation(
     var selectedUnit: GpApiResponseData? = null
     var farmRefId: String? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialogThemeNoFloating)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,31 +39,31 @@ class BottomSheetFarmInformation(
         }
 
         binding?.submit?.setOnClickListener {
-            val farm_reference_id = farmRefId
-            var output_qty = 0
-            var unit_id = selectedUnit?.unit_id
+            val farmReferenceId = farmRefId
+            var outputQty = 0
+            val unitId = selectedUnit?.unit_id
 
             try {
-                output_qty = binding?.edtArea?.text.toString().toInt()
+                outputQty = binding?.edtArea?.text.toString().toInt()
             } catch (nfe: NumberFormatException) {
-                // not a valid int
+                showToast(getString(R.string.invalid_value))
             }
 
-            if (farm_reference_id.isNullOrEmpty()) {
-                showToast("Invalid farm selected")
+            if (farmReferenceId.isNullOrEmpty()) {
+                showToast(getString(R.string.invalid_farm_selected))
                 return@setOnClickListener
             }
-            if (output_qty < 1) {
-                showToast("Invalid Quantity selected")
-                return@setOnClickListener
-            }
-
-            if (unit_id.isNullOrEmpty()) {
-                showToast("Invalid unit selected")
+            if (outputQty < 1) {
+                showToast(getString(R.string.Invalid_quantity_selected))
                 return@setOnClickListener
             }
 
-            listener.invoke(farm_reference_id, output_qty, unit_id)
+            if (unitId.isNullOrEmpty()) {
+                showToast(getString(R.string.Invalid_unit_selected))
+                return@setOnClickListener
+            }
+
+            listener.invoke(farmReferenceId, outputQty, unitId)
         }
 
         binding?.edtAreaUnit?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -82,7 +89,7 @@ class BottomSheetFarmInformation(
 
         context?.let { context ->
             units?.let {
-                val adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, it)
+                val adapter = ArrayAdapter(context, R.layout.simple_list_item, it)
                 binding?.edtAreaUnit?.adapter = adapter
             }
         }

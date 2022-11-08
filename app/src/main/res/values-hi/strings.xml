@@ -509,6 +509,8 @@
     <string name="next_crop_desc">आप अपनी अगली फसल कौनसी लगाने वाले है</string>
     <string name="take_suggestions_text">आज ही अपना नया फॉर्म जोड़ें और कृषि एक्सपर्ट द्वारा पाइये उचित सलाह</string>
     <string name="not_now">अभी नहीं</string>
+    <string name="invalid_value">Nat a valid value</string>
+    <string name="Invalid_quantity_selected">Invalid Quantity selected</string>
 </resources>
 
 

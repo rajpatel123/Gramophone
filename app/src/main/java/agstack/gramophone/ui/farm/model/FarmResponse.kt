@@ -76,7 +76,10 @@ data class Data(
     val duration: String?,
     val farm_area: String?,
     val farm_ref_id: String?,
-    val stage_name: String?
+    val stage_name: String?,
+    val is_crop_cycle_completed: Boolean? = false,
+    val harvested_quantity: String?,
+    val harvested_quantity_unit: String?,
 ) : Parcelable
 
 @Parcelize

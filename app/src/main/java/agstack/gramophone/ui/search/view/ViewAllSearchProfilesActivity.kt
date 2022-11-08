@@ -32,13 +32,12 @@ class ViewAllSearchProfilesActivity :
         items?.let {
             val gridLayoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
             viewDataBinding.recyclerViewProfiles.layoutManager = gridLayoutManager
-            viewDataBinding.recyclerViewProfiles.adapter = ProfilesAdapter(items){id, authorId, authorUuid ->
+            viewDataBinding.recyclerViewProfiles.adapter = ProfilesAdapter(items){id ->
                 openActivity(this@ViewAllSearchProfilesActivity,
                     OtherUserProfileActivity::class.java,
                     Bundle().apply {
-                        putString(Constants.POST_ID, id)
-                        putString(Constants.AUTHER_ID, authorId)
-                        putString(Constants.AUTHER_UUID, authorUuid)
+                        putString(Constants.AUTHER_ID, id)
+                        putString(Constants.AUTHER_UUID, id)
                     })
             }
         }
