@@ -93,37 +93,32 @@
                             android:visibility="gone"
                             tools:visibility="visible">
 
-                            <ImageView
-                                android:id="@+id/shareButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/_10sdp"
-                                android:src="@drawable/ic_whatsapp" />
+                            <FrameLayout
+                                android:id="@+id/frameShare"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp">
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_bookmark" />
+                                <ImageView
+                                    android:layout_gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_whatsapp" />
 
-                            <!-- <Button
-                                 android:id="@+id/showMoreButton"
-                                 android:layout_width="wrap_content"
-                                 android:layout_height="wrap_content"
-                                 android:layout_marginTop="5dp"
-                                 android:layout_marginBottom="5dp"
-                                 android:background="@color/colorTransparent"
-                                 android:clickable="false"
-                                 android:drawablePadding="4dp"
-                                 android:text="Show More"
-                                 android:textAllCaps="false"
-                                 android:textColor="@color/white"
-                                 android:textSize="12sp" />
+                            </FrameLayout>
 
-                             <ImageView
-                                 android:id="@+id/showMoreIcon"
-                                 android:layout_width="14dp"
-                                 android:layout_height="14dp"
-                                 android:src="@drawable/ic_arrow_down" />-->
+                            <FrameLayout
+                                android:id="@+id/frameBookmarked"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp">
+
+                                <ImageView
+                                    android:layout_gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_bookmark" />
+
+                            </FrameLayout>
+
                         </LinearLayout>
                     </LinearLayout>
 
@@ -209,7 +204,7 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
                 <RelativeLayout
                     android:id="@+id/relativeToolbar"

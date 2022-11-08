@@ -634,4 +634,6 @@
     <string name="invalid_farm_selected">Invalid farm selected</string>
     <string name="Invalid_quantity_selected">Invalid Quantity selected</string>
     <string name="Invalid_unit_selected">Invalid unit selected</string>
+    <string name="video_embeded_sharing_msg_short_link">Watch agriculture video and get best advice from Gramophone App</string>
+    <string name="whatsapp_not_installed">Whatsapp have not been installed.</string>
 </resources>

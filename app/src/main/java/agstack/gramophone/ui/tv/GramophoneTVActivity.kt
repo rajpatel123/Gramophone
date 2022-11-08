@@ -9,7 +9,12 @@ import agstack.gramophone.ui.tv.adapter.PlayListAdapter
 import agstack.gramophone.ui.tv.adapter.VideoListAdapter
 import agstack.gramophone.ui.tv.model.PlayListItemModels
 import agstack.gramophone.ui.tv.model.YoutubeChannelItem
+import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.PaginationScrollListener
+import agstack.gramophone.utils.ShareSheetPresenter
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -21,6 +26,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerSupportFragmentX
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class GramophoneTVActivity :
@@ -81,6 +87,29 @@ class GramophoneTVActivity :
 
         viewDataBinding.frameHidePlayList.setOnClickListener {
             viewDataBinding.linearVideoList.visibility = View.GONE
+        }
+
+        viewDataBinding.frameShare.setOnClickListener {
+            if (currentPlayingVideoId != null && videosTitleHashMap.containsKey(
+                    currentPlayingVideoId)
+            ) {
+                val playListItemModels = videosTitleHashMap[currentPlayingVideoId]
+                if (playListItemModels != null) {
+                    try {
+                        val title: String = playListItemModels.snippet.title
+                        val imageUrl: String =
+                            playListItemModels.snippet.thumbnails.default.url
+                        share(title, imageUrl, currentPlayingVideoId!!)
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        }
+
+        viewDataBinding.frameBookmarked.setOnClickListener {
+            if (currentPlayingVideoId.isNotNullOrEmpty())
+                gramophoneTVViewModel.bookmarkVideo(currentPlayingVideoId!!)
         }
 
         getPlayLists()
@@ -207,6 +236,29 @@ class GramophoneTVActivity :
             }
         }
         return 0
+    }
+
+    private fun share(title: String, imageUrl: String, currentPlayingVideoId: String) {
+        val parameterizedUri: Uri = ShareSheetPresenter.BASE_URI.buildUpon()
+            .appendQueryParameter(Constants.CategoryKey, Constants.GramophoneVideo)
+            .appendQueryParameter(Constants.VideoId, currentPlayingVideoId)
+            .appendQueryParameter(Constants.VideoName, currentPlayingVideoName)
+            .appendQueryParameter(Constants.PlayListId, currentPlayingPlayListId)
+            .appendQueryParameter(Constants.PlayListName, currentPlayingPlayListName).build()
+
+
+        val extraText =
+            title + " " + ShareSheetPresenter.BASE_URI + " \n Check " + imageUrl + " and other video on Gramophone App. Buy best quality agricultural products, get info on weather, mandi price and best advice for better production from Gramophone App."
+
+        val whatsappIntent = Intent(Intent.ACTION_SEND)
+        whatsappIntent.type = "text/plain"
+        whatsappIntent.setPackage("com.whatsapp")
+        whatsappIntent.putExtra(Intent.EXTRA_TEXT, extraText)
+        try {
+            startActivity(whatsappIntent)
+        } catch (ex: ActivityNotFoundException) {
+            showToast(getString(R.string.whatsapp_not_installed))
+        }
     }
 
     override fun populatePlayLists(playLists: List<YoutubeChannelItem>) {

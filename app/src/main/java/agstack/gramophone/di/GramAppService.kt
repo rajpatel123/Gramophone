@@ -49,6 +49,7 @@ import agstack.gramophone.ui.search.model.SuggestionsRequest
 import agstack.gramophone.ui.search.model.SuggestionsResponse
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
+import agstack.gramophone.ui.tv.model.VideoBookMarkedRequest
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.ui.userprofile.verifyotp.model.VerifyOTPRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
@@ -75,7 +76,7 @@ interface GramAppService {
     @JvmSuppressWildcards
     suspend fun getAddressData(
         @Path("type") type: String,
-        @Body addressRequestModel: AddressRequestModel
+        @Body addressRequestModel: AddressRequestModel,
     ): Response<StateResponseModel>
 
 
@@ -83,7 +84,7 @@ interface GramAppService {
     @JvmSuppressWildcards
     suspend fun getDistrict(
         @Path("type") type: String,
-        @Body addressRequestModel: AddressRequestModel
+        @Body addressRequestModel: AddressRequestModel,
     ): Response<AddressResponseModel>
 
     @PUT("api/v5/general/language-update")
@@ -125,21 +126,20 @@ interface GramAppService {
     suspend fun getReviewData(
         @Query("sort_by") sortBy: String? = Constants.TOP,
         @Query("page") page: String? = "1",
-        @Body productData: ProductData
+        @Body productData: ProductData,
     ): Response<ProductReviewDataResponse>
 
 
     @PUT("api/v5/review/update-review")
     suspend fun updateReviewData(
-        @Body productData: ProductData
+        @Body productData: ProductData,
     ): Response<ProductReviewDataResponse>
 
 
     @POST("api/v5/review/add-review")
     suspend fun addReviewData(
-        @Body productData: ProductData
+        @Body productData: ProductData,
     ): Response<ProductReviewDataResponse>
-
 
 
     @POST("api/v5/product/get-related-product")
@@ -158,20 +158,23 @@ interface GramAppService {
     suspend fun addToCart(@Body productData: ProductData): Response<CartDataResponse>
 
     @POST("api/v5/product/get-expert-advice")
-    suspend fun getExpertAdvice(@Body productData: ProductData):Response<SuccessStatusResponse>
+    suspend fun getExpertAdvice(@Body productData: ProductData): Response<SuccessStatusResponse>
 
     @POST("api/v5/general/help/{type}")
-    suspend fun getHelp(@Path("type") type: String,@Body productData: ProductData):Response<SuccessStatusResponse>
+    suspend fun getHelp(
+        @Path("type") type: String,
+        @Body productData: ProductData,
+    ): Response<SuccessStatusResponse>
 
     @PUT("api/v5/product/update-product-favourite")
-    suspend fun updateProductFavorite(@Body productData: ProductData):Response<SuccessStatusResponse>
+    suspend fun updateProductFavorite(@Body productData: ProductData): Response<SuccessStatusResponse>
 
     @GET("api/v5/cart/get-cart")
     suspend fun getCartData(): Response<CartDataResponse>
 
     @FormUrlEncoded
     @HTTP(method = "DELETE", path = "api/v5/cart/remove-from-cart", hasBody = true)
-    suspend fun removeCartItem(@Field("product_id") productId : Int): Response<SuccessStatusResponse>
+    suspend fun removeCartItem(@Field("product_id") productId: Int): Response<SuccessStatusResponse>
 
     @POST("api/v5/order/get-order/{type}")
     suspend fun getOrderData(
@@ -180,11 +183,10 @@ interface GramAppService {
     ): Response<OrderListResponse>
 
     @POST("api/v5/order/get-order-detail")
-    suspend fun getOrderDetails(@Body orderDetailRequest : OrderDetailRequest): Response<OrderDetailResponse>
+    suspend fun getOrderDetails(@Body orderDetailRequest: OrderDetailRequest): Response<OrderDetailResponse>
 
     @POST("api/v5/cart/place-order")
     suspend fun placeOrder(@Body placeOrderRequest: PlaceOrderRequest): Response<PlaceOrderResponse>
-
 
 
     @PUT("api/v5/setting/whatsapp/{opt-in}")
@@ -194,7 +196,7 @@ interface GramAppService {
     suspend fun logoutUser(): Response<LogoutResponseModel>
 
     @PUT("api/v5/setting/user-block/{customer_id}")
-    suspend fun unBlockUser(@Path("customer_id") customer_id :  Int): Response<BlockedUsersListResponseModel>
+    suspend fun unBlockUser(@Path("customer_id") customer_id: Int): Response<BlockedUsersListResponseModel>
 
 
     @POST("api/v5/general/address-fetch")
@@ -204,7 +206,10 @@ interface GramAppService {
     suspend fun getBanners(): Response<BannerResponse>
 
     @GET("https://maps.googleapis.com/maps/api/geocode/json")
-    suspend fun getLocationAddress(@Query("latlng") latlng: String, @Query("key") key: String): Response<GoogleAddressResponseModel>
+    suspend fun getLocationAddress(
+        @Query("latlng") latlng: String,
+        @Query("key") key: String,
+    ): Response<GoogleAddressResponseModel>
 
     @GET("api/v5/category/product-app-category")
     suspend fun getCategories(): Response<CategoryResponse>
@@ -226,7 +231,7 @@ interface GramAppService {
 
 
     @PUT("api/v5/customer/profile-data")
-    suspend fun updateProfile(@Body updateProfileModel: UpdateProfileModel):Response<SuccessStatusResponse>
+    suspend fun updateProfile(@Body updateProfileModel: UpdateProfileModel): Response<SuccessStatusResponse>
 
     @GET("api/v5/category/home-data")
     suspend fun getHomeData(): Response<HomeDataResponse>
@@ -246,7 +251,6 @@ interface GramAppService {
     suspend fun validateOTPMobile(@Body validateOtpRequestModel: ValidateOtpMobileRequestModel): Response<SuccessStatusResponse>
 
 
-
     @GET("api/v5/gramcash/gramcash")
     @JvmSuppressWildcards
     suspend fun getGramCash(): Response<GramCashResponseModel>
@@ -254,8 +258,10 @@ interface GramAppService {
 
     @POST("api/v5/gramcash/gramcash-txn/{type}")
     @JvmSuppressWildcards
-    suspend fun getGramCashTxn(@Path("type") type: String,
-                               @Body requestModel: TransactionRequestModel): Response<GramCashTxnResponseModel>
+    suspend fun getGramCashTxn(
+        @Path("type") type: String,
+        @Body requestModel: TransactionRequestModel,
+    ): Response<GramCashTxnResponseModel>
 
     @POST("api/v5/category/product-filter-data")
     suspend fun getAllProducts(
@@ -292,10 +298,13 @@ interface GramAppService {
     suspend fun getOffersOnProduct(@Body productData: ProductData): Response<ApplicableOfferResponse>
 
     @POST("api/v5/farm/get-farm/{type}")
-    suspend fun getFarmsData(@Path("type") storeId: String, @Body request : FarmRequest): Response<FarmResponse>
+    suspend fun getFarmsData(
+        @Path("type") storeId: String,
+        @Body request: FarmRequest,
+    ): Response<FarmResponse>
 
     @POST("api/v5/farm/add-farm")
-    suspend fun addFarm(@Body request : AddFarmRequest): Response<AddFarmResponse>
+    suspend fun addFarm(@Body request: AddFarmRequest): Response<AddFarmResponse>
 
     @GET("api/v5/farm/unit/{type}")
     suspend fun getFarmUnits(@Path("type") type: String): Response<FarmUnitResponse>
@@ -311,27 +320,30 @@ interface GramAppService {
     ): Response<HasgTagResponseModel>
 
     @POST("api/v5/search/suggestions")
-    suspend fun getSuggestions(@Body body : SuggestionsRequest): Response<SuggestionsResponse>
+    suspend fun getSuggestions(@Body body: SuggestionsRequest): Response<SuggestionsResponse>
 
 
     @GET("api/v5/customer/my-gramophone")
     suspend fun getMyGramophoneData(): Response<MyGramophoneResponseModel>
 
     @POST("api/v5/search/global-search")
-    suspend fun searchByKeyword(@Body body : GlobalSearchRequest): Response<GlobalSearchResponse>
+    suspend fun searchByKeyword(@Body body: GlobalSearchRequest): Response<GlobalSearchResponse>
 
     @POST("api/v5/search/community-search")
-    suspend fun searchByKeywordInCommunity(@Body body : GlobalSearchRequest): Response<GlobalSearchResponse>
+    suspend fun searchByKeywordInCommunity(@Body body: GlobalSearchRequest): Response<GlobalSearchResponse>
 
     @POST("api/v5/farm/add-harvest-ques")
-    suspend fun addHarvestQues(@Body body : AddHarvestRequest) : Response<MyGramophoneResponseModel>
+    suspend fun addHarvestQues(@Body body: AddHarvestRequest): Response<MyGramophoneResponseModel>
 
     @POST("api/v5/category/product-favourite-data")
-    suspend fun getFavouriteProduct(@Body body : FavouriteRequestModel): Response<FeaturedProductResponseModel>
+    suspend fun getFavouriteProduct(@Body body: FavouriteRequestModel): Response<FeaturedProductResponseModel>
 
     @GET("api/v5/quiz/get-quiz")
     suspend fun getQuiz(): Response<QuizPollResponseModel>
 
     @POST("api/v5/quiz/submit-answer")
     suspend fun answerQuiz(@Body answeredQuizPollRequestModel: AnsweredQuizPollRequestModel): Response<AnsweredQuizPollRequestModel>
+
+    @POST("api/v5/customer/gramophone-tv-bookmark")
+    suspend fun bookmarkVideo(@Body body: VideoBookMarkedRequest): Response<SuccessStatusResponse>
 }

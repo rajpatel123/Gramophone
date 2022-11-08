@@ -2,12 +2,10 @@ package agstack.gramophone.ui.tv
 
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.di.GramophoneTVApiService
 import agstack.gramophone.di.RetrofitInstanceForYoutube
-import agstack.gramophone.ui.tv.model.ItemsModelResponse
-import agstack.gramophone.ui.tv.model.PlayListItemModels
-import agstack.gramophone.ui.tv.model.YoutubeChannelItem
-import agstack.gramophone.ui.tv.model.YoutubeModel
+import agstack.gramophone.ui.tv.model.*
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GramophoneTVViewModel @Inject constructor(
+    private val productRepository: ProductRepository,
 ) : BaseViewModel<GramophoneTVNavigator>() {
 
     var progress = MutableLiveData<Boolean>()
@@ -198,6 +197,30 @@ class GramophoneTVViewModel @Inject constructor(
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }
             } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
+
+    fun bookmarkVideo(currentPlayingVideoId: String) {
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.value = true
+
+                    val response = productRepository.bookmarkVideo(VideoBookMarkedRequest(currentPlayingVideoId, true))
+                    progress.value = false
+                    if (response.isSuccessful) {
+                        getNavigator()?.showToast(response.body()?.gp_api_message)
+                    }
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
+                progress.value = false
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
                     else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))

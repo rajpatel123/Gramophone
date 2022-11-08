@@ -499,4 +499,6 @@
     <string name="take_suggestions_text">आज ही अपना नया फॉर्म जोड़ें और कृषि एक्सपर्ट द्वारा पाइये उचित सलाह</string>
     <string name="not_now">अभी नहीं</string>
     <string name="video_count">%1$dव्हिडिओ</string>
+    <string name="video_embeded_sharing_msg_short_link">Watch agriculture video and get best advice from Gramophone App</string>
+    <string name="whatsapp_not_installed">Whatsapp have not been installed.</string>
 </resources>
