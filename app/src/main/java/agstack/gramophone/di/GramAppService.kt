@@ -22,6 +22,8 @@ import agstack.gramophone.ui.favourite.model.FavouriteRequestModel
 import agstack.gramophone.ui.favourite.model.FeaturedProductResponseModel
 import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.AnsweredQuizPollRequestModel
+import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
 import agstack.gramophone.ui.home.view.fragments.gramophone.model.MyGramophoneResponseModel
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
@@ -326,4 +328,10 @@ interface GramAppService {
 
     @POST("api/v5/category/product-favourite-data")
     suspend fun getFavouriteProduct(@Body body : FavouriteRequestModel): Response<FeaturedProductResponseModel>
+
+    @GET("api/v5/quiz/get-quiz")
+    suspend fun getQuiz(): Response<QuizPollResponseModel>
+
+    @POST("api/v5/quiz/submit-answer")
+    suspend fun answerQuiz(@Body answeredQuizPollRequestModel: AnsweredQuizPollRequestModel): Response<AnsweredQuizPollRequestModel>
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlOptionView"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_30sdp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/rlOption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/_13sdp"
+        android:background="@drawable/poll_rectangle_bg"
+        >
+        <TextView
+            android:id="@+id/tvQuizOption"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_margin="@dimen/_10sdp"
+            android:fontFamily="@font/manrope_medium"
+            android:gravity="start|center_vertical"
+            android:paddingStart="@dimen/_5sdp"
+            android:text="Narendra Modi"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold"
+            android:visibility="visible"
+           />
+
+        <ImageView
+            android:id="@+id/ivAnswer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_tick_check"
+            tools:srcCompat="@drawable/ic_error" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

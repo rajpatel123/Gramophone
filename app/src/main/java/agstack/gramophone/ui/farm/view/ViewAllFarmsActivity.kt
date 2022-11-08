@@ -21,9 +21,9 @@ class ViewAllFarmsActivity :
     BaseActivityWrapper<ActivityViewAllFarmsBinding, ViewAllFarmsNavigator, ViewAllFarmsViewModel>(),
     ViewAllFarmsNavigator {
 
-    var bottomSheet : BottomSheetFarmInformation? = null
+    var bottomSheet: BottomSheetFarmInformation? = null
     var units: List<GpApiResponseData>? = null
-    var selectedCrop : CropData? = null
+    var selectedCrop: CropData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,12 +33,7 @@ class ViewAllFarmsActivity :
 
         viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
         viewDataBinding.swipeRefresh.setOnRefreshListener {
-            if (viewDataBinding.addFarmWrapper.viewOldFarmsLayout.visibility == View.GONE) {
-                getViewModel().getOldFarms()
-            } else {
-                getViewModel().getFarms()
-            }
-            viewDataBinding.swipeRefresh.isRefreshing = false
+            refresh()
         }
 
         viewDataBinding.addFarmWrapper.addFarmTitleLayout.setOnClickListener {
@@ -122,10 +117,16 @@ class ViewAllFarmsActivity :
                     cropImage = it[0].crop_image,
                 )
 
-                if (isOldFarms) {
-                     bottomSheet =
+                if (it.size == 1 && isOldFarms && it[0].is_crop_cycle_completed!! && !it[0].harvested_quantity.isNullOrEmpty()) {
+                    bottomSheet =
                         BottomSheetFarmInformation { farm_reference_id, output_qty, output_unit_id ->
-                            getViewModel().addHarvestQues(AddHarvestRequest(farm_reference_id, output_qty, output_unit_id))
+                            getViewModel().addHarvestQues(
+                                AddHarvestRequest(
+                                    farm_reference_id,
+                                    output_qty,
+                                    output_unit_id
+                                )
+                            )
                         }
                     val bundle = Bundle()
                     bundle.putParcelableArrayList("unitsList", units as ArrayList)
@@ -148,9 +149,20 @@ class ViewAllFarmsActivity :
         )
     }
 
+    private fun refresh() {
+        if (viewDataBinding.addFarmWrapper.viewOldFarmsLayout.visibility == View.GONE) {
+            getViewModel().getOldFarms()
+        } else {
+            getViewModel().getFarms()
+        }
+        viewDataBinding.swipeRefresh.isRefreshing = false
+    }
+
     override fun onAddHarvestQues() {
         bottomSheet?.dismiss()
-        val dialog = CustomOneDialog {
+        refresh()
+
+        val dialog = InfoSubmittedDialog {
             openActivity(
                 AddFarmActivity::class.java,
                 Bundle().apply {
@@ -158,6 +170,6 @@ class ViewAllFarmsActivity :
                 })
         }
 
-        dialog.show(this@ViewAllFarmsActivity.supportFragmentManager,"custom_sheet")
+        dialog.show(this@ViewAllFarmsActivity.supportFragmentManager, "custom_sheet")
     }
 }

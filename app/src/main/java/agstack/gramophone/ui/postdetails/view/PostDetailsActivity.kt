@@ -31,6 +31,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.amnix.xtension.extensions.inflater
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.canhub.cropper.CropImageContract
@@ -39,6 +40,7 @@ import com.canhub.cropper.CropImageView
 import com.canhub.cropper.options
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_post_details.*
+import kotlinx.android.synthetic.main.item_tags.view.*
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -218,10 +220,15 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
     }
 
     override fun setTags(tags: List<Tag>) {
-        val tagsCropAdapter = DisplayTagAdapter(tags)
-        viewDataBinding.rvTag.adapter = tagsCropAdapter
-        viewDataBinding.rvTag.layoutManager =
-            StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
+        if (tags.isNotEmpty()) {
+            viewDataBinding.finalTagLL.removeAllViews()
+            tags.forEach {
+                val view = inflater.inflate(R.layout.item_tags, null)
+                view.tvTag.setText(it.tag)
+                viewDataBinding.finalTagLL.addView(view)
+            }
+        }
+
     }
 
 

@@ -4,6 +4,7 @@ import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
+import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.articles.ArticlesWebViewActivity
 import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
 
@@ -20,13 +21,11 @@ import agstack.gramophone.ui.tv.GramophoneTVActivity
 import agstack.gramophone.ui.unitconverter.UnitConverterActivity
 import agstack.gramophone.ui.userprofile.UserProfileActivity
 import agstack.gramophone.ui.weather.WeatherActivity
-import agstack.gramophone.utils.ApiResponse
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.*
 import agstack.gramophone.view.activity.CreatePostActivity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -41,6 +40,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository,
+    private val productRepository: ProductRepository
 ) : BaseViewModel<HomeActivityNavigator>() {
 
     var progressBar = ObservableField<Boolean>()
@@ -74,9 +74,11 @@ class HomeViewModel @Inject constructor(
                                 val customerId =
                                     if (gpApiResponseData.customer_id.isNullOrEmpty()) "" else gpApiResponseData.customer_id
                                 val customerAddress=
-                                    if (gpApiResponseData.address_data?.address.isNullOrEmpty()) "" else (gpApiResponseData.address_data?.district.plus(
+                                    if (gpApiResponseData.address_data==null) "" else (gpApiResponseData.address_data?.district.plus(
                                         ", "
                                     ).plus(gpApiResponseData.address_data?.state))
+
+                                Log.d("Address",customerAddress)
 
 
 
@@ -104,6 +106,7 @@ class HomeViewModel @Inject constructor(
                                     customerAddress
                                 )
 
+                                Log.d("Address",customerAddress)
 
                                 getNavigator()?.setImageNameMobile(
                                     name,
@@ -167,6 +170,30 @@ class HomeViewModel @Inject constructor(
         }
 
     }
+
+    fun getCrops() {
+        try {
+            viewModelScope.launch {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    val response = productRepository.getCrops()
+                    if (response.isSuccessful) {
+                       SharedPreferencesHelper.instance?.putParcelable(SharedPreferencesKeys.CROPS,
+                           response.body()!!
+                       )
+                    } else {
+                        getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+                    }
+                }
+            }
+        } catch (ex: Exception) {
+            when (ex) {
+                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+            }
+        }
+
+    }
+
 
     private fun handleResponse(logoutResponse: Response<LogoutResponseModel>): ApiResponse<LogoutResponseModel> {
         if (logoutResponse.isSuccessful) {

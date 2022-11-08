@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 
-class CustomOneDialog (private val listener: () -> Unit) : DialogFragment() {
+class InfoSubmittedDialog (private val listener: () -> Unit) : DialogFragment() {
 
     var binding : InfoSubmittedDialogBinding? = null
 

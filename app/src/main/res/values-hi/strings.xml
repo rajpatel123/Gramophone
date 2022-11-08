@@ -423,7 +423,7 @@
     <string name="_01_quantity">01</string>
     <string name="others">Others</string>
     <string name="order_placed">Order Placed</string>
-    <string name="no_orders_yet">No orders yet!</string>
+    <string name="no_orders_yet">No Orders Yet!</string>
     <string name="download_invoice">Download Invoice</string>
     <string name="one_offer_applied">1 Offer applied</string>
     <string name="phone">Phone</string>
@@ -501,6 +501,9 @@
     <string name="crop_rates_from_nearest_mandis">निकटतम मंडियों से फसल दरें</string>
     <string name="unit_converter_sub_text">माप की सामान्य इकाइयों को परिवर्तित करें</string>
     <string name="complain_logged">Complain logged successfully</string>
+    <string name="gramophone_poll">GRAMOPHONE POLL</string>
+    <string name="gramophone_quiz">GRAMOPHONE QUIZ</string>
+    <string name="day_remaining">Day Remaining</string>
     <string name="add_your_farm">+ अपना खेत जोड़े</string>
     <string name="give_your_crop_details">उपज की जानकारी देवे</string>
     <string name="approx_end_date">"अनुमानित समाप्ति: %1$s"</string>
@@ -510,6 +513,8 @@
     <string name="take_suggestions_text">आज ही अपना नया फॉर्म जोड़ें और कृषि एक्सपर्ट द्वारा पाइये उचित सलाह</string>
     <string name="not_now">अभी नहीं</string>
     <string name="video_count">%1$d वीडियो</string>
+    <string name="invalid_value">Nat a valid value</string>
+    <string name="Invalid_quantity_selected">Invalid Quantity selected</string>
 </resources>
 
 

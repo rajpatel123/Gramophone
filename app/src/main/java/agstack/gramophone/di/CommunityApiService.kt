@@ -5,11 +5,13 @@ import agstack.gramophone.ui.comments.model.DeleteCommentResponseModel
 import agstack.gramophone.ui.comments.model.sendcomment.GetCommentRequestModel
 import agstack.gramophone.ui.comments.model.sendcomment.SendCommentResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.create.CreatePostResponseModel
+import agstack.gramophone.ui.favourite.model.favouritecount.FavouriteCountResponseModel
 import agstack.gramophone.ui.followings.model.FollowerResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.BookmarkPostResponse
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikePostResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikedusersResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
+import agstack.gramophone.ui.home.view.fragments.community.model.pin.UpdatePinResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.reportpost.ReportUserPostResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.*
@@ -45,7 +47,7 @@ interface CommunityApiService {
     suspend fun bookmarkPost(@Body likedUsersRequestModel: PostRequestModel?): Response<BookmarkPostResponse>
 
     @PUT("/api/v2/posts/update-pin")
-    suspend fun pinPost(@Body likedUsersRequestModel: PostRequestModel?): Response<BlockResponseModel>
+    suspend fun pinPost(@Body likedUsersRequestModel: PostRequestModel?): Response<UpdatePinResponseModel>
 
     @GET("/api/v2/posts/{id}")
     suspend fun getPostDetails(@Path("id") id: String): Response<PostDetailResponseModel>
@@ -165,8 +167,10 @@ interface CommunityApiService {
     @POST("/api/v2/profiles/get-followers")
     suspend fun getFollowers(@Body followRequestModel: FollowRequestModel): Response<FollowerResponseModel>
 
+    @GET("/api/v2/posts/total-post-count")
+    suspend fun getFavouriteCount(): Response<FavouriteCountResponseModel>
 
-    @GET("/api/v5/quiz/get-quiz")
-    suspend fun getQuiz(): Response<QuizPollResponseModel>
+
+
 
 }

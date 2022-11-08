@@ -78,7 +78,7 @@ class SearchResultAdapter(
                         })
                 }
 
-                if(productList.size > 3){
+                if(list[position].items.size > 3){
                     holder.binding.viewAllProducts.visibility = View.VISIBLE
                 }else{
                     holder.binding.viewAllProducts.visibility = View.GONE
@@ -105,7 +105,7 @@ class SearchResultAdapter(
                             putParcelable("dataList", list[position])
                         })
                 }
-                if(dataList.size > 3){
+                if(list[position].items.size > 3){
                     holder.binding.viewAllCrops.visibility = View.VISIBLE
                 }else{
                     holder.binding.viewAllCrops.visibility = View.GONE
@@ -117,13 +117,12 @@ class SearchResultAdapter(
                 if(profileList.size > 3){
                     profileList = profileList.subList(0, 3)
                 }
-                holder.binding.recyclerViewProfiles.adapter = ProfilesAdapter(profileList){id, authorId, authorUuid ->
+                holder.binding.recyclerViewProfiles.adapter = ProfilesAdapter(profileList){id  ->
                     openActivity(holder.itemView.context,
                         OtherUserProfileActivity::class.java,
                         Bundle().apply {
-                            putString(Constants.POST_ID, id)
-                            putString(Constants.AUTHER_ID, authorId)
-                            putString(Constants.AUTHER_UUID, authorUuid)
+                            putString(Constants.AUTHER_ID, id)
+                            putString(Constants.AUTHER_UUID, id)
                         })
                 }
                 holder.binding.viewAllProfiles.setOnClickListener {
@@ -134,7 +133,7 @@ class SearchResultAdapter(
                             putParcelable("dataList", list[position])
                         })
                 }
-                if(profileList.size > 3){
+                if(list[position].items.size > 3){
                     holder.binding.viewAllProfiles.visibility = View.VISIBLE
                 }else{
                     holder.binding.viewAllProfiles.visibility = View.GONE
@@ -163,7 +162,7 @@ class SearchResultAdapter(
                             putParcelable("dataList", list[position])
                         })
                 }
-                if(dataList.size > 3){
+                if(list[position].items.size > 3){
                     holder.binding.viewAll.visibility = View.VISIBLE
                 }else{
                     holder.binding.viewAll.visibility = View.GONE
@@ -192,7 +191,7 @@ class SearchResultAdapter(
                             putParcelable("dataList", list[position])
                         })
                 }
-                if(dataList.size > 3){
+                if(list[position].items.size > 3){
                     holder.binding.viewAll.visibility = View.VISIBLE
                 }else{
                     holder.binding.viewAll.visibility = View.GONE
@@ -222,7 +221,7 @@ class SearchResultAdapter(
                             putParcelable("dataList", list[position])
                         })
                 }
-                if(dataList.size > 3){
+                if(list[position].items.size > 3){
                     holder.binding.viewAll.visibility = View.VISIBLE
                 }else{
                     holder.binding.viewAll.visibility = View.GONE
@@ -251,7 +250,7 @@ class SearchResultAdapter(
                             putParcelable("dataList", list[position])
                         })
                 }
-                if(dataList.size > 3){
+                if(list[position].items.size > 3){
                     holder.binding.viewAll.visibility = View.VISIBLE
                 }else{
                     holder.binding.viewAll.visibility = View.GONE
@@ -279,7 +278,7 @@ class SearchResultAdapter(
                             putParcelable("dataList", list[position])
                         })
                 }
-                if(postList.size > 3){
+                if(list[position].items.size > 3){
                     holder.binding.viewAllPosts.visibility = View.VISIBLE
                 }else{
                     holder.binding.viewAllPosts.visibility = View.GONE

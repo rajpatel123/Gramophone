@@ -10,7 +10,6 @@ import agstack.gramophone.ui.farm.model.FarmRequest
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.CommunityRequestModel
 import agstack.gramophone.ui.home.view.fragments.gramophone.MyGramophoneFragmentNavigator
-import agstack.gramophone.ui.order.model.Data
 import agstack.gramophone.ui.userprofile.UserProfileActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Utility
@@ -136,9 +135,67 @@ class MyGramophoneFragmentViewModel
                     if (placeOrderResponse.isSuccessful && placeOrderResponse.body()?.gp_api_status == Constants.GP_API_STATUS
                         && placeOrderResponse.body()?.gp_api_response_data?.data != null && placeOrderResponse.body()?.gp_api_response_data?.data?.size!! > 0
                     ) {
-                        getNavigator()?.updateOrderSection(placeOrderResponse.body()?.gp_api_response_data)
+                        getNavigator()?.updateOrderSection(placeOrderResponse.body()?.gp_api_response_data,Constants.PLACED)
                     }else{
-                        getNavigator()?.updateOrderSection(null)
+                        getRecentOrder()
+                    }
+
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
+    fun getRecentOrder() {
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    val placeOrderResponse =
+                        productRepository.getOrderData(
+                            Constants.RECENT,
+                            1.toString(),
+                            "1"
+                        )
+                    if (placeOrderResponse.isSuccessful && placeOrderResponse.body()?.gp_api_status == Constants.GP_API_STATUS
+                        && placeOrderResponse.body()?.gp_api_response_data?.data != null && placeOrderResponse.body()?.gp_api_response_data?.data?.size!! > 0
+                    ) {
+                        getNavigator()?.updateOrderSection(placeOrderResponse.body()?.gp_api_response_data,Constants.RECENT)
+                    }else{
+                        getPastOrder()
+                    }
+
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
+    fun getPastOrder() {
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    val placeOrderResponse =
+                        productRepository.getOrderData(
+                            Constants.PAST,
+                            1.toString(),
+                            "1"
+                        )
+                    if (placeOrderResponse.isSuccessful && placeOrderResponse.body()?.gp_api_status == Constants.GP_API_STATUS
+                        && placeOrderResponse.body()?.gp_api_response_data?.data != null && placeOrderResponse.body()?.gp_api_response_data?.data?.size!! > 0
+                    ) {
+                        getNavigator()?.updateOrderSection(placeOrderResponse.body()?.gp_api_response_data,Constants.PAST)
+                    }else{
+                        getNavigator()?.updateOrderSection(null, Constants.PAST)
                     }
 
                 } else {
@@ -179,6 +236,25 @@ class MyGramophoneFragmentViewModel
                 val response = onBoardingRepository.getMyGramophoneData()
                 if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS && response.body()?.gp_api_response_data != null ) {
                     getNavigator()?.updateMyFavoriteSection(response.body()!!)
+                }else{
+
+                }
+
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
+
+    fun getFavouritePostCount() {
+        viewModelScope.launch {
+            try {
+                val response = communityRepository.getFavouriteCount()
+                if (response.isSuccessful ) {
+                   getNavigator()?.updateMyFavoritePostCount(response.body()!!.data.bookMarkedPostCounts)
                 }else{
 
                 }

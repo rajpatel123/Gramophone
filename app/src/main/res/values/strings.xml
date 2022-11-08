@@ -376,6 +376,7 @@
     <string name="tab_expert">Expert</string>
     <string name="tab_my_post">My Post</string>
     <string name="my_post">My Posts(%d)</string>
+    <string name="postss">My Posts</string>
     <string name="my_posts">My Posts(%d)</string>
     <string name="tab_saved_post">Saved Post</string>
     <string name="starts_from_99">Starts from \u20B9 99</string>
@@ -486,7 +487,7 @@
     <string name="comma_with_space">", "</string>
     <string name="others">Others</string>
     <string name="order_placed">Order Placed</string>
-    <string name="no_orders_yet">No orders yet!</string>
+    <string name="no_orders_yet">No Orders Yet!</string>
     <string name="download_invoice">Download Invoice</string>
 
     <string name="crop_duration">"बुआई का समय: %1$s"</string>
@@ -612,6 +613,11 @@
     <string name="crop_rates_from_nearest_mandis">Crop rates from nearest Mandis</string>
     <string name="unit_converter_sub_text">Convert common units of measurement</string>
     <string name="complain_logged">Complain logged successfully</string>
+    <string name="gramophone_poll">GRAMOPHONE POLL</string>
+    <string name="gramophone_quiz">GRAMOPHONE QUIZ</string>
+    <string name="day_remaining">Day Remaining</string>
+    <string name="people_answered">Farmers answered</string>
+    <string name="browsw_post_by_crops">Browse Posts By Crops</string>
     <string name="add_your_farm">+ अपना खेत जोड़े</string>
     <string name="give_your_crop_details">उपज की जानकारी देवे</string>
     <string name="approx_end_date">अनुमानित समाप्ति: %1$s</string>
@@ -624,4 +630,8 @@
     <string name="channel_id" translatable="false">UCmJ7oQCcKzf-IU2QXaMVykQ</string>
     <string name="google_api" translatable="false">AIzaSyD6HGLMvm-bUW0ZCX3wXztDZZXUQTfznZI</string>
     <string name="video_count">%1$d videos</string>
+    <string name="invalid_value">Nat a valid value</string>
+    <string name="invalid_farm_selected">Invalid farm selected</string>
+    <string name="Invalid_quantity_selected">Invalid Quantity selected</string>
+    <string name="Invalid_unit_selected">Invalid unit selected</string>
 </resources>

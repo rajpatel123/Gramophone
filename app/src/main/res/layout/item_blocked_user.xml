@@ -22,8 +22,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivProfileImage"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_45sdp"
             android:layout_centerVertical="true"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/state_img"
@@ -34,7 +34,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:layout_toEndOf="@+id/ivProfileImage">
 
             <TextView
@@ -53,10 +54,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvUserName"
+                android:layout_marginTop="0dp"
                 android:fontFamily="@font/manrope_regular"
                 android:text="@{model.address}"
                 android:textColor="@color/blakish"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_8ssp"
                 tools:text="Indore, Madhya Pradesh" />
 
         </RelativeLayout>
@@ -75,7 +77,7 @@
             android:paddingBottom="@dimen/_5sdp"
             android:text="@string/unblock"
             android:textColor="@color/blakish"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_10ssp"
 
             />
 
