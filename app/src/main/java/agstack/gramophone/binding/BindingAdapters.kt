@@ -1,14 +1,18 @@
 package agstack.gramophone.binding
 
 import agstack.gramophone.R
-import agstack.gramophone.ui.home.view.fragments.market.model.FeaturedArticlesResponse
-import agstack.gramophone.ui.home.view.fragments.market.model.FeaturedArticlesResponseItem
 import agstack.gramophone.utils.Utility
+import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.text.Html
+import android.text.Spannable
+import android.text.SpannableStringBuilder
 import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -483,6 +487,26 @@ fun setBackgroundColor(
     } else {
         view.setBackgroundColor(ContextCompat.getColor(view.context,
             android.R.color.white))
+    }
+}
+
+@BindingAdapter("farmDate")
+fun farmDate(view: TextView, str: String?) {
+    str?.let {
+        val sb = SpannableStringBuilder(str)
+        sb.setSpan(
+            ForegroundColorSpan(Color.BLACK),
+            str.indexOf(":") + 1,
+            str.length,
+            Spannable.SPAN_INCLUSIVE_INCLUSIVE
+        );
+        sb.setSpan(
+            StyleSpan(Typeface.BOLD),
+            str.indexOf(":") + 1,
+            str.length,
+            Spannable.SPAN_INCLUSIVE_INCLUSIVE
+        );
+        view.text = sb
     }
 }
 

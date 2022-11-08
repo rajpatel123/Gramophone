@@ -68,16 +68,18 @@ class CropGroupExplorerActivity :
 
             },
             footerListener = {
-                val selectedCrop = CropData(
-                    cropId = it.crop_id,
-                    cropName = it.crop_name,
-                    cropImage = it.crop_image,
-                )
-                openActivity(
-                    AddFarmActivity::class.java,
-                    Bundle().apply {
-                        putParcelable("selectedCrop", selectedCrop)
-                    })
+                if(!isOldFarms){
+                    val selectedCrop = CropData(
+                        cropId = it.crop_id,
+                        cropName = it.crop_name,
+                        cropImage = it.crop_image,
+                    )
+                    openActivity(
+                        AddFarmActivity::class.java,
+                        Bundle().apply {
+                            putParcelable("selectedCrop", selectedCrop)
+                        })
+                }
             },
             isOldFarms = isOldFarms
         )
