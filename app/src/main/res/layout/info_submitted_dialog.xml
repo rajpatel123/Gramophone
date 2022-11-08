@@ -8,12 +8,13 @@
         android:orientation="vertical"
         android:background="@drawable/rounder_corner_32_white">
 
-        <ImageView
+        <pl.droidsonroids.gif.GifImageView
             android:layout_width="@dimen/_116sdp"
             android:layout_height="@dimen/_116sdp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/thanks_you"
             android:layout_marginTop="@dimen/_2sdp"/>
+
 
         <TextView
             android:layout_width="match_parent"
