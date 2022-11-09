@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <FrameLayout
                 android:id="@+id/ll_green"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_92sdp"
@@ -30,7 +30,16 @@
                 android:orientation="horizontal"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:onClick="@{()->viewModel.finish()}"
+                    app:srcCompat="@drawable/ic_arrow_left"
+                    app:tint="@color/white" />
+            </FrameLayout>
 
             <View
                 android:id="@+id/view"
@@ -45,6 +54,21 @@
                 />
 
             <com.amnix.xtension.widgets.CircularImageView
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:layout_marginStart="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:scaleType="centerInside"
+                android:shadowColor="@color/grey"
+                android:shadowRadius="10"
+                android:visibility="@{viewModel.imageExist? View.GONE:View.VISIBLE}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/view"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:product_image="@{viewModel.profileImage}"
+                app:srcCompat="@drawable/ic_profile_default" />
+
+            <com.amnix.xtension.widgets.CircularImageView
                 android:id="@+id/cv_profile_pic"
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
@@ -56,6 +80,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/view"
                 app:layout_constraintVertical_chainStyle="packed"
+                android:visibility="@{viewModel.imageExist? View.VISIBLE:View.GONE}"
                 app:product_image="@{viewModel.profileImage}"
                 app:srcCompat="@drawable/ic_profile_default" />
 
@@ -148,7 +173,7 @@
                         android:fontFamily="@font/manrope_regular"
                         android:hint="Sawer, Madhya pradesh"
                         android:maxLines="3"
-                        android:text="@{ viewModel.userProfileData.address_data.address +`, ` +viewModel.userProfileData.address_data.village+`, ` +viewModel.userProfileData.address_data.tehsil+`, ` +viewModel.userProfileData.address_data.district+`, ` +viewModel.userProfileData.address_data.state}"
+                        android:text="@{ viewModel.userProfileData.address_data.address +`, ` +viewModel.userProfileData.address_data.village+`, ` +viewModel.userProfileData.address_data.tehsil+`, ` +viewModel.userProfileData.address_data.district+`, ` +viewModel.userProfileData.address_data.state+` - ` +viewModel.userProfileData.address_data.pincode}"
                         android:textColor="@color/gray"
                         tools:text="Sawer, Madhya pradesh" />
 
@@ -186,7 +211,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/manrope_regular"
                         android:hint="98260-01714"
-                        android:text="@{viewModel.userProfileData.mobile_no}"
+                        android:text="@{` `+viewModel.userProfileData.mobile_no}"
                         android:textColor="@color/gray"
                         tools:text="98260-01714" />
                 </LinearLayout>
@@ -337,6 +362,7 @@
                             android:layout_height="wrap_content"
                             android:hint="250"
                             android:text="@string/farmer"
+                            android:fontFamily="@font/manrope_semibold"
                             android:textColor="@color/blakish" />
                     </LinearLayout>
 
@@ -384,6 +410,7 @@
                             android:layout_height="wrap_content"
                             android:hint="250"
                             android:text="@string/trader"
+                            android:fontFamily="@font/manrope_semibold"
                             android:textColor="@color/blakish" />
                     </LinearLayout>
 
@@ -416,15 +443,29 @@
                             android:id="@+id/tv_firmlabel"
                             style="@style/TextSize14Sp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="16dp"
                             android:layout_below="@id/v1"
-                            android:layout_marginLeft="@dimen/_18sdp"
+                            android:layout_marginLeft="14dp"
                             android:layout_toRightOf="@+id/ic_firm"
                             android:fontFamily="@font/manrope_regular"
                             android:maxLines="3"
                             android:paddingRight="@dimen/_5sdp"
                             android:text="@string/firm"
                             android:textColor="@color/gray" />
+
+                        <TextView
+                            android:id="@+id/tv_firmValue"
+                            style="@style/TextSize14Sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/v1"
+                            android:layout_toRightOf="@+id/tv_firmlabel"
+                            android:fontFamily="@font/manrope_regular"
+                            android:maxLines="3"
+                            android:paddingRight="@dimen/_5sdp"
+                            android:text="@{viewModel.firmName}"
+                            android:textColor="@color/blakish"
+                            tools:text="fjdknfkj" />
 
                         <TextView
                             android:id="@+id/tv_addfirm"

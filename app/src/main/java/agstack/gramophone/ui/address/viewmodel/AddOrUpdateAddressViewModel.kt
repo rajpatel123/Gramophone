@@ -7,28 +7,22 @@ import agstack.gramophone.ui.address.AddressNavigator
 import agstack.gramophone.ui.address.model.*
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
-import agstack.gramophone.ui.address.view.AddOrUpdateAddressActivity
 import agstack.gramophone.ui.address.view.StateListActivity
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
-import agstack.gramophone.utils.*
 import agstack.gramophone.ui.profile.model.UserAddress
-import agstack.gramophone.utils.ApiResponse
-import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.*
 import agstack.gramophone.utils.Constants.ALL_STRING
 import agstack.gramophone.utils.Constants.DISTRICT
 import agstack.gramophone.utils.Constants.PINCODE
 import agstack.gramophone.utils.Constants.TEHSIL
 import agstack.gramophone.utils.Constants.VILLAGE
 import android.Manifest
-import android.location.Address
-import android.location.Geocoder
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNullOrBlank
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -545,15 +539,53 @@ class AddOrUpdateAddressViewModel @Inject constructor(
         }
 
     fun setAddressdata(userAddress: UserAddress) {
-        Log.d("fetched address",userAddress?.district!!)
+        Log.d("fetched address", userAddress?.district!!)
         if (userAddress?.state != null) stateNameStr.set(userAddress.state)
-        if (userAddress?.district != null) districtName.set(userAddress.district)
+
+        stateNameInitial.set(stateNameStr.get()?.subSequence(0, 1).toString())
+
+
+        if (userAddress?.district != null) districtName.set(userAddress.district) else {
+            getDistrict(
+                "district",
+                stateNameStr.get()!!,
+                "",
+                ""
+            )
+            return
+        }
+
         if (userAddress?.tehsil != null) tehsilName.set(userAddress.tehsil)
-        if (userAddress?.village != null) villageName.set(userAddress.village)
+        else{
+            getTehsil(
+                "tehsil",
+                stateNameStr.get()!!,
+                districtName.get()!!,
+                ""
+            )
+            return
+        }
+
+        if (userAddress?.village != null) villageName.set(userAddress.village) else{
+            getVillage(
+                "village",
+                stateNameStr.get()!!,
+                districtName.get()!!,
+                tehsilName.get()!!,
+                ""
+            )
+            return
+        }
+
         if (userAddress?.address != null) address.set(userAddress.address)
-        if (userAddress?.pincode != null) pinCode.set(userAddress.pincode)
 
-
+        if (userAddress?.pincode != null) pinCode.set(userAddress.pincode) else getPinCode(
+            "pincode",
+            stateNameStr.get()!!,
+            districtName.get()!!,
+            tehsilName.get()!!,
+            villageName.get()!!
+        )
 
 
     }

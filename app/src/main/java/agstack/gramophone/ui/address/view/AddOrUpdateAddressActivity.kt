@@ -230,20 +230,6 @@ class AddOrUpdateAddressActivity :
     }
 
     override fun updateUi() {
-        if (intent?.extras?.containsKey(Constants.STATE) == true) {
-            addOrUpdateAddressViewModel.setStatesName(
-                intent?.extras?.get(Constants.STATE) as String,
-                intent?.extras?.get(Constants.STATE_IMAGE_URL) as String
-            )
-            addOrUpdateAddressViewModel.getDistrict(
-                "district",
-                intent?.extras?.get(Constants.STATE) as String,
-                "",
-                ""
-            )
-        } else {
-            addOrUpdateAddressViewModel.getAddressByLocation()
-        }
 
         if (intent?.extras?.containsKey(Constants.FROM_EDIT_PROFILE) == true) {
 
@@ -261,6 +247,20 @@ class AddOrUpdateAddressActivity :
         } else {
             viewDataBinding.ivBack.visibility = View.GONE
             viewDataBinding.saveBtn.visibility=View.GONE
+            if (intent?.extras?.containsKey(Constants.STATE) == true) {
+                addOrUpdateAddressViewModel.setStatesName(
+                    intent?.extras?.get(Constants.STATE) as String,
+                    intent?.extras?.get(Constants.STATE_IMAGE_URL) as String
+                )
+                addOrUpdateAddressViewModel.getDistrict(
+                    "district",
+                    intent?.extras?.get(Constants.STATE) as String,
+                    "",
+                    ""
+                )
+            } else {
+                addOrUpdateAddressViewModel.getAddressByLocation()
+            }
         }
     }
 
