@@ -8,4 +8,5 @@ data class FormattedArticlesData(
     var tag: String? = null,
     var image_url: String? = null,
     var articleTye: String? = null,
+    var videoThumbnailUrl: String? = null,
 )

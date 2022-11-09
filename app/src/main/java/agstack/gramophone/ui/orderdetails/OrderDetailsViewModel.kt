@@ -30,8 +30,8 @@ class OrderDetailsViewModel @Inject constructor(
     var orderId = MutableLiveData<String>()
     var orderDate = MutableLiveData<String>()
     var quantity = MutableLiveData<String>()
-    var subTotalPrice = MutableLiveData<String>()
-    var totalPrice = MutableLiveData<String>()
+    var subTotalPrice = MutableLiveData<Float>()
+    var totalPrice = MutableLiveData<Float>()
     var orderStatus = MutableLiveData<String>()
     var orderStatusMessage = MutableLiveData<String>()
     var paymentMethod = MutableLiveData<String>()
@@ -39,7 +39,7 @@ class OrderDetailsViewModel @Inject constructor(
     var username = MutableLiveData<String>()
     var address = MutableLiveData<String>()
     var mobile = MutableLiveData<String>()
-    var discount = MutableLiveData<String>()
+    var discount = MutableLiveData<Float>()
     var gramCash = MutableLiveData<Int>()
 
     init {
@@ -47,8 +47,8 @@ class OrderDetailsViewModel @Inject constructor(
         orderId.value = ""
         orderDate.value = ""
         quantity.value = ""
-        subTotalPrice.value = ""
-        totalPrice.value = ""
+        subTotalPrice.value = 0f
+        totalPrice.value = 0f
         orderStatus.value = ""
         orderStatusMessage.value = ""
         paymentMethod.value = ""
@@ -56,7 +56,7 @@ class OrderDetailsViewModel @Inject constructor(
         username.value = ""
         address.value = ""
         mobile.value = ""
-        discount.value = "0"
+        discount.value = 0f
         gramCash.value = 0
     }
 
@@ -112,14 +112,14 @@ class OrderDetailsViewModel @Inject constructor(
                             this@OrderDetailsViewModel.address.value = fullAddress.toString()
                         }
                         this@OrderDetailsViewModel.subTotalPrice.value =
-                            responseData.pricing_details.sub_total_price.toString()
+                            responseData.pricing_details.sub_total_price
                         this@OrderDetailsViewModel.totalPrice.value =
-                            responseData.pricing_details.total_price.toString()
+                            responseData.pricing_details.total_price
 
                         val totalDiscount =
                             responseData.pricing_details.promotional_discount
 
-                        this@OrderDetailsViewModel.discount.value = totalDiscount.toString()
+                        this@OrderDetailsViewModel.discount.value = totalDiscount
 
                         this@OrderDetailsViewModel.gramCash.value =
                             responseData.pricing_details.gram_cash

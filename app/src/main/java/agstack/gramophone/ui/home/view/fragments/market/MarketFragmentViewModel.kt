@@ -16,6 +16,7 @@ import agstack.gramophone.ui.weather.model.WeatherResponse
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
@@ -302,6 +303,7 @@ class MarketFragmentViewModel
                             val postViewCount =
                                 if (item.post_views.isNotNullOrEmpty()) item.post_views else ""
                             var tag = ""
+                            var videoThumbnailUrl: String? = null
                             if (item.acf != null && item.acf !is Boolean) {
                                 tag = try {
                                     val categoryName: String =
@@ -310,6 +312,21 @@ class MarketFragmentViewModel
                                 } catch (e: Exception) {
                                     e.printStackTrace()
                                     ""
+                                }
+                                val videoUrl = try {
+                                    val videoLink: String =
+                                        (item.acf as Map<*, *>)["video_url"] as String
+                                    if (videoLink.isNotNullOrEmpty()) videoLink else ""
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                    ""
+                                }
+                                if (videoUrl.isNotNullOrEmpty()) {
+                                    val uri: Uri = Uri.parse(videoUrl)
+                                    if (uri.lastPathSegment.toString().isNotNullOrEmpty()) {
+                                        videoThumbnailUrl =
+                                            "https://img.youtube.com/vi/" + uri.lastPathSegment.toString() + "/0.jpg"
+                                    }
                                 }
                             }
                             var imageUrl = ""
@@ -336,6 +353,7 @@ class MarketFragmentViewModel
                             formattedArticlesData.post_views = postViewCount
                             formattedArticlesData.tag = tag
                             formattedArticlesData.image_url = imageUrl
+                            formattedArticlesData.videoThumbnailUrl = videoThumbnailUrl
                             formattedArticlesData.articleTye = Constants.FEATURED_ARTICLES
                             featuredArticlesList.add(formattedArticlesData)
                         }

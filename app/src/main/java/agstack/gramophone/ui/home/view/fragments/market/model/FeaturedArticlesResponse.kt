@@ -21,6 +21,7 @@ data class Embedded(
 data class Acf(
     val category_name: String? = null,
     val crop_name: String? = null,
+    val video_url: String? = null,
 )
 
 data class TitleX(

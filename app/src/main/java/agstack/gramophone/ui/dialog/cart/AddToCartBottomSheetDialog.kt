@@ -29,6 +29,7 @@ class AddToCartBottomSheetDialog(
     private val viewOfferDetail: ((Offer) -> Unit)?,
     private val applyOfferOnProduct: ((VerifyPromotionRequestModel) -> Unit)?,
     private val onAddToCart: ((ProductData) -> Unit)?,
+    private val refreshOfferOnQuantityChange: ((Int, Int) -> Unit)?,
 ) :
     BottomSheetDialogFragment() {
     @Inject
@@ -78,28 +79,7 @@ class AddToCartBottomSheetDialog(
             if (availableProductOffersAdapter.isNotNull())
                 availableProductOffersAdapter?.updateSelectedSkuPrice(selectedSkuPrice)
         }
-        if (mSkuOfferList.isNullOrEmpty()) {
-            binding?.v2Separator?.visibility = View.GONE
-            binding?.rlAvailableOffers?.visibility = View.GONE
-        } else {
-            binding?.v2Separator?.visibility = View.VISIBLE
-            binding?.rlAvailableOffers?.visibility = View.VISIBLE
-
-            availableProductOffersAdapter =
-                AvailableProductOffersAdapter(mSkuOfferList, selectedSkuPrice, {
-                    selectedOfferItem = it
-                    calculateDiscountAndPromotion(selectedSkuListItem.get()!!, selectedOfferItem)
-                    applyOfferOnProduct?.invoke(VerifyPromotionRequestModel(selectedSkuListItem.get()?.productId!!,
-                        quantity,
-                        it.promotion_id.toString()))
-                }, {
-                    viewOfferDetail?.invoke(it)
-                })
-
-            binding?.rvAvailableoffers?.adapter = availableProductOffersAdapter
-
-        }
-
+        setOffersUI()
         binding?.tvContactForPrice?.setOnClickListener {
             Toast.makeText(requireContext(), "Your request has been submitted", Toast.LENGTH_SHORT)
                 .show()
@@ -114,13 +94,48 @@ class AddToCartBottomSheetDialog(
         binding?.ivAdd?.setOnClickListener {
             quantity += 1
             setQuantity()
-            calculateDiscountAndPromotion(selectedSkuListItem.get()!!, selectedOfferItem)
+            calculateDiscountAndPromotion(selectedSkuListItem.get()!!, null)
+            refreshOfferOnQuantityChange?.invoke(selectedSkuListItem.get()!!.productId!!.toInt(),
+                quantity)
         }
         binding?.ivSubtract?.setOnClickListener {
             if (quantity > 1)
                 quantity -= 1
             setQuantity()
-            calculateDiscountAndPromotion(selectedSkuListItem.get()!!, selectedOfferItem)
+            refreshOfferOnQuantityChange?.invoke(selectedSkuListItem.get()!!.productId!!.toInt(),
+                quantity
+            )
+            calculateDiscountAndPromotion(selectedSkuListItem.get()!!, null)
+        }
+    }
+
+    private fun setOffersUI() {
+        if (mSkuOfferList.isNullOrEmpty()) {
+            binding?.v2Separator?.visibility = View.GONE
+            binding?.rlAvailableOffers?.visibility = View.GONE
+        } else {
+            binding?.v2Separator?.visibility = View.VISIBLE
+            binding?.rlAvailableOffers?.visibility = View.VISIBLE
+
+            if (availableProductOffersAdapter == null) {
+                availableProductOffersAdapter =
+                    AvailableProductOffersAdapter(mSkuOfferList, selectedSkuPrice, {
+                        selectedOfferItem = it
+                        calculateDiscountAndPromotion(selectedSkuListItem.get()!!,
+                            selectedOfferItem)
+                        applyOfferOnProduct?.invoke(VerifyPromotionRequestModel(selectedSkuListItem.get()?.productId!!,
+                            quantity,
+                            it.promotion_id.toString()))
+                    }, {
+                        viewOfferDetail?.invoke(it)
+                    })
+
+                binding?.rvAvailableoffers?.adapter = availableProductOffersAdapter
+            } else {
+                if (availableProductOffersAdapter.isNotNull())
+                    availableProductOffersAdapter!!.updateOffer(mSkuOfferList)
+            }
+
         }
     }
 
@@ -285,5 +300,15 @@ class AddToCartBottomSheetDialog(
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    fun updateOffer(offersList: ArrayList<Offer>) {
+        mSkuOfferList = offersList
+        if (!mSkuOfferList.isNullOrEmpty()) {
+            for (item in mSkuOfferList) {
+                item.selected = false
+            }
+        }
+        setOffersUI()
     }
 }

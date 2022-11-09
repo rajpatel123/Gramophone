@@ -97,6 +97,11 @@ class AvailableProductOffersAdapter(
         notifyDataSetChanged()
     }
 
+    fun updateOffer(offersList: ArrayList<Offer>) {
+        mSKUOfferList = offersList
+        notifyDataSetChanged()
+    }
+
     inner class CustomViewHolder(var binding: ItemAvailableOffersOnParticularProductBinding) :
         RecyclerView.ViewHolder(binding.root)
 }

@@ -85,17 +85,6 @@ object ApiModule {
 
     @Provides
     @Singleton
-    @Named("gramophoneTV")
-    fun provideRetrofitGramophoneTV(client: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL_YOUTUBE)
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
-            .build()
-    }
-
-    @Provides
-    @Singleton
     fun provideGramAppService(@Named("mobility") retrofit: Retrofit): GramAppService {
         return retrofit.create(GramAppService::class.java)
     }
@@ -119,12 +108,6 @@ object ApiModule {
         return retrofit.create(ArticlesApiService::class.java)
     }
 
-    @Provides
-    @Singleton
-    fun provideGramAppTVService(@Named("gramophoneTV") retrofit: Retrofit): GramophoneTVApiService {
-        return retrofit.create(GramophoneTVApiService::class.java)
-    }
-
     private fun getHeaderInterceptor(): Interceptor {
         return Interceptor { chain ->
             val request =
@@ -139,50 +122,4 @@ object ApiModule {
             chain.proceed(request)
         }
     }
-
-    private fun getCommunityHeaderInterceptor(): Interceptor {
-        return Interceptor { chain ->
-            val request =
-                chain.request().newBuilder()
-                    .header(
-                        Constants.AUTHORIZATION,
-                        "Bearer " + SharedPreferencesHelper.instance?.getString(
-                            SharedPreferencesKeys.session_token
-                        )!!
-                    )
-                    .build()
-            chain.proceed(request)
-        }
-    }
-
-    /*   @Provides
-       @Singleton
-       @Named("community")
-       fun provideCommunityOkHttpClient(logging: HttpLoggingInterceptor): OkHttpClient {
-           return OkHttpClient.Builder()
-               .addInterceptor(getCommunityHeaderInterceptor())
-               .addInterceptor(logging)
-               .connectTimeout(15, TimeUnit.SECONDS) // connect timeout
-               .readTimeout(15, TimeUnit.SECONDS)
-               .build()
-       }
-
-       @Provides
-       @Singleton
-       @Named("community")
-       fun provideCommunityRetrofit(@Named("community") client: OkHttpClient): Retrofit {
-           return Retrofit.Builder()
-               .baseUrl(BuildConfig.BASE_URL_SOCIAL)
-               .addConverterFactory(GsonConverterFactory.create())
-               .client(client)
-               .build()
-       }
-
-       @Provides
-       @Singleton
-       fun provideCommunityService(@Named("community") retrofit: Retrofit): CommunityAppService {
-           return retrofit.create(CommunityAppService::class.java)
-       }*/
-
-
 }

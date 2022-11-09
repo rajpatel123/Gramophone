@@ -86,6 +86,18 @@ class ShopByViewModel @Inject constructor(
                             })
                         }
                     }
+                    Constants.SHOP_BY_COMPANY -> {
+                        progress.value = true
+                        val response = productRepository.getCompanies()
+                        if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS
+                            && response.body()?.gpApiResponseData?.companiesList?.size!! > 0
+                        ) {
+                            progress.value = false
+                            getNavigator()?.setShopByCompanyAdapter(ShopByCompanyAdapter(response.body()?.gpApiResponseData?.companiesList) { id, name, image ->
+                                getNavigator()?.openFeaturedActivityForShopByCompany(id, name, image)
+                            })
+                        }
+                    }
                 }
             } catch (ex: Exception) {
                 progress.value = false

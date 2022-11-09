@@ -69,6 +69,10 @@ class ShareSheetPresenter(
         // To be used for generic message and/ or when actual link could not be generated
         @JvmField
         val GENERIC_URI = Uri.parse("https://app.gramophone.in/gM7N")
+
+        // To be used to generate appended Uri
+        @JvmField
+        val BASE_URI = Uri.parse("http://www.gramophone.in/")
     }
 
 
