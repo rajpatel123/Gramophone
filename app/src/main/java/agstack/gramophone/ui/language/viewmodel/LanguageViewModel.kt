@@ -176,7 +176,7 @@ class LanguageViewModel @Inject constructor(
                 }else{
                     it.selected = false
                 }
-                language=it
+
             }
             language?.let {
                 languageAdapter.selectedLanguage?.invoke(it)
