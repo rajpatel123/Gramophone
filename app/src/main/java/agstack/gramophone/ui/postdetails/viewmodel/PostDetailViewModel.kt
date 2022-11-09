@@ -17,6 +17,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -73,7 +74,7 @@ class PostDetailViewModel @Inject constructor(
 
       postDate.set(data?.createdDate)
 
-      if (data?.author?.address_short.isNullOrEmpty()){
+      if (data?.author?.address_short.isNotNullOrEmpty()){
        authorLocation.set(data?.author?.address_short)
        isAddress.set(true)
       }else{
