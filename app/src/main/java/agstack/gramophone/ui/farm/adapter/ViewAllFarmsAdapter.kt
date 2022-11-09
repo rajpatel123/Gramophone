@@ -1,7 +1,9 @@
 package agstack.gramophone.ui.farm.adapter
 
+import agstack.gramophone.R
 import agstack.gramophone.databinding.CardViewAllFarmsBinding
 import agstack.gramophone.ui.farm.model.Data
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +29,7 @@ class ViewAllFarmsAdapter(
         )
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewAllFarmViewHolder, position: Int) {
         holder.binding.item = farmList[position]
         holder.binding.isOldFarms = isOldFarms
@@ -41,6 +44,18 @@ class ViewAllFarmsAdapter(
 
         holder.binding.footerLayout.setOnClickListener {
             footerListener.invoke(farmList[position])
+        }
+
+        holder.binding.txtAddFarm.setTextColor(holder.binding.root.context.resources.getColor(R.color.orange))
+        if(isOldFarms && farmList[position].size == 1 && farmList[position][0].is_crop_cycle_completed!!){
+            if(farmList[position][0].harvested_quantity.isNullOrEmpty()){
+                holder.binding.txtAddFarm.text = holder.binding.root.context.getString(R.string.give_your_crop_details)
+            }else{
+                holder.binding.txtAddFarm.setTextColor(holder.binding.root.context.resources.getColor(R.color.black))
+                holder.binding.txtAddFarm.text = farmList[position][0].harvested_quantity + " " + farmList[position][0].harvested_quantity_unit
+            }
+        }else{
+            holder.binding.txtAddFarm.text = holder.binding.root.context.getString(R.string.add_your_farm)
         }
     }
 

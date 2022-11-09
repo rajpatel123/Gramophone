@@ -147,7 +147,7 @@
                         tools:text='बुआई की तारीख : Jul 15, 2022'
                         android:textColor="@color/oldmrpcolor"
                         android:textSize="@dimen/_12ssp"
-                        android:text='@{@string/crop_sowing_date(item.crop_sowing_date)}'
+                        app:farmDate='@{@string/crop_sowing_date(item.crop_sowing_date)}'
                         android:visibility='@{item.crop_sowing_date == null ? View.GONE : View.VISIBLE}' />
 
                     <TextView
@@ -162,7 +162,7 @@
                         tools:text='बुआई का समय : Jul 15, 2022 To Jul 25, 2022'
                         android:textColor="@color/oldmrpcolor"
                         android:textSize="@dimen/_12ssp"
-                        android:text='@{@string/crop_duration(item.duration)}'
+                        app:farmDate='@{@string/crop_duration(item.duration)}'
                         android:visibility='@{item.duration == null ? View.GONE : View.VISIBLE}' />
 
                     <TextView
@@ -177,7 +177,7 @@
                         tools:text='खेत का एरिया : 22 Acre'
                         android:textColor="@color/oldmrpcolor"
                         android:textSize="@dimen/_12ssp"
-                        android:text='@{@string/farm_area(item.farm_area)}'
+                        app:farmDate='@{@string/farm_area(item.farm_area)}'
                         android:visibility='@{item.farm_area == null ? View.GONE : View.VISIBLE}' />
 
                     <TextView
@@ -192,7 +192,7 @@
                         tools:text='वर्तमान चरण: 22 Days'
                         android:textColor="@color/oldmrpcolor"
                         android:textSize="@dimen/_12ssp"
-                        android:text='@{@string/stage_name(item.days, item.stage_name)}'
+                        app:farmDate='@{@string/stage_name(item.days, item.stage_name)}'
                         android:visibility='@{(item.stage_name == null || isOldFarms) ? View.GONE : View.VISIBLE}' />
 
                     <TextView
@@ -208,7 +208,7 @@
                         android:textColor="@color/oldmrpcolor"
                         android:textSize="@dimen/_10ssp"
                         android:visibility='@{isOldFarms ? View.VISIBLE : View.GONE}'
-                        android:text='@{@string/approx_end_date(item.crop_anticipated_completed_date)}'/>
+                        app:farmDate='@{@string/approx_end_date(item.crop_anticipated_completed_date)}'/>
 
 
                 </LinearLayout>

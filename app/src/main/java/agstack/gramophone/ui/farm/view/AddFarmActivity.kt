@@ -84,7 +84,7 @@ class AddFarmActivity :
     }
 
     override fun setFarmUnitsAdapter(units: List<GpApiResponseData>) {
-        val adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1, units)
+        val adapter = ArrayAdapter(this, R.layout.simple_list_item, units)
         viewDataBinding.edtAreaUnit.adapter = adapter
         this.units = units
     }
