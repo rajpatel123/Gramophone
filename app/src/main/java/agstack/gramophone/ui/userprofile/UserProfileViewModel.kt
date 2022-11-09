@@ -14,6 +14,7 @@ import agstack.gramophone.utils.*
 import agstack.gramophone.utils.Constants.CAMERA_PERMISSION
 import agstack.gramophone.utils.Constants.PAGE
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -37,12 +38,18 @@ class UserProfileViewModel @Inject constructor(
     var isFarmerSelected = ObservableField<Boolean>(false)
     var isTraderSelected = ObservableField<Boolean>(false)
     var profileImage = MutableLiveData<String>()
+    var imageExist = ObservableField<Boolean>(false)
+    var firmName = ObservableField<String>()
     private var userProfileJob: Job? = null
     private var updateProfileJob: Job? = null
     var progressLoader = ObservableField<Boolean>(false)
     var userProfileData = ObservableField<GpApiResponseProfileData>()
     var userHandle=ObservableField<String>()
 
+
+    fun finish(){
+        getNavigator()?.finishActivity()
+    }
     fun profileImageSelect() {
 
         var hasCameraPermission = getNavigator()?.requestPermission(CAMERA_PERMISSION)
@@ -53,9 +60,18 @@ class UserProfileViewModel @Inject constructor(
     }
 
     fun setProfilePic() {
-        profileImage.value = SharedPreferencesHelper.instance?.getString(
-            SharedPreferencesKeys.USER_IMAGE
-        )
+        if (TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.USER_IMAGE
+            ))){
+            imageExist.set(false)
+        }else{
+            profileImage.value = SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.USER_IMAGE
+            )
+            imageExist.set(true)
+
+        }
+
     }
 
     fun onEditAddressClick() {
@@ -92,8 +108,20 @@ class UserProfileViewModel @Inject constructor(
                 val userProfileResponseData: GpApiResponseProfileData? =
                     userProfileResponse.body()?.gp_api_response_data
                 userProfileData.set(userProfileResponseData)
-                isFarmerSelected.set(userProfileResponseData?.is_farmer)
-                isTraderSelected.set(userProfileResponseData?.is_trader)
+
+                if (userProfileResponseData?.is_farmer == false && userProfileResponseData?.is_trader==false){
+                    onFarmerLayoutSelected()
+                }else{
+                    isFarmerSelected.set(userProfileResponseData?.is_farmer)
+                    isTraderSelected.set(userProfileResponseData?.is_trader)
+                }
+
+                if (!TextUtils.isEmpty(userProfileResponseData?.firm_name)){
+                    firmName.set(userProfileResponseData?.firm_name)
+                }else{
+                    firmName.set("--")
+                }
+
 
                 getProfile(userProfileResponseData?.customer_id)
                 //getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)

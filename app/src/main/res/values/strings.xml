@@ -318,7 +318,7 @@
     <string name="selectrolecontent">This will help us understand you so that we can serve you better</string>
     <string name="farmer">Farmer</string>
     <string name="trader">Trader</string>
-    <string name="firm">Firm</string>
+    <string name="firm">Firm:</string>
     <string name="add">Add</string>
     <string name="mandi">Mandi</string>
     <string name="editprofile">Edit Profile</string>
@@ -327,6 +327,7 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="verify_otp">Verify OTP</string>
+    <string name="verification_otp">OTP verification</string>
     <string name="update_profile">Update Profile</string>
     <string name="add_firm_name">Add Firm Name</string>
     <string name="save_continue"><![CDATA[Save & Continue]]></string>
