@@ -33,12 +33,34 @@ import kotlin.math.roundToInt
 
 @BindingAdapter("product_image")
 fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
+    if (imageUrl.isNullOrEmpty()) {
+        view.setImageResource(R.drawable.ic_gramophone_leaf)
+    } else {
         Glide.with(view.context)
             .load(imageUrl)
             .transition(DrawableTransitionOptions.withCrossFade())
             .placeholder(R.drawable.ic_gramophone_leaf)
             .error(R.drawable.ic_gramophone_leaf)
             .into(view)
+    }
+}
+
+@BindingAdapter(value = ["article_image", "video_thumbnail"], requireAll = true)
+fun bindArticleImageFromUrl(view: ImageView, articleImage: String?, videoThumnailImage: String?) {
+    when {
+        videoThumnailImage.isNotNullOrEmpty() -> {
+            Glide.with(view.context)
+                .load(videoThumnailImage)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(view)
+        }
+        articleImage.isNotNullOrEmpty() -> {
+            Glide.with(view.context)
+                .load(articleImage)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(view)
+        }
+    }
 }
 
 @BindingAdapter("product_image_farm")

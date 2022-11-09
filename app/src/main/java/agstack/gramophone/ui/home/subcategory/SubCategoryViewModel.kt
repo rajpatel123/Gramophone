@@ -367,7 +367,7 @@ class SubCategoryViewModel @Inject constructor(
                             //set skuList
                             mSKUList =
                                 productData.get()?.productSkuList as ArrayList<ProductSkuListItem?>
-                            loadOffersData(productId)
+                            loadOffersData(productId, 1, false)
                         }
                     } else {
                         getNavigator()?.showToast(productDetailResponse.body()?.gpApiMessage)
@@ -379,14 +379,14 @@ class SubCategoryViewModel @Inject constructor(
         }
     }
 
-    private fun loadOffersData(productId: Int) {
+    fun loadOffersData(productId: Int, quantity: Int, isRefreshOffer: Boolean) {
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
                     val productData = ProductData()
                     productData.product_id = productId
-                    productData.quantity = 1
+                    productData.quantity = quantity
 
                     var offerList = ArrayList<Offer>()
 
@@ -398,10 +398,13 @@ class SubCategoryViewModel @Inject constructor(
                         offerList =
                             offersResponse.body()?.gp_api_response_data?.offers as ArrayList<Offer>
                     }
+                    if (isRefreshOffer) {
 
-                    getNavigator()?.openAddToCartDialog(mSKUList,
-                        offerList,
-                        productData)
+                    } else {
+                        getNavigator()?.openAddToCartDialog(mSKUList,
+                            offerList,
+                            productData)
+                    }
                 }
             } catch (e: Exception) {
                 progress.value = false

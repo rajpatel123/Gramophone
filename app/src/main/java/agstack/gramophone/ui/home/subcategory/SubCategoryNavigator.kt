@@ -37,6 +37,10 @@ interface SubCategoryNavigator : BaseNavigator {
         isOfferApplicable: Boolean, promotionId: String? = null, message: String,
     )
 
+    fun updateOfferOnAddToCartDialog(
+        mSkuOfferList: ArrayList<Offer>
+    )
+
     fun disableSortAndFilter()
 
     fun enableSortAndFilter()
