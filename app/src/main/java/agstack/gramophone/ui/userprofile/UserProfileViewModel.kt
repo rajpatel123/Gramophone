@@ -19,6 +19,8 @@ import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.append
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -26,6 +28,7 @@ import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.File
 import java.io.IOException
+import java.lang.StringBuilder
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,6 +38,7 @@ class UserProfileViewModel @Inject constructor(
 ) : BaseViewModel<UserProfileNavigator>() {
     var followers = ObservableField<String>()
     var followee = ObservableField<String>()
+    var address = ObservableField<String>()
     var isFarmerSelected = ObservableField<Boolean>(false)
     var isTraderSelected = ObservableField<Boolean>(false)
     var profileImage = MutableLiveData<String>()
@@ -64,6 +68,7 @@ class UserProfileViewModel @Inject constructor(
                 SharedPreferencesKeys.USER_IMAGE
             ))){
             imageExist.set(false)
+            profileImage.value=""
         }else{
             profileImage.value = SharedPreferencesHelper.instance?.getString(
                 SharedPreferencesKeys.USER_IMAGE
@@ -122,6 +127,32 @@ class UserProfileViewModel @Inject constructor(
                     firmName.set("--")
                 }
 
+                var location = StringBuilder()
+
+                if (userProfileResponseData?.address_data?.address.isNotNullOrEmpty()){
+                    location.append(userProfileResponseData?.address_data?.address!!).append(", ")
+                }
+                if (userProfileResponseData?.address_data?.village.isNotNullOrEmpty()){
+                    location.append(userProfileResponseData?.address_data?.village!!).append(", ")
+                }
+
+                if (userProfileResponseData?.address_data?.tehsil.isNotNullOrEmpty()){
+                    location.append(userProfileResponseData?.address_data?.tehsil!!).append(", ")
+                }
+
+                if (userProfileResponseData?.address_data?.district.isNotNullOrEmpty()){
+                    location.append(userProfileResponseData?.address_data?.district!!).append(", ")
+                }
+
+                if (userProfileResponseData?.address_data?.state.isNotNullOrEmpty()){
+                    location.append(userProfileResponseData?.address_data?.state!!)
+                }
+
+                if (userProfileResponseData?.address_data?.pincode.isNotNullOrEmpty()){
+                    location.append("-").append(userProfileResponseData?.address_data?.pincode!!)
+                }
+
+                address.set(location.toString())
 
                 getProfile(userProfileResponseData?.customer_id)
                 //getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)

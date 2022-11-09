@@ -53,38 +53,38 @@
 
                 />
 
-            <com.amnix.xtension.widgets.CircularImageView
-                android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_70sdp"
+            <LinearLayout
+                android:id="@+id/llProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_marginStart="@dimen/_32sdp"
                 android:layout_marginTop="@dimen/_12sdp"
-                android:scaleType="centerInside"
-                android:shadowColor="@color/grey"
-                android:shadowRadius="10"
-                android:visibility="@{viewModel.imageExist? View.GONE:View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/view"
-                app:layout_constraintVertical_chainStyle="packed"
-                app:product_image="@{viewModel.profileImage}"
-                app:srcCompat="@drawable/ic_profile_default" />
+                app:layout_constraintVertical_chainStyle="packed">
+                <com.amnix.xtension.widgets.CircularImageView
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:scaleType="centerInside"
+                    android:shadowColor="@color/grey"
+                    android:shadowRadius="10"
+                    android:visibility="@{viewModel.imageExist? View.GONE:View.VISIBLE}"
 
-            <com.amnix.xtension.widgets.CircularImageView
-                android:id="@+id/cv_profile_pic"
-                android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_70sdp"
-                android:layout_marginStart="@dimen/_32sdp"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:scaleType="centerInside"
-                android:shadowColor="@color/grey"
-                android:shadowRadius="10"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/view"
-                app:layout_constraintVertical_chainStyle="packed"
-                android:visibility="@{viewModel.imageExist? View.VISIBLE:View.GONE}"
-                app:product_image="@{viewModel.profileImage}"
-                app:srcCompat="@drawable/ic_profile_default" />
+                    app:srcCompat="@drawable/ic_profile_default" />
 
-
+                <com.amnix.xtension.widgets.CircularImageView
+                    android:id="@+id/cv_profile_pic"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:scaleType="centerInside"
+                    android:shadowColor="@color/grey"
+                    android:shadowRadius="10"
+                    tools:visibility="gone"
+                    android:visibility="@{viewModel.imageExist? View.VISIBLE:View.GONE}"
+                    app:product_image="@{viewModel.profileImage}"
+                    app:srcCompat="@drawable/ic_profile_default" />
+            </LinearLayout>
             <ImageButton
                 android:id="@+id/im_camera"
                 android:layout_width="@dimen/_25sdp"
@@ -94,9 +94,11 @@
                 android:onClick="@{()-> viewModel.profileImageSelect()}"
                 android:shadowColor="@color/black"
                 android:shadowRadius="10"
-                app:layout_constraintStart_toStartOf="@+id/cv_profile_pic"
-                app:layout_constraintTop_toTopOf="@+id/cv_profile_pic"
+                app:layout_constraintStart_toStartOf="@+id/llProfile"
+                app:layout_constraintTop_toTopOf="@+id/llProfile"
                 app:srcCompat="@drawable/ic_camera_circular" />
+
+
 
 
             <TextView
@@ -125,7 +127,7 @@
                 android:layout_marginRight="@dimen/_32sdp"
                 android:orientation="vertical"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cv_profile_pic">
+                app:layout_constraintTop_toBottomOf="@id/llProfile">
 
                 <TextView
                     android:id="@+id/tv_userName"
@@ -171,9 +173,8 @@
                         android:layout_toRightOf="@+id/iv_location"
                         android:layout_weight="2"
                         android:fontFamily="@font/manrope_regular"
-                        android:hint="Sawer, Madhya pradesh"
                         android:maxLines="3"
-                        android:text="@{ viewModel.userProfileData.address_data.address +`, ` +viewModel.userProfileData.address_data.village+`, ` +viewModel.userProfileData.address_data.tehsil+`, ` +viewModel.userProfileData.address_data.district+`, ` +viewModel.userProfileData.address_data.state+` - ` +viewModel.userProfileData.address_data.pincode}"
+                        android:text="@{viewModel.address}"
                         android:textColor="@color/gray"
                         tools:text="Sawer, Madhya pradesh" />
 
