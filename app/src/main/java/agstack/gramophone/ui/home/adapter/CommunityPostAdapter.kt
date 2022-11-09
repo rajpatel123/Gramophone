@@ -25,6 +25,7 @@ import android.content.Intent
 import android.os.Build
 import android.text.Html
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View.*
 import android.view.ViewGroup
@@ -231,9 +232,11 @@ class CommunityPostAdapter(
                 holder.itemPostBinding.rlPosts.visibility = GONE
                 configurePagerHolder(textHolder, position, bannerResponse)
                 if (!postByCropsVisible){
+                    postByCropsVisible=true
                     holder.itemPostBinding.cropLL.visibility = VISIBLE
                     try {
 
+                        Log.d("postByCropsVisible","".plus(" ").plus(postByCropsVisible))
                         val cropResponse = SharedPreferencesHelper.instance?.getParcelable(SharedPreferencesKeys.CROPS, CropResponse::class.java)
                         if (cropResponse!=null) {
                             val linearLayoutManager =
@@ -243,16 +246,11 @@ class CommunityPostAdapter(
                                 PostByCropsAdapter(cropResponse?.gpApiResponseData!!.cropsList) {
                                     onCropSelection?.invoke(it)
                                 }
-
-                            holder.itemPostBinding.cropLL.visibility = VISIBLE
-                        }else{
-                            holder.itemPostBinding.cropLL.visibility = GONE
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
 
                     }
-                    postByCropsVisible=true
                 }else{
                     holder.itemPostBinding.cropLL.visibility = GONE
                 }
@@ -265,6 +263,8 @@ class CommunityPostAdapter(
         configureItem(textHolder, position)
         holder.itemPostBinding.rlBanner.visibility = GONE
         holder.itemPostBinding.rlPosts.visibility = VISIBLE
+        holder.itemPostBinding.cropLL.visibility = GONE
+
     }
 
     private fun configureItem(holder: TextItemHolder, position: Int) {
