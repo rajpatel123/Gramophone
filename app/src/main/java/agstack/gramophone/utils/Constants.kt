@@ -136,6 +136,7 @@ object Constants {
     const val GP_TOKEN: String = "gp_token"
     const val PAGE_URL: String = "url"
     const val PAGE_TITLE: String = "title"
+    const val ARTICLES = "/articles"
     const val FEATURED_ARTICLES = "featured_articles"
     const val TRENDING_ARTICLES = "trending_articles"
     const val SUGGESTED_ARTICLES = "suggested_articles"
