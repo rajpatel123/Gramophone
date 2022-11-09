@@ -65,9 +65,9 @@
                     android:layout_marginTop="@dimen/_4sdp"
                     android:layout_toRightOf="@+id/imageWrapper"
                     android:fontFamily="@font/manrope_bold"
+
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_11ssp"
-                    android:text='@{item.description ?? ""}'
                     tools:text="Which is the system of farming in which the framer is related to the state?" />
 
                 <TextView
