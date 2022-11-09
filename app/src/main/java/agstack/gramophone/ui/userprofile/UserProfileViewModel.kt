@@ -28,6 +28,7 @@ import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.File
 import java.io.IOException
+import java.lang.StringBuilder
 import javax.inject.Inject
 
 @HiltViewModel
@@ -126,7 +127,7 @@ class UserProfileViewModel @Inject constructor(
                     firmName.set("--")
                 }
 
-                var location = ""
+                var location = StringBuilder()
 
                 if (userProfileResponseData?.address_data?.address.isNotNullOrEmpty()){
                     location.append(userProfileResponseData?.address_data?.address!!).append(", ")
@@ -144,14 +145,14 @@ class UserProfileViewModel @Inject constructor(
                 }
 
                 if (userProfileResponseData?.address_data?.state.isNotNullOrEmpty()){
-                    location.append(userProfileResponseData?.address_data?.state!!).append("-")
+                    location.append(userProfileResponseData?.address_data?.state!!)
                 }
 
-                if (userProfileResponseData?.address_data?.state.isNotNullOrEmpty()){
-                    location.append(userProfileResponseData?.address_data?.pincode!!)
+                if (userProfileResponseData?.address_data?.pincode.isNotNullOrEmpty()){
+                    location.append("-").append(userProfileResponseData?.address_data?.pincode!!)
                 }
 
-                address.set(location)
+                address.set(location.toString())
 
                 getProfile(userProfileResponseData?.customer_id)
                 //getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)

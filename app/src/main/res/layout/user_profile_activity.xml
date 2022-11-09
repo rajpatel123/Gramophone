@@ -173,7 +173,6 @@
                         android:layout_toRightOf="@+id/iv_location"
                         android:layout_weight="2"
                         android:fontFamily="@font/manrope_regular"
-                        android:hint="Sawer, Madhya pradesh"
                         android:maxLines="3"
                         android:text="@{viewModel.address}"
                         android:textColor="@color/gray"
