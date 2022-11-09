@@ -236,7 +236,6 @@ class CommunityPostAdapter(
                     holder.itemPostBinding.cropLL.visibility = VISIBLE
                     try {
 
-                        Log.d("postByCropsVisible","".plus(" ").plus(postByCropsVisible))
                         val cropResponse = SharedPreferencesHelper.instance?.getParcelable(SharedPreferencesKeys.CROPS, CropResponse::class.java)
                         if (cropResponse!=null) {
                             val linearLayoutManager =
