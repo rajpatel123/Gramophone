@@ -267,6 +267,8 @@ class FeaturedProductActivity :
             subCategoryViewModel.checkOfferApplicability(it)
         }, {
             subCategoryViewModel.onAddToCartClicked(it)
+        }, { productId, quantity ->
+            subCategoryViewModel.loadOffersData(productId, quantity, true)
         })
         bottomSheet?.mSKUList = mSKUList
         bottomSheet?.productData = productData
@@ -284,6 +286,11 @@ class FeaturedProductActivity :
     ) {
         if (bottomSheet.isNotNull())
             bottomSheet?.updateDialog(isOfferApplicable, promotionId!!, message)
+    }
+
+    override fun updateOfferOnAddToCartDialog(mSkuOfferList: ArrayList<Offer>) {
+        if (bottomSheet.isNotNull())
+            bottomSheet?.updateOffer(mSkuOfferList)
     }
 
     override fun disableSortAndFilter() {

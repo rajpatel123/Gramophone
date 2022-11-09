@@ -37,7 +37,7 @@ data class Data(
     val order_id: Int,
     val order_status_name: String,
     val payment_method: String,
-    val price: Int,
+    val price: Float,
     val product_image: String,
     val quantity: Int,
 )

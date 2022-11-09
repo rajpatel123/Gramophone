@@ -6,9 +6,11 @@
     <data>
 
         <import type="android.view.View" />
+
         <variable
             name="constants"
             type="agstack.gramophone.utils.Constants" />
+
         <variable
             name="model"
             type="agstack.gramophone.ui.home.view.fragments.market.model.FormattedArticlesData" />
@@ -35,18 +37,26 @@
                     android:layout_gravity="center_horizontal"
                     android:background="@color/white"
                     android:scaleType="fitXY"
-                    app:product_image='@{model.image_url ?? ""}'
+                    app:article_image="@{model.image_url}"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerTopOnly20"
                     app:strokeColor="@color/gray_stroke"
-                    app:strokeWidth="1dp" />
+                    app:strokeWidth="1dp"
+                    app:video_thumbnail="@{model.videoThumbnailUrl}" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_18sdp"
                     android:contentDescription="@string/image"
-                    android:visibility="@{model.articleTye.equals(constants.FEATURED_ARTICLES)  ? View.VISIBLE : View.GONE}"
-                    android:src="@drawable/ic_article_featured" />
+                    android:src="@drawable/ic_article_featured"
+                    android:visibility="@{model.articleTye.equals(constants.FEATURED_ARTICLES)  ? View.VISIBLE : View.GONE}" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_transparent_video_play"
+                    android:visibility="@{model.videoThumbnailUrl != null  ? View.VISIBLE : View.GONE}" />
 
             </RelativeLayout>
 
@@ -72,10 +82,10 @@
                     android:paddingTop="@dimen/_2sdp"
                     android:paddingEnd="@dimen/_4sdp"
                     android:paddingBottom="@dimen/_2sdp"
-                    app:htmlText='@{model.tag ?? ""}'
                     android:textColor="@color/article_tag_text"
                     android:textSize="@dimen/_10ssp"
                     android:translationY="-0.49sp"
+                    app:htmlText='@{model.tag ?? ""}'
                     tools:text="@string/farming" />
 
                 <TextView
@@ -128,10 +138,10 @@
                         android:fontFamily="@font/manrope_bold"
                         android:gravity="top"
                         android:lineSpacingExtra="1sp"
-                        app:readTime='@{model.min_to_read ?? ""}'
                         android:textSize="@dimen/_10ssp"
                         android:translationY="-0.49sp"
                         app:drawableStartCompat="@drawable/ic_article_read_time"
+                        app:readTime='@{model.min_to_read ?? ""}'
                         tools:text="5 Min Read" />
 
                 </LinearLayout>

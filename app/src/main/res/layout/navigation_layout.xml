@@ -235,11 +235,11 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{ ()-> navvm.openCropsNFarms()}"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingTop="@dimen/_15sdp"
                     android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_15sdp"
-                    android:onClick="@{ ()-> navvm.openCropsNFarms()}">
+                    android:paddingBottom="@dimen/_15sdp">
 
                     <ImageView
                         android:id="@+id/iv_my_farms"
@@ -251,11 +251,11 @@
                         android:src="@drawable/ic_my_crop_farms" />
 
                     <LinearLayout
-                        android:layout_toStartOf="@+id/tvNew"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_toStartOf="@+id/tvNew"
                         android:layout_toEndOf="@+id/iv_my_farms"
                         android:gravity="center_vertical"
                         android:orientation="vertical">
@@ -403,6 +403,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{()->navvm.openGramophoneTVClicked()}"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingTop="@dimen/_15sdp"
                     android:paddingEnd="@dimen/_10sdp"
@@ -642,7 +643,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/unit_converter_sub_text"
                             android:textColor="@color/gray_strike_through"
-                            android:textSize="@dimen/_8sdp"/>
+                            android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
 

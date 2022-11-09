@@ -52,6 +52,7 @@ data class CartItem(
     val product_image: String,
     val product_name: String,
     val offer_applied: OfferApplied,
+    val free_giveaway: FreeGiveAway,
     val product_sku: String,
     var quantity: Int,
     val selling_price: String,
@@ -68,6 +69,13 @@ data class OfferApplied(
     val t_c: String,
     val image: String,
     var promotion_id:String?=null
+)
+
+data class FreeGiveAway(
+    var name: String,
+    val price: Float,
+    val base_price: Float,
+    val image: String
 )
 
 data class ShippingDetails(
