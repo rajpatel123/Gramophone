@@ -22,7 +22,7 @@ class FavouriteProductViewModel @Inject constructor(
 ):BaseViewModel<FavouriteProductNavigator>() {
 
     val progress = ObservableField<Boolean>(false)
-    val isDataAvailable = ObservableField<Boolean>(false)
+    val isDataAvailable = ObservableField<Boolean>(true)
 
 
     fun getFavouriteProduct(){

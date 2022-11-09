@@ -27,18 +27,18 @@ class VerifyOtpDialogViewModel @Inject constructor(
     private var verifyOTPJob: Job? = null
     var resendOTPType = ObservableField<String>()
     var remainigTimeForOTP = ObservableField<String>()
+    var mobileNo = ObservableField<String>()
     var timeOver = ObservableField<Boolean>(false)
     var isVerifyEnable = ObservableField<Boolean>(true)
     var progressLoader = ObservableField<Boolean>(false)
     var type: String = Constants.SMS
     var remaningDuration: Long = 0
     var otp_reference_id: Int? = null
-    var mobileNo :String?=null
 
 
     fun showInitialValues(mobileNoBundle: String,OTPReferenceIDBundle :Int){
         otp_reference_id=OTPReferenceIDBundle
-        mobileNo = mobileNoBundle
+        mobileNo.set(mobileNoBundle)
         val text: String =
             java.lang.String.format(getNavigator()?.getMessage(R.string.resend_otp)!!, type)
         resendOTPType.set(text)

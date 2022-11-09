@@ -22,6 +22,7 @@ import agstack.gramophone.ui.search.model.GlobalSearchRequest
 import agstack.gramophone.ui.search.model.GlobalSearchResponse
 import agstack.gramophone.ui.search.model.SuggestionsRequest
 import agstack.gramophone.ui.search.model.SuggestionsResponse
+import agstack.gramophone.ui.tv.model.VideoBookMarkedRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -305,6 +306,14 @@ class ProductRepositoryImpl @Inject constructor(
             Dispatchers.IO
         ) {
             val response = gramoAppService.addHarvestQues(body)
+            response
+        }
+
+    override suspend fun bookmarkVideo(body: VideoBookMarkedRequest): Response<SuccessStatusResponse> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val response = gramoAppService.bookmarkVideo(body)
             response
         }
 }

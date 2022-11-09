@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/activefarmTitleContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/border_set"
+            android:orientation="horizontal">
+
+
+            <RelativeLayout
+                android:layout_width="160dp"
+                android:layout_height="80dp">
+
+                <com.google.android.youtube.player.YouTubeThumbnailView
+                    android:id="@+id/youtube_thumbnail"
+                    android:layout_width="160dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="100dp"
+                    android:background="@drawable/playlist_translucent_rectangle_dark"
+                    android:gravity="center|center_horizontal">
+
+                    <TextView
+                        android:id="@+id/videoCountTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="33dp"
+                        android:layout_gravity="center"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:text="Videos"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="3dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/action_bar_list_icon" />
+
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/playListNameView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center_vertical"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="5sp"
+                    android:text="Gramophone - Our Journey in 2018"
+                    android:textAllCaps="true"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+                <!--<TextView-->
+                <!--android:id="@+id/videoCountTextView"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textSize="14sp"-->
+                <!--android:fontFamily="sans-serif"-->
+                <!--android:textStyle="normal"-->
+                <!--android:textColor="@color/light_gray_subtitle"-->
+                <!--android:lineSpacingExtra="6sp"-->
+                <!--android:text="videos"-->
+                <!--/>-->
+            </LinearLayout>
+
+            <!--<ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical|end"
+                android:clickable="true"
+                android:background="@color/colorTransparent"
+                android:onClick="activeFarmClickAction"
+                android:id="@+id/showActiveFarmButton"
+                android:src="@drawable/ic_menu_more"
+                />-->
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

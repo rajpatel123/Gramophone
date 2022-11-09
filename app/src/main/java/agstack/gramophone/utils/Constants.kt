@@ -9,13 +9,13 @@ object Constants {
 
     val POLL: String = "poll"
     val QUIZ: String = "quiz"
-    val PAGE : String="follower"
-    val PAGE_SOURCE : String="gram"
-    val GET_SELECTED_TAGS: Int= 32
-    val IsUrlForPlayStore: String="play.google.com"
-    val sharedContent: String="sharedContent"
-    val DISCOUNT ="discount"
-    val FREEBIE ="freebie"
+    val PAGE: String = "follower"
+    val PAGE_SOURCE: String = "gram"
+    val GET_SELECTED_TAGS: Int = 32
+    val IsUrlForPlayStore: String = "play.google.com"
+    val sharedContent: String = "sharedContent"
+    val DISCOUNT = "discount"
+    val FREEBIE = "freebie"
     const val SearchUrl = "app://www.gramophone.in/"
     const val SearchUrlPARAMETER = "search/?category=search&text="
     const val ProfileUrlPARAMETER = "profile/?category=profile&uuid="
@@ -32,17 +32,17 @@ object Constants {
     val AUTHER_UUID: String = "auth_uuid"
 
     val ADDRESSOBJECT: String = "address"
-    val REFERRAL_CODE: String="referralCOde"
-    val UNAUTHORIZED: Int=401
-    val GP_API_MESSAGE: String="gp_api_message"
-    val MESSAGE: String="message"
-    val PIN_POST: String="pinpost"
-    val EDIT_POST: String="edit_post"
-    val COPY_POST: String="copy_post"
-    val DELETE_POST: String="delete_post"
-    val BLOCK_USER: String="block"
-    val REPORT_POST: String="report"
-    val DELAY: Long=3_000
+    val REFERRAL_CODE: String = "referralCOde"
+    val UNAUTHORIZED: Int = 401
+    val GP_API_MESSAGE: String = "gp_api_message"
+    val MESSAGE: String = "message"
+    val PIN_POST: String = "pinpost"
+    val EDIT_POST: String = "edit_post"
+    val COPY_POST: String = "copy_post"
+    val DELETE_POST: String = "delete_post"
+    val BLOCK_USER: String = "block"
+    val REPORT_POST: String = "report"
+    val DELAY: Long = 3_000
     val INDEX: String = "pageIndex"
     val FROM_EDIT_PROFILE = "FROM_EDIT_PROFILE"
     val REMAINING_TIME: String = "remaining_time"
@@ -91,7 +91,7 @@ object Constants {
     val HOME_COMMUNITY_VIEW_TYPE = 13
     val HOME_WEATHER_VIEW_TYPE = 14
     val GramCashResponse = "GramCashResponse"
-    val ReferralPointBalanceData ="ReferralPointBalanceData"
+    val ReferralPointBalanceData = "ReferralPointBalanceData"
     val GramCashFAQList = "GramCashFAQList"
     val GramCashReferralRulesList = "GramCashReferralRulesList"
 
@@ -108,7 +108,6 @@ object Constants {
     val IV_THREE = 10133
 
 
-
     //sortBy options
     val TOP = "top"
     val ORDER_TYPE = "order_type"
@@ -118,7 +117,7 @@ object Constants {
     val RECENT_REVIEWS = "Recent Reviews"
     val REFERRAL = "referral"
     val EXPIRE = "expire"
-    val GC_Expiring_soon: String?="gramcash_expiring_soon"
+    val GC_Expiring_soon: String? = "gramcash_expiring_soon"
     val SUB_CATEGORY = "Subcategory"
     val BRAND = "Brand"
     val CROP = "Crop"
@@ -137,12 +136,13 @@ object Constants {
     const val GP_TOKEN: String = "gp_token"
     const val PAGE_URL: String = "url"
     const val PAGE_TITLE: String = "title"
+    const val ARTICLES = "/articles"
     const val FEATURED_ARTICLES = "featured_articles"
     const val TRENDING_ARTICLES = "trending_articles"
     const val SUGGESTED_ARTICLES = "suggested_articles"
     const val FAVOURITE_ARTICLES = "/favourite-articles"
 
-val SHAREIMAGEURIStRING = "imageuriString"
+    val SHAREIMAGEURIStRING = "imageuriString"
 
     val NORMAL: Int = 0
     val ALL: Int = 1
@@ -227,8 +227,19 @@ val SHAREIMAGEURIStRING = "imageuriString"
     const val CROP_ID = "crop_id"
     const val BOTTOM_SHEET = "bottom_sheet"
     const val LOCATION_ACCESS_DIALOG = "location_access_dialog"
-
+    const val DEVELOPER_KEY =
+        "525118102961-uv60hb4hl2kdrnofh39crb9fq47dqjmo.apps.googleusercontent.com"
     const val postShareRequestKey = 7001
+    const val ITEM = 0
+    const val LOADING = 1
+
+    /*Share keys*/
+    const val CategoryKey = "category"
+    const val VideoId = "videoId"
+    const val VideoName = "videoName"
+    const val PlayListId = "playListId"
+    const val PlayListName = "playListName"
+    const val GramophoneVideo = "gramophoneVideo"
 
     /**
      * For Broadcast

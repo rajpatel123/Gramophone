@@ -54,17 +54,17 @@ data class PricingDetails(
     val delivery_charge: Int,
     val gram_cash: Int,
     val product_discount: Int,
-    val promotional_discount: Int,
-    val sub_total_price: Int,
-    val total_price: Int,
+    val promotional_discount: Float,
+    val sub_total_price: Float,
+    val total_price: Float,
 )
 
 data class Product(
-    val discounted_price: Int,
+    val discounted_price: Float,
     val free_products: List<FreeProduct>,
     val offer_applied: OfferApplied,
     val is_offer_applied: String,
-    val price: Int,
+    val price: Float,
     val product_id: Int,
     val product_image: String,
     val product_name: String,
@@ -78,8 +78,8 @@ data class VRInfo(
 )
 
 data class FreeProduct(
-    val mrp_price: Int,
-    val price: Int,
+    val mrp_price: Float,
+    val price: Float,
     val product_image: String,
     val product_name: String,
 )

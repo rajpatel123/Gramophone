@@ -91,7 +91,7 @@
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
-            android:text="@{@string/rupee_symbol_with_space.concat(String.valueOf(model.discounted_price))}"
+            app:reformatFloatPriceToInt="@{model.discounted_price}"
             android:textColor="@color/blakish"
             android:textSize="16sp"
             tools:text="₹ 900" />
@@ -225,7 +225,7 @@
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="1sp"
                 tools:text="@string/rupee_0"
-                android:text="@{@string/rupee_symbol_with_space.concat(String.valueOf(model.free_products[0].price)) }"
+                app:reformatFloatPriceToInt="@{model.free_products[0].price}"
                 android:textColor="@color/blakish"
                 android:textSize="14sp" />
 
@@ -241,7 +241,7 @@
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="1sp"
                 tools:text="@string/dummy_price"
-                android:text="@{@string/rupee_symbol_with_space.concat(String.valueOf(model.free_products[0].mrp_price)) }"
+                app:reformatFloatPriceToInt="@{model.free_products[0].mrp_price}"
                 android:textColor="@color/gray_strike_through"
                 android:textSize="14sp" />
 

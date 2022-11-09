@@ -105,7 +105,7 @@
                 android:fontFamily="@font/manrope_medium"
                 android:text="@{model.author.address!=null?model.author.address:@string/add_address}"
                 android:textColor="@{model.author.address!=null?@color/gray:@color/red}"
-                android:textSize="@dimen/_8ssp"
+                android:textSize="@dimen/_10ssp"
                 android:visibility="visible"
                 tools:text="Utter pradesh" />
         </LinearLayout>
@@ -121,7 +121,7 @@
             android:fontFamily="@font/manrope_medium"
             android:text="@{model.createdDate}"
             android:textColor="@color/gray"
-            android:textSize="@dimen/_8ssp"
+            android:textSize="@dimen/_10ssp"
             tools:text="Datefhjd" />
 
        <LinearLayout

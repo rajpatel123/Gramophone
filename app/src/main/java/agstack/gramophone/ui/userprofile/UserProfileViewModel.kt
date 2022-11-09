@@ -14,10 +14,13 @@ import agstack.gramophone.utils.*
 import agstack.gramophone.utils.Constants.CAMERA_PERMISSION
 import agstack.gramophone.utils.Constants.PAGE
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.append
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -25,6 +28,7 @@ import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.File
 import java.io.IOException
+import java.lang.StringBuilder
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,15 +38,22 @@ class UserProfileViewModel @Inject constructor(
 ) : BaseViewModel<UserProfileNavigator>() {
     var followers = ObservableField<String>()
     var followee = ObservableField<String>()
+    var address = ObservableField<String>()
     var isFarmerSelected = ObservableField<Boolean>(false)
     var isTraderSelected = ObservableField<Boolean>(false)
     var profileImage = MutableLiveData<String>()
+    var imageExist = ObservableField<Boolean>(false)
+    var firmName = ObservableField<String>()
     private var userProfileJob: Job? = null
     private var updateProfileJob: Job? = null
     var progressLoader = ObservableField<Boolean>(false)
     var userProfileData = ObservableField<GpApiResponseProfileData>()
     var userHandle=ObservableField<String>()
 
+
+    fun finish(){
+        getNavigator()?.finishActivity()
+    }
     fun profileImageSelect() {
 
         var hasCameraPermission = getNavigator()?.requestPermission(CAMERA_PERMISSION)
@@ -53,9 +64,19 @@ class UserProfileViewModel @Inject constructor(
     }
 
     fun setProfilePic() {
-        profileImage.value = SharedPreferencesHelper.instance?.getString(
-            SharedPreferencesKeys.USER_IMAGE
-        )
+        if (TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.USER_IMAGE
+            ))){
+            imageExist.set(false)
+            profileImage.value=""
+        }else{
+            profileImage.value = SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.USER_IMAGE
+            )
+            imageExist.set(true)
+
+        }
+
     }
 
     fun onEditAddressClick() {
@@ -92,8 +113,46 @@ class UserProfileViewModel @Inject constructor(
                 val userProfileResponseData: GpApiResponseProfileData? =
                     userProfileResponse.body()?.gp_api_response_data
                 userProfileData.set(userProfileResponseData)
-                isFarmerSelected.set(userProfileResponseData?.is_farmer)
-                isTraderSelected.set(userProfileResponseData?.is_trader)
+
+                if (userProfileResponseData?.is_farmer == false && userProfileResponseData?.is_trader==false){
+                    onFarmerLayoutSelected()
+                }else{
+                    isFarmerSelected.set(userProfileResponseData?.is_farmer)
+                    isTraderSelected.set(userProfileResponseData?.is_trader)
+                }
+
+                if (!TextUtils.isEmpty(userProfileResponseData?.firm_name)){
+                    firmName.set(userProfileResponseData?.firm_name)
+                }else{
+                    firmName.set("--")
+                }
+
+                var location = StringBuilder()
+
+                if (userProfileResponseData?.address_data?.address.isNotNullOrEmpty()){
+                    location.append(userProfileResponseData?.address_data?.address!!).append(", ")
+                }
+                if (userProfileResponseData?.address_data?.village.isNotNullOrEmpty()){
+                    location.append(userProfileResponseData?.address_data?.village!!).append(", ")
+                }
+
+                if (userProfileResponseData?.address_data?.tehsil.isNotNullOrEmpty()){
+                    location.append(userProfileResponseData?.address_data?.tehsil!!).append(", ")
+                }
+
+                if (userProfileResponseData?.address_data?.district.isNotNullOrEmpty()){
+                    location.append(userProfileResponseData?.address_data?.district!!).append(", ")
+                }
+
+                if (userProfileResponseData?.address_data?.state.isNotNullOrEmpty()){
+                    location.append(userProfileResponseData?.address_data?.state!!)
+                }
+
+                if (userProfileResponseData?.address_data?.pincode.isNotNullOrEmpty()){
+                    location.append("-").append(userProfileResponseData?.address_data?.pincode!!)
+                }
+
+                address.set(location.toString())
 
                 getProfile(userProfileResponseData?.customer_id)
                 //getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)

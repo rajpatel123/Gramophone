@@ -28,6 +28,7 @@ import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.orderdetails.OrderDetailsActivity
 import agstack.gramophone.ui.referandearn.ReferAndEarnActivity
 import agstack.gramophone.ui.referandearn.model.GramCashResponseModel
+import agstack.gramophone.ui.tv.GramophoneTVActivity
 import agstack.gramophone.utils.*
 import agstack.gramophone.view.activity.CreatePostActivity
 import android.content.Intent
@@ -469,14 +470,26 @@ class MyGramophoneFragment :
         }
 
         binding?.layoutFavorite?.llArticleLinearLayout?.setOnClickListener {
-            openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
-                putString(
-                    Constants.PAGE_URL,
-                      BuildConfig.BASE_URL_ARTICLES+Constants.FAVOURITE_ARTICLES)
+            if(myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles > 0){
+                openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
+                    putString(
+                        Constants.PAGE_URL,
+                        BuildConfig.BASE_URL_ARTICLES+Constants.FAVOURITE_ARTICLES)
 
-                  putString(Constants.PAGE_SOURCE,
-                      "gramo")
-              })
+                    putString(Constants.PAGE_SOURCE,
+                        "gramo")
+                })
+            }else{
+                openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
+                    putString(
+                        Constants.PAGE_URL,
+                        BuildConfig.BASE_URL_ARTICLES+Constants.ARTICLES)
+
+                    putString(Constants.PAGE_SOURCE,
+                        "gramo")
+                })
+            }
+
         }
 
         binding?.layoutFavorite?.llProductLinearLayout?.setOnClickListener {
@@ -488,7 +501,7 @@ class MyGramophoneFragment :
         }
 
         binding?.layoutFavorite?.llTVLinearLayout?.setOnClickListener {
-
+            openActivity(GramophoneTVActivity::class.java, null)
         }
 
     }

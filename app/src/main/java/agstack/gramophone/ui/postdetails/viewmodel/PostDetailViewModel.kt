@@ -17,6 +17,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -37,6 +38,7 @@ class PostDetailViewModel @Inject constructor(
  private var data: Data? = null
  var authorName = ObservableField<String>()
  var authorLocation = ObservableField<String>()
+ var isAddress = ObservableField<Boolean>()
  var postDate = ObservableField<String>()
  var commentInput = ObservableField<String>()
 
@@ -69,6 +71,16 @@ class PostDetailViewModel @Inject constructor(
       // authorLocation.set(data?.author)
      if (data?.description != null)
       postDesc.set(data?.description.toString())
+
+      postDate.set(data?.createdDate)
+
+      if (data?.author?.address_short.isNotNullOrEmpty()){
+       authorLocation.set(data?.author?.address_short)
+       isAddress.set(true)
+      }else{
+       isAddress.set(false)
+       authorLocation.set(getNavigator()?.getMessage(R.string.add_address))
+      }
 
      likeCount.set(data?.likesCount.toString() +" "+getNavigator()?.getMessage(R.string.like))
      commentCount.set(data?.commentsCount.toString()+" "+getNavigator()?.getMessage(R.string.comment_count))

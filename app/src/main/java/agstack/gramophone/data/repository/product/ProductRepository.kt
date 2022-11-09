@@ -21,6 +21,7 @@ import agstack.gramophone.ui.search.model.GlobalSearchRequest
 import agstack.gramophone.ui.search.model.GlobalSearchResponse
 import agstack.gramophone.ui.search.model.SuggestionsRequest
 import agstack.gramophone.ui.search.model.SuggestionsResponse
+import agstack.gramophone.ui.tv.model.VideoBookMarkedRequest
 import retrofit2.Response
 import javax.inject.Singleton
 
@@ -101,5 +102,7 @@ interface ProductRepository {
     suspend fun searchByKeywordInCommunity(body: GlobalSearchRequest): Response<GlobalSearchResponse>
 
     suspend fun addHarvestQues(body: AddHarvestRequest): Response<MyGramophoneResponseModel>
+
+    suspend fun bookmarkVideo(body: VideoBookMarkedRequest): Response<SuccessStatusResponse>
 
 }
