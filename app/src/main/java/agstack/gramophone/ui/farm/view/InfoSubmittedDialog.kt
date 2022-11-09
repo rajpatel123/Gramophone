@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 
-class InfoSubmittedDialog (private val listener: () -> Unit) : DialogFragment() {
+class InfoSubmittedDialog (private val listener1: () -> Unit, private val listener2 :()-> Unit) : DialogFragment() {
 
     var binding : InfoSubmittedDialogBinding? = null
 
@@ -22,11 +22,12 @@ class InfoSubmittedDialog (private val listener: () -> Unit) : DialogFragment() 
 
         binding?.notNow?.setOnClickListener {
             dialog?.dismiss()
+            listener1.invoke()
         }
 
         binding?.addFarmText?.setOnClickListener {
-            listener.invoke()
             dialog?.dismiss()
+            listener2.invoke()
         }
 
         if (dialog != null && dialog?.window != null) {
