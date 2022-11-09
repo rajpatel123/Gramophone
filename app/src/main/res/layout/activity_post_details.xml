@@ -82,8 +82,8 @@
                         android:layout_below="@+id/tvName"
                         android:layout_toEndOf="@+id/ivProfileImage"
                         android:fontFamily="@font/manrope_medium"
-                        android:text="+ Add Address"
-                        android:textColor="@color/red"
+                        android:text="@{viewModel.authorLocation}"
+                        android:textColor="@{viewModel.isAddress?@color/gray:@color/red}"
                         android:textSize="@dimen/_10ssp" />
 
                     <TextView
@@ -93,7 +93,7 @@
                         android:layout_below="@+id/tvCity"
                         android:layout_toEndOf="@+id/ivProfileImage"
                         android:fontFamily="@font/manrope_medium"
-                        android:text="15 Aug 2022"
+                        android:text="@{viewModel.postDate}"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/_10ssp" />
 
