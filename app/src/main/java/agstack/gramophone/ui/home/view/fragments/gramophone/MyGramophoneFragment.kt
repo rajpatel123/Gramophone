@@ -28,6 +28,7 @@ import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.orderdetails.OrderDetailsActivity
 import agstack.gramophone.ui.referandearn.ReferAndEarnActivity
 import agstack.gramophone.ui.referandearn.model.GramCashResponseModel
+import agstack.gramophone.ui.tv.GramophoneTVActivity
 import agstack.gramophone.utils.*
 import agstack.gramophone.view.activity.CreatePostActivity
 import android.content.Intent
@@ -500,7 +501,7 @@ class MyGramophoneFragment :
         }
 
         binding?.layoutFavorite?.llTVLinearLayout?.setOnClickListener {
-
+            openActivity(GramophoneTVActivity::class.java, null)
         }
 
     }
