@@ -34,15 +34,7 @@ class FollowerFollowedActivity :
 
         swipeRefresh.setOnRefreshListener {
             swipeRefresh.isRefreshing=true
-            when(viewDataBinding.tabLayout.selectedTabPosition){
-                0->{
-                    followerFollowingViewModel.getFollowers()
-                }
-
-                1->{
-                    followerFollowingViewModel.getFollowing()
-                }
-            }
+            refreshList()
 
         }
         viewDataBinding.tabLayout.addOnTabSelectedListener(object :
@@ -67,7 +59,23 @@ class FollowerFollowedActivity :
         })
     }
 
+    private fun refreshList() {
+        when(viewDataBinding.tabLayout.selectedTabPosition){
+            0->{
+                followerFollowingViewModel.getFollowers()
+            }
 
+            1->{
+                followerFollowingViewModel.getFollowing()
+            }
+        }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        refreshList()
+    }
     override fun getLayoutID(): Int {
         return R.layout.activity_follower_falowee
     }
