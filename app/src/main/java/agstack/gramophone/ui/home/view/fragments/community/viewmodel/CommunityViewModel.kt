@@ -52,7 +52,7 @@ class CommunityViewModel @Inject constructor(
     var myFavoriteCount: Int? = null
     var quizPoll: List<GpApiResponseData>? = null
     var profileData = ObservableField<ProfileData>()
-    lateinit var postId: String
+    var postId: String?=null
     var block = "block"
     private lateinit var menuClickedData: Data
     lateinit var mAlertDialog: AlertDialog
@@ -71,7 +71,7 @@ class CommunityViewModel @Inject constructor(
     var showProgress = ObservableField<Boolean>()
     var following = ObservableField<Boolean>()
     var menuVisible = ObservableField<Boolean>()
-    var isAdmin = ObservableField<Boolean>()
+    var isGeneral = ObservableField<Boolean>()
     var limit = ObservableField<Int>()
     lateinit var uuid: String
     lateinit var id: String
@@ -186,10 +186,10 @@ class CommunityViewModel @Inject constructor(
 
                         mandi.set(profileData.get()?.mandi)
                         phoneNo.set(profileData.get()?.phoneNo)
-                        if (profileData.get()?.communityUserType.equals("admin")) {
-                            isAdmin.set(true)
+                        if (profileData.get()?.communityUserType.equals("general")) {
+                            isGeneral.set(true)
                         } else {
-                            isAdmin.set(false)
+                            isGeneral.set(false)
                         }
                         followers.set(response.body()?.data!!.totalFollowers.toString())
                         followeee.set(response.body()?.data!!.totalFollowees.toString())
@@ -780,7 +780,7 @@ class CommunityViewModel @Inject constructor(
     }
 
 
-    private fun block(postId: String, id: String, action: String) {
+    private fun block(postId: String?, id: String, action: String) {
         viewModelScope.launch {
 
             try {

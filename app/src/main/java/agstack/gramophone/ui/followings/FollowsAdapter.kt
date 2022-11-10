@@ -43,6 +43,10 @@ class FollowsAdapter(private val dataList: List<Data>) :
             profileClicked?.invoke(user)
         }
 
+        mBinding.name.setOnClickListener{
+            profileClicked?.invoke(user)
+        }
+
     }
 
     override fun getItemCount(): Int {
