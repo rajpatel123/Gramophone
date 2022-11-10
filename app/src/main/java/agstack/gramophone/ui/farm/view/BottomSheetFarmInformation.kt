@@ -84,7 +84,7 @@ class BottomSheetFarmInformation(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        units = arguments?.getParcelableArrayList<GpApiResponseData>("unitsList")
+        units = arguments?.getParcelableArrayList("unitsList")
         farmRefId = arguments?.getString("farm_ref_id")
 
         context?.let { context ->

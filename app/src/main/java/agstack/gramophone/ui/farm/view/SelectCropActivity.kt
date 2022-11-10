@@ -46,6 +46,7 @@ class SelectCropActivity :
         disposable =  EventBus.subscribe<FarmEvent>()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
+                    if(it.text ==  "farm_added")
                     finishActivity()
                 }
     }

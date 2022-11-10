@@ -5,10 +5,14 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityCropGroupExplorerBinding
 import agstack.gramophone.ui.farm.adapter.CropGroupExplorerAdapter
+import agstack.gramophone.ui.farm.model.AddHarvestRequest
 import agstack.gramophone.ui.farm.model.Data
+import agstack.gramophone.ui.farm.model.FarmEvent
+import agstack.gramophone.ui.farm.model.unit.GpApiResponseData
 import agstack.gramophone.ui.farm.navigator.CropGroupExplorerNavigator
 import agstack.gramophone.ui.farm.viewmodel.CropGroupExplorerViewModel
 import agstack.gramophone.ui.home.view.fragments.market.model.CropData
+import agstack.gramophone.utils.EventBus
 import android.os.Bundle
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,13 +22,17 @@ class CropGroupExplorerActivity :
     BaseActivityWrapper<ActivityCropGroupExplorerBinding, CropGroupExplorerNavigator, CropGroupExplorerViewModel>(),
     CropGroupExplorerNavigator {
     var isOldFarms = false
+    var units: List<GpApiResponseData>? = null
+    var farmRefId: String? = null
+    var bottomSheet: BottomSheetFarmInformation? = null
+    var selectedCrop: CropData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUi()
     }
 
-    private fun setUi(){
+    private fun setUi() {
         intent.extras?.let {
             if (it.containsKey("isOldFarms")) {
                 isOldFarms = it.getBoolean("isOldFarms")
@@ -36,8 +44,13 @@ class CropGroupExplorerActivity :
                     setAdapter(list)
                 }
             }
-            if (it.containsKey("isOldFarms")) {
-                isOldFarms = it.getBoolean("isOldFarms")
+
+            if (it.containsKey("unitsList")) {
+                units = it.getParcelableArrayList("unitsList")
+            }
+
+            if (it.containsKey("farm_ref_id")) {
+                farmRefId = it.getString("farm_ref_id")
             }
         }
     }
@@ -60,7 +73,8 @@ class CropGroupExplorerActivity :
     }
 
     override fun setAdapter(cropList: List<Data>) {
-        viewDataBinding.rvCrops.adapter = CropGroupExplorerAdapter(cropList,
+        viewDataBinding.rvCrops.adapter = CropGroupExplorerAdapter(
+            cropList,
             headerListener = {
 
             },
@@ -68,21 +82,73 @@ class CropGroupExplorerActivity :
 
             },
             footerListener = {
-                if(!isOldFarms){
-                    val selectedCrop = CropData(
-                        cropId = it.crop_id,
-                        cropName = it.crop_name,
-                        cropImage = it.crop_image,
-                    )
-                    openActivity(
-                        AddFarmActivity::class.java,
-                        Bundle().apply {
-                            putParcelable("selectedCrop", selectedCrop)
-                        })
+                selectedCrop = CropData(
+                    cropId = it.crop_id,
+                    cropName = it.crop_name,
+                    cropImage = it.crop_image,
+                )
+
+                if (it.is_crop_cycle_completed!!) {
+                    if (it.harvested_quantity.isNullOrEmpty()) {
+                        bottomSheet =
+                            BottomSheetFarmInformation { farm_reference_id, output_qty, output_unit_id ->
+                                getViewModel().addHarvestQues(
+                                    AddHarvestRequest(
+                                        farm_reference_id,
+                                        output_qty,
+                                        output_unit_id
+                                    )
+                                )
+                            }
+                        val bundle = Bundle()
+                        bundle.putParcelableArrayList("unitsList", units as ArrayList)
+                        bundle.putString("farm_ref_id", it.farm_ref_id)
+                        bottomSheet?.arguments = bundle
+                        bottomSheet?.show(
+                            this@CropGroupExplorerActivity.supportFragmentManager,
+                            "bottom_sheet"
+                        )
+                    } else {
+                        // do nothing
+                    }
+                } else {
+                    if (isOldFarms) {
+                        // do nothing
+                    } else {
+                        openActivity(
+                            AddFarmActivity::class.java,
+                            Bundle().apply {
+                                putParcelable("selectedCrop", selectedCrop)
+                            })
+                    }
                 }
             },
             isOldFarms = isOldFarms
         )
+    }
+
+    override fun onAddHarvestQues() {
+        bottomSheet?.dismiss()
+
+        val dialog = InfoSubmittedDialog(
+            listener1 = {
+                EventBus.post(FarmEvent("harvest_info_added"))
+                finish()
+            },
+
+            listener2 = {
+                openActivity(
+                    AddFarmActivity::class.java,
+                    Bundle().apply {
+                        putParcelable("selectedCrop", selectedCrop)
+                    })
+
+                EventBus.post(FarmEvent("harvest_info_added"))
+                finish()
+            },
+        )
+
+        dialog.show(this@CropGroupExplorerActivity.supportFragmentManager, "custom_sheet")
     }
 
 }

@@ -206,7 +206,7 @@
                         android:fontFamily="@font/manrope_medium"
                         tools:text="@string/approx_end_date"
                         android:textColor="@color/oldmrpcolor"
-                        android:textSize="@dimen/_10ssp"
+                        android:textSize="@dimen/_12ssp"
                         android:visibility='@{isOldFarms ? View.VISIBLE : View.GONE}'
                         app:farmDate='@{@string/approx_end_date(item.crop_anticipated_completed_date)}'/>
 
@@ -233,12 +233,10 @@
                     android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:drawablePadding="@dimen/_8sdp"
-                    android:visibility='@{isOldFarms ? View.GONE : View.VISIBLE}'
                     android:fontFamily="@font/manrope_medium"
-                    android:text="+ अपना खेत जोड़े"
+                    tools:text="+ अपना खेत जोड़े"
                     android:textColor="@color/orange"
                     android:textSize="@dimen/_13ssp" />
-
             </RelativeLayout>
 
         </RelativeLayout>
