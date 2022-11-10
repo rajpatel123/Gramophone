@@ -282,6 +282,10 @@
         <activity
             android:name=".ui.search.view.ViewAllSearchProductCategoriesActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.search.view.ViewAllSearchPostsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.search.view.ViewAllSearchCropCategoriesActivity"
             android:screenOrientation="portrait" />

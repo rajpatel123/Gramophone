@@ -55,7 +55,11 @@ class ViewAllFarmsAdapter(
                 holder.binding.txtAddFarm.text = farmList[position][0].harvested_quantity + " " + farmList[position][0].harvested_quantity_unit
             }
         }else{
-            holder.binding.txtAddFarm.text = holder.binding.root.context.getString(R.string.add_your_farm)
+            if(isOldFarms){
+                holder.binding.txtAddFarm.text = ""
+            }else{
+                holder.binding.txtAddFarm.text = holder.binding.root.context.getString(R.string.add_your_farm)
+            }
         }
     }
 

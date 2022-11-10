@@ -2,9 +2,11 @@ package agstack.gramophone.ui.search.adapter
 
 import agstack.gramophone.databinding.SubItemPostBinding
 import agstack.gramophone.ui.search.model.Item
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 
 class PostsAdapter  (
     val list: List<Item>,
@@ -18,6 +20,9 @@ class PostsAdapter  (
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val post = list[position]
         holder.binding.item = post
+
+        if (post.description.isNotNullOrEmpty())
+        holder.binding.txtPost.text= Html.fromHtml(post.description)
 
         holder.binding.postContainer.setOnClickListener {
             listener.invoke(post.id!!)

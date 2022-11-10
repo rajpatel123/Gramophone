@@ -49,9 +49,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
 
     fun changeState() {
-        getNavigator()?.openAndFinishActivity(StateListActivity::class.java, Bundle().apply {
-            putString(Constants.CHANGE_STATE, Constants.CHANGE_STATE)
-        })
+        getNavigator()?.openStateList()
     }
 
     fun onBackPressedClick() {
@@ -237,7 +235,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                     loading.set(false)
 
                 } else {
-                    getNavigator()?.onError(stateListData?.gp_api_message)
+                    //getNavigator()?.onError(stateListData?.gp_api_message)
 
                 }
 
@@ -270,7 +268,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
         return ApiResponse.Error(response.message())
     }
 
-    fun setStatesName(stateName: String, image: String) {
+    fun setStatesName(stateName: String, image: String?) {
         stateNameStr.set(stateName)
         if (image.isNullOrEmpty()) {
             isImageAvailable.set(false)
@@ -526,16 +524,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
 
     fun checkPermissionAndUpdateUi() {
-           if (stateNameStr.get().isNotNullOrBlank()){
                getNavigator()?.updateUi()
-           }else{
-               if (getNavigator()?.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) == true){
-                   getNavigator()?.updateUi()
-               }else{
-                   getNavigator()?.requestForLocation()
-               }
-           }
-
         }
 
     fun setAddressdata(userAddress: UserAddress) {
@@ -579,13 +568,17 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
         if (userAddress?.address != null) address.set(userAddress.address)
 
-        if (userAddress?.pincode != null) pinCode.set(userAddress.pincode) else getPinCode(
-            "pincode",
-            stateNameStr.get()!!,
-            districtName.get()!!,
-            tehsilName.get()!!,
-            villageName.get()!!
-        )
+        if (userAddress?.pincode != null){
+            pinCode.set(userAddress.pincode)
+        } else{
+            getPinCode(
+                "pincode",
+                stateNameStr.get()!!,
+                districtName.get()!!,
+                tehsilName.get()!!,
+                villageName.get()!!
+            )
+        }
 
 
     }
