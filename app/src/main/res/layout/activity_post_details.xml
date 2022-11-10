@@ -29,504 +29,524 @@
                 layout="@layout/layout_toolbar" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/postDetails"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/bottomCommentBar"
             android:layout_below="@+id/appbar"
-
-            >
-
-            <LinearLayout
+            tools:visibility="gone"
+            android:visibility="@{viewModel.isDataAvailable?View.VISIBLE:View.GONE}"
+            android:orientation="vertical">
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/postDetails"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-
+                android:layout_above="@+id/bottomCommentBar"
                 >
 
-
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/ivProfileImage"
-                        android:layout_width="@dimen/_40sdp"
-                        android:layout_height="@dimen/_40sdp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_10sdp"
-                        android:src="@drawable/dummy_profile"
-                        app:civ_border_color="@color/white"
-                        app:civ_border_width="2dp" />
+                    >
 
-
-                    <TextView
-                        android:id="@+id/tvName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:layout_toEndOf="@+id/ivProfileImage"
-                        android:fontFamily="@font/manrope_bold"
-                        android:text="@{viewModel.authorName}"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_11ssp" />
-
-                    <TextView
-                        android:id="@+id/tvCity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tvName"
-                        android:layout_toEndOf="@+id/ivProfileImage"
-                        android:fontFamily="@font/manrope_medium"
-                        android:text="@{viewModel.authorLocation}"
-                        android:textColor="@{viewModel.isAddress?@color/gray:@color/red}"
-                        android:textSize="@dimen/_10ssp" />
-
-                    <TextView
-                        android:id="@+id/tvDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tvCity"
-                        android:layout_toEndOf="@+id/ivProfileImage"
-                        android:fontFamily="@font/manrope_medium"
-                        android:text="@{viewModel.postDate}"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/_10ssp" />
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:layout_marginTop="@dimen/_13sdp"
-                        android:layout_toEndOf="@+id/tvName"
-                        android:background="@drawable/admin_tag_bg"
-                        android:paddingStart="@dimen/_5sdp"
-                        android:paddingTop="@dimen/_2sdp"
-                        android:paddingEnd="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_2sdp">
-
-                        <ImageView
-                            android:id="@+id/ivLeaf"
-                            android:layout_width="@dimen/_8sdp"
-                            android:layout_height="@dimen/_8sdp"
-                            android:layout_centerVertical="true"
-                            app:srcCompat="@mipmap/leaf_logo"
-                            app:tint="@color/white" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/_2sdp"
-                            android:layout_toEndOf="@+id/ivLeaf"
-                            android:fontFamily="@font/manrope_medium"
-                            android:text="ADMIN"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_7ssp" />
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        android:id="@+id/llDetails"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tvDate"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/ivProfileImage"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:src="@drawable/dummy_profile"
+                            app:civ_border_color="@color/white"
+                            app:civ_border_width="2dp" />
+
 
                         <TextView
-                            android:id="@+id/tvDesc"
+                            android:id="@+id/tvName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_12sdp"
-                            android:layout_marginTop="@dimen/_30sdp"
-                            android:layout_marginEnd="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:layout_toEndOf="@+id/ivProfileImage"
                             android:fontFamily="@font/manrope_bold"
-                            android:text="@{viewModel.postDesc}"
+                            android:text="@{viewModel.authorName}"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/_14ssp"
-                            android:visibility="@{viewModel.postDesc!=null?View.VISIBLE:View.GONE}" />
+                            android:textSize="@dimen/_11ssp" />
 
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/imageContainer"
+                        <TextView
+                            android:id="@+id/tvCity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvName"
+                            android:layout_toEndOf="@+id/ivProfileImage"
+                            android:fontFamily="@font/manrope_medium"
+                            android:text="@{viewModel.authorLocation}"
+                            android:textColor="@{viewModel.isAddress?@color/gray:@color/red}"
+                            android:textSize="@dimen/_10ssp" />
+
+                        <TextView
+                            android:id="@+id/tvDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvCity"
+                            android:layout_toEndOf="@+id/ivProfileImage"
+                            android:fontFamily="@font/manrope_medium"
+                            android:text="@{viewModel.postDate}"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/_10ssp" />
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_13sdp"
+                            android:layout_toEndOf="@+id/tvName"
+                            android:background="@drawable/admin_tag_bg"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_2sdp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:paddingBottom="@dimen/_2sdp">
+
+                            <ImageView
+                                android:id="@+id/ivLeaf"
+                                android:layout_width="@dimen/_8sdp"
+                                android:layout_height="@dimen/_8sdp"
+                                android:layout_centerVertical="true"
+                                app:srcCompat="@mipmap/leaf_logo"
+                                app:tint="@color/white" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/_2sdp"
+                                android:layout_toEndOf="@+id/ivLeaf"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="ADMIN"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_7ssp" />
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llDetails"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/tvDate"
-                            android:layout_marginStart="@dimen/_12sdp"
-                            android:layout_marginTop="@dimen/_30sdp"
-                            android:layout_marginEnd="@dimen/_12sdp"
-                            android:visibility="gone"
-                            app:cardCornerRadius="@dimen/_10sdp">
+                            android:orientation="vertical">
 
-                            <ImageView
-                                android:id="@+id/postImage"
+                            <TextView
+                                android:id="@+id/tvDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_12sdp"
+                                android:layout_marginTop="@dimen/_30sdp"
+                                android:layout_marginEnd="@dimen/_12sdp"
+                                android:fontFamily="@font/manrope_bold"
+                                android:text="@{viewModel.postDesc}"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_14ssp"
+                                android:visibility="@{viewModel.postDesc!=null?View.VISIBLE:View.GONE}" />
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/imageContainer"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:minHeight="@dimen/_300sdp"
-                                android:scaleType="fitXY" />
-                        </androidx.cardview.widget.CardView>
-
-                        <LinearLayout
-                            android:id="@+id/llShowingDate"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/rvTag"
-                            android:layout_marginStart="@dimen/_12sdp"
-                            android:layout_marginTop="@dimen/_12sdp"
-                            android:layout_marginEnd="@dimen/_12sdp"
-                            android:background="@drawable/rounded_corner_4showing_date_bg"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:visibility="@{viewModel.showDateView?View.VISIBLE:View.GONE}">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                android:paddingStart="@dimen/_8sdp"
-                                android:paddingTop="@dimen/_8sdp"
-                                android:paddingBottom="@dimen/_8sdp"
-                                android:visibility="@{viewModel.isDate?View.VISIBLE:View.GONE}"
-
-                                >
+                                android:layout_below="@+id/tvDate"
+                                android:layout_marginStart="@dimen/_12sdp"
+                                android:layout_marginTop="@dimen/_30sdp"
+                                android:layout_marginEnd="@dimen/_12sdp"
+                                android:visibility="gone"
+                                app:cardCornerRadius="@dimen/_10sdp">
 
                                 <ImageView
-                                    android:id="@+id/ivImg"
-                                    android:layout_width="wrap_content"
+                                    android:id="@+id/postImage"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    app:srcCompat="@drawable/ic_group__1_" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginStart="@dimen/_5sdp"
-                                    android:layout_toEndOf="@+id/ivImg"
-
-                                    android:fontFamily="@font/manrope_semibold"
-                                    android:text="@string/showing_date_msg"
-                                    android:textColor="@color/date_color"
-                                    android:textSize="@dimen/_11ssp"
-
-                                    />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginStart="@dimen/_5sdp"
-                                    android:fontFamily="@font/manrope_semibold"
-                                    android:onClick="@{()->viewModel.showUpdatePostBottomSheet()}"
-                                    android:text="@string/start"
-                                    android:textColor="@color/green_dark"
-                                    android:textSize="@dimen/_11ssp"
-
-                                    />
-                            </RelativeLayout>
+                                    android:minHeight="@dimen/_300sdp"
+                                    android:scaleType="fitXY" />
+                            </androidx.cardview.widget.CardView>
 
                             <LinearLayout
+                                android:id="@+id/llShowingDate"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center_vertical"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/rvTag"
+                                android:layout_marginStart="@dimen/_12sdp"
+                                android:layout_marginTop="@dimen/_12sdp"
+                                android:layout_marginEnd="@dimen/_12sdp"
+                                android:background="@drawable/rounded_corner_4showing_date_bg"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal"
-                                android:visibility="@{viewModel.isDate?View.GONE:View.VISIBLE}">
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:visibility="@{viewModel.showDateView?View.VISIBLE:View.GONE}">
 
-                                <TextView
-                                    android:id="@+id/tvTag"
-                                    android:layout_width="wrap_content"
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/_2sdp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/manrope_semibold"
-                                    android:text="@{viewModel.likeCount}"
-                                    android:textColor="@color/date_color"
-                                    android:textSize="@dimen/_12ssp"
-                                    tools:text="Tomato" />
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:paddingStart="@dimen/_8sdp"
+                                    android:paddingTop="@dimen/_8sdp"
+                                    android:paddingBottom="@dimen/_8sdp"
+                                    android:visibility="@{viewModel.isDate?View.VISIBLE:View.GONE}"
 
-                                <TextView
-                                    android:id="@+id/tvShowDate"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/_2sdp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/manrope_semibold"
-                                    android:onClick="@{()->viewModel.openLikedUserList()}"
-                                    android:text="@{viewModel.showingDate}"
+                                    >
 
-                                    android:textColor="@color/date_color"
-                                    android:textSize="@dimen/_12ssp"
-                                    tools:text="2022-10-14" />
+                                    <ImageView
+                                        android:id="@+id/ivImg"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        app:srcCompat="@drawable/ic_group__1_" />
 
-                                <TextView
-                                    android:id="@+id/tvArea"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/_2sdp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/manrope_semibold"
-                                    android:onClick="@{()->viewModel.openLikedUserList()}"
-                                    android:text="@{viewModel.likeCount}"
-                                    android:textColor="@color/date_color"
-                                    android:textSize="@dimen/_12ssp"
-                                    tools:text="10 Acre" />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginStart="@dimen/_5sdp"
+                                        android:layout_toEndOf="@+id/ivImg"
 
-                                <ImageView
-                                    android:id="@+id/ivEdit"
-                                    android:layout_width="@dimen/_40sdp"
-                                    android:layout_height="@dimen/_40sdp"
-                                    android:fontFamily="@font/manrope_semibold"
-                                    android:onClick="@{()->viewModel.showUpdatePostBottomSheet()}"
-                                    android:paddingStart="@dimen/_10sdp"
-                                    android:paddingEnd="@dimen/_10sdp"
-                                    app:srcCompat="@drawable/ic_post_edit"
-                                    app:tint="@color/date_color" />
+                                        android:fontFamily="@font/manrope_semibold"
+                                        android:text="@string/showing_date_msg"
+                                        android:textColor="@color/date_color"
+                                        android:textSize="@dimen/_11ssp"
+
+                                        />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginStart="@dimen/_5sdp"
+                                        android:fontFamily="@font/manrope_semibold"
+                                        android:onClick="@{()->viewModel.showUpdatePostBottomSheet()}"
+                                        android:text="@string/start"
+                                        android:textColor="@color/green_dark"
+                                        android:textSize="@dimen/_11ssp"
+
+                                        />
+                                </RelativeLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center_vertical"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:visibility="@{viewModel.isDate?View.GONE:View.VISIBLE}">
+
+                                    <TextView
+                                        android:id="@+id/tvTag"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/_2sdp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/manrope_semibold"
+                                        android:text="@{viewModel.likeCount}"
+                                        android:textColor="@color/date_color"
+                                        android:textSize="@dimen/_12ssp"
+                                        tools:text="Tomato" />
+
+                                    <TextView
+                                        android:id="@+id/tvShowDate"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/_2sdp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/manrope_semibold"
+                                        android:onClick="@{()->viewModel.openLikedUserList()}"
+                                        android:text="@{viewModel.showingDate}"
+
+                                        android:textColor="@color/date_color"
+                                        android:textSize="@dimen/_12ssp"
+                                        tools:text="2022-10-14" />
+
+                                    <TextView
+                                        android:id="@+id/tvArea"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/_2sdp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/manrope_semibold"
+                                        android:onClick="@{()->viewModel.openLikedUserList()}"
+                                        android:text="@{viewModel.likeCount}"
+                                        android:textColor="@color/date_color"
+                                        android:textSize="@dimen/_12ssp"
+                                        tools:text="10 Acre" />
+
+                                    <ImageView
+                                        android:id="@+id/ivEdit"
+                                        android:layout_width="@dimen/_40sdp"
+                                        android:layout_height="@dimen/_40sdp"
+                                        android:fontFamily="@font/manrope_semibold"
+                                        android:onClick="@{()->viewModel.showUpdatePostBottomSheet()}"
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        app:srcCompat="@drawable/ic_post_edit"
+                                        app:tint="@color/date_color" />
+                                </LinearLayout>
+
                             </LinearLayout>
 
                         </LinearLayout>
 
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tvSpace"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/llDetails"
-                        android:minHeight="@dimen/_26sdp" />
-
-                    <HorizontalScrollView
-                        android:id="@+id/hScrollView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tvSpace"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="8dp"
-                        android:scrollbars="none">
-
-                        <LinearLayout
-                            android:id="@+id/finalTagLL"
+                        <TextView
+                            android:id="@+id/tvSpace"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:lineSpacingExtra="@dimen/_5sdp"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/_10sdp"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            tools:listitem="@layout/final_tag_list_item" />
+                            android:layout_below="@+id/llDetails"
+                            android:minHeight="@dimen/_26sdp" />
 
-                    </HorizontalScrollView>
-
-
-                    <LinearLayout
-                        android:id="@+id/llActions"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/hScrollView"
-                        android:layout_marginStart="@dimen/_12sdp"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:layout_marginEnd="@dimen/_12sdp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <RelativeLayout
-                            android:id="@+id/rlLikes"
-                            android:layout_width="0dp"
+                        <HorizontalScrollView
+                            android:id="@+id/hScrollView"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight=".8">
+                            android:layout_below="@+id/tvSpace"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="8dp"
+                            android:scrollbars="none">
 
-                            <ImageView
-                                android:id="@+id/ivLike"
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:id="@+id/finalTagLL"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:onClick="@{()->viewModel.likePost()}" />
+                                android:lineSpacingExtra="@dimen/_5sdp"
+                                android:orientation="horizontal"
+                                android:padding="@dimen/_10sdp"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                tools:listitem="@layout/final_tag_list_item" />
 
-                            <TextView
-                                android:id="@+id/tvLikes"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginStart="@dimen/_2sdp"
-                                android:layout_toEndOf="@+id/ivLike"
-                                android:onClick="@{()->viewModel.openLikedUserList()}"
-                                android:text="@{viewModel.likeCount}" />
-                        </RelativeLayout>
+                        </HorizontalScrollView>
 
-                        <RelativeLayout
-                            android:id="@+id/rlComments"
-                            android:layout_width="0dp"
+
+                        <LinearLayout
+                            android:id="@+id/llActions"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1.2">
-
-                            <ImageView
-                                android:id="@+id/ivComment"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                app:srcCompat="@drawable/ic_comment" />
-
-                            <TextView
-                                android:id="@+id/tvComment"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginStart="@dimen/_2sdp"
-                                android:layout_toEndOf="@+id/ivComment"
-                                android:text="@{viewModel.commentCount}" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.2"
-                            android:gravity="center_vertical">
+                            android:layout_below="@+id/hScrollView"
+                            android:layout_marginStart="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:layout_marginEnd="@dimen/_12sdp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
                             <RelativeLayout
-                                android:layout_width="wrap_content"
+                                android:id="@+id/rlLikes"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/_6sdp"
-                                android:layout_toStartOf="@+id/ivBookmark"
-                                android:background="@drawable/rounded_corner_stroke"
-                                android:paddingStart="@dimen/_16sdp"
-                                android:paddingEnd="@dimen/_16sdp">
+                                android:layout_weight=".8">
 
                                 <ImageView
-                                    android:id="@+id/ivWhatsapp"
+                                    android:id="@+id/ivLike"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:minHeight="@dimen/_25sdp"
-                                    android:onClick="@{()->viewModel.shareOnWhatsApp()}"
-                                    app:srcCompat="@drawable/ic_whatsapp" />
+                                    android:layout_centerVertical="true"
+                                    android:onClick="@{()->viewModel.likePost()}" />
+
+                                <TextView
+                                    android:id="@+id/tvLikes"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="@dimen/_2sdp"
+                                    android:layout_toEndOf="@+id/ivLike"
+                                    android:onClick="@{()->viewModel.openLikedUserList()}"
+                                    android:text="@{viewModel.likeCount}" />
                             </RelativeLayout>
 
-                            <ImageView
-                                android:id="@+id/ivBookmark"
-                                android:layout_width="wrap_content"
+                            <RelativeLayout
+                                android:id="@+id/rlComments"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"
-                                android:onClick="@{()->viewModel.bookmarkPost()}"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                app:srcCompat="@drawable/ic_bookmark" />
-                        </RelativeLayout>
+                                android:layout_weight="1.2">
 
-                    </LinearLayout>
+                                <ImageView
+                                    android:id="@+id/ivComment"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    app:srcCompat="@drawable/ic_comment" />
+
+                                <TextView
+                                    android:id="@+id/tvComment"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="@dimen/_2sdp"
+                                    android:layout_toEndOf="@+id/ivComment"
+                                    android:text="@{viewModel.commentCount}" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.2"
+                                android:gravity="center_vertical">
+
+                                <RelativeLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="@dimen/_6sdp"
+                                    android:layout_toStartOf="@+id/ivBookmark"
+                                    android:background="@drawable/rounded_corner_stroke"
+                                    android:paddingStart="@dimen/_16sdp"
+                                    android:paddingEnd="@dimen/_16sdp">
+
+                                    <ImageView
+                                        android:id="@+id/ivWhatsapp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerHorizontal="true"
+                                        android:minHeight="@dimen/_25sdp"
+                                        android:onClick="@{()->viewModel.shareOnWhatsApp()}"
+                                        app:srcCompat="@drawable/ic_whatsapp" />
+                                </RelativeLayout>
+
+                                <ImageView
+                                    android:id="@+id/ivBookmark"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:onClick="@{()->viewModel.bookmarkPost()}"
+                                    android:paddingStart="@dimen/_10sdp"
+                                    android:paddingEnd="@dimen/_10sdp"
+                                    app:srcCompat="@drawable/ic_bookmark" />
+                            </RelativeLayout>
+
+                        </LinearLayout>
 
 
-                </RelativeLayout>
+                    </RelativeLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvComments"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/bottomCommentBar"
-                    android:layout_below="@+id/postDetails"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    tools:listitem="@layout/item_comments" />
-            </LinearLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvComments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/bottomCommentBar"
+                        android:layout_below="@+id/postDetails"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        tools:listitem="@layout/item_comments" />
+                </LinearLayout>
 
-        </androidx.core.widget.NestedScrollView>
+            </androidx.core.widget.NestedScrollView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvPostImage"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_300sdp"
-            android:layout_above="@+id/bottomCommentBar"
-            android:minHeight="@dimen/_200sdp"
-            android:visibility="gone"
-            app:cardCornerRadius="@dimen/_2sdp">
-
-            <FrameLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvPostImage"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:elevation="@dimen/_2sdp">
+                android:layout_height="@dimen/_300sdp"
+                android:layout_above="@+id/bottomCommentBar"
+                android:minHeight="@dimen/_200sdp"
+                android:visibility="gone"
+                app:cardCornerRadius="@dimen/_2sdp">
 
-                <ImageView
-                    android:id="@+id/deleteImage"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_gravity="end"
-                    android:layout_margin="@dimen/_5sdp"
-                    android:elevation="@dimen/_2sdp"
-                    android:onClick="@{()->viewModel.deleteImage()}"
-                    app:srcCompat="@drawable/ic_image_delete" />
-
-                <ImageView
-                    android:id="@+id/postCommentImage"
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="fitXY" />
-            </FrameLayout>
-        </androidx.cardview.widget.CardView>
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/white"
-            android:id="@+id/bottomCommentBar">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:id="@+id/llActions3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_corner_comment"
-                    android:minHeight="@dimen/_40sdp"
-                    android:paddingStart="@dimen/_5sdp"
-                    android:paddingEnd="@dimen/_10sdp">
-
-                    <EditText
-                        android:id="@+id/tvCommentBottomBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_2sdp"
-                        android:background="@null"
-                        android:hint="Write a comment..."
-                        android:singleLine="true"
-                        android:paddingEnd="@dimen/_40sdp"
-                        android:text="@={viewModel.commentInput}" />
+                    android:elevation="@dimen/_2sdp">
 
                     <ImageView
-                        android:id="@+id/ivCameraButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        app:srcCompat="@drawable/ic_camera"
-                        android:onClick="@{()->viewModel.captureImage()}"
-                        app:tint="@color/grey" />
-                </RelativeLayout>
+                        android:id="@+id/deleteImage"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="end"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:elevation="@dimen/_2sdp"
+                        android:onClick="@{()->viewModel.deleteImage()}"
+                        app:srcCompat="@drawable/ic_image_delete" />
 
-                <ImageView
-                    android:layout_width="0dp"
+                    <ImageView
+                        android:id="@+id/postCommentImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY" />
+                </FrameLayout>
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/white"
+                android:id="@+id/bottomCommentBar">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".09"
-                    android:minHeight="@dimen/_40sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    android:onClick="@{()->viewModel.sendComment()}"
-                    app:srcCompat="@drawable/ic_send" />
-            </LinearLayout>
-        </com.google.android.material.appbar.AppBarLayout>
+                    <RelativeLayout
+                        android:id="@+id/llActions3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_corner_comment"
+                        android:minHeight="@dimen/_40sdp"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_10sdp">
+
+                        <EditText
+                            android:id="@+id/tvCommentBottomBox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/_2sdp"
+                            android:background="@null"
+                            android:hint="Write a comment..."
+                            android:singleLine="true"
+                            android:paddingEnd="@dimen/_40sdp"
+                            android:text="@={viewModel.commentInput}" />
+
+                        <ImageView
+                            android:id="@+id/ivCameraButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/ic_camera"
+                            android:onClick="@{()->viewModel.captureImage()}"
+                            app:tint="@color/grey" />
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".09"
+                        android:minHeight="@dimen/_40sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+
+                        android:onClick="@{()->viewModel.sendComment()}"
+                        app:srcCompat="@drawable/ic_send" />
+                </LinearLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.isDataAvailable?View.GONE:View.VISIBLE}"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:fontFamily="@font/manrope_semibold"
+                android:textSize="@dimen/_14ssp"
+                android:text="@string/no_data_title"/>
+        </RelativeLayout>
     </RelativeLayout>
 </layout>

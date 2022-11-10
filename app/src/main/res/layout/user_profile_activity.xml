@@ -131,10 +131,12 @@
 
                 <TextView
                     android:id="@+id/tv_userName"
-                    style="@style/TextSize20Sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16sdp"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/black"
                     android:text="@{viewModel.userProfileData.customer_name}"
                     tools:text="Uday Shetty" />
 
@@ -144,6 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/manrope_regular"
+                    android:textSize="@dimen/_11ssp"
                     android:text="@{viewModel.userProfileData.username}"
                     android:textColor="@color/gray"
                     tools:text="Uday Shetty" />
@@ -286,9 +289,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@color/white"
                 android:orientation="vertical"
+                android:paddingBottom="@dimen/_100sdp"
                 app:layout_constraintTop_toBottomOf="@id/ll_name_address_followers">
 
 
@@ -420,15 +424,16 @@
                         android:id="@+id/rlFirm"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:visibility="@{viewModel.isTraderSelected() == true ? View.VISIBLE : View.GONE}">
 
                         <View
                             android:id="@+id/v1"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_2sdp"
+                            android:layout_height="@dimen/_1sdp"
                             android:layout_alignParentTop="true"
-                            android:layout_marginBottom="@dimen/_32sdp"
-                            android:background="@color/gray" />
+                            android:layout_marginBottom="@dimen/_22sdp"
+                            android:background="@color/grey" />
 
 
                         <ImageView
@@ -483,11 +488,11 @@
                         <View
                             android:id="@+id/v2"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_2sdp"
+                            android:layout_height="@dimen/_1sdp"
                             android:layout_below="@+id/tv_addfirm"
-                            android:layout_marginTop="@dimen/_32sdp"
+                            android:layout_marginTop="@dimen/_22sdp"
                             android:layout_marginBottom="@dimen/_10sdp"
-                            android:background="@color/gray" />
+                            android:background="@color/grey" />
                     </RelativeLayout>
 
                     <RelativeLayout

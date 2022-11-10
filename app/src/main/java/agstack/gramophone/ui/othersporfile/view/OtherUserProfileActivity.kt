@@ -172,6 +172,7 @@ class OtherUserProfileActivity :
     }
 
     override fun setProfileImage(profileImage: String) {
+        if (profileImage.isNotNullOrEmpty() && !profileImage.equals("null"))
         Glide.with(this).load(profileImage).into(cv_profile_pic)
     }
 

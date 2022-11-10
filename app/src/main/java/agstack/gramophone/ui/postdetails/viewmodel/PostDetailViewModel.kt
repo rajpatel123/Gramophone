@@ -38,6 +38,7 @@ class PostDetailViewModel @Inject constructor(
  private var data: Data? = null
  var authorName = ObservableField<String>()
  var authorLocation = ObservableField<String>()
+ var isDataAvailable = ObservableField<Boolean>()
  var isAddress = ObservableField<Boolean>()
  var postDate = ObservableField<String>()
  var commentInput = ObservableField<String>()
@@ -65,7 +66,8 @@ class PostDetailViewModel @Inject constructor(
    try {
     if (getNavigator()?.isNetworkAvailable() == true) {
      val response = communityRepository.getPostDetails(postId)
-     if (response.isSuccessful) {
+     if (response.isSuccessful &&response.body()?.data!=null) {
+      isDataAvailable.set(true)
       data = response.body()?.data
       authorName.set(data?.author?.username)
       // authorLocation.set(data?.author)
@@ -124,7 +126,9 @@ class PostDetailViewModel @Inject constructor(
       imageAvailable.set(false)
      }
     }else{
-     getNavigator()?.onError(Utility.getErrorMessage(response.errorBody()))
+      isDataAvailable.set(false)
+
+      getNavigator()?.onError(Utility.getErrorMessage(response.errorBody()))
     }
    } else
     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)

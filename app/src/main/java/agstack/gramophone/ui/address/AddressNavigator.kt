@@ -24,5 +24,6 @@ interface AddressNavigator : BaseNavigator{
     fun setStateImage(imageUrl: String)
     fun requestForLocation()
     fun updateUi()
+    fun openStateList()
 
 }

@@ -29,8 +29,13 @@ class SelectOtherStateActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        stateList = intent.extras?.get(Constants.STATE_LIST) as GpApiResponseData
-        otherStateViewModel.loadList(stateList)
+        if (intent.extras?.containsKey(Constants.STATE_LIST) == true){
+            stateList = intent.extras?.get(Constants.STATE_LIST) as GpApiResponseData
+            otherStateViewModel.loadList(stateList)
+        }else{
+            otherStateViewModel.getStateList()
+        }
+
     }
 
     override fun getLayoutID(): Int {
