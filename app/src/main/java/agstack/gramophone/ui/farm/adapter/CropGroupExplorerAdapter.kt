@@ -1,7 +1,9 @@
 package agstack.gramophone.ui.farm.adapter
 
+import agstack.gramophone.R
 import agstack.gramophone.databinding.CardCropGroupExplorerItemBinding
 import agstack.gramophone.ui.farm.model.Data
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +29,7 @@ class CropGroupExplorerAdapter (
         )
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CropGroupExplorerViewHolder, position: Int) {
         holder.binding.item = list[position]
         holder.binding.isOldFarms = isOldFarms
@@ -41,6 +44,22 @@ class CropGroupExplorerAdapter (
 
         holder.binding.footerLayout.setOnClickListener {
             footerListener.invoke(list[position])
+        }
+
+        holder.binding.txtAddFarm.setTextColor(holder.binding.root.context.resources.getColor(R.color.orange))
+        if(isOldFarms && list[position].is_crop_cycle_completed!!){
+            if(list[position].harvested_quantity.isNullOrEmpty()){
+                holder.binding.txtAddFarm.text = holder.binding.root.context.getString(R.string.give_your_crop_details)
+            }else{
+                holder.binding.txtAddFarm.setTextColor(holder.binding.root.context.resources.getColor(R.color.black))
+                holder.binding.txtAddFarm.text = list[position].harvested_quantity + " " + list[position].harvested_quantity_unit
+            }
+        }else{
+            if(isOldFarms){
+                holder.binding.txtAddFarm.text = ""
+            }else{
+                holder.binding.txtAddFarm.text = holder.binding.root.context.getString(R.string.add_your_farm)
+            }
         }
     }
 

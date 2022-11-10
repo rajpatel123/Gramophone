@@ -78,7 +78,7 @@ class AddFarmActivity :
     }
 
     override fun onFarmAdded() {
-        EventBus.post(FarmEvent("added"))
+        EventBus.post(FarmEvent("farm_added"))
         showToast(getMessage(R.string.message_farm_added))
         finish()
     }

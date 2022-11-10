@@ -7,14 +7,18 @@ import agstack.gramophone.databinding.ActivityViewAllFarmsBinding
 import agstack.gramophone.ui.farm.adapter.ViewAllFarmsAdapter
 import agstack.gramophone.ui.farm.model.AddHarvestRequest
 import agstack.gramophone.ui.farm.model.Data
+import agstack.gramophone.ui.farm.model.FarmEvent
 import agstack.gramophone.ui.farm.model.unit.GpApiResponseData
 import agstack.gramophone.ui.farm.navigator.ViewAllFarmsNavigator
 import agstack.gramophone.ui.farm.viewmodel.ViewAllFarmsViewModel
 import agstack.gramophone.ui.home.view.fragments.market.model.CropData
+import agstack.gramophone.utils.EventBus
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.Disposable
 
 @AndroidEntryPoint
 class ViewAllFarmsActivity :
@@ -24,6 +28,7 @@ class ViewAllFarmsActivity :
     var bottomSheet: BottomSheetFarmInformation? = null
     var units: List<GpApiResponseData>? = null
     var selectedCrop: CropData? = null
+    private var disposable: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +61,12 @@ class ViewAllFarmsActivity :
             getViewModel().getOldFarms()
         }
 
+        disposable =  EventBus.subscribe<FarmEvent>()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                if(it.text ==  "harvest_info_added")
+                    refresh()
+            }
     }
 
     override fun onBackPressed() {
@@ -90,6 +101,11 @@ class ViewAllFarmsActivity :
         this.units = units
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable?.let { if(!it.isDisposed) it.dispose() }
+    }
+
     override fun setViewAllFarmsAdapter(
         farmsList: List<List<Data>>,
         isCustomerFarm: Boolean,
@@ -107,6 +123,8 @@ class ViewAllFarmsActivity :
                             "cropList", it as ArrayList<Data>
                         )
                         putBoolean("isOldFarms", isOldFarms)
+                        putParcelableArrayList("unitsList", units as ArrayList)
+                        putString("farm_ref_id", it[0].farm_ref_id)
                     })
                 }
             },
@@ -117,32 +135,39 @@ class ViewAllFarmsActivity :
                     cropImage = it[0].crop_image,
                 )
 
-                if (it.size == 1 && isOldFarms && it[0].is_crop_cycle_completed!! && !it[0].harvested_quantity.isNullOrEmpty()) {
-                    bottomSheet =
-                        BottomSheetFarmInformation { farm_reference_id, output_qty, output_unit_id ->
-                            getViewModel().addHarvestQues(
-                                AddHarvestRequest(
-                                    farm_reference_id,
-                                    output_qty,
-                                    output_unit_id
+                if (it.size == 1 && isOldFarms && it[0].is_crop_cycle_completed!!) {
+                    if (it[0].harvested_quantity.isNullOrEmpty()) {
+                        bottomSheet =
+                            BottomSheetFarmInformation { farm_reference_id, output_qty, output_unit_id ->
+                                getViewModel().addHarvestQues(
+                                    AddHarvestRequest(
+                                        farm_reference_id,
+                                        output_qty,
+                                        output_unit_id
+                                    )
                                 )
-                            )
-                        }
-                    val bundle = Bundle()
-                    bundle.putParcelableArrayList("unitsList", units as ArrayList)
-                    bundle.putString("farm_ref_id", it[0].farm_ref_id)
-                    bottomSheet?.arguments = bundle
-                    bottomSheet?.show(
-                        this@ViewAllFarmsActivity.supportFragmentManager,
-                        "bottom_sheet"
-                    )
-
+                            }
+                        val bundle = Bundle()
+                        bundle.putParcelableArrayList("unitsList", units as ArrayList)
+                        bundle.putString("farm_ref_id", it[0].farm_ref_id)
+                        bottomSheet?.arguments = bundle
+                        bottomSheet?.show(
+                            this@ViewAllFarmsActivity.supportFragmentManager,
+                            "bottom_sheet"
+                        )
+                    } else {
+                        // do nothing
+                    }
                 } else {
-                    openActivity(
-                        AddFarmActivity::class.java,
-                        Bundle().apply {
-                            putParcelable("selectedCrop", selectedCrop)
-                        })
+                    if (isOldFarms) {
+                        // do nothing
+                    } else {
+                        openActivity(
+                            AddFarmActivity::class.java,
+                            Bundle().apply {
+                                putParcelable("selectedCrop", selectedCrop)
+                            })
+                    }
                 }
             },
             isOldFarms = isOldFarms
@@ -162,13 +187,13 @@ class ViewAllFarmsActivity :
         bottomSheet?.dismiss()
         refresh()
 
-        val dialog = InfoSubmittedDialog {
+        val dialog = InfoSubmittedDialog({}, {
             openActivity(
                 AddFarmActivity::class.java,
                 Bundle().apply {
                     putParcelable("selectedCrop", selectedCrop)
                 })
-        }
+        })
 
         dialog.show(this@ViewAllFarmsActivity.supportFragmentManager, "custom_sheet")
     }
