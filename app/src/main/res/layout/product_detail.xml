@@ -60,7 +60,7 @@
                             doubleToFloatRating="@{viewModel.productReviewsData.rating.totalRating}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_minus25sdp"
+                            android:layout_marginStart="@dimen/_minus25sdp"
                             android:isIndicator="true"
                             android:numStars="5"
                             android:scaleX=".6"
@@ -73,13 +73,14 @@
                             android:id="@+id/tvTotalReviews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
                             android:fontFamily="@font/manrope_bold"
-                            android:hint="15 Farmers"
+                            tools:text="15 Farmers"
                             android:text="@{viewModel.productReviewsData.rating.totalReview.toString()+` `+ @string/farmers}"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_13ssp"
-                            android:visibility="@{viewModel.productReviewsData.rating.totalRating>0?View.VISIBLE : View.INVISIBLE}" />
+                            android:visibility="gone" />
+                        <!--android:visibility="@{viewModel.productReviewsData.rating.totalRating>0?View.VISIBLE : View.INVISIBLE}"-->
 
 
                     </LinearLayout>
@@ -105,6 +106,7 @@
                                 app:srcCompat="@drawable/ic_whatsapp" />
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/whatsAppShare"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
