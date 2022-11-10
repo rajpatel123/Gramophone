@@ -166,7 +166,7 @@ class CommunityViewModel @Inject constructor(
 
                     val response = communityRepository.getProfileData(uuid)
                     showProgress.set(false)
-                    if (response.isSuccessful) {
+                    if (response.isSuccessful && response.body()!=null) {
                         profileData.set(response.body()?.data!!)
                         if (!TextUtils.isEmpty("" + response.body()?.data?.photoUrl))
                             getNavigator()?.setProfileImage("" + response.body()?.data?.photoUrl)
@@ -194,6 +194,7 @@ class CommunityViewModel @Inject constructor(
                         followers.set(response.body()?.data!!.totalFollowers.toString())
                         followeee.set(response.body()?.data!!.totalFollowees.toString())
                     } else {
+                        isGeneral.set(false)
                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                     }
                 } else
