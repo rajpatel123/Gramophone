@@ -28,29 +28,32 @@
             android:layout_marginBottom="@dimen/_3sdp"
             app:srcCompat="@drawable/dummy_profile" />
 
-        <TextView
-            android:id="@+id/name"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_centerVertical="true"
+           android:layout_marginEnd="@dimen/_90sdp"
             android:layout_toEndOf="@+id/imageView"
-            android:text="@{model.username}"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold"
-            tools:text="Raj patel" />
 
-        <TextView
-            android:id="@+id/tv_address_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_toEndOf="@+id/imageView"
-            android:text="@{model.address_short}"
-            android:textSize="@dimen/_10ssp"
-            tools:text="Utter Pradesh" />
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{model.username}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                tools:text="Raj patel" />
+
+            <TextView
+                android:id="@+id/tv_address_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{model.address_short}"
+                android:textSize="@dimen/_10ssp"
+                tools:text="Utter Pradesh" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_follow"
@@ -59,6 +62,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/_16sdp"
+            android:background="@{model.following?@drawable/following_bg:@drawable/follow}"
             android:fontFamily="@font/manrope_semibold"
             android:gravity="center"
             android:paddingStart="@dimen/_6sdp"
@@ -66,16 +70,17 @@
             android:paddingEnd="@dimen/_6sdp"
             android:paddingBottom="@dimen/_3sdp"
             android:text="@{model.following?@string/following:@string/follow}"
-            android:background="@{model.following?@drawable/following_bg:@drawable/follow}"
             android:textColor="@color/gjg"
             android:textSize="@dimen/_10ssp"
             android:textStyle="bold"
             tools:text="Follow" />
 
-
-
-
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_below="@+id/imageView"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:background="@color/grey" />
     </RelativeLayout>
 
 </layout>

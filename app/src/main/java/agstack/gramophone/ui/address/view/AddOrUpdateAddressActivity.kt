@@ -10,22 +10,23 @@ import agstack.gramophone.ui.address.adapter.AddressDataListAdapter
 import agstack.gramophone.ui.address.model.AddressDataModel
 import agstack.gramophone.ui.address.viewmodel.AddOrUpdateAddressViewModel
 import agstack.gramophone.ui.home.view.HomeActivity
+import agstack.gramophone.ui.profile.model.UserAddress
 import agstack.gramophone.utils.Constants
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
-import com.google.android.gms.location.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_or_update_address.*
-import java.util.*
 
 
 @AndroidEntryPoint
@@ -33,7 +34,35 @@ class AddOrUpdateAddressActivity :
     BaseActivityWrapper<ActivityAddOrUpdateAddressBinding, AddressNavigator, AddOrUpdateAddressViewModel>(),
     AddressNavigator {
 
+    private var addressReceivedfromBundle: UserAddress? = null
     private val addOrUpdateAddressViewModel: AddOrUpdateAddressViewModel by viewModels()
+    var stateListIntentLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                if (data?.hasExtra(Constants.STATE_NAME) == true) {
+                    if (!(addressReceivedfromBundle!=null && addressReceivedfromBundle!!.state.equals(data?.getStringExtra(Constants.STATE_NAME) as String))){
+                        addOrUpdateAddressViewModel.districtName.set("")
+//                        addOrUpdateAddressViewModel.tehsilName.set("")
+//                        addOrUpdateAddressViewModel.villageName.set("")
+//                        addOrUpdateAddressViewModel.pinCode.set("")
+                        addOrUpdateAddressViewModel.address.set("")
+
+                        addOrUpdateAddressViewModel.setStatesName(
+                            data?.getStringExtra(Constants.STATE_NAME) as String,
+                            null
+                        )
+                        addOrUpdateAddressViewModel.getDistrict(
+                            "district",
+                            data?.getStringExtra(Constants.STATE_NAME) as String,
+                            "",
+                            ""
+                        )
+                    }
+                }
+
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +73,8 @@ class AddOrUpdateAddressActivity :
             )
         }
         watchSpinners()
+
+        addOrUpdateAddressViewModel.checkPermissionAndUpdateUi()
     }
 
     override fun getLayoutID(): Int {
@@ -236,7 +267,7 @@ class AddOrUpdateAddressActivity :
             viewDataBinding.ivBack.visibility = View.VISIBLE
             viewDataBinding.saveBtn.visibility=View.VISIBLE
             if(intent?.extras?.containsKey(Constants.ADDRESSOBJECT)==true){
-                val addressReceivedfromBundle =
+                 addressReceivedfromBundle =
                     intent?.getParcelableExtra<agstack.gramophone.ui.profile.model.UserAddress>(
                         Constants.ADDRESSOBJECT
                     )
@@ -245,8 +276,9 @@ class AddOrUpdateAddressActivity :
 
 
         } else {
+
             viewDataBinding.ivBack.visibility = View.GONE
-            viewDataBinding.saveBtn.visibility=View.GONE
+            viewDataBinding.saveBtn.visibility = View.GONE
             if (intent?.extras?.containsKey(Constants.STATE) == true) {
                 addOrUpdateAddressViewModel.setStatesName(
                     intent?.extras?.get(Constants.STATE) as String,
@@ -261,7 +293,28 @@ class AddOrUpdateAddressActivity :
             } else {
                 addOrUpdateAddressViewModel.getAddressByLocation()
             }
+
+//            if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) == true) {
+//
+//            } else {
+//                requestForLocation()
+//            }
+
+
         }
+    }
+
+    override fun openStateList() {
+        if (intent?.extras?.containsKey(Constants.FROM_EDIT_PROFILE) != true) {
+            openAndFinishActivity(StateListActivity::class.java, Bundle().apply {
+                putString(Constants.CHANGE_STATE, Constants.CHANGE_STATE)
+            })
+        } else {
+            val stateIntent = Intent(this, SelectOtherStateActivity::class.java)
+            stateListIntentLauncher.launch(stateIntent)
+        }
+
+
     }
 
     override fun goToApp() {
@@ -320,11 +373,12 @@ class AddOrUpdateAddressActivity :
 
     override fun onResume() {
         super.onResume()
-        addOrUpdateAddressViewModel.checkPermissionAndUpdateUi()
+
     }
 
     override fun onBackPressClick() {
         super.onBackPressed()
     }
+
 
 }

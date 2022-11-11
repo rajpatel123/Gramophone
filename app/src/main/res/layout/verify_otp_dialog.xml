@@ -41,7 +41,7 @@
                 style="@style/small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/_4sdp"
                 android:text="@string/enter_6_digit_code"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_10ssp" />
@@ -158,7 +158,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -225,7 +225,7 @@
         </LinearLayout>
 
         <View
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_2sdp"
             android:background="@color/viewcolor"/>
@@ -233,7 +233,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp">
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+          >
 
 
             <TextView
@@ -242,13 +245,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:fontFamily="@font/manrope_semibold"
-                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_centerVertical="true"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:enabled="@{viewModel.isVerifyEnable? true:false}"
+                android:fontFamily="@font/manrope_semibold"
                 android:onClick="@{ ()-> viewModel.onVerifyClick() }"
                 android:text="@string/verify"
-                android:textColor="@color/brand_color"/>
+                android:textColor="@color/brand_color" />
 
 
             <TextView
@@ -256,13 +259,14 @@
                 style="@style/TextSize14Sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_20sdp"
                 android:layout_centerVertical="true"
-                android:fontFamily="@font/manrope_semibold"
+                android:layout_marginEnd="@dimen/_20ssp"
+
                 android:layout_toLeftOf="@id/tv_verify"
+                android:fontFamily="@font/manrope_semibold"
                 android:onClick="@{ ()-> viewModel.onCancelClick() }"
                 android:text="@string/cancel"
-                android:textColor="@color/gray"/>
+                android:textColor="@color/gray" />
         </RelativeLayout>
     </LinearLayout>
 

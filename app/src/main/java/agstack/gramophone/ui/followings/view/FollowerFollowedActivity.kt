@@ -15,6 +15,7 @@ import android.view.View.VISIBLE
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.amnix.xtension.extensions.setOnSwipeListener
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +32,11 @@ class FollowerFollowedActivity :
         followerFollowingViewModel.initList()
         setUpToolBar(true, getString(R.string.followers).plus(" & ").plus(getString(R.string.following)), R.drawable.ic_arrow_left)
 
+        swipeRefresh.setOnRefreshListener {
+            swipeRefresh.isRefreshing=true
+            refreshList()
+
+        }
         viewDataBinding.tabLayout.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
            override fun onTabSelected(tab: TabLayout.Tab) {
@@ -53,7 +59,23 @@ class FollowerFollowedActivity :
         })
     }
 
+    private fun refreshList() {
+        when(viewDataBinding.tabLayout.selectedTabPosition){
+            0->{
+                followerFollowingViewModel.getFollowers()
+            }
 
+            1->{
+                followerFollowingViewModel.getFollowing()
+            }
+        }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        refreshList()
+    }
     override fun getLayoutID(): Int {
         return R.layout.activity_follower_falowee
     }
@@ -67,6 +89,7 @@ class FollowerFollowedActivity :
     }
 
     override fun updateList(followsAdapter: FollowsAdapter, followClciked: (Data) -> Unit,profileClciked: (Data) -> Unit) {
+        swipeRefresh.isRefreshing=false
         followsAdapter.followClicked = followClciked
         followsAdapter.profileClicked = profileClciked
         followsAdapter.setImage = this
@@ -82,6 +105,8 @@ class FollowerFollowedActivity :
     }
 
     override fun updateListFollowee(followsAdapter: FollowsAdapter, followClciked: (Data) -> Unit,profileClciked: (Data) -> Unit) {
+        swipeRefresh.isRefreshing=false
+
         followsAdapter.followClicked = followClciked
         followsAdapter.profileClicked = profileClciked
         followsAdapter.setImage = this
