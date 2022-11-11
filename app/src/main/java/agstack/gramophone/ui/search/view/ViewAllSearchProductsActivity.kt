@@ -3,13 +3,13 @@ package agstack.gramophone.ui.search.view
 import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
+import agstack.gramophone.base.BaseNavigator
+import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.databinding.ActivityViewAllSearchProductsBinding
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.search.adapter.ProductsAdapter
 import agstack.gramophone.ui.search.model.Data
-import agstack.gramophone.ui.search.navigator.ViewAllSearchProductsNavigator
-import agstack.gramophone.ui.search.viewmodel.ViewAllSearchProductsViewModel
 import agstack.gramophone.utils.Constants
 import android.content.Context
 import android.content.Intent
@@ -22,8 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ViewAllSearchProductsActivity :
-    BaseActivityWrapper<ActivityViewAllSearchProductsBinding, ViewAllSearchProductsNavigator, ViewAllSearchProductsViewModel>(),
-    ViewAllSearchProductsNavigator {
+    BaseActivityWrapper<ActivityViewAllSearchProductsBinding, BaseNavigator, BaseViewModel<BaseNavigator>>(),
+    BaseNavigator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,8 +63,8 @@ class ViewAllSearchProductsActivity :
         return BR.viewModel
     }
 
-    override fun getViewModel(): ViewAllSearchProductsViewModel {
-        val viewModel: ViewAllSearchProductsViewModel by viewModels()
+    override fun getViewModel(): BaseViewModel<BaseNavigator>  {
+        val viewModel: BaseViewModel<BaseNavigator>  by viewModels()
         return viewModel
     }
 
