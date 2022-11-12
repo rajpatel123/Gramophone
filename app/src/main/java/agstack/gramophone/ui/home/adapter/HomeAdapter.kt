@@ -56,17 +56,57 @@ class HomeAdapter(
         articlesData: HashMap<String, ArrayList<FormattedArticlesData>>,
         weatherResponse: WeatherResponse?,
     ) {
+
+    }
+
+    fun notifyBannerItemInserted(allBannerResponse: BannerResponse?, position: Int) {
         this.allBannerResponse = allBannerResponse
+        notifyItemChanged(position)
+    }
+
+    fun notifyCategoryItemInserted(categoryResponse: CategoryResponse?, position: Int) {
         this.categoryResponse = categoryResponse
+        notifyItemChanged(position)
+    }
+
+    fun notifyFeaturedItemInserted(allProductsResponse: AllProductsResponse?, position: Int) {
         this.allProductsResponse = allProductsResponse
+        notifyItemChanged(position)
+    }
+
+    fun notifyCropItemInserted(cropResponse: CropResponse?, position: Int) {
         this.cropResponse = cropResponse
+        notifyItemChanged(position)
+    }
+
+    fun notifyStoreItemInserted(storeResponse: StoreResponse?, position: Int) {
         this.storeResponse = storeResponse
+        notifyItemChanged(position)
+    }
+
+    fun notifyCompanyItemInserted(companyResponse: CompanyResponse?, position: Int) {
         this.companyResponse = companyResponse
+        notifyItemChanged(position)
+    }
+
+    fun notifyCartItemInserted(cartList: List<CartItem>?, position: Int) {
         this.cartList = cartList
+        notifyItemChanged(position)
+    }
+
+    fun notifyFarmItemInserted(farmResponse: FarmResponse?, position: Int) {
         this.farmResponse = farmResponse
+        notifyItemChanged(position)
+    }
+
+    fun notifyArticleItemInserted(articlesData: HashMap<String, ArrayList<FormattedArticlesData>>, position: Int) {
         this.articlesData = articlesData
+        notifyItemChanged(position)
+    }
+
+    fun notifyWeatherItemInserted(weatherResponse: WeatherResponse?, position: Int) {
         this.weatherResponse = weatherResponse
-        notifyDataSetChanged()
+        notifyItemChanged(position)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -599,51 +639,7 @@ class HomeAdapter(
     }
 
     override fun getItemId(position: Int): Long {
-        when (homeScreenSequenceList[position]) {
-            Constants.HOME_BANNER_1 -> {
-                return Constants.HOME_BANNER_VIEW_TYPE.toLong()
-            }
-            Constants.HOME_BANNER_EXCLUSIVE -> {
-                return Constants.HOME_BANNER_EXCLUSIVE_VIEW_TYPE.toLong()
-            }
-            Constants.HOME_BANNER_REFERRAL -> {
-                return Constants.HOME_BANNER_REFERRAL_VIEW_TYPE.toLong()
-            }
-            Constants.HOME_SHOP_BY_CATEGORY -> {
-                return Constants.HOME_SHOP_BY_CATEGORY_VIEW_TYPE.toLong()
-            }
-            Constants.HOME_FEATURED_PRODUCTS -> {
-                return Constants.HOME_FEATURED_PRODUCTS_VIEW_TYPE.toLong()
-            }
-            Constants.HOME_SHOP_BY_CROP -> {
-                return Constants.HOME_SHOP_BY_CROP_VIEW_TYPE.toLong()
-            }
-            Constants.HOME_SHOP_BY_STORE -> {
-                return Constants.HOME_SHOP_BY_STORE_VIEW_TYPE.toLong()
-            }
-            Constants.HOME_SHOP_BY_COMPANY -> {
-                return Constants.HOME_SHOP_BY_COMPANY_VIEW_TYPE.toLong()
-            }
-            Constants.HOME_GRAMOPHONE_PROMISE -> {
-                return Constants.HOME_GRAMOPHONE_PROMISE_VIEW_TYPE.toLong()
-            }
-            Constants.HOME_CART -> {
-                return Constants.HOME_CART_VIEW_TYPE.toLong()
-            }
-            Constants.HOME_FARMS -> {
-                return Constants.HOME_FARMS_VIEW_TYPE.toLong()
-            }
-            Constants.HOME_ARTICLES -> {
-                return Constants.HOME_ARTICLES_VIEW_TYPE.toLong()
-            }
-            Constants.HOME_COMMUNITY -> {
-                return Constants.HOME_COMMUNITY_VIEW_TYPE.toLong()
-            }
-            Constants.HOME_WEATHER -> {
-                return Constants.HOME_WEATHER_VIEW_TYPE.toLong()
-            }
-        }
-        return Constants.HOME_EMPTY_VIEW_TYPE.toLong()
+        return position.toLong()
     }
 
     override fun getItemCount(): Int {

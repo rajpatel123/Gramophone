@@ -152,6 +152,53 @@ class MarketFragment :
             weatherResponse)
     }
 
+    override fun notifyBannerItemInserted(allBannerResponse: BannerResponse?, position: Int) {
+        homeAdapter?.notifyBannerItemInserted(allBannerResponse, position)
+    }
+
+    override fun notifyCategoryItemInserted(categoryResponse: CategoryResponse?, position: Int) {
+        homeAdapter?.notifyCategoryItemInserted(categoryResponse, position)
+    }
+
+    override fun notifyFeaturedItemInserted(
+        allProductsResponse: AllProductsResponse?,
+        position: Int,
+    ) {
+        homeAdapter?.notifyFeaturedItemInserted(allProductsResponse, position)
+    }
+
+    override fun notifyCropItemInserted(cropResponse: CropResponse?, position: Int) {
+        homeAdapter?.notifyCropItemInserted(cropResponse, position)
+    }
+
+    override fun notifyStoreItemInserted(storeResponse: StoreResponse?, position: Int) {
+        homeAdapter?.notifyStoreItemInserted(storeResponse, position)
+    }
+
+    override fun notifyCompanyItemInserted(companyResponse: CompanyResponse?, position: Int) {
+        homeAdapter?.notifyCompanyItemInserted(companyResponse, position)
+    }
+
+    override fun notifyCartItemInserted(cartList: List<CartItem>?, position: Int) {
+        homeAdapter?.notifyCartItemInserted(cartList, position)
+    }
+
+    override fun notifyFarmItemInserted(farmResponse: FarmResponse?, position: Int) {
+        homeAdapter?.notifyFarmItemInserted(farmResponse, position)
+    }
+
+    override fun notifyArticleItemInserted(
+        articlesData: HashMap<String, ArrayList<FormattedArticlesData>>,
+        position: Int,
+    ) {
+        homeAdapter?.notifyArticleItemInserted(
+            articlesData, position)
+    }
+
+    override fun notifyWeatherItemInserted(weatherResponse: WeatherResponse?, position: Int) {
+        homeAdapter?.notifyWeatherItemInserted(weatherResponse, position)
+    }
+
     override fun onResume() {
         super.onResume()
         marketFragmentViewModel.getBanners(false)
