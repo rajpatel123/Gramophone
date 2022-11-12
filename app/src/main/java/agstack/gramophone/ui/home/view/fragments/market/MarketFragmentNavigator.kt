@@ -24,5 +24,25 @@ interface MarketFragmentNavigator : BaseNavigator {
         weatherResponse: WeatherResponse?
     )
 
+    fun notifyBannerItemInserted(allBannerResponse: BannerResponse?, position: Int)
+
+    fun notifyCategoryItemInserted(categoryResponse: CategoryResponse?, position: Int)
+
+    fun notifyFeaturedItemInserted(allProductsResponse: AllProductsResponse?, position: Int)
+
+    fun notifyCropItemInserted(cropResponse: CropResponse?, position: Int)
+
+    fun notifyStoreItemInserted(storeResponse: StoreResponse?, position: Int)
+
+    fun notifyCompanyItemInserted(companyResponse: CompanyResponse?, position: Int)
+
+    fun notifyCartItemInserted(cartList: List<CartItem>?, position: Int)
+
+    fun notifyFarmItemInserted(farmResponse: FarmResponse?, position: Int)
+
+    fun notifyArticleItemInserted(articlesData: HashMap<String, ArrayList<FormattedArticlesData>>, position: Int)
+
+    fun notifyWeatherItemInserted(weatherResponse: WeatherResponse?, position: Int)
+
     fun launchCommunityFragment()
 }

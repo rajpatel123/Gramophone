@@ -34,6 +34,7 @@ class MarketFragmentViewModel
     private val weatherRepository: WeatherRepository,
 ) : BaseViewModel<MarketFragmentNavigator>() {
 
+    var homeScreenSequenceList: List<String> = ArrayList()
     var allProductsResponse: AllProductsResponse? = null
     var cropResponse: CropResponse? = null
     var storeResponse: StoreResponse? = null
@@ -67,8 +68,9 @@ class MarketFragmentViewModel
             try {
                 val response = productRepository.getHomeData()
                 if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
-                    val list = response.body()?.gp_api_response_data?.home_screen_sequence!!
-                    getNavigator()?.setHomeAdapter(HomeAdapter(list,
+                    homeScreenSequenceList =
+                        response.body()?.gp_api_response_data?.home_screen_sequence!!
+                    getNavigator()?.setHomeAdapter(HomeAdapter(homeScreenSequenceList,
                         allBannerResponse,
                         categoryResponse,
                         allProductsResponse,
@@ -89,6 +91,15 @@ class MarketFragmentViewModel
                 }
             }
         }
+    }
+
+    private fun assignPosition(viewType: String): Int {
+        for ((index, item) in homeScreenSequenceList.withIndex()) {
+            if (item == viewType) {
+                return index
+            }
+        }
+        return homeScreenSequenceList.size - 1
     }
 
     /*
@@ -115,7 +126,9 @@ class MarketFragmentViewModel
                         )
                     }
                 }
-                notifyAdapter()
+                getNavigator()?.notifyBannerItemInserted(allBannerResponse, assignPosition(Constants.HOME_BANNER_1))
+                getNavigator()?.notifyBannerItemInserted(allBannerResponse, assignPosition(Constants.HOME_BANNER_REFERRAL))
+                getNavigator()?.notifyBannerItemInserted(allBannerResponse, assignPosition(Constants.HOME_BANNER_EXCLUSIVE))
             } catch (ex: Exception) {
                 ex.printStackTrace()
             }
@@ -127,7 +140,7 @@ class MarketFragmentViewModel
             try {
                 val response = productRepository.getFeaturedProducts(PageLimitRequest("10", "1"))
                 allProductsResponse = response.body()
-                notifyAdapter()
+                getNavigator()?.notifyFeaturedItemInserted(allProductsResponse, assignPosition(Constants.HOME_FEATURED_PRODUCTS))
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -142,7 +155,7 @@ class MarketFragmentViewModel
             try {
                 val response = productRepository.getCategories()
                 categoryResponse = response.body()
-                notifyAdapter()
+                getNavigator()?.notifyCategoryItemInserted(categoryResponse, assignPosition(Constants.HOME_SHOP_BY_CATEGORY))
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -167,7 +180,7 @@ class MarketFragmentViewModel
                         cropList.subList(0, 9)
                     else cropList
                 }
-                notifyAdapter()
+                getNavigator()?.notifyCropItemInserted(cropResponse, assignPosition(Constants.HOME_SHOP_BY_CROP))
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -192,7 +205,7 @@ class MarketFragmentViewModel
                         storeList.subList(0, 4)
                     else storeList
                 }
-                notifyAdapter()
+                getNavigator()?.notifyStoreItemInserted(storeResponse, assignPosition(Constants.HOME_SHOP_BY_STORE))
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -214,7 +227,7 @@ class MarketFragmentViewModel
                     ) {
                         weatherResponse = response.body()
                     }
-                    notifyAdapter()
+                    getNavigator()?.notifyWeatherItemInserted(weatherResponse, assignPosition(Constants.HOME_WEATHER))
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -237,7 +250,7 @@ class MarketFragmentViewModel
                         companyList.subList(0, 6)
                     else companyList
                 }
-                notifyAdapter()
+                getNavigator()?.notifyCompanyItemInserted(companyResponse, assignPosition(Constants.HOME_SHOP_BY_COMPANY))
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -256,7 +269,7 @@ class MarketFragmentViewModel
                 ) {
                     cartList = response.body()?.gp_api_response_data?.cart_items
                 }
-                notifyAdapter()
+                getNavigator()?.notifyCartItemInserted(cartList, assignPosition(Constants.HOME_CART))
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -275,7 +288,7 @@ class MarketFragmentViewModel
                 ) {
                     farmResponse = response.body()
                 }
-                notifyAdapter()
+                getNavigator()?.notifyFarmItemInserted(farmResponse, assignPosition(Constants.HOME_FARMS))
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -470,21 +483,21 @@ class MarketFragmentViewModel
                     }
                     articlesData[Constants.SUGGESTED_ARTICLES] = suggestedArticlesList
                 }
-                notifyAdapter()
+                getNavigator()?.notifyArticleItemInserted(articlesData, assignPosition(Constants.HOME_ARTICLES))
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
                     else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
-                notifyAdapter()
+                getNavigator()?.notifyArticleItemInserted(articlesData, assignPosition(Constants.HOME_ARTICLES))
             }
         }
     }
 
-    private fun notifyAdapter() {
+    /*private fun notifyAdapter() {
         getNavigator()?.notifyHomeAdapter(
             allBannerResponse, categoryResponse, allProductsResponse,
             cropResponse,
             storeResponse, companyResponse, cartList, farmResponse, articlesData, weatherResponse)
-    }
+    }*/
 }
