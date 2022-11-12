@@ -128,9 +128,12 @@ class OrderDetailsViewModel @Inject constructor(
                                 "Order Dispatched")
                         ) {
                             val orderStatusMessage =
-                                responseData.vr_info.name + ";<br>" + getNavigator()?.getMessage(R.string.phone) + " <font color = '#10203E'>" + if (responseData.vr_info.mobile_no.isNotNullOrEmpty())
-                                    responseData.vr_info.mobile_no else getNavigator()?.getMessage(R.string.not_available) + "</font></b> " + getNavigator()?.getMessage(
-                                    R.string.order_has_been_assigned)
+                                responseData.vr_info.name + ";<br>" + getNavigator()?.getMessage(R.string.phone) + " <font color = '#10203E'>" +
+                                        if (responseData.vr_info.mobile_no.isNotNullOrEmpty()) {
+                                            responseData.vr_info.mobile_no
+                                        } else {
+                                            getNavigator()?.getMessage(R.string.not_available)
+                                        } + "</font></b> " + getNavigator()?.getMessage(R.string.order_has_been_assigned)
                             this@OrderDetailsViewModel.orderStatusMessage.value = orderStatusMessage
                         } else {
                             this@OrderDetailsViewModel.orderStatusMessage.value =
