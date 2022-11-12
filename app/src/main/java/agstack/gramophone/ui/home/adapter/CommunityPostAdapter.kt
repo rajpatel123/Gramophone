@@ -423,6 +423,10 @@ class CommunityPostAdapter(
             onProfileImageClicked?.invoke(data)
         }
 
+        holder.itemPostBinding.tvName.setOnClickListener {
+            onProfileImageClicked?.invoke(data)
+        }
+
         holder.itemPostBinding.tvLikes.setOnClickListener {
             onItemLikesClicked?.invoke(data?._id!!)
         }

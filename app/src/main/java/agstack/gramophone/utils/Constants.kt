@@ -7,6 +7,7 @@ import android.content.Context
 
 object Constants {
 
+    val BLOCKED_STATUS: String="blockStatus"
     val POLL: String = "poll"
     val QUIZ: String = "quiz"
     val PAGE: String = "follower"

@@ -26,10 +26,11 @@ class FollowerFollowedActivity :
     BaseActivityWrapper<ActivityFollowerFaloweeBinding, FollowerFollowingNavigator, FollowerFollowingViewModel>(),
     FollowerFollowingNavigator, FollowsAdapter.SetImage {
     private val followerFollowingViewModel: FollowerFollowingViewModel by viewModels()
-
+    private var isListLoaded:Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         followerFollowingViewModel.initList()
+        isListLoaded=true
         setUpToolBar(true, getString(R.string.followers).plus(" & ").plus(getString(R.string.following)), R.drawable.ic_arrow_left)
 
         swipeRefresh.setOnRefreshListener {
@@ -69,11 +70,17 @@ class FollowerFollowedActivity :
                 followerFollowingViewModel.getFollowing()
             }
         }
+        isListLoaded=true
     }
 
 
+    override fun onPause() {
+        super.onPause()
+        isListLoaded=false
+    }
     override fun onResume() {
         super.onResume()
+        if (!isListLoaded)
         refreshList()
     }
     override fun getLayoutID(): Int {

@@ -156,8 +156,15 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
-    fun getProfile() {
-        blockStr.set("Block User")
+    fun getProfile(blockedStatus: Int) {
+        if (blockedStatus == 1) {
+            blockStr.set("Unblock User")
+            block="unblock"
+        } else{
+            blockStr.set("Block User")
+            block="block"
+
+        }
         showProgress.set(true)
         viewModelScope.launch {
 
@@ -166,7 +173,7 @@ class CommunityViewModel @Inject constructor(
 
                     val response = communityRepository.getProfileData(uuid)
                     showProgress.set(false)
-                    if (response.isSuccessful && response.body()!=null) {
+                    if (response.isSuccessful && response.body() != null) {
                         profileData.set(response.body()?.data!!)
                         if (!TextUtils.isEmpty("" + response.body()?.data?.photoUrl))
                             getNavigator()?.setProfileImage("" + response.body()?.data?.photoUrl)
