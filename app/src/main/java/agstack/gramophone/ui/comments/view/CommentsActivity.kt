@@ -25,6 +25,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.amnix.xtension.extensions.hideKeyboard
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.canhub.cropper.CropImageContract
@@ -170,6 +171,14 @@ class CommentsActivity :
         viewDataBinding.tvCommentBottom.setText(data.text)
     }
 
+    override fun showImage(it: Data) {
+       viewDataBinding.ivFullImage.hideKeyboard()
+
+        Glide.with(this)
+        .load(it.image)
+        .into(viewDataBinding.ivFullImage)
+    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
@@ -192,8 +201,10 @@ class CommentsActivity :
     override fun updateCommentsList(
         commentsAdapter: CommentsAdapter,
         onDeleteComment: (data: Data) -> Unit,
-        onEditCommentMenuClicked: (data: Data) -> Unit
+        onEditCommentMenuClicked: (data: Data) -> Unit,
+        onImageViewClciked: (data: Data) -> Unit
     ) {
+        commentsAdapter.onImageViewClciked = onImageViewClciked
         commentsAdapter.onDeleteComment = onDeleteComment
         commentsAdapter.onEditCommentMenuClicked = onEditCommentMenuClicked
         rvCommentsDialog?.layoutManager =

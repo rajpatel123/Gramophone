@@ -395,7 +395,9 @@ class CommunityViewModel @Inject constructor(
 
                         },
                         {
+                            showProgress.set(true)
                             likePost(it._id, it.position)
+
                         },
                         {
                             if (it.bookMarked) {
@@ -613,7 +615,6 @@ class CommunityViewModel @Inject constructor(
                     val response =
                         communityRepository.followPost(FollowRequestModel(it.author.uuid))
                     if (response.isSuccessful) {
-                        showProgress.set(false)
 
                         var post = communityPostAdapter.getItem(it.position!!)
                         if (response.body()?.data?.following == true) {
@@ -625,10 +626,10 @@ class CommunityViewModel @Inject constructor(
 
 
                     } else {
-                        showProgress.set(false)
-
                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                     }
+                    showProgress.set(false)
+
                 } else
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
             } catch (ex: Exception) {
@@ -714,6 +715,8 @@ class CommunityViewModel @Inject constructor(
     }
 
     private fun likePost(_id: String, position: Int?) {
+        showProgress.set(true)
+
         viewModelScope.launch {
 
             try {
@@ -729,7 +732,12 @@ class CommunityViewModel @Inject constructor(
                     }
                 } else
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+
+              //  showProgress.set(false)
+
             } catch (ex: Exception) {
+               // showProgress.set(false)
+
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
                     else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
@@ -853,7 +861,7 @@ class CommunityViewModel @Inject constructor(
 
     fun getQuiz() {
         viewModelScope.launch {
-            delay(3000)
+            //delay(3000)
             try {
 
                 if (getNavigator()?.isNetworkAvailable() == true) {
