@@ -34,6 +34,8 @@ class GlobalSearchActivity :
     private val originalSearchResultList = arrayListOf<Data>()
     private val filterSearchResultList = arrayListOf<Data>()
     private var searchInCommunity = false
+    private var disableSearchForAWhile = false
+    private val handler =  Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,14 +44,21 @@ class GlobalSearchActivity :
         searchSuggestions()
 
         viewDataBinding.recyclerViewSuggestions.adapter = SuggestionAdapter(suggestionList) {
+            disableSearchForAWhile = true
+            handler.postDelayed({
+                disableSearchForAWhile = false
+            }, 1500)
+
             hideSoftKeyboard(viewDataBinding.edtSearch)
+            viewDataBinding.edtSearch.setText(it)
+            viewDataBinding.edtSearch.setSelection(it.length)
             getViewModel().searchByKeyword(GlobalSearchRequest(it), searchInCommunity)
         }
         viewDataBinding.recyclerViewSearchResult.adapter = SearchResultAdapter(filterSearchResultList) {
             showToast(it)
         }
 
-        Handler(Looper.getMainLooper()).postDelayed({
+        handler.postDelayed({
             viewDataBinding.edtSearch.requestFocus();
             showSoftKeyboard(viewDataBinding.edtSearch)
         }, 300)
@@ -59,6 +68,11 @@ class GlobalSearchActivity :
     override fun onPause() {
         super.onPause()
         hideSoftKeyboard(viewDataBinding.edtSearch)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
     }
 
     fun getBundle(): Bundle? {
@@ -150,7 +164,7 @@ class GlobalSearchActivity :
     private fun searchSuggestions() {
         RxSearchObservable.fromView(viewDataBinding.edtSearch)
             .debounce(800, TimeUnit.MILLISECONDS)
-            .filter { !it.isNullOrEmpty() }
+            .filter { !it.isNullOrEmpty() && !disableSearchForAWhile}
             .map { s -> s.toString().lowercase(Locale.getDefault()).trim() }
            /* .distinctUntilChanged()*/
             .switchMap { Flowable.just(it) }
@@ -163,11 +177,13 @@ class GlobalSearchActivity :
         viewDataBinding.tabBarContainer.visibility = View.VISIBLE
 
         var tab = viewDataBinding.tabLayout.newTab()
+        tab.tag = "All"
         tab.text = "All"
         viewDataBinding.tabLayout.addTab(tab)
 
         result.forEach { item ->
             tab = viewDataBinding.tabLayout.newTab()
+            tab.tag = item.type
             tab.text = item.type?.replace('_', ' ')?.toCamelCase()?.trim()
             viewDataBinding.tabLayout.addTab(tab)
         }
@@ -175,13 +191,12 @@ class GlobalSearchActivity :
         viewDataBinding.tabLayout.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                val tabTitle = tab?.text
                 result.forEach { item ->
-                    val recyclerItemTitle = item.type?.replace('_', ' ')?.toCamelCase()?.trim()
-                    filterSearchResultList.clear()
-                    if ("All" == tabTitle) {
+                    if ("All" == tab?.tag) {
+                        filterSearchResultList.clear()
                         filterSearchResultList.addAll(originalSearchResultList)
-                    }else if (recyclerItemTitle == tabTitle) {
+                    }else if (item.type == tab?.tag) {
+                        filterSearchResultList.clear()
                         filterSearchResultList.add(item)
                     }
                     viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
