@@ -1,17 +1,21 @@
 package agstack.gramophone.ui.home.adapter
 
 import agstack.gramophone.BR
+import agstack.gramophone.R
 import agstack.gramophone.databinding.ItemCommentsBinding
 import agstack.gramophone.ui.comments.model.Data
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.bumptech.glide.Glide
 
 class CommentsAdapter(val items:List<Data>?) :
@@ -20,6 +24,7 @@ class CommentsAdapter(val items:List<Data>?) :
     lateinit var context: Context
     var onDeleteComment: ((data: Data) -> Unit)? = null
     var onEditCommentMenuClicked: ((data: Data) -> Unit)? = null
+    var onImageViewClciked: ((data: Data) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         context = parent.context
@@ -49,6 +54,11 @@ class CommentsAdapter(val items:List<Data>?) :
             holder.binding.cvMenu.visibility= GONE
         }
 
+        if (comment?.author?.username.isNotNullOrEmpty()){
+            holder.binding.tvName.text = comment?.author?.username
+        }else{
+            holder.binding.tvName.text = context.getString(R.string.anonymous)
+        }
         holder.binding.ivCommentsActions.setOnClickListener {
             if (holder.binding.cvMenu.visibility== VISIBLE){
                 holder.binding.cvMenu.visibility= GONE
@@ -74,6 +84,10 @@ class CommentsAdapter(val items:List<Data>?) :
         if (comment?.image != null) {
             Glide.with(context).load(comment?.image).into(holder.binding.commentImage)
             holder.binding.imageContainer.visibility=VISIBLE
+
+            holder.binding.imageContainer.setOnClickListener {
+             onImageViewClciked?.invoke(comment)
+            }
         }else{
             holder.binding.imageContainer.visibility= GONE
         }

@@ -13,6 +13,7 @@ import agstack.gramophone.ui.home.view.fragments.community.model.quiz.Option
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
 import agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.Constants.BLOCKED_STATUS
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -43,7 +44,7 @@ class OtherUserProfileActivity :
         if (intent.extras?.getString(Constants.POST_ID).isNotNullOrEmpty())
         otherProfileViewModel.postId = intent.extras?.getString(Constants.POST_ID)!!
 
-        otherProfileViewModel.getProfile()
+        otherProfileViewModel.getProfile(intent.getIntExtra(BLOCKED_STATUS,0))
         otherProfileViewModel.getPostByUUID(otherProfileViewModel.uuid)
 
     }

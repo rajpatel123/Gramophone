@@ -57,6 +57,7 @@ class FollowerFollowingViewModel @Inject constructor(
                             Bundle().apply {
                                 putString(Constants.AUTHER_ID, it._id)
                                 putString(Constants.AUTHER_UUID, it.uuid)
+                                putInt(Constants.BLOCKED_STATUS, it.blockStatus)
                             })
                     })
                 } else {
@@ -97,6 +98,8 @@ class FollowerFollowingViewModel @Inject constructor(
                                 Bundle().apply {
                                     putString(Constants.AUTHER_ID, it._id)
                                     putString(Constants.AUTHER_UUID, it.uuid)
+                                    putInt(Constants.BLOCKED_STATUS, it.blockStatus)
+
                                 })
                         })
                 } else {

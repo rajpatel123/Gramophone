@@ -41,6 +41,7 @@ class PostDetailViewModel @Inject constructor(
  var isDataAvailable = ObservableField<Boolean>()
  var isAddress = ObservableField<Boolean>()
  var postDate = ObservableField<String>()
+ var isAdmin = ObservableField<Boolean>(false)
  var commentInput = ObservableField<String>()
 
  var postDesc = ObservableField<String>()
@@ -76,7 +77,11 @@ class PostDetailViewModel @Inject constructor(
 
       postDate.set(data?.createdDate)
 
-      if (data?.author?.address_short.isNotNullOrEmpty()){
+      if (!TextUtils.isEmpty(data?.author?.communityUserType) && "admin".equals(data?.author?.communityUserType,true)) {
+      isAdmin.set(true)
+      }
+
+       if (data?.author?.address_short.isNotNullOrEmpty()){
        authorLocation.set(data?.author?.address_short)
        isAddress.set(true)
       }else{

@@ -494,10 +494,6 @@ class MyGramophoneFragment :
 
         binding?.layoutFavorite?.llProductLinearLayout?.setOnClickListener {
             openActivity(FavouriteProductActivity::class.java)
-
-//            if (activity is HomeActivity) {
-//                (activity as HomeActivity).showHomeFragment()
-//            }
         }
 
         binding?.layoutFavorite?.llTVLinearLayout?.setOnClickListener {

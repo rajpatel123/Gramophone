@@ -37,6 +37,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amnix.xtension.extensions.isNotNull
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_poll.view.*
 import kotlinx.android.synthetic.main.item_poll_option.view.*
@@ -223,7 +224,8 @@ class CommunityPostAdapter(
 //            holder.itemPostBinding.pollLayoutLL.visibility = GONE
 //        }
 
-        if (position > 1 && (position == 2 || (position>4 && (position-2)%6 == 0))) {
+        Log.d("List","".plus(position > 1 && (position == 2 || (position>4 && (position-1)%5 == 0))))
+        if (position > 1 && (position == 2 || (position>4 && (position-2)%5 == 0))) {
             var bannerResponse = SharedPreferencesHelper.instance?.getParcelable(
                 SharedPreferencesKeys.BANNER_DATA, BannerResponse::class.java
             )
@@ -234,6 +236,7 @@ class CommunityPostAdapter(
                 if (!postByCropsVisible){
                     postByCropsVisible=true
                     holder.itemPostBinding.cropLL.visibility = VISIBLE
+                    holder.itemPostBinding.cropSeparatopr.visibility = VISIBLE
                     try {
 
                         val cropResponse = SharedPreferencesHelper.instance?.getParcelable(SharedPreferencesKeys.CROPS, CropResponse::class.java)
@@ -251,18 +254,24 @@ class CommunityPostAdapter(
 
                     }
                 }else{
+                    holder.itemPostBinding.cropSeparatopr.visibility = VISIBLE
                     holder.itemPostBinding.cropLL.visibility = GONE
                 }
 
-                return
+
             }
+        }else{
+             holder.itemPostBinding.rlBanner.visibility = GONE
+            holder.itemPostBinding.cropLL.visibility = GONE
+            holder.itemPostBinding.cropSeparatopr.visibility = GONE
+
+
         }
 
 
         configureItem(textHolder, position)
-        holder.itemPostBinding.rlBanner.visibility = GONE
+
         holder.itemPostBinding.rlPosts.visibility = VISIBLE
-        holder.itemPostBinding.cropLL.visibility = GONE
 
     }
 
@@ -322,6 +331,9 @@ class CommunityPostAdapter(
                 view.tvTag.setText(it.tag)
                 holder.itemPostBinding.finalTagLL.addView(view)
             }
+            holder.itemPostBinding.hScrollView.visibility = VISIBLE
+        }else{
+            holder.itemPostBinding.hScrollView.visibility = GONE
         }
 
         if (data.lastComment.author.isNotEmpty()) {
@@ -332,8 +344,10 @@ class CommunityPostAdapter(
                 )
             }
 
-            if (data.lastComment.author.size > 0) {
+            if (data.lastComment.author.size > 0 && data.lastComment.author[0].username.isNotNullOrEmpty() && !data.lastComment.author[0].username.equals("null")) {
                 holder.itemPostBinding.tvName1.setText("" + data.lastComment.author[0].username)
+            }else{
+                holder.itemPostBinding.tvName1.setText("" + context.getString(R.string.anonymous))
             }
             holder.itemPostBinding.llChat.visibility = VISIBLE
 
@@ -420,6 +434,10 @@ class CommunityPostAdapter(
         }
 
         holder.itemPostBinding.ivProfileImage.setOnClickListener {
+            onProfileImageClicked?.invoke(data)
+        }
+
+        holder.itemPostBinding.tvName.setOnClickListener {
             onProfileImageClicked?.invoke(data)
         }
 
