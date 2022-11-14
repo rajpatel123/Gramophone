@@ -716,7 +716,16 @@ class CommunityViewModel @Inject constructor(
 
     private fun likePost(_id: String, position: Int?) {
         showProgress.set(true)
+        var post = communityPostAdapter.getItem(position!!)
+        if (post?.liked == true){
+            post?.likesCount = post?.likesCount!!-1
 
+        }else{
+            post?.likesCount = post?.likesCount!!+1
+
+        }
+        post?.liked = !post.liked
+        communityPostAdapter.notifyItemChanged(position)
         viewModelScope.launch {
 
             try {
