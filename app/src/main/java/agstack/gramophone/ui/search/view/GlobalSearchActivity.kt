@@ -31,7 +31,8 @@ class GlobalSearchActivity :
     BaseActivityWrapper<ActivityGlobalSearchBinding, GlobalSearchNavigator, GlobalSearchViewModel>(),
     GlobalSearchNavigator {
     private val suggestionList = arrayListOf<String>()
-    private val searchResultList = arrayListOf<Data>()
+    private val originalSearchResultList = arrayListOf<Data>()
+    private val filterSearchResultList = arrayListOf<Data>()
     private var searchInCommunity = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +45,7 @@ class GlobalSearchActivity :
             hideSoftKeyboard(viewDataBinding.edtSearch)
             getViewModel().searchByKeyword(GlobalSearchRequest(it), searchInCommunity)
         }
-        viewDataBinding.recyclerViewSearchResult.adapter = SearchResultAdapter(searchResultList) {
+        viewDataBinding.recyclerViewSearchResult.adapter = SearchResultAdapter(filterSearchResultList) {
             showToast(it)
         }
 
@@ -80,7 +81,9 @@ class GlobalSearchActivity :
     @SuppressLint("NotifyDataSetChanged")
     override fun notifySuggestionAdapter(suggestions: List<String>) {
         // clear and hide search result
-        searchResultList.clear()
+        originalSearchResultList.clear()
+        filterSearchResultList.clear()
+
         viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
         viewDataBinding.recyclerViewSearchResult.visibility = View.GONE
         removeTabs()
@@ -105,11 +108,14 @@ class GlobalSearchActivity :
         viewDataBinding.recyclerViewSuggestions.adapter?.notifyDataSetChanged()
         viewDataBinding.suggestionsResultWrapper.visibility = View.GONE
 
-        searchResultList.clear()
-        searchResultList.addAll(result)
+        originalSearchResultList.clear()
+        originalSearchResultList.addAll(result)
+
+        filterSearchResultList.clear()
+        filterSearchResultList.addAll(result)
         viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
 
-        if (searchResultList.size > 0) {
+        if (originalSearchResultList.size > 0) {
             viewDataBinding.recyclerViewSearchResult.visibility = View.VISIBLE
             viewDataBinding.emptyResultWrapper.visibility = View.GONE
             addTabs(result)
@@ -134,7 +140,8 @@ class GlobalSearchActivity :
         viewDataBinding.suggestionsResultWrapper.visibility = View.VISIBLE
 
         // clear and hide search result
-        searchResultList.clear()
+        originalSearchResultList.clear()
+        filterSearchResultList.clear()
         viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
         viewDataBinding.recyclerViewSearchResult.visibility = View.GONE
         removeTabs()
@@ -151,6 +158,7 @@ class GlobalSearchActivity :
             .subscribe { getViewModel().getSuggestions(SuggestionsRequest(it)) }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun addTabs(result: List<Data>) {
         viewDataBinding.tabBarContainer.visibility = View.VISIBLE
 
@@ -170,12 +178,13 @@ class GlobalSearchActivity :
                 val tabTitle = tab?.text
                 result.forEach { item ->
                     val recyclerItemTitle = item.type?.replace('_', ' ')?.toCamelCase()?.trim()
+                    filterSearchResultList.clear()
                     if ("All" == tabTitle) {
-                        viewDataBinding.recyclerViewSearchResult.scrollToPosition(0)
+                        filterSearchResultList.addAll(originalSearchResultList)
                     }else if (recyclerItemTitle == tabTitle) {
-                        val itemPosition = result.indexOf(item)
-                        viewDataBinding.recyclerViewSearchResult.scrollToPosition(itemPosition)
+                        filterSearchResultList.add(item)
                     }
+                    viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
                 }
             }
 
