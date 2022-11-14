@@ -108,6 +108,8 @@
                             android:layout_marginStart="@dimen/_5sdp"
                             android:layout_marginTop="@dimen/_13sdp"
                             android:layout_toEndOf="@+id/tvName"
+                            android:visibility="@{viewModel.isAdmin()?View.VISIBLE:View.GONE}"
+
                             android:background="@drawable/admin_tag_bg"
                             android:paddingStart="@dimen/_5sdp"
                             android:paddingTop="@dimen/_2sdp"
@@ -123,13 +125,14 @@
                                 app:tint="@color/white" />
 
                             <TextView
+                                android:id="@+id/tvAdmin"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="@dimen/_2sdp"
                                 android:layout_toEndOf="@+id/ivLeaf"
                                 android:fontFamily="@font/manrope_medium"
-                                android:text="ADMIN"
+                                android:text="@string/admin"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_7ssp" />
                         </RelativeLayout>
