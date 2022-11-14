@@ -163,11 +163,13 @@ class GlobalSearchActivity :
         viewDataBinding.tabBarContainer.visibility = View.VISIBLE
 
         var tab = viewDataBinding.tabLayout.newTab()
+        tab.tag = "All"
         tab.text = "All"
         viewDataBinding.tabLayout.addTab(tab)
 
         result.forEach { item ->
             tab = viewDataBinding.tabLayout.newTab()
+            tab.tag = item.type
             tab.text = item.type?.replace('_', ' ')?.toCamelCase()?.trim()
             viewDataBinding.tabLayout.addTab(tab)
         }
@@ -175,13 +177,12 @@ class GlobalSearchActivity :
         viewDataBinding.tabLayout.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                val tabTitle = tab?.text
                 result.forEach { item ->
-                    val recyclerItemTitle = item.type?.replace('_', ' ')?.toCamelCase()?.trim()
-                    filterSearchResultList.clear()
-                    if ("All" == tabTitle) {
+                    if ("All" == tab?.tag) {
+                        filterSearchResultList.clear()
                         filterSearchResultList.addAll(originalSearchResultList)
-                    }else if (recyclerItemTitle == tabTitle) {
+                    }else if (item.type == tab?.tag) {
+                        filterSearchResultList.clear()
                         filterSearchResultList.add(item)
                     }
                     viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
