@@ -26,6 +26,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.amnix.xtension.extensions.isNotNull
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_category_detail.view.*
@@ -172,9 +173,19 @@ class SubCategoryActivity :
     }
 
     override fun setViewPagerAdapter(bannerList: List<Banner>?) {
-        val adapter = ViewPagerAdapter(bannerList!!)
-        viewDataBinding.viewPager.adapter = adapter
-        viewDataBinding.dotsIndicator.attachTo(viewDataBinding.viewPager)
+        if (bannerList.isNotNullOrEmpty()) {
+            viewDataBinding.rlBanner.visibility = View.VISIBLE
+            val adapter = ViewPagerAdapter(bannerList!!)
+            viewDataBinding.viewPager.adapter = adapter
+            if (bannerList.size > 1) {
+                viewDataBinding.dotsIndicator.attachTo(viewDataBinding.viewPager)
+                viewDataBinding.rlDotsIndicator.visibility = View.VISIBLE
+            } else {
+                viewDataBinding.rlDotsIndicator.visibility = View.GONE
+            }
+        } else {
+            viewDataBinding.rlBanner.visibility = View.GONE
+        }
     }
 
     override fun setSubCategoryAdapter(

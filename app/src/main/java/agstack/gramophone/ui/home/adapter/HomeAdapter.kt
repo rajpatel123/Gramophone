@@ -181,13 +181,11 @@ class HomeAdapter(
                     && allBannerResponse!!.gpApiResponseData?.homeBanner1?.isNotEmpty() == true
                 ) {
                     holder.binding.itemView.visibility = View.VISIBLE
-                    holder.binding.ivPlaceHolder.visibility = View.GONE
                     holder.binding.viewPager.adapter =
                         ViewPagerAdapter(allBannerResponse!!.gpApiResponseData?.homeBanner1!!)
                     holder.binding.dotsIndicator.attachTo(holder.binding.viewPager)
                 } else {
                     holder.binding.itemView.visibility = View.GONE
-                    holder.binding.ivPlaceHolder.visibility = View.VISIBLE
                 }
             }
             is ShopByCategoryViewHolder -> {
@@ -195,7 +193,6 @@ class HomeAdapter(
                     && categoryResponse!!.gp_api_response_data.product_app_categories_list.isNotEmpty()
                 ) {
                     holder.binding.itemView.visibility = View.VISIBLE
-                    holder.binding.ivPlaceHolder.visibility = View.GONE
                     val categoryAdapter =
                         ShopByCategoryAdapter(categoryResponse!!.gp_api_response_data.product_app_categories_list) { id, name, image ->
                             openActivity(holder.itemView.context,
@@ -210,7 +207,6 @@ class HomeAdapter(
                     holder.binding.rvShopByCat.adapter = categoryAdapter
                 } else {
                     holder.binding.itemView.visibility = View.GONE
-                    holder.binding.ivPlaceHolder.visibility = View.VISIBLE
                 }
             }
             is FeaturedProductsViewHolder -> {
@@ -219,7 +215,7 @@ class HomeAdapter(
                     && allProductsResponse!!.gp_api_response_data.data.isNotEmpty()
                 ) {
                     holder.binding.itemView.visibility = View.VISIBLE
-                    holder.binding.ivPlaceHolder.visibility = View.GONE
+
                     productList.addAll(allProductsResponse?.gp_api_response_data?.data!!)
 
                     val tempProductList: List<Data> = if (productList.size >= 4)
@@ -247,7 +243,6 @@ class HomeAdapter(
                     }
                 } else {
                     holder.binding.itemView.visibility = View.GONE
-                    holder.binding.ivPlaceHolder.visibility = View.VISIBLE
                 }
             }
             is ShopByCropViewHolder -> {
@@ -256,7 +251,6 @@ class HomeAdapter(
                     && cropResponse!!.gpApiResponseData?.cropsList?.isNotEmpty() == true
                 ) {
                     holder.binding.itemView.visibility = View.VISIBLE
-                    holder.binding.ivPlaceHolder.visibility = View.VISIBLE
                     cropList.addAll(cropResponse!!.gpApiResponseData?.cropsList!!)
 
                     val tempCropList: List<CropData> = if (cropList.size >= 9)
@@ -281,7 +275,6 @@ class HomeAdapter(
                     }
                 } else {
                     holder.binding.itemView.visibility = View.GONE
-                    holder.binding.ivPlaceHolder.visibility = View.VISIBLE
                 }
             }
             is ShopByStoreViewHolder -> {
@@ -290,7 +283,6 @@ class HomeAdapter(
                     && storeResponse!!.gpApiResponseData?.storeList?.isNotEmpty() == true
                 ) {
                     holder.binding.itemView.visibility = View.VISIBLE
-                    holder.binding.ivPlaceHolder.visibility = View.GONE
                     storeList.addAll(storeResponse!!.gpApiResponseData?.storeList!!)
 
                     val tempStoreList: List<StoreData> = if (storeList.size >= 4)
@@ -316,7 +308,6 @@ class HomeAdapter(
                     }
                 } else {
                     holder.binding.itemView.visibility = View.GONE
-                    holder.binding.ivPlaceHolder.visibility = View.VISIBLE
                 }
             }
             is ShopByCompanyViewHolder -> {
@@ -325,8 +316,6 @@ class HomeAdapter(
                     && companyResponse!!.gpApiResponseData?.companiesList?.isNotEmpty() == true
                 ) {
                     holder.binding.itemView.visibility = View.VISIBLE
-                    holder.binding.ivPlaceHolder.visibility = View.GONE
-
                     companyList.addAll(companyResponse!!.gpApiResponseData?.companiesList!!)
 
                     val tempCompanyList: List<CompanyData> = if (companyList.size >= 6)
@@ -353,7 +342,6 @@ class HomeAdapter(
                     }
                 } else {
                     holder.binding.itemView.visibility = View.GONE
-                    holder.binding.ivPlaceHolder.visibility = View.VISIBLE
                 }
             }
             is ExclusiveBannerViewHolder -> {
@@ -361,7 +349,6 @@ class HomeAdapter(
                     && allBannerResponse!!.gpApiResponseData?.homeGramophoneExclusive?.isNotEmpty() == true
                 ) {
                     holder.binding.itemView.visibility = View.VISIBLE
-                    holder.binding.ivPlaceHolder.visibility = View.GONE
                     val exclusiveBanner =
                         allBannerResponse!!.gpApiResponseData?.homeGramophoneExclusive
                     val tempBanner: List<Banner>
@@ -383,7 +370,6 @@ class HomeAdapter(
                     }
                 } else {
                     holder.binding.itemView.visibility = View.GONE
-                    holder.binding.ivPlaceHolder.visibility = View.VISIBLE
                 }
             }
             is ReferralBannerViewHolder -> {
@@ -391,7 +377,6 @@ class HomeAdapter(
                     && allBannerResponse!!.gpApiResponseData?.homeReferralBanner?.isNotEmpty() == true
                 ) {
                     holder.binding.itemView.visibility = View.VISIBLE
-                    holder.binding.ivPlaceHolder.visibility = View.GONE
                     val referralBanner = allBannerResponse!!.gpApiResponseData?.homeReferralBanner!!
                     /*val referralBannerAdapter = ReferralBannerAdapter(referralBanner) {
                     *//* Do anything on banner click *//*
@@ -403,7 +388,6 @@ class HomeAdapter(
                     holder.binding.rlDotsIndicator.visibility = View.GONE
                 } else {
                     holder.binding.itemView.visibility = View.GONE
-                    holder.binding.ivPlaceHolder.visibility = View.VISIBLE
                 }
             }
             is PromiseBannerViewHolder -> {
@@ -412,7 +396,6 @@ class HomeAdapter(
             is CartViewHolder -> {
                 if (!cartList.isNullOrEmpty()) {
                     holder.binding.itemView.visibility = View.VISIBLE
-                    holder.binding.ivPlaceHolder.visibility = View.GONE
                     holder.binding.tvCartItemCount.text =
                         holder.itemView.context.getString(R.string.products_in_your_cart).plus(" (")
                             .plus(cartList?.size).plus(")")
@@ -429,10 +412,11 @@ class HomeAdapter(
                     }
                 } else {
                     holder.binding.itemView.visibility = View.GONE
-                    holder.binding.ivPlaceHolder.visibility = View.VISIBLE
                 }
             }
             is FarmsViewHolder -> {
+                holder.binding.itemView.visibility = View.VISIBLE
+
                 var farmList: List<List<agstack.gramophone.ui.farm.model.Data>>? = null
 
                 if (farmResponse?.gp_api_response_data?.customer_farm != null &&
@@ -443,11 +427,11 @@ class HomeAdapter(
                     farmResponse?.gp_api_response_data?.model_farm?.data?.isNotNullOrEmpty() == true
                 ) {
                     farmList = farmResponse?.gp_api_response_data?.model_farm?.data
+                }else{
+                    holder.binding.itemView.visibility = View.VISIBLE
                 }
 
                 if (farmList != null && farmList.isNotEmpty()) {
-                    holder.binding.itemView.visibility = View.VISIBLE
-                    holder.binding.ivPlaceHolder.visibility = View.GONE
                     holder.binding.rvFarms.adapter = FarmAdapter(
                         farmList,
                         headerListener = {
@@ -478,9 +462,6 @@ class HomeAdapter(
                                 })
                         },
                     )
-                } else {
-                    holder.binding.itemView.visibility = View.GONE
-                    holder.binding.ivPlaceHolder.visibility = View.VISIBLE
                 }
 
                 holder.binding.viewAllFarms.setOnClickListener {
@@ -572,7 +553,6 @@ class HomeAdapter(
             is WeatherViewHolder -> {
                 if (weatherResponse.isNotNull() && weatherResponse?.gp_api_response_data.isNotNullOrEmpty()) {
                     holder.binding.itemView.visibility = View.VISIBLE
-                    holder.binding.ivPlaceHolder.visibility = View.GONE
                     val data = weatherResponse?.gp_api_response_data?.get(0)
                     when {
                         data?.address.isNotNullOrEmpty() -> holder.binding.tvLocation.text =
@@ -598,7 +578,6 @@ class HomeAdapter(
 
                 } else {
                     holder.binding.itemView.visibility = View.GONE
-                    holder.binding.ivPlaceHolder.visibility = View.VISIBLE
                 }
                 holder.binding.itemView.setOnClickListener {
                     openActivity(

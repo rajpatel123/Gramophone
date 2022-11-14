@@ -6,14 +6,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/ivPlaceHolder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/image"
-        android:scaleType="fitXY"
-        android:src="@drawable/item_place_holder" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvReferral"
         android:layout_width="match_parent"

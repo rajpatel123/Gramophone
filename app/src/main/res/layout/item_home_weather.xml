@@ -132,12 +132,4 @@
             android:background="@color/gray_stroke" />
 
     </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/ivPlaceHolder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/image"
-        android:scaleType="fitXY"
-        android:src="@drawable/item_place_holder" />
 </RelativeLayout>

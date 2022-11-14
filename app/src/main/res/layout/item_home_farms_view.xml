@@ -1,74 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:id="@+id/itemView"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/itemView"
+    <include
+        android:id="@+id/addFarmWrapper"
+        layout="@layout/home_add_farm_header" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_farms"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="1"
+        tools:listitem="@layout/card_farms" />
 
-        <include
-            android:id="@+id/addFarmWrapper"
-            layout="@layout/home_add_farm_header" />
+    <LinearLayout
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_farms"
-            android:layout_width="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:backgroundTint="@color/pink">
+
+        <TextView
+            android:id="@+id/viewAllFarms"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_4sdp"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:layout_marginEnd="@dimen/_4sdp"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="1"
-            tools:listitem="@layout/card_farms" />
-
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:backgroundTint="@color/pink"
-            android:gravity="center_horizontal">
-
-            <TextView
-                android:id="@+id/viewAllFarms"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_corner_32"
-                android:drawablePadding="@dimen/_12sdp"
-                android:fontFamily="@font/manrope_bold"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:paddingStart="16dp"
-                android:paddingTop="6dp"
-                android:paddingEnd="12dp"
-                android:paddingBottom="6dp"
-                android:text="@string/view_all"
-                android:textColor="@color/orange"
-                android:textSize="@dimen/_12ssp"
-                android:textStyle="normal"
-                app:drawableEndCompat="@drawable/ic_arrow_right" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:background="@color/gray_stroke" />
+            android:drawablePadding="@dimen/_12sdp"
+            android:paddingStart="16dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="6dp"
+            android:fontFamily="@font/manrope_bold"
+            android:text="@string/view_all"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/_12ssp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:textStyle="normal"
+            android:background="@drawable/rounded_corner_32"
+            app:drawableEndCompat="@drawable/ic_arrow_right"/>
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/ivPlaceHolder"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/image"
-        android:scaleType="fitXY"
-        android:src="@drawable/item_place_holder" />
-</RelativeLayout>
+        android:layout_height="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@color/gray_stroke" />
+
+</LinearLayout>
