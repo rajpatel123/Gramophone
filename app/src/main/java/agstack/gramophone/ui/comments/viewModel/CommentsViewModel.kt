@@ -33,6 +33,7 @@ class CommentsViewModel @Inject constructor(
     var commentInput = ObservableField<String>()
     var postImage = ObservableField<File>()
     var isLoading = ObservableField<Boolean>()
+    var showImageFullScreen = ObservableField<Boolean>()
     lateinit var tags:List<Map<String,String>>
     lateinit var postId: String
     var comment:Data? = null
@@ -58,6 +59,9 @@ class CommentsViewModel @Inject constructor(
                             {
                                 comment = it
                              getNavigator()?.populateCommentData(it)
+                            },{
+                                showImageFullScreen.set(true)
+                                getNavigator()?.showImage(it)
                             })
                     }
                 } else
@@ -73,6 +77,10 @@ class CommentsViewModel @Inject constructor(
         }
     }
 
+    fun onImageClose(){
+        showImageFullScreen.set(false)
+        //getNavigator()?.finishActivity()
+    }
     fun onCloseClick(){
         getNavigator()?.finishActivity()
     }

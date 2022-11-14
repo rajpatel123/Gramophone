@@ -11,6 +11,7 @@ data class Author(
     val username: String,
     val uuid: String,
     val address_short: String?,
-    val address: String?
+    val address: String?,
+    val communityUserType:String?
 
 )
