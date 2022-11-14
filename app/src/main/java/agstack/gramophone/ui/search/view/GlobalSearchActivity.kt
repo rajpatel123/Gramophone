@@ -16,7 +16,11 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.amnix.xtension.extensions.toCamelCase
 import com.google.android.material.tabs.TabLayout
@@ -63,6 +67,13 @@ class GlobalSearchActivity :
             showSoftKeyboard(viewDataBinding.edtSearch)
         }, 300)
 
+        viewDataBinding.edtSearch.setOnEditorActionListener { _, action, _ ->
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                hideSoftKeyboard(viewDataBinding.edtSearch)
+                getViewModel().searchByKeyword(GlobalSearchRequest(viewDataBinding.edtSearch.text.toString()), searchInCommunity)
+            }
+            false
+        }
     }
 
     override fun onPause() {

@@ -14,11 +14,13 @@ import agstack.gramophone.ui.home.adapter.ViewPagerAdapter
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.subcategory.model.Offer
+import agstack.gramophone.ui.home.view.fragments.community.CommunityFragment
 import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
+import agstack.gramophone.ui.search.view.GlobalSearchActivity
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.MenuItem
@@ -141,7 +143,11 @@ class SubCategoryActivity :
             R.id.item_cart -> {
                 openActivity(CartActivity::class.java)
             }
-
+            R.id.item_search -> {
+                openActivity(GlobalSearchActivity::class.java, Bundle().apply {
+                    putBoolean("searchInCommunity", false)
+                })
+            }
         }
         return true
     }
