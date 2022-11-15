@@ -30,7 +30,9 @@ class PostsAdapter(
             listener.invoke(post.id!!)
         }
 
-        ("Posted on: " + post.actionTimeStamp?.let { getDateTime(it) }).also { holder.binding.txtPostedDate.text = it }
+        if(post.createdDate.isNotNullOrEmpty()){
+            ("Posted on : " + post.createdDate).also { holder.binding.txtPostedDate.text = it }
+        }
     }
 
     override fun getItemCount(): Int {

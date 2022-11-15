@@ -48,6 +48,7 @@ data class Item(
     var commentsCount: Int?,
     var description: String?,
     var actionTimeStamp: Long?,
+    var createdDate : String?,
     var language: String?,
     var index_id: String?,
     var category_type: String?

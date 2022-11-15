@@ -80,7 +80,7 @@
                 android:fontFamily="@font/manrope_regular"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text='@{item.id ?? ""}'
+                android:text='@{item.handle ?? ""}'
                 android:textColor="@color/blakish"
                 android:textSize="@dimen/_11ssp"
                 tools:text="Pewdaay" />
