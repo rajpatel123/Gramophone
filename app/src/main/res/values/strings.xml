@@ -639,4 +639,5 @@
     <string name="whatsapp_not_installed">Whatsapp have not been installed.</string>
     <string name="anonymous">Anonymous</string>
     <string name="admin">ADMIN</string>
+    <string name="spray">Spray</string>
 </resources>
