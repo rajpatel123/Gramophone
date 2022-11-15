@@ -206,11 +206,12 @@ class GlobalSearchActivity :
                     if ("All" == tab?.tag) {
                         filterSearchResultList.clear()
                         filterSearchResultList.addAll(originalSearchResultList)
+                        viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
                     }else if (item.type == tab?.tag) {
                         filterSearchResultList.clear()
                         filterSearchResultList.add(item)
+                        viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
                     }
-                    viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
                 }
             }
 
