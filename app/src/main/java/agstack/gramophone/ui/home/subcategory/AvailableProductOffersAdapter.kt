@@ -3,20 +3,22 @@ package agstack.gramophone.ui.home.subcategory
 import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.databinding.ItemAvailableOffersOnParticularProductBinding
-import agstack.gramophone.ui.home.subcategory.model.Offer
+import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.amnix.xtension.extensions.isNotNull
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import kotlin.math.roundToInt
 
 class AvailableProductOffersAdapter(
-    SKUOfferList: ArrayList<Offer>,
+    SKUOfferList: ArrayList<PromotionListItem?>,
     private var selectedSkuPrice: Float,
-    private val selectedOfferProduct: ((Offer) -> Unit)?,
-    private val onOfferDetailClicked: ((Offer) -> Unit)?,
+    private var quantity: Int,
+    private val selectedOfferProduct: ((PromotionListItem) -> Unit)?,
+    private val onOfferDetailClicked: ((PromotionListItem) -> Unit)?,
 ) :
     RecyclerView.Adapter<AvailableProductOffersAdapter.CustomViewHolder>() {
     var mSKUOfferList = SKUOfferList
@@ -34,18 +36,18 @@ class AvailableProductOffersAdapter(
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
 
-        val model: Offer = mSKUOfferList[position]
+        val model: PromotionListItem = mSKUOfferList[position]!!
         holder.binding.setVariable(BR.model, model)
         val mBinding = holder.binding as ItemAvailableOffersOnParticularProductBinding
         var amountSaved = 0f
-        if (model.benefit.isNotNull()) {
-            amountSaved = model.benefit.amount
+        if (model.benefit.isNotNull() && model.benefit?.amount_saved.isNotNull()) {
+            amountSaved = model.benefit?.amount_saved!!.toFloat()
         }
         if (amountSaved.toString().contains(".0") || amountSaved.toString().contains(".00"))
             mBinding.tvSaveAmount.text = "₹ " + amountSaved.roundToInt().toString()
         else mBinding.tvSaveAmount.text = "₹ " + amountSaved.toString()
 
-        if (amountSaved > 0f && selectedSkuPrice - amountSaved >= 0) {
+        if (amountSaved > 0f && (selectedSkuPrice - amountSaved >= 0)) {
             val payOnly = selectedSkuPrice - amountSaved
             val payOnlyString: String =
                 if (payOnly.toString().contains(".0") || payOnly.toString().contains(".00")) {
@@ -77,11 +79,11 @@ class AvailableProductOffersAdapter(
             mBinding.tvSkuPrice.visibility = View.GONE
         }
         mBinding.radioBtn.setOnClickListener {
-            mSKUOfferList[lastSelectPosition].selected = false
+            mSKUOfferList[lastSelectPosition]?.selected = false
             lastSelectPosition = position
             model.selected = true
-            selectedOfferProduct?.invoke(model)
             notifyDataSetChanged()
+            selectedOfferProduct?.invoke(model)
         }
         mBinding.tvViewdetail.setOnClickListener {
             onOfferDetailClicked?.invoke(model)
@@ -92,13 +94,10 @@ class AvailableProductOffersAdapter(
         return mSKUOfferList.size
     }
 
-    fun updateSelectedSkuPrice(selectedPrice: Float) {
-        selectedSkuPrice = selectedPrice
-        notifyDataSetChanged()
-    }
-
-    fun updateOffer(offersList: ArrayList<Offer>) {
+    fun updateOffer(offersList: ArrayList<PromotionListItem?>, selectedSkuPrice: Float, qty: Int) {
         mSKUOfferList = offersList
+        this.selectedSkuPrice = selectedSkuPrice
+        quantity = qty
         notifyDataSetChanged()
     }
 

@@ -391,7 +391,7 @@ class ProductDetailsViewModel @Inject constructor(
             finalSalePrice = modelSalesPrice
             if (offerModel.isNotNull())
                 offerModel?.let {
-                    if (offerModel.benefit.isNotNull() && offerModel.benefit?.amount_saved!! > 0) {
+                    if (offerModel.benefit.isNotNull() && offerModel.benefit?.amount_saved.isNotNull() && offerModel.benefit?.amount_saved!! > 0) {
                         finalSalePrice = modelSalesPrice - offerModel.benefit.amount_saved.toFloat()
 
                         discountPercent =
@@ -401,15 +401,6 @@ class ProductDetailsViewModel @Inject constructor(
                     }
                 }
         }
-        /* if (modelMrpPrice.toString().endsWith(".0") || modelMrpPrice.toString()
-                 .contains(".00")
-         ) {
-             binding?.tvProductMRP?.text =
-                 getString(R.string.rupee) + (modelMrpPrice.roundToInt()).toString()
-         } else {
-             binding?.tvProductMRP?.text =
-                 getString(R.string.rupee) + (modelMrpPrice).toString()
-         }*/
 
         getNavigator()?.setPercentageOff_mrpVisibility(
             model.product_app_name!!,

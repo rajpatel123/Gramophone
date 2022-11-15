@@ -5,9 +5,9 @@ import agstack.gramophone.data.repository.promotions.PromotionsRepository
 import agstack.gramophone.databinding.BottomSheetAddToCartBinding
 import agstack.gramophone.ui.home.product.activity.ProductSKUAdapter
 import agstack.gramophone.ui.home.subcategory.AvailableProductOffersAdapter
-import agstack.gramophone.ui.home.subcategory.model.Offer
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
+import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.VerifyPromotionRequestModel
 import android.os.Bundle
 import android.util.Log
@@ -26,7 +26,7 @@ import kotlin.math.roundToInt
 
 
 class AddToCartBottomSheetDialog(
-    private val viewOfferDetail: ((Offer) -> Unit)?,
+    private val viewOfferDetail: ((PromotionListItem) -> Unit)?,
     private val applyOfferOnProduct: ((VerifyPromotionRequestModel) -> Unit)?,
     private val onAddToCart: ((ProductData) -> Unit)?,
     private val refreshOfferOnQuantityChange: ((Int, Int) -> Unit)?,
@@ -36,11 +36,11 @@ class AddToCartBottomSheetDialog(
     lateinit var promotionsRepository: PromotionsRepository
     var binding: BottomSheetAddToCartBinding? = null
     lateinit var mSKUList: ArrayList<ProductSkuListItem?>
-    lateinit var mSkuOfferList: ArrayList<Offer>
+    lateinit var mSkuOfferList: ArrayList<PromotionListItem?>
     lateinit var productData: ProductData
     var selectedSkuListItem = ObservableField<ProductSkuListItem>()
     var availableProductOffersAdapter: AvailableProductOffersAdapter? = null
-    var selectedOfferItem: Offer? = null
+    var selectedOfferItem: PromotionListItem? = null
     var selectedSkuPrice = 0f
     var price = 0f
     var quantity = 1
@@ -62,22 +62,21 @@ class AddToCartBottomSheetDialog(
                 if (productData.product_id.toString() == item!!.productId) {
                     selectedSkuListItem.set(item)
                     item.selected = true
-                    setSelectedSkuPrice(if (item.mrpPrice.isNull()) 0f else item.mrpPrice!!.toFloat(),
-                        if (item.salesPrice.isNullOrEmpty()) 0f else item.salesPrice.toFloat())
+                    setSelectedSkuPrice()
                 }
             }
         }
-        calculateDiscountAndPromotion(selectedSkuListItem.get()!!, selectedOfferItem)
+        calculateDiscountAndPromotion(selectedSkuListItem.get()!!, null)
 
         binding?.rvProductSku?.adapter = ProductSKUAdapter(mSKUList) {
             Log.d("productSKUItemSelected", it.productId.toString())
             selectedSkuListItem.set(it)
             productData.product_id = it.productId?.toInt()
-            setSelectedSkuPrice(if (it.mrpPrice.isNull()) 0f else it.mrpPrice!!.toFloat(),
-                if (it.salesPrice.isNullOrEmpty()) 0f else it.salesPrice.toFloat())
-            calculateDiscountAndPromotion(selectedSkuListItem.get()!!, selectedOfferItem)
-            if (availableProductOffersAdapter.isNotNull())
-                availableProductOffersAdapter?.updateSelectedSkuPrice(selectedSkuPrice)
+            setSelectedSkuPrice()
+            calculateDiscountAndPromotion(selectedSkuListItem.get()!!, null)
+            binding?.progressBar?.visibility = View.VISIBLE
+            refreshOfferOnQuantityChange?.invoke(selectedSkuListItem.get()!!.productId!!.toInt(),
+                quantity)
         }
         setOffersUI()
         binding?.tvContactForPrice?.setOnClickListener {
@@ -94,7 +93,9 @@ class AddToCartBottomSheetDialog(
         binding?.ivAdd?.setOnClickListener {
             quantity += 1
             setQuantity()
+            setSelectedSkuPrice()
             calculateDiscountAndPromotion(selectedSkuListItem.get()!!, null)
+            binding?.progressBar?.visibility = View.VISIBLE
             refreshOfferOnQuantityChange?.invoke(selectedSkuListItem.get()!!.productId!!.toInt(),
                 quantity)
         }
@@ -102,10 +103,12 @@ class AddToCartBottomSheetDialog(
             if (quantity > 1)
                 quantity -= 1
             setQuantity()
+            setSelectedSkuPrice()
+            calculateDiscountAndPromotion(selectedSkuListItem.get()!!, null)
+            binding?.progressBar?.visibility = View.VISIBLE
             refreshOfferOnQuantityChange?.invoke(selectedSkuListItem.get()!!.productId!!.toInt(),
                 quantity
             )
-            calculateDiscountAndPromotion(selectedSkuListItem.get()!!, null)
         }
     }
 
@@ -119,10 +122,8 @@ class AddToCartBottomSheetDialog(
 
             if (availableProductOffersAdapter == null) {
                 availableProductOffersAdapter =
-                    AvailableProductOffersAdapter(mSkuOfferList, selectedSkuPrice, {
+                    AvailableProductOffersAdapter(mSkuOfferList, selectedSkuPrice, quantity, {
                         selectedOfferItem = it
-                        calculateDiscountAndPromotion(selectedSkuListItem.get()!!,
-                            selectedOfferItem)
                         applyOfferOnProduct?.invoke(VerifyPromotionRequestModel(selectedSkuListItem.get()?.productId!!,
                             quantity,
                             it.promotion_id.toString()))
@@ -133,7 +134,7 @@ class AddToCartBottomSheetDialog(
                 binding?.rvAvailableoffers?.adapter = availableProductOffersAdapter
             } else {
                 if (availableProductOffersAdapter.isNotNull())
-                    availableProductOffersAdapter!!.updateOffer(mSkuOfferList)
+                    availableProductOffersAdapter!!.updateOffer(mSkuOfferList, selectedSkuPrice, quantity)
             }
 
         }
@@ -147,17 +148,23 @@ class AddToCartBottomSheetDialog(
         }
     }
 
-    private fun setSelectedSkuPrice(mrpPrice: Float, salesPrice: Float) {
-        selectedSkuPrice = if (salesPrice == 0f) {
-            mrpPrice * quantity
-        } else {
-            salesPrice * quantity
+    private fun setSelectedSkuPrice() {
+        if (selectedSkuListItem.get().isNotNull()) {
+            val it: ProductSkuListItem = selectedSkuListItem.get()!!
+            val mrpPrice = if (it.mrpPrice.isNull()) 0f else it.mrpPrice!!.toFloat()
+            val salesPrice = if (it.salesPrice.isNullOrEmpty()) 0f else it.salesPrice.toFloat()
+
+            selectedSkuPrice = if (salesPrice == 0f) {
+                mrpPrice * quantity
+            } else {
+                salesPrice * quantity
+            }
         }
     }
 
     private fun calculateDiscountAndPromotion(
         model: ProductSkuListItem,
-        offerModel: Offer? = null,
+        offerModel: PromotionListItem? = null,
     ) {
         if (model.isNull()) return
         var modelMrpPrice = 0f
@@ -197,8 +204,8 @@ class AddToCartBottomSheetDialog(
             finalSalePrice = modelSalesPrice
             if (offerModel.isNotNull())
                 offerModel?.let {
-                    if (offerModel.benefit.isNotNull() && offerModel.benefit.amount > 0) {
-                        finalSalePrice = modelSalesPrice - offerModel.benefit.amount
+                    if (offerModel.benefit.isNotNull() && offerModel.benefit?.amount_saved.isNotNull()&& offerModel.benefit?.amount_saved!! > 0) {
+                        finalSalePrice = modelSalesPrice - offerModel.benefit.amount_saved.toFloat()
 
                         discountPercent =
                             ((modelMrpPrice - finalSalePrice) / modelMrpPrice) * 100
@@ -281,15 +288,18 @@ class AddToCartBottomSheetDialog(
         message: String,
     ) {
         try {
+            binding?.progressBar?.visibility = View.GONE
             if (isOfferApplicable) {
+                calculateDiscountAndPromotion(selectedSkuListItem.get()!!, selectedOfferItem)
                 productData.promotion_id = promotionId.toInt()
                 Toast.makeText(requireContext(), message, Toast.LENGTH_LONG)
                     .show()
             } else {
                 productData.promotion_id = null
+                selectedOfferItem = null
                 if (!mSkuOfferList.isNullOrEmpty()) {
                     for (item in mSkuOfferList) {
-                        item.selected = false
+                        item!!.selected = false
                     }
                     if (availableProductOffersAdapter.isNotNull())
                         availableProductOffersAdapter?.notifyDataSetChanged()
@@ -302,11 +312,14 @@ class AddToCartBottomSheetDialog(
         }
     }
 
-    fun updateOffer(offersList: ArrayList<Offer>) {
-        mSkuOfferList = offersList
+    fun updateOffer(offersList: ArrayList<PromotionListItem?>) {
+        binding?.progressBar?.visibility = View.GONE
+        if (mSkuOfferList.isNotNullOrEmpty()) mSkuOfferList.clear()
+        else mSkuOfferList = ArrayList()
+        mSkuOfferList.addAll(offersList)
         if (!mSkuOfferList.isNullOrEmpty()) {
             for (item in mSkuOfferList) {
-                item.selected = false
+                item!!.selected = false
             }
         }
         setOffersUI()
