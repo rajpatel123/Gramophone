@@ -16,7 +16,11 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.amnix.xtension.extensions.toCamelCase
 import com.google.android.material.tabs.TabLayout
@@ -52,17 +56,24 @@ class GlobalSearchActivity :
             hideSoftKeyboard(viewDataBinding.edtSearch)
             viewDataBinding.edtSearch.setText(it)
             viewDataBinding.edtSearch.setSelection(it.length)
-            getViewModel().searchByKeyword(GlobalSearchRequest(it), searchInCommunity)
+            getViewModel().searchByKeyword(GlobalSearchRequest(keyword = it, source = "app", pageSection = "suggestion"), searchInCommunity)
         }
         viewDataBinding.recyclerViewSearchResult.adapter = SearchResultAdapter(filterSearchResultList) {
             showToast(it)
         }
 
         handler.postDelayed({
-            viewDataBinding.edtSearch.requestFocus();
+            viewDataBinding.edtSearch.requestFocus()
             showSoftKeyboard(viewDataBinding.edtSearch)
         }, 300)
 
+        viewDataBinding.edtSearch.setOnEditorActionListener { _, action, _ ->
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                hideSoftKeyboard(viewDataBinding.edtSearch)
+                getViewModel().searchByKeyword(GlobalSearchRequest(viewDataBinding.edtSearch.text.toString(), source = "app", pageSection = "search"), searchInCommunity)
+            }
+            false
+        }
     }
 
     override fun onPause() {
@@ -132,7 +143,7 @@ class GlobalSearchActivity :
         if (originalSearchResultList.size > 0) {
             viewDataBinding.recyclerViewSearchResult.visibility = View.VISIBLE
             viewDataBinding.emptyResultWrapper.visibility = View.GONE
-            addTabs(result)
+            addTabs()
         } else {
             viewDataBinding.recyclerViewSearchResult.visibility = View.GONE
             viewDataBinding.emptyResultWrapper.visibility = View.VISIBLE
@@ -173,7 +184,7 @@ class GlobalSearchActivity :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun addTabs(result: List<Data>) {
+    private fun addTabs() {
         viewDataBinding.tabBarContainer.visibility = View.VISIBLE
 
         var tab = viewDataBinding.tabLayout.newTab()
@@ -181,7 +192,7 @@ class GlobalSearchActivity :
         tab.text = "All"
         viewDataBinding.tabLayout.addTab(tab)
 
-        result.forEach { item ->
+        originalSearchResultList.forEach { item ->
             tab = viewDataBinding.tabLayout.newTab()
             tab.tag = item.type
             tab.text = item.type?.replace('_', ' ')?.toCamelCase()?.trim()
@@ -191,15 +202,16 @@ class GlobalSearchActivity :
         viewDataBinding.tabLayout.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                result.forEach { item ->
-                    if ("All" == tab?.tag) {
-                        filterSearchResultList.clear()
-                        filterSearchResultList.addAll(originalSearchResultList)
-                    }else if (item.type == tab?.tag) {
-                        filterSearchResultList.clear()
-                        filterSearchResultList.add(item)
-                    }
+                if ("All" == tab?.tag) {
+                    filterSearchResultList.clear()
+                    filterSearchResultList.addAll(originalSearchResultList)
                     viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
+                }else{
+                    originalSearchResultList.filter { it.type == tab?.tag }.forEach {
+                        filterSearchResultList.clear()
+                        filterSearchResultList.add(it)
+                        viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
+                    }
                 }
             }
 

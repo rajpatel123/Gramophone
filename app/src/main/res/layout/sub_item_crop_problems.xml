@@ -52,15 +52,16 @@
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerTopOnly20"
                     tools:src="@drawable/dummy_crop"
-                    app:product_image='@{item.image ?? ""}'/>
+                    app:product_image='@{item.image ?? ""}' />
 
             </RelativeLayout>
 
 
             <LinearLayout
+                android:id="@+id/bottomHalf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_corner_bottom_16_solid_white_stroke_gray"
+                android:background="@drawable/rounded_corner_bottom_16_solid_yellow_stroke_gray"
                 android:orientation="vertical">
 
                 <TextView
@@ -76,7 +77,7 @@
                     android:textColor="@color/blakish"
                     android:textSize="@dimen/_11ssp"
                     tools:text="Late Blight"
-                    android:text='@{item.name ?? "" }'/>
+                    android:text='@{item.name ?? "" }' />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -90,7 +91,7 @@
                     tools:text="Nutritional issue"
                     android:textColor="@color/green_dark"
                     android:textSize="@dimen/_11ssp"
-                    android:text='@{item.category_type ?? ""}'/>
+                    android:text='@{item.category_type ?? ""}' />
 
             </LinearLayout>
 
