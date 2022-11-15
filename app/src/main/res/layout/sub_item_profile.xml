@@ -66,7 +66,7 @@
                 android:maxLines="2"
                 android:text='@{item.name ?? ""}'
                 android:textColor="@color/blakish"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_12ssp"
                 tools:text="Naveen Sharma" />
 
 
@@ -79,11 +79,11 @@
                 android:layout_marginTop="@dimen/_6sdp"
                 android:fontFamily="@font/manrope_regular"
                 android:gravity="center"
-                android:maxLines="2"
+                android:maxLines="1"
+                android:text='@{item.handle ?? ""}'
                 android:textColor="@color/blakish"
                 android:textSize="@dimen/_11ssp"
-                tools:text="Pewdaay"
-                android:text='@{item.status ?? ""}' />
+                tools:text="Pewdaay" />
 
         </RelativeLayout>
 

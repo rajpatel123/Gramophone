@@ -38,6 +38,7 @@ data class Item(
     var highest_group_score: String?,
     var id: String?,
     var image: String?,
+    var postImage : String?,
     var name: String?,
     var product_base_name: String?,
     var product_sku_list: List<ProductSku>?,
@@ -47,6 +48,7 @@ data class Item(
     var commentsCount: Int?,
     var description: String?,
     var actionTimeStamp: Long?,
+    var createdDate : String?,
     var language: String?,
     var index_id: String?,
     var category_type: String?

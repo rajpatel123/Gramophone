@@ -12,11 +12,15 @@
             type="agstack.gramophone.ui.farm.viewmodel.AddFarmViewModel" />
     </data>
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <RelativeLayout
             android:id="@+id/flBannerFrameLayout"
@@ -121,7 +125,6 @@
             </RelativeLayout>
 
         </RelativeLayout>
-
 
         <RelativeLayout
             android:id="@+id/date_picker"
@@ -338,4 +341,6 @@
             tools:visibility="visible" />
 
     </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
 </layout>
