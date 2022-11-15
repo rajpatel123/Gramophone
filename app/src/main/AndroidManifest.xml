@@ -39,6 +39,12 @@
         android:theme="@style/SplashTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.advisory.view.CropProblemDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.advisory.view.AllCropProblemsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.advisory.AdvisoryActivity"
             android:exported="false" />
         <activity

@@ -9,7 +9,9 @@ import agstack.gramophone.ui.home.subcategory.SubCategoryViewModel
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AdvisoryActivity : BaseActivityWrapper<ActivityAdvisoryBinding,SubCategoryNavigator,SubCategoryViewModel>() {
 
 private val subCategoryViewModel : SubCategoryViewModel by viewModels()
