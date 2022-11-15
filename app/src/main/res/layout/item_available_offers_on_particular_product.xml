@@ -10,7 +10,7 @@
 
         <variable
             name="model"
-            type="agstack.gramophone.ui.home.subcategory.model.Offer" />
+            type="agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem" />
     </data>
 
     <RelativeLayout
@@ -105,7 +105,7 @@
                             android:maxLines="1"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/_10ssp"
-                            app:validity_date="@{model.end_date}"
+                            app:validity_date="@{model.valid_till}"
                             tools:text="Valid till March 2023" />
 
                         <TextView

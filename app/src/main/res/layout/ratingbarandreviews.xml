@@ -18,9 +18,9 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
@@ -31,11 +31,10 @@
             android:orientation="horizontal"
             android:padding="@dimen/_20sdp"
             android:weightSum="10"
+            app:layout_constraintBottom_toTopOf="@+id/llRateThisProduct"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/llRateThisProduct"
-            >
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -57,8 +56,8 @@
 
                     <ProgressBar
                         android:id="@+id/progressbar_5rating"
-                        progressAdapter="@{rvm.productReviewsData.rating.ratingCount.jsonMember5}"
                         style="?android:attr/progressBarStyleHorizontal"
+                        progressAdapter="@{rvm.productReviewsData.rating.ratingCount.jsonMember5}"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_8sdp"
@@ -68,8 +67,8 @@
                         android:paddingBottom="4dp"
                         android:progress="40"
                         android:progressTint="@color/green_dark"
-                        app:trackCornerRadius="3dp"
                         android:scaleY="2"
+                        app:trackCornerRadius="3dp"
                         app:trackThickness="@dimen/_5sdp" />
 
                 </LinearLayout>
@@ -90,8 +89,8 @@
 
                     <ProgressBar
                         android:id="@+id/progressbar_4rating"
-                        progressAdapter="@{rvm.productReviewsData.rating.ratingCount.jsonMember4}"
                         style="?android:attr/progressBarStyleHorizontal"
+                        progressAdapter="@{rvm.productReviewsData.rating.ratingCount.jsonMember4}"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_8sdp"
@@ -100,8 +99,8 @@
                         android:paddingTop="4dp"
                         android:paddingBottom="4dp"
                         android:progress="40"
-                        android:scaleY="2"
-                        android:progressTint="@color/green" />
+                        android:progressTint="@color/green"
+                        android:scaleY="2" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -122,16 +121,16 @@
                         style="?android:attr/progressBarStyleHorizontal"
                         progressAdapter="@{rvm.productReviewsData.rating.ratingCount.jsonMember3}"
                         android:layout_width="fill_parent"
-                        android:background="@drawable/progress_bar_background"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_8sdp"
+                        android:background="@drawable/progress_bar_background"
                         android:indeterminate="false"
                         android:max="100"
                         android:paddingTop="4dp"
                         android:paddingBottom="4dp"
                         android:progress="40"
-                        android:scaleY="2"
-                        android:progressTint="@color/star_yellow" />
+                        android:progressTint="@color/star_yellow"
+                        android:scaleY="2" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -157,9 +156,9 @@
                         android:max="100"
                         android:paddingTop="4dp"
                         android:paddingBottom="4dp"
-                        android:scaleY="2"
                         android:progress="40"
-                        android:progressTint="#FF9376" />
+                        android:progressTint="#FF9376"
+                        android:scaleY="2" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -185,9 +184,9 @@
                         android:max="100"
                         android:paddingTop="4dp"
                         android:paddingBottom="4dp"
-                        android:scaleY="2"
                         android:progress="10"
-                        android:progressTint="#F8111B" />
+                        android:progressTint="#F8111B"
+                        android:scaleY="2" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -266,8 +265,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_150sdp"
             android:background="@color/blue_20"
-            android:padding="@dimen/_20sdp"
             android:orientation="vertical"
+            android:padding="@dimen/_20sdp"
             app:layout_constraintBottom_toTopOf="@id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/ll_total_ratings">
 
@@ -295,58 +294,62 @@
         </LinearLayout>
 
         <androidx.constraintlayout.widget.Guideline
-            app:layout_constraintTop_toBottomOf="@id/llRateThisProduct"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             android:id="@+id/guideline"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.4" />
+            app:layout_constraintGuide_percent="0.4"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llRateThisProduct" />
 
 
         <LinearLayout
             android:id="@+id/ll_selfRating"
-            app:layout_constraintTop_toTopOf="@id/guideline"
-            app:layout_constraintBottom_toBottomOf="@id/guideline"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_88sdp"
             android:layout_marginLeft="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_minus44sdp"
             android:layout_marginRight="@dimen/_35sdp"
             android:background="@drawable/rounded_corner_with_grey_color"
             android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline">
 
             <!--android:onClick="@{ ()-> rvm.onSelfRatingClick() }"-->
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_42sdp">
 
-            <RatingBar
-                android:id="@+id/ratingbar_self_rating_stars"
-                style="?android:attr/ratingBarStyleIndicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/llrating_all"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_5sdp"
-                doubleToFloatRating="@{rvm.ratingSelected}"
-                android:isIndicator="false"
-                android:max="5"
-                android:numStars="5"
-                android:scaleX="1"
-                android:scaleY="1"
-                android:stepSize="1"
-                android:theme="@style/RatingBar"
-                android:transformPivotX="0dp"
-                android:transformPivotY="0dp" />
+                <RatingBar
+                    android:id="@+id/ratingbar_self_rating_stars"
+                    style="?android:attr/ratingBarStyleIndicator"
+                    doubleToFloatRating="@{rvm.ratingSelected}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:isIndicator="false"
+                    android:max="5"
+                    android:numStars="5"
+                    android:scaleX="1"
+                    android:scaleY="1"
+                    android:stepSize="1"
+                    android:theme="@style/RatingBar"
+                    android:transformPivotX="0dp"
+                    android:transformPivotY="0dp" />
 
+            </RelativeLayout>
 
             <View
                 android:id="@+id/v1_separator"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_2sdp"
                 android:layout_below="@+id/tv_inclusive"
-                android:layout_marginTop="@dimen/_5sdp"
                 android:background="#F2F4F7" />
 
             <RelativeLayout
@@ -354,58 +357,59 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="@style/TextSize14Sp"
-                    android:textColor="@color/blue_happy"
                     android:id="@+id/tv_nothappy"
+                    style="@style/TextSize14Sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:padding="@dimen/_8sdp"
-                    android:text="@string/nothappy"></TextView>
+                    android:text="@string/nothappy"
+                    android:textColor="@color/blue_happy"></TextView>
 
                 <TextView
-                    style="@style/TextSize14Sp"
-                    android:textColor="@color/blue_happy"
                     android:id="@+id/tv_veryhappy"
+                    style="@style/TextSize14Sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:padding="@dimen/_8sdp"
-                    android:text="@string/veryhappy"></TextView>
+                    android:text="@string/veryhappy"
+                    android:textColor="@color/blue_happy"></TextView>
 
             </RelativeLayout>
 
 
         </LinearLayout>
 
-      <View
+        <View
             android:id="@+id/v2_separator"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            app:layout_constraintTop_toBottomOf="@+id/guideline"
             android:layout_marginTop="@dimen/_75sdp"
-            android:background="#F2F4F7" />
+            android:background="#F2F4F7"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/guideline" />
 
 
-       <androidx.recyclerview.widget.RecyclerView
-           android:id="@+id/rv_reviews_product"
-          app:layout_constraintRight_toRightOf="parent"
-           app:layout_constraintLeft_toLeftOf="parent"
-           app:layout_constraintTop_toBottomOf="@+id/v2_separator"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="@dimen/_25sdp"
-           android:layout_marginLeft="@dimen/_20sdp"
-           android:layout_marginRight="@dimen/_20sdp"
-           android:layout_marginBottom="@dimen/_10sdp"
-           android:orientation="vertical"
-           android:scrollbars="vertical"
-           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-           tools:itemCount="2"
-           tools:listitem="@layout/rating_review_item">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_reviews_product"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:scrollbars="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v2_separator"
+            tools:itemCount="2"
+            tools:listitem="@layout/rating_review_item">
 
 
-       </androidx.recyclerview.widget.RecyclerView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 
 </layout>

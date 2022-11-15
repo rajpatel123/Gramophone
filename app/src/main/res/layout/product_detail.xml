@@ -60,7 +60,7 @@
                             doubleToFloatRating="@{viewModel.productReviewsData.rating.totalRating}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_minus25sdp"
+                            android:layout_marginStart="@dimen/_minus25sdp"
                             android:isIndicator="true"
                             android:numStars="5"
                             android:scaleX=".6"
@@ -73,13 +73,14 @@
                             android:id="@+id/tvTotalReviews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
                             android:fontFamily="@font/manrope_bold"
-                            android:hint="15 Farmers"
+                            tools:text="15 Farmers"
                             android:text="@{viewModel.productReviewsData.rating.totalReview.toString()+` `+ @string/farmers}"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_13ssp"
-                            android:visibility="@{viewModel.productReviewsData.rating.totalRating>0?View.VISIBLE : View.INVISIBLE}" />
+                            android:visibility="gone" />
+                        <!--android:visibility="@{viewModel.productReviewsData.rating.totalRating>0?View.VISIBLE : View.INVISIBLE}"-->
 
 
                     </LinearLayout>
@@ -105,6 +106,7 @@
                                 app:srcCompat="@drawable/ic_whatsapp" />
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/whatsAppShare"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -192,7 +194,7 @@
                             android:textSize="@dimen/_18ssp"
 
                             app:qtySelected="@{viewModel.qtySelected}"
-                            app:salesprice_="@{viewModel.selectedSkuListItem.salesPrice}"
+                            app:salesPrice="@{viewModel.selectedSkuListItem.salesPrice}"
 
                             tools:text="₹799.00" />
 
@@ -208,7 +210,7 @@
                             android:background="@drawable/strike_through"
                             android:gravity="center"
                             app:qtySelected="@{viewModel.qtySelected}"
-                            app:mrpprice_="@{viewModel.selectedSkuListItem.mrpPrice.toString()}"
+                            app:mrpPrice="@{viewModel.selectedSkuListItem.mrpPrice.toString()}"
                             android:textColor="@color/oldmrpcolor"
                             android:textSize="@dimen/_12ssp"
                             tools:text="₹1,290" />
@@ -220,7 +222,7 @@
                             style="@style/heading_title_bold_large"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/_7sdp"
+                            android:layout_marginStart="@dimen/_7sdp"
                             android:gravity="center"
                             android:textColor="@color/green"
                             android:textSize="@dimen/_14ssp"
@@ -676,6 +678,7 @@
 
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center">
@@ -706,8 +709,8 @@
         </androidx.core.widget.NestedScrollView>
 
         <ProgressBar
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:visibility="@{viewModel.progressLoader? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@+id/layout_bottom"
             app:layout_constraintEnd_toEndOf="parent"

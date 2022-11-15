@@ -9,7 +9,6 @@ import agstack.gramophone.ui.dialog.sortby.SortByData
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.subcategory.model.Brands
 import agstack.gramophone.ui.home.subcategory.model.Crops
-import agstack.gramophone.ui.home.subcategory.model.Offer
 import agstack.gramophone.ui.home.subcategory.model.TechnicalData
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.order.model.PageLimitRequest
@@ -37,6 +36,7 @@ class SubCategoryViewModel @Inject constructor(
 
     var productData = ObservableField<GpApiResponseDataProduct?>()
     var mSKUList = ArrayList<ProductSkuListItem?>()
+    var mSkuOfferList = ArrayList<PromotionListItem?>()
     var showSubCategoryView = MutableLiveData<Boolean>()
     var showSortFilterView = MutableLiveData<Boolean>()
     var showSortFilterInToolbar = MutableLiveData<Boolean>()
@@ -388,21 +388,26 @@ class SubCategoryViewModel @Inject constructor(
                     productData.product_id = productId
                     productData.quantity = quantity
 
-                    var offerList = ArrayList<Offer>()
 
-                    val offersResponse = productRepository.getOffersOnProduct(productData)
+                    val offersOnProductResponse =
+                        productRepository.getOffersOnProductData(productData)
                     progress.value = false
-                    if (offersResponse.isSuccessful && offersResponse.body()?.gp_api_response_data.isNotNull()
-                        && offersResponse.body()?.gp_api_response_data?.offers.isNotNullOrEmpty()
-                    ) {
-                        offerList =
-                            offersResponse.body()?.gp_api_response_data?.offers as ArrayList<Offer>
+                    if (offersOnProductResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
+                        //setOffer List
+                        offersOnProductResponse.body()?.gpApiResponseData?.offersProductList.let {
+                            val prodOfferList =
+                                ArrayList(offersOnProductResponse.body()?.gpApiResponseData?.offersProductList!!)
+                            prodOfferList.let {
+                                mSkuOfferList = ArrayList(prodOfferList)
+                            }
+                        }
                     }
-                    if (isRefreshOffer) {
 
+                    if (isRefreshOffer) {
+                        getNavigator()?.updateOfferOnAddToCartDialog(mSkuOfferList)
                     } else {
                         getNavigator()?.openAddToCartDialog(mSKUList,
-                            offerList,
+                            mSkuOfferList,
                             productData)
                     }
                 }

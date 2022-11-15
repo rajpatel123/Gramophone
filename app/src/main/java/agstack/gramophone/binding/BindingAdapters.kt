@@ -472,26 +472,41 @@ fun setPriceAndVisibility(
 }
 
 
-@BindingAdapter(value = ["salesprice_", "qtySelected"], requireAll = true)
+@BindingAdapter(value = ["salesPrice", "qtySelected"], requireAll = true)
 fun calculateSalesPrice(
     textView: AppCompatTextView, salesprice: String?, qty: Int,
 ) {
-    if (salesprice != null)
+    try {
+        if (salesprice != null) {
+            val floatPrice = salesprice.toFloat() * qty
 
-        textView.text =
-            textView.context.getString(R.string.rupee_symbol_with_space) + (salesprice?.toFloat()!! * qty).toString()
-
+            if (floatPrice.toString().endsWith(".0") || floatPrice.toString().contains(".00"))
+                textView.text =
+                    textView.context.getString(R.string.rupee_symbol_with_space) + floatPrice.roundToInt()
+                        .toString()
+            else textView.text =
+                textView.context.getString(R.string.rupee_symbol_with_space) + floatPrice.toString()
+        }
+    } catch (e: Exception) {
+        // do nothing
+    }
 }
 
 
-@BindingAdapter(value = ["mrpprice_", "qtySelected"], requireAll = true)
+@BindingAdapter(value = ["mrpPrice", "qtySelected"], requireAll = true)
 fun calculateMRPPrice(
     textView: AppCompatTextView, mrpPrice: String?, qty: Int,
 ) {
     if (mrpPrice != null) {
         textView.visibility = View.VISIBLE
 
-        textView.text = (mrpPrice?.toFloat()!! * qty).toString()
+        val floatPrice = mrpPrice.toFloat() * qty
+        if (floatPrice.toString().endsWith(".0") || floatPrice.toString().contains(".00"))
+            textView.text =
+                textView.context.getString(R.string.rupee_symbol_with_space) + floatPrice.roundToInt()
+                    .toString()
+        else textView.text =
+            textView.context.getString(R.string.rupee_symbol_with_space) + floatPrice.toString()
     } else {
         textView.visibility = View.GONE
     }
