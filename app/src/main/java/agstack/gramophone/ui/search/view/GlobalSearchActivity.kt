@@ -63,7 +63,7 @@ class GlobalSearchActivity :
         }
 
         handler.postDelayed({
-            viewDataBinding.edtSearch.requestFocus();
+            viewDataBinding.edtSearch.requestFocus()
             showSoftKeyboard(viewDataBinding.edtSearch)
         }, 300)
 
@@ -207,12 +207,10 @@ class GlobalSearchActivity :
                     filterSearchResultList.addAll(originalSearchResultList)
                     viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
                 }else{
-                    originalSearchResultList.forEach { item ->
-                       if (item.type == tab?.tag) {
-                            filterSearchResultList.clear()
-                            filterSearchResultList.add(item)
-                            viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
-                        }
+                    originalSearchResultList.filter { it.type == tab?.tag }.forEach {
+                        filterSearchResultList.clear()
+                        filterSearchResultList.add(it)
+                        viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
                     }
                 }
             }
