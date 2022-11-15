@@ -56,7 +56,7 @@ class GlobalSearchActivity :
             hideSoftKeyboard(viewDataBinding.edtSearch)
             viewDataBinding.edtSearch.setText(it)
             viewDataBinding.edtSearch.setSelection(it.length)
-            getViewModel().searchByKeyword(GlobalSearchRequest(it), searchInCommunity)
+            getViewModel().searchByKeyword(GlobalSearchRequest(keyword = it, source = "app", pageSection = "suggestion"), searchInCommunity)
         }
         viewDataBinding.recyclerViewSearchResult.adapter = SearchResultAdapter(filterSearchResultList) {
             showToast(it)
@@ -70,7 +70,7 @@ class GlobalSearchActivity :
         viewDataBinding.edtSearch.setOnEditorActionListener { _, action, _ ->
             if (action == EditorInfo.IME_ACTION_DONE) {
                 hideSoftKeyboard(viewDataBinding.edtSearch)
-                getViewModel().searchByKeyword(GlobalSearchRequest(viewDataBinding.edtSearch.text.toString()), searchInCommunity)
+                getViewModel().searchByKeyword(GlobalSearchRequest(viewDataBinding.edtSearch.text.toString(), source = "app", pageSection = "search"), searchInCommunity)
             }
             false
         }
@@ -143,7 +143,7 @@ class GlobalSearchActivity :
         if (originalSearchResultList.size > 0) {
             viewDataBinding.recyclerViewSearchResult.visibility = View.VISIBLE
             viewDataBinding.emptyResultWrapper.visibility = View.GONE
-            addTabs(result)
+            addTabs()
         } else {
             viewDataBinding.recyclerViewSearchResult.visibility = View.GONE
             viewDataBinding.emptyResultWrapper.visibility = View.VISIBLE
@@ -184,7 +184,7 @@ class GlobalSearchActivity :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun addTabs(result: List<Data>) {
+    private fun addTabs() {
         viewDataBinding.tabBarContainer.visibility = View.VISIBLE
 
         var tab = viewDataBinding.tabLayout.newTab()
@@ -192,7 +192,7 @@ class GlobalSearchActivity :
         tab.text = "All"
         viewDataBinding.tabLayout.addTab(tab)
 
-        result.forEach { item ->
+        originalSearchResultList.forEach { item ->
             tab = viewDataBinding.tabLayout.newTab()
             tab.tag = item.type
             tab.text = item.type?.replace('_', ' ')?.toCamelCase()?.trim()
@@ -202,15 +202,17 @@ class GlobalSearchActivity :
         viewDataBinding.tabLayout.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                result.forEach { item ->
-                    if ("All" == tab?.tag) {
-                        filterSearchResultList.clear()
-                        filterSearchResultList.addAll(originalSearchResultList)
-                        viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
-                    }else if (item.type == tab?.tag) {
-                        filterSearchResultList.clear()
-                        filterSearchResultList.add(item)
-                        viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
+                if ("All" == tab?.tag) {
+                    filterSearchResultList.clear()
+                    filterSearchResultList.addAll(originalSearchResultList)
+                    viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
+                }else{
+                    originalSearchResultList.forEach { item ->
+                       if (item.type == tab?.tag) {
+                            filterSearchResultList.clear()
+                            filterSearchResultList.add(item)
+                            viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
+                        }
                     }
                 }
             }
