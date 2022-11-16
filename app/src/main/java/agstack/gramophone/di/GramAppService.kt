@@ -9,6 +9,12 @@ import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
+import agstack.gramophone.ui.advisory.models.advisory.AdvisoryRequestModel
+import agstack.gramophone.ui.advisory.models.cropproblems.CropProblemRequestModel
+import agstack.gramophone.ui.advisory.models.cropproblems.CropProblemResponseModel
+import agstack.gramophone.ui.advisory.models.cropproblems.advisory.AdvisoryResponseModel
+import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProductRequestModel
+import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProductResponseModel
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.cart.model.PlaceOrderRequest
 import agstack.gramophone.ui.createnewpost.model.MentionRequestModel
@@ -346,4 +352,14 @@ interface GramAppService {
 
     @POST("api/v5/customer/gramophone-tv-bookmark")
     suspend fun bookmarkVideo(@Body body: VideoBookMarkedRequest): Response<SuccessStatusResponse>
+
+    @POST("api/v5/farm/crop-advisory-details/{type}")
+    suspend fun getCropAdvisoryDetails(@Body body: AdvisoryRequestModel): Response<AdvisoryResponseModel>
+
+    @POST("api/v5/farm/recommended-products")
+    suspend fun getRecommendedProducts(@Body body: RecommendedProductRequestModel): Response<RecommendedProductResponseModel>
+
+    @POST("api/v5/farm/crop-problems")
+    suspend fun getCropProblems(@Body body: CropProblemRequestModel): Response<CropProblemResponseModel>
+
 }

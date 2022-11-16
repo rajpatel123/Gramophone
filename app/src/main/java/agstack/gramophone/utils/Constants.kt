@@ -7,6 +7,8 @@ import android.content.Context
 
 object Constants {
 
+    val FARM_ID: String = "farm_id"
+    val FARM_TYPE: String = "farm_type"
     val BLOCKED_STATUS: String="blockStatus"
     val POLL: String = "poll"
     val QUIZ: String = "quiz"
