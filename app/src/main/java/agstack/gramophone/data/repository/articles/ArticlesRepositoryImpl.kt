@@ -31,11 +31,11 @@ class ArticlesRepositoryImpl @Inject constructor(
             response
         }
 
-    override suspend fun getSuggestedArticles(): Response<SuggestedArticlesResponse> =
+    override suspend fun getSuggestedArticles(suggestedCrops: String): Response<SuggestedArticlesResponse> =
         withContext(
             Dispatchers.IO
         ) {
-            val response = articleApiService.getSuggestedArticles()
+            val response = articleApiService.getSuggestedArticles(suggestedCrops)
             response
         }
 }

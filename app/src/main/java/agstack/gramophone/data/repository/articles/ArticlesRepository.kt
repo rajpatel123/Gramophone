@@ -12,5 +12,5 @@ interface ArticlesRepository {
 
     suspend fun getTrendingArticles(): Response<TrendingArticlesResponse>
 
-    suspend fun getSuggestedArticles(): Response<SuggestedArticlesResponse>
+    suspend fun getSuggestedArticles(suggestedCrops: String): Response<SuggestedArticlesResponse>
 }

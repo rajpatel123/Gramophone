@@ -3,6 +3,7 @@ package agstack.gramophone.data.repository.product
 
 import agstack.gramophone.data.model.SuccessStatusResponse
 import agstack.gramophone.di.GramAppService
+import agstack.gramophone.ui.articles.SuggestedCropResponse
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.cart.model.PlaceOrderRequest
 import agstack.gramophone.ui.dialog.filter.FilterRequest
@@ -304,6 +305,14 @@ class ProductRepositoryImpl @Inject constructor(
             Dispatchers.IO
         ) {
             val response = gramoAppService.bookmarkVideo(body)
+            response
+        }
+
+    override suspend fun getSuggestedCrops(): Response<SuggestedCropResponse> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val response = gramoAppService.getSuggestedCrops()
             response
         }
 }

@@ -75,11 +75,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_5sdp"
                             android:fontFamily="@font/manrope_bold"
-                            tools:text="15 Farmers"
                             android:text="@{viewModel.productReviewsData.rating.totalReview.toString()+` `+ @string/farmers}"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_13ssp"
-                            android:visibility="gone" />
+                            android:visibility="gone"
+                            tools:text="15 Farmers" />
                         <!--android:visibility="@{viewModel.productReviewsData.rating.totalRating>0?View.VISIBLE : View.INVISIBLE}"-->
 
 
@@ -199,8 +199,6 @@
                             tools:text="₹799.00" />
 
 
-
-
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_productMRP"
                             style="@style/heading_title_bold_large"
@@ -209,10 +207,10 @@
                             android:layout_marginLeft="@dimen/_7sdp"
                             android:background="@drawable/strike_through"
                             android:gravity="center"
-                            app:qtySelected="@{viewModel.qtySelected}"
-                            app:mrpPrice="@{viewModel.selectedSkuListItem.mrpPrice.toString()}"
                             android:textColor="@color/oldmrpcolor"
                             android:textSize="@dimen/_12ssp"
+                            app:mrpPrice="@{viewModel.selectedSkuListItem.mrpPrice.toString()}"
+                            app:qtySelected="@{viewModel.qtySelected}"
                             tools:text="₹1,290" />
                         <!-- android:text="@{viewModel.selectedSkuListItem.mrpPrice.toString()}"-->
 
@@ -673,15 +671,14 @@
                     layout="@layout/ratingbarandreviews"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/tv_rating_title"
                     bind:rvm="@{viewModel}" />
 
 
                 <RelativeLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:visibility="gone">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_viewAllReviews"
@@ -720,9 +717,12 @@
         <LinearLayout
             android:id="@+id/layout_bottom"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_48sdp"
+            android:layout_height="@dimen/_50sdp"
             android:background="@color/white"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
             android:weightSum="2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nestedscroll">
@@ -730,103 +730,56 @@
             <LinearLayout
                 android:id="@+id/btn_expertAdvice"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corner"
                 android:backgroundTint="@color/mute_grey"
+                android:gravity="center"
                 android:onClick="@{()->viewModel.onExpertAdviceClicked()}"
                 android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
-                    app:srcCompat="@drawable/ic_expert_grey" />
 
                 <TextView
                     android:id="@+id/tv_expertAdvice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:drawablePadding="@dimen/_6sdp"
+                    android:fontFamily="@font/manrope_bold"
                     android:text="@string/expert_advice"
                     android:textAllCaps="false"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/_14ssp" />
+                    android:textSize="@dimen/_13ssp"
+                    app:drawableStartCompat="@drawable/ic_expert_grey" />
             </LinearLayout>
 
+            <View
+                android:layout_width="@dimen/_6sdp"
+                android:layout_height="@dimen/_30sdp" />
 
             <LinearLayout
                 android:id="@+id/btn_addtocart"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_weight="1"
                 android:background="@{ viewModel.addToCartEnabled ? @drawable/active_button_background : @drawable/deactive_button_background}"
                 android:clickable="@{viewModel.addToCartEnabled}"
+                android:gravity="center"
                 android:onClick="@{()->viewModel.onAddToCartClicked()}"
                 android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
-                    app:srcCompat="@drawable/ic_cart_white" />
 
                 <TextView
                     android:id="@+id/tv_addtocart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:drawablePadding="@dimen/_6sdp"
+                    android:fontFamily="@font/manrope_bold"
                     android:text="@string/add_to_cart"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
+                    android:textSize="@dimen/_13ssp"
+                    app:drawableStartCompat="@drawable/ic_cart_white" />
             </LinearLayout>
-
-            <!--
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/btn_expertAdvice"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/_48sdp"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:layout_marginTop="@dimen/_4sdp"
-                            android:layout_marginBottom="@dimen/_4sdp"
-                            android:layout_weight="1"
-                            android:background="@drawable/rounded_corner"
-                            android:backgroundTint="@color/mute_grey"
-                            android:drawableStart="@drawable/ic_expert_grey"
-                            android:drawablePadding="@dimen/_minus25sdp"
-                            android:onClick="@{()->viewModel.onExpertAdviceClicked()}"
-                            android:paddingStart="@dimen/_5sdp"
-                            android:text="@string/expert_advice"
-                            android:textAllCaps="false"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/_14ssp" />
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/btn_addtocart"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/_48sdp"
-                            android:layout_marginLeft="@dimen/_6sdp"
-                            android:layout_marginTop="@dimen/_4sdp"
-                            android:layout_marginRight="@dimen/_5sdp"
-                            android:layout_marginBottom="@dimen/_4sdp"
-                            android:layout_weight="1"
-                            android:background="@{ viewModel.addToCartEnabled ? @drawable/active_button_background : @drawable/deactive_button_background}"
-                            android:drawableStart="@drawable/ic_cart_white"
-                            android:drawablePadding="@dimen/_minus30sdp"
-                            android:enabled="@{viewModel.addToCartEnabled}"
-                            android:onClick="@{()->viewModel.onAddToCartClicked()}"
-                            android:paddingStart="@dimen/_5sdp"
-                            android:text="@string/add_to_cart"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_14ssp" />-->
-
 
         </LinearLayout>
 
