@@ -8,9 +8,9 @@ import javax.inject.Singleton
 
 @Singleton
 interface ArticlesRepository {
-    suspend fun getFeaturedArticles(): Response<FeaturedArticlesResponse>
+    suspend fun getFeaturedArticles(language: String): Response<FeaturedArticlesResponse>
 
-    suspend fun getTrendingArticles(): Response<TrendingArticlesResponse>
+    suspend fun getTrendingArticles(language: String): Response<TrendingArticlesResponse>
 
-    suspend fun getSuggestedArticles(suggestedCrops: String): Response<SuggestedArticlesResponse>
+    suspend fun getSuggestedArticles(suggestedCrops: String, language: String): Response<SuggestedArticlesResponse>
 }

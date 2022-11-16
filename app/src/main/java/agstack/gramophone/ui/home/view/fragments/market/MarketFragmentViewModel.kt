@@ -45,6 +45,7 @@ class MarketFragmentViewModel
     var farmResponse: FarmResponse? = null
     var weatherResponse: WeatherResponse? = null
     var articlesData: HashMap<String, ArrayList<FormattedArticlesData>> = HashMap()
+    var language: String? = null
 
     fun showAppTourDialogIfApplicable() {
         if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.APP_TOUR_ENABLED) == true
@@ -55,6 +56,14 @@ class MarketFragmentViewModel
     }
 
     fun getHomeData() {
+        language =
+            if (SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.languageCode)
+                    .isNullOrEmpty()
+            ) {
+                "en"
+            } else {
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.languageCode)!!
+            }
         allProductsResponse = null
         cropResponse = null
         storeResponse = null
@@ -312,7 +321,8 @@ class MarketFragmentViewModel
     fun getFeaturedArticles() {
         viewModelScope.launch {
             try {
-                val response = articlesRepository.getFeaturedArticles()
+                val response =
+                    articlesRepository.getFeaturedArticles(if (language.isNullOrEmpty()) "en" else language!!)
                 if (response.isSuccessful) {
                     val featuredArticleResponse = response.body()
                     val featuredArticlesList = ArrayList<FormattedArticlesData>()
@@ -398,7 +408,8 @@ class MarketFragmentViewModel
     private fun getTrendingArticles() {
         viewModelScope.launch {
             try {
-                val response = articlesRepository.getTrendingArticles()
+                val response =
+                    articlesRepository.getTrendingArticles(if (language.isNullOrEmpty()) "en" else language!!)
                 if (response.isSuccessful) {
                     val featuredArticleResponse = response.body()
                     val trendingArticlesList = ArrayList<FormattedArticlesData>()
@@ -468,7 +479,8 @@ class MarketFragmentViewModel
                         viewModelScope.launch {
                             try {
                                 val response =
-                                    articlesRepository.getSuggestedArticles(suggestedCrops)
+                                    articlesRepository.getSuggestedArticles(suggestedCrops,
+                                        if (language.isNullOrEmpty()) "en" else language!!)
                                 if (response.isSuccessful) {
                                     val featuredArticleResponse = response.body()
                                     val suggestedArticlesList = ArrayList<FormattedArticlesData>()
