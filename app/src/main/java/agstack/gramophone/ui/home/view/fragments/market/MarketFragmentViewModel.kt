@@ -436,8 +436,10 @@ class MarketFragmentViewModel
                                     ""
                                 }
                             }
-                            val imageUrl =
-                                if (item.featured_image.isNotNullOrEmpty()) item.featured_image else ""
+                            var imageUrl = ""
+                            if (item.fimg_url !=null && item.fimg_url !is Boolean) {
+                                imageUrl = item.fimg_url.toString()
+                            }
 
                             val formattedArticlesData = FormattedArticlesData()
                             formattedArticlesData.id = id

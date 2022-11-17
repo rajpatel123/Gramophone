@@ -112,7 +112,13 @@ class SubCategoryViewModel @Inject constructor(
                 var webUrl = ""
                 if (bundle.containsKey(Constants.PAGE_URL) && bundle.getString(Constants.PAGE_URL) != null) {
                     webUrl = bundle.getString(Constants.PAGE_URL).toString()
-                    webUrl += "?" + Constants.LANG + "=" + getNavigator()?.getLanguage() + "&" + Constants.GP_TOKEN + "=" + SharedPreferencesHelper.instance?.getString(
+                    webUrl += "?" + Constants.LANG + "=" + if (SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.languageCode)
+                            .isNullOrEmpty()
+                    ) {
+                        "en"
+                    } else {
+                        SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.languageCode)!!
+                    } + "&" + Constants.GP_TOKEN + "=" + SharedPreferencesHelper.instance?.getString(
                         SharedPreferencesKeys.session_token)!!
                 }
                 if (webUrl.isNotNullOrEmpty()) {
