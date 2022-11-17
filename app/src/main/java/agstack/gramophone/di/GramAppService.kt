@@ -354,7 +354,7 @@ interface GramAppService {
     suspend fun bookmarkVideo(@Body body: VideoBookMarkedRequest): Response<SuccessStatusResponse>
 
     @POST("api/v5/farm/crop-advisory-details/{type}")
-    suspend fun getCropAdvisoryDetails(@Body body: AdvisoryRequestModel): Response<AdvisoryResponseModel>
+    suspend fun getCropAdvisoryDetails(@Body body: AdvisoryRequestModel, @Path("type") type: String): Response<AdvisoryResponseModel>
 
     @POST("api/v5/farm/recommended-products")
     suspend fun getRecommendedProducts(@Body body: RecommendedProductRequestModel): Response<RecommendedProductResponseModel>

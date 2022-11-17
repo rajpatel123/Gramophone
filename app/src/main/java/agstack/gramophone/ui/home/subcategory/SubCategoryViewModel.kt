@@ -2,7 +2,9 @@ package agstack.gramophone.ui.home.subcategory
 
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.ui.advisory.models.advisory.AdvisoryRequestModel
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.dialog.filter.MainFilterData
 import agstack.gramophone.ui.dialog.sortby.SortByData
@@ -33,6 +35,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SubCategoryViewModel @Inject constructor(
     private val productRepository: ProductRepository,
+    private val onBoardingRepository: OnBoardingRepository
 ) : BaseViewModel<SubCategoryNavigator>() {
 
     var productData = ObservableField<GpApiResponseDataProduct?>()
@@ -506,5 +509,41 @@ class SubCategoryViewModel @Inject constructor(
                 progress.value = false
             }
         }
+    }
+
+
+    fun getCropAdvisoryDetails(){
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.value = true
+                    val response =
+                        onBoardingRepository.getCropAdvisoryDetails(AdvisoryRequestModel(
+                            getNavigator()?.getBundle()?.get(Constants.FARM_ID) as Int),
+                            getNavigator()?.getBundle()?.get(Constants.FARM_TYPE).toString()
+                        )
+                    progress.value = false
+
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                        && response.body()?.gp_api_response_data != null
+                    ) {
+                        getNavigator()?.setProductListAdapter(ProductListAdapter(
+                            response.body()?.gp_api_response_data?.data),
+                            {
+                                fetchProductDetail(it)
+                            }, {
+                                getNavigator()?.openProductDetailsActivity(ProductData(it))
+                            })
+                    }
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
+                progress.value = false
+            }
+        }
+
+
+
     }
 }

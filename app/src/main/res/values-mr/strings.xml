@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Gramophone</string>
 
     <!-- Language selection -->
@@ -501,4 +501,9 @@
     <string name="video_count">%1$dव्हिडिओ</string>
     <string name="video_embeded_sharing_msg_short_link">Watch agriculture video and get best advice from Gramophone App</string>
     <string name="whatsapp_not_installed">Whatsapp have not been installed.</string>
+    <string name="tvUpcomingStages">UPCOMING STAGES</string>
+    <string name="other_suggessions_instructions">
+    <string name="other_suggessions_instructions">अन्य निर्देश और सुझाव</string>
+</string>
+    <string name="crop_all_problems">सभी कीट और समस्याएं</string>
 </resources>

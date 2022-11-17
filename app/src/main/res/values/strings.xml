@@ -641,4 +641,9 @@
     <string name="admin">ADMIN</string>
     <string name="spray">Spray</string>
     <string name="all_problems_txt">यहां होने वाले सभी कीट और समस्याओं की जाँच करें इस चरण के साथ उनके विवरण, समाधान और अनुशंसित उत्पादों को लागू करने के लिए</string>
+    <string name="tvUpcomingStages">UPCOMING STAGES</string>
+    <string name="other_suggessions_instructions">अन्य निर्देश और सुझाव</string>
+    <string name="crop_all_problems">सभी कीट और समस्याएं</string>
+    <string name="view_all_issues">View All Issues of this Stage</string>
+
 </resources>

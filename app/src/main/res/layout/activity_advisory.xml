@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.advisory.AdvisoryActivity">
 
     <data>
@@ -9,78 +10,228 @@
             type="agstack.gramophone.ui.home.subcategory.SubCategoryViewModel"/>
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <include
             android:id="@+id/myToolbar"
             layout="@layout/layout_toolbar" />
-
-        <RelativeLayout
-            android:id="@+id/rlProfile"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/myToolbar">
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_margin="@dimen/_20sdp"
-                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvName"
-                    android:layout_width="wrap_content"
+
+                <RelativeLayout
+                    android:id="@+id/rlProfile"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/manrope_bold"
-                    android:textColor="@color/brand_color"
-                    android:textSize="@dimen/_16ssp"
-                    tools:text="Uday Setty" />
-
-                <TextView
-                    android:id="@+id/tvLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:drawableStart="@drawable/ic_location"
-                    android:fontFamily="@font/manrope_regular"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/_10ssp"
-                    tools:text=" Sawer, Madhya Pradesh" />
-
-                <TextView
-                    android:id="@+id/tvViewProfile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp">
+
+
+                    <TextView
+                        android:id="@+id/tvCropId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_bold"
+                        android:textColor="@color/brand_color"
+                        android:textSize="@dimen/_16ssp"
+                        tools:text="FC46437" />
+
+                    <ImageView
+                        android:id="@+id/ivInfo"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        app:srcCompat="@drawable/ic_advisory_info" />
+
+                    <TextView
+                        android:id="@+id/tvLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvCropId"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:drawableStart="@drawable/ic_location"
+                        android:fontFamily="@font/manrope_regular"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10ssp"
+                        tools:text=" Sawer, Madhya Pradesh" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvUpcomingStases"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tvUpcomingStages"
+                    android:gravity="center"
                     android:fontFamily="@font/manrope_regular"
-                    android:text="@string/view_profile"
-                    android:textColor="@color/weather_orange"
-                    android:textSize="@dimen/_14ssp"
-                    tools:text="@string/view_profile" />
-            </LinearLayout>
+                    android:textSize="@dimen/_12ssp"
+                    android:layout_below="@+id/rlProfile"
+                    android:textColor="@color/blakish"/>
 
 
-            <agstack.gramophone.widget.CircularImageView
-                android:id="@+id/ivUserProfile"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_80sdp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
-                android:background="@drawable/dummy_profile" />
-        </RelativeLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvActivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvUpcomingStases"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp" />
 
-        <include layout="@layout/item_advisory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rlProfile"/>
-    </RelativeLayout>
+                <View
+                    android:id="@+id/viewActivitySeparator"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_5sdp"
+                    android:layout_below="@+id/rvActivity"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/grey" />
+
+                <LinearLayout
+                    android:id="@+id/llActivityDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/viewActivitySeparator"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rlInstructions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llActivityDetails"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:background="@drawable/instructions_bg_with_bolrder"
+                    android:padding="@dimen/_10sdp">
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/instructions_bg"
+                        android:fontFamily="@font/manrope_regular"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="@string/other_suggessions_instructions"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/title"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:background="@drawable/referral_background"
+                        android:fontFamily="@font/manrope_regular"
+                        android:paddingBottom="@dimen/_15sdp"
+                        android:textColor="@color/black"
+                        tools:text="दो  दिनों के बाद खेत को हलके से पानी से भिगा दें इस गतिविधि के दिन। लोरेम इप्सम डोलर सीट आमेट, कॉन्सेक्टेटूर एडिपिसिसिंग एलीट, सेड डो ईसमॉड टेम्पर इंसीडिंट यूट लेबर एट डोलोरे मैग्ना अलिका। यूट एनिम एड मिनिम वेनम" />
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/viewCropProblemSeparator"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_6sdp"
+                    android:layout_below="@+id/rlInstructions"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/grey" />
+
+                <TextView
+                    android:id="@+id/tvCropIssues"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/viewCropProblemSeparator"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:text="@string/crop_all_problems"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    android:id="@+id/issuesTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvCropIssues"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:paddingBottom="@dimen/_15sdp"
+                    android:text="@string/all_problems_txt"
+                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/black" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCropProblems"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/issuesTitle"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
+
+                    tools:listitem="@layout/item_crop_issues" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rvCropProblems"
+
+                    >
+                    <TextView
+                        android:id="@+id/tvViewAll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/manrope_bold"
+                        android:gravity="center"
+                        android:text="@string/view_all_issues"
+                        android:textColor="@color/orange"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/tvViewAll"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        app:srcCompat="@drawable/ic_arrow_right"/>
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
 
 
 </layout>
