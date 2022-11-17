@@ -527,13 +527,13 @@ class SubCategoryViewModel @Inject constructor(
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
                         && response.body()?.gp_api_response_data != null
                     ) {
-                        getNavigator()?.setProductListAdapter(ProductListAdapter(
-                            response.body()?.gp_api_response_data?.data),
-                            {
-                                fetchProductDetail(it)
-                            }, {
-                                getNavigator()?.openProductDetailsActivity(ProductData(it))
-                            })
+//                        getNavigator()?.setProductListAdapter(ProductListAdapter(
+//                            response.body()?.gp_api_response_data?.data),
+//                            {
+//                                fetchProductDetail(it)
+//                            }, {
+//                                getNavigator()?.openProductDetailsActivity(ProductData(it))
+//                            })
                     }
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))

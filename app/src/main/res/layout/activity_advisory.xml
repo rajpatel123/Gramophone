@@ -25,15 +25,16 @@
                 android:layout_height="match_parent">
 
 
-
                 <RelativeLayout
                     android:id="@+id/rlProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp">
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:background="@drawable/ic_strip_bg">
 
 
                     <TextView
@@ -71,12 +72,12 @@
                     android:id="@+id/tvUpcomingStases"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tvUpcomingStages"
-                    android:gravity="center"
-                    android:fontFamily="@font/manrope_regular"
-                    android:textSize="@dimen/_12ssp"
                     android:layout_below="@+id/rlProfile"
-                    android:textColor="@color/blakish"/>
+                    android:fontFamily="@font/manrope_regular"
+                    android:gravity="center"
+                    android:text="@string/tvUpcomingStages"
+                    android:textColor="@color/blakish"
+                    android:textSize="@dimen/_12ssp" />
 
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -87,7 +88,10 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp" />
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:orientation="horizontal"
+                    app:layoutManager="LinearLayoutManager"
+                    tools:listitem="@layout/item_activity" />
 
                 <View
                     android:id="@+id/viewActivitySeparator"
@@ -200,6 +204,7 @@
                     tools:listitem="@layout/item_crop_issues" />
 
                 <RelativeLayout
+                    android:id="@+id/tvViewAllRl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rvCropProblems"
@@ -224,9 +229,15 @@
                         android:layout_centerVertical="true"
                         android:gravity="center"
                         android:layout_marginStart="@dimen/_10sdp"
-                        app:srcCompat="@drawable/ic_arrow_right"/>
+                        app:srcCompat="@drawable/ic_arrow_right" />
 
                 </RelativeLayout>
+
+                <include
+                    layout="@layout/item_advisory_community"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvViewAllRl" />
             </RelativeLayout>
 
         </androidx.core.widget.NestedScrollView>

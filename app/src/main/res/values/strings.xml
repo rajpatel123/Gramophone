@@ -645,5 +645,9 @@
     <string name="other_suggessions_instructions">अन्य निर्देश और सुझाव</string>
     <string name="crop_all_problems">सभी कीट और समस्याएं</string>
     <string name="view_all_issues">View All Issues of this Stage</string>
+    <string name="crop_related_txt">फसल से संबंधित\n समस्या के लिए कम्युनिटी\n पर प्रश्न पूछे</string>
+    <string name="crop_related_description">आप चित्रों के साथ अपने प्रश्न पोस्ट करें एवं हमारे विशेषज्ञ शीघ्र ही उसका उत्तर देंगे ।</string>
+    <string name="ask_expert">विशेषज्ञ सलाह के लिए पूछें</string>
+    <string name="disclaimer">Disclaimer: ** Actual dosage of the product may vary depending on various factors and should be adjusted accordingly. User should follow directions provided by manufacturer on the label claims.</string>
 
 </resources>

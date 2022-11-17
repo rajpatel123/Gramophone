@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_5sdp"
+    android:background="@drawable/activity_bg"
+    android:padding="@dimen/_10sdp">
+
+    <TextView
+        android:id="@+id/tvActivityQty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/manrope_bold"
+        android:textColor="@color/blakish"
+        tools:text="100-200 DAYS" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvActivityQty"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_centerHorizontal="true"
+
+        android:fontFamily="@font/manrope_medium"
+        tools:text="Flowering Stage" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/tvActivityQty"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        app:srcCompat="@drawable/ic_info_report" />
+
+
+</RelativeLayout>

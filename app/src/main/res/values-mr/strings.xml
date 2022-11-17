@@ -506,4 +506,6 @@
     <string name="other_suggessions_instructions">अन्य निर्देश और सुझाव</string>
 </string>
     <string name="crop_all_problems">सभी कीट और समस्याएं</string>
+    <string name="crop_related_description">आप चित्रों के साथ अपने प्रश्न पोस्ट करें एवं हमारे विशेषज्ञ शीघ्र ही उसका उत्तर देंगे ।</string>
+    <string name="disclaimer">Actual dosage of the product may vary depending on various factors and should be adjusted accordingly. User should follow directions provided by manufacturer on the label claims.</string>
 </resources>
