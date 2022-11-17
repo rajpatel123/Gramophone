@@ -8,7 +8,6 @@ import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.farm.model.*
 import agstack.gramophone.ui.farm.model.unit.FarmUnitResponse
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
-import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.gramophone.model.MyGramophoneResponseModel
 import agstack.gramophone.ui.home.view.fragments.market.model.*
@@ -92,8 +91,6 @@ interface ProductRepository {
     suspend fun getFarmUnits(type: String): Response<FarmUnitResponse>
 
     suspend fun checkPromotionOnProduct(verifyPromotionRequestModel: VerifyPromotionRequestModel): Response<CheckPromotionResponseModel>
-
-    suspend fun getOffersOnProduct(productData: ProductData): Response<ApplicableOfferResponse>
 
     suspend fun getSuggestions(body: SuggestionsRequest): Response<SuggestionsResponse>
 

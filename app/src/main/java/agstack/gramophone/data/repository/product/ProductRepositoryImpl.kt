@@ -9,7 +9,6 @@ import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.farm.model.*
 import agstack.gramophone.ui.farm.model.unit.FarmUnitResponse
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
-import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.gramophone.model.MyGramophoneResponseModel
 import agstack.gramophone.ui.home.view.fragments.market.model.*
@@ -26,7 +25,6 @@ import agstack.gramophone.ui.tv.model.VideoBookMarkedRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
-import retrofit2.http.Body
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -260,14 +258,6 @@ class ProductRepositoryImpl @Inject constructor(
         val response = gramoAppService.getFarmUnits(type)
         response
     }
-
-    override suspend fun getOffersOnProduct(productData: ProductData): Response<ApplicableOfferResponse> =
-        withContext(
-            Dispatchers.IO
-        ) {
-            val response = gramoAppService.getOffersOnProduct(productData)
-            response
-        }
 
     override suspend fun checkPromotionOnProduct(verifyPromotionRequestModel: VerifyPromotionRequestModel): Response<CheckPromotionResponseModel> = withContext(
         Dispatchers.IO

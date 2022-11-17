@@ -21,12 +21,11 @@ import agstack.gramophone.ui.createnewpost.model.MentionRequestModel
 import agstack.gramophone.ui.createnewpost.model.MentionTagResponsemodel
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
 import agstack.gramophone.ui.dialog.filter.FilterRequest
-import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
 import agstack.gramophone.ui.farm.model.*
 import agstack.gramophone.ui.farm.model.unit.FarmUnitResponse
 import agstack.gramophone.ui.favourite.model.FavouriteRequestModel
 import agstack.gramophone.ui.favourite.model.FeaturedProductResponseModel
-import agstack.gramophone.ui.home.subcategory.model.ApplicableOfferResponse
+import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.AnsweredQuizPollRequestModel
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
@@ -299,9 +298,6 @@ interface GramAppService {
 
     @PUT("api/v5/cart/update-to-cart")
     suspend fun updateCartItem(@Body productData: ProductData): Response<SuccessStatusResponse>
-
-    @POST("api/v5/product/get-promotion")
-    suspend fun getOffersOnProduct(@Body productData: ProductData): Response<ApplicableOfferResponse>
 
     @POST("api/v5/farm/get-farm/{type}")
     suspend fun getFarmsData(

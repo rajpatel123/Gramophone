@@ -1,13 +1,14 @@
 package agstack.gramophone.ui.search.adapter
 
-import agstack.gramophone.databinding.SubItemCropBinding
+import agstack.gramophone.R
 import agstack.gramophone.databinding.SubItemCropProblemsBinding
 import agstack.gramophone.ui.search.model.Item
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 
-class CropProblemsAdapter (
+class CropProblemsAdapter(
     val list: List<Item>,
     private val listener: (String, String?, String?) -> Unit,
 ) : RecyclerView.Adapter<CropProblemsAdapter.MyViewHolder>() {
@@ -22,6 +23,17 @@ class CropProblemsAdapter (
 
         holder.binding.itemView.setOnClickListener {
             listener.invoke(crop.id!!, crop.name, crop.image)
+        }
+        if (position % 2 == 0) {
+            holder.binding.bottomHalf.background = AppCompatResources.getDrawable(
+                holder.binding.bottomHalf.context,
+                R.drawable.rounded_corner_bottom_16_solid_yellow_stroke_gray
+            )
+        } else {
+            holder.binding.bottomHalf.background = AppCompatResources.getDrawable(
+                holder.binding.bottomHalf.context,
+                R.drawable.rounded_corner_bottom_16_solid_pink_stroke_gray
+            )
         }
     }
 

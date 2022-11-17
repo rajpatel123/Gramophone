@@ -6,14 +6,13 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityArticlesBinding
 import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
-import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.subcategory.ProductListAdapter
 import agstack.gramophone.ui.home.subcategory.SubCategoryNavigator
 import agstack.gramophone.ui.home.subcategory.SubCategoryViewModel
-import agstack.gramophone.ui.home.subcategory.model.Offer
 import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
+import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
@@ -198,7 +197,7 @@ class ArticlesWebViewActivity :
 
     override fun openAddToCartDialog(
         mSKUList: ArrayList<ProductSkuListItem?>,
-        mSkuOfferList: ArrayList<Offer>,
+        mSkuOfferList: ArrayList<PromotionListItem?>,
         productData: ProductData,
     ) {
         bottomSheet = AddToCartBottomSheetDialog({
@@ -208,7 +207,7 @@ class ArticlesWebViewActivity :
                 Bundle().apply {
 
                     val offersDataItem = DataItem()
-                    offersDataItem.endDate = it.end_date
+                    offersDataItem.endDate = it.valid_till
                     offersDataItem.productName = it.title
                     offersDataItem.productsku = it.applicable_on_sku
                     offersDataItem.image = it.image
@@ -245,7 +244,7 @@ class ArticlesWebViewActivity :
             bottomSheet?.updateDialog(isOfferApplicable, promotionId!!, message)
     }
 
-    override fun updateOfferOnAddToCartDialog(mSkuOfferList: ArrayList<Offer>) {
+    override fun updateOfferOnAddToCartDialog(mSkuOfferList: ArrayList<PromotionListItem?>) {
         if (bottomSheet.isNotNull())
             bottomSheet?.updateOffer(mSkuOfferList)
     }

@@ -16,7 +16,11 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.amnix.xtension.extensions.toCamelCase
 import com.google.android.material.tabs.TabLayout
@@ -34,6 +38,8 @@ class GlobalSearchActivity :
     private val originalSearchResultList = arrayListOf<Data>()
     private val filterSearchResultList = arrayListOf<Data>()
     private var searchInCommunity = false
+    private var disableSearchForAWhile = false
+    private val handler =  Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,23 +48,42 @@ class GlobalSearchActivity :
         searchSuggestions()
 
         viewDataBinding.recyclerViewSuggestions.adapter = SuggestionAdapter(suggestionList) {
+            disableSearchForAWhile = true
+            handler.postDelayed({
+                disableSearchForAWhile = false
+            }, 1500)
+
             hideSoftKeyboard(viewDataBinding.edtSearch)
-            getViewModel().searchByKeyword(GlobalSearchRequest(it), searchInCommunity)
+            viewDataBinding.edtSearch.setText(it)
+            viewDataBinding.edtSearch.setSelection(it.length)
+            getViewModel().searchByKeyword(GlobalSearchRequest(keyword = it, source = "app", pageSection = "suggestion"), searchInCommunity)
         }
         viewDataBinding.recyclerViewSearchResult.adapter = SearchResultAdapter(filterSearchResultList) {
             showToast(it)
         }
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            viewDataBinding.edtSearch.requestFocus();
+        handler.postDelayed({
+            viewDataBinding.edtSearch.requestFocus()
             showSoftKeyboard(viewDataBinding.edtSearch)
         }, 300)
 
+        viewDataBinding.edtSearch.setOnEditorActionListener { _, action, _ ->
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                hideSoftKeyboard(viewDataBinding.edtSearch)
+                getViewModel().searchByKeyword(GlobalSearchRequest(viewDataBinding.edtSearch.text.toString(), source = "app", pageSection = "search"), searchInCommunity)
+            }
+            false
+        }
     }
 
     override fun onPause() {
         super.onPause()
         hideSoftKeyboard(viewDataBinding.edtSearch)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
     }
 
     fun getBundle(): Bundle? {
@@ -118,7 +143,7 @@ class GlobalSearchActivity :
         if (originalSearchResultList.size > 0) {
             viewDataBinding.recyclerViewSearchResult.visibility = View.VISIBLE
             viewDataBinding.emptyResultWrapper.visibility = View.GONE
-            addTabs(result)
+            addTabs()
         } else {
             viewDataBinding.recyclerViewSearchResult.visibility = View.GONE
             viewDataBinding.emptyResultWrapper.visibility = View.VISIBLE
@@ -150,7 +175,7 @@ class GlobalSearchActivity :
     private fun searchSuggestions() {
         RxSearchObservable.fromView(viewDataBinding.edtSearch)
             .debounce(800, TimeUnit.MILLISECONDS)
-            .filter { !it.isNullOrEmpty() }
+            .filter { !it.isNullOrEmpty() && !disableSearchForAWhile}
             .map { s -> s.toString().lowercase(Locale.getDefault()).trim() }
            /* .distinctUntilChanged()*/
             .switchMap { Flowable.just(it) }
@@ -159,15 +184,17 @@ class GlobalSearchActivity :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun addTabs(result: List<Data>) {
+    private fun addTabs() {
         viewDataBinding.tabBarContainer.visibility = View.VISIBLE
 
         var tab = viewDataBinding.tabLayout.newTab()
+        tab.tag = "All"
         tab.text = "All"
         viewDataBinding.tabLayout.addTab(tab)
 
-        result.forEach { item ->
+        originalSearchResultList.forEach { item ->
             tab = viewDataBinding.tabLayout.newTab()
+            tab.tag = item.type
             tab.text = item.type?.replace('_', ' ')?.toCamelCase()?.trim()
             viewDataBinding.tabLayout.addTab(tab)
         }
@@ -175,16 +202,16 @@ class GlobalSearchActivity :
         viewDataBinding.tabLayout.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                val tabTitle = tab?.text
-                result.forEach { item ->
-                    val recyclerItemTitle = item.type?.replace('_', ' ')?.toCamelCase()?.trim()
+                if ("All" == tab?.tag) {
                     filterSearchResultList.clear()
-                    if ("All" == tabTitle) {
-                        filterSearchResultList.addAll(originalSearchResultList)
-                    }else if (recyclerItemTitle == tabTitle) {
-                        filterSearchResultList.add(item)
-                    }
+                    filterSearchResultList.addAll(originalSearchResultList)
                     viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
+                }else{
+                    originalSearchResultList.filter { it.type == tab?.tag }.forEach {
+                        filterSearchResultList.clear()
+                        filterSearchResultList.add(it)
+                        viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
+                    }
                 }
             }
 

@@ -22,11 +22,13 @@ import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
+import com.amnix.xtension.extensions.isNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 @HiltViewModel
 class ProductDetailsViewModel @Inject constructor(
@@ -96,13 +98,14 @@ class ProductDetailsViewModel @Inject constructor(
     }
 
     fun onMinusQtyClicked() {
-        if (qtySelected.get()!! >= 2)
+        if (qtySelected.get()!! > 1) {
             qtySelected.set(qtySelected.get()!! - 1)
-        loadOffersData(productDetailstoBeFetched, qtySelected.get())
-        setPercentage_mrpVisibility(
-            selectedSkuListItem.get()!!,
-            null
-        )
+            loadOffersData(productDetailstoBeFetched, qtySelected.get())
+            setPercentage_mrpVisibility(
+                selectedSkuListItem.get()!!,
+                null
+            )
+        }
         //check if available in getCartAPI , if yes then call addtocart
         /*    var cartItemsList = getCartData()
             if (cartItemsList != null && cartItemsList.size>0) {
@@ -345,89 +348,65 @@ class ProductDetailsViewModel @Inject constructor(
         model: ProductSkuListItem,
         offerModel: PromotionListItem? = null,
     ) {
-        var isOffersLayoutVisible = true
-        var priceDiff: Float = 0.0f
-        var discount :Float=0.0f
-        var finalSalePrice: Double = 0.0
-        var finaldiscount = "0"
-        var isMRPVisibile = false
-        var isContactforPriceVisible = false
-        if (model.mrpPrice == null && model.salesPrice == null) {
 
-            isContactforPriceVisible = true
+        if (model.isNull()) return
+        var modelMrpPrice = 0f
+        var modelSalesPrice = 0f
+        var finalSalePrice = 0f
+        var finalDiscount = "0"
+        var isMRPVisible = false
+        var isDiscountPercentVisible = false
+        var isContactForPriceVisible = false
+        var proceedForCalculation = true
+        var isOffersLayoutVisible = true
+        addToCartEnabled.set(true)
+
+        modelMrpPrice = if (model.mrpPrice.isNull()) 0f else model.mrpPrice!!.toFloat()
+        modelSalesPrice = if (model.salesPrice.isNullOrEmpty()) 0f else model.salesPrice.toFloat()
+
+        if (modelMrpPrice == 0f && modelSalesPrice > 0f) {
+            modelMrpPrice = modelSalesPrice
+        } else if (modelSalesPrice == 0f && modelMrpPrice > 0f) {
+            modelSalesPrice = modelMrpPrice
+        } else if (modelMrpPrice > 0f && modelSalesPrice > 0f) {
+            // do no assignment in this case
+        } else {
+            modelMrpPrice = 0f
+            modelSalesPrice = 0f
             addToCartEnabled.set(false)
             isOffersLayoutVisible = false
-        } else {
+            isContactForPriceVisible = true
+            proceedForCalculation = false
+        }
+        modelMrpPrice *= qtySelected.get()!!
+        modelSalesPrice *= qtySelected.get()!!
+        var discountPercent = 0f
+        if (proceedForCalculation) {
+            isMRPVisible = modelMrpPrice > modelSalesPrice
+            discountPercent =
+                ((modelMrpPrice - modelSalesPrice) / modelMrpPrice) * 100
+            finalDiscount = (String.format("%.0f", discountPercent) + "% off")
+            isDiscountPercentVisible = discountPercent > 0
 
-            // in this condition , model.mrpPrice != null && model.salesPrice != null
-            isContactforPriceVisible = false
-            addToCartEnabled.set(true)
+            finalSalePrice = modelSalesPrice
+            if (offerModel.isNotNull())
+                offerModel?.let {
+                    if (offerModel.benefit.isNotNull() && offerModel.benefit?.amount_saved.isNotNull() && offerModel.benefit?.amount_saved!! > 0) {
+                        finalSalePrice = modelSalesPrice - offerModel.benefit.amount_saved.toFloat()
 
-            var amountSaved = 0f
-            if (offerModel?.benefit?.amount_saved.isNotNull()) {
-                amountSaved = offerModel?.benefit?.amount_saved!!.toFloat()
-            }
-
-            if (offerModel == null || amountSaved == 0f) {
-                if (model.mrpPrice != null) {
-
-                    priceDiff = (model.mrpPrice!!.toFloat() - (model.salesPrice)!!.toFloat())
-                    discount = model.mrpPrice!!.toFloat() - priceDiff
-                } else {
-                    priceDiff = (model.salesPrice)!!.toFloat()
-                    discount = model.salesPrice!!.toFloat() - priceDiff
-                }
-            } else if (amountSaved > 0f) {
-                if (model.mrpPrice != null && model.salesPrice != null) {
-                    priceDiff =
-                        (model.mrpPrice.toFloat()  - (model.salesPrice).toFloat()) - amountSaved
-                    discount = (model.mrpPrice!!.toFloat()) - priceDiff
-                } else if (model.mrpPrice == null && model.salesPrice != null) {
-                    priceDiff =
-                        (model.salesPrice)!!.toFloat() - amountSaved
-
-                    discount = (model.salesPrice).toFloat() - priceDiff
-
-                }
-
-            }
-
-            val numarator = (discount * 100)
-            var denominator: Float = 1f
-            if (model.mrpPrice != null) {
-                denominator = model.mrpPrice.toFloat()
-            } else {
-                denominator = model.salesPrice!!.toFloat()
-            }
-            val percentage = numarator / denominator
-            val formatted_percentage = String.format("%.0f", percentage);
-            finaldiscount = (formatted_percentage + " % off")
-            isMRPVisibile = priceDiff > 0 && model.mrpPrice!=null
-
-
-            offerModel?.let {
-                if (offerModel.benefit?.promotionType.equals(Constants.DISCOUNT) && offerModel?.benefit?.amount_saved != null)
-                    if (offerModel?.benefit?.amount_saved!! > 0) {
-                        finalSalePrice =
-                            ( model.salesPrice?.toDouble()!! *qtySelected.get()!! )- offerModel?.benefit?.amount_saved
+                        discountPercent =
+                            ((modelMrpPrice - finalSalePrice) / modelMrpPrice) * 100
+                        finalDiscount = (String.format("%.0f", discountPercent) + "% off")
+                        isDiscountPercentVisible = discountPercent > 0
                     }
-            }
-            if (offerModel == null || offerModel?.benefit?.amount_saved == 0.0) {
-                finalSalePrice = model.salesPrice?.toDouble()!!*qtySelected.get()!!
-            }
-
-            // set offer detailsLayout visibility
-            isOffersLayoutVisible = true
-
-
-
+                }
         }
 
         getNavigator()?.setPercentageOff_mrpVisibility(
             model.product_app_name!!,
-            finalSalePrice.toString(),
-            finaldiscount,
-            isMRPVisibile, isOffersLayoutVisible, isContactforPriceVisible
+            finalSalePrice,
+            finalDiscount,
+            isMRPVisible, isOffersLayoutVisible, isContactForPriceVisible
         )
 
     }
@@ -567,12 +546,12 @@ class ProductDetailsViewModel @Inject constructor(
                             {
                                 //When RadioButton is clicked
                                 selectedOfferItem = it
-                                if(selectedOfferItem.selected==true){
-                                checkPromotionApplicable(
-                                    selectedOfferItem, selectedSkuListItem.get()!!,
-                                    qtySelected.get()!!
-                                )}
-                                else{
+                                if (selectedOfferItem.selected == true) {
+                                    checkPromotionApplicable(
+                                        selectedOfferItem, selectedSkuListItem.get()!!,
+                                        qtySelected.get()!!
+                                    )
+                                } else {
                                     setPercentage_mrpVisibility(selectedSkuListItem.get()!!, null)
                                 }
 
@@ -605,7 +584,7 @@ class ProductDetailsViewModel @Inject constructor(
     private fun checkPromotionApplicable(
         selectedOfferItem: PromotionListItem,
         selectedSKU: ProductSkuListItem,
-        quantity: Int
+        quantity: Int,
     ) {
 
         var isApplicable = false
@@ -635,7 +614,7 @@ class ProductDetailsViewModel @Inject constructor(
                 )
             } else {
                 for (item in mSkuOfferList) {
-                    item?.selected =false
+                    item?.selected = false
                 }
                 getNavigator()?.refreshOfferAdapter()
                 getNavigator()?.showToast(offersOnProductResponse.body()?.gpApiMessage)

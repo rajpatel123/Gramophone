@@ -13,12 +13,13 @@ import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.adapter.ViewPagerAdapter
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
-import agstack.gramophone.ui.home.subcategory.model.Offer
 import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
+import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
+import agstack.gramophone.ui.search.view.GlobalSearchActivity
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.MenuItem
@@ -26,6 +27,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.amnix.xtension.extensions.isNotNull
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_category_detail.view.*
@@ -141,7 +143,11 @@ class SubCategoryActivity :
             R.id.item_cart -> {
                 openActivity(CartActivity::class.java)
             }
-
+            R.id.item_search -> {
+                openActivity(GlobalSearchActivity::class.java, Bundle().apply {
+                    putBoolean("searchInCommunity", false)
+                })
+            }
         }
         return true
     }
@@ -172,9 +178,19 @@ class SubCategoryActivity :
     }
 
     override fun setViewPagerAdapter(bannerList: List<Banner>?) {
-        val adapter = ViewPagerAdapter(bannerList!!)
-        viewDataBinding.viewPager.adapter = adapter
-        viewDataBinding.dotsIndicator.attachTo(viewDataBinding.viewPager)
+        if (bannerList.isNotNullOrEmpty()) {
+            viewDataBinding.rlBanner.visibility = View.VISIBLE
+            val adapter = ViewPagerAdapter(bannerList!!)
+            viewDataBinding.viewPager.adapter = adapter
+            if (bannerList.size > 1) {
+                viewDataBinding.dotsIndicator.attachTo(viewDataBinding.viewPager)
+                viewDataBinding.rlDotsIndicator.visibility = View.VISIBLE
+            } else {
+                viewDataBinding.rlDotsIndicator.visibility = View.GONE
+            }
+        } else {
+            viewDataBinding.rlBanner.visibility = View.GONE
+        }
     }
 
     override fun setSubCategoryAdapter(
@@ -209,7 +225,7 @@ class SubCategoryActivity :
 
     override fun openAddToCartDialog(
         mSKUList: ArrayList<ProductSkuListItem?>,
-        mSkuOfferList: ArrayList<Offer>,
+        mSkuOfferList: ArrayList<PromotionListItem?>,
         productData: ProductData,
     ) {
         bottomSheet = AddToCartBottomSheetDialog({
@@ -219,7 +235,7 @@ class SubCategoryActivity :
                 Bundle().apply {
 
                     val offersDataItem = DataItem()
-                    offersDataItem.endDate = it.end_date
+                    offersDataItem.endDate = it.valid_till
                     offersDataItem.productName = it.title
                     offersDataItem.productsku = it.applicable_on_sku
                     offersDataItem.image = it.image
@@ -252,7 +268,7 @@ class SubCategoryActivity :
             bottomSheet?.updateDialog(isOfferApplicable, promotionId!!, message)
     }
 
-    override fun updateOfferOnAddToCartDialog(mSkuOfferList: ArrayList<Offer>) {
+    override fun updateOfferOnAddToCartDialog(mSkuOfferList: ArrayList<PromotionListItem?>) {
         if (bottomSheet.isNotNull())
             bottomSheet?.updateOffer(mSkuOfferList)
     }
