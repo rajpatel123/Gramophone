@@ -60,7 +60,7 @@ class GlobalSearchActivity :
         handler.postDelayed({
             viewDataBinding.edtSearch.requestFocus()
             showSoftKeyboard(viewDataBinding.edtSearch)
-        }, 300)
+        }, 500)
 
         viewDataBinding.edtSearch.setOnEditorActionListener { _, action, _ ->
             if (action == EditorInfo.IME_ACTION_DONE) {

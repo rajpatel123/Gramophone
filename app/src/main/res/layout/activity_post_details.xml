@@ -540,8 +540,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{viewModel.isDataAvailable?View.GONE:View.VISIBLE}"
-            >
+            android:visibility="@{viewModel.isDataAvailable?View.GONE:View.VISIBLE, default = gone}"
+            tools:visibility="visible">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
