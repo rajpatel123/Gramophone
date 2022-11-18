@@ -280,8 +280,14 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    override fun showSoftKeyboard(view : View) {
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    override fun showSoftKeyboard(view: View) {
+        val focusedView = view.findFocus() ?: view.apply { requestFocus() }
+        val imm = (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+        val isShowSucceeded = imm.showSoftInput(focusedView, InputMethodManager.SHOW_IMPLICIT)
+        if (!isShowSucceeded) {
+            imm.toggleSoftInputFromWindow(
+                view.windowToken, 0, InputMethodManager.HIDE_IMPLICIT_ONLY
+            )
+        }
     }
 }
