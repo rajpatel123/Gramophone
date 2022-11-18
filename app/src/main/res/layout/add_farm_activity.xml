@@ -12,11 +12,16 @@
             type="agstack.gramophone.ui.farm.viewmodel.AddFarmViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_above="@+id/btnSave"
+        android:fillViewport="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -194,21 +199,8 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/btnSave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/orange"
-            android:enabled="@{viewModel.enableSaveButton, default=true}"
-            android:fontFamily="@font/manrope_bold"
-            android:gravity="center"
-            android:onClick="@{() -> viewModel.onClickSaveAndContinue()}"
-            android:padding="@dimen/_13sdp"
-            android:text="@string/save_continue"
-            android:textColor="@color/white" />
-
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/wrapper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/date_picker"
@@ -216,7 +208,9 @@
             android:layout_below="@+id/date_picker"
             android:layout_marginTop="@dimen/_4sdp"
             android:orientation="horizontal"
-            android:weightSum="10">
+            android:weightSum="10"
+            android:paddingBottom="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_48sdp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -342,5 +336,20 @@
 
     </RelativeLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
+
+        <TextView
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/orange"
+            android:enabled="@{viewModel.enableSaveButton, default=true}"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center"
+            android:onClick="@{() -> viewModel.onClickSaveAndContinue()}"
+            android:padding="@dimen/_13sdp"
+            android:text="@string/save_continue"
+            android:textColor="@color/white" />
+    </RelativeLayout>
 </layout>
