@@ -3,12 +3,15 @@ package agstack.gramophone.ui.search.viewmodel
 
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.data.repository.community.CommunityRepository
 import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
 import agstack.gramophone.ui.search.model.GlobalSearchRequest
 import agstack.gramophone.ui.search.model.GlobalSearchResponse
 import agstack.gramophone.ui.search.model.SuggestionsRequest
 import agstack.gramophone.ui.search.navigator.GlobalSearchNavigator
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.Utility
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GlobalSearchViewModel @Inject constructor(
     private val productRepository: ProductRepository,
+    private val communityRepository: CommunityRepository,
 ) : BaseViewModel<GlobalSearchNavigator>() {
     var progress = MutableLiveData<Boolean>()
 
@@ -27,11 +31,11 @@ class GlobalSearchViewModel @Inject constructor(
         progress.value = false
     }
 
-    fun onBackPressClick(){
+    fun onBackPressClick() {
         getNavigator()?.onBackPressClick()
     }
 
-    fun onClearSearchClick(){
+    fun onClearSearchClick() {
         getNavigator()?.onClearSearchClick()
     }
 
@@ -60,13 +64,13 @@ class GlobalSearchViewModel @Inject constructor(
     }
 
 
-    fun searchByKeyword(body: GlobalSearchRequest, searchInCommunity : Boolean = false) {
+    fun searchByKeyword(body: GlobalSearchRequest, searchInCommunity: Boolean = false) {
         progress.value = true
         viewModelScope.launch {
             try {
-                val response : Response<GlobalSearchResponse> = if(searchInCommunity){
+                val response: Response<GlobalSearchResponse> = if (searchInCommunity) {
                     productRepository.searchByKeywordInCommunity(body)
-                }else{
+                } else {
                     productRepository.searchByKeyword(body)
                 }
 
@@ -86,6 +90,32 @@ class GlobalSearchViewModel @Inject constructor(
                     else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
             }
+        }
+    }
+
+    fun likePost(body: PostRequestModel) {
+        progress.value = true
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    val response = communityRepository.likePost(body)
+                    if (response.isSuccessful) {
+                        getNavigator()?.onLikePostSuccess(response.body())
+                    } else {
+                        getNavigator()?.onError(Utility.getErrorMessage(response.errorBody()))
+                    }
+                } else {
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+                }
+                progress.value = false
+            } catch (ex: Exception) {
+                progress.value = false
+                when (ex) {
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                }
+            }
+
         }
     }
 }

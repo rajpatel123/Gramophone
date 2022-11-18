@@ -262,14 +262,20 @@ class SearchResultAdapter(
                 if(postList.size > 3){
                     postList = postList.subList(0, 3)
                 }
-                holder.binding.recyclerViewPosts.adapter = PostsAdapter(postList){
-                    openActivity(
-                        holder.itemView.context,
-                        PostDetailsActivity::class.java,
-                        Bundle().apply {
-                            putString(Constants.POST_ID, it)
-                        })
-                }
+                holder.binding.recyclerViewPosts.adapter = PostsAdapter(
+                    postList,
+                    listener = {
+                        openActivity(
+                            holder.itemView.context,
+                            PostDetailsActivity::class.java,
+                            Bundle().apply {
+                                putString(Constants.POST_ID, it)
+                            })
+                    },
+                    listener2 = {
+                        listener.invoke(it)
+                    },
+                )
                 holder.binding.viewAllPosts.setOnClickListener {
                     openActivity(
                         holder.itemView.context,

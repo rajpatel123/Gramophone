@@ -45,6 +45,7 @@ data class Item(
     var related_tags: List<String>?,
     var status: String?,
     var likesCount: Int?,
+    var isLiked : Boolean = false,  // local
     var commentsCount: Int?,
     var description: String?,
     var actionTimeStamp: Long?,
