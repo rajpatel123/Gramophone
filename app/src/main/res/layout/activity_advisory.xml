@@ -14,9 +14,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/_45sdp"
+            android:padding="@dimen/_5sdp"
             android:id="@+id/myToolbar"
-            layout="@layout/layout_toolbar" />
+            >
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:onClick="@{()->viewModel.onBackPressed()}"
+                app:srcCompat="@drawable/ic_arrow_left" />
+
+            <agstack.gramophone.widget.CircularImageView
+                android:id="@+id/cropImage"
+                product_image="@{viewModel.cropImage}"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/cropImage"
+                android:fontFamily="@font/manrope_semibold"
+                android:text="@{viewModel.cropName}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp"
+                tools:text="Makka" />
+        </RelativeLayout>
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -29,7 +64,6 @@
                     android:id="@+id/rlProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_14sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingStart="@dimen/_10sdp"
@@ -44,6 +78,7 @@
                         android:fontFamily="@font/manrope_bold"
                         android:textColor="@color/brand_color"
                         android:textSize="@dimen/_16ssp"
+                        android:text="@{viewModel.cropRefID}"
                         tools:text="FC46437" />
 
                     <ImageView
@@ -63,6 +98,7 @@
                         android:fontFamily="@font/manrope_regular"
                         android:gravity="center_vertical"
                         android:textColor="@color/gray"
+                        android:text="@{viewModel.address}"
                         android:textSize="@dimen/_10ssp"
                         tools:text=" Sawer, Madhya Pradesh" />
 
@@ -76,7 +112,7 @@
                     android:fontFamily="@font/manrope_regular"
                     android:gravity="center"
                     android:text="@string/tvUpcomingStages"
-                    android:textColor="@color/blakish"
+                    android:textColor="@color/brand_color"
                     android:textSize="@dimen/_12ssp" />
 
 
@@ -151,7 +187,7 @@
                         android:fontFamily="@font/manrope_regular"
                         android:paddingBottom="@dimen/_15sdp"
                         android:textColor="@color/black"
-                        tools:text="दो  दिनों के बाद खेत को हलके से पानी से भिगा दें इस गतिविधि के दिन। लोरेम इप्सम डोलर सीट आमेट, कॉन्सेक्टेटूर एडिपिसिसिंग एलीट, सेड डो ईसमॉड टेम्पर इंसीडिंट यूट लेबर एट डोलोरे मैग्ना अलिका। यूट एनिम एड मिनिम वेनम" />
+                        android:text="दो  दिनों के बाद खेत को हलके से पानी से भिगा दें इस गतिविधि के दिन। लोरेम इप्सम डोलर सीट आमेट, कॉन्सेक्टेटूर एडिपिसिसिंग एलीट, सेड डो ईसमॉड टेम्पर इंसीडिंट यूट लेबर एट डोलोरे मैग्ना अलिका। यूट एनिम एड मिनिम वेनम" />
                 </RelativeLayout>
 
                 <View
@@ -190,8 +226,8 @@
                     android:fontFamily="@font/manrope_regular"
                     android:paddingBottom="@dimen/_15sdp"
                     android:text="@string/all_problems_txt"
-                    android:textSize="@dimen/_12ssp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvCropProblems"

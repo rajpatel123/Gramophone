@@ -1,4 +1,4 @@
-package agstack.gramophone.ui.advisory.models.cropproblems.advisory
+package agstack.gramophone.ui.advisory.models.advisory
 
 data class LinkedTechnical(
     val can_be_purchased_from_outside: Boolean,
@@ -6,6 +6,6 @@ data class LinkedTechnical(
     val product_base_name: String,
     val product_composition: String,
     val product_images: String,
-    val product_mrp_price: Any,
-    val product_sale_price: Int
+    val product_mrp_price: Float,
+    val product_sale_price: Float
 )

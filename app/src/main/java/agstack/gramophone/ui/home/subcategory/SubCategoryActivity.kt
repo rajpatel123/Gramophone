@@ -5,6 +5,8 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityCategoryDetailBinding
+import agstack.gramophone.ui.advisory.adapter.ActivityListAdapter
+import agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.dialog.filter.FilterDialog
@@ -285,6 +287,18 @@ class SubCategoryActivity :
 
     override fun reload() {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
+    }
+
+    override fun setAdvisoryActivity(
+        activityListAdapter: ActivityListAdapter,
+        function: (GpApiResponseData) -> Unit
+    ) {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+    }
+
+    override fun updateActivitiesList(it: GpApiResponseData) {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+
     }
 
     override fun getBundle(): Bundle? {

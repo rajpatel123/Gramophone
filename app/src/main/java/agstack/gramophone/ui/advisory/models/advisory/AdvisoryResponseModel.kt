@@ -1,4 +1,4 @@
-package agstack.gramophone.ui.advisory.models.cropproblems.advisory
+package agstack.gramophone.ui.advisory.models.advisory
 
 data class AdvisoryResponseModel(
     val gp_api_error_data: GpApiErrorData,

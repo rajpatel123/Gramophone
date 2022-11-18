@@ -1,82 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-<androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <FrameLayout
+<layout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <TextView
-            android:id="@+id/tvActivityName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/spray"
-            android:textColor="@color/white"
-            android:paddingEnd="@dimen/_15sdp"
-            android:paddingStart="@dimen/_15sdp"
-            android:paddingTop="@dimen/_5sdp"
-            android:paddingBottom="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_7sdp"
-            android:layout_gravity="center_horizontal"
-            android:elevation="@dimen/_1sdp"
-            android:fontFamily="@font/manrope_semibold"
-            android:textSize="@dimen/_14ssp"
-            android:background="@drawable/advisoryhead_bg"/>
-
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:orientation="vertical"
-            android:background="@drawable/advisory_border">
-            <TextView
+            android:layout_height="match_parent">
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="पानी में मिलाकर छिड़काव करें"
-                android:fontFamily="@font/manrope_bold"
-                android:textSize="@dimen/_14ssp"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_25sdp"
-                android:textColor="@color/black"/>
+                android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="उपरोक्त समस्याओं का निदान के लिए यहाँ नीचे दी गयी सामग्री को पानी में मिलाकर अपनी फसल पर छिड़काव करे "
-                android:fontFamily="@font/manrope_regular"
-                android:textSize="@dimen/_14ssp"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:textColor="@color/black"/>
+                <TextView
+                    android:id="@+id/tvActivityName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/spray"
+                    android:textColor="@color/white"
+                    android:paddingEnd="@dimen/_15sdp"
+                    android:paddingStart="@dimen/_15sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:elevation="@dimen/_1sdp"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:textSize="@dimen/_14ssp"
+                    android:background="@drawable/advisoryhead_bg"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
-                android:padding="@dimen/_10sdp"
-                tools:listitem="@layout/item_linked_issues"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:orientation="vertical"
+                    android:background="@drawable/advisory_border">
+                    <TextView
+                        android:id="@+id/tvShortDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="पानी में मिलाकर छिड़काव करें"
+                        android:fontFamily="@font/manrope_bold"
+                        android:textSize="@dimen/_14ssp"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tvBriefDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="उपरोक्त समस्याओं का निदान के लिए यहाँ नीचे दी गयी सामग्री को पानी में मिलाकर अपनी फसल पर छिड़काव करे "
+                        android:fontFamily="@font/manrope_regular"
+                        android:textSize="@dimen/_14ssp"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:textColor="@color/black"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvLikedIssues"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="2"
+                        android:padding="@dimen/_10sdp"
+                        tools:listitem="@layout/item_linked_issues"/>
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/_8sdp"
-                app:spanCount="2"
-                tools:listitem="@layout/item_linked_product" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvLikedProduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_8sdp"
+                        app:spanCount="2"
+                        tools:listitem="@layout/item_linked_product" />
 
-        </LinearLayout>
-    </FrameLayout>
+                </LinearLayout>
+            </FrameLayout>
 
-</androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

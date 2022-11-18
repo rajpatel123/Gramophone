@@ -449,6 +449,9 @@ class MyGramophoneFragment :
                     farms?.gp_api_response_data?.customer_farm?.data!![0][0].farm_id?.toInt()!!
                 )
                 putString(Constants.FARM_TYPE,"customer_farm")
+                putString(Constants.CROP_NAME,farms.gp_api_response_data.customer_farm.data[0][0].crop_name)
+                putString(Constants.CROP_IMAGE,farms.gp_api_response_data.customer_farm.data[0][0].crop_image)
+                putString(Constants.CROP_ID,farms.gp_api_response_data.customer_farm.data[0][0].farm_ref_id)
             })
         }
 

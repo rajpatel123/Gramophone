@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,13 +9,16 @@
 
         <variable
             name="model"
-            type="agstack.gramophone.ui.orderdetails.model.Product" />
+            type="agstack.gramophone.ui.advisory.models.advisory.LinkedTechnical" />
     </data>
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:padding="@dimen/_10sdp"
         android:background="@drawable/linked_product_bg">
 
@@ -29,9 +33,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/manrope_medium"
+                android:text="@string/required_quantity"
                 android:textColor="@color/blakish"
-                android:textSize="@dimen/_12ssp"
-                tools:text="अनुशंसित मात्रा प्रति एकड़" />
+                android:textSize="@dimen/_12ssp" />
 
             <RelativeLayout
                 android:id="@+id/rlQty"
@@ -50,6 +54,7 @@
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:fontFamily="@font/manrope_bold"
+                    android:text="@{model.product_composition}"
                     android:textColor="@color/blakish"
                     android:textSize="@dimen/_12ssp"
                     tools:text="100-200 Gram" />
@@ -64,61 +69,63 @@
         </RelativeLayout>
 
         <ImageView
-            android:id="@+id/ivProduct"
+            android:id="@+id/ivProducts"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
             android:layout_below="@+id/rlQuantity"
             android:layout_marginTop="16dp"
             android:contentDescription="@string/image"
-            android:src="@drawable/dummy_neem_cake" />
+            app:product_image='@{model.product_images ?? ""}'
+            tools:src="@drawable/dummy_neem_cake"
+            />
 
         <TextView
-            android:id="@+id/tvProductName"
+            android:id="@+id/tvProductNames"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlQuantity"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="@dimen/_8sdp"
-            android:layout_toEndOf="@+id/ivProduct"
-            android:layout_toStartOf="@+id/tvAddToCart"
+            android:layout_toStartOf="@+id/tvAddToCarts"
+            android:layout_toEndOf="@+id/ivProducts"
             android:ellipsize="end"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="-2sp"
             android:maxLines="3"
-            android:text="@string/product_fungicide"
+            android:text='@{model.product_base_name ?? ""}'
             android:textColor="@color/blakish"
             android:textSize="13sp" />
 
 
         <TextView
-            android:id="@+id/tvSellingPrice"
+            android:id="@+id/tvSellingPrices"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_22sdp"
-            android:layout_below="@+id/tvProductName"
+            android:layout_below="@+id/tvProductNames"
             android:layout_marginTop="@dimen/_5sdp"
-            android:layout_toEndOf="@+id/ivProduct"
+            android:layout_toEndOf="@+id/ivProducts"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
-            android:text="@string/_799_00"
+            app:reformatFloatPriceToInt="@{model.product_sale_price}"
             android:textColor="@color/blakish"
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/tvActualPrice"
+            android:id="@+id/tvActualPrices"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_22sdp"
-            android:layout_below="@+id/tvProductName"
+            android:layout_below="@+id/tvProductNames"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:layout_toEndOf="@+id/tvSellingPrice"
+            android:layout_toEndOf="@+id/tvSellingPrices"
             android:background="@drawable/strike_through"
             android:fontFamily="@font/manrope_bold"
-
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
-            android:text="@string/_1_290"
+            app:mrp_price_equal="@{model.product_mrp_price}"
+            app:to_sales_price="@{model.product_sale_price}"
             android:textColor="@color/gray_strike_through"
             android:textSize="13sp" />
 
@@ -126,22 +133,24 @@
             android:id="@+id/tvDiscountPercent"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_22sdp"
-            android:layout_below="@+id/tvProductName"
+            android:layout_below="@+id/tvProductNames"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:layout_toEndOf="@+id/tvActualPrice"
+            android:layout_toEndOf="@+id/tvActualPrices"
             android:background="@drawable/off_background"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_10sdp"
+            app:mrp_price="@{model.product_mrp_price}"
+            app:sales_price="@{model.product_sale_price}"
             android:textColor="@color/green_dark"
             android:textSize="13sp"
             tools:text="50%" />
 
         <TextView
-            android:id="@+id/tvAddToCart"
+            android:id="@+id/tvAddToCarts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlQuantity"
@@ -160,4 +169,7 @@
             android:textSize="@dimen/_11ssp" />
 
     </RelativeLayout>
+
+</FrameLayout>
+
 </layout>

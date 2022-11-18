@@ -4,6 +4,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.ui.advisory.adapter.ActivityListAdapter
 import agstack.gramophone.ui.advisory.models.advisory.AdvisoryRequestModel
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.dialog.filter.MainFilterData
@@ -57,6 +58,12 @@ class SubCategoryViewModel @Inject constructor(
     var categoryId: String? = null
     var storeId: String? = null
     private var checkOfferApplicableJob: Job? = null
+
+    //advisory fields
+    val cropRefID = ObservableField<String>()
+    val address = ObservableField<String>()
+    val cropName = ObservableField<String>()
+    val cropImage = ObservableField<String>()
 
     init {
         progress.value = false
@@ -528,17 +535,13 @@ class SubCategoryViewModel @Inject constructor(
                             getNavigator()?.getBundle()?.get(Constants.FARM_TYPE).toString()
                         )
                     progress.value = false
-
-                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
-                        && response.body()?.gp_api_response_data != null
-                    ) {
-//                        getNavigator()?.setProductListAdapter(ProductListAdapter(
-//                            response.body()?.gp_api_response_data?.data),
-//                            {
-//                                fetchProductDetail(it)
-//                            }, {
-//                                getNavigator()?.openProductDetailsActivity(ProductData(it))
-//                            })
+                    if (response.isSuccessful && response.body()?.gp_api_status== Constants.GP_API_STATUS){
+                        if (response.body()?.gp_api_response_data?.size!! >0){
+                           val activityListAdapter =  ActivityListAdapter(response.body()?.gp_api_response_data!!)
+                            getNavigator()?.setAdvisoryActivity(activityListAdapter,{
+                                getNavigator()?.updateActivitiesList(it)
+                            })
+                        }
                     }
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
@@ -549,6 +552,18 @@ class SubCategoryViewModel @Inject constructor(
         }
 
 
+    }
 
+    fun onBackPressed() {
+        getNavigator()?.finishActivity()
+    }
+
+    fun updateProfileDetail() {
+        val bundle = getNavigator()?.getBundle()
+        cropRefID.set(bundle?.get(Constants.CROP_ID) as String?)
+        cropName.set(bundle?.get(Constants.CROP_NAME) as String?)
+        cropImage.set(bundle?.get(Constants.CROP_IMAGE) as String?)
+
+        address.set(SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ADDRESS))
     }
 }

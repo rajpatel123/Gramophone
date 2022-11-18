@@ -10,9 +10,9 @@ import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
 import agstack.gramophone.ui.advisory.models.advisory.AdvisoryRequestModel
+import agstack.gramophone.ui.advisory.models.advisory.AdvisoryResponseModel
 import agstack.gramophone.ui.advisory.models.cropproblems.CropProblemRequestModel
 import agstack.gramophone.ui.advisory.models.cropproblems.CropProblemResponseModel
-import agstack.gramophone.ui.advisory.models.cropproblems.advisory.AdvisoryResponseModel
 import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProductRequestModel
 import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProductResponseModel
 import agstack.gramophone.ui.cart.model.CartDataResponse

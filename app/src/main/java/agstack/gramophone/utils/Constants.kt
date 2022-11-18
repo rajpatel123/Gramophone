@@ -228,6 +228,8 @@ object Constants {
     const val COMPANY_NAME = "company_name"
     const val COMPANY_IMAGE = "company_image"
     const val CROP_ID = "crop_id"
+    const val CROP_NAME = "crop_name"
+    const val CROP_IMAGE = "crop_image"
     const val BOTTOM_SHEET = "bottom_sheet"
     const val LOCATION_ACCESS_DIALOG = "location_access_dialog"
     const val DEVELOPER_KEY =

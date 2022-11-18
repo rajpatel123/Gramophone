@@ -1,4 +1,4 @@
-package agstack.gramophone.ui.advisory.models.cropproblems.advisory
+package agstack.gramophone.ui.advisory.models.advisory
 
 data class LinkedIssue(
     val issue_description: String,

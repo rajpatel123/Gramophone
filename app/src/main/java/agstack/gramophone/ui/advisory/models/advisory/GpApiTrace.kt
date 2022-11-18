@@ -1,4 +1,4 @@
-package agstack.gramophone.ui.advisory.models.cropproblems.advisory
+package agstack.gramophone.ui.advisory.models.advisory
 
 data class GpApiTrace(
     val gp_language: String,

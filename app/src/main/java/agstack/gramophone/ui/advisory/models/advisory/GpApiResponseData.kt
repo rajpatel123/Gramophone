@@ -1,4 +1,4 @@
-package agstack.gramophone.ui.advisory.models.cropproblems.advisory
+package agstack.gramophone.ui.advisory.models.advisory
 
 data class GpApiResponseData(
     val activity: List<Activity>,
@@ -9,5 +9,6 @@ data class GpApiResponseData(
     val stage_description: String,
     val stage_end_day: Int,
     val stage_name: String,
-    val stage_start_day: Int
+    val stage_start_day: Int,
+    var isSelected:Boolean= false
 )

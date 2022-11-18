@@ -649,5 +649,6 @@
     <string name="crop_related_description">आप चित्रों के साथ अपने प्रश्न पोस्ट करें एवं हमारे विशेषज्ञ शीघ्र ही उसका उत्तर देंगे ।</string>
     <string name="ask_expert">विशेषज्ञ सलाह के लिए पूछें</string>
     <string name="disclaimer">Disclaimer: ** Actual dosage of the product may vary depending on various factors and should be adjusted accordingly. User should follow directions provided by manufacturer on the label claims.</string>
+    <string name="required_quantity">अनुशंसित मात्रा प्रति एकड़</string>
 
 </resources>
