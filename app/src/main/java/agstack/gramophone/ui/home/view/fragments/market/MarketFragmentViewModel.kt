@@ -412,7 +412,7 @@ class MarketFragmentViewModel
                     articlesRepository.getTrendingArticles(if (language.isNullOrEmpty()) "en" else language!!)
                 if (response.isSuccessful) {
                     val featuredArticleResponse = response.body()
-                    val trendingArticlesList = ArrayList<FormattedArticlesData>()
+                    var trendingArticlesList = ArrayList<FormattedArticlesData>()
 
                     if (featuredArticleResponse != null) {
                         for (item in featuredArticleResponse) {
@@ -451,6 +451,9 @@ class MarketFragmentViewModel
                             formattedArticlesData.articleTye = Constants.TRENDING_ARTICLES
                             trendingArticlesList.add(formattedArticlesData)
                         }
+                    }
+                    trendingArticlesList.sortByDescending {
+                        it.post_views
                     }
                     articlesData[Constants.TRENDING_ARTICLES] = trendingArticlesList
                 }
