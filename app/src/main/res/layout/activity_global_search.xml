@@ -54,7 +54,6 @@
                     android:layout_toStartOf="@+id/imgClearSearch"
                     android:background="@null"
                     android:hint="@string/search_here"
-                    android:textColorHint="@color/blakish"
                     android:imeOptions="actionDone"
                     android:inputType="textNoSuggestions"
                     android:singleLine="true"

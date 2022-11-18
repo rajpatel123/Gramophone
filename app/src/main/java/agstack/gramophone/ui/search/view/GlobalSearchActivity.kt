@@ -193,7 +193,7 @@ class GlobalSearchActivity :
                 if (it.isNullOrEmpty()) {
                     onClearSearchClick()
                 } else {
-                    getViewModel().getSuggestions(SuggestionsRequest(it))
+                    getViewModel().getSuggestions(SuggestionsRequest(keyword = it, search_type = if(searchInCommunity)  "community" else "global"))
                 }
             }
     }
