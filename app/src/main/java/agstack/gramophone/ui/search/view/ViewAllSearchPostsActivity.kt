@@ -6,9 +6,13 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.databinding.ActivityViewAllSearchPostsBinding
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikePostResponseModel
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
 import agstack.gramophone.ui.postdetails.view.PostDetailsActivity
 import agstack.gramophone.ui.search.adapter.PostsAdapter
 import agstack.gramophone.ui.search.model.Data
+import agstack.gramophone.ui.search.navigator.ViewAllSearchPostsNavigator
+import agstack.gramophone.ui.search.viewmodel.ViewAllSearchPostsViewModel
 import agstack.gramophone.utils.Constants
 import android.content.Context
 import android.content.Intent
@@ -19,8 +23,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ViewAllSearchPostsActivity :
-    BaseActivityWrapper<ActivityViewAllSearchPostsBinding, BaseNavigator, BaseViewModel<BaseNavigator>>(),
-    BaseNavigator {
+    BaseActivityWrapper<ActivityViewAllSearchPostsBinding, ViewAllSearchPostsNavigator, ViewAllSearchPostsViewModel>(),
+    ViewAllSearchPostsNavigator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,14 +33,20 @@ class ViewAllSearchPostsActivity :
 
         val items = dataList?.items
         items?.let {
-            viewDataBinding.recyclerViewPosts.adapter = PostsAdapter(items){
-                openActivity(
-                    this@ViewAllSearchPostsActivity,
-                    PostDetailsActivity::class.java,
-                    Bundle().apply {
-                        putString(Constants.POST_ID, it)
-                    })
-            }
+            viewDataBinding.recyclerViewPosts.adapter = PostsAdapter(
+                items,
+                listener = {
+                    openActivity(
+                        this@ViewAllSearchPostsActivity,
+                        PostDetailsActivity::class.java,
+                        Bundle().apply {
+                            putString(Constants.POST_ID, it)
+                        })
+                },
+                listener2 = {
+                    getViewModel().likePost(PostRequestModel(it, ""))
+                },
+            )
         }
     }
 
@@ -56,8 +66,12 @@ class ViewAllSearchPostsActivity :
         return BR.viewModel
     }
 
-    override fun getViewModel(): BaseViewModel<BaseNavigator> {
-        val viewModel: BaseViewModel<BaseNavigator> by viewModels()
+    override fun onLikePostSuccess(response: LikePostResponseModel?) {
+
+    }
+
+    override fun getViewModel(): ViewAllSearchPostsViewModel {
+        val viewModel: ViewAllSearchPostsViewModel by viewModels()
         return viewModel
     }
 
