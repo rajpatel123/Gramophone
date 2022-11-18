@@ -4,6 +4,8 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityGlobalSearchBinding
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.LikePostResponseModel
+import agstack.gramophone.ui.home.view.fragments.community.model.likes.PostRequestModel
 import agstack.gramophone.ui.search.adapter.SearchResultAdapter
 import agstack.gramophone.ui.search.adapter.SuggestionAdapter
 import agstack.gramophone.ui.search.model.Data
@@ -16,11 +18,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import com.amnix.xtension.extensions.toCamelCase
 import com.google.android.material.tabs.TabLayout
@@ -48,18 +47,14 @@ class GlobalSearchActivity :
         searchSuggestions()
 
         viewDataBinding.recyclerViewSuggestions.adapter = SuggestionAdapter(suggestionList) {
-            disableSearchForAWhile = true
-            handler.postDelayed({
-                disableSearchForAWhile = false
-            }, 1500)
-
+            disableSearchForAWhile()
             hideSoftKeyboard(viewDataBinding.edtSearch)
-            viewDataBinding.edtSearch.setText(it)
+            viewDataBinding.edtSearch.setText(it) // need to disable search before to avoid looping api calls
             viewDataBinding.edtSearch.setSelection(it.length)
             getViewModel().searchByKeyword(GlobalSearchRequest(keyword = it, source = "app", pageSection = "suggestion"), searchInCommunity)
         }
         viewDataBinding.recyclerViewSearchResult.adapter = SearchResultAdapter(filterSearchResultList) {
-            showToast(it)
+            getViewModel().likePost(PostRequestModel(it, ""))
         }
 
         handler.postDelayed({
@@ -71,6 +66,7 @@ class GlobalSearchActivity :
             if (action == EditorInfo.IME_ACTION_DONE) {
                 hideSoftKeyboard(viewDataBinding.edtSearch)
                 getViewModel().searchByKeyword(GlobalSearchRequest(viewDataBinding.edtSearch.text.toString(), source = "app", pageSection = "search"), searchInCommunity)
+                disableSearchForAWhile()
             }
             false
         }
@@ -84,6 +80,13 @@ class GlobalSearchActivity :
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacksAndMessages(null)
+    }
+
+    private fun disableSearchForAWhile(){
+        disableSearchForAWhile = true
+        handler.postDelayed({
+            disableSearchForAWhile = false
+        }, 1500)
     }
 
     fun getBundle(): Bundle? {
@@ -101,6 +104,12 @@ class GlobalSearchActivity :
     override fun getViewModel(): GlobalSearchViewModel {
         val viewModel: GlobalSearchViewModel by viewModels()
         return viewModel
+    }
+
+    override fun onLikePostSuccess(response: LikePostResponseModel?) {
+        response?.let {
+
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -175,12 +184,18 @@ class GlobalSearchActivity :
     private fun searchSuggestions() {
         RxSearchObservable.fromView(viewDataBinding.edtSearch)
             .debounce(800, TimeUnit.MILLISECONDS)
-            .filter { !it.isNullOrEmpty() && !disableSearchForAWhile}
+            .filter {/*it.isNotNullOrEmpty() &&*/ !disableSearchForAWhile }
             .map { s -> s.toString().lowercase(Locale.getDefault()).trim() }
-           /* .distinctUntilChanged()*/
+            /* .distinctUntilChanged()*/
             .switchMap { Flowable.just(it) }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { getViewModel().getSuggestions(SuggestionsRequest(it)) }
+            .subscribe {
+                if (it.isNullOrEmpty()) {
+                    onClearSearchClick()
+                } else {
+                    getViewModel().getSuggestions(SuggestionsRequest(it))
+                }
+            }
     }
 
     @SuppressLint("NotifyDataSetChanged")

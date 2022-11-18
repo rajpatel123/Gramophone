@@ -8,7 +8,7 @@
 
         <import type="android.view.View" />
 
-        <import type="android.text.TextUtils"/>
+        <import type="android.text.TextUtils" />
 
         <variable
             name="item"
@@ -20,7 +20,6 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/postContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
@@ -35,6 +34,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <RelativeLayout
+                android:id="@+id/postContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -106,6 +106,7 @@
                 android:layout_height="@dimen/_38sdp">
 
                 <TextView
+                    android:id="@+id/txtLike"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
@@ -113,7 +114,6 @@
                     android:fontFamily="@font/manrope_regular"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/_16sdp"
-                    android:text='@{item.likesCount + " Likes" ?? "Likes" }'
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_10ssp"
                     app:drawableStartCompat="@drawable/ic_like"
