@@ -23,6 +23,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
@@ -39,14 +40,13 @@ class ProductDetailsActivity :
     ProductDetailsNavigator, ProductImagesFragment.ProductImagesFragmentInterface,
     YouTubePlayer.OnInitializedListener {
 
-
+    private var contactforPriceDialog = ContactForPriceBottomSheetDialog.newInstance()
     private val productDetailsViewModel: ProductDetailsViewModel by viewModels()
     private var multipleImageDetailDialog: MultipleImageDetailDialog? = null
     private val TAG = ProductDetailsActivity::class.java.getSimpleName()
     private var isShowMoreClicked: Boolean = false
     private lateinit var showMoreOrLessText: String
     private lateinit var drawableEndArrow: Drawable
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,20 +62,15 @@ class ProductDetailsActivity :
     private fun setSelfRatingBarChangeListener() {
         viewDataBinding.ratingbarReviews.ratingbarSelfRatingStars.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
             if (fromUser) {
-
                 val ratingfinal = rating.toDouble()
                 mViewModel?.ratingSelected?.set(ratingfinal)
                 mViewModel?.openAddEditProductReview(ratingfinal)
             }
-
-
         }
-
-
     }
 
     private fun share() {
-        var extraText: String?=null
+        var extraText: String? = null
         if (productDetailsViewModel.productData.get().isNotNull()) {
             extraText =
                 productDetailsViewModel.productData.get()?.productBaseName + " " + ShareSheetPresenter.BASE_URI + " \n Check "
@@ -85,9 +80,9 @@ class ProductDetailsActivity :
             extraText += " and other products on Gramophone App. Buy best quality agricultural products, get info on weather, mandi price and best advice for better production from Gramophone App."
 
             val whatsappIntent = Intent(Intent.ACTION_SEND)
-                    whatsappIntent.type = "text/plain"
-                    whatsappIntent.setPackage("com.whatsapp")
-                    whatsappIntent.putExtra(Intent.EXTRA_TEXT, extraText)
+            whatsappIntent.type = "text/plain"
+            whatsappIntent.setPackage("com.whatsapp")
+            whatsappIntent.putExtra(Intent.EXTRA_TEXT, extraText)
             try {
                 startActivity(whatsappIntent)
             } catch (ex: ActivityNotFoundException) {
@@ -96,30 +91,27 @@ class ProductDetailsActivity :
         }
     }
 
-
     override fun showGenuineCustomerRatingDialog(
         genuineCustomerRatingAlertFragment: GenuineCustomerRatingAlertFragment,
-        addToCartEnable: Boolean,
-        onAddToCartClick: () -> Unit
+        addToCartEnabled: Boolean,
+        onAddToCartClick: () -> Unit,
     ) {
-        var genuineCustomerDialog = GenuineCustomerRatingAlertFragment.newInstance(addToCartEnable)
+        var genuineCustomerDialog = GenuineCustomerRatingAlertFragment.newInstance(addToCartEnabled)
         genuineCustomerDialog = genuineCustomerRatingAlertFragment
         genuineCustomerDialog.setOnClickSelectedListener(onAddToCartClick)
         genuineCustomerDialog.show(supportFragmentManager, "genuineCustomerDialog")
     }
 
-    private var contactforPriceDialog = ContactForPriceBottomSheetDialog.newInstance()
     override fun showContactForPriceBottomSheetDialog(contactForPriceBottomSheetDialog: ContactForPriceBottomSheetDialog) {
         contactforPriceDialog = contactForPriceBottomSheetDialog
         contactforPriceDialog.show(supportFragmentManager, "contactForPriceDialog")
     }
 
-
     private var expertAdviceBottomSheet = ExpertAdviceBottomSheetFragment.newInstance()
     override fun showExpertAdviceDialog(
         expertAdviceBottomSheetFragment: ExpertAdviceBottomSheetFragment,
         onOkayClick: () -> Unit,
-        onCancelClick: () -> Unit
+        onCancelClick: () -> Unit,
     ) {
         expertAdviceBottomSheet = expertAdviceBottomSheetFragment
         expertAdviceBottomSheet.setOnClickSelectedListener(onOkayClick, onCancelClick)
@@ -129,7 +121,6 @@ class ProductDetailsActivity :
     override fun dismissExpertBottomSheet() {
         expertAdviceBottomSheet.dismiss()
     }
-
 
     private fun initProductDetailView() {
         viewDataBinding.tvShowAllDetails.setOnClickListener {
@@ -177,16 +168,13 @@ class ProductDetailsActivity :
     override fun onInitializationSuccess(
         provider: YouTubePlayer.Provider?,
         player: YouTubePlayer?,
-        wasRestored: Boolean
+        wasRestored: Boolean,
     ) {
         if (!wasRestored) {
             player?.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT)
             try {
                 player?.loadVideo("5Eqb_-j3FDA")
                 player?.play()
-                /* if (videoId != null && !videoId.equals("")) {
-
-                 }*/
             } catch (e: IllegalStateException) {
                 e.printStackTrace()
             }
@@ -195,7 +183,7 @@ class ProductDetailsActivity :
 
     override fun onInitializationFailure(
         p0: YouTubePlayer.Provider?,
-        p1: YouTubeInitializationResult?
+        p1: YouTubeInitializationResult?,
     ) {
         Toast.makeText(
             this,
@@ -203,7 +191,6 @@ class ProductDetailsActivity :
             Toast.LENGTH_LONG
         ).show()
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflator = menuInflater
@@ -216,7 +203,6 @@ class ProductDetailsActivity :
             R.id.item_cart -> {
                 openActivity(CartActivity::class.java)
             }
-
         }
         return true
     }
@@ -243,13 +229,10 @@ class ProductDetailsActivity :
 
     override fun setProductSKUAdapter(
         productSKUAdapter: ProductSKUAdapter,
-        onSKUItemClicked: (ProductSkuListItem) -> Unit
+        onSKUItemClicked: (ProductSkuListItem) -> Unit,
     ) {
-
         productSKUAdapter.selectedProduct = onSKUItemClicked
         viewDataBinding.rvProductSku.adapter = productSKUAdapter
-
-
     }
 
     override fun refreshSKUAdapter() {
@@ -260,87 +243,108 @@ class ProductDetailsActivity :
         viewDataBinding.rvAvailableoffers.adapter!!.notifyDataSetChanged()
     }
 
-    override fun setPercentageOff_mrpVisibility(
-        productname:String,
-        salesprice: Float,
+    override fun updateUIAfterCalculation(
+        productName: String,
+        salesPrice: Float,
+        mrpPrice: Float,
         discount: String,
+        isDiscountPercentVisible: Boolean,
         isMRPVisible: Boolean,
         isOffersLayoutVisible: Boolean,
-        isContactforPriceVisible: Boolean
+        isContactForPriceVisible: Boolean,
     ) {
-        viewDataBinding.tvProductname.text=productname
-        viewDataBinding.tvProductSP.text = resources.getString(R.string.rupee) + "" + salesprice
-        if (salesprice.toString().endsWith(".0") || salesprice.toString()
-                .contains(".00")
-        ) {
-            viewDataBinding.tvProductSP.text =
-                getString(R.string.rupee) + (salesprice.roundToInt()).toString()
-        } else {
-            viewDataBinding.tvProductSP.text = getString(R.string.rupee) + (salesprice).toString()
-        }
+        viewDataBinding.tvProductname.text = productName
+        setSalesPrice(salesPrice)
 
-
-        viewDataBinding.tvPercentageOffOnSelectedSKU.text = discount
         if (isMRPVisible) {
+            setMrpPrice(mrpPrice)
             viewDataBinding.tvProductMRP.visibility = View.VISIBLE
-            viewDataBinding.tvPercentageOffOnSelectedSKU.visibility = View.VISIBLE
         } else {
             viewDataBinding.tvProductMRP.visibility = View.GONE
-            viewDataBinding.tvPercentageOffOnSelectedSKU.visibility = View.INVISIBLE
         }
 
+        if (isDiscountPercentVisible) {
+            viewDataBinding.tvPercentageOffOnSelectedSKU.text = discount
+            viewDataBinding.tvPercentageOffOnSelectedSKU.visibility = View.VISIBLE
+        } else {
+            viewDataBinding.tvPercentageOffOnSelectedSKU.visibility = View.GONE
+        }
 
-        if (isContactforPriceVisible) {
+        if (isContactForPriceVisible) {
             viewDataBinding.tvContactForPrice.visibility = View.VISIBLE
             viewDataBinding.llPriceDiscount.visibility = View.GONE
             viewDataBinding.llQty.visibility = View.GONE
             viewDataBinding.tvInclusive.visibility = View.GONE
+            viewDataBinding.llAddToCart.isEnabled = false
+            viewDataBinding.llAddToCart.setBackgroundColor(ContextCompat.getColor(this,
+                R.color.grey_border))
         } else {
             viewDataBinding.tvContactForPrice.visibility = View.GONE
             viewDataBinding.llPriceDiscount.visibility = View.VISIBLE
             viewDataBinding.llQty.visibility = View.VISIBLE
             viewDataBinding.tvInclusive.visibility = View.VISIBLE
+            viewDataBinding.llAddToCart.isEnabled = true
+            viewDataBinding.llAddToCart.setBackgroundColor(ContextCompat.getColor(this,
+                R.color.orange))
         }
 
         if (!isOffersLayoutVisible) {
-            //v2_separator
             viewDataBinding.v2Separator.visibility = View.GONE
             viewDataBinding.rlAvailableOffers.visibility = View.GONE
         } else {
             viewDataBinding.v2Separator.visibility = View.VISIBLE
             viewDataBinding.rlAvailableOffers.visibility = View.VISIBLE
         }
+    }
 
+    private fun setSalesPrice(priceAfterDiscount: Float) {
+        if (priceAfterDiscount.toString().endsWith(".0") || priceAfterDiscount.toString()
+                .contains(".00")
+        ) {
+            viewDataBinding.tvProductSP.text =
+                getString(R.string.rupee) + priceAfterDiscount.roundToInt().toString()
+        } else {
+            viewDataBinding.tvProductSP.text =
+                getString(R.string.rupee) + priceAfterDiscount.toString()
+        }
+    }
+
+    private fun setMrpPrice(mrpPrice: Float) {
+        if (mrpPrice.toString().endsWith(".0") || mrpPrice.toString()
+                .contains(".00")
+        ) {
+            viewDataBinding.tvProductMRP.text =
+                getString(R.string.rupee) + (mrpPrice.roundToInt()).toString()
+        } else {
+            viewDataBinding.tvProductMRP.text =
+                getString(R.string.rupee) + (mrpPrice).toString()
+        }
     }
 
     override fun setProductSKUOfferAdapter(
         productSKUOfferAdapter: ProductSKUOfferAdapter,
         onOfferItemClicked: (PromotionListItem) -> Unit,
-        onViewDetailsClicked: (PromotionListItem) -> Unit
+        onViewAllClicked: (PromotionListItem) -> Unit,
     ) {
         productSKUOfferAdapter.selectedProduct = onOfferItemClicked
-        productSKUOfferAdapter.onViewAllClicked = onViewDetailsClicked
+        productSKUOfferAdapter.onViewAllClicked = onViewAllClicked
         viewDataBinding.rvAvailableoffers.adapter = productSKUOfferAdapter
     }
 
-
     override fun setRelatedProductsAdapter(
         relatedProductFragmentAdapter: RelatedProductFragmentAdapter,
-        onRelatedProductItemClicked: (RelatedProductItem) -> Unit
+        relatedProductItemClicked: (RelatedProductItem) -> Unit,
     ) {
-
         viewDataBinding.rvRelatedProducts.adapter = relatedProductFragmentAdapter
-        relatedProductFragmentAdapter.selectedProduct = onRelatedProductItemClicked
-
+        relatedProductFragmentAdapter.selectedProduct = relatedProductItemClicked
     }
 
-    override fun onItemClick(clickedposition: Int) {
-        Log.d("Position of item", clickedposition.toString())
+    override fun onItemClick(position: Int) {
+        Log.d("Position of item", position.toString())
         val allProductImages = mViewModel?.productData?.get()?.productImages!! as ArrayList
 
         multipleImageDetailDialog = MultipleImageDetailDialog.newInstance(allProductImages)
         multipleImageDetailDialog?.show(supportFragmentManager, TAG)
-
     }
 
     override fun getFragmentManagerPager(): FragmentManager {
@@ -362,7 +366,7 @@ class ProductDetailsActivity :
 
     override fun openViewAllReviewRatingsActivity(
         productId: Int,
-        productReviewsData: GpApiResponseData?
+        productReviewsData: GpApiResponseData?,
     ) {
         openActivity(ProductAllReviewsActivity::class.java, Bundle().apply {
             putParcelable(Constants.PRODUCTREVIEWDATA, productReviewsData)
@@ -376,9 +380,9 @@ class ProductDetailsActivity :
         })
     }
 
-    override fun updateAddToCartButtonText(newText: String?): String {
-        if (newText != null)
-            viewDataBinding.tvAddtocart.setText(newText)
+    override fun updateAddToCartButtonText(text: String?): String {
+        if (text != null)
+            viewDataBinding.tvAddtocart.text = text
         return viewDataBinding.tvAddtocart.text.toString()
     }
 }

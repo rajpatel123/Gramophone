@@ -10,27 +10,60 @@ import agstack.gramophone.ui.home.view.fragments.market.model.*
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager
 
-interface ProductDetailsNavigator: BaseNavigator {
+interface ProductDetailsNavigator : BaseNavigator {
     fun getBundle(): Bundle?
-    fun setToolbarTitle(title:String?)
-    fun setProductSKUAdapter(productSKUAdapter: ProductSKUAdapter, onSKUItemClicked: (ProductSkuListItem) -> Unit)
-    fun setProductSKUOfferAdapter(productSKUOfferAdapter: ProductSKUOfferAdapter, onOfferItemClicked: (PromotionListItem) -> Unit,onViewAllClicked:(PromotionListItem)->Unit)
+    fun setToolbarTitle(title: String?)
+    fun setProductSKUAdapter(
+        productSKUAdapter: ProductSKUAdapter,
+        onSKUItemClicked: (ProductSkuListItem) -> Unit,
+    )
+
+    fun setProductSKUOfferAdapter(
+        productSKUOfferAdapter: ProductSKUOfferAdapter,
+        onOfferItemClicked: (PromotionListItem) -> Unit,
+        onViewAllClicked: (PromotionListItem) -> Unit,
+    )
+
     fun getFragmentManagerPager(): FragmentManager
     fun setProductImagesViewPagerAdapter(productImagesAdapter: ProductImagesAdapter)
-     fun setRelatedProductsAdapter(relatedProductFragmentAdapter: RelatedProductFragmentAdapter, function: (RelatedProductItem) -> Unit)
-     fun setProductDetailsAdapter(productDetailsAdapter: ProductDetailsAdapter)
-     fun setRatingAndReviewsAdapter(ratingAndReviewsAdapter: RatingAndReviewsAdapter)
-     fun openViewAllReviewRatingsActivity(productId: Int, productReviewsData: GpApiResponseData?)
+    fun setRelatedProductsAdapter(
+        relatedProductFragmentAdapter: RelatedProductFragmentAdapter,
+        relatedProductItemClicked: (RelatedProductItem) -> Unit,
+    )
+
+    fun setProductDetailsAdapter(productDetailsAdapter: ProductDetailsAdapter)
+    fun setRatingAndReviewsAdapter(ratingAndReviewsAdapter: RatingAndReviewsAdapter)
+    fun openViewAllReviewRatingsActivity(productId: Int, productReviewsData: GpApiResponseData?)
     fun openProductDetailsActivity(productData: ProductData)
-    fun showGenuineCustomerRatingDialog(genuineCustomerRatingAlertFragment: GenuineCustomerRatingAlertFragment,addtocartEnabled:Boolean, onAddToCartClick: () -> Unit)
-    fun showExpertAdviceDialog(expertAdviceBottomSheetFragment: ExpertAdviceBottomSheetFragment, onOkayClick: () -> Unit,onCancelClick: () -> Unit)
+    fun showGenuineCustomerRatingDialog(
+        genuineCustomerRatingAlertFragment: GenuineCustomerRatingAlertFragment,
+        addToCartEnabled: Boolean,
+        onAddToCartClick: () -> Unit,
+    )
+
+    fun showExpertAdviceDialog(
+        expertAdviceBottomSheetFragment: ExpertAdviceBottomSheetFragment,
+        onOkayClick: () -> Unit,
+        onCancelClick: () -> Unit,
+    )
+
     fun dismissExpertBottomSheet()
     fun refreshSKUAdapter()
-     fun setPercentageOff_mrpVisibility(productname:String,salesprice:Float,discount: String,isMRPVisible:Boolean,isOffersLayoutVisible:Boolean,isContactforPriceVisible:Boolean)
+    fun updateUIAfterCalculation(
+        productName: String,
+        salesPrice: Float,
+        mrpPrice: Float,
+        discount: String,
+        isDiscountPercentVisible: Boolean,
+        isMRPVisible: Boolean,
+        isOffersLayoutVisible: Boolean,
+        isContactForPriceVisible: Boolean,
+    )
+
     fun setRatingBarChangeListener()
     fun refreshOfferAdapter()
     fun showContactForPriceBottomSheetDialog(contactForPriceBottomSheetDialog: ContactForPriceBottomSheetDialog)
-    fun updateAddToCartButtonText(text:String?=null):String
+    fun updateAddToCartButtonText(text: String? = null): String
 
 
 }

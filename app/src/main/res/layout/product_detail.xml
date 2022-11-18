@@ -757,7 +757,7 @@
                 android:layout_height="@dimen/_30sdp" />
 
             <LinearLayout
-                android:id="@+id/btn_addtocart"
+                android:id="@+id/llAddToCart"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_weight="1"

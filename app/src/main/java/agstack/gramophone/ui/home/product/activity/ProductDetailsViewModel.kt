@@ -90,7 +90,7 @@ class ProductDetailsViewModel @Inject constructor(
     fun onAddQtyClicked() {
         qtySelected.set(qtySelected.get()!! + 1)
         loadOffersData(productDetailstoBeFetched, qtySelected.get())
-        setPercentage_mrpVisibility(
+        calculateDiscountAndPromotion(
             selectedSkuListItem.get()!!,
             null
         )
@@ -101,7 +101,7 @@ class ProductDetailsViewModel @Inject constructor(
         if (qtySelected.get()!! > 1) {
             qtySelected.set(qtySelected.get()!! - 1)
             loadOffersData(productDetailstoBeFetched, qtySelected.get())
-            setPercentage_mrpVisibility(
+            calculateDiscountAndPromotion(
                 selectedSkuListItem.get()!!,
                 null
             )
@@ -233,7 +233,7 @@ class ProductDetailsViewModel @Inject constructor(
                                 //Refresh offerList when product SKU is selected
 
 
-                                setPercentage_mrpVisibility(
+                                calculateDiscountAndPromotion(
                                     selectedSkuListItem.get()!!,
                                     null
                                 )
@@ -255,7 +255,7 @@ class ProductDetailsViewModel @Inject constructor(
 
                                     productDetailstoBeFetched.product_id =
                                         selectedSkuListItem.get()?.productId!!.toInt()
-                                    setPercentage_mrpVisibility(
+                                    calculateDiscountAndPromotion(
                                         selectedSkuListItem.get()!!,
                                         selectedOfferItem
                                     )
@@ -343,12 +343,10 @@ class ProductDetailsViewModel @Inject constructor(
         return cartItemsList
     }
 
-
-    private fun setPercentage_mrpVisibility(
+    private fun calculateDiscountAndPromotion(
         model: ProductSkuListItem,
         offerModel: PromotionListItem? = null,
     ) {
-
         if (model.isNull()) return
         var modelMrpPrice = 0f
         var modelSalesPrice = 0f
@@ -373,10 +371,10 @@ class ProductDetailsViewModel @Inject constructor(
         } else {
             modelMrpPrice = 0f
             modelSalesPrice = 0f
-            addToCartEnabled.set(false)
-            isOffersLayoutVisible = false
             isContactForPriceVisible = true
             proceedForCalculation = false
+            isOffersLayoutVisible = false
+            addToCartEnabled.set(false)
         }
         modelMrpPrice *= qtySelected.get()!!
         modelSalesPrice *= qtySelected.get()!!
@@ -391,7 +389,7 @@ class ProductDetailsViewModel @Inject constructor(
             finalSalePrice = modelSalesPrice
             if (offerModel.isNotNull())
                 offerModel?.let {
-                    if (offerModel.benefit.isNotNull() && offerModel.benefit?.amount_saved.isNotNull() && offerModel.benefit?.amount_saved!! > 0) {
+                    if (offerModel.benefit.isNotNull() && offerModel.benefit?.amount_saved.isNotNull()&& offerModel.benefit?.amount_saved!! > 0) {
                         finalSalePrice = modelSalesPrice - offerModel.benefit.amount_saved.toFloat()
 
                         discountPercent =
@@ -402,13 +400,14 @@ class ProductDetailsViewModel @Inject constructor(
                 }
         }
 
-        getNavigator()?.setPercentageOff_mrpVisibility(
+        getNavigator()?.updateUIAfterCalculation(
             model.product_app_name!!,
             finalSalePrice,
+            modelMrpPrice,
             finalDiscount,
+            isDiscountPercentVisible,
             isMRPVisible, isOffersLayoutVisible, isContactForPriceVisible
         )
-
     }
 
     private fun loadRelatedProductData(productDetailstoBeFetched: ProductData) {
@@ -552,7 +551,7 @@ class ProductDetailsViewModel @Inject constructor(
                                         qtySelected.get()!!
                                     )
                                 } else {
-                                    setPercentage_mrpVisibility(selectedSkuListItem.get()!!, null)
+                                    calculateDiscountAndPromotion(selectedSkuListItem.get()!!, null)
                                 }
 
 
@@ -608,7 +607,7 @@ class ProductDetailsViewModel @Inject constructor(
                 }
                 getNavigator()?.refreshOfferAdapter()
 
-                setPercentage_mrpVisibility(
+                calculateDiscountAndPromotion(
                     selectedSkuListItem.get()!!,
                     selectedOfferItem
                 )

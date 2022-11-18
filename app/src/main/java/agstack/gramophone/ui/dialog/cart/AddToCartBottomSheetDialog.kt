@@ -279,7 +279,6 @@ class AddToCartBottomSheetDialog(
             binding?.tvProductSP?.text =
                 getString(R.string.rupee) + priceAfterDiscount.toString()
         }
-
     }
 
     fun updateDialog(
