@@ -1,7 +1,6 @@
 package agstack.gramophone.ui.dialog
 
 import agstack.gramophone.databinding.DialogLocationAccessBinding
-import agstack.gramophone.ui.home.subcategory.model.Offer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

@@ -9,27 +9,28 @@ import agstack.gramophone.ui.home.product.ProductDetailsAdapter
 import agstack.gramophone.ui.home.product.fragment.*
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.ShareSheetPresenter
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.widget.MultipleImageDetailDialog
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Observer
-import com.google.android.material.radiobutton.MaterialRadioButton
+import com.amnix.xtension.extensions.isNotNull
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.roundToInt
 
 
 @AndroidEntryPoint
@@ -71,6 +72,28 @@ class ProductDetailsActivity :
         }
 
 
+    }
+
+    private fun share() {
+        var extraText: String?=null
+        if (productDetailsViewModel.productData.get().isNotNull()) {
+            extraText =
+                productDetailsViewModel.productData.get()?.productBaseName + " " + ShareSheetPresenter.BASE_URI + " \n Check "
+            if (productDetailsViewModel.productData.get()?.productImages.isNotNullOrEmpty()) {
+                extraText += productDetailsViewModel.productData.get()?.productImages!![0]
+            }
+            extraText += " and other products on Gramophone App. Buy best quality agricultural products, get info on weather, mandi price and best advice for better production from Gramophone App."
+
+            val whatsappIntent = Intent(Intent.ACTION_SEND)
+                    whatsappIntent.type = "text/plain"
+                    whatsappIntent.setPackage("com.whatsapp")
+                    whatsappIntent.putExtra(Intent.EXTRA_TEXT, extraText)
+            try {
+                startActivity(whatsappIntent)
+            } catch (ex: ActivityNotFoundException) {
+                showToast(getString(R.string.whatsapp_not_installed))
+            }
+        }
     }
 
 
@@ -136,6 +159,9 @@ class ProductDetailsActivity :
 
         }
 
+        viewDataBinding.whatsAppShare.setOnClickListener {
+            share()
+        }
 
     }
 
@@ -235,16 +261,26 @@ class ProductDetailsActivity :
     }
 
     override fun setPercentageOff_mrpVisibility(
-        product_app_name:String,
-        salesPrice: String,
-        discountPercentage: String,
+        productname:String,
+        salesprice: Float,
+        discount: String,
         isMRPVisible: Boolean,
         isOffersLayoutVisible: Boolean,
         isContactforPriceVisible: Boolean
     ) {
-        viewDataBinding.tvProductname.text=product_app_name
-        viewDataBinding.tvProductSP.setText(resources.getString(R.string.rupee) + "" + salesPrice)
-        viewDataBinding.tvPercentageOffOnSelectedSKU.setText(discountPercentage)
+        viewDataBinding.tvProductname.text=productname
+        viewDataBinding.tvProductSP.text = resources.getString(R.string.rupee) + "" + salesprice
+        if (salesprice.toString().endsWith(".0") || salesprice.toString()
+                .contains(".00")
+        ) {
+            viewDataBinding.tvProductSP.text =
+                getString(R.string.rupee) + (salesprice.roundToInt()).toString()
+        } else {
+            viewDataBinding.tvProductSP.text = getString(R.string.rupee) + (salesprice).toString()
+        }
+
+
+        viewDataBinding.tvPercentageOffOnSelectedSKU.text = discount
         if (isMRPVisible) {
             viewDataBinding.tvProductMRP.visibility = View.VISIBLE
             viewDataBinding.tvPercentageOffOnSelectedSKU.visibility = View.VISIBLE

@@ -2,10 +2,10 @@ package agstack.gramophone.ui.home.subcategory
 
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
-import agstack.gramophone.ui.home.subcategory.model.Offer
 import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
+import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import android.os.Bundle
 
 interface SubCategoryNavigator : BaseNavigator {
@@ -27,7 +27,7 @@ interface SubCategoryNavigator : BaseNavigator {
 
     fun openAddToCartDialog(
         mSKUList: ArrayList<ProductSkuListItem?>,
-        mSkuOfferList: ArrayList<Offer>,
+        mSkuOfferList: ArrayList<PromotionListItem?>,
         productData: ProductData,
     )
 
@@ -38,7 +38,7 @@ interface SubCategoryNavigator : BaseNavigator {
     )
 
     fun updateOfferOnAddToCartDialog(
-        mSkuOfferList: ArrayList<Offer>
+        mSkuOfferList: ArrayList<PromotionListItem?>
     )
 
     fun disableSortAndFilter()
