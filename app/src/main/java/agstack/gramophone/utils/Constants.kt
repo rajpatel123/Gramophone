@@ -7,6 +7,7 @@ import android.content.Context
 
 object Constants {
 
+    val STAGE_ID: String="stage_id"
     val FARM_ID: String = "farm_id"
     val FARM_TYPE: String = "farm_type"
     val BLOCKED_STATUS: String="blockStatus"
@@ -228,6 +229,7 @@ object Constants {
     const val COMPANY_NAME = "company_name"
     const val COMPANY_IMAGE = "company_image"
     const val CROP_ID = "crop_id"
+    const val CROP_REF_ID = "crop_ref_id"
     const val CROP_NAME = "crop_name"
     const val CROP_IMAGE = "crop_image"
     const val BOTTOM_SHEET = "bottom_sheet"

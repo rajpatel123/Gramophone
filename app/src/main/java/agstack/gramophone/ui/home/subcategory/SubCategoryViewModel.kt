@@ -5,7 +5,10 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.advisory.adapter.ActivityListAdapter
+import agstack.gramophone.ui.advisory.adapter.CropIssueListAdapter
 import agstack.gramophone.ui.advisory.models.advisory.AdvisoryRequestModel
+import agstack.gramophone.ui.advisory.models.cropproblems.CropProblemRequestModel
+import agstack.gramophone.ui.advisory.view.AllCropProblemsActivity
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.dialog.filter.MainFilterData
 import agstack.gramophone.ui.dialog.sortby.SortByData
@@ -18,6 +21,7 @@ import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -38,6 +42,7 @@ class SubCategoryViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository
 ) : BaseViewModel<SubCategoryNavigator>() {
 
+    private var stageId: Int = 0
     var productData = ObservableField<GpApiResponseDataProduct?>()
     var mSKUList = ArrayList<ProductSkuListItem?>()
     var mSkuOfferList = ArrayList<PromotionListItem?>()
@@ -61,6 +66,7 @@ class SubCategoryViewModel @Inject constructor(
 
     //advisory fields
     val cropRefID = ObservableField<String>()
+    val cropId = ObservableField<Int>()
     val address = ObservableField<String>()
     val cropName = ObservableField<String>()
     val cropImage = ObservableField<String>()
@@ -560,10 +566,55 @@ class SubCategoryViewModel @Inject constructor(
 
     fun updateProfileDetail() {
         val bundle = getNavigator()?.getBundle()
-        cropRefID.set(bundle?.get(Constants.CROP_ID) as String?)
+        cropRefID.set(bundle?.get(Constants.CROP_REF_ID) as String?)
+        cropId.set(bundle?.get(Constants.CROP_ID) as Int?)
         cropName.set(bundle?.get(Constants.CROP_NAME) as String?)
         cropImage.set(bundle?.get(Constants.CROP_IMAGE) as String?)
 
         address.set(SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ADDRESS))
+    }
+
+    fun getCropIssues(stageId: Int) {
+        this.stageId = stageId
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.value = true
+                    val response =
+                        onBoardingRepository.getCropProblems(
+                            CropProblemRequestModel(
+                            crop_id = cropId.get()!!,stageId))
+                    progress.value = false
+                    if (response.isSuccessful && response.body()?.gp_api_status== Constants.GP_API_STATUS){
+                        if (response.body()?.gp_api_response_data?.size!! >0){
+                            val activityListAdapter =  CropIssueListAdapter(response.body()?.gp_api_response_data!!)
+                            getNavigator()?.setAdvisoryProblemsActivity(activityListAdapter,{
+                                getNavigator()?.openActivity(AllCropProblemsActivity::class.java,
+                                    Bundle().apply {
+                                        putInt(Constants.STAGE_ID,stageId)
+                                        putInt(Constants.CROP_ID, cropId.get()!!)
+                                    }
+                                )
+                            })
+                        }
+                    }
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
+                progress.value = false
+            }
+        }
+
+    }
+
+    fun onViewAllIssuesClicked(){
+        getNavigator()?.openActivity(AllCropProblemsActivity::class.java,
+            Bundle().apply {
+                putInt(Constants.STAGE_ID,stageId)
+                putInt(Constants.CROP_ID, cropId.get()!!)
+            }
+        )
+
     }
 }

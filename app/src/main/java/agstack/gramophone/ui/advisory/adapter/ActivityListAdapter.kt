@@ -15,10 +15,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 
-class ActivityListAdapter(private val dataList: List<GpApiResponseData>) :
+class ActivityListAdapter(val dataList: List<GpApiResponseData>) :
     RecyclerView.Adapter<ActivityListAdapter.DeveloperViewHolder>() {
     var onActivitySelected: ((GpApiResponseData) -> Unit)? = null
-
+     var lastSelectedActivityPosition =0
     interface SetImage {
         fun onImageSet(imageUrl: String, iv: ImageView)
     }
@@ -35,6 +35,7 @@ class ActivityListAdapter(private val dataList: List<GpApiResponseData>) :
 
         if (position==0){
             if (!isSelected()){
+                lastSelectedActivityPosition = position
                 activityModel.isSelected=true
                 onActivitySelected?.invoke(activityModel)
             }
@@ -59,7 +60,11 @@ class ActivityListAdapter(private val dataList: List<GpApiResponseData>) :
                     R.color.gray_strike_through))
         }
         holder.binding.tvActivityQty.setOnClickListener {
+            dataList[lastSelectedActivityPosition].isSelected=false
+            lastSelectedActivityPosition = position
+            activityModel.isSelected=true
             onActivitySelected?.invoke(activityModel)
+            notifyDataSetChanged()
         }
     }
 

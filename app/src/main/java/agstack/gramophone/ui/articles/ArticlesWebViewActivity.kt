@@ -5,6 +5,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityArticlesBinding
 import agstack.gramophone.ui.advisory.adapter.ActivityListAdapter
+import agstack.gramophone.ui.advisory.adapter.CropIssueListAdapter
 import agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData
 import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
@@ -182,6 +183,13 @@ class ArticlesWebViewActivity :
     override fun updateActivitiesList(it: GpApiResponseData) {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
 
+    }
+
+    override fun setAdvisoryProblemsActivity(
+        activityListAdapter: CropIssueListAdapter,
+        function: (agstack.gramophone.ui.advisory.models.cropproblems.GpApiResponseData) -> Unit
+    ) {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
     }
 
     override fun setViewPagerAdapter(bannerList: List<Banner>?) {

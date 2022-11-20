@@ -8,6 +8,7 @@ import agstack.gramophone.databinding.ItemAdvisoryBinding
 import agstack.gramophone.ui.advisory.adapter.ActivityLinkedIssuesListAdapter
 import agstack.gramophone.ui.advisory.adapter.ActivityLinkedProductsListAdapter
 import agstack.gramophone.ui.advisory.adapter.ActivityListAdapter
+import agstack.gramophone.ui.advisory.adapter.CropIssueListAdapter
 import agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.subcategory.ProductListAdapter
@@ -18,9 +19,13 @@ import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amnix.xtension.extensions.inflater
+import com.amnix.xtension.extensions.isNotNull
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_advisory.*
 
@@ -99,36 +104,63 @@ class AdvisoryActivity :
     }
 
     override fun updateActivitiesList(gpApiResponseData: GpApiResponseData) {
-        gpApiResponseData.activity.forEach { activityToBeDone ->
+
+        if (gpApiResponseData.activity.isEmpty()){
             viewDataBinding.llActivityDetails.removeAllViews()
-            val view = inflater.inflate(R.layout.item_advisory, null)
-            val advisoryLayout = ItemAdvisoryBinding.bind(view)
-            advisoryLayout.tvActivityName.text = activityToBeDone.activity_name
-            advisoryLayout.tvBriefDesc.text = activityToBeDone.activity_brief_description
-            advisoryLayout.tvShortDesc.text = activityToBeDone.short_application
+            viewDataBinding.noActivityLL.visibility=VISIBLE
+            viewDataBinding.llActivityDetails.visibility=GONE
 
-            if (activityToBeDone.linked_issues != null && activityToBeDone.linked_issues.size > 0) {
-                val activityLinkedIssuesListAdapter =
-                    ActivityLinkedIssuesListAdapter(activityToBeDone.linked_issues)
-                advisoryLayout.rvLikedIssues.layoutManager =
-                    LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-                advisoryLayout.rvLikedIssues.setHasFixedSize(true)
-                advisoryLayout.rvLikedIssues.adapter = activityLinkedIssuesListAdapter
+        }else{
+            gpApiResponseData.activity.forEach { activityToBeDone ->
+                viewDataBinding.llActivityDetails.removeAllViews()
+                viewDataBinding.noActivityLL.visibility= GONE
+                viewDataBinding.llActivityDetails.visibility= VISIBLE
+                val view = inflater.inflate(R.layout.item_advisory, null)
+                val advisoryLayout = ItemAdvisoryBinding.bind(view)
+                advisoryLayout.tvActivityName.text = activityToBeDone.activity_name
+                advisoryLayout.tvBriefDesc.text = activityToBeDone.activity_brief_description
+                advisoryLayout.tvShortDesc.text = activityToBeDone.short_application
+
+                if (activityToBeDone.linked_issues != null && activityToBeDone.linked_issues.size > 0) {
+                    val activityLinkedIssuesListAdapter =
+                        ActivityLinkedIssuesListAdapter(activityToBeDone.linked_issues)
+                    advisoryLayout.rvLikedIssues.layoutManager =
+                        LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                    advisoryLayout.rvLikedIssues.setHasFixedSize(true)
+                    advisoryLayout.rvLikedIssues.adapter = activityLinkedIssuesListAdapter
+                }
+
+                if (activityToBeDone.linked_technicals != null && activityToBeDone.linked_technicals.size > 0) {
+                    val activityLinkedProductListAdapter =
+                        ActivityLinkedProductsListAdapter(activityToBeDone.linked_technicals)
+                    advisoryLayout.rvLikedProduct.layoutManager =
+                        LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                    advisoryLayout.rvLikedProduct.setHasFixedSize(true)
+                    advisoryLayout.rvLikedProduct.adapter = activityLinkedProductListAdapter
+                }
+                viewDataBinding.llActivityDetails.addView(view)
+                subCategoryViewModel.getCropIssues(activityToBeDone.stage_id)
             }
 
-            if (activityToBeDone.linked_technicals != null && activityToBeDone.linked_technicals.size > 0) {
-                val activityLinkedProductListAdapter =
-                    ActivityLinkedProductsListAdapter(activityToBeDone.linked_technicals)
-                advisoryLayout.rvLikedProduct.layoutManager =
-                    LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-                advisoryLayout.rvLikedProduct.setHasFixedSize(true)
-                advisoryLayout.rvLikedProduct.adapter = activityLinkedProductListAdapter
-            }
-
-
-
-            viewDataBinding.llActivityDetails.addView(view)
         }
+
+    }
+
+    override fun setAdvisoryProblemsActivity(
+        cropIssueListAdapter: CropIssueListAdapter,
+        onProblemSelected: (agstack.gramophone.ui.advisory.models.cropproblems.GpApiResponseData) -> Unit
+    ) {
+
+        if (cropIssueListAdapter.dataList.size>6){
+            viewDataBinding.tvViewAllRl.visibility= VISIBLE
+        }else{
+            viewDataBinding.tvViewAllRl.visibility= VISIBLE
+
+        }
+        cropIssueListAdapter.onProblemSelected = onProblemSelected
+        rvCropProblems.layoutManager = GridLayoutManager(this, 2)
+        rvCropProblems.setHasFixedSize(true)
+        rvCropProblems.adapter = cropIssueListAdapter
 
     }
 
@@ -136,10 +168,19 @@ class AdvisoryActivity :
         activityListAdapter: ActivityListAdapter,
         onActivityClciekd: (GpApiResponseData) -> Unit
     ) {
-        activityListAdapter.onActivitySelected = onActivityClciekd
-        rvActivity.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rvActivity.setHasFixedSize(true)
-        rvActivity.adapter = activityListAdapter
+
+        if (activityListAdapter.dataList.isNotEmpty()){
+            activityListAdapter.onActivitySelected = onActivityClciekd
+            rvActivity.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            rvActivity.setHasFixedSize(true)
+            rvActivity.adapter = activityListAdapter
+            viewDataBinding.llActivityStageAvailable.visibility = VISIBLE
+            viewDataBinding.llNoActivityStage.visibility = GONE
+        }else{
+            viewDataBinding.llActivityStageAvailable.visibility = GONE
+            viewDataBinding.llNoActivityStage.visibility = VISIBLE
+        }
+
     }
 
     override fun finishActivity() {
