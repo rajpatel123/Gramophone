@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 class ActivityListAdapter(val dataList: List<GpApiResponseData>) :
     RecyclerView.Adapter<ActivityListAdapter.DeveloperViewHolder>() {
     var onActivitySelected: ((GpApiResponseData) -> Unit)? = null
+    var onActivityInfoClicked: ((GpApiResponseData) -> Unit)? = null
      var lastSelectedActivityPosition =0
     interface SetImage {
         fun onImageSet(imageUrl: String, iv: ImageView)
@@ -65,6 +66,12 @@ class ActivityListAdapter(val dataList: List<GpApiResponseData>) :
             activityModel.isSelected=true
             onActivitySelected?.invoke(activityModel)
             notifyDataSetChanged()
+        }
+
+        holder.binding.ivInfoClicked.setOnClickListener {
+            if (activityModel.isSelected){
+                onActivityInfoClicked?.invoke(activityModel)
+            }
         }
     }
 

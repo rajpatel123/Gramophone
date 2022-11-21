@@ -52,11 +52,13 @@ interface SubCategoryNavigator : BaseNavigator {
 
     fun reload()
 
-    fun setAdvisoryActivity(activityListAdapter: ActivityListAdapter, function: (GpApiResponseData) -> Unit)
+    fun setAdvisoryActivity(activityListAdapter: ActivityListAdapter, function: (GpApiResponseData) -> Unit,infoClicked: (GpApiResponseData) -> Unit)
 
     fun updateActivitiesList(it: GpApiResponseData)
 
     fun setAdvisoryProblemsActivity(activityListAdapter: CropIssueListAdapter, function: (agstack.gramophone.ui.advisory.models.cropproblems.GpApiResponseData) -> Unit)
 
     fun showInfoBottomSheet()
+
+    fun openIssueImagesBottomSheet(it: GpApiResponseData)
 }

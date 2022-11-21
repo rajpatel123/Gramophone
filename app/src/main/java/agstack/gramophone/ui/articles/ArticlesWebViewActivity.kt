@@ -175,10 +175,13 @@ class ArticlesWebViewActivity :
 
     override fun setAdvisoryActivity(
         activityListAdapter: ActivityListAdapter,
-        function: (GpApiResponseData) -> Unit
+        function: (GpApiResponseData) -> Unit,
+        infoClicked: (GpApiResponseData) -> Unit
     ) {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
+
     }
+
 
     override fun updateActivitiesList(it: GpApiResponseData) {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
@@ -189,10 +192,17 @@ class ArticlesWebViewActivity :
         activityListAdapter: CropIssueListAdapter,
         function: (agstack.gramophone.ui.advisory.models.cropproblems.GpApiResponseData) -> Unit
     ) {
-        // Don't write anything here. This method is only used in ArticleWebViewActivity
+        TODO("Not yet implemented")
     }
 
+
+
     override fun showInfoBottomSheet() {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+
+    }
+
+    override fun openIssueImagesBottomSheet(it: GpApiResponseData) {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
 
     }

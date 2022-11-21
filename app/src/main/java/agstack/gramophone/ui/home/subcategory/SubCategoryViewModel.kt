@@ -547,6 +547,8 @@ class SubCategoryViewModel @Inject constructor(
                            val activityListAdapter =  ActivityListAdapter(response.body()?.gp_api_response_data!!)
                             getNavigator()?.setAdvisoryActivity(activityListAdapter,{
                                 getNavigator()?.updateActivitiesList(it)
+                            },{
+                               getNavigator()?.openIssueImagesBottomSheet(it)
                             })
                         }
                     }

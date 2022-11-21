@@ -7,13 +7,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-
+        android:paddingBottom="@dimen/_10sdp"
         android:background="@drawable/transparent_background_for_crop">
 
        <LinearLayout
+           android:id="@+id/llCropIssueDetails"
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:orientation="vertical"
+           android:visibility="gone"
 
            >
            <FrameLayout
@@ -114,10 +116,12 @@
 
                    <View
                        android:id="@+id/view"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_marginStart="0dp"
+                       android:layout_width="@dimen/_8sdp"
+                       android:layout_height="@dimen/_8sdp"
+                       android:layout_centerVertical="true"
+                       android:layout_marginStart="10dp"
                        android:layout_toEndOf="@+id/txtStage"
+                       android:background="@drawable/circle_solid_gray"
                        android:fontFamily="@font/manrope_bold"
                        android:textColor="@color/blakish"
                        android:textSize="@dimen/_10ssp"
@@ -127,8 +131,8 @@
                        android:id="@+id/stageName"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:layout_marginStart="0dp"
-                       android:layout_toEndOf="@+id/txtStageDesc"
+                       android:layout_marginStart="10dp"
+                       android:layout_toEndOf="@+id/view"
                        android:fontFamily="@font/manrope_bold"
                        android:textColor="@color/blakish"
                        android:textSize="@dimen/_10ssp"
@@ -141,6 +145,7 @@
                android:layout_height="wrap_content"
                android:layout_margin="@dimen/_8sdp"
                android:background="@color/yellow_light"
+               android:layout_marginBottom="@dimen/_10sdp"
                android:padding="@dimen/_10sdp">
 
                <ImageView
@@ -162,6 +167,33 @@
 
        </LinearLayout>
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llCropIssueImageBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/_10sdp">
+            <TextView
+                android:id="@+id/issue_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_medium"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/black"
+                tools:text="कृषि विशेषज्ञों की सलाह के अनुसार इस समय उत्पन्न होने वाली समस्याएँ एवं सुरक्षा उपाय कृषि विशेषज्ञों की सलाह के अनुसार इस समय उत्पन्न होने वाली समस्याएँ एवं सुरक्षा उपाय"/>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rvCropImage"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:orientation="horizontal"
+                    tools:listitem="@layout/item_image"
+                    app:layoutManager="LinearLayoutManager"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </LinearLayout>
 

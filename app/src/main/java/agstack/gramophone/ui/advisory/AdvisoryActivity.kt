@@ -176,13 +176,24 @@ class AdvisoryActivity :
         )
     }
 
+    override fun openIssueImagesBottomSheet(it: GpApiResponseData) {
+        val bottomSheet = CropIssueBottomSheetDialog()
+        bottomSheet.setData(it)
+        bottomSheet.show(
+            supportFragmentManager,
+            Constants.BOTTOM_SHEET
+        )
+    }
+
     override fun setAdvisoryActivity(
         activityListAdapter: ActivityListAdapter,
-        onActivityClciekd: (GpApiResponseData) -> Unit
+        onActivityClciekd: (GpApiResponseData) -> Unit,
+        onInfoClicked: (GpApiResponseData) -> Unit
     ) {
 
         if (activityListAdapter.dataList.isNotEmpty()){
             activityListAdapter.onActivitySelected = onActivityClciekd
+            activityListAdapter.onActivityInfoClicked = onInfoClicked
             rvActivity.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             rvActivity.setHasFixedSize(true)
             rvActivity.adapter = activityListAdapter

@@ -292,10 +292,14 @@ class SubCategoryActivity :
 
     override fun setAdvisoryActivity(
         activityListAdapter: ActivityListAdapter,
-        function: (GpApiResponseData) -> Unit
+        function: (GpApiResponseData) -> Unit,
+        infoClicked: (GpApiResponseData) -> Unit
     ) {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
+
     }
+
+
 
     override fun updateActivitiesList(it: GpApiResponseData) {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
@@ -310,6 +314,11 @@ class SubCategoryActivity :
     }
 
     override fun showInfoBottomSheet() {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+
+    }
+
+    override fun openIssueImagesBottomSheet(it: GpApiResponseData) {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
 
     }

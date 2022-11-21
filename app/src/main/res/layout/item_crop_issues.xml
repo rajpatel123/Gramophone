@@ -28,8 +28,8 @@
                 product_image="@{model.category_image}"
                 android:layout_width="match_parent"
                 android:layout_height="104dp"
-                android:scaleType="fitXY"
                 android:layout_gravity="center_horizontal"
+                android:scaleType="fitXY"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.SelectedCornerRadius" />
 
             <LinearLayout
