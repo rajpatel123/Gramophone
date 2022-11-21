@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.advisory.models.recomondedproducts.GpApiResponseData" />
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:padding="@dimen/_10sdp"
+            android:background="@drawable/linked_product_bg">
+
+
+            <ImageView
+                android:id="@+id/ivProducts"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/image"
+                app:product_image='@{model.product_sku_list[0].image ?? ""}'
+                tools:src="@drawable/dummy_neem_cake"
+                />
+
+            <TextView
+                android:id="@+id/tvProductNames"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_toStartOf="@+id/tvAddToCarts"
+                android:layout_toEndOf="@+id/ivProducts"
+                android:ellipsize="end"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="-2sp"
+                android:maxLines="3"
+                android:text='@{model.product_base_name ?? ""}'
+                android:textColor="@color/blakish"
+                android:textSize="13sp" />
+
+
+            <TextView
+                android:id="@+id/tvSellingPrices"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_below="@+id/tvProductNames"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/ivProducts"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="1sp"
+                app:reformatFloatPriceToInt="@{model.product_sku_list[0].cost_price}"
+                android:textColor="@color/blakish"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvActualPrices"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_below="@+id/tvProductNames"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/tvSellingPrices"
+                android:background="@drawable/strike_through"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="1sp"
+                app:mrp_price_equal="@{model.product_sku_list[0].cost_price}"
+                app:to_sales_price="@{model.product_sku_list[0].discount_price}"
+                android:textColor="@color/gray_strike_through"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvDiscountPercent"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_below="@+id/tvProductNames"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/tvActualPrices"
+                android:background="@drawable/off_background"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="1sp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                app:mrp_price="@{model.product_sku_list[0].cost_price}"
+                app:sales_price="@{model.product_sku_list[0].discount_price}"
+                android:textColor="@color/green_dark"
+                android:textSize="13sp"
+                tools:text="50%" />
+
+            <TextView
+                android:id="@+id/tvAddToCarts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/rounded_corner_8_solid_white_stroke_orange"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="-2sp"
+                android:paddingStart="12dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="8dp"
+                android:text="@string/add_to_cart"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_11ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_2sdp"
+                android:background="@color/mute_grey"
+                android:layout_below="@+id/tvAddToCarts"
+                android:layout_marginTop="@dimen/_30sdp"/>
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+</layout>

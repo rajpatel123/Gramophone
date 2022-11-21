@@ -7,6 +7,7 @@ import agstack.gramophone.ui.advisory.AllCropProblemNavigator
 import agstack.gramophone.ui.advisory.adapter.CropIssueListAdapter
 import agstack.gramophone.ui.advisory.models.cropproblems.CropProblemRequestModel
 import agstack.gramophone.ui.advisory.view.AllCropProblemsActivity
+import agstack.gramophone.ui.advisory.view.CropProblemDetailActivity
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import androidx.databinding.ObservableField
@@ -38,7 +39,16 @@ class CropProblemViewModel @Inject constructor(
                             val cropIssueListAdapter =
                                 CropIssueListAdapter(response.body()?.gp_api_response_data!!)
                             getNavigator()?.setAdvisoryProblemsActivity(cropIssueListAdapter){
-
+                                getNavigator()?.openActivity(
+                                    CropProblemDetailActivity::class.java,
+                                    Bundle().apply {
+                                        putInt(Constants.DESEASE_ID,it.disease_id)
+                                        putString(Constants.DESEASE_NAME,it.category_name)
+                                        putString(Constants.DESEASE_DESC,it.category_description)
+                                        putString(Constants.DESEASE_IMAGE,it.category_image)
+                                        putString(Constants.DESEASE_TYPE,it.category_type)
+                                    }
+                                )
                             }
                         }
                     }

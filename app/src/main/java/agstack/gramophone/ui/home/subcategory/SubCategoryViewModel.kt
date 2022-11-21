@@ -9,6 +9,7 @@ import agstack.gramophone.ui.advisory.adapter.CropIssueListAdapter
 import agstack.gramophone.ui.advisory.models.advisory.AdvisoryRequestModel
 import agstack.gramophone.ui.advisory.models.cropproblems.CropProblemRequestModel
 import agstack.gramophone.ui.advisory.view.AllCropProblemsActivity
+import agstack.gramophone.ui.advisory.view.CropProblemDetailActivity
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.dialog.filter.MainFilterData
 import agstack.gramophone.ui.dialog.sortby.SortByData
@@ -589,10 +590,13 @@ class SubCategoryViewModel @Inject constructor(
                         if (response.body()?.gp_api_response_data?.size!! >0){
                             val activityListAdapter =  CropIssueListAdapter(response.body()?.gp_api_response_data!!)
                             getNavigator()?.setAdvisoryProblemsActivity(activityListAdapter,{
-                                getNavigator()?.openActivity(AllCropProblemsActivity::class.java,
+                                getNavigator()?.openActivity(CropProblemDetailActivity::class.java,
                                     Bundle().apply {
-                                        putInt(Constants.STAGE_ID,stageId)
-                                        putInt(Constants.CROP_ID, cropId.get()!!)
+                                        putInt(Constants.DESEASE_ID,it.disease_id)
+                                        putString(Constants.DESEASE_NAME,it.category_name)
+                                        putString(Constants.DESEASE_DESC,it.category_description)
+                                        putString(Constants.DESEASE_IMAGE,it.category_image)
+                                        putString(Constants.DESEASE_TYPE,it.category_type)
                                     }
                                 )
                             })

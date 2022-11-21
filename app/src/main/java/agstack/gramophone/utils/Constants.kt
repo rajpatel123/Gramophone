@@ -7,6 +7,12 @@ import android.content.Context
 
 object Constants {
 
+
+    val DESEASE_TYPE: String="diseaseType"
+    val DESEASE_NAME: String="diseaseName"
+    val DESEASE_DESC: String="diseaseDesc"
+    val DESEASE_IMAGE: String="diseaseImage"
+    val DESEASE_ID: String="desease_id"
     val STAGE_ID: String="stage_id"
     val FARM_ID: String = "farm_id"
     val FARM_TYPE: String = "farm_type"
