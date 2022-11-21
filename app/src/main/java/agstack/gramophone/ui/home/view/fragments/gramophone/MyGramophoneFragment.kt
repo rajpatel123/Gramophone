@@ -35,6 +35,7 @@ import agstack.gramophone.view.activity.CreatePostActivity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -453,6 +454,9 @@ class MyGramophoneFragment :
                 putString(Constants.CROP_IMAGE,farms.gp_api_response_data.customer_farm.data[0][0].crop_image)
                 putString(Constants.CROP_REF_ID,farms.gp_api_response_data.customer_farm.data[0][0].farm_ref_id)
                 putInt(Constants.CROP_ID,farms.gp_api_response_data.customer_farm.data[0][0].crop_id)
+                putString(Constants.CROP_DURATION,farms.gp_api_response_data.customer_farm.data[0][0].duration)
+                putString(Constants.CROP_STAGE,farms.gp_api_response_data.customer_farm.data[0][0].stage_name)
+                putString(Constants.CROP_DAYS,farms.gp_api_response_data.customer_farm.data[0][0].days)
             })
         }
 

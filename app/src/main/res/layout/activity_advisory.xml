@@ -86,6 +86,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
+                        android:onClick="@{()->viewModel.onInfoClicked()}"
                         app:srcCompat="@drawable/ic_advisory_info" />
 
                    <RelativeLayout

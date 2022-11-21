@@ -57,4 +57,6 @@ interface SubCategoryNavigator : BaseNavigator {
     fun updateActivitiesList(it: GpApiResponseData)
 
     fun setAdvisoryProblemsActivity(activityListAdapter: CropIssueListAdapter, function: (agstack.gramophone.ui.advisory.models.cropproblems.GpApiResponseData) -> Unit)
+
+    fun showInfoBottomSheet()
 }

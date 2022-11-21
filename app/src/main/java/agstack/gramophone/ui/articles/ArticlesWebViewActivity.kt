@@ -192,6 +192,11 @@ class ArticlesWebViewActivity :
         // Don't write anything here. This method is only used in ArticleWebViewActivity
     }
 
+    override fun showInfoBottomSheet() {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+
+    }
+
     override fun setViewPagerAdapter(bannerList: List<Banner>?) {
         // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
     }

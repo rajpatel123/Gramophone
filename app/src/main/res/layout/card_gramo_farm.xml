@@ -90,17 +90,17 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/headerLayout"
                 android:layout_marginLeft="@dimen/_8sdp"
-                android:layout_marginRight="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_2sdp"
-                android:paddingBottom="@dimen/_8sdp"
-                android:orientation="vertical">
+                android:layout_marginRight="@dimen/_8sdp"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/_8sdp">
 
                 <LinearLayout
                     android:id="@+id/singleFarmLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="visible">
 
                     <TextView
                         android:id="@+id/txtCropCode"
@@ -152,8 +152,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:drawablePadding="@dimen/_8sdp"
-                        >
+                        android:drawablePadding="@dimen/_8sdp">
 
                         <TextView
                             android:id="@+id/txtDurationDesc"
@@ -171,12 +170,10 @@
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/txtDurationDesc"
                             android:fontFamily="@font/manrope_bold"
-                            tools:text=' Jul 15, 2022 To Jul 25, 2022'
                             android:textColor="@color/blakish"
                             android:textSize="@dimen/_10ssp"
-                            />
+                            tools:text=' Jul 15, 2022 To Jul 25, 2022' />
                     </RelativeLayout>
-
 
 
                     <RelativeLayout
@@ -184,8 +181,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:drawablePadding="@dimen/_8sdp"
-                        >
+                        android:drawablePadding="@dimen/_8sdp">
 
                         <TextView
                             android:id="@+id/txtAreaDesc"
@@ -203,12 +199,10 @@
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/txtAreaDesc"
                             android:fontFamily="@font/manrope_bold"
-                            tools:text=' 22 Acre'
                             android:textColor="@color/blakish"
                             android:textSize="@dimen/_10ssp"
-                            />
+                            tools:text=' 22 Acre' />
                     </RelativeLayout>
-
 
 
                     <RelativeLayout
@@ -216,18 +210,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:drawablePadding="@dimen/_8sdp"
-                        >
+                        android:drawablePadding="@dimen/_8sdp">
+
                         <TextView
                             android:id="@+id/txtStageDesc"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/ic_info_para"
                             android:fontFamily="@font/manrope_medium"
-                           android:text="@string/stage_names"
+                            android:text="@string/stage_names"
                             android:textColor="@color/oldmrpcolor"
-                            android:textSize="@dimen/_10ssp"
-                            />
+                            android:textSize="@dimen/_10ssp" />
 
                         <TextView
                             android:id="@+id/txtStage"
@@ -235,10 +228,9 @@
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/txtStageDesc"
                             android:fontFamily="@font/manrope_bold"
-                            tools:text=' 22 Acre'
                             android:textColor="@color/blakish"
                             android:textSize="@dimen/_10ssp"
-                            />
+                            tools:text=' 22 Acre' />
                     </RelativeLayout>
 
 
@@ -248,10 +240,9 @@
                     android:id="@+id/multiFarmLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_marginBottom="@dimen/_4sdp"
                     android:layout_marginStart="@dimen/_8sdp"
-                    >
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginBottom="@dimen/_4sdp">
 
                     <TextView
                         android:id="@+id/txtMultipleFarms"

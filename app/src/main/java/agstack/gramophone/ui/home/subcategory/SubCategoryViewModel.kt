@@ -621,4 +621,8 @@ class SubCategoryViewModel @Inject constructor(
         )
 
     }
+
+    fun onInfoClicked(){
+      getNavigator()?.showInfoBottomSheet()
+    }
 }

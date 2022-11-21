@@ -309,6 +309,11 @@ class SubCategoryActivity :
         // Don't write anything here. This method is only used in ArticleWebViewActivity
     }
 
+    override fun showInfoBottomSheet() {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+
+    }
+
     override fun getBundle(): Bundle? {
         return intent?.extras
     }

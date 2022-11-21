@@ -8,6 +8,9 @@ import android.content.Context
 object Constants {
 
 
+    val CROP_DAYS: String="crop_days"
+    val CROP_DURATION: String="crop_duration"
+    val CROP_STAGE: String="crop_stage"
     val DESEASE_TYPE: String="diseaseType"
     val DESEASE_NAME: String="diseaseName"
     val DESEASE_DESC: String="diseaseDesc"

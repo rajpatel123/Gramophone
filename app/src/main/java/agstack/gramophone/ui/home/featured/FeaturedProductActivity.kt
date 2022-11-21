@@ -335,6 +335,11 @@ class FeaturedProductActivity :
 
     }
 
+    override fun showInfoBottomSheet() {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+
+    }
+
     override fun getLayoutID(): Int {
         return R.layout.activity_featured_products
     }

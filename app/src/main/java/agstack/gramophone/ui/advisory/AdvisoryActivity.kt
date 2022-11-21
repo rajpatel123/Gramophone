@@ -10,6 +10,8 @@ import agstack.gramophone.ui.advisory.adapter.ActivityLinkedProductsListAdapter
 import agstack.gramophone.ui.advisory.adapter.ActivityListAdapter
 import agstack.gramophone.ui.advisory.adapter.CropIssueListAdapter
 import agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData
+import agstack.gramophone.ui.advisory.view.CropIssueBottomSheetDialog
+import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.subcategory.ProductListAdapter
 import agstack.gramophone.ui.home.subcategory.SubCategoryNavigator
@@ -18,6 +20,7 @@ import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
+import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -162,6 +165,15 @@ class AdvisoryActivity :
         rvCropProblems.setHasFixedSize(true)
         rvCropProblems.adapter = cropIssueListAdapter
 
+    }
+
+    override fun showInfoBottomSheet() {
+        val bottomSheet = CropIssueBottomSheetDialog()
+        bottomSheet.bundle=intent.extras
+        bottomSheet.show(
+          supportFragmentManager,
+            Constants.BOTTOM_SHEET
+        )
     }
 
     override fun setAdvisoryActivity(
