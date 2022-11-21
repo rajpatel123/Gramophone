@@ -43,7 +43,7 @@ class CropIssueBottomSheetDialog : BottomSheetDialogFragment() {
             binding?.llCropIssueImageBottom?.visibility=VISIBLE
             binding?.llCropIssueDetails?.visibility= GONE
             binding?.issueDesc?.text = gpApiResponse?.stage_description
-            rvCropImage.layoutManager = LinearLayoutManager(activity)
+            rvCropImage.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
             rvCropImage.setHasFixedSize(true)
             rvCropImage.adapter = gpApiResponse?.crop_stage_images?.let {
                 CropIssueImageListAdapter(
