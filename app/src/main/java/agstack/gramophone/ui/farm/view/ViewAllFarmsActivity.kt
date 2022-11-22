@@ -135,7 +135,7 @@ class ViewAllFarmsActivity :
                     cropImage = it[0].crop_image,
                 )
 
-                if (it.size == 1 && isOldFarms && it[0].is_crop_cycle_completed!!) {
+                if (it.size == 1 /*&& isOldFarms*/ && it[0].is_crop_cycle_completed!!) {
                     if (it[0].harvested_quantity.isNullOrEmpty()) {
                         bottomSheet =
                             BottomSheetFarmInformation { farm_reference_id, output_qty, output_unit_id ->

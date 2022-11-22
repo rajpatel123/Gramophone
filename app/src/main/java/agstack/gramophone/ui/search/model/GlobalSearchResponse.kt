@@ -37,6 +37,7 @@ data class Item(
     var handle: String?,
     var highest_group_score: String?,
     var id: String?,
+    var category_parent_id: String?,
     var image: String?,
     var postImage : String?,
     var name: String?,
