@@ -122,7 +122,7 @@ class AddToCartBottomSheetDialog(
 
             if (availableProductOffersAdapter == null) {
                 availableProductOffersAdapter =
-                    AvailableProductOffersAdapter(mSkuOfferList, selectedSkuPrice, quantity, {
+                    AvailableProductOffersAdapter(mSkuOfferList, selectedSkuPrice, {
                         selectedOfferItem = it
                         applyOfferOnProduct?.invoke(VerifyPromotionRequestModel(selectedSkuListItem.get()?.productId!!,
                             quantity,

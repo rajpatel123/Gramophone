@@ -7,6 +7,7 @@ import agstack.gramophone.databinding.ProductDetailBinding
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
 import agstack.gramophone.ui.home.product.fragment.*
+import agstack.gramophone.ui.home.subcategory.AvailableProductOffersAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.ShareSheetPresenter
@@ -322,12 +323,8 @@ class ProductDetailsActivity :
     }
 
     override fun setProductSKUOfferAdapter(
-        productSKUOfferAdapter: ProductSKUOfferAdapter,
-        onOfferItemClicked: (PromotionListItem) -> Unit,
-        onViewAllClicked: (PromotionListItem) -> Unit,
+        productSKUOfferAdapter: AvailableProductOffersAdapter,
     ) {
-        productSKUOfferAdapter.selectedProduct = onOfferItemClicked
-        productSKUOfferAdapter.onViewAllClicked = onViewAllClicked
         viewDataBinding.rvAvailableoffers.adapter = productSKUOfferAdapter
     }
 

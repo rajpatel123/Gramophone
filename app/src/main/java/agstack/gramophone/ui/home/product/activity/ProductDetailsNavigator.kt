@@ -6,6 +6,7 @@ import agstack.gramophone.ui.home.product.fragment.ContactForPriceBottomSheetDia
 import agstack.gramophone.ui.home.product.fragment.ExpertAdviceBottomSheetFragment
 import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
+import agstack.gramophone.ui.home.subcategory.AvailableProductOffersAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager
@@ -18,11 +19,7 @@ interface ProductDetailsNavigator : BaseNavigator {
         onSKUItemClicked: (ProductSkuListItem) -> Unit,
     )
 
-    fun setProductSKUOfferAdapter(
-        productSKUOfferAdapter: ProductSKUOfferAdapter,
-        onOfferItemClicked: (PromotionListItem) -> Unit,
-        onViewAllClicked: (PromotionListItem) -> Unit,
-    )
+    fun setProductSKUOfferAdapter(productSKUOfferAdapter: AvailableProductOffersAdapter)
 
     fun getFragmentManagerPager(): FragmentManager
     fun setProductImagesViewPagerAdapter(productImagesAdapter: ProductImagesAdapter)
