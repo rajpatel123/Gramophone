@@ -6,8 +6,10 @@ import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.advisory.adapter.ActivityListAdapter
 import agstack.gramophone.ui.advisory.adapter.CropIssueListAdapter
+import agstack.gramophone.ui.advisory.adapter.RecommendedLinkedProductsListAdapter
 import agstack.gramophone.ui.advisory.models.advisory.AdvisoryRequestModel
 import agstack.gramophone.ui.advisory.models.cropproblems.CropProblemRequestModel
+import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProductRequestModel
 import agstack.gramophone.ui.advisory.view.AllCropProblemsActivity
 import agstack.gramophone.ui.advisory.view.CropProblemDetailActivity
 import agstack.gramophone.ui.dialog.filter.FilterRequest
@@ -71,6 +73,14 @@ class SubCategoryViewModel @Inject constructor(
     val address = ObservableField<String>()
     val cropName = ObservableField<String>()
     val cropImage = ObservableField<String>()
+
+
+    val issueName = ObservableField<String>()
+    val issueImage = ObservableField<String>()
+    val issueDescription = ObservableField<String>()
+    val issueType = ObservableField<String>()
+    val productCount = ObservableField<String>()
+
 
     init {
         progress.value = false
@@ -626,5 +636,37 @@ class SubCategoryViewModel @Inject constructor(
 
     fun onInfoClicked(){
       getNavigator()?.showInfoBottomSheet()
+    }
+
+
+    fun getRecommendedProduct() {
+        val bundle =  getNavigator()?.getBundle()
+
+        viewModelScope.launch {
+            val response = onBoardingRepository.getRecommendedProducts(
+                RecommendedProductRequestModel(bundle?.getInt(Constants.DESEASE_ID)!!)
+            )
+
+            if (response.isSuccessful && response.body().isNotNull()){
+                productCount.set(" ".plus("").plus(response.body()?.gp_api_response_data!!.size).plus(getNavigator()?.getMessage(
+                    R.string.recommended_product)))
+                val recommendedLinkedProductsListAdapter= RecommendedLinkedProductsListAdapter(
+                    response.body()?.gp_api_response_data!!
+                )
+
+                getNavigator()?.setProductList(recommendedLinkedProductsListAdapter){
+
+                }
+            }
+        }
+
+    }
+
+    fun setDiseaseDetails() {
+        val bundle = getNavigator()?.getBundle()
+        issueName.set(bundle?.getString(Constants.DESEASE_NAME))
+        issueImage.set(bundle?.getString(Constants.DESEASE_IMAGE))
+        issueDescription.set(bundle?.getString(Constants.DESEASE_DESC))
+        issueType.set(bundle?.getString(Constants.DESEASE_TYPE))
     }
 }

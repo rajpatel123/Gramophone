@@ -7,6 +7,7 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityFeaturedProductsBinding
 import agstack.gramophone.ui.advisory.adapter.ActivityListAdapter
 import agstack.gramophone.ui.advisory.adapter.CropIssueListAdapter
+import agstack.gramophone.ui.advisory.adapter.RecommendedLinkedProductsListAdapter
 import agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
@@ -343,6 +344,14 @@ class FeaturedProductActivity :
     }
 
     override fun openIssueImagesBottomSheet(it: GpApiResponseData) {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+
+    }
+
+    override fun setProductList(
+        recommendedLinkedProductsListAdapter: RecommendedLinkedProductsListAdapter,
+        function: (agstack.gramophone.ui.advisory.models.recomondedproducts.GpApiResponseData) -> Unit
+    ) {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
 
     }

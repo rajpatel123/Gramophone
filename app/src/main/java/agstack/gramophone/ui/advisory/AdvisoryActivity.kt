@@ -5,10 +5,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityAdvisoryBinding
 import agstack.gramophone.databinding.ItemAdvisoryBinding
-import agstack.gramophone.ui.advisory.adapter.ActivityLinkedIssuesListAdapter
-import agstack.gramophone.ui.advisory.adapter.ActivityLinkedProductsListAdapter
-import agstack.gramophone.ui.advisory.adapter.ActivityListAdapter
-import agstack.gramophone.ui.advisory.adapter.CropIssueListAdapter
+import agstack.gramophone.ui.advisory.adapter.*
 import agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData
 import agstack.gramophone.ui.advisory.view.CropIssueBottomSheetDialog
 import agstack.gramophone.ui.dialog.BottomSheetDialog
@@ -183,6 +180,13 @@ class AdvisoryActivity :
             supportFragmentManager,
             Constants.BOTTOM_SHEET
         )
+    }
+
+    override fun setProductList(
+        recommendedLinkedProductsListAdapter: RecommendedLinkedProductsListAdapter,
+        function: (agstack.gramophone.ui.advisory.models.recomondedproducts.GpApiResponseData) -> Unit
+    ) {
+        TODO("Not yet implemented")
     }
 
     override fun setAdvisoryActivity(
