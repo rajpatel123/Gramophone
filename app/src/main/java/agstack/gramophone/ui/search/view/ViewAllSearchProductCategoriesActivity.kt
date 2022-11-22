@@ -6,6 +6,7 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.databinding.ActivityViewAllSearchProductCategoriesBinding
+import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.search.adapter.ProductCategoryAdapter
 import agstack.gramophone.ui.search.model.Data
@@ -32,14 +33,16 @@ class ViewAllSearchProductCategoriesActivity :
         items?.let {
             val gridLayoutManager = GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
             viewDataBinding.rvProductCategory.layoutManager = gridLayoutManager
-            viewDataBinding.rvProductCategory.adapter = ProductCategoryAdapter(items){ id, name, image ->
+            viewDataBinding.rvProductCategory.adapter = ProductCategoryAdapter(items){ id, subId, name, image ->
                 openActivity(this@ViewAllSearchProductCategoriesActivity,
-                SubCategoryActivity::class.java,
-                Bundle().apply {
-                    putString(Constants.CATEGORY_ID, id)
-                    putString(Constants.CATEGORY_NAME, name)
-                    putString(Constants.CATEGORY_IMAGE, image)
-                }) }
+                    FeaturedProductActivity::class.java,
+                    Bundle().apply {
+                        putString(Constants.SHOP_BY_SUB_CATEGORY, id)
+                        putString(Constants.SUB_CATEGORY_ID, subId)
+                        putString(Constants.SUB_CATEGORY_NAME, name)
+                        putString(Constants.SUB_CATEGORY_IMAGE, image)
+                    })
+            }
         }
     }
 
