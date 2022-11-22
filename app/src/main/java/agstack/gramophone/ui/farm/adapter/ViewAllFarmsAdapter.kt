@@ -52,7 +52,7 @@ class ViewAllFarmsAdapter(
                 holder.binding.txtAddFarm.text = holder.binding.root.context.getString(R.string.give_your_crop_details)
             }else{
                 holder.binding.txtAddFarm.setTextColor(holder.binding.root.context.resources.getColor(R.color.black))
-                holder.binding.txtAddFarm.text = farmList[position][0].harvested_quantity + " " + farmList[position][0].harvested_quantity_unit
+                holder.binding.txtAddFarm.text = holder.binding.root.context.getString(R.string.farm_crop) + " " + farmList[position][0].harvested_quantity + " " + farmList[position][0].harvested_quantity_unit
             }
         }else{
             if(isOldFarms){
