@@ -20,7 +20,7 @@ class ProductCategoryAdapter(
         holder.binding.item = category
 
         holder.binding.categoryContainer.setOnClickListener {
-            listener.invoke(category.id!!, category.name, category.image)
+            listener.invoke(category.category_parent_id!!, category.name, category.image)
         }
     }
 

@@ -22,13 +22,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include
-                android:id="@+id/myToolbar"
-                layout="@layout/layout_toolbar" />
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/ToolbarTheme"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                app:contentInsetStartWithNavigation="0dp"
+                app:layout_collapseMode="none"
+                app:title="@string/add_tag_title"
+                app:navigationIcon="@drawable/ic_cross"
+                app:titleTextAppearance="@style/Toolbar.TitleText"
+                app:titleTextColor="@color/blakish"
+                android:elevation="4dp" />
 
             <View
                 android:id="@+id/divider"
-                android:layout_below="@+id/myToolbar"
+                android:layout_below="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/gray_view_line" />

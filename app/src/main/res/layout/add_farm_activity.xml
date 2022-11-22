@@ -278,19 +278,19 @@
 
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/edtAreaUnit"
-                        android:theme="@style/ThemeOverlay.AppCompat.Light"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_38sdp"
                         android:background="@drawable/rounded_corner"
                         android:backgroundTint="@color/mute_grey"
+                        android:drawableStart="@drawable/ic_comment"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:paddingBottom="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_2sdp"
                         android:paddingStart="@dimen/_5sdp"
-                        android:drawableStart="@drawable/ic_comment"
                         android:paddingTop="@dimen/_8sdp"
                         android:spinnerMode="dropdown"
-                        android:textSize="@dimen/_10ssp"
+                        android:textSize="@dimen/_12ssp"
+                        android:theme="@style/ThemeOverlay.AppCompat.Light"
                         tools:hint="Bigha" />
 
                     <ImageView
