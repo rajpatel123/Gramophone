@@ -37,7 +37,6 @@ class SelectCropActivity :
     private var disposable: Disposable? = null
     private val originalList = arrayListOf<CropData>()
     private val filterList = arrayListOf<CropData>()
-    private var disableSearchForAWhile = false
     private val handler =  Handler(Looper.getMainLooper())
     var lastCheckedPosition = -1
 
@@ -97,6 +96,10 @@ class SelectCropActivity :
         return when (item.itemId) {
             R.id.item_search -> {
                 getViewModel().onSearchMenuItemClick()
+                handler.postDelayed({
+                    viewDataBinding.edtSearch.requestFocus()
+                    showSoftKeyboard(viewDataBinding.edtSearch)
+                }, 200)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -193,12 +196,7 @@ class SelectCropActivity :
         filterList.clear()
         filterList.addAll(originalList)
         viewDataBinding.rvSelectCrop.adapter?.notifyDataSetChanged()
+        hideSoftKeyboard(viewDataBinding.edtSearch)
     }
 
-    private fun disableSearchForAWhile(){
-        disableSearchForAWhile = true
-        handler.postDelayed({
-            disableSearchForAWhile = false
-        }, 1000)
-    }
 }

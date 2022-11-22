@@ -502,4 +502,5 @@
     <string name="video_embeded_sharing_msg_short_link">Watch agriculture video and get best advice from Gramophone App</string>
     <string name="whatsapp_not_installed">Whatsapp have not been installed.</string>
     <string name="farm_crop">उपज</string>
+    <string name="loading_txt">Loading...</string>
 </resources>
