@@ -47,7 +47,7 @@ class ViewAllFarmsAdapter(
         }
 
         holder.binding.txtAddFarm.setTextColor(holder.binding.root.context.resources.getColor(R.color.orange))
-        if(isOldFarms && farmList[position].size == 1 && farmList[position][0].is_crop_cycle_completed!!){
+        if(/*isOldFarms &&*/ farmList[position].size == 1 && farmList[position][0].is_crop_cycle_completed!!){
             if(farmList[position][0].harvested_quantity.isNullOrEmpty()){
                 holder.binding.txtAddFarm.text = holder.binding.root.context.getString(R.string.give_your_crop_details)
             }else{

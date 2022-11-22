@@ -47,12 +47,12 @@ class CropGroupExplorerAdapter (
         }
 
         holder.binding.txtAddFarm.setTextColor(holder.binding.root.context.resources.getColor(R.color.orange))
-        if(isOldFarms && list[position].is_crop_cycle_completed!!){
+        if(/*isOldFarms && */list[position].is_crop_cycle_completed!!){
             if(list[position].harvested_quantity.isNullOrEmpty()){
                 holder.binding.txtAddFarm.text = holder.binding.root.context.getString(R.string.give_your_crop_details)
             }else{
                 holder.binding.txtAddFarm.setTextColor(holder.binding.root.context.resources.getColor(R.color.black))
-                holder.binding.txtAddFarm.text = list[position].harvested_quantity + " " + list[position].harvested_quantity_unit
+                holder.binding.txtAddFarm.text = holder.binding.root.context.getString(R.string.farm_crop) + " " + list[position].harvested_quantity + " " + list[position].harvested_quantity_unit
             }
         }else{
             if(isOldFarms){
