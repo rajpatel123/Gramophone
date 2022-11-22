@@ -5,10 +5,11 @@ import agstack.gramophone.ui.search.model.Item
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 
 class ProductCategoryAdapter(
     val list: List<Item>,
-    private val listener: (String, String?, String?) -> Unit,
+    private val listener: (String, String, String?, String?) -> Unit,
 ) : RecyclerView.Adapter<ProductCategoryAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -20,7 +21,14 @@ class ProductCategoryAdapter(
         holder.binding.item = category
 
         holder.binding.categoryContainer.setOnClickListener {
-            listener.invoke(category.category_parent_id!!, category.name, category.image)
+            val parentCategoryId =
+                if (category.category_parent_id.isNotNullOrEmpty()) category.category_parent_id!! else category.id!!
+            listener.invoke(
+                parentCategoryId,
+                category.id!!,
+                category.name,
+                category.image
+            )
         }
     }
 
