@@ -445,7 +445,7 @@ class MyGramophoneFragment :
         }
 
         binding?.layoutFarm?.headerLayout?.setOnClickListener {
-            openActivity(AdvisoryActivity::class.java,Bundle().apply {
+            (activity as HomeActivity).advisoryActivityLauncher.launch(Intent(activity,AdvisoryActivity::class.java).putExtra("bundle",Bundle().apply {
                 putInt(Constants.FARM_ID,
                     farms?.gp_api_response_data?.customer_farm?.data!![0][0].farm_id?.toInt()!!
                 )
@@ -457,7 +457,7 @@ class MyGramophoneFragment :
                 putString(Constants.CROP_DURATION,farms.gp_api_response_data.customer_farm.data[0][0].duration)
                 putString(Constants.CROP_STAGE,farms.gp_api_response_data.customer_farm.data[0][0].stage_name)
                 putString(Constants.CROP_DAYS,farms.gp_api_response_data.customer_farm.data[0][0].days)
-            })
+            }))
         }
 
         binding?.layoutFarm?.txtAddFarm?.setOnClickListener {

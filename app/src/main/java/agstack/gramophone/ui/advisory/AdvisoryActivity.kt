@@ -54,7 +54,7 @@ class AdvisoryActivity :
     override fun getBindingVariable(): Int = BR.viewModel
 
     override fun getViewModel(): SubCategoryViewModel = subCategoryViewModel
-    override fun getBundle(): Bundle? = intent.extras
+    override fun getBundle(): Bundle? = intent.getBundleExtra("bundle")
 
     override fun setViewPagerAdapter(bannerList: List<Banner>?) {
     }
@@ -203,7 +203,7 @@ class AdvisoryActivity :
         TODO("Not yet implemented")
     }
 
-    override fun openCommunity() {
+    private fun openCommunity() {
         val data = Intent();
         data.putExtra(Constants.GO_TO_COMMUNITY,"advisory")
         setResult(RESULT_OK, data);
