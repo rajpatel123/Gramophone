@@ -47,6 +47,8 @@ class CropGroupExplorerActivity :
 
             if (it.containsKey("unitsList")) {
                 units = it.getParcelableArrayList("unitsList")
+            }else{
+                getViewModel().getFarmUnits("harvest")
             }
 
             if (it.containsKey("farm_ref_id")) {
@@ -151,4 +153,7 @@ class CropGroupExplorerActivity :
         dialog.show(this@CropGroupExplorerActivity.supportFragmentManager, "custom_sheet")
     }
 
+    override fun setFarmUnits(units: List<GpApiResponseData>) {
+        this.units = units
+    }
 }
