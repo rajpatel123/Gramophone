@@ -15,15 +15,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.amnix.xtension.extensions.isNotNull
 
 
-class ActivityLinkedProductsListAdapter(private val dataList: List<LinkedTechnical>) :
+class ActivityLinkedProductsListAdapter(
+    private val dataList: List<LinkedTechnical>,
+    var onAddToCartClick: ((productId: String) -> Unit),
+) :
     RecyclerView.Adapter<ActivityLinkedProductsListAdapter.DeveloperViewHolder>() {
-    var onActivitySelected: ((LinkedIssue) -> Unit)? = null
 
     interface SetImage {
         fun onImageSet(imageUrl: String, iv: ImageView)
     }
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): DeveloperViewHolder {
 
         return DeveloperViewHolder(
@@ -32,9 +36,12 @@ class ActivityLinkedProductsListAdapter(private val dataList: List<LinkedTechnic
     }
 
     override fun onBindViewHolder(holder: DeveloperViewHolder, position: Int) {
-        var linkedIssue: LinkedTechnical = dataList[position]!!
+        val linkedIssue: LinkedTechnical = dataList[position]
         holder.binding.setVariable(BR.model, linkedIssue)
-
+        holder.binding.tvAddToCarts.setOnClickListener {
+            if (onAddToCartClick.isNotNull())
+                onAddToCartClick?.invoke(linkedIssue.product_base_name)
+        }
     }
 
     override fun getItemCount(): Int {
