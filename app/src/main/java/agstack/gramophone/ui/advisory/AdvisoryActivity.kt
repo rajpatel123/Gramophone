@@ -7,8 +7,8 @@ import agstack.gramophone.databinding.ActivityAdvisoryBinding
 import agstack.gramophone.databinding.ItemAdvisoryBinding
 import agstack.gramophone.ui.advisory.adapter.*
 import agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData
+import agstack.gramophone.ui.advisory.models.advisory.LinkedTechnical
 import agstack.gramophone.ui.advisory.view.CropIssueBottomSheetDialog
-import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.subcategory.ProductListAdapter
 import agstack.gramophone.ui.home.subcategory.SubCategoryNavigator
@@ -18,16 +18,21 @@ import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.utils.Constants
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amnix.xtension.extensions.inflater
-import com.amnix.xtension.extensions.isNotNull
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_advisory.*
+import java.util.stream.Collectors
+
 
 @AndroidEntryPoint
 class AdvisoryActivity :
@@ -40,6 +45,7 @@ class AdvisoryActivity :
         super.onCreate(savedInstanceState)
         subCategoryViewModel.updateProfileDetail()
         subCategoryViewModel.getCropAdvisoryDetails()
+        viewDataBinding.llCommunityLL.goToCommunity.setOnClickListener {openCommunity()  }
     }
 
 
@@ -103,6 +109,7 @@ class AdvisoryActivity :
     override fun reload() {
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun updateActivitiesList(gpApiResponseData: GpApiResponseData) {
 
         if (gpApiResponseData.activity.isEmpty()){
@@ -122,6 +129,7 @@ class AdvisoryActivity :
                 advisoryLayout.tvShortDesc.text = activityToBeDone.short_application
 
                 if (activityToBeDone.linked_issues != null && activityToBeDone.linked_issues.size > 0) {
+
                     val activityLinkedIssuesListAdapter =
                         ActivityLinkedIssuesListAdapter(activityToBeDone.linked_issues)
                     advisoryLayout.rvLikedIssues.layoutManager =
@@ -130,9 +138,15 @@ class AdvisoryActivity :
                     advisoryLayout.rvLikedIssues.adapter = activityLinkedIssuesListAdapter
                 }
 
+
                 if (activityToBeDone.linked_technicals != null && activityToBeDone.linked_technicals.size > 0) {
+                    val sortedList: List<LinkedTechnical> =
+                        activityToBeDone.linked_technicals.stream()
+                            .sorted(Comparator.comparingInt(LinkedTechnical::product_id).reversed())
+                            .collect(Collectors.toList())
+
                     val activityLinkedProductListAdapter =
-                        ActivityLinkedProductsListAdapter(activityToBeDone.linked_technicals)
+                        ActivityLinkedProductsListAdapter(sortedList)
                     advisoryLayout.rvLikedProduct.layoutManager =
                         LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
                     advisoryLayout.rvLikedProduct.setHasFixedSize(true)
@@ -187,6 +201,13 @@ class AdvisoryActivity :
         function: (agstack.gramophone.ui.advisory.models.recomondedproducts.GpApiResponseData) -> Unit
     ) {
         TODO("Not yet implemented")
+    }
+
+    override fun openCommunity() {
+        val data = Intent();
+        data.putExtra(Constants.GO_TO_COMMUNITY,"advisory")
+        setResult(RESULT_OK, data);
+        finish();
     }
 
     override fun setAdvisoryActivity(

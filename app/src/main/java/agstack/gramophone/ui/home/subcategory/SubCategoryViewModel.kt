@@ -669,4 +669,5 @@ class SubCategoryViewModel @Inject constructor(
         issueDescription.set(bundle?.getString(Constants.DESEASE_DESC))
         issueType.set(bundle?.getString(Constants.DESEASE_TYPE))
     }
+
 }

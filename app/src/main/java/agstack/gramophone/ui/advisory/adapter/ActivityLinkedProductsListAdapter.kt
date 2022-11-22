@@ -12,6 +12,8 @@ import agstack.gramophone.ui.advisory.models.advisory.LinkedIssue
 import agstack.gramophone.ui.advisory.models.advisory.LinkedTechnical
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.DataX
 import android.view.LayoutInflater
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ActivityLinkedProductsListAdapter(private val dataList: List<LinkedTechnical>) :
     RecyclerView.Adapter<ActivityLinkedProductsListAdapter.DeveloperViewHolder>() {
+    private var isHeaderVisible: Boolean=false
     var onActivitySelected: ((LinkedIssue) -> Unit)? = null
 
     interface SetImage {
@@ -32,9 +35,26 @@ class ActivityLinkedProductsListAdapter(private val dataList: List<LinkedTechnic
     }
 
     override fun onBindViewHolder(holder: DeveloperViewHolder, position: Int) {
-        var linkedIssue: LinkedTechnical = dataList[position]!!
-        holder.binding.setVariable(BR.model, linkedIssue)
+        var linkedTechnical: LinkedTechnical = dataList[position]!!
+        holder.binding.setVariable(BR.model, linkedTechnical)
 
+
+
+        if (position>0 && linkedTechnical.product_id<1  && !isHeaderVisible){
+            holder.binding.outPurchaseText.visibility=VISIBLE
+            isHeaderVisible=true
+        }else{
+            holder.binding.outPurchaseText.visibility= GONE
+        }
+
+        if (dataList.size==1 && linkedTechnical.product_id==0){
+            holder.binding.outPurchaseText.visibility=VISIBLE
+        }
+
+        if (linkedTechnical.product_id==0){
+            holder.binding.productDetails.visibility= GONE
+            holder.binding.tvProductTitle.visibility= VISIBLE
+        }
     }
 
     override fun getItemCount(): Int {
