@@ -2,6 +2,7 @@ package agstack.gramophone.data.repository.product
 
 
 import agstack.gramophone.data.model.SuccessStatusResponse
+import agstack.gramophone.ui.articles.SuggestedCropResponse
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.cart.model.PlaceOrderRequest
 import agstack.gramophone.ui.dialog.filter.FilterRequest
@@ -102,4 +103,5 @@ interface ProductRepository {
 
     suspend fun bookmarkVideo(body: VideoBookMarkedRequest): Response<SuccessStatusResponse>
 
+    suspend fun getSuggestedCrops(): Response<SuggestedCropResponse>
 }

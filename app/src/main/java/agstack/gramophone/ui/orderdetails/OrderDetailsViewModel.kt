@@ -4,7 +4,6 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
-import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.ui.orderdetails.adapter.OrderedProductsAdapter
@@ -13,13 +12,19 @@ import agstack.gramophone.ui.orderdetails.model.GpApiResponseData
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
+import java.io.OutputStream
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -141,6 +146,7 @@ class OrderDetailsViewModel @Inject constructor(
                         }
 
                         getNavigator()?.setColorOnOrderStatus(orderStatus.value!!)
+                        /*downloadInPdf(responseData.download_invoice)*/
 
                         getNavigator()?.setOrderListAdapter(
                             OrderedProductsAdapter(responseData.products),
@@ -182,5 +188,44 @@ class OrderDetailsViewModel @Inject constructor(
             }
         }
     }
+
+    /*private fun downloadInPdf(downloadInvoice: String) {
+
+        // TODO handle the response
+        try {
+            var gpxfile: File? = null
+            if (downloadInvoice != null) {
+                val r = Random()
+                val i1 = r.nextInt(80 - 65) + 65
+                fileName = "sample$i1.pdf"
+                root = File(Environment.getExternalStorageDirectory(), "WebPageToPdf")
+                if (!root.exists()) {
+                    root.mkdirs()
+                }
+                if (root.exists()) {
+                    if (gpxfile == null || !gpxfile.exists()) {
+                        gpxfile = File(root, "sample$i1.pdf")
+                        val op: OutputStream = FileOutputStream(gpxfile)
+                        gpxfile!!.setWritable(true)
+                        op.write(downloadInvoice)
+                        op.flush()
+                        op.close()
+                    } else {
+                        if (gpxfile.exists()) {
+                            val op: OutputStream = FileOutputStream(gpxfile, true)
+                            op.write(downloadInvoice)
+                            op.flush()
+                            op.close()
+                        }
+                    }
+                }
+                getNavigator()?.showToast("Content Write To the file name sample$i1 .pdfin WebPageToPdf Directory")
+                print("Response ----------------------" + downloadInvoice)
+            }
+        } catch (e: java.lang.Exception) {
+            Log.d("KEY_ERROR", "UNABLE TO DOWNLOAD FILE")
+            e.printStackTrace()
+        }
+    }*/
 
 }

@@ -8,5 +8,6 @@ data class TrendingArticlesResponseItem(
     val min_to_read: String? = null,
     val post_views: String? = null,
     val acf: Any? = null,
+    val fimg_url: Any? = null,
     val featured_image: String? = null,
 )

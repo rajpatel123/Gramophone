@@ -9,6 +9,7 @@ import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
+import agstack.gramophone.ui.articles.SuggestedCropResponse
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.cart.model.PlaceOrderRequest
 import agstack.gramophone.ui.createnewpost.model.MentionRequestModel
@@ -342,4 +343,7 @@ interface GramAppService {
 
     @POST("api/v5/customer/gramophone-tv-bookmark")
     suspend fun bookmarkVideo(@Body body: VideoBookMarkedRequest): Response<SuccessStatusResponse>
+
+    @GET("api/v5/article/suggested-crops")
+    suspend fun getSuggestedCrops(): Response<SuggestedCropResponse>
 }

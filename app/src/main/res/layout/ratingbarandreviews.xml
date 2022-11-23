@@ -394,7 +394,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_reviews_product"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_25sdp"
             android:layout_marginRight="@dimen/_20sdp"

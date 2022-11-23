@@ -21,12 +21,10 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.view.KeyEvent
 import android.view.View
-import android.view.ViewTreeObserver
 import android.webkit.*
 import androidx.activity.viewModels
 import com.amnix.xtension.extensions.isNotNull
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_articles.*
 
 @AndroidEntryPoint
 class ArticlesWebViewActivity :
@@ -36,7 +34,6 @@ class ArticlesWebViewActivity :
     private val subCategoryViewModel: SubCategoryViewModel by viewModels()
     var bottomSheet: AddToCartBottomSheetDialog? = null
     private var lastTimeClicked: Long = 0
-    private var mOnScrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,21 +102,9 @@ class ArticlesWebViewActivity :
             }
 
         }, "Android")
-        viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
 
         viewDataBinding.viewBack.setOnClickListener {
             onKeyDown(KeyEvent.KEYCODE_BACK, KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK))
-        }
-
-        viewDataBinding.swipeRefresh.viewTreeObserver
-            .addOnScrollChangedListener(ViewTreeObserver.OnScrollChangedListener {
-                viewDataBinding.swipeRefresh.isEnabled = viewDataBinding.webView.scrollY == 0
-            }
-                .also { mOnScrollChangedListener = it })
-
-        viewDataBinding.swipeRefresh.setOnRefreshListener {
-            viewDataBinding.webView.reload()
-            viewDataBinding.swipeRefresh.isRefreshing = false
         }
     }
 
@@ -255,12 +240,6 @@ class ArticlesWebViewActivity :
 
     override fun enableSortAndFilter() {
         // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
-    }
-
-    override fun onStop() {
-        viewDataBinding.swipeRefresh.viewTreeObserver.removeOnScrollChangedListener(
-            mOnScrollChangedListener)
-        super.onStop()
     }
 
     override fun getBundle(): Bundle? {

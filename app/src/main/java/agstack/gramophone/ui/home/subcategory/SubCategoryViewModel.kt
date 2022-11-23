@@ -111,20 +111,19 @@ class SubCategoryViewModel @Inject constructor(
             } else if (bundle.containsKey(Constants.PAGE_URL) || bundle.containsKey(Constants.PAGE_SOURCE)) {
                 var webUrl = ""
                 if (bundle.containsKey(Constants.PAGE_URL) && bundle.getString(Constants.PAGE_URL) != null) {
-                    webUrl = bundle.get(Constants.PAGE_URL).toString()
-                    if (webUrl.isNotNullOrEmpty() && !webUrl.contains("single-article") && !webUrl.contains(
-                            "?")
+                    webUrl = bundle.getString(Constants.PAGE_URL).toString()
+                    webUrl += "?" + Constants.LANG + "=" + if (SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.languageCode)
+                            .isNullOrEmpty()
                     ) {
-                        webUrl += "?" + Constants.LANG + "=" + getNavigator()?.getLanguage() + "&" + Constants.GP_TOKEN + "=" + SharedPreferencesHelper.instance?.getString(
-                            SharedPreferencesKeys.session_token)!!
-                    }
+                        "en"
+                    } else {
+                        SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.languageCode)!!
+                    } + "&" + Constants.GP_TOKEN + "=" + SharedPreferencesHelper.instance?.getString(
+                        SharedPreferencesKeys.session_token)!!
                 }
-
-                Log.d("URL","".plus(webUrl.isNotNullOrEmpty() && !webUrl.contains("single-article") && !webUrl.contains(
-                    "?")).plus(webUrl))
-                if (webUrl.isNotNullOrEmpty())
+                if (webUrl.isNotNullOrEmpty()) {
                     getNavigator()?.loadUrl(webUrl)
-
+                }
 
                 if (webUrl.isNotNullOrEmpty() && bundle.containsKey(Constants.PAGE_SOURCE)) {
                     viewModelScope.launch {

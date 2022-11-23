@@ -12,6 +12,7 @@ import agstack.gramophone.ui.home.product.fragment.ContactForPriceBottomSheetDia
 import agstack.gramophone.ui.home.product.fragment.ExpertAdviceBottomSheetFragment
 import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
+import agstack.gramophone.ui.home.subcategory.AvailableProductOffersAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
@@ -90,7 +91,7 @@ class ProductDetailsViewModel @Inject constructor(
     fun onAddQtyClicked() {
         qtySelected.set(qtySelected.get()!! + 1)
         loadOffersData(productDetailstoBeFetched, qtySelected.get())
-        setPercentage_mrpVisibility(
+        calculateDiscountAndPromotion(
             selectedSkuListItem.get()!!,
             null
         )
@@ -101,7 +102,7 @@ class ProductDetailsViewModel @Inject constructor(
         if (qtySelected.get()!! > 1) {
             qtySelected.set(qtySelected.get()!! - 1)
             loadOffersData(productDetailstoBeFetched, qtySelected.get())
-            setPercentage_mrpVisibility(
+            calculateDiscountAndPromotion(
                 selectedSkuListItem.get()!!,
                 null
             )
@@ -233,7 +234,7 @@ class ProductDetailsViewModel @Inject constructor(
                                 //Refresh offerList when product SKU is selected
 
 
-                                setPercentage_mrpVisibility(
+                                calculateDiscountAndPromotion(
                                     selectedSkuListItem.get()!!,
                                     null
                                 )
@@ -255,7 +256,7 @@ class ProductDetailsViewModel @Inject constructor(
 
                                     productDetailstoBeFetched.product_id =
                                         selectedSkuListItem.get()?.productId!!.toInt()
-                                    setPercentage_mrpVisibility(
+                                    calculateDiscountAndPromotion(
                                         selectedSkuListItem.get()!!,
                                         selectedOfferItem
                                     )
@@ -343,12 +344,10 @@ class ProductDetailsViewModel @Inject constructor(
         return cartItemsList
     }
 
-
-    private fun setPercentage_mrpVisibility(
+    private fun calculateDiscountAndPromotion(
         model: ProductSkuListItem,
         offerModel: PromotionListItem? = null,
     ) {
-
         if (model.isNull()) return
         var modelMrpPrice = 0f
         var modelSalesPrice = 0f
@@ -373,10 +372,10 @@ class ProductDetailsViewModel @Inject constructor(
         } else {
             modelMrpPrice = 0f
             modelSalesPrice = 0f
-            addToCartEnabled.set(false)
-            isOffersLayoutVisible = false
             isContactForPriceVisible = true
             proceedForCalculation = false
+            isOffersLayoutVisible = false
+            addToCartEnabled.set(false)
         }
         modelMrpPrice *= qtySelected.get()!!
         modelSalesPrice *= qtySelected.get()!!
@@ -402,13 +401,14 @@ class ProductDetailsViewModel @Inject constructor(
                 }
         }
 
-        getNavigator()?.setPercentageOff_mrpVisibility(
+        getNavigator()?.updateUIAfterCalculation(
             model.product_app_name!!,
             finalSalePrice,
+            modelMrpPrice,
             finalDiscount,
+            isDiscountPercentVisible,
             isMRPVisible, isOffersLayoutVisible, isContactForPriceVisible
         )
-
     }
 
     private fun loadRelatedProductData(productDetailstoBeFetched: ProductData) {
@@ -538,24 +538,29 @@ class ProductDetailsViewModel @Inject constructor(
                                 //do nothing as a new list is loaded with selected = false
                             }
                         }
-                        getNavigator()?.setProductSKUOfferAdapter(
-                            ProductSKUOfferAdapter(
-                                mSkuOfferList,
-                                selectedSkuListItem.get()!!,
-                                qtySelected.get()!!),
+                        var selectedSkuPrice = 0f
+                        if (selectedSkuListItem.get().isNotNull()) {
+                            val item: ProductSkuListItem = selectedSkuListItem.get()!!
+                            val mrpPrice =
+                                if (item.mrpPrice.isNull()) 0f else item.mrpPrice!!.toFloat()
+                            val salesPrice =
+                                if (item.salesPrice.isNullOrEmpty()) 0f else item.salesPrice.toFloat()
+
+                            selectedSkuPrice = if (salesPrice == 0f) {
+                                mrpPrice * quantity
+                            } else {
+                                salesPrice * quantity
+                            }
+                        }
+                        getNavigator()?.setProductSKUOfferAdapter(AvailableProductOffersAdapter(
+                            mSkuOfferList,
+                            selectedSkuPrice,
                             {
-                                //When RadioButton is clicked
                                 selectedOfferItem = it
-                                if (selectedOfferItem.selected == true) {
-                                    checkPromotionApplicable(
-                                        selectedOfferItem, selectedSkuListItem.get()!!,
-                                        qtySelected.get()!!
-                                    )
-                                } else {
-                                    setPercentage_mrpVisibility(selectedSkuListItem.get()!!, null)
-                                }
-
-
+                                checkOfferApplicability(VerifyPromotionRequestModel(
+                                    selectedSkuListItem.get()?.productId!!,
+                                    quantity,
+                                    it.promotion_id.toString()))
                             },
                             {
                                 //when view all is clicked
@@ -563,7 +568,7 @@ class ProductDetailsViewModel @Inject constructor(
                                     OfferDetailActivity::class.java,
                                     Bundle().apply {
 
-                                        var offersDataItem = DataItem()
+                                        val offersDataItem = DataItem()
                                         offersDataItem.endDate = it.valid_till
                                         offersDataItem.productName = it.title
                                         offersDataItem.productsku = it.applicable_on_sku
@@ -572,13 +577,50 @@ class ProductDetailsViewModel @Inject constructor(
                                         putParcelable(Constants.OFFERSDATA, offersDataItem)
 
                                     })
-                            })
+                            }))
                     }
                 }
             }
         }
+    }
 
+    private fun checkOfferApplicability(
+        verifyPromotionsModel: VerifyPromotionRequestModel,
+    ) {
+        checkPromotionApplicableJob.cancelIfActive()
+        checkPromotionApplicableJob = checkNetworkThenRun {
+            try {
+                val response =
+                    productRepository.checkPromotionOnProduct(verifyPromotionsModel)
 
+                if (response.body()?.gpApiStatus.equals(Constants.GP_API_STATUS) &&
+                    response.body()?.gpApiResponseData?.promotionApplicable == true
+                ) {
+                    for (item in mSkuOfferList) {
+                        item?.selected =
+                            selectedOfferItem.promotion_id!! == item?.promotion_id
+
+                    }
+                    getNavigator()?.refreshOfferAdapter()
+                    calculateDiscountAndPromotion(
+                        selectedSkuListItem.get()!!,
+                        selectedOfferItem
+                    )
+                } else {
+                    for (item in mSkuOfferList) {
+                        item?.selected = false
+                    }
+                    getNavigator()?.refreshOfferAdapter()
+                    getNavigator()?.showToast(if (response.body()?.gpApiMessage.isNull()) "" else response.body()?.gpApiMessage!!)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                for (item in mSkuOfferList) {
+                    item?.selected = false
+                }
+                getNavigator()?.refreshOfferAdapter()
+            }
+        }
     }
 
     private fun checkPromotionApplicable(
@@ -608,7 +650,7 @@ class ProductDetailsViewModel @Inject constructor(
                 }
                 getNavigator()?.refreshOfferAdapter()
 
-                setPercentage_mrpVisibility(
+                calculateDiscountAndPromotion(
                     selectedSkuListItem.get()!!,
                     selectedOfferItem
                 )

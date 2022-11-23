@@ -45,6 +45,7 @@ class MarketFragmentViewModel
     var farmResponse: FarmResponse? = null
     var weatherResponse: WeatherResponse? = null
     var articlesData: HashMap<String, ArrayList<FormattedArticlesData>> = HashMap()
+    var language: String? = null
 
     fun showAppTourDialogIfApplicable() {
         if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.APP_TOUR_ENABLED) == true
@@ -55,6 +56,14 @@ class MarketFragmentViewModel
     }
 
     fun getHomeData() {
+        language =
+            if (SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.languageCode)
+                    .isNullOrEmpty()
+            ) {
+                "en"
+            } else {
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.languageCode)!!
+            }
         allProductsResponse = null
         cropResponse = null
         storeResponse = null
@@ -126,9 +135,12 @@ class MarketFragmentViewModel
                         )
                     }
                 }
-                getNavigator()?.notifyBannerItemInserted(allBannerResponse, assignPosition(Constants.HOME_BANNER_1))
-                getNavigator()?.notifyBannerItemInserted(allBannerResponse, assignPosition(Constants.HOME_BANNER_REFERRAL))
-                getNavigator()?.notifyBannerItemInserted(allBannerResponse, assignPosition(Constants.HOME_BANNER_EXCLUSIVE))
+                getNavigator()?.notifyBannerItemInserted(allBannerResponse,
+                    assignPosition(Constants.HOME_BANNER_1))
+                getNavigator()?.notifyBannerItemInserted(allBannerResponse,
+                    assignPosition(Constants.HOME_BANNER_REFERRAL))
+                getNavigator()?.notifyBannerItemInserted(allBannerResponse,
+                    assignPosition(Constants.HOME_BANNER_EXCLUSIVE))
             } catch (ex: Exception) {
                 ex.printStackTrace()
             }
@@ -140,7 +152,8 @@ class MarketFragmentViewModel
             try {
                 val response = productRepository.getFeaturedProducts(PageLimitRequest("10", "1"))
                 allProductsResponse = response.body()
-                getNavigator()?.notifyFeaturedItemInserted(allProductsResponse, assignPosition(Constants.HOME_FEATURED_PRODUCTS))
+                getNavigator()?.notifyFeaturedItemInserted(allProductsResponse,
+                    assignPosition(Constants.HOME_FEATURED_PRODUCTS))
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -155,7 +168,8 @@ class MarketFragmentViewModel
             try {
                 val response = productRepository.getCategories()
                 categoryResponse = response.body()
-                getNavigator()?.notifyCategoryItemInserted(categoryResponse, assignPosition(Constants.HOME_SHOP_BY_CATEGORY))
+                getNavigator()?.notifyCategoryItemInserted(categoryResponse,
+                    assignPosition(Constants.HOME_SHOP_BY_CATEGORY))
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -180,7 +194,8 @@ class MarketFragmentViewModel
                         cropList.subList(0, 9)
                     else cropList
                 }
-                getNavigator()?.notifyCropItemInserted(cropResponse, assignPosition(Constants.HOME_SHOP_BY_CROP))
+                getNavigator()?.notifyCropItemInserted(cropResponse,
+                    assignPosition(Constants.HOME_SHOP_BY_CROP))
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -205,7 +220,8 @@ class MarketFragmentViewModel
                         storeList.subList(0, 4)
                     else storeList
                 }
-                getNavigator()?.notifyStoreItemInserted(storeResponse, assignPosition(Constants.HOME_SHOP_BY_STORE))
+                getNavigator()?.notifyStoreItemInserted(storeResponse,
+                    assignPosition(Constants.HOME_SHOP_BY_STORE))
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -227,7 +243,8 @@ class MarketFragmentViewModel
                     ) {
                         weatherResponse = response.body()
                     }
-                    getNavigator()?.notifyWeatherItemInserted(weatherResponse, assignPosition(Constants.HOME_WEATHER))
+                    getNavigator()?.notifyWeatherItemInserted(weatherResponse,
+                        assignPosition(Constants.HOME_WEATHER))
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -250,7 +267,8 @@ class MarketFragmentViewModel
                         companyList.subList(0, 6)
                     else companyList
                 }
-                getNavigator()?.notifyCompanyItemInserted(companyResponse, assignPosition(Constants.HOME_SHOP_BY_COMPANY))
+                getNavigator()?.notifyCompanyItemInserted(companyResponse,
+                    assignPosition(Constants.HOME_SHOP_BY_COMPANY))
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -269,7 +287,8 @@ class MarketFragmentViewModel
                 ) {
                     cartList = response.body()?.gp_api_response_data?.cart_items
                 }
-                getNavigator()?.notifyCartItemInserted(cartList, assignPosition(Constants.HOME_CART))
+                getNavigator()?.notifyCartItemInserted(cartList,
+                    assignPosition(Constants.HOME_CART))
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -288,7 +307,8 @@ class MarketFragmentViewModel
                 ) {
                     farmResponse = response.body()
                 }
-                getNavigator()?.notifyFarmItemInserted(farmResponse, assignPosition(Constants.HOME_FARMS))
+                getNavigator()?.notifyFarmItemInserted(farmResponse,
+                    assignPosition(Constants.HOME_FARMS))
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
@@ -301,7 +321,8 @@ class MarketFragmentViewModel
     fun getFeaturedArticles() {
         viewModelScope.launch {
             try {
-                val response = articlesRepository.getFeaturedArticles()
+                val response =
+                    articlesRepository.getFeaturedArticles(if (language.isNullOrEmpty()) "en" else language!!)
                 if (response.isSuccessful) {
                     val featuredArticleResponse = response.body()
                     val featuredArticlesList = ArrayList<FormattedArticlesData>()
@@ -387,10 +408,11 @@ class MarketFragmentViewModel
     private fun getTrendingArticles() {
         viewModelScope.launch {
             try {
-                val response = articlesRepository.getTrendingArticles()
+                val response =
+                    articlesRepository.getTrendingArticles(if (language.isNullOrEmpty()) "en" else language!!)
                 if (response.isSuccessful) {
                     val featuredArticleResponse = response.body()
-                    val trendingArticlesList = ArrayList<FormattedArticlesData>()
+                    var trendingArticlesList = ArrayList<FormattedArticlesData>()
 
                     if (featuredArticleResponse != null) {
                         for (item in featuredArticleResponse) {
@@ -404,16 +426,20 @@ class MarketFragmentViewModel
                             var tag = ""
                             if (item.acf != null && item.acf !is Boolean) {
                                 tag = try {
-                                    val categoryName: String =
-                                        (item.acf as Map<*, *>)["category_name"] as String
-                                    if (categoryName.isNotNullOrEmpty()) categoryName else ""
+                                    if ((item.acf as Map<*, *>)["category_name"].isNotNull()) {
+                                        val categoryName: String =
+                                            (item.acf as Map<*, *>)["category_name"] as String
+                                        if (categoryName.isNotNullOrEmpty()) categoryName else ""
+                                    } else ""
                                 } catch (e: Exception) {
                                     e.printStackTrace()
                                     ""
                                 }
                             }
-                            val imageUrl =
-                                if (item.featured_image.isNotNullOrEmpty()) item.featured_image else ""
+                            var imageUrl = ""
+                            if (item.fimg_url !=null && item.fimg_url !is Boolean) {
+                                imageUrl = item.fimg_url.toString()
+                            }
 
                             val formattedArticlesData = FormattedArticlesData()
                             formattedArticlesData.id = id
@@ -425,6 +451,9 @@ class MarketFragmentViewModel
                             formattedArticlesData.articleTye = Constants.TRENDING_ARTICLES
                             trendingArticlesList.add(formattedArticlesData)
                         }
+                    }
+                    trendingArticlesList.sortByDescending {
+                        it.post_views
                     }
                     articlesData[Constants.TRENDING_ARTICLES] = trendingArticlesList
                 }
@@ -442,62 +471,80 @@ class MarketFragmentViewModel
     private fun getSuggestedArticles() {
         viewModelScope.launch {
             try {
-                val response = articlesRepository.getSuggestedArticles()
-                if (response.isSuccessful) {
-                    val featuredArticleResponse = response.body()
-                    val suggestedArticlesList = ArrayList<FormattedArticlesData>()
+                val suggestedCropResponse = productRepository.getSuggestedCrops()
+                if (suggestedCropResponse.isSuccessful && suggestedCropResponse.body()?.gp_api_status == Constants.GP_API_STATUS
+                    && suggestedCropResponse.body()?.gp_api_response_data?.crops_suggested != null && suggestedCropResponse.body()?.gp_api_response_data?.crops_suggested?.size!! > 0
+                ) {
+                    val list = suggestedCropResponse.body()?.gp_api_response_data?.crops_suggested!!
+                    var suggestedCrops: String = ""
+                    for (item in list) {
+                        suggestedCrops = suggestedCrops + item.crop_name + ","
+                    }
+                    if (suggestedCrops.isNotNullOrEmpty()) {
+                        viewModelScope.launch {
+                            try {
+                                val response =
+                                    articlesRepository.getSuggestedArticles(suggestedCrops,
+                                        if (language.isNullOrEmpty()) "en" else language!!)
+                                if (response.isSuccessful) {
+                                    val featuredArticleResponse = response.body()
+                                    val suggestedArticlesList = ArrayList<FormattedArticlesData>()
 
-                    if (featuredArticleResponse != null) {
-                        for (item in featuredArticleResponse) {
-                            val id = item.ID
-                            val title =
-                                if (item.post_title.isNotNullOrEmpty()) item.post_title else ""
-                            val minToRead =
-                                if (item.min_to_read.isNotNullOrEmpty()) item.min_to_read else ""
-                            val postViewCount =
-                                if (item.post_views.isNotNullOrEmpty()) item.post_views else ""
-                            var tag = ""
-                            if (item.acf != null && item.acf !is Boolean) {
-                                tag = try {
-                                    val categoryName: String =
-                                        (item.acf as Map<*, *>)["category_name"] as String
-                                    if (categoryName.isNotNullOrEmpty()) categoryName else ""
-                                } catch (e: Exception) {
-                                    e.printStackTrace()
-                                    ""
+                                    if (featuredArticleResponse != null) {
+                                        for (item in featuredArticleResponse) {
+                                            val id = item.ID
+                                            val title =
+                                                if (item.post_title.isNotNullOrEmpty()) item.post_title else ""
+                                            val minToRead =
+                                                if (item.min_to_read.isNotNullOrEmpty()) item.min_to_read else ""
+                                            val postViewCount =
+                                                if (item.post_views.isNotNullOrEmpty()) item.post_views else ""
+                                            var tag = ""
+                                            if (item.acf != null && item.acf !is Boolean) {
+                                                tag = try {
+                                                    val categoryName: String =
+                                                        (item.acf as Map<*, *>)["category_name"] as String
+                                                    if (categoryName.isNotNullOrEmpty()) categoryName else ""
+                                                } catch (e: Exception) {
+                                                    e.printStackTrace()
+                                                    ""
+                                                }
+                                            }
+                                            val imageUrl =
+                                                if (item.featured_image.isNotNullOrEmpty()) item.featured_image else ""
+
+                                            val formattedArticlesData = FormattedArticlesData()
+                                            formattedArticlesData.id = id
+                                            formattedArticlesData.title = title
+                                            formattedArticlesData.min_to_read = minToRead
+                                            formattedArticlesData.post_views = postViewCount
+                                            formattedArticlesData.tag = tag
+                                            formattedArticlesData.image_url = imageUrl
+                                            formattedArticlesData.articleTye =
+                                                Constants.SUGGESTED_ARTICLES
+                                            suggestedArticlesList.add(formattedArticlesData)
+                                        }
+                                    }
+                                    articlesData[Constants.SUGGESTED_ARTICLES] =
+                                        suggestedArticlesList
                                 }
+                                getNavigator()?.notifyArticleItemInserted(articlesData,
+                                    assignPosition(Constants.HOME_ARTICLES))
+                            } catch (ex: Exception) {
+                                when (ex) {
+                                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(
+                                        R.string.network_failure))
+                                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                                }
+                                getNavigator()?.notifyArticleItemInserted(articlesData,
+                                    assignPosition(Constants.HOME_ARTICLES))
                             }
-                            val imageUrl =
-                                if (item.featured_image.isNotNullOrEmpty()) item.featured_image else ""
-
-                            val formattedArticlesData = FormattedArticlesData()
-                            formattedArticlesData.id = id
-                            formattedArticlesData.title = title
-                            formattedArticlesData.min_to_read = minToRead
-                            formattedArticlesData.post_views = postViewCount
-                            formattedArticlesData.tag = tag
-                            formattedArticlesData.image_url = imageUrl
-                            formattedArticlesData.articleTye = Constants.SUGGESTED_ARTICLES
-                            suggestedArticlesList.add(formattedArticlesData)
                         }
                     }
-                    articlesData[Constants.SUGGESTED_ARTICLES] = suggestedArticlesList
                 }
-                getNavigator()?.notifyArticleItemInserted(articlesData, assignPosition(Constants.HOME_ARTICLES))
-            } catch (ex: Exception) {
-                when (ex) {
-                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
-                }
-                getNavigator()?.notifyArticleItemInserted(articlesData, assignPosition(Constants.HOME_ARTICLES))
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
-
-    /*private fun notifyAdapter() {
-        getNavigator()?.notifyHomeAdapter(
-            allBannerResponse, categoryResponse, allProductsResponse,
-            cropResponse,
-            storeResponse, companyResponse, cartList, farmResponse, articlesData, weatherResponse)
-    }*/
 }
