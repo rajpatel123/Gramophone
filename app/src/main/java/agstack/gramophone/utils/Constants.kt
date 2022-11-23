@@ -7,6 +7,19 @@ import android.content.Context
 
 object Constants {
 
+
+    val GO_TO_COMMUNITY: String="community_page"
+    val CROP_DAYS: String="crop_days"
+    val CROP_DURATION: String="crop_duration"
+    val CROP_STAGE: String="crop_stage"
+    val DESEASE_TYPE: String="diseaseType"
+    val DESEASE_NAME: String="diseaseName"
+    val DESEASE_DESC: String="diseaseDesc"
+    val DESEASE_IMAGE: String="diseaseImage"
+    val DESEASE_ID: String="desease_id"
+    val STAGE_ID: String="stage_id"
+    val FARM_ID: String = "farm_id"
+    val FARM_TYPE: String = "farm_type"
     val BLOCKED_STATUS: String="blockStatus"
     val POLL: String = "poll"
     val QUIZ: String = "quiz"
@@ -226,6 +239,9 @@ object Constants {
     const val COMPANY_NAME = "company_name"
     const val COMPANY_IMAGE = "company_image"
     const val CROP_ID = "crop_id"
+    const val CROP_REF_ID = "crop_ref_id"
+    const val CROP_NAME = "crop_name"
+    const val CROP_IMAGE = "crop_image"
     const val BOTTOM_SHEET = "bottom_sheet"
     const val LOCATION_ACCESS_DIALOG = "location_access_dialog"
     const val DEVELOPER_KEY =

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Gramophone</string>
 
     <!-- Language selection -->
@@ -501,5 +501,18 @@
     <string name="video_count">%1$dव्हिडिओ</string>
     <string name="video_embeded_sharing_msg_short_link">Watch agriculture video and get best advice from Gramophone App</string>
     <string name="whatsapp_not_installed">Whatsapp have not been installed.</string>
+    <string name="tvUpcomingStages">UPCOMING STAGES</string>
+    <string name="other_suggessions_instructions">
+    <string name="other_suggessions_instructions">अन्य निर्देश और सुझाव</string>
+</string>
+    <string name="crop_all_problems">सभी कीट और समस्याएं</string>
+    <string name="crop_related_description">आप चित्रों के साथ अपने प्रश्न पोस्ट करें एवं हमारे विशेषज्ञ शीघ्र ही उसका उत्तर देंगे ।</string>
+    <string name="disclaimer">Actual dosage of the product may vary depending on various factors and should be adjusted accordingly. User should follow directions provided by manufacturer on the label claims.</string>
+    <string name="required_quantity">अनुशंसित मात्रा प्रति एकड़</string>
+    <string name="advisory_details_not_found">Advisory not available!</string>
+    <string name="back_to_my_farm">Back to My Farm</string>
+    <string name="recommended_product">Products Recommended</string>
+    <string name="expected_stage">अनुमानित  चरण</string>
+    <string name="purchage_from_out">"बाहर से ख़रीदे जाने वाले उत्पाद"</string>
     <string name="farm_crop">उपज</string>
 </resources>

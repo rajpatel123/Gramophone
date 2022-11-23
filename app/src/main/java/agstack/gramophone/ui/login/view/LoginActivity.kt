@@ -85,6 +85,11 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
         progress.visibility = VISIBLE
     }
 
+    override fun hideProgressBar() {
+        progress.visibility = GONE
+
+    }
+
     override fun onHelpClick(number: String) {
         loginViewModel.onHelpClick()
     }

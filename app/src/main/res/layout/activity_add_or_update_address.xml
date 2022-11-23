@@ -22,7 +22,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
                 tools:context=".ui.address.view.AddOrUpdateAddressActivity">
@@ -57,7 +57,7 @@
                         android:id="@+id/tvCompleteAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="60dp"
+                        android:layout_marginTop="10dp"
                         android:fontFamily="@font/manrope_bold"
                         android:gravity="center"
                         android:text="@string/complete_address"

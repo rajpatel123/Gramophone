@@ -10,10 +10,7 @@ import agstack.gramophone.ui.login.LoginNavigator
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.view.LoginActivity
-import agstack.gramophone.utils.ApiResponse
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.*
 import android.Manifest
 import android.app.AlertDialog
 import android.os.Bundle
@@ -64,7 +61,7 @@ class LoginViewModel @Inject constructor(
                 val response = onBoardingRepository.sendOTP(sendOtpRequestModel)
 
                 val sendOtpResponseModel = handleLoginResponse(response).data
-
+                getNavigator()?.hideProgressBar()
                 if (Constants.GP_API_STATUS.equals(sendOtpResponseModel?.gp_api_status)) {
 
                     var loginData = handleLoginResponse(response)
@@ -76,7 +73,7 @@ class LoginViewModel @Inject constructor(
                         )
                     })
                 } else {
-                    getNavigator()?.onError(sendOtpResponseModel?.gp_api_message)
+                    getNavigator()?.onError(Utility.getErrorMessage(response.errorBody()))
 
                 }
 
