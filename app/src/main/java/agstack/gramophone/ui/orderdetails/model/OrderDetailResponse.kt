@@ -20,6 +20,7 @@ data class GpApiResponseData(
     val order_date: String,
     val order_id: Int,
     val order_status: String,
+    val download_invoice: String,
     val order_type: String,
     val pricing_details: PricingDetails,
     val product_image: String,

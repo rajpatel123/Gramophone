@@ -33,6 +33,7 @@ class LanguageViewModel @Inject constructor(
 
     fun getLanguageList() = viewModelScope.launch {
         isLanguageSelected.set(false)
+        getNavigator()?.initiateApp()
         getLanguage()
     }
 
@@ -94,7 +95,6 @@ class LanguageViewModel @Inject constructor(
                         SharedPreferencesKeys.app_data,
                         initiateAppDataResponseModel!!
                     )
-                    getNavigator()?.moveToNext()
                 }else{
                     getNavigator()?.onError(initiateAppDataResponseModel?.gp_api_message)
 
@@ -131,13 +131,42 @@ class LanguageViewModel @Inject constructor(
         when (v.id) {
             R.id.btnContinue -> {
                 if (language != null) {
-                    val langIsoCode = language?.language_code
-                    if (langIsoCode != null && !langIsoCode.equals("", ignoreCase = true)) {
-                        LocaleManagerClass.updateLocale(langIsoCode, getNavigator()?.getResource())
-                        SharedPreferencesHelper.instance?.putString(SharedPreferencesKeys.languageCode,langIsoCode)
+                  viewModelScope.launch {
+                      try {
+                          if (getNavigator()?.isNetworkAvailable() == true) {
+                              val updateLanguageRequestModel = UpdateLanguageRequestModel(language!!.language_code)
 
-                    }
-                    getNavigator()?.initiateApp()
+                              val response = onBoardingRepository.updateLanguageWhileOnBoarding(updateLanguageRequestModel)
+
+                              val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
+
+                              if (GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
+                                  // getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
+                                  SharedPreferencesHelper.instance?.putParcelable(
+                                      SharedPreferencesKeys.BANNER_DATA,
+                                      BannerResponse("")
+                                  )
+
+                                  val langIsoCode = language?.language_code
+                                  SharedPreferencesHelper.instance?.putString(SharedPreferencesKeys.languageCode,langIsoCode)
+                                  if (langIsoCode != null && !langIsoCode.equals("", ignoreCase = true)) {
+                                      LocaleManagerClass.updateLocale(langIsoCode, getNavigator()?.getResource())
+                                  }
+
+                                  getNavigator()?.moveToNext()
+                              } else {
+                                  getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+                              }
+
+                          } else
+                              getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+                      } catch (ex: Exception) {
+                          when (ex) {
+                              is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                              else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                          }
+                      }
+                  }
                 } else {
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.select_language_msg_english))
                 }

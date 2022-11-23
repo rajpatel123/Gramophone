@@ -9,6 +9,7 @@ import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.content.res.Resources
 import android.text.TextUtils
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +24,9 @@ class SplashViewModel @Inject constructor(
     var splashViewModel: MutableLiveData<ApiResponse<SplashModel>> = MutableLiveData()
 
     fun initSplash(resources: Resources) {
+        Log.d("Lang",
+            SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.languageCode)!!
+        )
         if (TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.languageCode))){
             LocaleManagerClass.updateLocale("en", resources)
         }else{

@@ -2,7 +2,16 @@ package agstack.gramophone.ui.home.subcategory
 
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.ui.advisory.adapter.ActivityListAdapter
+import agstack.gramophone.ui.advisory.adapter.CropIssueListAdapter
+import agstack.gramophone.ui.advisory.adapter.RecommendedLinkedProductsListAdapter
+import agstack.gramophone.ui.advisory.models.advisory.AdvisoryRequestModel
+import agstack.gramophone.ui.advisory.models.cropproblems.CropProblemRequestModel
+import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProductRequestModel
+import agstack.gramophone.ui.advisory.view.AllCropProblemsActivity
+import agstack.gramophone.ui.advisory.view.CropProblemDetailActivity
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.dialog.filter.MainFilterData
 import agstack.gramophone.ui.dialog.sortby.SortByData
@@ -15,6 +24,7 @@ import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -32,8 +42,10 @@ import javax.inject.Inject
 @HiltViewModel
 class SubCategoryViewModel @Inject constructor(
     private val productRepository: ProductRepository,
+    private val onBoardingRepository: OnBoardingRepository
 ) : BaseViewModel<SubCategoryNavigator>() {
 
+    private var stageId: Int = 0
     var productData = ObservableField<GpApiResponseDataProduct?>()
     var mSKUList = ArrayList<ProductSkuListItem?>()
     var mSkuOfferList = ArrayList<PromotionListItem?>()
@@ -54,6 +66,21 @@ class SubCategoryViewModel @Inject constructor(
     var categoryId: String? = null
     var storeId: String? = null
     private var checkOfferApplicableJob: Job? = null
+
+    //advisory fields
+    val cropRefID = ObservableField<String>()
+    val cropId = ObservableField<Int>()
+    val address = ObservableField<String>()
+    val cropName = ObservableField<String>()
+    val cropImage = ObservableField<String>()
+
+
+    val issueName = ObservableField<String>()
+    val issueImage = ObservableField<String>()
+    val issueDescription = ObservableField<String>()
+    val issueType = ObservableField<String>()
+    val productCount = ObservableField<String>()
+
 
     init {
         progress.value = false
@@ -111,20 +138,19 @@ class SubCategoryViewModel @Inject constructor(
             } else if (bundle.containsKey(Constants.PAGE_URL) || bundle.containsKey(Constants.PAGE_SOURCE)) {
                 var webUrl = ""
                 if (bundle.containsKey(Constants.PAGE_URL) && bundle.getString(Constants.PAGE_URL) != null) {
-                    webUrl = bundle.get(Constants.PAGE_URL).toString()
-                    if (webUrl.isNotNullOrEmpty() && !webUrl.contains("single-article") && !webUrl.contains(
-                            "?")
+                    webUrl = bundle.getString(Constants.PAGE_URL).toString()
+                    webUrl += "?" + Constants.LANG + "=" + if (SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.languageCode)
+                            .isNullOrEmpty()
                     ) {
-                        webUrl += "?" + Constants.LANG + "=" + getNavigator()?.getLanguage() + "&" + Constants.GP_TOKEN + "=" + SharedPreferencesHelper.instance?.getString(
-                            SharedPreferencesKeys.session_token)!!
-                    }
+                        "en"
+                    } else {
+                        SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.languageCode)!!
+                    } + "&" + Constants.GP_TOKEN + "=" + SharedPreferencesHelper.instance?.getString(
+                        SharedPreferencesKeys.session_token)!!
                 }
-
-                Log.d("URL","".plus(webUrl.isNotNullOrEmpty() && !webUrl.contains("single-article") && !webUrl.contains(
-                    "?")).plus(webUrl))
-                if (webUrl.isNotNullOrEmpty())
+                if (webUrl.isNotNullOrEmpty()) {
                     getNavigator()?.loadUrl(webUrl)
-
+                }
 
                 if (webUrl.isNotNullOrEmpty() && bundle.containsKey(Constants.PAGE_SOURCE)) {
                     viewModelScope.launch {
@@ -512,4 +538,138 @@ class SubCategoryViewModel @Inject constructor(
             }
         }
     }
+
+
+    fun getCropAdvisoryDetails(){
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.value = true
+                    val response =
+                        onBoardingRepository.getCropAdvisoryDetails(AdvisoryRequestModel(
+                            getNavigator()?.getBundle()?.get(Constants.FARM_ID) as Int),
+                            getNavigator()?.getBundle()?.get(Constants.FARM_TYPE).toString()
+                        )
+                    progress.value = false
+                    if (response.isSuccessful && response.body()?.gp_api_status== Constants.GP_API_STATUS){
+                        if (response.body()?.gp_api_response_data?.size!! >0){
+                           val activityListAdapter =  ActivityListAdapter(response.body()?.gp_api_response_data!!)
+                            getNavigator()?.setAdvisoryActivity(activityListAdapter,{
+                                getNavigator()?.updateActivitiesList(it)
+                            },{
+                               getNavigator()?.openIssueImagesBottomSheet(it)
+                            })
+                        }
+                    }
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
+                progress.value = false
+            }
+        }
+
+
+    }
+
+    fun onBackPressed() {
+        getNavigator()?.finishActivity()
+    }
+
+    fun updateProfileDetail() {
+        val bundle = getNavigator()?.getBundle()
+        cropRefID.set(bundle?.get(Constants.CROP_REF_ID) as String?)
+        cropId.set(bundle?.get(Constants.CROP_ID) as Int?)
+        cropName.set(bundle?.get(Constants.CROP_NAME) as String?)
+        cropImage.set(bundle?.get(Constants.CROP_IMAGE) as String?)
+
+        address.set(SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ADDRESS))
+    }
+
+    fun getCropIssues(stageId: Int) {
+        this.stageId = stageId
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.value = true
+                    val response =
+                        onBoardingRepository.getCropProblems(
+                            CropProblemRequestModel(
+                            crop_id = cropId.get()!!,stageId))
+                    progress.value = false
+                    if (response.isSuccessful && response.body()?.gp_api_status== Constants.GP_API_STATUS){
+                        if (response.body()?.gp_api_response_data?.size!! >0){
+                            val activityListAdapter =  CropIssueListAdapter(response.body()?.gp_api_response_data!!)
+                            getNavigator()?.setAdvisoryProblemsActivity(activityListAdapter,{
+                                getNavigator()?.openActivity(CropProblemDetailActivity::class.java,
+                                    Bundle().apply {
+                                        putInt(Constants.DESEASE_ID,it.disease_id)
+                                        putString(Constants.DESEASE_NAME,it.category_name)
+                                        putString(Constants.DESEASE_DESC,it.category_description)
+                                        putString(Constants.DESEASE_IMAGE,it.category_image)
+                                        putString(Constants.DESEASE_TYPE,it.category_type)
+                                    }
+                                )
+                            })
+                        }
+                    }
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
+                progress.value = false
+            }
+        }
+
+    }
+
+    fun onViewAllIssuesClicked(){
+        getNavigator()?.openActivity(AllCropProblemsActivity::class.java,
+            Bundle().apply {
+                putInt(Constants.STAGE_ID,stageId)
+                putInt(Constants.CROP_ID, cropId.get()!!)
+            }
+        )
+
+    }
+
+    fun onInfoClicked(){
+      getNavigator()?.showInfoBottomSheet()
+    }
+
+
+    fun getRecommendedProduct() {
+        val bundle =  getNavigator()?.getBundle()
+
+        viewModelScope.launch {
+            val response = onBoardingRepository.getRecommendedProducts(
+                RecommendedProductRequestModel(bundle?.getInt(Constants.DESEASE_ID)!!)
+            )
+
+            if (response.isSuccessful && response.body().isNotNull()){
+                productCount.set(" ".plus("").plus(response.body()?.gp_api_response_data!!.size).plus(getNavigator()?.getMessage(
+                    R.string.recommended_product)))
+                val recommendedLinkedProductsListAdapter= RecommendedLinkedProductsListAdapter(
+                    response.body()?.gp_api_response_data!!
+                )
+
+                getNavigator()?.setProductList(RecommendedLinkedProductsListAdapter(response.body()?.gp_api_response_data!!),
+                    {
+                        fetchProductDetail(it)
+                    }, {
+                        getNavigator()?.openProductDetailsActivity(ProductData(it))
+                    })
+            }
+        }
+
+    }
+
+    fun setDiseaseDetails() {
+        val bundle = getNavigator()?.getBundle()
+        issueName.set(bundle?.getString(Constants.DESEASE_NAME))
+        issueImage.set(bundle?.getString(Constants.DESEASE_IMAGE))
+        issueDescription.set(bundle?.getString(Constants.DESEASE_DESC))
+        issueType.set(bundle?.getString(Constants.DESEASE_TYPE))
+    }
+
 }

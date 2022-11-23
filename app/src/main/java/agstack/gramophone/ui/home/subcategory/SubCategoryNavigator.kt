@@ -1,6 +1,10 @@
 package agstack.gramophone.ui.home.subcategory
 
 import agstack.gramophone.base.BaseNavigator
+import agstack.gramophone.ui.advisory.adapter.ActivityListAdapter
+import agstack.gramophone.ui.advisory.adapter.CropIssueListAdapter
+import agstack.gramophone.ui.advisory.adapter.RecommendedLinkedProductsListAdapter
+import agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
@@ -48,4 +52,18 @@ interface SubCategoryNavigator : BaseNavigator {
     fun loadUrl(url: String)
 
     fun reload()
+
+    fun setAdvisoryActivity(activityListAdapter: ActivityListAdapter, function: (GpApiResponseData) -> Unit,infoClicked: (GpApiResponseData) -> Unit)
+
+    fun updateActivitiesList(it: GpApiResponseData)
+
+    fun setAdvisoryProblemsActivity(activityListAdapter: CropIssueListAdapter, function: (agstack.gramophone.ui.advisory.models.cropproblems.GpApiResponseData) -> Unit)
+
+    fun showInfoBottomSheet()
+
+    fun openIssueImagesBottomSheet(it: GpApiResponseData)
+
+    fun setProductList(recommendedLinkedProductsListAdapter: RecommendedLinkedProductsListAdapter, onAddToCartClick: ((productId: Int) -> Unit),
+                       onProductDetailClick: ((productId: Int) -> Unit),)
+
 }

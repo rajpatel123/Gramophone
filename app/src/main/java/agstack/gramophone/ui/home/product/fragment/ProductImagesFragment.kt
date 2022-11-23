@@ -43,7 +43,7 @@ class ProductImagesFragment :Fragment(){
     }
 
     interface ProductImagesFragmentInterface {
-        fun onItemClick( position: Int)
+        fun onItemClick(position: Int)
     }
 
     companion object {

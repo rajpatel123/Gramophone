@@ -16,7 +16,6 @@ import kotlin.math.roundToInt
 class AvailableProductOffersAdapter(
     SKUOfferList: ArrayList<PromotionListItem?>,
     private var selectedSkuPrice: Float,
-    private var quantity: Int,
     private val selectedOfferProduct: ((PromotionListItem) -> Unit)?,
     private val onOfferDetailClicked: ((PromotionListItem) -> Unit)?,
 ) :
@@ -97,7 +96,6 @@ class AvailableProductOffersAdapter(
     fun updateOffer(offersList: ArrayList<PromotionListItem?>, selectedSkuPrice: Float, qty: Int) {
         mSKUOfferList = offersList
         this.selectedSkuPrice = selectedSkuPrice
-        quantity = qty
         notifyDataSetChanged()
     }
 

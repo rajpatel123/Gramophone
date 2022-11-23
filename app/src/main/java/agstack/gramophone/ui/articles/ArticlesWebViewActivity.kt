@@ -4,6 +4,10 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityArticlesBinding
+import agstack.gramophone.ui.advisory.adapter.ActivityListAdapter
+import agstack.gramophone.ui.advisory.adapter.CropIssueListAdapter
+import agstack.gramophone.ui.advisory.adapter.RecommendedLinkedProductsListAdapter
+import agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData
 import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.subcategory.ProductListAdapter
@@ -21,12 +25,10 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.view.KeyEvent
 import android.view.View
-import android.view.ViewTreeObserver
 import android.webkit.*
 import androidx.activity.viewModels
 import com.amnix.xtension.extensions.isNotNull
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_articles.*
 
 @AndroidEntryPoint
 class ArticlesWebViewActivity :
@@ -36,7 +38,6 @@ class ArticlesWebViewActivity :
     private val subCategoryViewModel: SubCategoryViewModel by viewModels()
     var bottomSheet: AddToCartBottomSheetDialog? = null
     private var lastTimeClicked: Long = 0
-    private var mOnScrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,21 +106,9 @@ class ArticlesWebViewActivity :
             }
 
         }, "Android")
-        viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
 
         viewDataBinding.viewBack.setOnClickListener {
             onKeyDown(KeyEvent.KEYCODE_BACK, KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK))
-        }
-
-        viewDataBinding.swipeRefresh.viewTreeObserver
-            .addOnScrollChangedListener(ViewTreeObserver.OnScrollChangedListener {
-                viewDataBinding.swipeRefresh.isEnabled = viewDataBinding.webView.scrollY == 0
-            }
-                .also { mOnScrollChangedListener = it })
-
-        viewDataBinding.swipeRefresh.setOnRefreshListener {
-            viewDataBinding.webView.reload()
-            viewDataBinding.swipeRefresh.isRefreshing = false
         }
     }
 
@@ -168,6 +157,48 @@ class ArticlesWebViewActivity :
 
     override fun reload() {
         viewDataBinding.webView.reload()
+    }
+
+    override fun setAdvisoryActivity(
+        activityListAdapter: ActivityListAdapter,
+        function: (GpApiResponseData) -> Unit,
+        infoClicked: (GpApiResponseData) -> Unit
+    ) {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+
+    }
+
+
+    override fun updateActivitiesList(it: GpApiResponseData) {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+
+    }
+
+    override fun setAdvisoryProblemsActivity(
+        activityListAdapter: CropIssueListAdapter,
+        function: (agstack.gramophone.ui.advisory.models.cropproblems.GpApiResponseData) -> Unit
+    ) {
+        TODO("Not yet implemented")
+    }
+
+
+
+    override fun showInfoBottomSheet() {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+
+    }
+
+    override fun openIssueImagesBottomSheet(it: GpApiResponseData) {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+
+    }
+
+    override fun setProductList(
+        recommendedLinkedProductsListAdapter: RecommendedLinkedProductsListAdapter,
+        onAddToCartClick: (productId: Int) -> Unit,
+        onProductDetailClick: (productId: Int) -> Unit,
+    ) {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
     }
 
     override fun setViewPagerAdapter(bannerList: List<Banner>?) {
@@ -255,12 +286,6 @@ class ArticlesWebViewActivity :
 
     override fun enableSortAndFilter() {
         // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
-    }
-
-    override fun onStop() {
-        viewDataBinding.swipeRefresh.viewTreeObserver.removeOnScrollChangedListener(
-            mOnScrollChangedListener)
-        super.onStop()
     }
 
     override fun getBundle(): Bundle? {

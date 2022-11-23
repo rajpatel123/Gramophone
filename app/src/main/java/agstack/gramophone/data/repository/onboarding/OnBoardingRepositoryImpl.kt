@@ -8,9 +8,14 @@ import agstack.gramophone.ui.address.model.AddressRequestModel
 import agstack.gramophone.ui.address.model.AddressResponseModel
 import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
-import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
+import agstack.gramophone.ui.advisory.models.advisory.AdvisoryRequestModel
+import agstack.gramophone.ui.advisory.models.advisory.AdvisoryResponseModel
+import agstack.gramophone.ui.advisory.models.cropproblems.CropProblemRequestModel
+import agstack.gramophone.ui.advisory.models.cropproblems.CropProblemResponseModel
+import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProductRequestModel
+import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProductResponseModel
 import agstack.gramophone.ui.createnewpost.model.MentionRequestModel
 import agstack.gramophone.ui.createnewpost.model.MentionTagResponsemodel
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
@@ -34,7 +39,6 @@ import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -206,5 +210,25 @@ class OnBoardingRepositoryImpl @Inject constructor(
         blockedUsers
     }
 
+    override suspend fun getCropAdvisoryDetails(
+        advisoryRequestModel: AdvisoryRequestModel,
+        type:String
+    ): Response<AdvisoryResponseModel>  = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = gramAppService.getCropAdvisoryDetails(advisoryRequestModel,type)
+        blockedUsers
+    }
+
+    override suspend fun getRecommendedProducts(recommendedProductRequestModel: RecommendedProductRequestModel): Response<RecommendedProductResponseModel>  = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = gramAppService.getRecommendedProducts(recommendedProductRequestModel)
+        blockedUsers
+    }
+
+    override suspend fun getCropProblems(cropProblemRequestModel: CropProblemRequestModel): Response<CropProblemResponseModel>  = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = gramAppService.getCropProblems(cropProblemRequestModel)
+        blockedUsers
+    }
 
 }
