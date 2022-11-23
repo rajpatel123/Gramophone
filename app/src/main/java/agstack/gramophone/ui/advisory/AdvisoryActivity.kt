@@ -60,7 +60,7 @@ class AdvisoryActivity :
     override fun getBindingVariable(): Int = BR.viewModel
 
     override fun getViewModel(): SubCategoryViewModel = subCategoryViewModel
-    override fun getBundle(): Bundle? = intent.getBundleExtra("bundle")
+    override fun getBundle(): Bundle? = intent.extras
 
     override fun setViewPagerAdapter(bannerList: List<Banner>?) {
     }
@@ -219,12 +219,15 @@ class AdvisoryActivity :
     }
 
     override fun openIssueImagesBottomSheet(it: GpApiResponseData) {
-        val bottomSheet = CropIssueBottomSheetDialog()
-        bottomSheet.setData(it)
-        bottomSheet.show(
-            supportFragmentManager,
-            Constants.BOTTOM_SHEET
-        )
+        if (it.stage_description!=null || it.crop_stage_images.size>0){
+            val bottomSheet = CropIssueBottomSheetDialog()
+            bottomSheet.setData(it)
+            bottomSheet.show(
+                supportFragmentManager,
+                Constants.BOTTOM_SHEET
+            )
+        }
+
     }
 
     override fun setProductList(

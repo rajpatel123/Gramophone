@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.search.adapter
 
 import agstack.gramophone.databinding.*
+import agstack.gramophone.ui.advisory.view.CropProblemDetailActivity
 import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
@@ -145,14 +146,17 @@ class SearchResultAdapter(
                 if(dataList.size > 3){
                     dataList = dataList.subList(0, 3)
                 }
-                holder.binding.rvCropProblems.adapter = CropProblemsAdapter(dataList){ id, name, image ->
-                    openActivity(holder.itemView.context,
-                        SubCategoryActivity::class.java,
+                holder.binding.rvCropProblems.adapter = CropProblemsAdapter(dataList){ id, name, image ,desc,type->
+                    openActivity(holder.binding.root.context,
+                        CropProblemDetailActivity::class.java,
                         Bundle().apply {
-                            putString(Constants.CATEGORY_ID, id)
-                            putString(Constants.CATEGORY_NAME, name)
-                            putString(Constants.CATEGORY_IMAGE, image)
-                        })
+                            putInt(Constants.DESEASE_ID,id.toInt())
+                            putString(Constants.DESEASE_NAME,name)
+                            putString(Constants.DESEASE_DESC,desc)
+                            putString(Constants.DESEASE_IMAGE,image)
+                            putString(Constants.DESEASE_TYPE,type)
+                        }
+                    )
                 }
                 holder.binding.viewAll.setOnClickListener {
                     openActivity(
