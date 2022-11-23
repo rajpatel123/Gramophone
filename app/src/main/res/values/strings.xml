@@ -491,6 +491,7 @@
     <string name="no_orders_yet">No Orders Yet!</string>
     <string name="download_invoice">Download Invoice</string>
 
+    <string name="crop_duration_advisory">"बुआई का समय:"</string>
     <string name="crop_duration">"बुआई का समय: %1$s"</string>
     <string name="crop_durations">"बुआई का समय: %1$s"</string>
     <string name="crop_sowing_date">"बुआई की तारीख: %1$s"</string>
@@ -639,5 +640,26 @@
     <string name="whatsapp_not_installed">Whatsapp have not been installed.</string>
     <string name="anonymous">Anonymous</string>
     <string name="admin">ADMIN</string>
+    <string name="spray">Spray</string>
+    <string name="all_problems_txt">यहां होने वाले सभी कीट और समस्याओं की जाँच करें इस चरण के साथ उनके विवरण, समाधान और अनुशंसित उत्पादों को लागू करने के लिए</string>
+    <string name="tvUpcomingStages">UPCOMING STAGES</string>
+    <string name="other_suggessions_instructions">अन्य निर्देश और सुझाव</string>
+    <string name="crop_all_problems">सभी कीट और समस्याएं</string>
+    <string name="view_all_issues">View All Issues of this Stage</string>
+    <string name="crop_related_txt">फसल से संबंधित\n समस्या के लिए कम्युनिटी\n पर प्रश्न पूछे</string>
+    <string name="crop_related_description">आप चित्रों के साथ अपने प्रश्न पोस्ट करें एवं हमारे विशेषज्ञ शीघ्र ही उसका उत्तर देंगे ।</string>
+    <string name="ask_expert">विशेषज्ञ सलाह के लिए पूछें</string>
+    <string name="disclaimer">Disclaimer: ** Actual dosage of the product may vary depending on various factors and should be adjusted accordingly. User should follow directions provided by manufacturer on the label claims.</string>
+    <string name="required_quantity">अनुशंसित मात्रा प्रति एकड़</string>
+    <string name="no_activities">No activities applicable!</string>
+    <string name="no_activity_desc">It seems there are no activity recommendation available or aplicable for this farm.</string>
+    <string name="advisory_details_not_found">Advisory not available!</string>
+    <string name="no_advisory_recommendations">It seems there are no recommendations available at this moment for this farm.</string>
+    <string name="back_to_my_farm">Back to My Farm</string>
+    <string name="recommended_product">Products Recommended</string>
+    <string name="crop_instruction_desc">This Information is Based on your Current location, for more accurate info please add your farm</string>
+    <string name="expected_stage">अनुमानित  चरण</string>
+    <string name="purchage_from_out">"बाहर से ख़रीदे जाने वाले उत्पाद"</string>
+
     <string name="farm_crop">उपज</string>
 </resources>

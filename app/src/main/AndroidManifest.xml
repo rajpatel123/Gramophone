@@ -39,6 +39,15 @@
         android:theme="@style/SplashTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.advisory.view.CropProblemDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.advisory.view.AllCropProblemsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.advisory.AdvisoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.favourite.view.FavouriteProductActivity"
             android:exported="false" />
         <activity
@@ -282,7 +291,6 @@
         <activity
             android:name=".ui.search.view.ViewAllSearchProductCategoriesActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.search.view.ViewAllSearchPostsActivity"
             android:screenOrientation="portrait" />

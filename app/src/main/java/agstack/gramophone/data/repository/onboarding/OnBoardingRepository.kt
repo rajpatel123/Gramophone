@@ -7,9 +7,14 @@ import agstack.gramophone.ui.address.model.AddressRequestModel
 import agstack.gramophone.ui.address.model.AddressResponseModel
 import agstack.gramophone.ui.address.model.StateResponseModel
 import agstack.gramophone.ui.address.model.UpdateAddressRequestModel
-import agstack.gramophone.ui.address.model.addressdetails.AddressDataByLatLongResponseModel
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
+import agstack.gramophone.ui.advisory.models.advisory.AdvisoryRequestModel
+import agstack.gramophone.ui.advisory.models.advisory.AdvisoryResponseModel
+import agstack.gramophone.ui.advisory.models.cropproblems.CropProblemRequestModel
+import agstack.gramophone.ui.advisory.models.cropproblems.CropProblemResponseModel
+import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProductRequestModel
+import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProductResponseModel
 import agstack.gramophone.ui.createnewpost.model.MentionRequestModel
 import agstack.gramophone.ui.createnewpost.model.MentionTagResponsemodel
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
@@ -33,6 +38,7 @@ import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import org.json.JSONObject
 import retrofit2.Response
+import retrofit2.http.Body
 import javax.inject.Singleton
 
 @Singleton
@@ -88,6 +94,12 @@ interface OnBoardingRepository {
     suspend fun getQuiz(): Response<QuizPollResponseModel>
 
     suspend fun answerQuiz(answeredQuizPollRequestModel: AnsweredQuizPollRequestModel): Response<AnsweredQuizPollRequestModel>
+
+    suspend fun getCropAdvisoryDetails(advisoryRequestModel: AdvisoryRequestModel, type: String): Response<AdvisoryResponseModel>
+
+    suspend fun getRecommendedProducts(body: RecommendedProductRequestModel): Response<RecommendedProductResponseModel>
+
+    suspend fun getCropProblems(cropProblemRequestModel: CropProblemRequestModel): Response<CropProblemResponseModel>
 
 
 }

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.home.subcategory.SubCategoryViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.advisory.view.AllCropProblemsActivity">
+
+        <include layout="@layout/layout_toolbar" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rlBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
+
+                    <FrameLayout
+                        android:id="@+id/frameLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/bannerPager"
+                            product_image="@{viewModel.issueImage}"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="@dimen/_140sdp"
+                            android:scaleType="fitXY" />
+
+
+                    </FrameLayout>
+                    <!--            <View-->
+                    <!--                android:layout_width="match_parent"-->
+                    <!--                android:layout_height="@dimen/_5sdp"-->
+                    <!--                android:layout_marginTop="@dimen/_5sdp"-->
+                    <!--                android:layout_below="@+id/frameLayout"-->
+                    <!--                android:background="@color/grey" />-->
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@{viewModel.issueName}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    tools:text="Late Blight" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:text="@{viewModel.issueType}"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_12ssp"
+
+                    tools:text="Nutritional Issue" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:text="@{viewModel.issueDescription}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/ivCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_recommended_product" />
+
+                    <TextView
+                        android:id="@+id/recommendedProductCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_toEndOf="@+id/ivCount"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="@{viewModel.productCount}"
+                        android:textColor="@color/black" />
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvRecommendedProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="1"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    tools:listitem="@layout/item_recommended_product" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+</layout>
