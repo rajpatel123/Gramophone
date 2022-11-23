@@ -6,6 +6,7 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.databinding.ActivityViewAllSearchCropCategoriesBinding
+import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.search.adapter.CropsCategoriesAdapter
 import agstack.gramophone.ui.search.model.Data
@@ -32,13 +33,14 @@ class ViewAllSearchCropCategoriesActivity :
         items?.let {
             val gridLayoutManager = GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
             viewDataBinding.rvCropCategory.layoutManager = gridLayoutManager
-            viewDataBinding.rvCropCategory.adapter = CropsCategoriesAdapter(items){id, name, image ->
+            viewDataBinding.rvCropCategory.adapter = CropsCategoriesAdapter(items){id, subId, name, image ->
                 openActivity(this@ViewAllSearchCropCategoriesActivity,
-                    SubCategoryActivity::class.java,
+                    FeaturedProductActivity::class.java,
                     Bundle().apply {
-                        putString(Constants.CATEGORY_ID, id)
-                        putString(Constants.CATEGORY_NAME, name)
-                        putString(Constants.CATEGORY_IMAGE, image)
+                        putString(Constants.SHOP_BY_SUB_CATEGORY, id)
+                        putString(Constants.SUB_CATEGORY_ID, subId)
+                        putString(Constants.SUB_CATEGORY_NAME, name)
+                        putString(Constants.SUB_CATEGORY_IMAGE, image)
                     })
             }
         }

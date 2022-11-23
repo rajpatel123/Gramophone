@@ -203,14 +203,15 @@ class SearchResultAdapter(
                 if(dataList.size > 3){
                     dataList = dataList.subList(0, 3)
                 }
-                holder.binding.rvProductCategory.adapter = ProductCategoryAdapter(dataList){ id, name, image ->
+                holder.binding.rvProductCategory.adapter = ProductCategoryAdapter(dataList){ id, subId, name, image ->
                     openActivity(holder.itemView.context,
-                        SubCategoryActivity::class.java,
+                        FeaturedProductActivity::class.java,
                         Bundle().apply {
-                            putString(Constants.CATEGORY_ID, id)
-                            putString(Constants.CATEGORY_NAME, name)
-                            putString(Constants.CATEGORY_IMAGE, image)
-                        })
+                        putString(Constants.SHOP_BY_SUB_CATEGORY, id)
+                        putString(Constants.SUB_CATEGORY_ID, subId)
+                        putString(Constants.SUB_CATEGORY_NAME, name)
+                        putString(Constants.SUB_CATEGORY_IMAGE, image)
+                    })
                 }
 
                 holder.binding.viewAll.setOnClickListener {
@@ -233,13 +234,14 @@ class SearchResultAdapter(
                 if(dataList.size > 3){
                     dataList = dataList.subList(0, 3)
                 }
-                holder.binding.rvCropCategory.adapter = CropsCategoriesAdapter(dataList){ id, name, image ->
+                holder.binding.rvCropCategory.adapter = CropsCategoriesAdapter(dataList){ id, subId, name, image ->
                     openActivity(holder.itemView.context,
-                        SubCategoryActivity::class.java,
+                        FeaturedProductActivity::class.java,
                         Bundle().apply {
-                            putString(Constants.CATEGORY_ID, id)
-                            putString(Constants.CATEGORY_NAME, name)
-                            putString(Constants.CATEGORY_IMAGE, image)
+                            putString(Constants.SHOP_BY_SUB_CATEGORY, id)
+                            putString(Constants.SUB_CATEGORY_ID, subId)
+                            putString(Constants.SUB_CATEGORY_NAME, name)
+                            putString(Constants.SUB_CATEGORY_IMAGE, image)
                         })
                 }
                 holder.binding.viewAll.setOnClickListener {
