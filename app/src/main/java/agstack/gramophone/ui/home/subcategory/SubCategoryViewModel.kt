@@ -654,9 +654,12 @@ class SubCategoryViewModel @Inject constructor(
                     response.body()?.gp_api_response_data!!
                 )
 
-                getNavigator()?.setProductList(recommendedLinkedProductsListAdapter){
-
-                }
+                getNavigator()?.setProductList(RecommendedLinkedProductsListAdapter(response.body()?.gp_api_response_data!!),
+                    {
+                        fetchProductDetail(it)
+                    }, {
+                        getNavigator()?.openProductDetailsActivity(ProductData(it))
+                    })
             }
         }
 

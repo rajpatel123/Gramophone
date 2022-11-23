@@ -9,6 +9,7 @@ import agstack.gramophone.ui.advisory.adapter.ActivityListAdapter
 import agstack.gramophone.ui.advisory.adapter.CropIssueListAdapter
 import agstack.gramophone.ui.advisory.adapter.RecommendedLinkedProductsListAdapter
 import agstack.gramophone.ui.advisory.models.recomondedproducts.GpApiResponseData
+import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.subcategory.ProductListAdapter
 import agstack.gramophone.ui.home.subcategory.SubCategoryNavigator
@@ -17,9 +18,13 @@ import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
+import agstack.gramophone.ui.offer.OfferDetailActivity
+import agstack.gramophone.ui.offerslist.model.DataItem
+import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.amnix.xtension.extensions.isNotNull
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,6 +33,7 @@ class CropProblemDetailActivity :
     SubCategoryNavigator {
 
     private val subCategoryViewModel: SubCategoryViewModel by viewModels()
+    var bottomSheet: AddToCartBottomSheetDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +84,35 @@ class CropProblemDetailActivity :
         mSkuOfferList: ArrayList<PromotionListItem?>,
         productData: ProductData
     ) {
-        // Don't write anything here. This method is only used in ArticleWebViewActivity
+        bottomSheet = AddToCartBottomSheetDialog({
+            //Offer detail activity from here
+            openActivity(
+                OfferDetailActivity::class.java,
+                Bundle().apply {
+
+                    val offersDataItem = DataItem()
+                    offersDataItem.endDate = it.valid_till
+                    offersDataItem.productName = it.title
+                    offersDataItem.productsku = it.applicable_on_sku
+                    offersDataItem.image = it.image
+                    offersDataItem.termsConditions = it.t_c
+                    putParcelable(Constants.OFFERSDATA, offersDataItem)
+
+                })
+        }, {
+            subCategoryViewModel.checkOfferApplicability(it)
+        }, {
+            subCategoryViewModel.onAddToCartClicked(it)
+        }, { productId, quantity ->
+            subCategoryViewModel.loadOffersData(productId, quantity, true)
+        })
+        bottomSheet?.mSKUList = mSKUList
+        bottomSheet?.productData = productData
+        bottomSheet?.mSkuOfferList = mSkuOfferList
+        bottomSheet?.show(
+            supportFragmentManager,
+            Constants.BOTTOM_SHEET
+        )
     }
 
     override fun openProductDetailsActivity(productData: ProductData) {
@@ -90,11 +124,13 @@ class CropProblemDetailActivity :
         promotionId: String?,
         message: String
     ) {
-        // Don't write anything here. This method is only used in ArticleWebViewActivity
+        if (bottomSheet.isNotNull())
+            bottomSheet?.updateDialog(isOfferApplicable, promotionId!!, message)
     }
 
     override fun updateOfferOnAddToCartDialog(mSkuOfferList: ArrayList<PromotionListItem?>) {
-        // Don't write anything here. This method is only used in ArticleWebViewActivity
+        if (bottomSheet.isNotNull())
+            bottomSheet?.updateOffer(mSkuOfferList)
     }
 
     override fun disableSortAndFilter() {
@@ -143,9 +179,11 @@ class CropProblemDetailActivity :
 
     override fun setProductList(
         recommendedLinkedProductsListAdapter: RecommendedLinkedProductsListAdapter,
-        onAddToCartClciked: (GpApiResponseData) -> Unit
+        onAddToCartClick: (productId: Int) -> Unit,
+        onProductDetailClick: (productId: Int) -> Unit
     ) {
-        recommendedLinkedProductsListAdapter.onAddToCartClicked = onAddToCartClciked
+        recommendedLinkedProductsListAdapter.onAddToCartClick = onAddToCartClick
+        recommendedLinkedProductsListAdapter.onProductDetailClick = onProductDetailClick
         viewDataBinding.rvRecommendedProduct.layoutManager = LinearLayoutManager(this)
         viewDataBinding.rvRecommendedProduct.setHasFixedSize(true)
         viewDataBinding.rvRecommendedProduct.adapter = recommendedLinkedProductsListAdapter

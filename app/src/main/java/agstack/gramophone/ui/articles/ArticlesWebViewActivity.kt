@@ -210,10 +210,10 @@ class ArticlesWebViewActivity :
 
     override fun setProductList(
         recommendedLinkedProductsListAdapter: RecommendedLinkedProductsListAdapter,
-        function: (agstack.gramophone.ui.advisory.models.recomondedproducts.GpApiResponseData) -> Unit
+        onAddToCartClick: (productId: Int) -> Unit,
+        onProductDetailClick: (productId: Int) -> Unit,
     ) {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
-
     }
 
     override fun setViewPagerAdapter(bannerList: List<Banner>?) {

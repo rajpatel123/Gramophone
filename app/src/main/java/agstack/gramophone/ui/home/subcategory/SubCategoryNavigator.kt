@@ -63,6 +63,7 @@ interface SubCategoryNavigator : BaseNavigator {
 
     fun openIssueImagesBottomSheet(it: GpApiResponseData)
 
-    fun setProductList(recommendedLinkedProductsListAdapter: RecommendedLinkedProductsListAdapter, function: (agstack.gramophone.ui.advisory.models.recomondedproducts.GpApiResponseData) -> Unit)
+    fun setProductList(recommendedLinkedProductsListAdapter: RecommendedLinkedProductsListAdapter, onAddToCartClick: ((productId: Int) -> Unit),
+                       onProductDetailClick: ((productId: Int) -> Unit),)
 
 }

@@ -9,6 +9,7 @@ import agstack.gramophone.ui.advisory.adapter.*
 import agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData
 import agstack.gramophone.ui.advisory.models.advisory.LinkedTechnical
 import agstack.gramophone.ui.advisory.view.CropIssueBottomSheetDialog
+import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.subcategory.ProductListAdapter
 import agstack.gramophone.ui.home.subcategory.SubCategoryNavigator
@@ -17,6 +18,8 @@ import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
+import agstack.gramophone.ui.offer.OfferDetailActivity
+import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
 import android.content.Intent
 import android.net.Uri
@@ -29,6 +32,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amnix.xtension.extensions.inflater
+import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_advisory.*
@@ -41,6 +45,7 @@ class AdvisoryActivity :
     SubCategoryNavigator {
 
     private val subCategoryViewModel: SubCategoryViewModel by viewModels()
+    var bottomSheet: AddToCartBottomSheetDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +88,35 @@ class AdvisoryActivity :
         mSkuOfferList: ArrayList<PromotionListItem?>,
         productData: ProductData
     ) {
+        bottomSheet = AddToCartBottomSheetDialog({
+            //Offer detail activity from here
+            openActivity(
+                OfferDetailActivity::class.java,
+                Bundle().apply {
+
+                    val offersDataItem = DataItem()
+                    offersDataItem.endDate = it.valid_till
+                    offersDataItem.productName = it.title
+                    offersDataItem.productsku = it.applicable_on_sku
+                    offersDataItem.image = it.image
+                    offersDataItem.termsConditions = it.t_c
+                    putParcelable(Constants.OFFERSDATA, offersDataItem)
+
+                })
+        }, {
+            subCategoryViewModel.checkOfferApplicability(it)
+        }, {
+            subCategoryViewModel.onAddToCartClicked(it)
+        }, { productId, quantity ->
+            subCategoryViewModel.loadOffersData(productId, quantity, true)
+        })
+        bottomSheet?.mSKUList = mSKUList
+        bottomSheet?.productData = productData
+        bottomSheet?.mSkuOfferList = mSkuOfferList
+        bottomSheet?.show(
+            supportFragmentManager,
+            Constants.BOTTOM_SHEET
+        )
     }
 
     override fun openProductDetailsActivity(productData: ProductData) {
@@ -93,9 +127,13 @@ class AdvisoryActivity :
         promotionId: String?,
         message: String
     ) {
+        if (bottomSheet.isNotNull())
+            bottomSheet?.updateDialog(isOfferApplicable, promotionId!!, message)
     }
 
     override fun updateOfferOnAddToCartDialog(mSkuOfferList: ArrayList<PromotionListItem?>) {
+        if (bottomSheet.isNotNull())
+            bottomSheet?.updateOffer(mSkuOfferList)
     }
 
     override fun disableSortAndFilter() {
@@ -144,7 +182,7 @@ class AdvisoryActivity :
                     advisoryLayout.rvLikedProduct.setHasFixedSize(true)
                     advisoryLayout.rvLikedProduct.adapter =
                         ActivityLinkedProductsListAdapter(activityToBeDone.linked_technicals) {
-                            showToast(it)
+                            subCategoryViewModel.fetchProductDetail(it)
                         }
                 }
                 viewDataBinding.llActivityDetails.addView(view)
@@ -191,9 +229,10 @@ class AdvisoryActivity :
 
     override fun setProductList(
         recommendedLinkedProductsListAdapter: RecommendedLinkedProductsListAdapter,
-        function: (agstack.gramophone.ui.advisory.models.recomondedproducts.GpApiResponseData) -> Unit
+        onAddToCartClick: (productId: Int) -> Unit,
+        onProductDetailClick: (productId: Int) -> Unit,
     ) {
-        TODO("Not yet implemented")
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
     }
 
     private fun openCommunity() {
