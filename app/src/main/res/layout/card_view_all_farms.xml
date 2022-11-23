@@ -17,7 +17,7 @@
             type="java.lang.Boolean"/>
 
         <variable
-            name="isCustomerFarm"
+            name="isCustomerFarms"
             type="java.lang.Boolean"/>
 
         <variable

@@ -123,7 +123,7 @@ class ViewAllFarmsActivity :
                             "cropList", it as ArrayList<Data>
                         )
                         putBoolean("isOldFarms", isOldFarms)
-                        putBoolean("isCustomerFarm", isCustomerFarms)
+                        putBoolean("isCustomerFarms", isCustomerFarms)
                         putParcelableArrayList("unitsList", units as ArrayList)
                         putString("farm_ref_id", it[0].farm_ref_id)
                     })
@@ -172,7 +172,7 @@ class ViewAllFarmsActivity :
                 }
             },
             isOldFarms = isOldFarms,
-            isCustomerFarm = isCustomerFarms,
+            isCustomerFarms = isCustomerFarms,
         )
     }
 

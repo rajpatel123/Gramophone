@@ -444,7 +444,7 @@ class HomeAdapter(
                                 holder.binding.itemView.context,
                                 CropGroupExplorerActivity::class.java,
                                 Bundle().apply {
-                                    putBoolean("isCustomerFarm", isCustomerFarms)
+                                    putBoolean("isCustomerFarms", isCustomerFarms)
                                     putParcelableArrayList(
                                         "cropList",
                                         it as ArrayList<agstack.gramophone.ui.farm.model.Data>
