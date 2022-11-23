@@ -20,4 +20,5 @@ interface PostDetailNavigator :BaseNavigator {
     fun setTags(tags: List<Tag>)
     fun showBottomSheet()
     fun populateCommentData(data: Data)
+    fun onLoadingTextMessage()
 }

@@ -14,7 +14,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class BottomSheetFarmInformation(
-    private val listener: (String, Int, String) -> Unit
+    private val listener: (String, Double, String) -> Unit
 ) :
     BottomSheetDialogFragment() {
     var binding: BottomSheetFarmInformationBinding? = null
@@ -40,11 +40,11 @@ class BottomSheetFarmInformation(
 
         binding?.submit?.setOnClickListener {
             val farmReferenceId = farmRefId
-            var outputQty = 0
+            var outputQty = 0.0
             val unitId = selectedUnit?.unit_id
 
             try {
-                outputQty = binding?.edtArea?.text.toString().toInt()
+                outputQty = binding?.edtArea?.text.toString().toDouble()
             } catch (nfe: NumberFormatException) {
                 showToast(getString(R.string.invalid_value))
             }

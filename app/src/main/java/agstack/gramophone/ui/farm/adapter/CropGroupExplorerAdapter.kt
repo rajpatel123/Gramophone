@@ -14,6 +14,7 @@ class CropGroupExplorerAdapter (
     private val contentListener: (Data) -> Unit,
     private val footerListener: (Data) -> Unit,
     private val isOldFarms : Boolean = false,
+    private val isCustomerFarms : Boolean = false,
 ) : RecyclerView.Adapter<CropGroupExplorerAdapter.CropGroupExplorerViewHolder>() {
     private var list = ArrayList<Data>()
 
@@ -47,7 +48,7 @@ class CropGroupExplorerAdapter (
         }
 
         holder.binding.txtAddFarm.setTextColor(holder.binding.root.context.resources.getColor(R.color.orange))
-        if(/*isOldFarms && */list[position].is_crop_cycle_completed!!){
+        if(/*isOldFarms && */ isCustomerFarms && list[position].is_crop_cycle_completed!!){
             if(list[position].harvested_quantity.isNullOrEmpty()){
                 holder.binding.txtAddFarm.text = holder.binding.root.context.getString(R.string.give_your_crop_details)
             }else{

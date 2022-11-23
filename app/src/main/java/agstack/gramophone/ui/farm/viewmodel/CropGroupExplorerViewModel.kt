@@ -48,4 +48,29 @@ class CropGroupExplorerViewModel @Inject constructor(private val productReposito
             }
         }
     }
+
+    fun getFarmUnits(type : String) {
+        progress.value = true
+        viewModelScope.launch {
+            try {
+                val response = productRepository.getFarmUnits(type = type)
+                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                    && response.body()?.gp_api_response_data != null
+                ) {
+                    val farmUnitsResponse = response.body()
+                    progress.value = false
+                    getNavigator()?.setFarmUnits(farmUnitsResponse?.gp_api_response_data!!)
+                }else{
+                    progress.value = false
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            } catch (ex: Exception) {
+                progress.value = false
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
 }

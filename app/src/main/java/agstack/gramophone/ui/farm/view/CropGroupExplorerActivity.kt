@@ -22,6 +22,7 @@ class CropGroupExplorerActivity :
     BaseActivityWrapper<ActivityCropGroupExplorerBinding, CropGroupExplorerNavigator, CropGroupExplorerViewModel>(),
     CropGroupExplorerNavigator {
     var isOldFarms = false
+    var isCustomerFarms = false
     var units: List<GpApiResponseData>? = null
     var farmRefId: String? = null
     var bottomSheet: BottomSheetFarmInformation? = null
@@ -38,6 +39,10 @@ class CropGroupExplorerActivity :
                 isOldFarms = it.getBoolean("isOldFarms")
             }
 
+            if (it.containsKey("isCustomerFarms")) {
+                isCustomerFarms = it.getBoolean("isCustomerFarms")
+            }
+
             if (it.containsKey("cropList")) {
                 it.getParcelableArrayList<Data>("cropList")?.let { list ->
                     setToolbarTitle(list[0]?.crop_name ?: "")
@@ -47,6 +52,8 @@ class CropGroupExplorerActivity :
 
             if (it.containsKey("unitsList")) {
                 units = it.getParcelableArrayList("unitsList")
+            }else{
+                getViewModel().getFarmUnits("harvest")
             }
 
             if (it.containsKey("farm_ref_id")) {
@@ -88,7 +95,7 @@ class CropGroupExplorerActivity :
                     cropImage = it.crop_image,
                 )
 
-                if (it.is_crop_cycle_completed!!) {
+                if (isCustomerFarms && it.is_crop_cycle_completed!!) {
                     if (it.harvested_quantity.isNullOrEmpty()) {
                         bottomSheet =
                             BottomSheetFarmInformation { farm_reference_id, output_qty, output_unit_id ->
@@ -123,7 +130,8 @@ class CropGroupExplorerActivity :
                     }
                 }
             },
-            isOldFarms = isOldFarms
+            isOldFarms = isOldFarms,
+            isCustomerFarms = isCustomerFarms
         )
     }
 
@@ -151,4 +159,7 @@ class CropGroupExplorerActivity :
         dialog.show(this@CropGroupExplorerActivity.supportFragmentManager, "custom_sheet")
     }
 
+    override fun setFarmUnits(units: List<GpApiResponseData>) {
+        this.units = units
+    }
 }

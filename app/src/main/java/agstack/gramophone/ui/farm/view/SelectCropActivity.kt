@@ -8,18 +8,26 @@ import agstack.gramophone.ui.farm.adapter.SelectCropAdapter
 import agstack.gramophone.ui.farm.model.FarmEvent
 import agstack.gramophone.ui.farm.navigator.SelectCropNavigator
 import agstack.gramophone.ui.farm.viewmodel.SelectCropViewModel
-import agstack.gramophone.ui.search.view.GlobalSearchActivity
+import agstack.gramophone.ui.home.view.fragments.market.model.CropData
 import agstack.gramophone.utils.EventBus
+import agstack.gramophone.utils.RxSearchObservable
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.Disposable
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class SelectCropActivity :
@@ -27,9 +35,13 @@ class SelectCropActivity :
     SelectCropNavigator {
 
     private var disposable: Disposable? = null
+    private val originalList = arrayListOf<CropData>()
+    private val filterList = arrayListOf<CropData>()
+    private val handler =  Handler(Looper.getMainLooper())
+    var lastCheckedPosition = -1
 
     companion object {
-        fun start(activity : AppCompatActivity){
+        fun start(activity: AppCompatActivity) {
             activity.startActivity(Intent(activity, SelectCropActivity::class.java))
         }
     }
@@ -39,6 +51,9 @@ class SelectCropActivity :
         setToolbarTitle(getMessage(R.string.add_tag_title))
         getViewModel().getCrops()
 
+        searchInit()
+        setSelectCropAdapter()
+
         viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
         viewDataBinding.swipeRefresh.setOnRefreshListener {
             getViewModel().clearSelection()
@@ -46,12 +61,12 @@ class SelectCropActivity :
             viewDataBinding.swipeRefresh.isRefreshing = false
         }
 
-        disposable =  EventBus.subscribe<FarmEvent>()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    if(it.text ==  "farm_added")
+        disposable = EventBus.subscribe<FarmEvent>()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                if (it.text == "farm_added")
                     finishActivity()
-                }
+            }
     }
 
     override fun setToolbarTitle(title: String) {
@@ -80,28 +95,55 @@ class SelectCropActivity :
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.item_search -> {
-                openActivity(GlobalSearchActivity::class.java, Bundle().apply {
-                    putBoolean("searchInCommunity", false)
-                })
+                getViewModel().onSearchMenuItemClick()
+                handler.postDelayed({
+                    viewDataBinding.edtSearch.requestFocus()
+                    showSoftKeyboard(viewDataBinding.edtSearch)
+                }, 200)
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    override fun setSelectCropAdapter(selectCropAdapter: SelectCropAdapter) {
+    private fun setSelectCropAdapter() {
+        val adapter = SelectCropAdapter(filterList) { cropData ->
+            filterList.forEach {
+                it.isSelected = false
+            }
+            getViewModel().selectedCrop = cropData;
+            getViewModel().selectedCrop?.isSelected = true
+
+            val copyOfLastCheckedPosition = lastCheckedPosition
+            lastCheckedPosition = filterList.indexOf(cropData)
+
+            notifyAdapter(copyOfLastCheckedPosition)
+            notifyAdapter(lastCheckedPosition)
+        }
+
         val layoutManager = GridLayoutManager(this, 3)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if (selectCropAdapter.getItemViewType(position) == selectCropAdapter.viewTypeHeader) 3 else 1
+                return if (adapter.getItemViewType(position) == adapter.viewTypeHeader) 3 else 1
             }
         }
         viewDataBinding.rvSelectCrop.layoutManager = layoutManager
         viewDataBinding.rvSelectCrop.setHasFixedSize(true)
-        viewDataBinding.rvSelectCrop.adapter = selectCropAdapter
+        viewDataBinding.rvSelectCrop.adapter = adapter
     }
 
-    override fun notifyAdapter(position : Int) {
+    @SuppressLint("NotifyDataSetChanged")
+    override fun updateCropAdapter(cropList: List<CropData>) {
+        originalList.clear()
+        originalList.addAll(cropList)
+
+        filterList.clear()
+        filterList.addAll(cropList)
+
+        viewDataBinding.rvSelectCrop.adapter?.notifyDataSetChanged()
+    }
+
+    override fun notifyAdapter(position: Int) {
         viewDataBinding.rvSelectCrop.adapter?.notifyItemChanged(position)
     }
 
@@ -124,7 +166,37 @@ class SelectCropActivity :
 
     override fun onDestroy() {
         super.onDestroy()
-        disposable?.let { if(!it.isDisposed) it.dispose() }
+        disposable?.let { if (!it.isDisposed) it.dispose() }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun searchInit() {
+        RxSearchObservable.fromView(viewDataBinding.edtSearch)
+            .debounce(500, TimeUnit.MILLISECONDS)
+            .filter { it.isNotNullOrEmpty() }
+            .map { s -> s.toString().lowercase(Locale.getDefault()).trim() }
+            .switchMap { Flowable.just(it) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { text ->
+                filterList.forEach {
+                    it.isSelected = false
+                }
+                filterList.clear()
+
+                originalList.filter { it.cropName == text }.forEach {
+                    filterList.add(it)
+                }
+                viewDataBinding.rvSelectCrop.adapter?.notifyDataSetChanged()
+            }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onSearchViewClearClick() {
+        viewDataBinding.edtSearch.text?.clear()
+        filterList.clear()
+        filterList.addAll(originalList)
+        viewDataBinding.rvSelectCrop.adapter?.notifyDataSetChanged()
+        hideSoftKeyboard(viewDataBinding.edtSearch)
     }
 
 }

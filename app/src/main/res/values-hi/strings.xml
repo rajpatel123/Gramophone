@@ -529,6 +529,7 @@
     <string name="expected_stage">अनुमानित  चरण</string>
     <string name="purchage_from_out">"बाहर से ख़रीदे जाने वाले उत्पाद"</string>
     <string name="farm_crop">crop</string>
+    <string name="loading_txt">Loading...</string>
 </resources>
 
 

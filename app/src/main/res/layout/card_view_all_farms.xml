@@ -17,6 +17,10 @@
             type="java.lang.Boolean"/>
 
         <variable
+            name="isCustomerFarms"
+            type="java.lang.Boolean"/>
+
+        <variable
             name="item"
             type="List&lt;agstack.gramophone.ui.farm.model.Data&gt;" />
     </data>

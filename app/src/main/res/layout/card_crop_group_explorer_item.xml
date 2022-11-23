@@ -210,7 +210,6 @@
                         android:visibility='@{isOldFarms ? View.VISIBLE : View.GONE}'
                         app:farmDate='@{@string/approx_end_date(item.crop_anticipated_completed_date)}'/>
 
-
                 </LinearLayout>
 
             </LinearLayout>
