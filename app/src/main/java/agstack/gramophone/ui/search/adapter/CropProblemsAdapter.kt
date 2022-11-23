@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class CropProblemsAdapter(
     val list: List<Item>,
-    private val listener: (String, String?, String?) -> Unit,
+    private val listener: (String, String?, String?,String?,String?) -> Unit,
 ) : RecyclerView.Adapter<CropProblemsAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -22,7 +22,7 @@ class CropProblemsAdapter(
         holder.binding.item = crop
 
         holder.binding.itemView.setOnClickListener {
-            listener.invoke(crop.id!!, crop.name, crop.image)
+            listener.invoke(crop.id!!, crop.name, crop.image,crop.description,crop.category_type)
         }
         if (position % 2 == 0) {
             holder.binding.bottomHalf.background = AppCompatResources.getDrawable(

@@ -4,6 +4,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityCropGroupExplorerBinding
+import agstack.gramophone.ui.advisory.AdvisoryActivity
 import agstack.gramophone.ui.farm.adapter.CropGroupExplorerAdapter
 import agstack.gramophone.ui.farm.model.AddHarvestRequest
 import agstack.gramophone.ui.farm.model.Data
@@ -12,6 +13,7 @@ import agstack.gramophone.ui.farm.model.unit.GpApiResponseData
 import agstack.gramophone.ui.farm.navigator.CropGroupExplorerNavigator
 import agstack.gramophone.ui.farm.viewmodel.CropGroupExplorerViewModel
 import agstack.gramophone.ui.home.view.fragments.market.model.CropData
+import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.EventBus
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -76,7 +78,20 @@ class CropGroupExplorerActivity :
         viewDataBinding.rvCrops.adapter = CropGroupExplorerAdapter(
             cropList,
             headerListener = {
-
+                openActivity(AdvisoryActivity::class.java,Bundle().apply {
+                    putInt(
+                        Constants.FARM_ID,
+                        it.farm_id?.toInt()!!
+                    )
+                    putString(Constants.FARM_TYPE,"customer_farm")
+                    putString(Constants.CROP_NAME,it.crop_name)
+                    putString(Constants.CROP_IMAGE,it.crop_image)
+                    putString(Constants.CROP_REF_ID,it.farm_ref_id)
+                    putInt(Constants.CROP_ID,it.crop_id)
+                    putString(Constants.CROP_DURATION,it.duration)
+                    putString(Constants.CROP_STAGE,it.stage_name)
+                    putString(Constants.CROP_DAYS,it.days)
+                })
             },
             contentListener = {
 

@@ -19,9 +19,7 @@
         android:layout_gravity="top"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_5sdp"
-        
-        android:background="@drawable/activity_bg"
-        android:padding="@dimen/_10sdp"
+        android:padding="@dimen/_15sdp"
        >
 
         <TextView
@@ -53,7 +51,7 @@
             android:id="@+id/ivInfoClicked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_2sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_toEndOf="@+id/tvActivityQty"
