@@ -26,33 +26,4 @@ class CropProblemDetailViewModel @Inject constructor(
 
 
 
-    fun getRecommendedProduct() {
-       val bundle =  getNavigator()?.getBundle()
-
-        viewModelScope.launch {
-            val response = onBoardingRepository.getRecommendedProducts(
-                RecommendedProductRequestModel(bundle?.getInt(Constants.DESEASE_ID)!!))
-
-            if (response.isSuccessful && response.body().isNotNull()){
-                productCount.set(" ".plus("").plus(response.body()?.gp_api_response_data!!.size).plus(getNavigator()?.getMessage(
-                    R.string.recommended_product)))
-              val recommendedLinkedProductsListAdapter= RecommendedLinkedProductsListAdapter(
-                  response.body()?.gp_api_response_data!!
-              )
-
-                getNavigator()?.setProductList(recommendedLinkedProductsListAdapter){
-
-                }
-            }
-        }
-
-    }
-
-    fun setDiseaseDetails() {
-        val bundle = getNavigator()?.getBundle()
-        issueName.set(bundle?.getString(Constants.DESEASE_NAME))
-        issueImage.set(bundle?.getString(Constants.DESEASE_IMAGE))
-        issueDescription.set(bundle?.getString(Constants.DESEASE_DESC))
-        issueType.set(bundle?.getString(Constants.DESEASE_TYPE))
-    }
 }

@@ -5,11 +5,9 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityAdvisoryBinding
 import agstack.gramophone.databinding.ItemAdvisoryBinding
-import agstack.gramophone.ui.advisory.adapter.ActivityLinkedIssuesListAdapter
-import agstack.gramophone.ui.advisory.adapter.ActivityLinkedProductsListAdapter
-import agstack.gramophone.ui.advisory.adapter.ActivityListAdapter
-import agstack.gramophone.ui.advisory.adapter.CropIssueListAdapter
+import agstack.gramophone.ui.advisory.adapter.*
 import agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData
+import agstack.gramophone.ui.advisory.models.advisory.LinkedTechnical
 import agstack.gramophone.ui.advisory.view.CropIssueBottomSheetDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.subcategory.ProductListAdapter
@@ -20,16 +18,22 @@ import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.utils.Constants
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amnix.xtension.extensions.inflater
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_advisory.*
+import java.util.stream.Collectors
+
 
 @AndroidEntryPoint
 class AdvisoryActivity :
@@ -42,6 +46,7 @@ class AdvisoryActivity :
         super.onCreate(savedInstanceState)
         subCategoryViewModel.updateProfileDetail()
         subCategoryViewModel.getCropAdvisoryDetails()
+        viewDataBinding.llCommunityLL.goToCommunity.setOnClickListener {openCommunity()  }
     }
 
 
@@ -50,7 +55,7 @@ class AdvisoryActivity :
     override fun getBindingVariable(): Int = BR.viewModel
 
     override fun getViewModel(): SubCategoryViewModel = subCategoryViewModel
-    override fun getBundle(): Bundle? = intent.extras
+    override fun getBundle(): Bundle? = intent.getBundleExtra("bundle")
 
     override fun setViewPagerAdapter(bannerList: List<Banner>?) {
     }
@@ -62,21 +67,21 @@ class AdvisoryActivity :
         categoryId: String,
         subCategoryId: String,
         subCategoryName: String,
-        subCategoryImage: String,
+        subCategoryImage: String
     ) {
     }
 
     override fun setProductListAdapter(
         productListAdapter: ProductListAdapter,
         onAddToCartClick: (productId: Int) -> Unit,
-        onProductDetailClick: (productId: Int) -> Unit,
+        onProductDetailClick: (productId: Int) -> Unit
     ) {
     }
 
     override fun openAddToCartDialog(
         mSKUList: ArrayList<ProductSkuListItem?>,
         mSkuOfferList: ArrayList<PromotionListItem?>,
-        productData: ProductData,
+        productData: ProductData
     ) {
     }
 
@@ -86,7 +91,7 @@ class AdvisoryActivity :
     override fun updateOfferApplicabilityOnDialog(
         isOfferApplicable: Boolean,
         promotionId: String?,
-        message: String,
+        message: String
     ) {
     }
 
@@ -105,6 +110,7 @@ class AdvisoryActivity :
     override fun reload() {
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun updateActivitiesList(gpApiResponseData: GpApiResponseData) {
 
         if (gpApiResponseData.activity.isEmpty()) {
@@ -181,6 +187,20 @@ class AdvisoryActivity :
             supportFragmentManager,
             Constants.BOTTOM_SHEET
         )
+    }
+
+    override fun setProductList(
+        recommendedLinkedProductsListAdapter: RecommendedLinkedProductsListAdapter,
+        function: (agstack.gramophone.ui.advisory.models.recomondedproducts.GpApiResponseData) -> Unit
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    private fun openCommunity() {
+        val data = Intent();
+        data.putExtra(Constants.GO_TO_COMMUNITY,"advisory")
+        setResult(RESULT_OK, data);
+        finish();
     }
 
     override fun setAdvisoryActivity(

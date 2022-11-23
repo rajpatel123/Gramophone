@@ -8,6 +8,7 @@ import android.content.Context
 object Constants {
 
 
+    val GO_TO_COMMUNITY: String="community_page"
     val CROP_DAYS: String="crop_days"
     val CROP_DURATION: String="crop_duration"
     val CROP_STAGE: String="crop_stage"

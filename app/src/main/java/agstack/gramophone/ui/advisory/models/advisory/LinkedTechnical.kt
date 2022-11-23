@@ -7,5 +7,6 @@ data class LinkedTechnical(
     val product_composition: String,
     val product_images: String,
     val product_mrp_price: Float,
-    val product_sale_price: Float
+    val product_sale_price: Float,
+    val product_id: Int
 )

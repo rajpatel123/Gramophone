@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="agstack.gramophone.ui.advisory.viewmodel.CropProblemDetailViewModel" />
+            type="agstack.gramophone.ui.home.subcategory.SubCategoryViewModel" />
     </data>
 
     <LinearLayout

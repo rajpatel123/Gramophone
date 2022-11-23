@@ -659,5 +659,6 @@
     <string name="recommended_product">Products Recommended</string>
     <string name="crop_instruction_desc">This Information is Based on your Current location, for more accurate info please add your farm</string>
     <string name="expected_stage">अनुमानित  चरण</string>
+    <string name="purchage_from_out">"बाहर से ख़रीदे जाने वाले उत्पाद"</string>
 
 </resources>

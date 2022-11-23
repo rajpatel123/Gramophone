@@ -7,5 +7,4 @@ import android.os.Bundle
 
 interface CropProblemDetailNavigator :BaseNavigator {
     fun getBundle(): Bundle?
-    fun setProductList(recommendedLinkedProductsListAdapter: RecommendedLinkedProductsListAdapter, function: (GpApiResponseData) -> Unit)
 }
