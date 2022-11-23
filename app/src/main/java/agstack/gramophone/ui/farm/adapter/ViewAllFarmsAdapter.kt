@@ -14,6 +14,7 @@ class ViewAllFarmsAdapter(
     private val contentListener: (List<Data>) -> Unit,
     private val footerListener: (List<Data>) -> Unit,
     private val isOldFarms : Boolean = false,
+    private val isCustomerFarm : Boolean = false,
 ) : RecyclerView.Adapter<ViewAllFarmsAdapter.ViewAllFarmViewHolder>() {
     private var farmList = ArrayList<List<Data>>()
 
@@ -33,6 +34,7 @@ class ViewAllFarmsAdapter(
     override fun onBindViewHolder(holder: ViewAllFarmViewHolder, position: Int) {
         holder.binding.item = farmList[position]
         holder.binding.isOldFarms = isOldFarms
+        holder.binding.isCustomerFarm = isCustomerFarm
 
         holder.binding.headerLayout.setOnClickListener {
             headerListener.invoke(farmList[position])
@@ -47,7 +49,7 @@ class ViewAllFarmsAdapter(
         }
 
         holder.binding.txtAddFarm.setTextColor(holder.binding.root.context.resources.getColor(R.color.orange))
-        if(/*isOldFarms &&*/ farmList[position].size == 1 && farmList[position][0].is_crop_cycle_completed!!){
+        if(/*isOldFarms &&*/ isCustomerFarm &&  farmList[position].size == 1 && farmList[position][0].is_crop_cycle_completed!!){
             if(farmList[position][0].harvested_quantity.isNullOrEmpty()){
                 holder.binding.txtAddFarm.text = holder.binding.root.context.getString(R.string.give_your_crop_details)
             }else{
