@@ -60,7 +60,7 @@
                 android:fontFamily="@font/manrope_bold"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="1sp"
-                app:reformatFloatPriceToInt="@{model.product_sku_list[0].cost_price}"
+                app:reformatFloatPriceToInt="@{model.product_sku_list[0].discount_price}"
                 android:textColor="@color/blakish"
                 android:textSize="16sp" />
 
