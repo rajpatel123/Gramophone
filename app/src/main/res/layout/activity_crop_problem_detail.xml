@@ -89,6 +89,10 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_8sdp"
+                    android:background="@color/mute_grey"/>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

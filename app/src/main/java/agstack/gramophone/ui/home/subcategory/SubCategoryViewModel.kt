@@ -647,7 +647,7 @@ class SubCategoryViewModel @Inject constructor(
             )
 
             if (response.isSuccessful && response.body().isNotNull()){
-                productCount.set(" ".plus("").plus(response.body()?.gp_api_response_data!!.size).plus(getNavigator()?.getMessage(
+                productCount.set(" ".plus(" ").plus(response.body()?.gp_api_response_data!!.size).plus(getNavigator()?.getMessage(
                     R.string.recommended_product)))
                 val recommendedLinkedProductsListAdapter= RecommendedLinkedProductsListAdapter(
                     response.body()?.gp_api_response_data!!
