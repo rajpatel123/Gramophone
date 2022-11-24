@@ -147,6 +147,8 @@ class GlobalSearchActivity :
 
         filterSearchResultList.clear()
         filterSearchResultList.addAll(result)
+        removeTabs()
+
         viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
 
         if (originalSearchResultList.size > 0) {
