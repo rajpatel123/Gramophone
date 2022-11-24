@@ -111,6 +111,14 @@ class ViewAllFarmsActivity :
         isCustomerFarms: Boolean,
         isOldFarms: Boolean
     ) {
+        if(farmsList.isEmpty()){
+            viewDataBinding.emptyView.visibility = View.VISIBLE
+            viewDataBinding.rvFarms.visibility = View.GONE
+        }else{
+            viewDataBinding.emptyView.visibility = View.GONE
+            viewDataBinding.rvFarms.visibility = View.VISIBLE
+        }
+
         viewDataBinding.rvFarms.adapter = ViewAllFarmsAdapter(
             farmsList,
             headerListener = {

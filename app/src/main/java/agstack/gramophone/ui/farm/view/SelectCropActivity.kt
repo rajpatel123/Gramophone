@@ -173,17 +173,17 @@ class SelectCropActivity :
     private fun searchInit() {
         RxSearchObservable.fromView(viewDataBinding.edtSearch)
             .debounce(500, TimeUnit.MILLISECONDS)
-            .filter { it.isNotNullOrEmpty() }
+            /*.filter { it.isNotNullOrEmpty() }*/
             .map { s -> s.toString().lowercase(Locale.getDefault()).trim() }
             .switchMap { Flowable.just(it) }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { text ->
-                filterList.forEach {
+                originalList.forEach {
                     it.isSelected = false
                 }
                 filterList.clear()
 
-                originalList.filter { it.cropName == text }.forEach {
+                originalList.filter { it.cropName.isNotNullOrEmpty() && it.cropName!!.contains(text, true) }.forEach {
                     filterList.add(it)
                 }
                 viewDataBinding.rvSelectCrop.adapter?.notifyDataSetChanged()
