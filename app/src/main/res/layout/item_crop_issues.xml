@@ -33,12 +33,12 @@
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.SelectedCornerRadius" />
 
             <LinearLayout
+                android:id="@+id/llDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/_12sdp"
                 android:layout_below="@+id/ivStage"
-                android:background="@drawable/rounded_corner_bottom_16_solid_white_stroke_gray"
                 >
                 <TextView
                     android:id="@+id/tvIssueTitle"
@@ -65,7 +65,7 @@
                     android:maxLines="1"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
-                    android:text="@{model.category_description}"
+                    android:text="@{model.category_type}"
                     android:textColor="@color/blakish"
                     android:textSize="@dimen/_12ssp" />
             </LinearLayout>

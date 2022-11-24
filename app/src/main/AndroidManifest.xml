@@ -40,19 +40,24 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.advisory.view.CropProblemDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.advisory.view.AllCropProblemsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.advisory.AdvisoryActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.favourite.view.FavouriteProductActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.followings.view.FollowerFollowedActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.othersporfile.view.OtherUserProfileActivity"
             android:exported="false"
@@ -244,7 +249,8 @@
         <activity android:name=".ui.unitconverter.UnitConverterActivity" />
         <activity
             android:name=".ui.feedback.FeedbackActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.offerslist.OffersListActivity"
             android:screenOrientation="portrait" />
