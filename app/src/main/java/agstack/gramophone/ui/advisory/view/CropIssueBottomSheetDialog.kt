@@ -55,7 +55,7 @@ class CropIssueBottomSheetDialog : BottomSheetDialogFragment() {
             binding?.llCropIssueImageBottom?.visibility=GONE
             binding?.llCropIssueDetails?.visibility= VISIBLE
             Glide.with(activity as AdvisoryActivity).load(bundle?.getString(CROP_IMAGE)).into(binding?.cropImage!!)
-            binding?.txtDuration?.text = bundle?.getString(Constants.CROP_DURATION)
+            binding?.txtDuration?.text = bundle?.getString(Constants.CROP_DURATION).plus(" - ".plus(bundle?.getString(Constants.CROP_END_DATE)))
             binding?.cropName?.text = bundle?.getString(Constants.CROP_NAME)
             binding?.txtStage?.text = "   ".plus(bundle?.getString(Constants.CROP_DAYS)).plus(" ".plus(getString(R.string.days)))
             binding?.txtAreaDesc?.text =" ".plus(getString(R.string.crop_duration_advisory)).plus(" ")
