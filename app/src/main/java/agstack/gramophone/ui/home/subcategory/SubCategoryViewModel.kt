@@ -16,6 +16,7 @@ import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.dialog.filter.MainFilterData
 import agstack.gramophone.ui.dialog.sortby.SortByData
 import agstack.gramophone.ui.farm.view.AddFarmActivity
+import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
 import agstack.gramophone.ui.farm.view.WhyAddFarmActivity
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.subcategory.model.Brands
@@ -692,6 +693,10 @@ class SubCategoryViewModel @Inject constructor(
 
     fun whyAddFarm(){
         getNavigator()?.openActivity(WhyAddFarmActivity::class.java, null)
+    }
+
+    fun goToMyFarm(){
+        getNavigator()?.openActivity(ViewAllFarmsActivity::class.java, null)
     }
 
 
