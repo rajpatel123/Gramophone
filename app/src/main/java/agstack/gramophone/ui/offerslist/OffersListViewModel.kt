@@ -76,7 +76,7 @@ class OffersListViewModel @Inject constructor(
                                 })
                         }
                     }
-                    if (allOfferslist?.size == 0) {
+                    if (allOfferslist.size == 0) {
                         getNavigator()?.ShowNoListView(true)
 
                     } else {

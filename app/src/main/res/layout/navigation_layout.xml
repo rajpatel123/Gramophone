@@ -670,7 +670,8 @@
                     android:paddingEnd="@dimen/_10sdp"
                     android:text="@string/watch_app_demo"
                     android:textColor="@color/blakish"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_12ssp"
+                    android:visibility="gone" />
 
                 <TextView
                     style="@style/regular"
