@@ -4,6 +4,7 @@ package agstack.gramophone.ui.home.adapter
 import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.databinding.*
+import agstack.gramophone.ui.advisory.AdvisoryActivity
 import agstack.gramophone.ui.articles.ArticlesWebViewActivity
 import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.cart.view.CartActivity
@@ -15,6 +16,7 @@ import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.shop.ShopByActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
+import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.weather.WeatherActivity
 import agstack.gramophone.ui.weather.model.WeatherResponse
@@ -22,6 +24,7 @@ import agstack.gramophone.utils.Constants
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -437,7 +440,22 @@ class HomeAdapter(
                     holder.binding.rvFarms.adapter = FarmAdapter(
                         farmList,
                         headerListener = {
+                            if (it.size<2){
+                                openActivity(context =holder.binding.root.context, AdvisoryActivity::class.java,Bundle().apply {
+                                    putInt(Constants.FARM_ID,
+                                        it[0].farm_id?.toInt()!!
+                                    )
+                                    putString(Constants.FARM_TYPE,"customer_farm")
+                                    putString(Constants.CROP_NAME,it[0].crop_name)
+                                    putString(Constants.CROP_IMAGE,it[0].crop_image)
+                                    putString(Constants.CROP_REF_ID,it[0].farm_ref_id)
+                                    putInt(Constants.CROP_ID,it[0].crop_id)
+                                    putString(Constants.CROP_DURATION,it[0].duration)
+                                    putString(Constants.CROP_STAGE,it[0].stage_name)
+                                    putString(Constants.CROP_DAYS,it[0].days)
+                                })
 
+                            }
                         },
                         contentListener = {
                             openActivity(

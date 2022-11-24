@@ -6,6 +6,7 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.databinding.ActivityViewAllSearchCropProblemsBinding
+import agstack.gramophone.ui.advisory.view.CropProblemDetailActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.search.adapter.CropProblemsAdapter
 import agstack.gramophone.ui.search.model.Data
@@ -32,14 +33,17 @@ class ViewAllSearchCropProblemsActivity :
         items?.let {
             val gridLayoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
             viewDataBinding.rvCropProblems.layoutManager = gridLayoutManager
-            viewDataBinding.rvCropProblems.adapter = CropProblemsAdapter(items){id, name, image ->
-                openActivity(this@ViewAllSearchCropProblemsActivity,
-                    SubCategoryActivity::class.java,
+            viewDataBinding.rvCropProblems.adapter = CropProblemsAdapter(items){id, name, image,desc,type ->
+                openActivity(
+                    CropProblemDetailActivity::class.java,
                     Bundle().apply {
-                        putString(Constants.CATEGORY_ID, id)
-                        putString(Constants.CATEGORY_NAME, name)
-                        putString(Constants.CATEGORY_IMAGE, image)
-                    })
+                        putInt(Constants.DESEASE_ID,id.toInt())
+                        putString(Constants.DESEASE_NAME,name)
+                        putString(Constants.DESEASE_DESC,desc)
+                        putString(Constants.DESEASE_IMAGE,image)
+                        putString(Constants.DESEASE_TYPE,type)
+                    }
+                )
             }
         }
     }
