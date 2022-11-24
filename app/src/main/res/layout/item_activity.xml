@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:fontFamily="@font/manrope_bold"
-                android:text="@{model.stage_start_day +` - ` +model.stage_end_day +`DAYS`}"
+                android:text="@{model.stage_start_day +` - ` +model.stage_end_day +` DAYS`}"
                 android:textColor="@color/blakish"
                 android:textSize="@dimen/_12ssp"
                 tools:text="100-200 DAYS" />

@@ -61,20 +61,20 @@
 
 
     <RelativeLayout
-        android:layout_below="@+id/headerLayout"
         android:id="@+id/buttonWrapperLayout"
         android:layout_width="match_parent"
+        android:layout_height="@dimen/_56sdp"
+        android:layout_below="@+id/headerLayout"
         android:layout_alignStart="@+id/headerLayout"
         android:layout_alignEnd="@+id/headerLayout"
-        android:layout_height="@dimen/_56sdp"
         android:background="@drawable/btn_rounded_corner_stroke_orange">
 
         <LinearLayout
             android:id="@+id/addFarmTitleLayout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="@dimen/_52sdp"
@@ -85,12 +85,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:fontFamily="@font/manrope_bold"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
-                android:lines="1"
+                android:fontFamily="@font/manrope_bold"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="center_vertical"
+                android:lines="1"
                 android:text="अपना खेत जोड़े"
                 android:textColor="@color/blakish"
                 android:textSize="@dimen/_13ssp"
@@ -104,9 +104,9 @@
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
             android:fontFamily="@font/manrope_bold"
             android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"

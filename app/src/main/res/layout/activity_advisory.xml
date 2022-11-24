@@ -5,6 +5,7 @@
     tools:context=".ui.advisory.AdvisoryActivity">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="viewModel"
             type="agstack.gramophone.ui.home.subcategory.SubCategoryViewModel"/>
@@ -55,75 +56,143 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
 
-                <RelativeLayout
-                    android:id="@+id/rlProfile"
+                <LinearLayout
+                    android:id="@+id/profileAddFarmLL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_strip_bg"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_10sdp">
+                    android:orientation="vertical">
 
-
-                    <TextView
-                        android:id="@+id/tvCropId"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:id="@+id/rlProfile"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/manrope_bold"
-                        android:text="@{viewModel.cropRefID}"
-                        android:textColor="@color/brand_color"
-                        android:textSize="@dimen/_16ssp"
-                        tools:text="FC46437" />
+                        android:background="@drawable/ic_strip_bg"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:visibility="@{viewModel.isCustomerFarm?View.VISIBLE:View.GONE}">
 
-                    <ImageView
-                        android:id="@+id/ivInfo"
-                        android:layout_width="@dimen/_40sdp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:onClick="@{()->viewModel.onInfoClicked()}"
-                        app:srcCompat="@drawable/ic_advisory_info" />
 
-                   <RelativeLayout
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_below="@+id/tvCropId"
-                       android:layout_marginTop="@dimen/_5sdp"
-                       >
-                       <TextView
-                           android:id="@+id/tvLocation"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
+                        <TextView
+                            android:id="@+id/tvCropId"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@{viewModel.cropRefID}"
+                            android:textColor="@color/brand_color"
+                            android:textSize="@dimen/_16ssp"
+                            tools:text="FC46437" />
 
-                           android:drawableStart="@drawable/ic_location"
-                           android:fontFamily="@font/manrope_regular"
-                           android:gravity="center_vertical"
-                           android:text="@{viewModel.address}"
-                           android:textColor="@color/gray"
-                           android:textSize="@dimen/_10ssp"
-                           tools:text=" Sawer, Madhya Pradesh" />
+                        <ImageView
+                            android:id="@+id/ivInfo"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:onClick="@{()->viewModel.onInfoClicked()}"
+                            app:srcCompat="@drawable/ic_advisory_info" />
 
-                       <ImageView
-                           android:id="@+id/editLocation"
-                           android:layout_width="@dimen/_40sdp"
-                           android:layout_height="wrap_content"
-                           android:layout_centerVertical="true"
-                           android:layout_toEndOf="@+id/tvLocation"
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvCropId"
+                            android:layout_marginTop="@dimen/_5sdp">
 
-                           app:srcCompat="@drawable/ic_edit" />
-                   </RelativeLayout>
-                </RelativeLayout>
+                            <TextView
+                                android:id="@+id/tvLocation"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
 
+                                android:drawableStart="@drawable/ic_location"
+                                android:fontFamily="@font/manrope_regular"
+                                android:gravity="center_vertical"
+                                android:text="@{viewModel.address}"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/_10ssp"
+                                tools:text=" Sawer, Madhya Pradesh" />
+
+                            <ImageView
+                                android:id="@+id/editLocation"
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toEndOf="@+id/tvLocation"
+
+                                app:srcCompat="@drawable/ic_edit" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/buttonWrapperLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_below="@+id/headerLayout"
+                        android:layout_alignStart="@+id/headerLayout"
+                        android:background="@color/mute_grey"
+                        android:visibility="@{viewModel.isCustomerFarm?View.GONE:View.VISIBLE}">
+
+                        <LinearLayout
+                            android:id="@+id/addFarmTitleLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:onClick="@{()->viewModel.addYourfarm()}"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="@dimen/_52sdp"
+                                android:layout_height="@dimen/_52sdp"
+                                android:contentDescription="@string/image"
+                                app:srcCompat="@drawable/ic_plus_red_circle" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                android:fontFamily="@font/manrope_bold"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:gravity="center_vertical"
+                                android:lines="1"
+                                android:text="अपना खेत जोड़े"
+                                android:textColor="@color/blakish"
+                                android:textSize="@dimen/_13ssp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/txtWhyAddFarm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                            android:fontFamily="@font/manrope_bold"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:gravity="center_vertical"
+                            android:lines="1"
+                            android:onClick="@{()->viewModel.whyAddFarm()}"
+                            android:text="जानिये क्यों ?"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/_13ssp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+                </LinearLayout>
                <LinearLayout
                    android:id="@+id/llActivityStage"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:layout_below="@+id/rlProfile"
+                   android:layout_below="@+id/profileAddFarmLL"
                    android:orientation="vertical">
 
                    <LinearLayout
@@ -327,93 +396,100 @@
                         android:text="दो  दिनों के बाद खेत को हलके से पानी से भिगा दें इस गतिविधि के दिन। लोरेम इप्सम डोलर सीट आमेट, कॉन्सेक्टेटूर एडिपिसिसिंग एलीट, सेड डो ईसमॉड टेम्पर इंसीडिंट यूट लेबर एट डोलोरे मैग्ना अलिका। यूट एनिम एड मिनिम वेनम" />
                 </RelativeLayout>
 
-                <View
-                    android:id="@+id/viewCropProblemSeparator"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_6sdp"
-                    android:layout_below="@+id/rlInstructions"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="@color/grey" />
-
-                <TextView
-                    android:id="@+id/tvCropIssues"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/viewCropProblemSeparator"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:fontFamily="@font/manrope_bold"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingEnd="@dimen/_10sdp"
-                    android:text="@string/crop_all_problems"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_14ssp" />
-
-                <TextView
-                    android:id="@+id/issuesTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvCropIssues"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:fontFamily="@font/manrope_regular"
-                    android:paddingBottom="@dimen/_15sdp"
-                    android:text="@string/all_problems_txt"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvCropProblems"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/issuesTitle"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="2"
-
-                    tools:listitem="@layout/item_crop_issues" />
-
                 <RelativeLayout
-                    android:id="@+id/tvViewAllRl"
+                    android:id="@+id/rlCropProblems"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()->viewModel.onViewAllIssuesClicked()}"
-                    android:layout_below="@+id/rvCropProblems"
+                    android:layout_below="@+id/rlInstructions"
+                    android:visibility="gone">
 
-                    >
+                    <View
+                        android:id="@+id/viewCropProblemSeparator"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_6sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@color/grey" />
 
                     <TextView
-                        android:id="@+id/tvViewAll"
+                        android:id="@+id/tvCropIssues"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:text="@string/crop_all_problems"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <TextView
+                        android:id="@+id/issuesTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_marginBottom="@dimen/_15sdp"
-                        android:fontFamily="@font/manrope_bold"
-                        android:gravity="center"
-                        android:text="@string/view_all_issues"
-                        android:textColor="@color/orange"
+                        android:layout_below="@+id/tvCropIssues"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:paddingBottom="@dimen/_15sdp"
+                        android:text="@string/all_problems_txt"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvCropProblems"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/tvViewAll"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        app:srcCompat="@drawable/ic_arrow_right" />
+                        android:layout_below="@+id/issuesTitle"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="2"
 
+                        tools:listitem="@layout/item_crop_issues" />
+
+                    <RelativeLayout
+                        android:id="@+id/tvViewAllRl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rvCropProblems"
+                        android:onClick="@{()->viewModel.onViewAllIssuesClicked()}"
+
+                        >
+
+                        <TextView
+                            android:id="@+id/tvViewAll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="@dimen/_15sdp"
+                            android:fontFamily="@font/manrope_bold"
+                            android:gravity="center"
+                            android:text="@string/view_all_issues"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/_12ssp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_toEndOf="@+id/tvViewAll"
+                            android:gravity="center"
+                            app:srcCompat="@drawable/ic_arrow_right" />
+
+                    </RelativeLayout>
                 </RelativeLayout>
 
                 <include
-                    layout="@layout/item_advisory_community"
                     android:id="@+id/llCommunityLL"
+                    layout="@layout/item_advisory_community"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvViewAllRl" />
+                    android:layout_below="@+id/rlCropProblems"
+                    />
             </RelativeLayout>
 
         </androidx.core.widget.NestedScrollView>

@@ -15,6 +15,8 @@ import agstack.gramophone.ui.advisory.view.CropProblemDetailActivity
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.dialog.filter.MainFilterData
 import agstack.gramophone.ui.dialog.sortby.SortByData
+import agstack.gramophone.ui.farm.view.AddFarmActivity
+import agstack.gramophone.ui.farm.view.WhyAddFarmActivity
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.subcategory.model.Brands
 import agstack.gramophone.ui.home.subcategory.model.Crops
@@ -73,7 +75,7 @@ class SubCategoryViewModel @Inject constructor(
     val address = ObservableField<String>()
     val cropName = ObservableField<String>()
     val cropImage = ObservableField<String>()
-
+    val isCustomerFarm= ObservableField<Boolean>()
 
     val issueName = ObservableField<String>()
     val issueImage = ObservableField<String>()
@@ -545,6 +547,11 @@ class SubCategoryViewModel @Inject constructor(
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
+                    if (getNavigator()?.getBundle()?.get(Constants.FARM_TYPE)?.equals("customer_farm") == true){
+                        isCustomerFarm.set(true)
+                    }else{
+                        isCustomerFarm.set(false)
+                    }
                     val response =
                         onBoardingRepository.getCropAdvisoryDetails(AdvisoryRequestModel(
                             getNavigator()?.getBundle()?.get(Constants.FARM_ID) as Int),
@@ -671,5 +678,21 @@ class SubCategoryViewModel @Inject constructor(
         issueDescription.set(bundle?.getString(Constants.DESEASE_DESC))
         issueType.set(bundle?.getString(Constants.DESEASE_TYPE))
     }
+
+    fun addYourfarm(){
+        val bundle = getNavigator()?.getBundle()
+        getNavigator()?.openAndFinishActivity(AddFarmActivity::class.java, Bundle().apply {
+            putParcelable("selectedCrop", CropData().apply {
+                cropImage = bundle?.get(Constants.CROP_IMAGE) as String?
+                cropId = bundle?.get(Constants.CROP_ID) as Int?
+                cropName = bundle?.get(Constants.CROP_NAME) as String?
+            })
+        })
+    }
+
+    fun whyAddFarm(){
+        getNavigator()?.openActivity(WhyAddFarmActivity::class.java, null)
+    }
+
 
 }

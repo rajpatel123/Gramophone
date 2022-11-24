@@ -4,6 +4,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityViewAllFarmsBinding
+import agstack.gramophone.ui.advisory.AdvisoryActivity
 import agstack.gramophone.ui.farm.adapter.ViewAllFarmsAdapter
 import agstack.gramophone.ui.farm.model.AddHarvestRequest
 import agstack.gramophone.ui.farm.model.Data
@@ -12,6 +13,7 @@ import agstack.gramophone.ui.farm.model.unit.GpApiResponseData
 import agstack.gramophone.ui.farm.navigator.ViewAllFarmsNavigator
 import agstack.gramophone.ui.farm.viewmodel.ViewAllFarmsViewModel
 import agstack.gramophone.ui.home.view.fragments.market.model.CropData
+import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.EventBus
 import android.os.Bundle
 import android.view.View
@@ -122,7 +124,28 @@ class ViewAllFarmsActivity :
         viewDataBinding.rvFarms.adapter = ViewAllFarmsAdapter(
             farmsList,
             headerListener = {
+                if (it.size<2){
+                    openActivity(AdvisoryActivity::class.java,Bundle().apply {
+                        putInt(
+                            Constants.FARM_ID,
+                            it[0].farm_id?.toInt()!!
+                        )
+                        if (isCustomerFarms){
+                            putString(Constants.FARM_TYPE,"customer_farm")
+                        }else{
+                            putString(Constants.FARM_TYPE,"model_farm")
+                        }
+                        putString(Constants.CROP_NAME,it[0].crop_name)
+                        putString(Constants.CROP_IMAGE,it[0].crop_image)
+                        putString(Constants.CROP_REF_ID,it[0].farm_ref_id)
+                        putInt(Constants.CROP_ID,it[0].crop_id)
+                        putString(Constants.CROP_DURATION,it[0].crop_sowing_date)
+                        putString(Constants.CROP_END_DATE,it[0].crop_anticipated_completed_date)
+                        putString(Constants.CROP_STAGE,it[0].stage_name)
+                        putString(Constants.CROP_DAYS,it[0].days)
+                    })
 
+                }
             },
             contentListener = {
                 if (isCustomerFarms) {

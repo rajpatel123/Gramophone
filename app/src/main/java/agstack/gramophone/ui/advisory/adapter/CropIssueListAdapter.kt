@@ -33,7 +33,7 @@ class CropIssueListAdapter(public val dataList: List<GpApiResponseData>) :
             onProblemSelected?.invoke(activityModel)
         }
 
-        if (position % 2 == 0) {
+        if (!activityModel.category_type.equals("Disease")) {
             holder.binding.llDetails.background = AppCompatResources.getDrawable(
                 holder.binding.llDetails.context,
                 R.drawable.rounded_corner_bottom_16_solid_yellow_stroke_gray
