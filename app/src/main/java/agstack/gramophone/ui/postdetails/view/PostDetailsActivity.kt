@@ -69,7 +69,7 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
 
         postDetailViewModel.getCrops()
 
-
+        viewDataBinding.loadingText.postDelayed({onLoadingTextMessage()}, 1000)
 
         cropImage = registerForActivityResult(CropImageContract()) { result ->
             if (result.isSuccessful) {
@@ -192,6 +192,11 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
         Glide.with(this).load(url).into(postImage)
         viewDataBinding.imageContainer.visibility = VISIBLE
     }
+
+    override fun onLoadingTextMessage() {
+        viewDataBinding.loadingText.text = getString(R.string.no_data_title)
+    }
+
 
     override fun setLikeImage(icLiked: Int) {
         ivLike.setImageResource(icLiked)

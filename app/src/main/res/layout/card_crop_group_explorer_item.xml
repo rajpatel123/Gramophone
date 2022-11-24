@@ -193,7 +193,7 @@
                         android:textColor="@color/oldmrpcolor"
                         android:textSize="@dimen/_12ssp"
                         app:farmDate='@{@string/stage_name(item.days, item.stage_name)}'
-                        android:visibility='@{(item.stage_name == null || isOldFarms) ? View.GONE : View.VISIBLE}' />
+                        android:visibility='@{(item.stage_name == null || isOldFarms || item.days == "-1") ? View.GONE : View.VISIBLE}' />
 
                     <TextView
                         android:id="@+id/txtApproxEnd"
@@ -209,7 +209,6 @@
                         android:textSize="@dimen/_12ssp"
                         android:visibility='@{isOldFarms ? View.VISIBLE : View.GONE}'
                         app:farmDate='@{@string/approx_end_date(item.crop_anticipated_completed_date)}'/>
-
 
                 </LinearLayout>
 

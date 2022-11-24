@@ -38,6 +38,15 @@
                     android:id="@+id/addFarmWrapper"
                     layout="@layout/view_all_add_farm_header" />
 
+                <TextView
+                    android:id="@+id/empty_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/_96sdp"
+                    android:text="@string/no_data_title" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_farms"
                     android:layout_width="match_parent"
@@ -50,6 +59,8 @@
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/card_farms" />
+
+
 
             </LinearLayout>
 

@@ -129,6 +129,7 @@ class PostDetailViewModel @Inject constructor(
       imageAvailable.set(true)
      } else {
       imageAvailable.set(false)
+      getNavigator()?.onLoadingTextMessage()
      }
     }else{
       isDataAvailable.set(false)

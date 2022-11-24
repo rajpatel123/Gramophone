@@ -108,21 +108,30 @@ class ViewAllFarmsActivity :
 
     override fun setViewAllFarmsAdapter(
         farmsList: List<List<Data>>,
-        isCustomerFarm: Boolean,
+        isCustomerFarms: Boolean,
         isOldFarms: Boolean
     ) {
+        if(farmsList.isEmpty()){
+            viewDataBinding.emptyView.visibility = View.VISIBLE
+            viewDataBinding.rvFarms.visibility = View.GONE
+        }else{
+            viewDataBinding.emptyView.visibility = View.GONE
+            viewDataBinding.rvFarms.visibility = View.VISIBLE
+        }
+
         viewDataBinding.rvFarms.adapter = ViewAllFarmsAdapter(
             farmsList,
             headerListener = {
 
             },
             contentListener = {
-                if (isCustomerFarm) {
+                if (isCustomerFarms) {
                     openActivity(CropGroupExplorerActivity::class.java, Bundle().apply {
                         putParcelableArrayList(
                             "cropList", it as ArrayList<Data>
                         )
                         putBoolean("isOldFarms", isOldFarms)
+                        putBoolean("isCustomerFarms", isCustomerFarms)
                         putParcelableArrayList("unitsList", units as ArrayList)
                         putString("farm_ref_id", it[0].farm_ref_id)
                     })
@@ -135,7 +144,7 @@ class ViewAllFarmsActivity :
                     cropImage = it[0].crop_image,
                 )
 
-                if (it.size == 1 /*&& isOldFarms*/ && it[0].is_crop_cycle_completed!!) {
+                if (it.size == 1 /*&& isOldFarms*/ && isCustomerFarms && it[0].is_crop_cycle_completed!!) {
                     if (it[0].harvested_quantity.isNullOrEmpty()) {
                         bottomSheet =
                             BottomSheetFarmInformation { farm_reference_id, output_qty, output_unit_id ->
@@ -170,7 +179,8 @@ class ViewAllFarmsActivity :
                     }
                 }
             },
-            isOldFarms = isOldFarms
+            isOldFarms = isOldFarms,
+            isCustomerFarms = isCustomerFarms,
         )
     }
 

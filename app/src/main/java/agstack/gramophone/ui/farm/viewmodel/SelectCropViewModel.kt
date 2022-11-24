@@ -22,13 +22,16 @@ class SelectCropViewModel @Inject constructor(
     private val productRepository: ProductRepository,
 ) : BaseViewModel<SelectCropNavigator>() {
 
-    private var lastCheckedPosition = -1
+
     var selectedCrop : CropData? = null
     var progress = MutableLiveData<Boolean>()
+    var showSearchView = MutableLiveData<Boolean>()
+
     var cropResponse: CropResponse? = null
 
     init {
         progress.value = false
+        showSearchView.value = false
     }
 
     fun getCrops() {
@@ -65,20 +68,8 @@ class SelectCropViewModel @Inject constructor(
                         )
                     )
                 }
+                getNavigator()?.updateCropAdapter(cropList)
 
-                getNavigator()?.setSelectCropAdapter(SelectCropAdapter(cropList){ cropData ->
-                    cropList.forEach {
-                        it.isSelected = false
-                    }
-                    selectedCrop = cropData;
-                    selectedCrop?.isSelected = true
-
-                    val copyOfLastCheckedPosition = lastCheckedPosition
-                    lastCheckedPosition = cropList.indexOf(cropData)
-
-                    getNavigator()?.notifyAdapter(copyOfLastCheckedPosition)
-                    getNavigator()?.notifyAdapter(lastCheckedPosition)
-                })
             } catch (ex: Exception) {
                 progress.value = false
                 when (ex) {
@@ -103,5 +94,18 @@ class SelectCropViewModel @Inject constructor(
 
     fun clearSelection(){
         selectedCrop = null
+    }
+
+    fun onSearchViewBackPress(){
+        showSearchView.value = false
+        onSearchViewClearClick()
+    }
+
+    fun onSearchViewClearClick(){
+        getNavigator()?.onSearchViewClearClick()
+    }
+
+    fun onSearchMenuItemClick (){
+        showSearchView.value = true
     }
 }

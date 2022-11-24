@@ -17,6 +17,10 @@
             type="java.lang.Boolean"/>
 
         <variable
+            name="isCustomerFarms"
+            type="java.lang.Boolean"/>
+
+        <variable
             name="item"
             type="List&lt;agstack.gramophone.ui.farm.model.Data&gt;" />
     </data>
@@ -193,7 +197,7 @@
                         tools:text='वर्तमान चरण: 22 Days'
                         android:textColor="@color/oldmrpcolor"
                         android:textSize="@dimen/_10ssp"
-                        android:visibility='@{(item[0].stage_name == null || isOldFarms) ? View.GONE : View.VISIBLE}'
+                        android:visibility='@{(item[0].stage_name == null || isOldFarms || item[0].days == "-1") ? View.GONE : View.VISIBLE}'
                         app:farmDate='@{(item[0].farm_ref_id != null) ? @string/stage_name(item[0].days, item[0].stage_name) : @string/stage_name_modal_farm(item[0].days, item[0].stage_name) }' />
 
                     <TextView

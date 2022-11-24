@@ -421,15 +421,17 @@ class HomeAdapter(
                 holder.binding.itemView.visibility = View.VISIBLE
 
                 var farmList: List<List<agstack.gramophone.ui.farm.model.Data>>? = null
-
+                var isCustomerFarms = false
                 if (farmResponse?.gp_api_response_data?.customer_farm != null &&
                     farmResponse?.gp_api_response_data?.customer_farm?.data?.isNotNullOrEmpty() == true
                 ){
                     farmList = farmResponse?.gp_api_response_data?.customer_farm?.data
+                    isCustomerFarms = true
                 }else if (farmResponse?.gp_api_response_data?.model_farm != null &&
                     farmResponse?.gp_api_response_data?.model_farm?.data?.isNotNullOrEmpty() == true
                 ) {
                     farmList = farmResponse?.gp_api_response_data?.model_farm?.data
+                    isCustomerFarms = false
                 }else{
                     holder.binding.itemView.visibility = View.VISIBLE
                 }
@@ -460,6 +462,7 @@ class HomeAdapter(
                                 holder.binding.itemView.context,
                                 CropGroupExplorerActivity::class.java,
                                 Bundle().apply {
+                                    putBoolean("isCustomerFarms", isCustomerFarms)
                                     putParcelableArrayList(
                                         "cropList",
                                         it as ArrayList<agstack.gramophone.ui.farm.model.Data>

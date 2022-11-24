@@ -49,7 +49,7 @@
                 android:paddingTop="@dimen/_4sdp"
                 android:textColor="@color/order_approved_text"
                 android:textSize="@dimen/_11ssp"
-                app:mrp_price="@{item.selling_price}"
+                app:mrp_price="@{item.cost_price}"
                 app:sales_price="@{item.discount_price}"
                 tools:text="20% Off" />
 
@@ -122,7 +122,7 @@
                         tools:text="₹ 1800"
                         android:textColor="@color/gray_strike_through"
                         android:textSize="14sp"
-                        app:mrp_price_equal="@{item.selling_price}"
+                        app:mrp_price_equal="@{item.cost_price}"
                         app:to_sales_price="@{item.discount_price}"/>
 
                 </LinearLayout>

@@ -87,7 +87,7 @@
                         android:foreground="?android:attr/selectableItemBackground"
                         android:hint="@string/quantity"
                         android:imeOptions="actionDone"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:letterSpacing=".05"
                         android:maxLength="5"
                         android:paddingBottom="@dimen/_10sdp"
