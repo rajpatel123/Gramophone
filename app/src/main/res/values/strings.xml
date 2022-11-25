@@ -664,4 +664,5 @@
     <string name="farm_crop">उपज</string>
     <string name="loading_txt">Loading...</string>
     <string name="already_added_in_cart">Product is already added in cart</string>
+    <string name="not_able_to_add">Not able to add in cart</string>
 </resources>

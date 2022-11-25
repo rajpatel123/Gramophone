@@ -17,6 +17,7 @@ import androidx.activity.viewModels
 import androidx.core.view.drawToBitmap
 import com.google.zxing.qrcode.encoder.QRCode
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
 
 @AndroidEntryPoint
 class ReferAndEarnActivity :
@@ -73,51 +74,59 @@ class ReferAndEarnActivity :
     }
 
     override fun share(currentShareOption: String, shareText: String?) {
-        var shareMessage = resources.getString(R.string.welcome_msg)
-        shareText?.let {
-            shareMessage = shareText
+        try {
+            var shareMessage = resources.getString(R.string.welcome_msg)
+            shareText?.let {
+                shareMessage = shareText
+            }
+
+
+            var QRCodeURI: Uri? = Utility.bitmapToUri(this, qrBitmap)
+            shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(
+                shareMessage,
+                getString(R.string.home_share_subject),
+                QRCodeURI,
+                currentShareOption
+            )
+
+            // var datainBundle
+
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
-
-        var QRCodeURI: Uri? = Utility.bitmapToUri(this, qrBitmap)
-        shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(
-            shareMessage,
-            getString(R.string.home_share_subject),
-            QRCodeURI,
-            currentShareOption
-        )
-
-        // var datainBundle
-
-
     }
 
 
     override fun shareReferalCode(
         currentShareOption: String,
         shareText: String?,
-        referralCode: String?
+        referralCode: String?,
     ) {
-        var shareMessage = resources.getString(R.string.welcome_msg)
+        try {
 
 
-        referralCode?.let {
-            shareMessage = "Your referal code is:"+ referralCode
+            var shareMessage = resources.getString(R.string.welcome_msg)
+
+
+            referralCode?.let {
+                shareMessage = "Your referal code is:" + referralCode
+            }
+
+            shareText?.let {
+                shareMessage = shareMessage + shareText
+            }
+
+
+            var QRCodeURI: Uri? = Utility.bitmapToUri(this, qrBitmap)
+            shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(
+                shareMessage,
+                getString(R.string.home_share_subject),
+                QRCodeURI,
+                currentShareOption
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
-        shareText?.let {
-            shareMessage = shareMessage +  shareText
-        }
-
-
-        var QRCodeURI: Uri? = Utility.bitmapToUri(this, qrBitmap)
-        shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(
-            shareMessage,
-            getString(R.string.home_share_subject),
-            QRCodeURI,
-            currentShareOption
-        )
-
     }
 
 
@@ -128,8 +137,8 @@ class ReferAndEarnActivity :
     }
 
 
-    override fun onReferralCodeClick(referalCode:String) {
-        val clipboard =this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+    override fun onReferralCodeClick(referalCode: String) {
+        val clipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
         val clip = ClipData.newPlainText("referral_code", referalCode)
         clipboard!!.setPrimaryClip(clip)
         Toast.makeText(this, getString(R.string.copied), Toast.LENGTH_SHORT).show();

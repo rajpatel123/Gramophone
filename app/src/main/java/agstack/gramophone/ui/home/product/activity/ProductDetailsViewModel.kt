@@ -3,7 +3,7 @@ package agstack.gramophone.ui.home.product.activity
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
-import agstack.gramophone.ui.cart.adapter.CartAdapter
+import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
@@ -20,6 +20,7 @@ import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.NonNullObservableField
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import android.R.attr.order
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
@@ -27,12 +28,14 @@ import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.amnix.xtension.extensions.isNull
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import java.io.IOException
 import javax.inject.Inject
-import kotlin.math.roundToInt
+
 
 @HiltViewModel
 class ProductDetailsViewModel @Inject constructor(
@@ -576,7 +579,11 @@ class ProductDetailsViewModel @Inject constructor(
                                         putParcelable(Constants.OFFERSDATA, offersDataItem)
 
                                     })
-                            }), if (mSkuOfferList.isNotNullOrEmpty()) { mSkuOfferList.size } else { 0 })
+                            }), if (mSkuOfferList.isNotNullOrEmpty()) {
+                            mSkuOfferList.size
+                        } else {
+                            0
+                        })
                     }
                 }
             }
@@ -758,10 +765,16 @@ class ProductDetailsViewModel @Inject constructor(
                         Constants.GP_API_STATUS)
                 ) {
                     getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+                    getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(R.string.gotocart)!!)
                 } else {
-                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.already_added_in_cart))
+                    if (addTocartResponse.errorBody().isNotNull() && addTocartResponse.errorBody()?.source().toString().contains("alr")) {
+                        getNavigator()?.showToast(R.string.already_added_in_cart)
+                        getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(
+                            R.string.gotocart)!!)
+                    } else {
+                        getNavigator()?.showToast((getNavigator()?.getMessage(R.string.not_able_to_add)))
+                    }
                 }
-                getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(R.string.gotocart)!!)
             }
         } else {
             getNavigator()?.openActivity(CartActivity::class.java)

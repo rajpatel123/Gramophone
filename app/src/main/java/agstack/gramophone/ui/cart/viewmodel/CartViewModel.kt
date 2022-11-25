@@ -129,6 +129,24 @@ class CartViewModel @Inject constructor(
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
                     val response = productRepository.getCartData()
+
+                    try {
+                        if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                            && response.body()?.gp_api_response_data?.cart_items != null
+                        ) {
+                            SharedPreferencesHelper.instance?.putInteger(
+                                SharedPreferencesKeys.CART_ITEM_COUNT,
+                                response.body()?.gp_api_response_data?.cart_items!!.size)
+                        } else {
+                            SharedPreferencesHelper.instance?.putInteger(
+                                SharedPreferencesKeys.CART_ITEM_COUNT,
+                                0)
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
                         && response.body()?.gp_api_response_data?.cart_items != null && response.body()?.gp_api_response_data?.cart_items?.size!! > 0
                     ) {
@@ -139,9 +157,6 @@ class CartViewModel @Inject constructor(
                         subTotal.value = response.body()?.gp_api_response_data?.sub_total
                         totalAmount.value = response.body()?.gp_api_response_data?.total
                         gramCash.value = response.body()?.gp_api_response_data?.gramcash_coins
-
-                        SharedPreferencesHelper.instance?.putInteger(
-                            SharedPreferencesKeys.CART_ITEM_COUNT, response.body()?.gp_api_response_data?.cart_items!!.size)
 
                         val applicableGramCashCoins: Int =
                             response.body()?.gp_api_response_data?.applicable_gramcash!!
