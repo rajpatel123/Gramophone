@@ -320,8 +320,16 @@ class ProductDetailsActivity :
 
     override fun setProductSKUOfferAdapter(
         productSKUOfferAdapter: AvailableProductOffersAdapter,
+        offerListSize: Int,
     ) {
         viewDataBinding.rvAvailableoffers.adapter = productSKUOfferAdapter
+        if (offerListSize > 0) {
+            viewDataBinding.v2Separator.visibility = View.VISIBLE
+            viewDataBinding.rlAvailableOffers.visibility = View.VISIBLE
+        } else {
+            viewDataBinding.v2Separator.visibility = View.GONE
+            viewDataBinding.rlAvailableOffers.visibility = View.GONE
+        }
     }
 
     override fun setRelatedProductsAdapter(

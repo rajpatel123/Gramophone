@@ -7,7 +7,6 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityShopByDetailBinding
 import agstack.gramophone.ui.home.adapter.ProductListAdapter
 import android.os.Bundle
-import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -44,11 +43,6 @@ class ShopByDetailActivity :
         shopByDetailViewModel.setAdapter()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_home, menu);
-        return super.onCreateOptionsMenu(menu)
-    }
 
     override fun onClick(view: View?) {
     }

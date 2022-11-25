@@ -36,18 +36,6 @@
                         layout="@layout/layout_toolbar"
                         app:layout_constraintTop_toBottomOf="parent" />
 
-                    <!--<fragment
-                        android:id="@+id/nav_host"
-                        android:name="androidx.navigation.fragment.NavHostFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:defaultNavHost="true"
-                        app:layout_constraintBottom_toTopOf="@+id/nav_view"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-                        app:navGraph='@navigation/mobile_navigation' />-->
-
                     <FrameLayout
                         android:id="@+id/fragment_container"
                         android:layout_width="match_parent"
@@ -63,38 +51,37 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="20dp"
-                        android:paddingEnd="@dimen/_15sdp"
-                        android:paddingStart="@dimen/_15sdp"
-                        android:paddingTop="@dimen/_8sdp"
-                        android:paddingBottom="@dimen/_8sdp"
-                        android:visibility="gone"
-                        android:onClick="@{()->viewModel.onCreatePostClicked()}"
                         android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="20dp"
                         android:background="@drawable/create_a_post_bg"
                         android:gravity="center_horizontal|center_vertical"
+                        android:onClick="@{()->viewModel.onCreatePostClicked()}"
                         android:orientation="horizontal"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_15sdp"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toTopOf="@+id/nav_view"
                         app:layout_constraintEnd_toEndOf="parent">
-
 
                         <ImageView
                             android:id="@+id/callButton"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            app:tint="@color/white"
                             android:layout_marginEnd="4dp"
+                            android:contentDescription="@string/image"
                             android:src="@drawable/ic_post_edit"
-                            android:visibility="visible" />
+                            android:visibility="visible"
+                            app:tint="@color/white" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/create_post"
-                            android:textSize="@dimen/_14ssp"
                             android:fontFamily="@font/manrope_semibold"
-                            android:textColor="@color/white"/>
-
+                            android:text="@string/create_post"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_14ssp" />
 
                     </LinearLayout>
 

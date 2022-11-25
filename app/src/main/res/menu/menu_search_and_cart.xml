@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/item_cart"
-        android:icon="@drawable/ic_cart_black"
+        app:actionLayout="@layout/item_menu_cart_with_counter"
         android:title=""
         android:orderInCategory="1"
         android:visible="true"

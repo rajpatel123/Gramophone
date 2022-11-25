@@ -19,7 +19,7 @@ interface ProductDetailsNavigator : BaseNavigator {
         onSKUItemClicked: (ProductSkuListItem) -> Unit,
     )
 
-    fun setProductSKUOfferAdapter(productSKUOfferAdapter: AvailableProductOffersAdapter)
+    fun setProductSKUOfferAdapter(productSKUOfferAdapter: AvailableProductOffersAdapter, offerListSize: Int)
 
     fun getFragmentManagerPager(): FragmentManager
     fun setProductImagesViewPagerAdapter(productImagesAdapter: ProductImagesAdapter)

@@ -242,6 +242,10 @@ class AdvisoryActivity :
 
     }
 
+    override fun updateCartCount(cartCount: Int) {
+        // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
+    }
+
     override fun showInfoBottomSheet() {
         val bottomSheet = CropIssueBottomSheetDialog()
         bottomSheet.bundle = intent.extras

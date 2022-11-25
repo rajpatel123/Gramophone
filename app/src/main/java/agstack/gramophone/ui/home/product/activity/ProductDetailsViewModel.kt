@@ -18,11 +18,14 @@ import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.NonNullObservableField
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.amnix.xtension.extensions.isNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -322,13 +325,10 @@ class ProductDetailsViewModel @Inject constructor(
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
                         && response.body()?.gp_api_response_data?.cart_items != null && response.body()?.gp_api_response_data?.cart_items?.size!! > 0
                     ) {
-
                         cartItemsList = response.body()?.gp_api_response_data?.cart_items
-
-                    } else {
-
+                        SharedPreferencesHelper.instance?.putInteger(
+                            SharedPreferencesKeys.CART_ITEM_COUNT, cartItemsList!!.size)
                     }
-
                     progressLoader.set(false)
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
@@ -576,7 +576,7 @@ class ProductDetailsViewModel @Inject constructor(
                                         putParcelable(Constants.OFFERSDATA, offersDataItem)
 
                                     })
-                            }))
+                            }), if (mSkuOfferList.isNotNullOrEmpty()) { mSkuOfferList.size } else { 0 })
                     }
                 }
             }
@@ -753,15 +753,15 @@ class ProductDetailsViewModel @Inject constructor(
                 val addTocartResponse =
                     productRepository.addToCart(producttoBeAdded)
 
-                if (addTocartResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
-                    progressLoader.set(false)
+                progressLoader.set(false)
+                if (addTocartResponse.isSuccessful && addTocartResponse.body()?.gp_api_status!!.equals(
+                        Constants.GP_API_STATUS)
+                ) {
                     getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
-                    getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(R.string.gotocart)!!)
-
                 } else {
-                    progressLoader.set(false)
-                    getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.already_added_in_cart))
                 }
+                getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(R.string.gotocart)!!)
             }
         } else {
             getNavigator()?.openActivity(CartActivity::class.java)
