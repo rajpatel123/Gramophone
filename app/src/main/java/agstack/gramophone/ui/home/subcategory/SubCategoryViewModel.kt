@@ -498,10 +498,11 @@ class SubCategoryViewModel @Inject constructor(
                     val response =
                         productRepository.addToCart(productData)
                     progress.value = false
-                    if (response.body()?.gp_api_status!! == Constants.GP_API_STATUS) {
-
+                    if (response.body()?.gp_api_status!! == Constants.GP_API_STATUS && response.body()?.gp_api_response_data?.cart_items != null) {
                         getNavigator()?.showToast(response.body()?.gp_api_message)
-
+                        SharedPreferencesHelper.instance?.putInteger(
+                            SharedPreferencesKeys.CART_ITEM_COUNT, response.body()?.gp_api_response_data?.cart_items!!.size)
+                        getNavigator()?.updateCartCount(response.body()?.gp_api_response_data?.cart_items!!.size)
                     } else {
                         getNavigator()?.showToast(response.body()?.gp_api_message)
                     }

@@ -66,4 +66,5 @@ interface SubCategoryNavigator : BaseNavigator {
     fun setProductList(recommendedLinkedProductsListAdapter: RecommendedLinkedProductsListAdapter, onAddToCartClick: ((productId: Int) -> Unit),
                        onProductDetailClick: ((productId: Int) -> Unit),)
 
+    fun updateCartCount(cartCount: Int)
 }

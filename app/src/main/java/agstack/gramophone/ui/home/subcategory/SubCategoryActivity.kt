@@ -25,6 +25,8 @@ import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.ui.search.view.GlobalSearchActivity
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -35,6 +37,7 @@ import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_category_detail.view.*
+import kotlinx.android.synthetic.main.item_menu_cart_with_counter.*
 import kotlin.math.abs
 
 @AndroidEntryPoint
@@ -85,6 +88,24 @@ class SubCategoryActivity :
                 viewDataBinding.collapsingToolbar.frameToolbarImage.visibility = View.GONE
             }
         })
+        updateCartCount(SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!)
+    }
+
+    override fun updateCartCount(cartCount: Int) {
+        try {
+            if (cartCount > 0) {
+                tvCartCount!!.text = cartCount.toString()
+                frameCartRedCircle!!.visibility = View.VISIBLE
+            } else {
+                frameCartRedCircle!!.visibility = View.GONE
+            }
+            rlItemMenuCart.setOnClickListener {
+                openActivity(CartActivity::class.java)
+            }
+            ivItemMenuCart.setColorFilter(ContextCompat.getColor(this, R.color.blakish), android.graphics.PorterDuff.Mode.SRC_IN)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
     }
 
     override fun onClick(view: View?) {
@@ -300,8 +321,6 @@ class SubCategoryActivity :
 
     }
 
-
-
     override fun updateActivitiesList(it: GpApiResponseData) {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
 
@@ -316,12 +335,10 @@ class SubCategoryActivity :
 
     override fun showInfoBottomSheet() {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
-
     }
 
     override fun openIssueImagesBottomSheet(it: GpApiResponseData) {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
-
     }
 
     override fun setProductList(

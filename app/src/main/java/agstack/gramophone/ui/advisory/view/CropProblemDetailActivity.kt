@@ -177,6 +177,10 @@ class CropProblemDetailActivity :
 
     }
 
+    override fun updateCartCount(cartCount: Int) {
+        // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
+    }
+
     override fun setProductList(
         recommendedLinkedProductsListAdapter: RecommendedLinkedProductsListAdapter,
         onAddToCartClick: (productId: Int) -> Unit,

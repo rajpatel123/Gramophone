@@ -11,6 +11,8 @@ import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.Utility
 import android.os.Bundle
 import android.widget.CompoundButton
@@ -101,6 +103,8 @@ class CartViewModel @Inject constructor(
                             putString(Constants.ORDER_ID,
                                 response.body()?.gp_api_response_data?.order_ref_id.toString())
                         })
+                        SharedPreferencesHelper.instance?.putInteger(
+                            SharedPreferencesKeys.CART_ITEM_COUNT, 0)
                     }
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
@@ -135,6 +139,9 @@ class CartViewModel @Inject constructor(
                         subTotal.value = response.body()?.gp_api_response_data?.sub_total
                         totalAmount.value = response.body()?.gp_api_response_data?.total
                         gramCash.value = response.body()?.gp_api_response_data?.gramcash_coins
+
+                        SharedPreferencesHelper.instance?.putInteger(
+                            SharedPreferencesKeys.CART_ITEM_COUNT, response.body()?.gp_api_response_data?.cart_items!!.size)
 
                         val applicableGramCashCoins: Int =
                             response.body()?.gp_api_response_data?.applicable_gramcash!!
