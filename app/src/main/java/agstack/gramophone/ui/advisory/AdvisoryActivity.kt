@@ -7,7 +7,6 @@ import agstack.gramophone.databinding.ActivityAdvisoryBinding
 import agstack.gramophone.databinding.ItemAdvisoryBinding
 import agstack.gramophone.ui.advisory.adapter.*
 import agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData
-import agstack.gramophone.ui.advisory.models.advisory.LinkedTechnical
 import agstack.gramophone.ui.advisory.view.CropIssueBottomSheetDialog
 import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
@@ -22,13 +21,13 @@ import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amnix.xtension.extensions.inflater
@@ -36,7 +35,7 @@ import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_advisory.*
-import java.util.stream.Collectors
+import kotlinx.android.synthetic.main.item_advisory.view.*
 
 
 @AndroidEntryPoint
@@ -157,11 +156,39 @@ class AdvisoryActivity :
             viewDataBinding.llActivityDetails.visibility = GONE
 
         } else {
+            viewDataBinding.llActivityDetails.removeAllViews()
+            var count = 1
             gpApiResponseData.activity.forEach { activityToBeDone ->
-                viewDataBinding.llActivityDetails.removeAllViews()
+
                 viewDataBinding.noActivityLL.visibility = GONE
                 viewDataBinding.llActivityDetails.visibility = VISIBLE
+
+
                 val view = inflater.inflate(R.layout.item_advisory, null)
+
+                if (count % 2 != 0) {
+                    view.tvActivityName.background = AppCompatResources.getDrawable(
+                        this,
+                        R.drawable.advisoryhead_bg
+                    )
+
+                    view.llActivityDetails.background = AppCompatResources.getDrawable(
+                        this,
+                        R.drawable.advisory_border
+                    )
+                } else {
+                    view.tvActivityName.background = AppCompatResources.getDrawable(
+                        this,
+                        R.drawable.advisoryhead_blue_bg
+                    )
+
+                    view.llActivityDetails.background = AppCompatResources.getDrawable(
+                        this,
+                        R.drawable.advisory_blue_border
+                    )
+                }
+                count++
+
                 val advisoryLayout = ItemAdvisoryBinding.bind(view)
                 advisoryLayout.tvActivityName.text = activityToBeDone.activity_name
                 advisoryLayout.tvBriefDesc.text = activityToBeDone.activity_brief_description
@@ -192,21 +219,31 @@ class AdvisoryActivity :
     }
 
     override fun setAdvisoryProblemsActivity(
-        activityListAdapter: CropIssueListAdapter,
+        cropIssueListAdapter: CropIssueListAdapter,
         function: (agstack.gramophone.ui.advisory.models.cropproblems.GpApiResponseData) -> Unit,
     ) {
 
-        if (activityListAdapter.dataList.size > 6) {
-            viewDataBinding.tvViewAllRl.visibility = VISIBLE
+        if (cropIssueListAdapter.dataList.size > 0) {
+            viewDataBinding.rlCropProblems.visibility = VISIBLE
+
+            if (cropIssueListAdapter.dataList.size > 6) {
+                viewDataBinding.tvViewAllRl.visibility = VISIBLE
+            } else {
+                viewDataBinding.tvViewAllRl.visibility = GONE
+            }
+            cropIssueListAdapter.onProblemSelected = function
+            rvCropProblems.layoutManager = GridLayoutManager(this, 2)
+            rvCropProblems.setHasFixedSize(true)
+            rvCropProblems.adapter = cropIssueListAdapter
         } else {
-            viewDataBinding.tvViewAllRl.visibility = VISIBLE
-
+            viewDataBinding.rlCropProblems.visibility = GONE
         }
-        activityListAdapter.onProblemSelected = function
-        rvCropProblems.layoutManager = GridLayoutManager(this, 2)
-        rvCropProblems.setHasFixedSize(true)
-        rvCropProblems.adapter = activityListAdapter
 
+
+    }
+
+    override fun updateCartCount(cartCount: Int) {
+        // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
     }
 
     override fun showInfoBottomSheet() {
@@ -219,7 +256,7 @@ class AdvisoryActivity :
     }
 
     override fun openIssueImagesBottomSheet(it: GpApiResponseData) {
-        if (it.stage_description!=null || it.crop_stage_images.size>0){
+        if (it.stage_description.isNotEmpty() || it.crop_stage_images.size > 0) {
             val bottomSheet = CropIssueBottomSheetDialog()
             bottomSheet.setData(it)
             bottomSheet.show(
@@ -263,6 +300,14 @@ class AdvisoryActivity :
         } else {
             viewDataBinding.llActivityStageAvailable.visibility = GONE
             viewDataBinding.llNoActivityStage.visibility = VISIBLE
+        }
+
+
+        if (subCategoryViewModel.isCustomerFarm.get() == true) {
+            viewDataBinding.llCommunityLL.communityLL.visibility = VISIBLE
+        } else {
+            viewDataBinding.llCommunityLL.communityLL.visibility = GONE
+
         }
 
     }

@@ -445,12 +445,17 @@ class HomeAdapter(
                                     putInt(Constants.FARM_ID,
                                         it[0].farm_id?.toInt()!!
                                     )
-                                    putString(Constants.FARM_TYPE,"customer_farm")
+                                    if (isCustomerFarms){
+                                        putString(Constants.FARM_TYPE,"customer_farm")
+                                    }else{
+                                        putString(Constants.FARM_TYPE,"model_farm")
+                                    }
                                     putString(Constants.CROP_NAME,it[0].crop_name)
                                     putString(Constants.CROP_IMAGE,it[0].crop_image)
                                     putString(Constants.CROP_REF_ID,it[0].farm_ref_id)
                                     putInt(Constants.CROP_ID,it[0].crop_id)
-                                    putString(Constants.CROP_DURATION,it[0].duration)
+                                    putString(Constants.CROP_DURATION,it[0].crop_sowing_date)
+                                    putString(Constants.CROP_END_DATE,it[0].crop_anticipated_completed_date)
                                     putString(Constants.CROP_STAGE,it[0].stage_name)
                                     putString(Constants.CROP_DAYS,it[0].days)
                                 })

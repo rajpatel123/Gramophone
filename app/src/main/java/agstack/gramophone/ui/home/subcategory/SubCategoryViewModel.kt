@@ -15,6 +15,9 @@ import agstack.gramophone.ui.advisory.view.CropProblemDetailActivity
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.dialog.filter.MainFilterData
 import agstack.gramophone.ui.dialog.sortby.SortByData
+import agstack.gramophone.ui.farm.view.AddFarmActivity
+import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
+import agstack.gramophone.ui.farm.view.WhyAddFarmActivity
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.subcategory.model.Brands
 import agstack.gramophone.ui.home.subcategory.model.Crops
@@ -73,7 +76,7 @@ class SubCategoryViewModel @Inject constructor(
     val address = ObservableField<String>()
     val cropName = ObservableField<String>()
     val cropImage = ObservableField<String>()
-
+    val isCustomerFarm= ObservableField<Boolean>()
 
     val issueName = ObservableField<String>()
     val issueImage = ObservableField<String>()
@@ -495,10 +498,11 @@ class SubCategoryViewModel @Inject constructor(
                     val response =
                         productRepository.addToCart(productData)
                     progress.value = false
-                    if (response.body()?.gp_api_status!! == Constants.GP_API_STATUS) {
-
+                    if (response.body()?.gp_api_status!! == Constants.GP_API_STATUS && response.body()?.gp_api_response_data?.cart_items != null) {
                         getNavigator()?.showToast(response.body()?.gp_api_message)
-
+                        SharedPreferencesHelper.instance?.putInteger(
+                            SharedPreferencesKeys.CART_ITEM_COUNT, response.body()?.gp_api_response_data?.cart_items!!.size)
+                        getNavigator()?.updateCartCount(response.body()?.gp_api_response_data?.cart_items!!.size)
                     } else {
                         getNavigator()?.showToast(response.body()?.gp_api_message)
                     }
@@ -545,6 +549,11 @@ class SubCategoryViewModel @Inject constructor(
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
+                    if (getNavigator()?.getBundle()?.get(Constants.FARM_TYPE)?.equals("customer_farm") == true){
+                        isCustomerFarm.set(true)
+                    }else{
+                        isCustomerFarm.set(false)
+                    }
                     val response =
                         onBoardingRepository.getCropAdvisoryDetails(AdvisoryRequestModel(
                             getNavigator()?.getBundle()?.get(Constants.FARM_ID) as Int),
@@ -647,7 +656,7 @@ class SubCategoryViewModel @Inject constructor(
             )
 
             if (response.isSuccessful && response.body().isNotNull()){
-                productCount.set(" ".plus("").plus(response.body()?.gp_api_response_data!!.size).plus(getNavigator()?.getMessage(
+                productCount.set(" ".plus(" ").plus(response.body()?.gp_api_response_data!!.size).plus(getNavigator()?.getMessage(
                     R.string.recommended_product)))
                 val recommendedLinkedProductsListAdapter= RecommendedLinkedProductsListAdapter(
                     response.body()?.gp_api_response_data!!
@@ -671,5 +680,25 @@ class SubCategoryViewModel @Inject constructor(
         issueDescription.set(bundle?.getString(Constants.DESEASE_DESC))
         issueType.set(bundle?.getString(Constants.DESEASE_TYPE))
     }
+
+    fun addYourfarm(){
+        val bundle = getNavigator()?.getBundle()
+        getNavigator()?.openAndFinishActivity(AddFarmActivity::class.java, Bundle().apply {
+            putParcelable("selectedCrop", CropData().apply {
+                cropImage = bundle?.get(Constants.CROP_IMAGE) as String?
+                cropId = bundle?.get(Constants.CROP_ID) as Int?
+                cropName = bundle?.get(Constants.CROP_NAME) as String?
+            })
+        })
+    }
+
+    fun whyAddFarm(){
+        getNavigator()?.openActivity(WhyAddFarmActivity::class.java, null)
+    }
+
+    fun goToMyFarm(){
+        getNavigator()?.openActivity(ViewAllFarmsActivity::class.java, null)
+    }
+
 
 }

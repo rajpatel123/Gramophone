@@ -286,6 +286,8 @@ class MarketFragmentViewModel
                     && response.body()?.gp_api_response_data?.cart_items != null && response.body()?.gp_api_response_data?.cart_items?.size!! > 0
                 ) {
                     cartList = response.body()?.gp_api_response_data?.cart_items
+                    SharedPreferencesHelper.instance?.putInteger(
+                        SharedPreferencesKeys.CART_ITEM_COUNT, cartList!!.size)
                 }
                 getNavigator()?.notifyCartItemInserted(cartList,
                     assignPosition(Constants.HOME_CART))

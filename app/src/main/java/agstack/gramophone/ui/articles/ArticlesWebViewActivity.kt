@@ -288,6 +288,10 @@ class ArticlesWebViewActivity :
         // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
     }
 
+    override fun updateCartCount(cartCount: Int) {
+        // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
+    }
+
     override fun getBundle(): Bundle? {
         return intent?.extras
     }

@@ -44,7 +44,7 @@ class ActivityListAdapter(val dataList: List<GpApiResponseData>) :
 
 
         if (activityModel.isSelected){
-         holder.binding.rlStageActivity.setBackgroundResource(R.drawable.activity__selected_bg)
+         holder.binding.flActivity.setBackgroundResource(R.drawable.activity__selected_bg)
          holder.binding.tvActivityQty.setTextColor(
              ContextCompat.getColor(holder.itemView.context,
              R.color.black))
@@ -52,7 +52,7 @@ class ActivityListAdapter(val dataList: List<GpApiResponseData>) :
              ContextCompat.getColor(holder.itemView.context,
              R.color.black))
         }else{
-            holder.binding.rlStageActivity.setBackgroundResource(R.drawable.activity_bg)
+            holder.binding.flActivity.setBackgroundResource(R.drawable.activity_bg)
             holder.binding.tvActivityQty.setTextColor(
                 ContextCompat.getColor(holder.itemView.context,
                     R.color.gray_strike_through))
@@ -60,7 +60,7 @@ class ActivityListAdapter(val dataList: List<GpApiResponseData>) :
                 ContextCompat.getColor(holder.itemView.context,
                     R.color.gray_strike_through))
         }
-        holder.binding.tvActivityQty.setOnClickListener {
+        holder.binding.flActivity.setOnClickListener {
             dataList[lastSelectedActivityPosition].isSelected=false
             lastSelectedActivityPosition = position
             activityModel.isSelected=true

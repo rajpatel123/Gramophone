@@ -11,6 +11,8 @@ import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.Utility
 import android.os.Bundle
 import android.widget.CompoundButton
@@ -101,6 +103,8 @@ class CartViewModel @Inject constructor(
                             putString(Constants.ORDER_ID,
                                 response.body()?.gp_api_response_data?.order_ref_id.toString())
                         })
+                        SharedPreferencesHelper.instance?.putInteger(
+                            SharedPreferencesKeys.CART_ITEM_COUNT, 0)
                     }
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
@@ -125,6 +129,24 @@ class CartViewModel @Inject constructor(
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
                     val response = productRepository.getCartData()
+
+                    try {
+                        if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                            && response.body()?.gp_api_response_data?.cart_items != null
+                        ) {
+                            SharedPreferencesHelper.instance?.putInteger(
+                                SharedPreferencesKeys.CART_ITEM_COUNT,
+                                response.body()?.gp_api_response_data?.cart_items!!.size)
+                        } else {
+                            SharedPreferencesHelper.instance?.putInteger(
+                                SharedPreferencesKeys.CART_ITEM_COUNT,
+                                0)
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
                         && response.body()?.gp_api_response_data?.cart_items != null && response.body()?.gp_api_response_data?.cart_items?.size!! > 0
                     ) {

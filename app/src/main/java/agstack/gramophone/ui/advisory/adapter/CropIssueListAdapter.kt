@@ -2,11 +2,13 @@ package agstack.gramophone.ui.advisory.adapter
 
 
 import agstack.gramophone.BR
+import agstack.gramophone.R
 import agstack.gramophone.databinding.ItemCropIssuesBinding
 import agstack.gramophone.ui.advisory.models.cropproblems.GpApiResponseData
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 
 
@@ -29,6 +31,18 @@ class CropIssueListAdapter(public val dataList: List<GpApiResponseData>) :
         holder.binding.setVariable(BR.model, activityModel)
         holder.binding.root.setOnClickListener {
             onProblemSelected?.invoke(activityModel)
+        }
+
+        if (!activityModel.category_type.equals("Disease")) {
+            holder.binding.llDetails.background = AppCompatResources.getDrawable(
+                holder.binding.llDetails.context,
+                R.drawable.rounded_corner_bottom_16_solid_yellow_stroke_gray
+            )
+        } else {
+            holder.binding.llDetails.background = AppCompatResources.getDrawable(
+                holder.binding.llDetails.context,
+                R.drawable.rounded_corner_bottom_16_solid_pink_stroke_gray
+            )
         }
     }
 
