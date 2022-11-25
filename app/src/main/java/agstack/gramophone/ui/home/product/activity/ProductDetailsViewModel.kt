@@ -358,7 +358,6 @@ class ProductDetailsViewModel @Inject constructor(
         var isContactForPriceVisible = false
         var proceedForCalculation = true
         var isOffersLayoutVisible = true
-        addToCartEnabled.set(true)
 
         modelMrpPrice = if (model.mrpPrice.isNull()) 0f else model.mrpPrice!!.toFloat()
         modelSalesPrice = if (model.salesPrice.isNullOrEmpty()) 0f else model.salesPrice.toFloat()
@@ -710,8 +709,8 @@ class ProductDetailsViewModel @Inject constructor(
 
             getNavigator()?.showGenuineCustomerRatingDialog(
                 GenuineCustomerRatingAlertFragment.newInstance(
-                    addToCartEnabled.get()!!
-                ), addToCartEnabled.get()!!
+                    addToCartEnabled.get()
+                ), addToCartEnabled.get()
             ) {
                 //callback comes here when on add to cart is clicked
                 Log.d("Click", "Add to cart Clicked")

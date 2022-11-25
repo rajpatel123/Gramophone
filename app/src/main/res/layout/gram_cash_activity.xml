@@ -5,6 +5,7 @@
 
     <data>
 
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -40,95 +41,95 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_160sdp"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_16sdp"
                     android:layout_marginTop="-100dp"
                     android:elevation="@dimen/_2sdp"
                     app:cardCornerRadius="@dimen/_10sdp">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/blue_white_gradient"
-                        android:gravity="center_vertical"
+                        android:background="@drawable/ic_blue_white_gradient"
+                        android:orientation="vertical"
                         android:paddingHorizontal="@dimen/_10sdp"
-                        android:paddingVertical="@dimen/_16sdp">
+                        android:paddingVertical="@dimen/_14sdp">
 
-                        <ImageView
-                            android:id="@+id/iv_gramcashimage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_gramcashlogo" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                        <LinearLayout
-                            android:id="@+id/ll_totalbal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+                            <ImageView
+                                android:id="@+id/iv_gramcashimage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/_62sdp"
+                                android:layout_centerVertical="true"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_gram_cash_logo" />
 
-                            <TextView
-                                style="@style/TextSize16Sp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="end"
-                                android:text="@{viewModel.gramCashResponseData.gramcashTotal.toString()}"
-                                android:textSize="@dimen/_32ssp" />
-
-                            <TextView
-                                style="@style/TextSize16Sp"
+                            <LinearLayout
+                                android:id="@+id/ll_totalbal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="end"
-                                android:text="@string/totalbalance"
-                                android:textColor="@color/gray"
-                                android:textSize="@dimen/_14ssp" />
-                        </LinearLayout>
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    style="@style/TextSize16Sp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="end"
+                                    android:text="@{viewModel.gramCashResponseData.gramcashTotal.toString()}"
+                                    android:textSize="@dimen/_28ssp"
+                                    tools:text="300" />
+
+                                <TextView
+                                    style="@style/TextSize16Sp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="end"
+                                    android:text="@string/totalbalance"
+                                    android:textColor="@color/gray"
+                                    android:textSize="@dimen/_12ssp" />
+                            </LinearLayout>
+
+
+                        </RelativeLayout>
 
 
                         <View
                             android:id="@+id/v1"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_1sdp"
-                            android:layout_marginTop="@dimen/_17sdp"
-                            android:background="@color/viewcolor"
+                            android:layout_marginTop="@dimen/_14sdp"
+                            android:background="@color/gray_stroke"
                             app:layout_constraintTop_toBottomOf="@id/ll_totalbal" />
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_36sdp"
-                            android:layout_marginTop="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:orientation="horizontal"
-                            android:weightSum="5"
                             app:layout_constraintTop_toBottomOf="@id/v1">
 
                             <TextView
-                           android:textSize="@dimen/_12ssp"
                                 style="@style/bold"
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
                                 android:layout_gravity="center"
-                                android:layout_weight="3.2"
+                                android:drawablePadding="@dimen/_6sdp"
                                 android:onClick="@{()->viewModel.manageaboutgramcash()}"
                                 android:text="@string/about_gram_cash_balance"
-                                android:textColor="@color/orange" />
+                                android:textColor="@color/orange"
+                                android:textSize="@dimen/_12ssp"
+                                app:drawableEndCompat="@drawable/ic_arrow_orange_right" />
 
-                            <ImageView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginHorizontal="@dimen/_6ssp"
-                                android:layout_weight=".2"
-                                app:srcCompat="@drawable/ic_arrow_orange_right" />
-
-
-                            <androidx.appcompat.widget.AppCompatButton
-                                android:layout_weight="1.5"
-                                android:onClick="@{()->viewModel.onRedeemNowClicked()}"
-                                android:layout_width="0dp"
+                            <TextView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
@@ -137,21 +138,22 @@
                                 android:focusable="true"
                                 android:fontFamily="@font/manrope_bold"
                                 android:gravity="center"
-                                android:padding="@dimen/_7sdp"
+                                android:onClick="@{()->viewModel.onRedeemNowClicked()}"
+                                android:paddingStart="@dimen/_12sdp"
+                                android:paddingEnd="@dimen/_12sdp"
+                                android:paddingBottom="@dimen/_8sdp"
+                                android:paddingTop="@dimen/_8sdp"
                                 android:text="@string/redeem"
                                 android:textAllCaps="false"
                                 android:textColor="@color/white"
                                 android:textSize="14sp"
                                 android:textStyle="normal" />
 
+                        </RelativeLayout>
 
-                        </LinearLayout>
-
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
-
 
                 <RelativeLayout
                     android:id="@+id/rl_available_pending"
@@ -176,13 +178,13 @@
 
                         <TextView
                             style="@style/TextSize18Sp"
-                            android:text="@{viewModel.gramCashResponseData.gramcashAvailable.toString()}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginLeft="@dimen/_15sdp"
+                            android:text="@{viewModel.gramCashResponseData.gramcashAvailable.toString()}"
                             android:textColor="@color/blakish"
-                            android:textSize="@dimen/_24ssp"
+                            android:textSize="@dimen/_22ssp"
                             tools:text="200" />
 
                     </LinearLayout>
@@ -205,19 +207,18 @@
 
                         <TextView
                             style="@style/TextSize18Sp"
-                            android:text="@{viewModel.gramCashResponseData.gramcashPending.toString()}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
                             android:layout_marginEnd="@dimen/_15sdp"
+                            android:text="@{viewModel.gramCashResponseData.gramcashPending.toString()}"
                             android:textColor="@color/blakish"
-                            android:textSize="@dimen/_24ssp"
+                            android:textSize="@dimen/_22ssp"
                             tools:text="200" />
 
                     </LinearLayout>
 
                 </RelativeLayout>
-
 
                 <View
                     android:id="@+id/view"
@@ -229,13 +230,14 @@
 
                 <LinearLayout
                     android:id="@+id/ll_gc_expiring"
-                    android:onClick="@{()->viewModel.OnClickGCexpiringin30days()}"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_36sdp"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_12sdp"
                     android:layout_marginBottom="@dimen/_14sdp"
+                    android:gravity="center"
+                    android:onClick="@{()->viewModel.OnClickGCexpiringin30days()}"
                     android:orientation="horizontal"
                     app:layout_constraintTop_toBottomOf="@id/v1">
 
@@ -245,14 +247,17 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="@string/gramcashexpiringin30days"
-                        android:textColor="@color/orange" />
+                        android:textColor="@color/orange"
+                        android:textSize="@dimen/_12ssp" />
 
                     <TextView
                         style="@style/TextSize16Sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_4sdp"
                         android:text="@{viewModel.gramCashResponseData.gramcashExpiringSoon.toString()}"
+                        android:visibility="@{viewModel.gramCashResponseData.gramcashExpiringSoon > 0 ? View.VISIBLE : View.GONE}"
                         tools:text="150" />
 
                     <ImageView
@@ -260,6 +265,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginHorizontal="@dimen/_7ssp"
+                        android:contentDescription="@string/image"
                         app:srcCompat="@drawable/ic_arrow_orange_right" />
 
                 </LinearLayout>
@@ -272,11 +278,11 @@
                     app:layout_constraintTop_toBottomOf="@id/ll_gc_expiring" />
 
                 <RelativeLayout
-                    android:onClick="@{()->viewModel.viewAllTransactionClick()}"
                     android:id="@+id/rl_viewall_trans"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
+                    android:onClick="@{()->viewModel.viewAllTransactionClick()}"
                     app:layout_constraintTop_toBottomOf="@id/v1">
 
 
@@ -333,8 +339,8 @@
                     android:layout_marginTop="@dimen/_9sdp"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_faq"
-                    tools:itemCount="1"/>
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_faq" />
 
                 <View
                     android:id="@+id/view4"
@@ -343,11 +349,12 @@
                     android:background="@color/gray_stroke" />
 
                 <ImageView
-                    android:onClick="@{()->viewModel.onInviteNowClicked()}"
-                    android:scaleType="fitXY"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                   android:src="@drawable/gcinvite"/>
+                    android:onClick="@{()->viewModel.onInviteNowClicked()}"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/gcinvite" />
+
                 <View
                     android:id="@+id/view5"
                     android:layout_width="match_parent"
@@ -371,8 +378,8 @@
                     android:layout_marginTop="@dimen/_9sdp"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_faq"
-                    tools:itemCount="5"/>
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_faq" />
 
 
             </LinearLayout>
