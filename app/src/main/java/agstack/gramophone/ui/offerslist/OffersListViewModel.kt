@@ -82,27 +82,21 @@ class OffersListViewModel @Inject constructor(
                     } else {
                         getNavigator()?.ShowNoListView(false)
                     }
-
-                    // getNavigator()?.showToast(offersListResponse.body()?.gpApiMessage)
-
                 } else {
-
                     getNavigator()?.showToast(offersListResponse.body()?.gpApiMessage)
                 }
             } catch (ex: Exception) {
+                getNavigator()?.ShowNoListView(true)
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
                     else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
         }
-
-
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         getFilteredListFromAPI(query, 1)
-
         return true
     }
 
