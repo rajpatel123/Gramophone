@@ -33,11 +33,14 @@ import java.util.concurrent.TimeUnit
 class GlobalSearchActivity :
     BaseActivityWrapper<ActivityGlobalSearchBinding, GlobalSearchNavigator, GlobalSearchViewModel>(),
     GlobalSearchNavigator {
+
     private val suggestionList = arrayListOf<String>()
     private val originalSearchResultList = arrayListOf<Data>()
     private val filterSearchResultList = arrayListOf<Data>()
+
     private var searchInCommunity = false
     private var disableSearchForAWhile = false
+
     private val handler =  Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,9 +56,14 @@ class GlobalSearchActivity :
             viewDataBinding.edtSearch.setSelection(it.length)
             getViewModel().searchByKeyword(GlobalSearchRequest(keyword = it, source = "app", pageSection = "suggestion"), searchInCommunity)
         }
-        viewDataBinding.recyclerViewSearchResult.adapter = SearchResultAdapter(filterSearchResultList) {
-            getViewModel().likePost(PostRequestModel(it, ""))
-        }
+
+        viewDataBinding.recyclerViewSearchResult.adapter =
+            SearchResultAdapter(
+                this@GlobalSearchActivity,
+                filterSearchResultList, getViewModel()
+            ) {
+                getViewModel().likePost(PostRequestModel(it, ""))
+            }
 
         handler.postDelayed({
             viewDataBinding.edtSearch.requestFocus()
@@ -246,5 +254,13 @@ class GlobalSearchActivity :
     private fun removeTabs(){
         viewDataBinding.tabLayout.removeAllTabs()
         viewDataBinding.tabBarContainer.visibility = View.GONE
+    }
+
+    fun lastSearchRequest() : GlobalSearchRequest? {
+        return getViewModel().lastSearchRequest
+    }
+
+    fun isSearchInCommunity() : Boolean {
+        return getViewModel().isSearchInCommunity
     }
 }

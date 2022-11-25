@@ -21,11 +21,13 @@ import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class GlobalSearchViewModel @Inject constructor(
+open class GlobalSearchViewModel @Inject constructor(
     private val productRepository: ProductRepository,
     private val communityRepository: CommunityRepository,
 ) : BaseViewModel<GlobalSearchNavigator>() {
     var progress = MutableLiveData<Boolean>()
+    var lastSearchRequest : GlobalSearchRequest? = null
+    var isSearchInCommunity = false
 
     init {
         progress.value = false
@@ -65,6 +67,9 @@ class GlobalSearchViewModel @Inject constructor(
 
 
     fun searchByKeyword(body: GlobalSearchRequest, searchInCommunity: Boolean = false) {
+        lastSearchRequest = body
+        isSearchInCommunity = searchInCommunity
+
         progress.value = true
         viewModelScope.launch {
             try {
@@ -115,7 +120,6 @@ class GlobalSearchViewModel @Inject constructor(
                     else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
-
         }
     }
 }

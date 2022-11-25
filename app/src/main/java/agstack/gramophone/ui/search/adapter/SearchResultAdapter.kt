@@ -5,12 +5,12 @@ import agstack.gramophone.ui.advisory.view.CropProblemDetailActivity
 import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
-import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.othersporfile.view.OtherUserProfileActivity
 import agstack.gramophone.ui.postdetails.view.PostDetailsActivity
 import agstack.gramophone.ui.search.model.Data
 import agstack.gramophone.ui.search.view.*
+import agstack.gramophone.ui.search.viewmodel.GlobalSearchViewModel
 import agstack.gramophone.utils.Constants
 import android.content.Context
 import android.content.Intent
@@ -22,7 +22,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.amnix.xtension.extensions.toCamelCase
 
 class SearchResultAdapter(
+    val activity : GlobalSearchActivity,
     val list: List<Data>,
+    val viewModel : GlobalSearchViewModel,
     private val listener: (String) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -73,9 +75,11 @@ class SearchResultAdapter(
                 holder.binding.viewAllProducts.setOnClickListener {
                     openActivity(
                         holder.itemView.context,
-                        ViewAllSearchProductsActivity::class.java,
+                        ViewAllProductsActivity::class.java,
                         Bundle().apply {
                             putParcelable("dataList", list[position])
+                            putParcelable("lastSearchRequest", activity.lastSearchRequest())
+                            putBoolean("isSearchInCommunity", activity.isSearchInCommunity())
                         })
                 }
 
@@ -101,9 +105,11 @@ class SearchResultAdapter(
                 holder.binding.viewAllCrops.setOnClickListener {
                     openActivity(
                         holder.itemView.context,
-                        ViewAllSearchCropsActivity::class.java,
+                        ViewAllCropsActivity::class.java,
                         Bundle().apply {
                             putParcelable("dataList", list[position])
+                            putParcelable("lastSearchRequest", activity.lastSearchRequest())
+                            putBoolean("isSearchInCommunity", activity.isSearchInCommunity())
                         })
                 }
                 if(list[position].items.size > 3){
@@ -129,9 +135,11 @@ class SearchResultAdapter(
                 holder.binding.viewAllProfiles.setOnClickListener {
                     openActivity(
                         holder.itemView.context,
-                        ViewAllSearchProfilesActivity::class.java,
+                        ViewAllProfilesActivity::class.java,
                         Bundle().apply {
                             putParcelable("dataList", list[position])
+                            putParcelable("lastSearchRequest", activity.lastSearchRequest())
+                            putBoolean("isSearchInCommunity", activity.isSearchInCommunity())
                         })
                 }
                 if(list[position].items.size > 3){
@@ -161,9 +169,11 @@ class SearchResultAdapter(
                 holder.binding.viewAll.setOnClickListener {
                     openActivity(
                         holder.itemView.context,
-                        ViewAllSearchCropProblemsActivity::class.java,
+                        ViewAllCropProblemsActivity::class.java,
                         Bundle().apply {
                             putParcelable("dataList", list[position])
+                            putParcelable("lastSearchRequest", activity.lastSearchRequest())
+                            putBoolean("isSearchInCommunity", activity.isSearchInCommunity())
                         })
                 }
                 if(list[position].items.size > 3){
@@ -190,9 +200,11 @@ class SearchResultAdapter(
                 holder.binding.viewAll.setOnClickListener {
                     openActivity(
                         holder.itemView.context,
-                        ViewAllSearchCompaniesActivity::class.java,
+                        ViewAllCompaniesActivity::class.java,
                         Bundle().apply {
                             putParcelable("dataList", list[position])
+                            putParcelable("lastSearchRequest", activity.lastSearchRequest())
+                            putBoolean("isSearchInCommunity", activity.isSearchInCommunity())
                         })
                 }
                 if(list[position].items.size > 3){
@@ -221,9 +233,11 @@ class SearchResultAdapter(
                 holder.binding.viewAll.setOnClickListener {
                     openActivity(
                         holder.itemView.context,
-                        ViewAllSearchProductCategoriesActivity::class.java,
+                        ViewAllProductCategoriesActivity::class.java,
                         Bundle().apply {
                             putParcelable("dataList", list[position])
+                            putParcelable("lastSearchRequest", activity.lastSearchRequest())
+                            putBoolean("isSearchInCommunity", activity.isSearchInCommunity())
                         })
                 }
                 if(list[position].items.size > 3){
@@ -251,9 +265,11 @@ class SearchResultAdapter(
                 holder.binding.viewAll.setOnClickListener {
                     openActivity(
                         holder.itemView.context,
-                        ViewAllSearchCropCategoriesActivity::class.java,
+                        ViewAllCropCategoriesActivity::class.java,
                         Bundle().apply {
                             putParcelable("dataList", list[position])
+                            putParcelable("lastSearchRequest", activity.lastSearchRequest())
+                            putBoolean("isSearchInCommunity", activity.isSearchInCommunity())
                         })
                 }
                 if(list[position].items.size > 3){
@@ -285,9 +301,11 @@ class SearchResultAdapter(
                 holder.binding.viewAllPosts.setOnClickListener {
                     openActivity(
                         holder.itemView.context,
-                        ViewAllSearchPostsActivity::class.java,
+                        ViewAllPostsActivity::class.java,
                         Bundle().apply {
                             putParcelable("dataList", list[position])
+                            putParcelable("lastSearchRequest", activity.lastSearchRequest())
+                            putBoolean("isSearchInCommunity", activity.isSearchInCommunity())
                         })
                 }
                 if(list[position].items.size > 3){
