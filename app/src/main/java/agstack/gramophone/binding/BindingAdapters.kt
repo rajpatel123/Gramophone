@@ -358,8 +358,8 @@ fun setQuantity(textView: TextView, quantity: String) {
 @BindingAdapter("reformatFloatPriceToInt")
 fun setReformattedIntPrice(textView: TextView, price: Float) {
     try {
-        if (price.isNaN() || price.isInfinite()) {
-            textView.text = textView.context.getString(R.string.rupee_0)
+        if (price.isNaN() || price.isInfinite() || price.toString() == "0" || price.toString() == "0.0") {
+            textView.visibility = View.INVISIBLE
         } else {
             if (price.toString().endsWith(".0") || price.toString().contains(".00"))
                 textView.text =
@@ -411,6 +411,19 @@ fun calculateDiscount(
                         .toString() + textView.context.getString(R.string.percent_off)
                 }
             }
+        }
+    } catch (e: Exception) {
+        textView.visibility = View.INVISIBLE
+    }
+}
+
+@BindingAdapter(value = ["mrp_price", "sales_price", "contact_for_price"], requireAll = true)
+fun contactForPrice(
+    textView: TextView, mrp_price: Float, sales_price: Float, contact_for_price: Boolean,
+) {
+    try {
+        if ((sales_price.toString() == "0" || sales_price.toString() == "0.0") && (mrp_price.toString() == "0" || mrp_price.toString() == "0.0")) {
+            textView.text = textView.context.getString(R.string.contactforprice)
         }
     } catch (e: Exception) {
         textView.visibility = View.INVISIBLE

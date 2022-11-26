@@ -45,7 +45,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SubCategoryViewModel @Inject constructor(
     private val productRepository: ProductRepository,
-    private val onBoardingRepository: OnBoardingRepository
+    private val onBoardingRepository: OnBoardingRepository,
 ) : BaseViewModel<SubCategoryNavigator>() {
 
     private var stageId: Int = 0
@@ -76,7 +76,7 @@ class SubCategoryViewModel @Inject constructor(
     val address = ObservableField<String>()
     val cropName = ObservableField<String>()
     val cropImage = ObservableField<String>()
-    val isCustomerFarm= ObservableField<Boolean>()
+    val isCustomerFarm = ObservableField<Boolean>()
 
     val issueName = ObservableField<String>()
     val issueImage = ObservableField<String>()
@@ -142,7 +142,8 @@ class SubCategoryViewModel @Inject constructor(
                 var webUrl = ""
                 if (bundle.containsKey(Constants.PAGE_URL) && bundle.getString(Constants.PAGE_URL) != null) {
                     webUrl = bundle.getString(Constants.PAGE_URL).toString()
-                    webUrl += "?" + Constants.LANG + "=" + if (SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.languageCode)
+                    webUrl += "?" + Constants.LANG + "=" + if (SharedPreferencesHelper.instance?.getString(
+                            SharedPreferencesKeys.languageCode)
                             .isNullOrEmpty()
                     ) {
                         "en"
@@ -205,7 +206,7 @@ class SubCategoryViewModel @Inject constructor(
                     SharedPreferencesKeys.BANNER_DATA, BannerResponse::class.java
                 )
                 if (bannerResponse?.gpApiStatus == Constants.GP_API_STATUS) {
-                    getNavigator()?.setViewPagerAdapter(bannerResponse.gpApiResponseData?.homeBanner1)
+                    getNavigator()?.setViewPagerAdapter(bannerResponse.gpApiResponseData?.productAppCategory)
                 }
             } catch (ex: Exception) {
                 // do nothing
@@ -498,11 +499,13 @@ class SubCategoryViewModel @Inject constructor(
                     val response =
                         productRepository.addToCart(productData)
                     progress.value = false
-                    if (response.body()?.gp_api_status!! == Constants.GP_API_STATUS && response.body()?.gp_api_response_data?.cart_items != null) {
+                    if (response.body()?.gp_api_status!! == Constants.GP_API_STATUS) {
                         getNavigator()?.showToast(response.body()?.gp_api_message)
+                        val cartCount =
+                            SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!
                         SharedPreferencesHelper.instance?.putInteger(
-                            SharedPreferencesKeys.CART_ITEM_COUNT, response.body()?.gp_api_response_data?.cart_items!!.size)
-                        getNavigator()?.updateCartCount(response.body()?.gp_api_response_data?.cart_items!!.size)
+                            SharedPreferencesKeys.CART_ITEM_COUNT, cartCount + 1)
+                        getNavigator()?.updateCartCount(cartCount + 1)
                     } else {
                         getNavigator()?.showToast(response.body()?.gp_api_message)
                     }
@@ -544,14 +547,16 @@ class SubCategoryViewModel @Inject constructor(
     }
 
 
-    fun getCropAdvisoryDetails(){
+    fun getCropAdvisoryDetails() {
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
-                    if (getNavigator()?.getBundle()?.get(Constants.FARM_TYPE)?.equals("customer_farm") == true){
+                    if (getNavigator()?.getBundle()?.get(Constants.FARM_TYPE)
+                            ?.equals("customer_farm") == true
+                    ) {
                         isCustomerFarm.set(true)
-                    }else{
+                    } else {
                         isCustomerFarm.set(false)
                     }
                     val response =
@@ -560,13 +565,14 @@ class SubCategoryViewModel @Inject constructor(
                             getNavigator()?.getBundle()?.get(Constants.FARM_TYPE).toString()
                         )
                     progress.value = false
-                    if (response.isSuccessful && response.body()?.gp_api_status== Constants.GP_API_STATUS){
-                        if (response.body()?.gp_api_response_data?.size!! >0){
-                           val activityListAdapter =  ActivityListAdapter(response.body()?.gp_api_response_data!!)
-                            getNavigator()?.setAdvisoryActivity(activityListAdapter,{
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
+                        if (response.body()?.gp_api_response_data?.size!! > 0) {
+                            val activityListAdapter =
+                                ActivityListAdapter(response.body()?.gp_api_response_data!!)
+                            getNavigator()?.setAdvisoryActivity(activityListAdapter, {
                                 getNavigator()?.updateActivitiesList(it)
-                            },{
-                               getNavigator()?.openIssueImagesBottomSheet(it)
+                            }, {
+                                getNavigator()?.openIssueImagesBottomSheet(it)
                             })
                         }
                     }
@@ -604,19 +610,20 @@ class SubCategoryViewModel @Inject constructor(
                     val response =
                         onBoardingRepository.getCropProblems(
                             CropProblemRequestModel(
-                            crop_id = cropId.get()!!,stageId))
+                                crop_id = cropId.get()!!, stageId))
                     progress.value = false
-                    if (response.isSuccessful && response.body()?.gp_api_status== Constants.GP_API_STATUS){
-                        if (response.body()?.gp_api_response_data?.size!! >0){
-                            val activityListAdapter =  CropIssueListAdapter(response.body()?.gp_api_response_data!!)
-                            getNavigator()?.setAdvisoryProblemsActivity(activityListAdapter,{
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
+                        if (response.body()?.gp_api_response_data?.size!! > 0) {
+                            val activityListAdapter =
+                                CropIssueListAdapter(response.body()?.gp_api_response_data!!)
+                            getNavigator()?.setAdvisoryProblemsActivity(activityListAdapter, {
                                 getNavigator()?.openActivity(CropProblemDetailActivity::class.java,
                                     Bundle().apply {
-                                        putInt(Constants.DESEASE_ID,it.disease_id)
-                                        putString(Constants.DESEASE_NAME,it.category_name)
-                                        putString(Constants.DESEASE_DESC,it.category_description)
-                                        putString(Constants.DESEASE_IMAGE,it.category_image)
-                                        putString(Constants.DESEASE_TYPE,it.category_type)
+                                        putInt(Constants.DESEASE_ID, it.disease_id)
+                                        putString(Constants.DESEASE_NAME, it.category_name)
+                                        putString(Constants.DESEASE_DESC, it.category_description)
+                                        putString(Constants.DESEASE_IMAGE, it.category_image)
+                                        putString(Constants.DESEASE_TYPE, it.category_type)
                                     }
                                 )
                             })
@@ -632,33 +639,34 @@ class SubCategoryViewModel @Inject constructor(
 
     }
 
-    fun onViewAllIssuesClicked(){
+    fun onViewAllIssuesClicked() {
         getNavigator()?.openActivity(AllCropProblemsActivity::class.java,
             Bundle().apply {
-                putInt(Constants.STAGE_ID,stageId)
+                putInt(Constants.STAGE_ID, stageId)
                 putInt(Constants.CROP_ID, cropId.get()!!)
             }
         )
 
     }
 
-    fun onInfoClicked(){
-      getNavigator()?.showInfoBottomSheet()
+    fun onInfoClicked() {
+        getNavigator()?.showInfoBottomSheet()
     }
 
 
     fun getRecommendedProduct() {
-        val bundle =  getNavigator()?.getBundle()
+        val bundle = getNavigator()?.getBundle()
 
         viewModelScope.launch {
             val response = onBoardingRepository.getRecommendedProducts(
                 RecommendedProductRequestModel(bundle?.getInt(Constants.DESEASE_ID)!!)
             )
 
-            if (response.isSuccessful && response.body().isNotNull()){
-                productCount.set(" ".plus(" ").plus(response.body()?.gp_api_response_data!!.size).plus(getNavigator()?.getMessage(
-                    R.string.recommended_product)))
-                val recommendedLinkedProductsListAdapter= RecommendedLinkedProductsListAdapter(
+            if (response.isSuccessful && response.body().isNotNull()) {
+                productCount.set(" ".plus(" ").plus(response.body()?.gp_api_response_data!!.size)
+                    .plus(getNavigator()?.getMessage(
+                        R.string.recommended_product)))
+                val recommendedLinkedProductsListAdapter = RecommendedLinkedProductsListAdapter(
                     response.body()?.gp_api_response_data!!
                 )
 
@@ -681,7 +689,7 @@ class SubCategoryViewModel @Inject constructor(
         issueType.set(bundle?.getString(Constants.DESEASE_TYPE))
     }
 
-    fun addYourfarm(){
+    fun addYourfarm() {
         val bundle = getNavigator()?.getBundle()
         getNavigator()?.openAndFinishActivity(AddFarmActivity::class.java, Bundle().apply {
             putParcelable("selectedCrop", CropData().apply {
@@ -692,11 +700,11 @@ class SubCategoryViewModel @Inject constructor(
         })
     }
 
-    fun whyAddFarm(){
+    fun whyAddFarm() {
         getNavigator()?.openActivity(WhyAddFarmActivity::class.java, null)
     }
 
-    fun goToMyFarm(){
+    fun goToMyFarm() {
         getNavigator()?.openActivity(ViewAllFarmsActivity::class.java, null)
     }
 
