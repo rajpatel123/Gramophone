@@ -4,10 +4,10 @@
 
     <item
         android:id="@+id/item_cart"
-        android:icon="@drawable/ic_cart_black"
-        android:title="show cart"
         android:orderInCategory="1"
+        android:title=""
         android:visible="true"
+        app:actionLayout="@layout/item_menu_cart_with_counter"
         app:showAsAction="always" />
 
 </menu>

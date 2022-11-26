@@ -116,6 +116,9 @@
                 android:paddingEnd="12dp"
                 android:paddingBottom="8dp"
                 android:text="@string/add_to_cart"
+                app:mrp_price="@{model.product_sku_list[0].cost_price}"
+                app:sales_price="@{model.product_sku_list[0].discount_price}"
+                app:contact_for_price="@{true}"
                 android:textColor="@color/orange"
                 android:textSize="@dimen/_11ssp" />
 
