@@ -26,6 +26,8 @@ import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -36,6 +38,7 @@ import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.item_menu_cart_with_counter.*
 import kotlin.math.abs
 
 @AndroidEntryPoint
@@ -86,6 +89,7 @@ class FeaturedProductActivity :
                 viewDataBinding.collapsingToolbar.title = ""
             }
         })
+        updateCartCount(SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!)
     }
 
     /*
@@ -96,6 +100,23 @@ class FeaturedProductActivity :
             if (subCategoryViewModel.showSortFilterInToolbar.value == true && it.itemId == R.id.item_sort) {
                 it.isVisible = true
             }
+        }
+    }
+
+    override fun updateCartCount(cartCount: Int) {
+        try {
+            if (cartCount > 0) {
+                tvCartCount!!.text = cartCount.toString()
+                frameCartRedCircle!!.visibility = View.VISIBLE
+            } else {
+                frameCartRedCircle!!.visibility = View.GONE
+            }
+            rlItemMenuCart.setOnClickListener {
+                openActivity(CartActivity::class.java)
+            }
+            ivItemMenuCart.setColorFilter(ContextCompat.getColor(this, R.color.blakish), android.graphics.PorterDuff.Mode.SRC_IN)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
         }
     }
 

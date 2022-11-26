@@ -12,13 +12,17 @@ import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
 import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.item_menu_cart_with_counter.*
 
 @AndroidEntryPoint
 class ShopByActivity :
@@ -35,11 +39,28 @@ class ShopByActivity :
 
     private fun setupUi() {
         shopByViewModel.getBundleData()
-
+        updateCartCount(SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!)
         viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
         viewDataBinding.swipeRefresh.setOnRefreshListener {
             shopByViewModel.getStores()
             viewDataBinding.swipeRefresh.isRefreshing = false
+        }
+    }
+
+    fun updateCartCount(cartCount: Int) {
+        try {
+            if (cartCount > 0) {
+                tvCartCount!!.text = cartCount.toString()
+                frameCartRedCircle!!.visibility = View.VISIBLE
+            } else {
+                frameCartRedCircle!!.visibility = View.GONE
+            }
+            rlItemMenuCart.setOnClickListener {
+                openActivity(CartActivity::class.java)
+            }
+            ivItemMenuCart.setColorFilter(ContextCompat.getColor(this, R.color.blakish), android.graphics.PorterDuff.Mode.SRC_IN)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
         }
     }
 
@@ -113,6 +134,10 @@ class ShopByActivity :
 
     override fun setToolbarTitle(title: String) {
         setUpToolBar(true, title, R.drawable.ic_arrow_left)
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     override fun getBundle(): Bundle? {

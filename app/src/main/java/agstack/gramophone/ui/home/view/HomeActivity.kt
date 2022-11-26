@@ -22,13 +22,18 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.forEach
@@ -41,11 +46,12 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.item_menu_cart_with_counter.*
 
 @AndroidEntryPoint
 class HomeActivity :
     BaseActivityWrapper<ActivityHomeBinding, HomeActivityNavigator, HomeViewModel>(),
-    HomeActivityNavigator {
+    HomeActivityNavigator, View.OnClickListener {
 
     var from: String = "home"
     private val homeViewModel: HomeViewModel by viewModels()
@@ -62,7 +68,7 @@ class HomeActivity :
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
-                if (data?.hasExtra(Constants.GO_TO_COMMUNITY) == true){
+                if (data?.hasExtra(Constants.GO_TO_COMMUNITY) == true) {
                     showCommunityFragment(data.getStringExtra(Constants.GO_TO_COMMUNITY)!!)
                 }
             }
@@ -108,19 +114,24 @@ class HomeActivity :
             }
     }
 
-    override fun setImageNameMobile(name: String, mobile: String, profileImage: String,gramCash:String?) {
+    override fun setImageNameMobile(
+        name: String,
+        mobile: String,
+        profileImage: String,
+        gramCash: String?,
+    ) {
         viewDataBinding.navigationlayout.tvName.text = name
         viewDataBinding.navigationlayout.tvContact.text =
             getString(R.string.dialing_code).plus(mobile)
         viewDataBinding.navigationlayout.tvGc.text = gramCash
         profileFragment.refreshProfile()
         if (profileImage.isNotNullOrEmpty())
-        Glide.with(this)
-            .load(profileImage)
-            .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .skipMemoryCache(true)
-            .fitCenter()
-            .into(viewDataBinding.navigationlayout.ivProfile)
+            Glide.with(this)
+                .load(profileImage)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .fitCenter()
+                .into(viewDataBinding.navigationlayout.ivProfile)
     }
 
     private fun setupUi() {
@@ -134,7 +145,9 @@ class HomeActivity :
             .add(R.id.fragment_container, tradeFragment, TradeFragment::class.java.simpleName)
             .hide(tradeFragment).commit()
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, profileFragment, MyGramophoneFragment::class.java.simpleName)
+            .add(R.id.fragment_container,
+                profileFragment,
+                MyGramophoneFragment::class.java.simpleName)
             .hide(profileFragment).commit()
         supportFragmentManager.beginTransaction().add(R.id.fragment_container,
             communityFragment,
@@ -156,12 +169,12 @@ class HomeActivity :
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(marketFragment).commit()
                     activeFragment = marketFragment
-                    viewDataBinding.llCreateAPost.visibility= GONE
+                    viewDataBinding.llCreateAPost.visibility = GONE
 
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_community -> {
-                    viewDataBinding.llCreateAPost.visibility=VISIBLE
+                    viewDataBinding.llCreateAPost.visibility = VISIBLE
                     viewDataBinding.toolbar.myToolbar.title =
                         "  " + resources.getString(R.string.community)
                     updateMenuItemVisibility(showHomeItems = false, showCommunityItems = true)
@@ -179,7 +192,7 @@ class HomeActivity :
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(profileFragment).commit()
                     activeFragment = profileFragment
-                    viewDataBinding.llCreateAPost.visibility= GONE
+                    viewDataBinding.llCreateAPost.visibility = GONE
 
                     return@setOnItemSelectedListener true
                 }
@@ -191,7 +204,7 @@ class HomeActivity :
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(tradeFragment).commit()
                     activeFragment = tradeFragment
-                    viewDataBinding.llCreateAPost.visibility= GONE
+                    viewDataBinding.llCreateAPost.visibility = GONE
 
                     return@setOnItemSelectedListener true
                 }
@@ -200,12 +213,12 @@ class HomeActivity :
         }
     }
 
-    fun showCommunityFragment(from:String) {
+    fun showCommunityFragment(from: String) {
         this.from = from
         viewDataBinding.navView.selectedItemId = R.id.navigation_community
         communityFragment.selectTab(from)
     }
-    
+
     fun showHomeFragment() {
         viewDataBinding.navView.selectedItemId = R.id.navigation_home
     }
@@ -263,8 +276,28 @@ class HomeActivity :
         }
     }
 
+    fun updateCartCount(cartCount: Int) {
+        try {
+            if (cartCount > 0) {
+                tvCartCount!!.text = cartCount.toString()
+                frameCartRedCircle!!.visibility = VISIBLE
+            } else {
+                frameCartRedCircle!!.visibility = GONE
+            }
+            rlItemMenuCart.setOnClickListener {
+                openActivity(CartActivity::class.java)
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+    }
+
     override fun closeDrawer() {
         drawer?.close()
+    }
+
+    override fun onClick(p0: View?) {
+        openActivity(CartActivity::class.java)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -285,6 +318,7 @@ class HomeActivity :
         super.onResume()
         mViewModel?.getProfile()
         mViewModel?.getCrops()
+        updateCartCount(SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!)
     }
 
     override fun getLayoutID(): Int {
@@ -308,7 +342,7 @@ class HomeActivity :
         startActivity(Intent.createChooser(intent, getMessage(R.string.share_app_link)));
     }
 
-    fun setToolbarTitle(title:String){
+    fun setToolbarTitle(title: String) {
         viewDataBinding.toolbar.myToolbar.title = title
 
     }

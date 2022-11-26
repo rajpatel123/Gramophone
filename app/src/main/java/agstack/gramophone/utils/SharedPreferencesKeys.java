@@ -111,4 +111,5 @@ public abstract class SharedPreferencesKeys {
     public static final String CUSTOMER_ADDRESS="CUSTOMER_ADDRESS";
     @Nullable
     public static final String CROPS = "crops";
+    public static final String CART_ITEM_COUNT = "cart_item_count";
 }

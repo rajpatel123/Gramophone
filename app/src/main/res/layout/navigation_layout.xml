@@ -561,7 +561,8 @@
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingTop="@dimen/_15sdp"
                     android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_15sdp">
+                    android:paddingBottom="@dimen/_15sdp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/iv_mandi_bhav"
@@ -669,7 +670,8 @@
                     android:paddingEnd="@dimen/_10sdp"
                     android:text="@string/watch_app_demo"
                     android:textColor="@color/blakish"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_12ssp"
+                    android:visibility="gone" />
 
                 <TextView
                     style="@style/regular"

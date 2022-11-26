@@ -277,16 +277,12 @@ class ProductDetailsActivity :
             viewDataBinding.llQty.visibility = View.GONE
             viewDataBinding.tvInclusive.visibility = View.GONE
             viewDataBinding.llAddToCart.isEnabled = false
-            viewDataBinding.llAddToCart.setBackgroundColor(ContextCompat.getColor(this,
-                R.color.grey_border))
         } else {
             viewDataBinding.tvContactForPrice.visibility = View.GONE
             viewDataBinding.llPriceDiscount.visibility = View.VISIBLE
             viewDataBinding.llQty.visibility = View.VISIBLE
             viewDataBinding.tvInclusive.visibility = View.VISIBLE
             viewDataBinding.llAddToCart.isEnabled = true
-            viewDataBinding.llAddToCart.setBackgroundColor(ContextCompat.getColor(this,
-                R.color.orange))
         }
 
         if (!isOffersLayoutVisible) {
@@ -324,8 +320,16 @@ class ProductDetailsActivity :
 
     override fun setProductSKUOfferAdapter(
         productSKUOfferAdapter: AvailableProductOffersAdapter,
+        offerListSize: Int,
     ) {
         viewDataBinding.rvAvailableoffers.adapter = productSKUOfferAdapter
+        if (offerListSize > 0) {
+            viewDataBinding.v2Separator.visibility = View.VISIBLE
+            viewDataBinding.rlAvailableOffers.visibility = View.VISIBLE
+        } else {
+            viewDataBinding.v2Separator.visibility = View.GONE
+            viewDataBinding.rlAvailableOffers.visibility = View.GONE
+        }
     }
 
     override fun setRelatedProductsAdapter(

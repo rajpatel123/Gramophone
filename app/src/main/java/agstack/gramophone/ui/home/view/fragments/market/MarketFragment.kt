@@ -18,6 +18,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -181,6 +182,11 @@ class MarketFragment :
 
     override fun notifyCartItemInserted(cartList: List<CartItem>?, position: Int) {
         homeAdapter?.notifyCartItemInserted(cartList, position)
+        if (cartList.isNotNullOrEmpty()) {
+            (activity as HomeActivity).updateCartCount(cartList!!.size)
+        } else {
+            (activity as HomeActivity).updateCartCount(0)
+        }
     }
 
     override fun notifyFarmItemInserted(farmResponse: FarmResponse?, position: Int) {
