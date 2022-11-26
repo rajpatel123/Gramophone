@@ -338,17 +338,8 @@
                         <ImageView
                             android:layout_width="@dimen/_16sdp"
                             android:layout_height="@dimen/_16sdp"
-                            android:visibility="@{viewModel.isFarmerSelected? View.VISIBLE:View.GONE}"
-                            app:srcCompat="@drawable/ic_tick_blue" />
+                            android:background="@{viewModel.isFarmerSelected?@drawable/ic_tick_blue:@drawable/ic_checkbox_empty}" />
 
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/radioBtnFarmer"
-                            android:layout_width="@dimen/_22sdp"
-                            android:layout_height="@dimen/_16sdp"
-                            android:checked="@{viewModel.isFarmerSelected}"
-                            android:clickable="false"
-                            android:visibility="@{viewModel.isFarmerSelected? View.GONE:View.VISIBLE}" />
 
 
                         <ImageView
@@ -386,17 +377,9 @@
                         <ImageView
                             android:layout_width="@dimen/_16sdp"
                             android:layout_height="@dimen/_16sdp"
-                            android:visibility="@{viewModel.isTraderSelected? View.VISIBLE:View.GONE}"
-                            app:srcCompat="@drawable/ic_tick_blue" />
+                            android:background="@{viewModel.isTraderSelected()?@drawable/ic_tick_blue:@drawable/ic_checkbox_empty}" />
+                        />
 
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/radioBtnTrader"
-                            android:layout_width="@dimen/_22sdp"
-                            android:layout_height="@dimen/_16sdp"
-                            android:checked="@{viewModel.isTraderSelected}"
-                            android:clickable="false"
-                            android:visibility="@{viewModel.isTraderSelected? View.GONE:View.VISIBLE}" />
 
 
                         <ImageView

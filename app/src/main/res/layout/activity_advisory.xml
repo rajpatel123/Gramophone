@@ -490,8 +490,7 @@
                     layout="@layout/item_advisory_community"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rlCropProblems"
-                    />
+                    android:layout_below="@+id/rlCropProblems" />
             </RelativeLayout>
 
         </androidx.core.widget.NestedScrollView>
