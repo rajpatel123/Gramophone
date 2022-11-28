@@ -21,10 +21,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.amnix.xtension.extensions.toCamelCase
 
-class SearchResultAdapter(
-    val activity : GlobalSearchActivity,
+class SearchResultAdapter(val viewModel : GlobalSearchViewModel,
     val list: List<Data>,
-    val viewModel : GlobalSearchViewModel,
     private val listener: (String) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -78,8 +76,8 @@ class SearchResultAdapter(
                         ViewAllProductsActivity::class.java,
                         Bundle().apply {
                             putParcelable("dataList", list[position])
-                            putParcelable("lastSearchRequest", activity.lastSearchRequest())
-                            putBoolean("isSearchInCommunity", activity.isSearchInCommunity())
+                            putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
+                            putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
                         })
                 }
 
@@ -108,8 +106,8 @@ class SearchResultAdapter(
                         ViewAllCropsActivity::class.java,
                         Bundle().apply {
                             putParcelable("dataList", list[position])
-                            putParcelable("lastSearchRequest", activity.lastSearchRequest())
-                            putBoolean("isSearchInCommunity", activity.isSearchInCommunity())
+                            putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
+                            putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
                         })
                 }
                 if(list[position].items.size > 3){
@@ -138,8 +136,8 @@ class SearchResultAdapter(
                         ViewAllProfilesActivity::class.java,
                         Bundle().apply {
                             putParcelable("dataList", list[position])
-                            putParcelable("lastSearchRequest", activity.lastSearchRequest())
-                            putBoolean("isSearchInCommunity", activity.isSearchInCommunity())
+                            putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
+                            putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
                         })
                 }
                 if(list[position].items.size > 3){
@@ -172,8 +170,8 @@ class SearchResultAdapter(
                         ViewAllCropProblemsActivity::class.java,
                         Bundle().apply {
                             putParcelable("dataList", list[position])
-                            putParcelable("lastSearchRequest", activity.lastSearchRequest())
-                            putBoolean("isSearchInCommunity", activity.isSearchInCommunity())
+                            putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
+                            putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
                         })
                 }
                 if(list[position].items.size > 3){
@@ -203,8 +201,8 @@ class SearchResultAdapter(
                         ViewAllCompaniesActivity::class.java,
                         Bundle().apply {
                             putParcelable("dataList", list[position])
-                            putParcelable("lastSearchRequest", activity.lastSearchRequest())
-                            putBoolean("isSearchInCommunity", activity.isSearchInCommunity())
+                            putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
+                            putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
                         })
                 }
                 if(list[position].items.size > 3){
@@ -236,8 +234,8 @@ class SearchResultAdapter(
                         ViewAllProductCategoriesActivity::class.java,
                         Bundle().apply {
                             putParcelable("dataList", list[position])
-                            putParcelable("lastSearchRequest", activity.lastSearchRequest())
-                            putBoolean("isSearchInCommunity", activity.isSearchInCommunity())
+                            putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
+                            putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
                         })
                 }
                 if(list[position].items.size > 3){
@@ -268,8 +266,8 @@ class SearchResultAdapter(
                         ViewAllCropCategoriesActivity::class.java,
                         Bundle().apply {
                             putParcelable("dataList", list[position])
-                            putParcelable("lastSearchRequest", activity.lastSearchRequest())
-                            putBoolean("isSearchInCommunity", activity.isSearchInCommunity())
+                            putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
+                            putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
                         })
                 }
                 if(list[position].items.size > 3){
@@ -304,8 +302,8 @@ class SearchResultAdapter(
                         ViewAllPostsActivity::class.java,
                         Bundle().apply {
                             putParcelable("dataList", list[position])
-                            putParcelable("lastSearchRequest", activity.lastSearchRequest())
-                            putBoolean("isSearchInCommunity", activity.isSearchInCommunity())
+                            putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
+                            putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
                         })
                 }
                 if(list[position].items.size > 3){

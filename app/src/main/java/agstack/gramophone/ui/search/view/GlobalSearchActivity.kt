@@ -41,7 +41,7 @@ class GlobalSearchActivity :
     private var searchInCommunity = false
     private var disableSearchForAWhile = false
 
-    private val handler =  Handler(Looper.getMainLooper())
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,17 +50,19 @@ class GlobalSearchActivity :
         searchSuggestions()
 
         viewDataBinding.recyclerViewSuggestions.adapter = SuggestionAdapter(suggestionList) {
-            disableSearchForAWhile()
+            disableSearchForAWhile() // need to disable search before edtSearch.setText to avoid looping api calls
             hideSoftKeyboard(viewDataBinding.edtSearch)
-            viewDataBinding.edtSearch.setText(it) // need to disable search before to avoid looping api calls
+            viewDataBinding.edtSearch.setText(it)
             viewDataBinding.edtSearch.setSelection(it.length)
-            getViewModel().searchByKeyword(GlobalSearchRequest(keyword = it, source = "app", pageSection = "suggestion"), searchInCommunity)
+            getViewModel().searchByKeyword(GlobalSearchRequest(keyword = it,
+                source = "app",
+                pageSection = "suggestion"), searchInCommunity)
         }
 
         viewDataBinding.recyclerViewSearchResult.adapter =
             SearchResultAdapter(
-                this@GlobalSearchActivity,
-                filterSearchResultList, getViewModel()
+                getViewModel(),
+                filterSearchResultList,
             ) {
                 getViewModel().likePost(PostRequestModel(it, ""))
             }
@@ -73,7 +75,9 @@ class GlobalSearchActivity :
         viewDataBinding.edtSearch.setOnEditorActionListener { _, action, _ ->
             if (action == EditorInfo.IME_ACTION_DONE) {
                 hideSoftKeyboard(viewDataBinding.edtSearch)
-                getViewModel().searchByKeyword(GlobalSearchRequest(viewDataBinding.edtSearch.text.toString(), source = "app", pageSection = "search"), searchInCommunity)
+                getViewModel().searchByKeyword(GlobalSearchRequest(viewDataBinding.edtSearch.text.toString(),
+                    source = "app",
+                    pageSection = "search"), searchInCommunity)
                 disableSearchForAWhile()
             }
             false
@@ -90,7 +94,7 @@ class GlobalSearchActivity :
         handler.removeCallbacksAndMessages(null)
     }
 
-    private fun disableSearchForAWhile(){
+    private fun disableSearchForAWhile() {
         disableSearchForAWhile = true
         handler.postDelayed({
             disableSearchForAWhile = false
@@ -203,7 +207,8 @@ class GlobalSearchActivity :
                 if (it.isNullOrEmpty()) {
                     onClearSearchClick()
                 } else {
-                    getViewModel().getSuggestions(SuggestionsRequest(keyword = it, search_type = if(searchInCommunity)  "community" else "global"))
+                    getViewModel().getSuggestions(SuggestionsRequest(keyword = it,
+                        search_type = if (searchInCommunity) "community" else "global"))
                 }
             }
     }
@@ -231,7 +236,7 @@ class GlobalSearchActivity :
                     filterSearchResultList.clear()
                     filterSearchResultList.addAll(originalSearchResultList)
                     viewDataBinding.recyclerViewSearchResult.adapter?.notifyDataSetChanged()
-                }else{
+                } else {
                     originalSearchResultList.filter { it.type == tab?.tag }.forEach {
                         filterSearchResultList.clear()
                         filterSearchResultList.add(it)
@@ -251,16 +256,8 @@ class GlobalSearchActivity :
         })
     }
 
-    private fun removeTabs(){
+    private fun removeTabs() {
         viewDataBinding.tabLayout.removeAllTabs()
         viewDataBinding.tabBarContainer.visibility = View.GONE
-    }
-
-    fun lastSearchRequest() : GlobalSearchRequest? {
-        return getViewModel().lastSearchRequest
-    }
-
-    fun isSearchInCommunity() : Boolean {
-        return getViewModel().isSearchInCommunity
     }
 }

@@ -25,7 +25,7 @@ abstract class GlobalSearchBaseActivity<B : ViewDataBinding, N : GlobalSearchNav
     private var lastSearchRequest: GlobalSearchRequest? = null
     private var isSearchInCommunity: Boolean? = false
     private var loadingComplete: Boolean = false
-    private var skip: String = "10"
+    private var skip: Int = 0
     var scrollChangeListener : NestedScrollView.OnScrollChangeListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,13 +40,20 @@ abstract class GlobalSearchBaseActivity<B : ViewDataBinding, N : GlobalSearchNav
         val items = dataList?.items
         items?.let { displayDataList.addAll(items as ArrayList<Item>) }
 
+        skip = 0
+
+        lastSearchRequest?.let {
+            it.skip = skip.toString()
+            it.afterKey = skip.toString()
+        }
+
         scrollChangeListener =
             NestedScrollView.OnScrollChangeListener { v: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
                 if (!loadingComplete && scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                    skip = (skip.toInt() + 10).toString()
+                    skip += 10
                     lastSearchRequest?.let {
-                        it.skip = skip
-                        it.afterKey = skip
+                        it.skip = skip.toString()
+                        it.afterKey = skip.toString()
                         getViewModel().searchByKeyword(it, isSearchInCommunity == true)
                     }
                 }
