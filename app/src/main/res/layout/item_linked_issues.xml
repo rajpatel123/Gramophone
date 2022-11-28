@@ -5,48 +5,58 @@
             name="model"
             type="agstack.gramophone.ui.advisory.models.advisory.LinkedIssue"/>
     </data>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
-        <RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:paddingStart="@dimen/_5sdp"
+        >
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/_5sdp"
-            android:paddingEnd="@dimen/_15sdp"
-            android:paddingBottom="@dimen/_5sdp"
-            android:paddingTop="@dimen/_5sdp"
-            android:background="@drawable/linked_issue_bg">
-
-
-            <com.amnix.xtension.widgets.CircularImageView
-                android:id="@+id/ivIssueImage"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                app:srcCompat="@drawable/dummy_crop"
-                product_image="@{model.issue_image}"/>
-
-            <TextView
-                android:id="@+id/tvIssue"
+            android:layout_height="match_parent"
+         >
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_toEndOf="@+id/ivIssueImage"
-                android:fontFamily="@font/manrope_bold"
-                android:text="@{model.issue_name}"
-                android:textColor="@color/blakish"
-                tools:text="अगेती झुलसा" />
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:background="@drawable/linked_issue_bg">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_arrow_right"
-                android:layout_toEndOf="@+id/tvIssue"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_10sdp"/>
-        </RelativeLayout>
 
-    </LinearLayout>
+                <com.amnix.xtension.widgets.CircularImageView
+                    android:id="@+id/ivIssueImage"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    app:srcCompat="@drawable/dummy_crop"
+                    product_image="@{model.issue_image}"/>
+
+                <TextView
+                    android:id="@+id/tvIssue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_toEndOf="@+id/ivIssueImage"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@{model.issue_name}"
+                    android:textColor="@color/brand_color"
+                    tools:text="अगेती झुलसा" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_toEndOf="@+id/tvIssue"
+                    app:tint="@color/brand_color"
+                    app:srcCompat="@drawable/ic_arrow_right" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
 </layout>

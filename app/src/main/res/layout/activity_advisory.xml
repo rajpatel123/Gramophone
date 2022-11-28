@@ -108,12 +108,12 @@
                                 android:id="@+id/tvLocation"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-
+                                android:drawableTint="@color/brand_color"
                                 android:drawableStart="@drawable/ic_location"
                                 android:fontFamily="@font/manrope_regular"
                                 android:gravity="center_vertical"
                                 android:text="@{viewModel.address}"
-                                android:textColor="@color/gray"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/_10ssp"
                                 tools:text=" Sawer, Madhya Pradesh" />
 
@@ -490,8 +490,7 @@
                     layout="@layout/item_advisory_community"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rlCropProblems"
-                    />
+                    android:layout_below="@+id/rlCropProblems" />
             </RelativeLayout>
 
         </androidx.core.widget.NestedScrollView>

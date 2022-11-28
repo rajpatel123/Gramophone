@@ -23,7 +23,7 @@ class AllCropProblemsActivity : BaseActivityWrapper<ActivityAllCropProblemsBindi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setUpToolBar(true,getString(R.string.crop_all_problems),R.drawable.ic_action_navigation_arrow_back,false)
+        setUpToolBar(true,getString(R.string.crop_all_problems),R.drawable.ic_arrow_left,false)
         cropProblemViewModel.getCropProblemList(intent.extras?.getInt(STAGE_ID),intent.extras?.getInt(CROP_ID))
     }
 

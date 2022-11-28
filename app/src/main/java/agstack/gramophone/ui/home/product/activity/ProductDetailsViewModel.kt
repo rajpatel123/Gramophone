@@ -765,6 +765,11 @@ class ProductDetailsViewModel @Inject constructor(
                         Constants.GP_API_STATUS)
                 ) {
                     getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+                    val cartCount =
+                        SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!
+                    SharedPreferencesHelper.instance?.putInteger(
+                        SharedPreferencesKeys.CART_ITEM_COUNT, cartCount + 1)
+                    getNavigator()?.updateCartCount(cartCount + 1)
                     getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(R.string.gotocart)!!)
                 } else {
                     if (addTocartResponse.errorBody().isNotNull() && addTocartResponse.errorBody()?.source().toString().contains("alr")) {

@@ -23,6 +23,7 @@ import agstack.gramophone.utils.Constants
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.activity.viewModels
@@ -46,11 +47,14 @@ class AdvisoryActivity :
     private val subCategoryViewModel: SubCategoryViewModel by viewModels()
     var bottomSheet: AddToCartBottomSheetDialog? = null
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         subCategoryViewModel.updateProfileDetail()
         subCategoryViewModel.getCropAdvisoryDetails()
         viewDataBinding.llCommunityLL.goToCommunity.setOnClickListener {openCommunity()  }
+
+        viewDataBinding.llCommunityLL.tvDisclaimer.text = Html.fromHtml(getString(R.string.disclaimer_txt),0)
     }
 
 

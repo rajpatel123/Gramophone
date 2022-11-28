@@ -11,6 +11,7 @@ import agstack.gramophone.ui.home.subcategory.AvailableProductOffersAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.ShareSheetPresenter
+import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.widget.MultipleImageDetailDialog
@@ -32,6 +33,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.item_menu_cart_with_counter.*
 import kotlin.math.roundToInt
 
 
@@ -123,7 +125,18 @@ class ProductDetailsActivity :
         expertAdviceBottomSheet.dismiss()
     }
 
+    private fun initYoutubePlayer() {
+        val youTubePlayerFragment = supportFragmentManager
+            .findFragmentById(R.id.youtube_player_fragment) as? YouTubePlayerFragment?
+
+        val googleApiKey = instance!!.getString(SharedPreferencesKeys.GOOGLE_API_KEY)
+
+        youTubePlayerFragment?.initialize(googleApiKey, this)
+    }
+
     private fun initProductDetailView() {
+        setUpToolBar(true, "", R.drawable.ic_arrow_left)
+        viewDataBinding.myToolbar.myToolbar.inflateMenu(R.menu.menu_search_and_cart)
         viewDataBinding.tvShowAllDetails.setOnClickListener {
             isShowMoreClicked = !isShowMoreClicked
 
@@ -154,16 +167,25 @@ class ProductDetailsActivity :
         viewDataBinding.whatsAppShare.setOnClickListener {
             share()
         }
-
+        updateCartCount(SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!)
     }
 
-    private fun initYoutubePlayer() {
-        val youTubePlayerFragment = supportFragmentManager
-            .findFragmentById(R.id.youtube_player_fragment) as? YouTubePlayerFragment?
-
-        val googleApiKey = instance!!.getString(SharedPreferencesKeys.GOOGLE_API_KEY)
-
-        youTubePlayerFragment?.initialize(googleApiKey, this)
+    override fun updateCartCount(cartCount: Int) {
+        try {
+            if (cartCount > 0) {
+                tvCartCount?.text = cartCount.toString()
+                frameCartRedCircle?.visibility = View.VISIBLE
+            } else {
+                frameCartRedCircle?.visibility = View.GONE
+            }
+            rlItemMenuCart?.setOnClickListener {
+                openActivity(CartActivity::class.java)
+            }
+            ivItemMenuCart?.setColorFilter(ContextCompat.getColor(this, R.color.blakish),
+                android.graphics.PorterDuff.Mode.SRC_IN)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
     }
 
     override fun onInitializationSuccess(
@@ -193,21 +215,6 @@ class ProductDetailsActivity :
         ).show()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflator = menuInflater
-        inflator.inflate(R.menu.menu_product_details, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_cart -> {
-                openActivity(CartActivity::class.java)
-            }
-        }
-        return true
-    }
-
     override fun getBundle(): Bundle? {
         return intent.extras
     }
@@ -225,7 +232,7 @@ class ProductDetailsActivity :
     }
 
     override fun setToolbarTitle(title: String?) {
-        setUpToolBar(true, title!!, R.drawable.ic_arrow_left)
+        viewDataBinding.myToolbar.myToolbar.title = title
     }
 
     override fun setProductSKUAdapter(

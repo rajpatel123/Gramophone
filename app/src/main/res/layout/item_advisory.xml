@@ -17,7 +17,7 @@
                 <TextView
                     android:id="@+id/tvActivityName"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="@dimen/_35sdp"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_vertical"
                     android:layout_marginTop="@dimen/_5sdp"
@@ -31,7 +31,7 @@
                     android:text="@string/spray"
 
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
+                    android:textSize="@dimen/_12ssp" />
 
                 <LinearLayout
                     android:id="@+id/llActivityDetails"
@@ -52,18 +52,20 @@
                         android:fontFamily="@font/manrope_bold"
                         android:gravity="center_horizontal"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_14ssp"
+                        android:textSize="@dimen/_12ssp"
                         tools:text="पानी में मिलाकर छिड़काव करें" />
 
                     <TextView
                         android:id="@+id/tvBriefDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingEnd="@dimen/_15sdp"
                         android:fontFamily="@font/manrope_regular"
                         android:gravity="center_horizontal"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_14ssp"
+                        android:textSize="@dimen/_11ssp"
                         tools:text="उपरोक्त समस्याओं का निदान के लिए यहाँ नीचे दी गयी सामग्री को पानी में मिलाकर अपनी फसल पर छिड़काव करे " />
 
                     <androidx.recyclerview.widget.RecyclerView

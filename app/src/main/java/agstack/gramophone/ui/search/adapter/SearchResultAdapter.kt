@@ -128,6 +128,8 @@ class SearchResultAdapter(val viewModel : GlobalSearchViewModel,
                         Bundle().apply {
                             putString(Constants.AUTHER_ID, id)
                             putString(Constants.AUTHER_UUID, id)
+                            putInt(Constants.BLOCKED_STATUS, 0)
+
                         })
                 }
                 holder.binding.viewAllProfiles.setOnClickListener {
