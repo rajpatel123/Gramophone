@@ -10,6 +10,8 @@ import agstack.gramophone.ui.settings.BlockedUsersNavigator
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUser
 import agstack.gramophone.ui.settings.viewmodel.BlockedUsersViewModel
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_blocked_users.*
@@ -39,8 +41,18 @@ class BlockedUsersActivity :
 
     override fun getViewModel() = blockedUsersViewModel
 
-    override fun updateUserList(blockedUsersAdapter: BlockedUsersAdapter,  onClicked: (BlockedUser) -> Unit) {
-        blockedUsersAdapter.selectedUser = onClicked
-        rvBlockedUsers.adapter=blockedUsersAdapter
+    override fun updateUserList(blockedUsersAdapter: BlockedUsersAdapter?,  onClicked: (BlockedUser) -> Unit) {
+        if (blockedUsersAdapter!=null){
+            blockedUsersAdapter?.selectedUser = onClicked
+            rvBlockedUsers.adapter=blockedUsersAdapter
+            rvBlockedUsers.visibility=VISIBLE
+            tvNoDataFoud.visibility= GONE
+        }else{
+            rvBlockedUsers.visibility= GONE
+            tvNoDataFoud.visibility= VISIBLE
+        }
+
+
+
     }
 }
