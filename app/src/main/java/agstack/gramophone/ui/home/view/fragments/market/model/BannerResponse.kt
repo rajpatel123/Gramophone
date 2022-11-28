@@ -20,6 +20,7 @@ data class GpApiResponseBannerData(
     @SerializedName("community") var communityBanner: ArrayList<Banner> = arrayListOf(),
     @SerializedName("my_farm") var myFarm: ArrayList<Banner> = arrayListOf(),
     @SerializedName("shop_by_store") var shopByStore: ArrayList<Banner> = arrayListOf(),
+    @SerializedName("product_app_category") var productAppCategory: ArrayList<Banner> = arrayListOf(),
 ) : Parcelable
 
 @Parcelize

@@ -19,7 +19,10 @@ interface ProductDetailsNavigator : BaseNavigator {
         onSKUItemClicked: (ProductSkuListItem) -> Unit,
     )
 
-    fun setProductSKUOfferAdapter(productSKUOfferAdapter: AvailableProductOffersAdapter, offerListSize: Int)
+    fun setProductSKUOfferAdapter(
+        productSKUOfferAdapter: AvailableProductOffersAdapter,
+        offerListSize: Int,
+    )
 
     fun getFragmentManagerPager(): FragmentManager
     fun setProductImagesViewPagerAdapter(productImagesAdapter: ProductImagesAdapter)
@@ -61,6 +64,5 @@ interface ProductDetailsNavigator : BaseNavigator {
     fun refreshOfferAdapter()
     fun showContactForPriceBottomSheetDialog(contactForPriceBottomSheetDialog: ContactForPriceBottomSheetDialog)
     fun updateAddToCartButtonText(text: String? = null): String
-
-
+    fun updateCartCount(cartCount: Int)
 }
