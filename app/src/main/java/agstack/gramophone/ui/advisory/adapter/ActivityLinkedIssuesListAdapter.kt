@@ -15,9 +15,11 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 
 
-class ActivityLinkedIssuesListAdapter(private val dataList: List<LinkedIssue>) :
+class ActivityLinkedIssuesListAdapter(
+    private val dataList: List<LinkedIssue>,
+    var onIssueClicked: ((LinkedIssue) -> Unit)?
+) :
     RecyclerView.Adapter<ActivityLinkedIssuesListAdapter.DeveloperViewHolder>() {
-    var onActivitySelected: ((LinkedIssue) -> Unit)? = null
 
     interface SetImage {
         fun onImageSet(imageUrl: String, iv: ImageView)
@@ -32,6 +34,10 @@ class ActivityLinkedIssuesListAdapter(private val dataList: List<LinkedIssue>) :
     override fun onBindViewHolder(holder: DeveloperViewHolder, position: Int) {
         var linkedIssue: LinkedIssue = dataList[position]!!
         holder.binding.setVariable(BR.model, linkedIssue)
+
+        holder.binding.root.setOnClickListener {
+            onIssueClicked?.invoke(linkedIssue)
+        }
 
     }
 

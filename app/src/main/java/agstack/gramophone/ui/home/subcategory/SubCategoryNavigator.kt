@@ -67,4 +67,6 @@ interface SubCategoryNavigator : BaseNavigator {
                        onProductDetailClick: ((productId: Int) -> Unit),)
 
     fun updateCartCount(cartCount: Int)
+
+
 }
