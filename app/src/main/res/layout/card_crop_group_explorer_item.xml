@@ -207,7 +207,7 @@
                         tools:text="@string/approx_end_date"
                         android:textColor="@color/oldmrpcolor"
                         android:textSize="@dimen/_12ssp"
-                        android:visibility='@{isOldFarms ? View.VISIBLE : View.GONE}'
+                        android:visibility='@{item.is_crop_cycle_completed ? View.VISIBLE : View.GONE}'
                         app:farmDate='@{@string/approx_end_date(item.crop_anticipated_completed_date)}'/>
 
                 </LinearLayout>

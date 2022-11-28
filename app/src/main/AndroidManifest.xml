@@ -280,28 +280,28 @@
             android:name=".ui.tv.GramophoneTVActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.search.view.ViewAllSearchProductsActivity"
+            android:name=".ui.search.view.ViewAllProductsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.search.view.ViewAllSearchCropsActivity"
+            android:name=".ui.search.view.ViewAllCropsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.search.view.ViewAllSearchProfilesActivity"
+            android:name=".ui.search.view.ViewAllProfilesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.search.view.ViewAllSearchCropProblemsActivity"
+            android:name=".ui.search.view.ViewAllCropProblemsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.search.view.ViewAllSearchCompaniesActivity"
+            android:name=".ui.search.view.ViewAllCompaniesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.search.view.ViewAllSearchProductCategoriesActivity"
+            android:name=".ui.search.view.ViewAllProductCategoriesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.search.view.ViewAllSearchPostsActivity"
+            android:name=".ui.search.view.ViewAllPostsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.search.view.ViewAllSearchCropCategoriesActivity"
+            android:name=".ui.search.view.ViewAllCropCategoriesActivity"
             android:screenOrientation="portrait" />
 
         <service android:name=".pushnotification.MyFirebaseMessagingService" />

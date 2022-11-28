@@ -3,6 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.search.viewmodel.GlobalSearchViewModel" />
+    </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,19 +28,45 @@
             android:background="@color/gray_stroke"
             android:id="@+id/section" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_below="@+id/section"
-            android:paddingTop="@dimen/_8sdp"
-            android:id="@+id/rvCrops"
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:itemCount="8"
-            app:spanCount="3"
-            tools:listitem="@layout/sub_item_crop" />
+            android:layout_below="@+id/section">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_below="@+id/section"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:id="@+id/rvCrops"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    tools:itemCount="8"
+                    app:spanCount="3"
+                    tools:listitem="@layout/sub_item_crop" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="@{viewModel.progress == true ? View.VISIBLE : View.GONE, default = gone}"
+            android:translationZ="@dimen/_4sdp"
+            tools:visibility="visible" />
 
     </RelativeLayout>
 
