@@ -134,11 +134,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/llContentLayout"
             android:layout_centerInParent="true"
-            android:onClick="@{ ()-> viewModel.closeDialog() }"
 
             android:layout_marginTop="@dimen/_20sdp"
             android:background="@drawable/circle_solid_gray"
             android:gravity="center_vertical"
+            android:onClick="@{ ()-> viewModel.closeDialog() }"
             android:orientation="horizontal"
             android:padding="@dimen/_10ssp"
             android:paddingBottom="@dimen/_10sdp">

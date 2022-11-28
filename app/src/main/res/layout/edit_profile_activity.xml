@@ -196,7 +196,7 @@
                     android:singleLine="true"
                     android:text="@={viewModel.mobileNo}"
                     android:textColor="@color/blakish"
-                    android:textSize="@dimen/_12ssp"
+                    android:textSize="@dimen/_11ssp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@+id/tvUpdate"
                     app:layout_constraintTop_toTopOf="parent" />

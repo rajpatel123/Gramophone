@@ -7,6 +7,7 @@ import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
 import agstack.gramophone.ui.userprofile.verifyotp.model.VerifyOTPRequestModel
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.Constants.RESEND_OTP_TIME
 import android.util.Log
 import android.view.View
 import androidx.databinding.ObservableField
@@ -88,7 +89,7 @@ class VerifyOtpDialogViewModel @Inject constructor(
                         type.uppercase()
                     )
                 resendOTPType.set(text)
-
+               getNavigator()?.showTimer(RESEND_OTP_TIME)
 
             } else {
                 progressLoader.set(false)

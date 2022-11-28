@@ -4,9 +4,12 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityAdvisoryBinding
+import agstack.gramophone.databinding.ActivityReferralDialogBinding
+import agstack.gramophone.databinding.CropIssueIdialogBinding
 import agstack.gramophone.databinding.ItemAdvisoryBinding
 import agstack.gramophone.ui.advisory.adapter.*
 import agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData
+import agstack.gramophone.ui.advisory.models.advisory.LinkedIssue
 import agstack.gramophone.ui.advisory.view.CropIssueBottomSheetDialog
 import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
@@ -20,10 +23,12 @@ import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.activity.viewModels
@@ -199,12 +204,13 @@ class AdvisoryActivity :
                 advisoryLayout.tvShortDesc.text = activityToBeDone.short_application
 
                 if (activityToBeDone.linked_issues.isNotNullOrEmpty()) {
-                    val activityLinkedIssuesListAdapter =
-                        ActivityLinkedIssuesListAdapter(activityToBeDone.linked_issues)
+
                     advisoryLayout.rvLikedIssues.layoutManager =
                         LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                     advisoryLayout.rvLikedIssues.setHasFixedSize(true)
-                    advisoryLayout.rvLikedIssues.adapter = activityLinkedIssuesListAdapter
+                    advisoryLayout.rvLikedIssues.adapter =  ActivityLinkedIssuesListAdapter(activityToBeDone.linked_issues) {
+                    openProblemDialog(it)
+                    }
                 }
 
                 if (activityToBeDone.linked_technicals.isNotNullOrEmpty()) {
@@ -315,6 +321,27 @@ class AdvisoryActivity :
         }
 
     }
+
+    fun openProblemDialog(linkedIssue: LinkedIssue) {
+        //Inflate the dialog with custom view   use Binding
+        val mDialogView =
+            LayoutInflater.from(this).inflate(R.layout.crop_issue_idialog, null)
+        val dialogBinding = CropIssueIdialogBinding.bind(mDialogView)
+        dialogBinding.setVariable(BR.model, linkedIssue)
+
+
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(dialogBinding.root)
+        //show dialog
+        val mAlertDialog = mBuilder.show()
+
+        mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background);
+        dialogBinding.llCrossLinearLayout.setOnClickListener {
+            mAlertDialog.dismiss()
+        }
+    }
+
 
     override fun finishActivity() {
         finish()
