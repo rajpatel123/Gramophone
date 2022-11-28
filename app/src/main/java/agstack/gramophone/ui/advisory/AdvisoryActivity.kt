@@ -328,6 +328,8 @@ class AdvisoryActivity :
             LayoutInflater.from(this).inflate(R.layout.crop_issue_idialog, null)
         val dialogBinding = CropIssueIdialogBinding.bind(mDialogView)
         dialogBinding.setVariable(BR.model, linkedIssue)
+
+
         //AlertDialogBuilder
         val mBuilder = AlertDialog.Builder(this)
             .setView(dialogBinding.root)
@@ -335,7 +337,9 @@ class AdvisoryActivity :
         val mAlertDialog = mBuilder.show()
 
         mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background);
-
+        dialogBinding.llCrossLinearLayout.setOnClickListener {
+            mAlertDialog.dismiss()
+        }
     }
 
 

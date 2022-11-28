@@ -27,50 +27,86 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:elevation="-2dp"
 
                 app:cardCornerRadius="@dimen/_10sdp">
-                <ImageView
-                    style="@style/heading_title_bold_large"
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_120sdp"
-                    android:maxHeight="@dimen/_100sdp"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/dummy_crop"
-                    />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            style="@style/heading_title_bold_large"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_130sdp"
+                            android:layout_marginBottom="10dp"
+                            android:maxHeight="@dimen/_100sdp"
+                            android:scaleType="fitXY"
+                            app:product_image="@{model.issue_image}" />
+
+                        <LinearLayout
+                            android:id="@+id/llCrossLinearLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top|end"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingBottom="@dimen/_10sdp">
+
+                            <ImageView
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                app:srcCompat="@drawable/ic_close_issue" />
+
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="@{model.issue_name}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="Late Blight" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@{model.issue_type}"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_12ssp"
+
+                        tools:text="Nutritional Issue" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@{model.issue_description}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp" />
+                </LinearLayout>
+
+
             </androidx.cardview.widget.CardView>
 
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:fontFamily="@font/manrope_bold"
-                android:text="@{model.issue_name}"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14ssp"
-                tools:text="Late Blight" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:fontFamily="@font/manrope_regular"
-                android:text="@{model.issue_type}"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/_12ssp"
-
-                tools:text="Nutritional Issue" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_10sdp"
-                android:fontFamily="@font/manrope_regular"
-                android:text="@{model.issue_description}"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp" />
 
 
         </LinearLayout>

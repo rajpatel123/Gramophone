@@ -62,6 +62,7 @@ class VerifyOTPDialogFragment :
     }
 
     override fun showTimer(duration: Long) {
+        mViewModel?.timeOver?.set(false)
         binding.tvTime.visibility = View.VISIBLE
         binding.tvResend.visibility = View.VISIBLE
         binding.tvResendOtp.visibility = View.GONE
