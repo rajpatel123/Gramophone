@@ -37,7 +37,7 @@ class CropProblemDetailActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setUpToolBar(true, "", R.drawable.ic_action_navigation_arrow_back, true)
+        setUpToolBar(true, "", R.drawable.ic_arrow_left, true)
         subCategoryViewModel.getRecommendedProduct()
         subCategoryViewModel.setDiseaseDetails()
     }

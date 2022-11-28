@@ -330,6 +330,7 @@
                         android:textSize="@dimen/_12ssp" />
 
                     <TextView
+                        android:id="@+id/pin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_20sdp"
@@ -337,6 +338,7 @@
                         android:layout_marginEnd="@dimen/_20sdp"
                         android:fontFamily="@font/manrope_medium"
                         android:text="@string/pincode"
+                        android:inputType="number"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp" />
 
@@ -359,13 +361,13 @@
                             android:layout_height="wrap_content"
                             android:completionThreshold="1"
                             android:imeOptions="actionDone"
-                            android:inputType="number"
                             android:maxLength="6"
+                            android:inputType="number"
                             android:paddingBottom="@dimen/_15sdp"
-                            android:text="@={viewModel.pinCode}" />
+                            android:text="@={viewModel.pinCode}"
+                            />
 
                     </com.google.android.material.textfield.TextInputLayout>
-
 
                 </LinearLayout>
 

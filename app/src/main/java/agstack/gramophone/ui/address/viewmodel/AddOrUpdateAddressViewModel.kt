@@ -24,6 +24,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNullOrBlank
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
@@ -569,7 +570,12 @@ class AddOrUpdateAddressViewModel @Inject constructor(
         if (userAddress?.address != null) address.set(userAddress.address)
 
         if (userAddress?.pincode != null){
-            pinCode.set(userAddress.pincode)
+           // getNavigator()?.setPinCode(userAddress.pincode)
+            viewModelScope.launch {
+                delay(2000)
+                pinCode.set(userAddress.pincode)
+
+            }
         } else{
             getPinCode(
                 "pincode",

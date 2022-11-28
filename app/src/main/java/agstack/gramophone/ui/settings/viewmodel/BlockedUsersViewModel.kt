@@ -36,6 +36,9 @@ class BlockedUsersViewModel @Inject constructor(
                                 unblockUser(it._id)
                             }
                         } else {
+                            getNavigator()?.updateUserList(null){
+                                unblockUser(it._id)
+                            }
                             getNavigator()?.onError(Utility.getErrorMessage(blockedUsersList.errorBody()))
                         }
                     } else

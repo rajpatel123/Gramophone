@@ -43,16 +43,17 @@
                     android:layout_toEndOf="@+id/ivIssueImage"
                     android:fontFamily="@font/manrope_bold"
                     android:text="@{model.issue_name}"
-                    android:textColor="@color/blakish"
+                    android:textColor="@color/brand_color"
                     tools:text="अगेती झुलसा" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_arrow_right"
-                    android:layout_toEndOf="@+id/tvIssue"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/_10sdp"/>
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_toEndOf="@+id/tvIssue"
+                    app:tint="@color/brand_color"
+                    app:srcCompat="@drawable/ic_arrow_right" />
             </RelativeLayout>
 
         </LinearLayout>
