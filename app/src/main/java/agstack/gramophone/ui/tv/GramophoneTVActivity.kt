@@ -16,6 +16,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,6 +50,7 @@ class GramophoneTVActivity :
     private val videoIdsList = ArrayList<String>()
     private val videosTitleHashMap = HashMap<String, PlayListItemModels>()
     private var youTubePlayer: YouTubePlayer? = null
+    private var lastTimeClicked: Long = 0
     var position = 0
 
     // Indicates if footer ProgressBar is shown (i.e. next page is loading)
@@ -100,7 +102,7 @@ class GramophoneTVActivity :
                         val imageUrl: String =
                             playListItemModels.snippet.thumbnails.default.url
                         share(title, imageUrl, currentPlayingVideoId!!)
-                    } catch (e: java.lang.Exception) {
+                    } catch (e: Exception) {
                         e.printStackTrace()
                     }
                 }
@@ -108,10 +110,23 @@ class GramophoneTVActivity :
         }
 
         viewDataBinding.frameBookmarked.setOnClickListener {
-            if (currentPlayingVideoId.isNotNullOrEmpty())
-                gramophoneTVViewModel.bookmarkVideo(currentPlayingVideoId!!)
+            if (SystemClock.elapsedRealtime() - lastTimeClicked > 2000) {
+                lastTimeClicked = SystemClock.elapsedRealtime()
+                if (currentPlayingVideoId.isNotNullOrEmpty()) {
+                    if (viewDataBinding.chkBookmark.isChecked) {
+                        viewDataBinding.chkBookmark.isChecked = false
+                        gramophoneTVViewModel.bookmarkVideo(currentPlayingVideoId!!, false)
+                        viewDataBinding.ivBookmark.setImageResource(R.drawable.ic_bookmark)
+                    } else {
+                        viewDataBinding.chkBookmark.isChecked = true
+                        gramophoneTVViewModel.bookmarkVideo(currentPlayingVideoId!!, true)
+                        viewDataBinding.ivBookmark.setImageResource(R.drawable.ic_bookmarked)
+                    }
+                }
+            }
         }
 
+        gramophoneTVViewModel.getBookmarkedVideoList()
         getPlayLists()
     }
 
@@ -261,6 +276,24 @@ class GramophoneTVActivity :
         }
     }
 
+    private fun isVideoBookmarked() {
+        if (gramophoneTVViewModel.bookmarkedList.isNotNullOrEmpty()) {
+            var isBookmarked: Boolean = false
+            for (item in gramophoneTVViewModel.bookmarkedList) {
+                if (item.youtube_video_id == currentPlayingVideoId) {
+                    isBookmarked = true
+                    break
+                }
+            }
+            if (isBookmarked) {
+                viewDataBinding.ivBookmark.setImageResource(R.drawable.ic_bookmarked)
+            } else {
+                viewDataBinding.ivBookmark.setImageResource(R.drawable.ic_bookmark)
+            }
+            viewDataBinding.chkBookmark.isChecked = isBookmarked
+        }
+    }
+
     override fun populatePlayLists(playLists: List<YoutubeChannelItem>) {
         if (playLists.isNotNullOrEmpty()) {
             if (sharedvideoId == null) {
@@ -363,7 +396,7 @@ class GramophoneTVActivity :
                     val videoId: String = videoIds[i].contentDetails.videoId
                     videoIdsList.add(videoId)
                     videosTitleHashMap[videoId] = videoIds[i]
-                } catch (e: java.lang.Exception) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -394,6 +427,7 @@ class GramophoneTVActivity :
 
             override fun onLoaded(arg0: String?) {
                 currentPlayingVideoId = arg0
+                isVideoBookmarked()
                 setCurrentPositionInVideoAdapter(currentPlayingVideoId!!)
                 if (videosTitleHashMap.isNotNullOrEmpty() && videosTitleHashMap.containsKey(
                         currentPlayingVideoId)
@@ -456,11 +490,12 @@ class GramophoneTVActivity :
                 if (videoIdsList.isNotNullOrEmpty()) {
                     try {
                         youTubePlayer.loadVideos(videoIdsList, position, 0)
-                    } catch (e: java.lang.IllegalStateException) {
+                    } catch (e: IllegalStateException) {
+                        e.printStackTrace()
                     }
                 }
             }
-        } catch (e: java.lang.Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }

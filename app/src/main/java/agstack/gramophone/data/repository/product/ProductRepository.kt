@@ -21,6 +21,7 @@ import agstack.gramophone.ui.search.model.GlobalSearchRequest
 import agstack.gramophone.ui.search.model.GlobalSearchResponse
 import agstack.gramophone.ui.search.model.SuggestionsRequest
 import agstack.gramophone.ui.search.model.SuggestionsResponse
+import agstack.gramophone.ui.tv.model.BookmarkedListResponse
 import agstack.gramophone.ui.tv.model.VideoBookMarkedRequest
 import retrofit2.Response
 import javax.inject.Singleton
@@ -104,4 +105,6 @@ interface ProductRepository {
     suspend fun bookmarkVideo(body: VideoBookMarkedRequest): Response<SuccessStatusResponse>
 
     suspend fun getSuggestedCrops(): Response<SuggestedCropResponse>
+
+    suspend fun getBookmarkedList(): Response<BookmarkedListResponse>
 }

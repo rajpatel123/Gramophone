@@ -99,9 +99,9 @@
                                 android:layout_height="50dp">
 
                                 <ImageView
-                                    android:layout_gravity="center"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
                                     android:src="@drawable/ic_whatsapp" />
 
                             </FrameLayout>
@@ -111,10 +111,18 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp">
 
-                                <ImageView
-                                    android:layout_gravity="center"
+                                <CheckBox
+                                    android:id="@+id/chkBookmark"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:visibility="gone" />
+
+                                <ImageView
+                                    android:id="@id/ivBookmark"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
                                     android:src="@drawable/ic_bookmark" />
 
                             </FrameLayout>
@@ -206,58 +214,58 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-                <RelativeLayout
-                    android:id="@+id/relativeToolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?actionBarSize"
-                    android:paddingStart="@dimen/_16sdp"
-                    android:paddingEnd="@dimen/_6sdp">
+            <RelativeLayout
+                android:id="@+id/relativeToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:paddingStart="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_6sdp">
 
-                    <TextView
-                        android:id="@+id/tvPlayListName"
+                <TextView
+                    android:id="@+id/tvPlayListName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/manrope_bold"
+                    android:gravity="top"
+                    android:lineSpacingExtra="1sp"
+                    android:textColor="@color/blakish"
+                    android:textSize="16sp"
+                    android:translationY="-0.27sp"
+                    tools:text="Channel Title" />
+
+                <FrameLayout
+                    android:id="@+id/frameHidePlayList"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true">
+
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:fontFamily="@font/manrope_bold"
-                        android:gravity="top"
-                        android:lineSpacingExtra="1sp"
-                        android:textColor="@color/blakish"
-                        android:textSize="16sp"
-                        android:translationY="-0.27sp"
-                        tools:text="Channel Title" />
+                        android:layout_gravity="center"
+                        android:background="@color/white"
+                        android:contentDescription="@string/image"
+                        android:src="@drawable/ic_cross" />
 
-                    <FrameLayout
-                        android:id="@+id/frameHidePlayList"
-                        android:layout_alignParentEnd="true"
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent">
+                </FrameLayout>
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:background="@color/white"
-                            android:contentDescription="@string/image"
-                            android:src="@drawable/ic_cross" />
+            </RelativeLayout>
 
-                    </FrameLayout>
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_stroke" />
 
-                </RelativeLayout>
-
-                <View
-                    android:id="@+id/view"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_stroke" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/videoListRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:orientation="vertical"
-                    tools:listitem="@layout/list_item_all_videos_new"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/videoListRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/list_item_all_videos_new" />
 
         </LinearLayout>
 
