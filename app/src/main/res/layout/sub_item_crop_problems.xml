@@ -50,9 +50,9 @@
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="1dp"
                     android:scaleType="centerCrop"
+                    app:product_image_farm='@{item.image ?? ""}'
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerTopOnly20"
-                    tools:src="@drawable/dummy_crop"
-                    app:product_image='@{item.image ?? ""}' />
+                    tools:src="@drawable/dummy_crop" />
 
             </RelativeLayout>
 
