@@ -102,7 +102,7 @@ class GramCashTransactionListAdapter(transactionList: ArrayList<GramcashTxnItem?
                 if (model.isExpired!! && model.expirySoon!!) {
                     mBinding.tvAmountTotal.text= model.amount
                 } else {
-                    mBinding.tvAmountTotal.text= "-"+ model.amount
+                    mBinding.tvAmountTotal.text= model.amount
                 }
                 mBinding.tvAmountTotal.setTextColor(
                     ContextCompat.getColor(
