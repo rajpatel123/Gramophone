@@ -241,6 +241,7 @@ class GramophoneTVViewModel @Inject constructor(
                     progress.value = false
                     if (response.isSuccessful) {
                         getNavigator()?.showToast(response.body()?.gp_api_message)
+                        getBookmarkedVideoList()
                     }
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
