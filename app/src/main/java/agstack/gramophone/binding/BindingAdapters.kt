@@ -70,6 +70,7 @@ fun bindImage(view: ImageView, imageUrl: String?) {
     } else {
         Glide.with(view.context)
             .load(imageUrl)
+            .apply(RequestOptions().override(600, 300))
             .transition(DrawableTransitionOptions.withCrossFade())
             .placeholder(R.drawable.ic_gramophone_leaf)
             .error(R.drawable.ic_gramophone_leaf)
