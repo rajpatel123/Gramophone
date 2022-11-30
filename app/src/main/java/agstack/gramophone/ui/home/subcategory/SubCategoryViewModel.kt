@@ -499,7 +499,7 @@ class SubCategoryViewModel @Inject constructor(
                     val response =
                         productRepository.addToCart(productData)
                     progress.value = false
-                    if (response.body()?.gp_api_status!! == Constants.GP_API_STATUS) {
+                    if (response.isSuccessful && response.body()?.gp_api_status!! == Constants.GP_API_STATUS) {
                         getNavigator()?.showToast(response.body()?.gp_api_message)
                         val cartCount =
                             SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!
@@ -507,7 +507,13 @@ class SubCategoryViewModel @Inject constructor(
                             SharedPreferencesKeys.CART_ITEM_COUNT, cartCount + 1)
                         getNavigator()?.updateCartCount(cartCount + 1)
                     } else {
-                        getNavigator()?.showToast(response.body()?.gp_api_message)
+                        if (response.errorBody().isNotNull() && response.errorBody()?.source().toString().contains("alr")) {
+                            getNavigator()?.showToast(R.string.already_added_in_cart)
+                            /*getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(
+                                R.string.gotocart)!!)*/
+                        } else {
+                            getNavigator()?.showToast((getNavigator()?.getMessage(R.string.not_able_to_add)))
+                        }
                     }
                 }
             } catch (e: Exception) {

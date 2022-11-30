@@ -7,6 +7,7 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityCheckoutStatusBinding
 import agstack.gramophone.ui.order.view.OrderListActivity
 import android.os.Bundle
+import android.os.SystemClock
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,6 +16,7 @@ class CheckoutStatusActivity : BaseActivityWrapper<ActivityCheckoutStatusBinding
 
     //initialise ViewModel
     private val checkoutStatusViewModel: CheckoutStatusViewModel by viewModels()
+    private var lastTimeClicked: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +24,10 @@ class CheckoutStatusActivity : BaseActivityWrapper<ActivityCheckoutStatusBinding
     }
 
     override fun openOrderListActivity() {
+        if (SystemClock.elapsedRealtime() - lastTimeClicked < 2000) {
+            return
+        }
+        lastTimeClicked = SystemClock.elapsedRealtime()
         openAndFinishActivity(OrderListActivity::class.java, null)
     }
 

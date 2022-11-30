@@ -84,8 +84,8 @@ class GCExpiringSoonActivity :
         viewDataBinding.rvexpireSoon.adapter?.notifyDataSetChanged()
     }
 
-    override fun openHomeActivity() {
-        openAndFinishActivityWithClearTopNewTaskClearTaskFlags(HomeActivity::class.java, null)
+    override fun goBack() {
+        finish()
     }
 
 }

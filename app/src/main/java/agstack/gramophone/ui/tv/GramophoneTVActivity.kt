@@ -16,6 +16,9 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.SystemClock
+import android.text.Html
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +29,9 @@ import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerSupportFragmentX
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 @AndroidEntryPoint
@@ -49,6 +55,7 @@ class GramophoneTVActivity :
     private val videoIdsList = ArrayList<String>()
     private val videosTitleHashMap = HashMap<String, PlayListItemModels>()
     private var youTubePlayer: YouTubePlayer? = null
+    private var lastTimeClicked: Long = 0
     var position = 0
 
     // Indicates if footer ProgressBar is shown (i.e. next page is loading)
@@ -100,7 +107,7 @@ class GramophoneTVActivity :
                         val imageUrl: String =
                             playListItemModels.snippet.thumbnails.default.url
                         share(title, imageUrl, currentPlayingVideoId!!)
-                    } catch (e: java.lang.Exception) {
+                    } catch (e: Exception) {
                         e.printStackTrace()
                     }
                 }
@@ -108,10 +115,23 @@ class GramophoneTVActivity :
         }
 
         viewDataBinding.frameBookmarked.setOnClickListener {
-            if (currentPlayingVideoId.isNotNullOrEmpty())
-                gramophoneTVViewModel.bookmarkVideo(currentPlayingVideoId!!)
+            if (SystemClock.elapsedRealtime() - lastTimeClicked > 2000) {
+                lastTimeClicked = SystemClock.elapsedRealtime()
+                if (currentPlayingVideoId.isNotNullOrEmpty()) {
+                    if (viewDataBinding.chkBookmark.isChecked) {
+                        viewDataBinding.chkBookmark.isChecked = false
+                        gramophoneTVViewModel.bookmarkVideo(currentPlayingVideoId!!, false)
+                        viewDataBinding.ivBookmark.setImageResource(R.drawable.ic_bookmark)
+                    } else {
+                        viewDataBinding.chkBookmark.isChecked = true
+                        gramophoneTVViewModel.bookmarkVideo(currentPlayingVideoId!!, true)
+                        viewDataBinding.ivBookmark.setImageResource(R.drawable.ic_bookmarked)
+                    }
+                }
+            }
         }
 
+        gramophoneTVViewModel.getBookmarkedVideoList()
         getPlayLists()
     }
 
@@ -215,7 +235,8 @@ class GramophoneTVActivity :
             }
         } else {
             try {
-                youTubePlayer!!.loadPlaylist(currentPlayingPlayListId)
+                youTubePlayer?.cuePlaylist(currentPlayingPlayListId)
+                youTubePlayer?.play()
             } catch (e: Exception) {
                 e.run { }
             }
@@ -258,6 +279,24 @@ class GramophoneTVActivity :
             startActivity(whatsappIntent)
         } catch (ex: ActivityNotFoundException) {
             showToast(getString(R.string.whatsapp_not_installed))
+        }
+    }
+
+    private fun isVideoBookmarked() {
+        if (gramophoneTVViewModel.bookmarkedList.isNotNullOrEmpty()) {
+            var isBookmarked: Boolean = false
+            for (item in gramophoneTVViewModel.bookmarkedList) {
+                if (item.youtube_video_id == currentPlayingVideoId) {
+                    isBookmarked = true
+                    break
+                }
+            }
+            if (isBookmarked) {
+                viewDataBinding.ivBookmark.setImageResource(R.drawable.ic_bookmarked)
+            } else {
+                viewDataBinding.ivBookmark.setImageResource(R.drawable.ic_bookmark)
+            }
+            viewDataBinding.chkBookmark.isChecked = isBookmarked
         }
     }
 
@@ -333,7 +372,8 @@ class GramophoneTVActivity :
                         if (youTubePlayer != null) {
                             try {
                                 viewDataBinding.linearVideoList.visibility = View.GONE
-                                youTubePlayer!!.loadPlaylist(currentPlayingPlayListId, position, 0)
+                                youTubePlayer?.cuePlaylist(currentPlayingPlayListId)
+                                youTubePlayer?.play()
                             } catch (e: IllegalStateException) {
                                 e.printStackTrace()
                             }
@@ -363,7 +403,7 @@ class GramophoneTVActivity :
                     val videoId: String = videoIds[i].contentDetails.videoId
                     videoIdsList.add(videoId)
                     videosTitleHashMap[videoId] = videoIds[i]
-                } catch (e: java.lang.Exception) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -394,6 +434,7 @@ class GramophoneTVActivity :
 
             override fun onLoaded(arg0: String?) {
                 currentPlayingVideoId = arg0
+                isVideoBookmarked()
                 setCurrentPositionInVideoAdapter(currentPlayingVideoId!!)
                 if (videosTitleHashMap.isNotNullOrEmpty() && videosTitleHashMap.containsKey(
                         currentPlayingVideoId)
@@ -455,12 +496,18 @@ class GramophoneTVActivity :
             if (!b) {
                 if (videoIdsList.isNotNullOrEmpty()) {
                     try {
-                        youTubePlayer.loadVideos(videoIdsList, position, 0)
-                    } catch (e: java.lang.IllegalStateException) {
+                        youTubePlayer.cuePlaylist(currentPlayingPlayListId)
+                        Timer().schedule(object : TimerTask() {
+                            override fun run() {
+                                youTubePlayer.play()
+                            }
+                        }, 1000)
+                    } catch (e: IllegalStateException) {
+                        e.printStackTrace()
                     }
                 }
             }
-        } catch (e: java.lang.Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }

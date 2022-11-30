@@ -22,6 +22,7 @@ import agstack.gramophone.ui.search.model.GlobalSearchRequest
 import agstack.gramophone.ui.search.model.GlobalSearchResponse
 import agstack.gramophone.ui.search.model.SuggestionsRequest
 import agstack.gramophone.ui.search.model.SuggestionsResponse
+import agstack.gramophone.ui.tv.model.BookmarkedListResponse
 import agstack.gramophone.ui.tv.model.VideoBookMarkedRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -313,6 +314,14 @@ class ProductRepositoryImpl @Inject constructor(
             Dispatchers.IO
         ) {
             val response = gramoAppService.getSuggestedCrops()
+            response
+        }
+
+    override suspend fun getBookmarkedList(): Response<BookmarkedListResponse> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val response = gramoAppService.getBookmarkedVideoList()
             response
         }
 }

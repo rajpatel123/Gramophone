@@ -24,7 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/myToolbar"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="@{viewModel.itemCount > 0 ? View.VISIBLE : View.GONE}">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,10 +67,10 @@
                 android:paddingVertical="12dp">
 
                 <TextView
+                    style="@style/TextSize13Sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    style="@style/TextSize13Sp"
                     android:text="@string/transaction_by_expiry_date"
                     android:textColor="@color/blakish"
                     android:textSize="13sp" />
@@ -93,12 +94,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvexpire_soon"
-            android:layout_marginBottom="?actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/tv_redeemNow"
             android:layout_below="@+id/expireContainer"
+            android:layout_marginBottom="?actionBarSize"
             android:orientation="vertical"
+            android:visibility="@{viewModel.itemCount > 0 ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="2"
             tools:listitem="@layout/item_transaction"
@@ -107,7 +109,6 @@
 
         <TextView
             android:id="@+id/tv_redeemNow"
-            android:onClick="@{()->viewModel.onRedeemNowClicked()}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -115,11 +116,23 @@
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
+            android:onClick="@{()->viewModel.onRedeemNowClicked()}"
             android:padding="@dimen/_13sdp"
             android:text="@string/redeem_now"
             android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp" />
+            android:textSize="@dimen/_14ssp"
+            android:visibility="@{viewModel.itemCount > 0 ? View.VISIBLE : View.GONE}" />
 
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/manrope_medium"
+            android:text="@string/no_expiry_points_available"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="@{viewModel.itemCount == 0 ? View.VISIBLE : View.GONE}" />
 
         <ProgressBar
             android:id="@+id/progress"

@@ -69,6 +69,8 @@ class FeaturedProductActivity :
         viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
         viewDataBinding.swipeRefresh.setOnRefreshListener {
             subCategoryViewModel.getBundleData()
+            viewDataBinding.tvFilterCount.visibility = View.GONE
+            viewDataBinding.tvFilterCount.text = ""
             viewDataBinding.swipeRefresh.isRefreshing = false
         }
         viewDataBinding.toolbar.setNavigationOnClickListener {
