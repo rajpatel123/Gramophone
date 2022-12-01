@@ -112,4 +112,6 @@ public abstract class SharedPreferencesKeys {
     @Nullable
     public static final String CROPS = "crops";
     public static final String CART_ITEM_COUNT = "cart_item_count";
+    @Nullable
+    public static final String UTM_SOURCE="utm_source";
 }

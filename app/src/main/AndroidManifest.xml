@@ -112,7 +112,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -125,6 +124,10 @@
                 <data
                     android:host="www.gramophone.in"
                     android:scheme="app" />
+                <data
+                    android:host="play.google.com"
+                    android:scheme="app" />
+
             </intent-filter>
 
         </activity>

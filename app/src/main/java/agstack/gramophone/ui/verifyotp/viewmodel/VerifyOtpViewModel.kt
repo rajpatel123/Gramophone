@@ -63,7 +63,8 @@ class VerifyOtpViewModel @Inject constructor(
         } else {
             val validateOtpRequestModel = ValidateOtpRequestModel(
                 mobileNo.get().toString(), otp.get()!!,
-                otpReference.get()?.toInt()!!
+                otpReference.get()?.toInt()!!,
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.UTM_SOURCE)
             )
             validateOtp(validateOtpRequestModel)
         }
