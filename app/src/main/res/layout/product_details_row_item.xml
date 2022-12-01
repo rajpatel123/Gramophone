@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/grey_rounded_corner_solid_grey_color"
             android:padding="@dimen/_8sdp"
-            tools:text="@string/key_points"></TextView>
+            tools:text="@string/key_points" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_keyvalue_list"

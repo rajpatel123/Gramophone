@@ -62,7 +62,7 @@ class HomeActivity :
     private lateinit var tradeFragment: TradeFragment
     private lateinit var activeFragment: Fragment
     var drawer: DrawerLayout? = null
-
+    var backPressedTime: Long = 0
 
     var advisoryActivityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -345,6 +345,16 @@ class HomeActivity :
     fun setToolbarTitle(title: String) {
         viewDataBinding.toolbar.myToolbar.title = title
 
+    }
+
+    override fun onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed()
+            finish()
+        } else {
+            showToast(getString(R.string.click_back_to_exit))
+        }
+        backPressedTime = System.currentTimeMillis()
     }
 
     override fun onDestroy() {

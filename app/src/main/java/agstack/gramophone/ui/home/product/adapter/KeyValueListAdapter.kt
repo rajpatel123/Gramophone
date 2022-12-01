@@ -33,7 +33,7 @@ class KeyValueListAdapter(listatKeyvalue: ArrayList<KeyPointsItem>) :
 
     override fun onBindViewHolder(holder: KeyValueListAdapter.CustomViewHolder, position: Int) {
 
-        var model: KeyPointsItem = mKeyValueList[position]!!
+        val model: KeyPointsItem = mKeyValueList[position]
         //holder.binding.setVariable(BR.model, model)
         val mBinding = holder.binding as KeyValueItemBinding
         if (position % 2 == 0) {
@@ -41,8 +41,8 @@ class KeyValueListAdapter(listatKeyvalue: ArrayList<KeyPointsItem>) :
             mBinding.tvValue.setBackgroundResource(R.drawable.greensolid_with_grey_borders)
         }
 
-        mBinding.tvKey.text = model.key
-        mBinding.tvValue.text = model.value
+        mBinding.tvKey.text = model.value
+        mBinding.tvValue.text = model.key
 
 
 
