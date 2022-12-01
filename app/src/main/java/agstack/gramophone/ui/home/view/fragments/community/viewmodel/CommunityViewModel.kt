@@ -453,7 +453,8 @@ class CommunityViewModel @Inject constructor(
                     val response = communityRepository.getCommunityPost(
                         CommunityUserPostRequestModel(
                             limit.get(),
-                            uuid
+                            uuid,
+                            "profile"
                         )
                     )
                     if (response.isSuccessful) {

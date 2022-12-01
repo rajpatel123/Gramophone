@@ -29,16 +29,20 @@ class FarmAdapter(
     override fun onBindViewHolder(holder: FarmViewHolder, position: Int) {
         holder.binding.item = farmList[position]
 
-        holder.binding.headerLayout.setOnClickListener {
+        holder.binding.contentLayoutLL.setOnClickListener {
             headerListener.invoke(farmList[position])
         }
 
-        holder.binding.contentLayout.setOnClickListener {
+        holder.binding.contentLayoutLL.setOnClickListener {
             contentListener.invoke(farmList[position])
         }
 
-        holder.binding.footerLayout.setOnClickListener {
+        holder.binding.txtAddFarm.setOnClickListener {
             footerListener.invoke(farmList[position])
+        }
+
+        holder.binding.txtAddedFarm.setOnClickListener {
+            contentListener.invoke(farmList[position])
         }
     }
 

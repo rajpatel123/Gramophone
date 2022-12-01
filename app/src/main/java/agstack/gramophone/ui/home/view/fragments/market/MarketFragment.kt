@@ -38,7 +38,7 @@ class MarketFragment :
     MarketFragmentNavigator {
     private var param1: String? = null
     private var param2: String? = null
-    private val marketFragmentViewModel: MarketFragmentViewModel by viewModels()
+    val marketFragmentViewModel: MarketFragmentViewModel by viewModels()
     var homeAdapter: HomeAdapter? = null
 
     companion object {

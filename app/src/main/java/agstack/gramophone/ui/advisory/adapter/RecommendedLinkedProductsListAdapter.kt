@@ -15,6 +15,7 @@ class RecommendedLinkedProductsListAdapter(private val dataList: List<GpApiRespo
     RecyclerView.Adapter<RecommendedLinkedProductsListAdapter.DeveloperViewHolder>() {
     var onAddToCartClick: ((productId: Int) -> Unit)? = null
     var onProductDetailClick: ((productId: Int) -> Unit)? = null
+    var onProductDetailClicked: ((productId: Int) -> Unit)? = null
 
     interface SetImage {
         fun onImageSet(imageUrl: String, iv: ImageView)
@@ -49,6 +50,14 @@ class RecommendedLinkedProductsListAdapter(private val dataList: List<GpApiRespo
         holder.binding.tvProductNames.setOnClickListener {
             try {
                 onProductDetailClick?.invoke(dataList[position].product_sku_list[0].id.toInt())
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        holder.binding.rlProoduct.setOnClickListener {
+            try {
+                onProductDetailClicked?.invoke(dataList[position].product_sku_list[0].id.toInt())
             } catch (e: Exception) {
                 e.printStackTrace()
             }

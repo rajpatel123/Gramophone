@@ -16,6 +16,7 @@ import com.amnix.xtension.extensions.isNotNull
 class ActivityLinkedProductsListAdapter(
     private val dataList: List<LinkedTechnical>,
     var onAddToCartClick: ((productId: Int) -> Unit),
+    var onDetailClick: ((productId: Int) -> Unit)
 ) :
     RecyclerView.Adapter<ActivityLinkedProductsListAdapter.DeveloperViewHolder>() {
     private var isHeaderVisible: Boolean = false
@@ -57,6 +58,13 @@ class ActivityLinkedProductsListAdapter(
             if (onAddToCartClick.isNotNull() && linkedTechnical.product_id.isNotNull())
                 onAddToCartClick.invoke(linkedTechnical.product_id)
         }
+
+        holder.binding.root.setOnClickListener {
+            if (onDetailClick.isNotNull() && linkedTechnical.product_id.isNotNull())
+                onDetailClick.invoke(linkedTechnical.product_id)
+        }
+
+
     }
 
     override fun getItemCount(): Int {

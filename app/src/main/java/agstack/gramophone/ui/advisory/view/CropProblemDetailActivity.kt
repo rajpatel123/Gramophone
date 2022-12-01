@@ -11,6 +11,7 @@ import agstack.gramophone.ui.advisory.adapter.RecommendedLinkedProductsListAdapt
 import agstack.gramophone.ui.advisory.models.recomondedproducts.GpApiResponseData
 import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
+import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.subcategory.ProductListAdapter
 import agstack.gramophone.ui.home.subcategory.SubCategoryNavigator
 import agstack.gramophone.ui.home.subcategory.SubCategoryViewModel
@@ -74,7 +75,7 @@ class CropProblemDetailActivity :
     override fun setProductListAdapter(
         productListAdapter: ProductListAdapter,
         onAddToCartClick: (productId: Int) -> Unit,
-        onProductDetailClick: (productId: Int) -> Unit
+        onProductDetailClicked: (productId: Int) -> Unit
     ) {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
     }
@@ -116,7 +117,9 @@ class CropProblemDetailActivity :
     }
 
     override fun openProductDetailsActivity(productData: ProductData) {
-        // Don't write anything here. This method is only used in ArticleWebViewActivity
+        val bundle = Bundle()
+        bundle.putParcelable(Constants.PRODUCT, productData)
+        openActivity(ProductDetailsActivity::class.java, bundle)
     }
 
     override fun updateOfferApplicabilityOnDialog(

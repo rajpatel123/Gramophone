@@ -444,7 +444,7 @@ class MyGramophoneFragment :
             openActivity(SelectCropActivity::class.java)
         }
 
-        binding?.layoutFarm?.headerLayout?.setOnClickListener {
+        binding?.layoutFarm?.contentLayoutLL?.setOnClickListener {
           if (farms?.gp_api_response_data?.customer_farm?.data!![0].size<2){
               openActivity(AdvisoryActivity::class.java,Bundle().apply {
                   putInt(Constants.FARM_ID,
@@ -460,6 +460,13 @@ class MyGramophoneFragment :
                   putString(Constants.CROP_STAGE,farms.gp_api_response_data.customer_farm.data[0][0].stage_name)
                   putString(Constants.CROP_DAYS,farms.gp_api_response_data.customer_farm.data[0][0].days)
               })
+          }else{
+              openActivity(CropGroupExplorerActivity::class.java, Bundle().apply {
+                  putParcelableArrayList(
+                      "cropList",
+                      farms?.gp_api_response_data?.customer_farm?.data?.get(0) as ArrayList<Data>
+                  )
+              })
           }
         }
 
@@ -474,12 +481,11 @@ class MyGramophoneFragment :
         }
 
         binding?.layoutFarm?.txtAddedFarm?.setOnClickListener {
-            openActivity(AddFarmActivity::class.java, Bundle().apply {
-                putParcelable("selectedCrop", CropData().apply {
-                    cropImage = farms?.gp_api_response_data?.customer_farm?.data!![0][0].crop_image
-                    cropId = farms?.gp_api_response_data?.customer_farm?.data!![0][0].crop_id
-                    cropName = farms?.gp_api_response_data?.customer_farm?.data!![0][0].crop_name
-                })
+            openActivity(CropGroupExplorerActivity::class.java, Bundle().apply {
+                putParcelableArrayList(
+                    "cropList",
+                    farms?.gp_api_response_data?.customer_farm?.data?.get(0) as ArrayList<Data>
+                )
             })
         }
 
@@ -568,6 +574,7 @@ class MyGramophoneFragment :
 
     fun refreshProfile() {
         myGramophoneFragmentViewModel.initProfile()
+        myGramophoneFragmentViewModel.getFarms()
     }
 
 
