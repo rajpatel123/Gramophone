@@ -618,11 +618,11 @@
 
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:id="@+id/rv_related_products"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_relproduct_title"
-                        android:layout_marginHorizontal="@dimen/_8sdp"
                         android:orientation="horizontal"
                         android:scrollbars="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
