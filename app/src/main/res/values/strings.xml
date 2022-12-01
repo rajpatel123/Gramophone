@@ -669,4 +669,5 @@
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://www.gramophone.in\",\n  }\n}]</string>
 
 
+    <string name="no_expiry_points_available">No expiry points available</string>
 </resources>

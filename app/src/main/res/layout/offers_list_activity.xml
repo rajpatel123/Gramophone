@@ -85,7 +85,7 @@
                 android:fontFamily="@font/manrope_medium"
                 android:text="@string/no_offers_found"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/_14ssp" />
+                android:textSize="@dimen/_12ssp" />
 
         </LinearLayout>
 

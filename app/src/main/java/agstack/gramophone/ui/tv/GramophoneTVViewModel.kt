@@ -6,6 +6,7 @@ import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.di.GramophoneTVApiService
 import agstack.gramophone.di.RetrofitInstanceForYoutube
 import agstack.gramophone.ui.tv.model.*
+import agstack.gramophone.utils.Constants
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,6 +25,7 @@ class GramophoneTVViewModel @Inject constructor(
 
     var progress = MutableLiveData<Boolean>()
     val videoIds: ArrayList<PlayListItemModels> = ArrayList()
+    var bookmarkedList: List<Bookmark> = ArrayList()
 
     init {
         progress.value = false
@@ -205,16 +207,41 @@ class GramophoneTVViewModel @Inject constructor(
         }
     }
 
-    fun bookmarkVideo(currentPlayingVideoId: String) {
+    fun getBookmarkedVideoList() {
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
 
-                    val response = productRepository.bookmarkVideo(VideoBookMarkedRequest(currentPlayingVideoId, true))
+                    val response = productRepository.getBookmarkedList()
+                    progress.value = false
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
+                        bookmarkedList = response.body()?.gp_api_response_data?.bookmarks!!
+                    }
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
+                progress.value = false
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+    }
+
+    fun bookmarkVideo(currentPlayingVideoId: String, isBookmark: Boolean) {
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.value = true
+
+                    val response = productRepository.bookmarkVideo(VideoBookMarkedRequest(currentPlayingVideoId, isBookmark))
                     progress.value = false
                     if (response.isSuccessful) {
                         getNavigator()?.showToast(response.body()?.gp_api_message)
+                        getBookmarkedVideoList()
                     }
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))

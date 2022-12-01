@@ -55,6 +55,7 @@ import agstack.gramophone.ui.search.model.SuggestionsRequest
 import agstack.gramophone.ui.search.model.SuggestionsResponse
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
+import agstack.gramophone.ui.tv.model.BookmarkedListResponse
 import agstack.gramophone.ui.tv.model.VideoBookMarkedRequest
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.ui.userprofile.verifyotp.model.VerifyOTPRequestModel
@@ -359,7 +360,9 @@ interface GramAppService {
     @POST("api/v5/farm/crop-problems")
     suspend fun getCropProblems(@Body body: CropProblemRequestModel): Response<CropProblemResponseModel>
 
-
     @GET("api/v5/article/suggested-crops")
     suspend fun getSuggestedCrops(): Response<SuggestedCropResponse>
+
+    @POST("api/v5/customer/get-gramophone-tv-bookmark")
+    suspend fun getBookmarkedVideoList(): Response<BookmarkedListResponse>
 }

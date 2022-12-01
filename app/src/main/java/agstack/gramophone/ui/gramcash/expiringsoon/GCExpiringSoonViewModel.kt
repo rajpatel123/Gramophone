@@ -9,6 +9,7 @@ import agstack.gramophone.ui.referandearn.transaction.model.GramcashTxnItem
 import agstack.gramophone.utils.Constants
 import android.util.Log
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -24,10 +25,14 @@ class GCExpiringSoonViewModel @Inject constructor(
     var progressLoader = ObservableField<Boolean>(false)
     private var getGramCashTxnJob: Job? = null
     var mAllTxnList = ArrayList<GramcashTxnItem?>()
+    var itemCount = MutableLiveData<Int>()
     var isLastPage = false
     var Gramcashexpiring_soon_amount = ObservableField<String>()
-    //Check if needed
-    var gramCashTxnResponseData = ObservableField<List<GramcashTxnItem?>?>()
+
+    init {
+        itemCount.value = 1
+    }
+
     fun getGramCashTxnExpiringSoon(GC_Expiring_soon_amount :String?) {
         Gramcashexpiring_soon_amount.set(GC_Expiring_soon_amount)
         getGramCashTxnJob.cancelIfActive()
@@ -45,9 +50,9 @@ class GCExpiringSoonViewModel @Inject constructor(
                     progressLoader.set(false)
                     val gpApiResponseDataList: List<GramcashTxnItem?>? =
                         allGramCashTxnResponse.body()?.gpApiResponseData?.gramcashTxn
-                    gramCashTxnResponseData.set(gpApiResponseDataList)
                     mAllTxnList =
                         allGramCashTxnResponse.body()?.gpApiResponseData?.gramcashTxn as ArrayList<GramcashTxnItem?>
+                    itemCount.value = mAllTxnList.size
                     getNavigator()?.setExpireTxnListAdapter(GramCashTransactionListAdapter(mAllTxnList))
                    // getNavigator()?.showToast(allGramCashTxnResponse.body()?.gpApiMessage)
                 } else {
@@ -112,6 +117,6 @@ class GCExpiringSoonViewModel @Inject constructor(
 
 
     fun onRedeemNowClicked(){
-        getNavigator()?.openHomeActivity()
+        getNavigator()?.goBack()
     }
 }
