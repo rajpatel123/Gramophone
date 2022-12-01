@@ -34,13 +34,14 @@ class ActivityListAdapter(val dataList: List<GpApiResponseData>) :
         var activityModel: GpApiResponseData = dataList[position]!!
         holder.binding.setVariable(BR.model, activityModel)
 
-        if (position==0){
             if (!isSelected()){
-                lastSelectedActivityPosition = position
-                activityModel.isSelected=true
-                onActivitySelected?.invoke(activityModel)
+                if (activityModel.is_current_stage){
+                    lastSelectedActivityPosition = position
+                    activityModel.isSelected=true
+                    onActivitySelected?.invoke(activityModel)
+                }
+
             }
-        }
 
 
         if (activityModel.isSelected){

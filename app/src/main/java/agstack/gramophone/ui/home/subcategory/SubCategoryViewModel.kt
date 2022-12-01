@@ -28,7 +28,6 @@ import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -680,7 +679,8 @@ class SubCategoryViewModel @Inject constructor(
                         fetchProductDetail(it)
                     }, {
                         getNavigator()?.openProductDetailsActivity(ProductData(it))
-                    })
+                    }
+                )
             }
         }
 

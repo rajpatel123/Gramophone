@@ -48,7 +48,7 @@
                     android:fontFamily="@font/manrope_semibold"
                     android:gravity="center_vertical"
                     android:lineSpacingExtra="-2sp"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
                     android:text="@{model.category_name}"
@@ -65,6 +65,7 @@
                     android:maxLines="1"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
+                    android:visibility="gone"
                     android:text="@{model.category_type}"
                     android:textColor="@color/blakish"
                     android:textSize="@dimen/_10ssp" />

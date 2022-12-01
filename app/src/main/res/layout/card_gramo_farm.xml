@@ -17,252 +17,258 @@
             android:elevation="@dimen/_2sdp"
             android:background="@drawable/grey_outline">
 
-            <RelativeLayout
-                android:id="@+id/headerLayout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_56sdp"
-                android:layout_marginLeft="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_1sdp"
-                android:layout_marginRight="@dimen/_8sdp"
-                android:foreground="?android:attr/selectableItemBackground">
-
-                <FrameLayout
-                    android:id="@+id/imageCorpWrapper"
-                    android:layout_width="@dimen/_42sdp"
-                    android:layout_height="@dimen/_42sdp"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/_4sdp"
-                    android:background="@drawable/rounded_corner_20_solid_white"
-                    android:padding="@dimen/_2sdp">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/imageSelectCorpItem"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/image"
-                        android:scaleType="centerCrop"
-                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize20Percent"
-                        tools:src="@drawable/dummy_crop" />
-
-                </FrameLayout>
-
-                <ImageView
-                    android:id="@+id/imageArow"
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/_4sdp"
-                    android:contentDescription="@string/image"
-                    android:padding="@dimen/_6sdp"
-                    android:src="@drawable/ic_right_head_arrow" />
-
-                <TextView
-                    android:id="@+id/txtCropName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_toEndOf="@+id/imageCorpWrapper"
-                    android:fontFamily="@font/manrope_bold"
-                    android:lines="1"
-                    android:maxLength="50"
-                    android:textColor="@color/brand_color"
-                    android:textSize="@dimen/_15ssp"
-                    android:textStyle="bold"
-                    tools:text="मक्का" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_2sdp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="@dimen/_6sdp"
-                    android:layout_marginEnd="@dimen/_2sdp"
-                    android:background="@color/blue_area" />
-
-            </RelativeLayout>
-
             <LinearLayout
-                android:id="@+id/contentLayout"
+                android:id="@+id/contentLayoutLL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/headerLayout"
-                android:layout_marginLeft="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:layout_marginRight="@dimen/_8sdp"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/_8sdp">
-
-                <LinearLayout
-                    android:id="@+id/singleFarmLayout"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:id="@+id/headerLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="visible">
+                    android:layout_height="@dimen/_56sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:layout_marginRight="@dimen/_8sdp"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <FrameLayout
+                        android:id="@+id/imageCorpWrapper"
+                        android:layout_width="@dimen/_42sdp"
+                        android:layout_height="@dimen/_42sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/_4sdp"
+                        android:background="@drawable/rounded_corner_20_solid_white"
+                        android:padding="@dimen/_2sdp">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imageSelectCorpItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/image"
+                            android:scaleType="centerCrop"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize20Percent"
+                            tools:src="@drawable/dummy_crop" />
+
+                    </FrameLayout>
+
+                    <ImageView
+                        android:id="@+id/imageArow"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:contentDescription="@string/image"
+                        android:padding="@dimen/_6sdp"
+                        android:src="@drawable/ic_right_head_arrow" />
 
                     <TextView
-                        android:id="@+id/txtCropCode"
+                        android:id="@+id/txtCropName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_toEndOf="@+id/imageCorpWrapper"
                         android:fontFamily="@font/manrope_bold"
                         android:lines="1"
                         android:maxLength="50"
-                        android:textColor="@color/black"
+                        android:textColor="@color/brand_color"
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
-                        tools:text='F3456' />
+                        tools:text="मक्का" />
 
-                    <RelativeLayout
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:drawablePadding="@dimen/_8sdp">
+                        android:layout_height="@dimen/_2sdp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:layout_marginEnd="@dimen/_2sdp"
+                        android:background="@color/blue_area" />
 
-                        <TextView
-                            android:id="@+id/txtDateDesc"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_date_picker"
-                            android:fontFamily="@font/manrope_medium"
-                            android:textColor="@color/oldmrpcolor"
-                            android:textSize="@dimen/_10ssp"
-                            tools:text='  बुआई की तारीख: ' />
-
-                        <TextView
-                            android:id="@+id/txtDate"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_3sdp"
-                            android:layout_toEndOf="@+id/txtDateDesc"
-                            android:fontFamily="@font/manrope_bold"
-                            android:textColor="@color/blakish"
-                            android:textSize="@dimen/_10ssp"
-                            tools:text="Jul 15, 2022" />
-                    </RelativeLayout>
-
-
-                    <RelativeLayout
-                        android:id="@+id/rlDurationDesc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:drawablePadding="@dimen/_8sdp">
-
-                        <TextView
-                            android:id="@+id/txtDurationDesc"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_date_picker"
-                            android:fontFamily="@font/manrope_medium"
-                            android:textColor="@color/oldmrpcolor"
-                            android:textSize="@dimen/_10ssp"
-                            tools:text='बुआई का समय :' />
-
-                        <TextView
-                            android:id="@+id/txtDuration"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/txtDurationDesc"
-                            android:fontFamily="@font/manrope_bold"
-                            android:textColor="@color/blakish"
-                            android:textSize="@dimen/_10ssp"
-                            tools:text=' Jul 15, 2022 To Jul 25, 2022' />
-                    </RelativeLayout>
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:drawablePadding="@dimen/_8sdp">
-
-                        <TextView
-                            android:id="@+id/txtAreaDesc"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_info_para"
-                            android:fontFamily="@font/manrope_medium"
-                            android:textColor="@color/oldmrpcolor"
-                            android:textSize="@dimen/_10ssp"
-                            tools:text='बुआई का समय :' />
-
-                        <TextView
-                            android:id="@+id/txtAreas"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/txtAreaDesc"
-                            android:fontFamily="@font/manrope_bold"
-                            android:textColor="@color/blakish"
-                            android:textSize="@dimen/_10ssp"
-                            tools:text=' 22 Acre' />
-                    </RelativeLayout>
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:drawablePadding="@dimen/_8sdp">
-
-                        <TextView
-                            android:id="@+id/txtStageDesc"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_info_para"
-                            android:fontFamily="@font/manrope_medium"
-                            android:text="@string/stage_names"
-                            android:textColor="@color/oldmrpcolor"
-                            android:textSize="@dimen/_10ssp" />
-
-                        <TextView
-                            android:id="@+id/txtStage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/txtStageDesc"
-                            android:fontFamily="@font/manrope_bold"
-                            android:textColor="@color/blakish"
-                            android:textSize="@dimen/_10ssp"
-                            tools:text=' 22 Acre' />
-                    </RelativeLayout>
-
-
-                </LinearLayout>
+                </RelativeLayout>
 
                 <LinearLayout
-                    android:id="@+id/multiFarmLayout"
+                    android:id="@+id/contentLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_marginBottom="@dimen/_4sdp">
+                    android:layout_below="@+id/headerLayout"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginRight="@dimen/_8sdp"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/_8sdp">
 
-                    <TextView
-                        android:id="@+id/txtMultipleFarms"
+                    <LinearLayout
+                        android:id="@+id/singleFarmLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/_8sdp"
-                        android:fontFamily="@font/manrope_medium"
-                        android:text="@string/view_farms"
-                        android:textColor="@color/oldmrpcolor"
-                        android:textSize="@dimen/_12ssp" />
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/txtCropCode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:fontFamily="@font/manrope_bold"
+                            android:lines="1"
+                            android:maxLength="50"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_15ssp"
+                            android:textStyle="bold"
+                            tools:text='F3456' />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:drawablePadding="@dimen/_8sdp">
+
+                            <TextView
+                                android:id="@+id/txtDateDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_date_picker"
+                                android:fontFamily="@font/manrope_medium"
+                                android:textColor="@color/oldmrpcolor"
+                                android:textSize="@dimen/_10ssp"
+                                tools:text='  बुआई की तारीख: ' />
+
+                            <TextView
+                                android:id="@+id/txtDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_3sdp"
+                                android:layout_toEndOf="@+id/txtDateDesc"
+                                android:fontFamily="@font/manrope_bold"
+                                android:textColor="@color/blakish"
+                                android:textSize="@dimen/_10ssp"
+                                tools:text="Jul 15, 2022" />
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:id="@+id/rlDurationDesc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:drawablePadding="@dimen/_8sdp">
+
+                            <TextView
+                                android:id="@+id/txtDurationDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_date_picker"
+                                android:fontFamily="@font/manrope_medium"
+                                android:textColor="@color/oldmrpcolor"
+                                android:textSize="@dimen/_10ssp"
+                                tools:text='बुआई का समय :' />
+
+                            <TextView
+                                android:id="@+id/txtDuration"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@+id/txtDurationDesc"
+                                android:fontFamily="@font/manrope_bold"
+                                android:textColor="@color/blakish"
+                                android:textSize="@dimen/_10ssp"
+                                tools:text=' Jul 15, 2022 To Jul 25, 2022' />
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:drawablePadding="@dimen/_8sdp">
+
+                            <TextView
+                                android:id="@+id/txtAreaDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_info_para"
+                                android:fontFamily="@font/manrope_medium"
+                                android:textColor="@color/oldmrpcolor"
+                                android:textSize="@dimen/_10ssp"
+                                tools:text='बुआई का समय :' />
+
+                            <TextView
+                                android:id="@+id/txtAreas"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@+id/txtAreaDesc"
+                                android:fontFamily="@font/manrope_bold"
+                                android:textColor="@color/blakish"
+                                android:textSize="@dimen/_10ssp"
+                                tools:text=' 22 Acre' />
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:drawablePadding="@dimen/_8sdp">
+
+                            <TextView
+                                android:id="@+id/txtStageDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_info_para"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="@string/stage_names"
+                                android:textColor="@color/oldmrpcolor"
+                                android:textSize="@dimen/_10ssp" />
+
+                            <TextView
+                                android:id="@+id/txtStage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@+id/txtStageDesc"
+                                android:fontFamily="@font/manrope_bold"
+                                android:textColor="@color/blakish"
+                                android:textSize="@dimen/_10ssp"
+                                tools:text=' 22 Acre' />
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/multiFarmLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_4sdp">
+
+                        <TextView
+                            android:id="@+id/txtMultipleFarms"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/_8sdp"
+                            android:fontFamily="@font/manrope_medium"
+                            android:text="@string/view_farms"
+                            android:textColor="@color/oldmrpcolor"
+                            android:textSize="@dimen/_12ssp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
-
             </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/footerLayout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_36sdp"
-                android:layout_below="@+id/contentLayout"
+                android:layout_below="@+id/contentLayoutLL"
                 android:layout_marginTop="@dimen/_2sdp"
                 android:background="@drawable/grey_outline_bottom"
                 android:foreground="?android:attr/selectableItemBackground"
