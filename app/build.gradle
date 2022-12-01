@@ -13,7 +13,6 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
-    id 'androidx.navigation.safeargs.kotlin'
     id 'dagger.hilt.android.plugin'
 }
 
@@ -170,10 +169,6 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
 
-    // Navigation Components
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
-    implementation 'androidx.navigation:navigation-runtime-ktx:2.5.1'
     implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
 
     // Dagger Hilt
