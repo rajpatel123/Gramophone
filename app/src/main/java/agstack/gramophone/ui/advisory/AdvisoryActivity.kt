@@ -4,7 +4,6 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityAdvisoryBinding
-import agstack.gramophone.databinding.ActivityReferralDialogBinding
 import agstack.gramophone.databinding.CropIssueIdialogBinding
 import agstack.gramophone.databinding.ItemAdvisoryBinding
 import agstack.gramophone.ui.advisory.adapter.*
@@ -57,9 +56,10 @@ class AdvisoryActivity :
         super.onCreate(savedInstanceState)
         subCategoryViewModel.updateProfileDetail()
         subCategoryViewModel.getCropAdvisoryDetails()
-        viewDataBinding.llCommunityLL.goToCommunity.setOnClickListener {openCommunity()  }
+        viewDataBinding.llCommunityLL.goToCommunity.setOnClickListener { openCommunity() }
 
-        viewDataBinding.llCommunityLL.tvDisclaimer.text = Html.fromHtml(getString(R.string.disclaimer_txt),0)
+        viewDataBinding.llCommunityLL.tvDisclaimer.text =
+            Html.fromHtml(getString(R.string.disclaimer_txt), 0)
     }
 
 
@@ -77,10 +77,7 @@ class AdvisoryActivity :
     }
 
     override fun getSubCategoryDetail(
-        categoryId: String,
-        subCategoryId: String,
-        subCategoryName: String,
-        subCategoryImage: String
+        categoryId: String, subCategoryId: String, subCategoryName: String, subCategoryImage: String
     ) {
     }
 
@@ -98,19 +95,17 @@ class AdvisoryActivity :
     ) {
         bottomSheet = AddToCartBottomSheetDialog({
             //Offer detail activity from here
-            openActivity(
-                OfferDetailActivity::class.java,
-                Bundle().apply {
+            openActivity(OfferDetailActivity::class.java, Bundle().apply {
 
-                    val offersDataItem = DataItem()
-                    offersDataItem.endDate = it.valid_till
-                    offersDataItem.productName = it.title
-                    offersDataItem.productsku = it.applicable_on_sku
-                    offersDataItem.image = it.image
-                    offersDataItem.termsConditions = it.t_c
-                    putParcelable(Constants.OFFERSDATA, offersDataItem)
+                val offersDataItem = DataItem()
+                offersDataItem.endDate = it.valid_till
+                offersDataItem.productName = it.title
+                offersDataItem.productsku = it.applicable_on_sku
+                offersDataItem.image = it.image
+                offersDataItem.termsConditions = it.t_c
+                putParcelable(Constants.OFFERSDATA, offersDataItem)
 
-                })
+            })
         }, {
             subCategoryViewModel.checkOfferApplicability(it)
         }, {
@@ -122,8 +117,7 @@ class AdvisoryActivity :
         bottomSheet?.productData = productData
         bottomSheet?.mSkuOfferList = mSkuOfferList
         bottomSheet?.show(
-            supportFragmentManager,
-            Constants.BOTTOM_SHEET
+            supportFragmentManager, Constants.BOTTOM_SHEET
         )
     }
 
@@ -131,17 +125,17 @@ class AdvisoryActivity :
     }
 
     override fun updateOfferApplicabilityOnDialog(
-        isOfferApplicable: Boolean,
-        promotionId: String?,
-        message: String
+        isOfferApplicable: Boolean, promotionId: String?, message: String
     ) {
-        if (bottomSheet.isNotNull())
-            bottomSheet?.updateDialog(isOfferApplicable, promotionId!!, message)
+        if (bottomSheet.isNotNull()) bottomSheet?.updateDialog(
+            isOfferApplicable,
+            promotionId!!,
+            message
+        )
     }
 
     override fun updateOfferOnAddToCartDialog(mSkuOfferList: ArrayList<PromotionListItem?>) {
-        if (bottomSheet.isNotNull())
-            bottomSheet?.updateOffer(mSkuOfferList)
+        if (bottomSheet.isNotNull()) bottomSheet?.updateOffer(mSkuOfferList)
     }
 
     override fun disableSortAndFilter() {
@@ -177,23 +171,19 @@ class AdvisoryActivity :
 
                 if (count % 2 != 0) {
                     view.tvActivityName.background = AppCompatResources.getDrawable(
-                        this,
-                        R.drawable.advisoryhead_bg
+                        this, R.drawable.advisoryhead_bg
                     )
 
                     view.llActivityDetails.background = AppCompatResources.getDrawable(
-                        this,
-                        R.drawable.advisory_border
+                        this, R.drawable.advisory_border
                     )
                 } else {
                     view.tvActivityName.background = AppCompatResources.getDrawable(
-                        this,
-                        R.drawable.advisoryhead_blue_bg
+                        this, R.drawable.advisoryhead_blue_bg
                     )
 
                     view.llActivityDetails.background = AppCompatResources.getDrawable(
-                        this,
-                        R.drawable.advisory_blue_border
+                        this, R.drawable.advisory_blue_border
                     )
                 }
                 count++
@@ -208,9 +198,10 @@ class AdvisoryActivity :
                     advisoryLayout.rvLikedIssues.layoutManager =
                         LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                     advisoryLayout.rvLikedIssues.setHasFixedSize(true)
-                    advisoryLayout.rvLikedIssues.adapter =  ActivityLinkedIssuesListAdapter(activityToBeDone.linked_issues) {
-                    openProblemDialog(it)
-                    }
+                    advisoryLayout.rvLikedIssues.adapter =
+                        ActivityLinkedIssuesListAdapter(activityToBeDone.linked_issues) {
+                            openProblemDialog(it)
+                        }
                 }
 
                 if (activityToBeDone.linked_technicals.isNotNullOrEmpty()) {
@@ -218,9 +209,14 @@ class AdvisoryActivity :
                         LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
                     advisoryLayout.rvLikedProduct.setHasFixedSize(true)
                     advisoryLayout.rvLikedProduct.adapter =
-                        ActivityLinkedProductsListAdapter(activityToBeDone.linked_technicals) {
-                            subCategoryViewModel.fetchProductDetail(it)
-                        }
+                        ActivityLinkedProductsListAdapter(activityToBeDone.linked_technicals,
+                            {
+                                subCategoryViewModel.fetchProductDetail(it)
+                            },
+                            {
+                                if (it > 0)
+                                    openProductDetailsActivity(ProductData(it))
+                            })
                 }
                 viewDataBinding.llActivityDetails.addView(view)
                 subCategoryViewModel.getCropIssues(activityToBeDone.stage_id)
@@ -260,8 +256,7 @@ class AdvisoryActivity :
         val bottomSheet = CropIssueBottomSheetDialog()
         bottomSheet.bundle = intent.extras
         bottomSheet.show(
-            supportFragmentManager,
-            Constants.BOTTOM_SHEET
+            supportFragmentManager, Constants.BOTTOM_SHEET
         )
     }
 
@@ -270,8 +265,7 @@ class AdvisoryActivity :
             val bottomSheet = CropIssueBottomSheetDialog()
             bottomSheet.setData(it)
             bottomSheet.show(
-                supportFragmentManager,
-                Constants.BOTTOM_SHEET
+                supportFragmentManager, Constants.BOTTOM_SHEET
             )
         }
 
@@ -287,7 +281,7 @@ class AdvisoryActivity :
 
     private fun openCommunity() {
         val data = Intent();
-        data.putExtra(Constants.GO_TO_COMMUNITY,"advisory")
+        data.putExtra(Constants.GO_TO_COMMUNITY, "advisory")
         setResult(RESULT_OK, data);
         finish();
     }
@@ -307,6 +301,8 @@ class AdvisoryActivity :
             rvActivity.adapter = activityListAdapter
             viewDataBinding.llActivityStageAvailable.visibility = VISIBLE
             viewDataBinding.llNoActivityStage.visibility = GONE
+            rvActivity.scrollToPosition(activityListAdapter.lastSelectedActivityPosition)
+
         } else {
             viewDataBinding.llActivityStageAvailable.visibility = GONE
             viewDataBinding.llNoActivityStage.visibility = VISIBLE
@@ -324,15 +320,13 @@ class AdvisoryActivity :
 
     fun openProblemDialog(linkedIssue: LinkedIssue) {
         //Inflate the dialog with custom view   use Binding
-        val mDialogView =
-            LayoutInflater.from(this).inflate(R.layout.crop_issue_idialog, null)
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.crop_issue_idialog, null)
         val dialogBinding = CropIssueIdialogBinding.bind(mDialogView)
         dialogBinding.setVariable(BR.model, linkedIssue)
 
 
         //AlertDialogBuilder
-        val mBuilder = AlertDialog.Builder(this)
-            .setView(dialogBinding.root)
+        val mBuilder = AlertDialog.Builder(this).setView(dialogBinding.root)
         //show dialog
         val mAlertDialog = mBuilder.show()
 

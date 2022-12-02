@@ -319,6 +319,9 @@ class HomeActivity :
         mViewModel?.getProfile()
         mViewModel?.getCrops()
         updateCartCount(SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!)
+        marketFragment.marketFragmentViewModel.getFarms()
+        profileFragment.refreshProfile()
+
     }
 
     override fun getLayoutID(): Int {

@@ -3,5 +3,6 @@ package agstack.gramophone.ui.verifyotp.model
 data class ValidateOtpRequestModel(
     val mobile_no: String,
     val otp: String,
-    val otp_reference_id:Int
+    val otp_reference_id:Int,
+    val utm_source:String?
 )
