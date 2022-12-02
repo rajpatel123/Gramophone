@@ -40,12 +40,17 @@ class ViewAllFarmsAdapter(
             headerListener.invoke(farmList[position])
         }
 
-        holder.binding.contentLayout.setOnClickListener {
+        holder.binding.multiFarmLayout.setOnClickListener {
             contentListener.invoke(farmList[position])
         }
 
-        holder.binding.footerLayout.setOnClickListener {
+        holder.binding.txtAddFarm.setOnClickListener {
             footerListener.invoke(farmList[position])
+        }
+
+
+        holder.binding.txtAddedFarm.setOnClickListener {
+            contentListener.invoke(farmList[position])
         }
 
         holder.binding.txtAddFarm.setTextColor(holder.binding.root.context.resources.getColor(R.color.orange))
