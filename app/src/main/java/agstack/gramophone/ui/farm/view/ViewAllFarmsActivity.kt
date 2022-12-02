@@ -145,6 +145,18 @@ class ViewAllFarmsActivity :
                         putString(Constants.CROP_DAYS,it[0].days)
                     })
 
+                }else{
+                    if (isCustomerFarms) {
+                        openActivity(CropGroupExplorerActivity::class.java, Bundle().apply {
+                            putParcelableArrayList(
+                                "cropList", it as ArrayList<Data>
+                            )
+                            putBoolean("isOldFarms", isOldFarms)
+                            putBoolean("isCustomerFarms", isCustomerFarms)
+                            putParcelableArrayList("unitsList", units as ArrayList)
+                            putString("farm_ref_id", it[0].farm_ref_id)
+                        })
+                    }
                 }
             },
             contentListener = {
@@ -229,5 +241,10 @@ class ViewAllFarmsActivity :
         })
 
         dialog.show(this@ViewAllFarmsActivity.supportFragmentManager, "custom_sheet")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refresh()
     }
 }
