@@ -144,6 +144,10 @@ class AdvisoryActivity :
     override fun enableSortAndFilter() {
     }
 
+    override fun disableFilterOnly() {
+
+    }
+
     override fun loadUrl(url: String) {
     }
 

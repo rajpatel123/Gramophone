@@ -140,6 +140,10 @@ class CropProblemDetailActivity :
         // Don't write anything here. This method is only used in ArticleWebViewActivity
     }
 
+    override fun disableFilterOnly() {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+    }
+
     override fun enableSortAndFilter() {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
     }

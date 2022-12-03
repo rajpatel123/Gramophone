@@ -204,6 +204,11 @@ class SubCategoryActivity :
         viewDataBinding.tvFilter.isEnabled = true
     }
 
+    override fun disableFilterOnly() {
+        viewDataBinding.tvSortBy.isEnabled = true
+        viewDataBinding.tvFilter.isEnabled = false
+    }
+
     override fun setViewPagerAdapter(bannerList: List<Banner>?) {
         if (bannerList.isNotNullOrEmpty()) {
             viewDataBinding.rlBanner.visibility = View.VISIBLE
