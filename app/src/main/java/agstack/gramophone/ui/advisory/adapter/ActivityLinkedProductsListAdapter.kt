@@ -36,9 +36,16 @@ class ActivityLinkedProductsListAdapter(
         val linkedTechnical: LinkedTechnical = dataList[position]
         holder.binding.setVariable(BR.model, linkedTechnical)
 
+        if (position == 0) {
+            if (!isProductWithIdAvailable()){
+                val param = holder.binding.outPurchaseText.layoutParams as ViewGroup.MarginLayoutParams
+                param.setMargins(55,0,55,39)
+                holder.binding.outPurchaseText.layoutParams = param
+            }
 
+        }
 
-        if (position > 0 && linkedTechnical.product_id < 1 && !isHeaderVisible) {
+        if (linkedTechnical.product_id < 1 && !isHeaderVisible) {
             holder.binding.outPurchaseText.visibility = VISIBLE
             isHeaderVisible = true
         } else {
@@ -65,6 +72,22 @@ class ActivityLinkedProductsListAdapter(
         }
 
 
+    }
+
+    private fun isProductWithIdAvailable(): Boolean {
+        var isExist = false
+        run breaking@{
+            dataList.forEach {
+                if (it.product_id > 0) {
+                    isExist = true
+                    return@breaking
+                } else {
+                    isExist = false
+
+                }
+            }
+        }
+        return isExist
     }
 
     override fun getItemCount(): Int {
