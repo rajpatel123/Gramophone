@@ -284,6 +284,10 @@ class ArticlesWebViewActivity :
         // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
     }
 
+    override fun disableFilterOnly() {
+        // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
+    }
+
     override fun enableSortAndFilter() {
         // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
     }

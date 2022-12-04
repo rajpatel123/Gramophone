@@ -330,6 +330,11 @@ class FeaturedProductActivity :
         viewDataBinding.tvFilter.isEnabled = true
     }
 
+    override fun disableFilterOnly() {
+        viewDataBinding.tvSortBy.isEnabled = true
+        viewDataBinding.tvFilter.isEnabled = false
+    }
+
     override fun loadUrl(url: String) {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
     }

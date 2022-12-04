@@ -96,7 +96,7 @@ class BindingAdapter {
                 val formatted_percentage = String.format("%.02f", percentage);
                 textView.setText(formatted_percentage + " % Off")
             }else{
-                textView.visibility=View.GONE
+                textView.visibility=View.INVISIBLE
             }
         }
 
