@@ -18,7 +18,76 @@
         android:orientation="vertical"
         tools:context=".ui.advisory.view.AllCropProblemsActivity">
 
-        <include layout="@layout/layout_toolbar" />
+        <RelativeLayout
+            android:id="@+id/myToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:paddingHorizontal="@dimen/_5sdp">
+
+            <RelativeLayout
+                android:id="@+id/rlBack"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:onClick="@{()->viewModel.onBackPressed()}">
+
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/image"
+                    app:srcCompat="@drawable/ic_arrow_left" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlItemMenuCart"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_4sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/ivItemMenuCart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/ic_cart" />
+
+                <FrameLayout
+                    android:id="@+id/frameCartRedCircle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/circle_solid_orange"
+                    android:padding="2dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tvCartCount"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/manrope_bold"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp"
+                        tools:text="1" />
+
+                </FrameLayout>
+
+
+            </RelativeLayout>
+        </RelativeLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -92,14 +161,14 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_8sdp"
-                    android:background="@color/mute_grey"/>
+                    android:background="@color/mute_grey" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    >
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_10sdp">
 
                     <ImageView
                         android:id="@+id/ivCount"
@@ -122,9 +191,9 @@
                     android:id="@+id/rvRecommendedProduct"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_10sdp"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="1"
-                    android:layout_marginTop="@dimen/_10sdp"
                     tools:listitem="@layout/item_recommended_product" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

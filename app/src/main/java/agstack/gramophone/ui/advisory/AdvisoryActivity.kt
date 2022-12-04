@@ -10,6 +10,7 @@ import agstack.gramophone.ui.advisory.adapter.*
 import agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData
 import agstack.gramophone.ui.advisory.models.advisory.LinkedIssue
 import agstack.gramophone.ui.advisory.view.CropIssueBottomSheetDialog
+import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.subcategory.ProductListAdapter
@@ -22,17 +23,21 @@ import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amnix.xtension.extensions.inflater
@@ -57,11 +62,14 @@ class AdvisoryActivity :
         subCategoryViewModel.updateProfileDetail()
         subCategoryViewModel.getCropAdvisoryDetails()
         viewDataBinding.llCommunityLL.goToCommunity.setOnClickListener { openCommunity() }
-
         viewDataBinding.llCommunityLL.tvDisclaimer.text =
             Html.fromHtml(getString(R.string.disclaimer_txt), 0)
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateCartCount(SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!)
+    }
 
     override fun getLayoutID(): Int = R.layout.activity_advisory
 
@@ -248,12 +256,23 @@ class AdvisoryActivity :
         } else {
             viewDataBinding.rlCropProblems.visibility = GONE
         }
-
-
     }
 
     override fun updateCartCount(cartCount: Int) {
-        // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
+        try {
+            if (cartCount > 0) {
+                viewDataBinding.tvCartCount.text = cartCount.toString()
+                viewDataBinding.frameCartRedCircle.visibility = View.VISIBLE
+            } else {
+                viewDataBinding.frameCartRedCircle.visibility = View.GONE
+            }
+            viewDataBinding.rlItemMenuCart.setOnClickListener {
+                openActivity(CartActivity::class.java)
+            }
+            viewDataBinding.ivItemMenuCart.setColorFilter(ContextCompat.getColor(this, R.color.blakish), android.graphics.PorterDuff.Mode.SRC_IN)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
     }
 
     override fun showInfoBottomSheet() {
