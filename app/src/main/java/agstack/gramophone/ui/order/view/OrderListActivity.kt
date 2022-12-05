@@ -71,7 +71,7 @@ class OrderListActivity :
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.itemOrder -> {
-                orderListViewModel.onHelpClick()
+                orderListViewModel.onHelpClicked()
             }
         }
     }

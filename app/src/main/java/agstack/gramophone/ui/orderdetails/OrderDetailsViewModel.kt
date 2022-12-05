@@ -11,6 +11,7 @@ import agstack.gramophone.ui.orderdetails.model.Address
 import agstack.gramophone.ui.orderdetails.model.GpApiResponseData
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.Utility
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -187,6 +188,37 @@ class OrderDetailsViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun onHelpClicked() {
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.value = true
+                    var producttoBeAdded = ProductData()
+                    producttoBeAdded.product_id = null
+                    producttoBeAdded.comments = ""
+
+                    val helpResponse = productRepository.getHelp(Constants.HELP, producttoBeAdded)
+                    progress.value = false
+
+                    if (helpResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+                        getNavigator()?.showToast(helpResponse.body()?.gp_api_message)
+                    } else {
+                        getNavigator()?.showToast(Utility.getErrorMessage(helpResponse.errorBody()))
+                    }
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
+                progress.value = false
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+
     }
 
     /*private fun downloadInPdf(downloadInvoice: String) {

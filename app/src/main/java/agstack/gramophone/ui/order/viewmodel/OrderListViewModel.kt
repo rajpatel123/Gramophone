@@ -3,14 +3,15 @@ package agstack.gramophone.ui.order.viewmodel
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.order.OrderListNavigator
 import agstack.gramophone.ui.order.adapter.OrderListAdapter
 import agstack.gramophone.ui.order.model.Data
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.Utility
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -54,11 +55,12 @@ class OrderListViewModel @Inject constructor(
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
-                    val placeOrderResponse =
-                        productRepository.getOrderData(Constants.PLACED,  Constants.API_DATA_LIMITS_IN_ONE_TIME, "1")
-                    if (placeOrderResponse.isSuccessful && placeOrderResponse.body()?.gp_api_status == Constants.GP_API_STATUS
-                        && placeOrderResponse.body()?.gp_api_response_data?.data != null && placeOrderResponse.body()?.gp_api_response_data?.data?.size!! > 0
-                    ) {
+                    val placeOrderResponse = productRepository.getOrderData(
+                        Constants.PLACED,
+                        Constants.API_DATA_LIMITS_IN_ONE_TIME,
+                        "1"
+                    )
+                    if (placeOrderResponse.isSuccessful && placeOrderResponse.body()?.gp_api_status == Constants.GP_API_STATUS && placeOrderResponse.body()?.gp_api_response_data?.data != null && placeOrderResponse.body()?.gp_api_response_data?.data?.size!! > 0) {
                         val placedList = ArrayList<Data>()
                         placedList.addAll(placeOrderResponse.body()?.gp_api_response_data?.data as ArrayList<Data>)
                         placedOrderSize.value = placedList.size
@@ -91,11 +93,12 @@ class OrderListViewModel @Inject constructor(
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
-                    val recentOrderDataResponse =
-                        productRepository.getOrderData(Constants.RECENT,  Constants.API_DATA_LIMITS_IN_ONE_TIME, "1")
-                    if (recentOrderDataResponse.isSuccessful && recentOrderDataResponse.body()?.gp_api_status == Constants.GP_API_STATUS
-                        && recentOrderDataResponse.body()?.gp_api_response_data?.data != null && recentOrderDataResponse.body()?.gp_api_response_data?.data?.size!! > 0
-                    ) {
+                    val recentOrderDataResponse = productRepository.getOrderData(
+                        Constants.RECENT,
+                        Constants.API_DATA_LIMITS_IN_ONE_TIME,
+                        "1"
+                    )
+                    if (recentOrderDataResponse.isSuccessful && recentOrderDataResponse.body()?.gp_api_status == Constants.GP_API_STATUS && recentOrderDataResponse.body()?.gp_api_response_data?.data != null && recentOrderDataResponse.body()?.gp_api_response_data?.data?.size!! > 0) {
                         recentOrderSize.value =
                             recentOrderDataResponse.body()?.gp_api_response_data?.data?.size
                         getNavigator()?.setRecentOrderAdapter(
@@ -129,11 +132,12 @@ class OrderListViewModel @Inject constructor(
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
-                    val pastOrderDataResponse =
-                        productRepository.getOrderData(Constants.PAST,  Constants.API_DATA_LIMITS_IN_ONE_TIME, "1")
-                    if (pastOrderDataResponse.isSuccessful && pastOrderDataResponse.body()?.gp_api_status == Constants.GP_API_STATUS
-                        && pastOrderDataResponse.body()?.gp_api_response_data?.data != null && pastOrderDataResponse.body()?.gp_api_response_data?.data?.size!! > 0
-                    ) {
+                    val pastOrderDataResponse = productRepository.getOrderData(
+                        Constants.PAST,
+                        Constants.API_DATA_LIMITS_IN_ONE_TIME,
+                        "1"
+                    )
+                    if (pastOrderDataResponse.isSuccessful && pastOrderDataResponse.body()?.gp_api_status == Constants.GP_API_STATUS && pastOrderDataResponse.body()?.gp_api_response_data?.data != null && pastOrderDataResponse.body()?.gp_api_response_data?.data?.size!! > 0) {
                         pastOrderSize.value =
                             pastOrderDataResponse.body()?.gp_api_response_data?.data?.size
                         getNavigator()?.setPastOrderAdapter(
@@ -160,6 +164,38 @@ class OrderListViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun onHelpClicked() {
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.value = true
+                    var producttoBeAdded = ProductData()
+                    producttoBeAdded.product_id = null
+                    producttoBeAdded.comments = ""
+
+                    val helpResponse = productRepository.getHelp(Constants.HELP, producttoBeAdded)
+
+                    progress.value = false
+
+                    if (helpResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+                        getNavigator()?.showToast(helpResponse.body()?.gp_api_message)
+                    } else {
+                        getNavigator()?.showToast(Utility.getErrorMessage(helpResponse.errorBody()))
+                    }
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
+                progress.value = false
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+
     }
 
 }
