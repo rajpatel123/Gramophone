@@ -280,10 +280,7 @@ class AdvisoryActivity :
     }
 
     private fun openCommunity() {
-        val data = Intent();
-        data.putExtra(Constants.GO_TO_COMMUNITY, "advisory")
-        setResult(RESULT_OK, data);
-        finish();
+       subCategoryViewModel.openHelpClicked()
     }
 
     override fun setAdvisoryActivity(
