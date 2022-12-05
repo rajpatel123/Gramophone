@@ -46,7 +46,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SubCategoryViewModel @Inject constructor(
     private val productRepository: ProductRepository,
-    private val onBoardingRepository: OnBoardingRepository
+    private val onBoardingRepository: OnBoardingRepository,
 ) : BaseViewModel<SubCategoryNavigator>() {
 
     private var stageId: Int = 0
@@ -263,7 +263,13 @@ class SubCategoryViewModel @Inject constructor(
                             }
                         }
                         initMainFilterData()
-                        getNavigator()?.enableSortAndFilter()
+                        if (brandsList.isNotNullOrEmpty() || cropsList.isNotNullOrEmpty() || technicalDataList.isNotNullOrEmpty()
+                            || subCategoryList.isNotNullOrEmpty()
+                        ) {
+                            getNavigator()?.enableSortAndFilter()
+                        } else {
+                            getNavigator()?.disableFilterOnly()
+                        }
                     } else {
                         brandsList = ArrayList()
                         cropsList = ArrayList()
@@ -308,7 +314,13 @@ class SubCategoryViewModel @Inject constructor(
                         subCategoryList =
                             response.body()?.gp_api_response_data?.product_app_sub_categories_list
                         initMainFilterData()
-                        getNavigator()?.enableSortAndFilter()
+                        if (brandsList.isNotNullOrEmpty() || cropsList.isNotNullOrEmpty() || technicalDataList.isNotNullOrEmpty()
+                            || subCategoryList.isNotNullOrEmpty()
+                        ) {
+                            getNavigator()?.enableSortAndFilter()
+                        } else {
+                            getNavigator()?.disableFilterOnly()
+                        }
                     } else {
                         brandsList = ArrayList()
                         cropsList = ArrayList()
@@ -508,7 +520,9 @@ class SubCategoryViewModel @Inject constructor(
                             SharedPreferencesKeys.CART_ITEM_COUNT, cartCount + 1)
                         getNavigator()?.updateCartCount(cartCount + 1)
                     } else {
-                        if (response.errorBody().isNotNull() && response.errorBody()?.source().toString().contains("alr")) {
+                        if (response.errorBody().isNotNull() && response.errorBody()?.source()
+                                .toString().contains("alr")
+                        ) {
                             getNavigator()?.showToast(R.string.already_added_in_cart)
                             /*getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(
                                 R.string.gotocart)!!)*/
@@ -669,10 +683,11 @@ class SubCategoryViewModel @Inject constructor(
                 RecommendedProductRequestModel(bundle?.getInt(Constants.DESEASE_ID)!!)
             )
 
-            if (response.isSuccessful && response.body().isNotNull()){
-                productCount.set("".plus(response.body()?.gp_api_response_data!!.size).plus(" ").plus(getNavigator()?.getMessage(
-                    R.string.recommended_product)))
-                val recommendedLinkedProductsListAdapter= RecommendedLinkedProductsListAdapter(
+            if (response.isSuccessful && response.body().isNotNull()) {
+                productCount.set("".plus(response.body()?.gp_api_response_data!!.size).plus(" ")
+                    .plus(getNavigator()?.getMessage(
+                        R.string.recommended_product)))
+                val recommendedLinkedProductsListAdapter = RecommendedLinkedProductsListAdapter(
                     response.body()?.gp_api_response_data!!
                 )
 

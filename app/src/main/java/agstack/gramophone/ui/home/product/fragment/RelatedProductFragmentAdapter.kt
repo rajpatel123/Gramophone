@@ -27,7 +27,7 @@ class RelatedProductFragmentAdapter(relatedProductItemList: List<RelatedProductI
         val model: RelatedProductItem = mRelatedProductItemList[position]
         holder.binding.setVariable(BR.model, model)
         val mBinding = holder.binding as ItemRelatedProductFragmentBinding
-        mBinding.relatedProdDetailsContainer.setOnClickListener{
+        mBinding.productDetailsContainer.setOnClickListener{
             selectedProduct?.invoke(model)
         }
 

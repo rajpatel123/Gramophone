@@ -123,32 +123,36 @@ fun bindLoginBannerImage(view: ImageView, imageUrl: String?) {
 
 @BindingAdapter(value = ["product_image", "error"], requireAll = false)
 fun loadImage(view: ImageView, profileImage: String, error: Int) {
-    Glide.with(view.context)
-        .load(profileImage)
-        .listener(object : RequestListener<Drawable> {
-            override fun onLoadFailed(
-                e: GlideException?,
-                model: Any?,
-                target: com.bumptech.glide.request.target.Target<Drawable>,
-                isFirstResource: Boolean,
-            ): Boolean {
-                view.setImageResource(error)
-                return true
-            }
+    if (profileImage.isNullOrEmpty()) {
+        view.setImageResource(R.drawable.ic_gramophone_leaf)
+    } else {
+        Glide.with(view.context)
+            .load(profileImage)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: com.bumptech.glide.request.target.Target<Drawable>,
+                    isFirstResource: Boolean,
+                ): Boolean {
+                    view.setImageResource(error)
+                    return true
+                }
 
-            override fun onResourceReady(
-                resource: Drawable?,
-                model: Any?,
-                target: com.bumptech.glide.request.target.Target<Drawable>,
-                dataSource: DataSource?,
-                isFirstResource: Boolean,
-            ): Boolean {
-                view.setImageDrawable(resource)
-                return true
-            }
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: com.bumptech.glide.request.target.Target<Drawable>,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean,
+                ): Boolean {
+                    view.setImageDrawable(resource)
+                    return true
+                }
 
-        })
-        .into(view)
+            })
+            .into(view)
+    }
 }
 
 @BindingAdapter("android:src")

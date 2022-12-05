@@ -4,11 +4,10 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityCropProblemDetailBinding
-import agstack.gramophone.ui.advisory.CropProblemDetailNavigator
 import agstack.gramophone.ui.advisory.adapter.ActivityListAdapter
 import agstack.gramophone.ui.advisory.adapter.CropIssueListAdapter
 import agstack.gramophone.ui.advisory.adapter.RecommendedLinkedProductsListAdapter
-import agstack.gramophone.ui.advisory.models.recomondedproducts.GpApiResponseData
+import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
@@ -22,8 +21,12 @@ import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amnix.xtension.extensions.isNotNull
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,9 +41,13 @@ class CropProblemDetailActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setUpToolBar(true, "", R.drawable.ic_arrow_left, true)
         subCategoryViewModel.getRecommendedProduct()
         subCategoryViewModel.setDiseaseDetails()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateCartCount(SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!)
     }
 
     override fun getLayoutID(): Int = R.layout.activity_crop_problem_detail
@@ -140,6 +147,10 @@ class CropProblemDetailActivity :
         // Don't write anything here. This method is only used in ArticleWebViewActivity
     }
 
+    override fun disableFilterOnly() {
+        // Don't write anything here. This method is only used in ArticleWebViewActivity
+    }
+
     override fun enableSortAndFilter() {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
     }
@@ -181,7 +192,20 @@ class CropProblemDetailActivity :
     }
 
     override fun updateCartCount(cartCount: Int) {
-        // Don't write anything here. This method is only used in FeaturedActivity & SubCategoryActivity
+        try {
+            if (cartCount > 0) {
+                viewDataBinding.tvCartCount.text = cartCount.toString()
+                viewDataBinding.frameCartRedCircle.visibility = View.VISIBLE
+            } else {
+                viewDataBinding.frameCartRedCircle.visibility = View.GONE
+            }
+            viewDataBinding.rlItemMenuCart.setOnClickListener {
+                openActivity(CartActivity::class.java)
+            }
+            viewDataBinding.ivItemMenuCart.setColorFilter(ContextCompat.getColor(this, R.color.blakish), android.graphics.PorterDuff.Mode.SRC_IN)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
     }
 
     override fun setProductList(
