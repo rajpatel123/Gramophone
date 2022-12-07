@@ -9,11 +9,11 @@ import agstack.gramophone.ui.cart.model.OfferApplied
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.orderdetails.adapter.OrderedProductsAdapter
-import agstack.gramophone.ui.orderdetails.model.FreeProduct
+import android.app.DownloadManager
+import android.content.Context
 import android.content.res.ColorStateList
-import android.os.Build
+import android.net.Uri
 import android.os.Bundle
-import android.text.Html
 import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
@@ -140,6 +140,13 @@ class OrderDetailsActivity :
         val bundle = Bundle()
         bundle.putParcelable("product", productData)
         openActivity(ProductDetailsActivity::class.java, bundle)
+    }
+
+    override fun downloadInvoice(invoiceUrl: String) {
+        val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val getPdf = DownloadManager.Request(Uri.parse(invoiceUrl))
+        getPdf.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        downloadManager.enqueue(getPdf)
     }
 
     override fun getBundle(): Bundle? {

@@ -20,4 +20,6 @@ interface OrderDetailsNavigator : BaseNavigator {
 
     fun setColorOnOrderStatus(orderStatus: String)
 
+    fun downloadInvoice(invoiceUrl: String)
+
 }

@@ -18,6 +18,8 @@ import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
+import agstack.gramophone.ui.orderdetails.model.OrderInvoiceRequest
+import agstack.gramophone.ui.orderdetails.model.OrderInvoiceResponse
 import agstack.gramophone.ui.search.model.GlobalSearchRequest
 import agstack.gramophone.ui.search.model.GlobalSearchResponse
 import agstack.gramophone.ui.search.model.SuggestionsRequest
@@ -322,6 +324,14 @@ class ProductRepositoryImpl @Inject constructor(
             Dispatchers.IO
         ) {
             val response = gramoAppService.getBookmarkedVideoList()
+            response
+        }
+
+    override suspend fun getOrderInvoiceUrl(request: OrderInvoiceRequest): Response<OrderInvoiceResponse> =
+        withContext(
+            Dispatchers.IO
+        ) {
+            val response = gramoAppService.getOrderInvoiceUrl(request)
             response
         }
 }
