@@ -145,7 +145,6 @@ class OrderDetailsViewModel @Inject constructor(
                         }
 
                         getNavigator()?.setColorOnOrderStatus(orderStatus.value!!)
-                        /*downloadInPdf(responseData.download_invoice)*/
 
                         getNavigator()?.setOrderListAdapter(
                             OrderedProductsAdapter(responseData.products),
@@ -211,11 +210,9 @@ class OrderDetailsViewModel @Inject constructor(
                 progress.value = false
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
             }
         }
-
     }
 
     private fun getInvoice(orderId: String) {
