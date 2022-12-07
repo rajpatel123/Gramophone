@@ -7,7 +7,6 @@ import agstack.gramophone.ui.cart.CartNavigator
 import agstack.gramophone.ui.cart.adapter.CartAdapter
 import agstack.gramophone.ui.cart.model.PlaceOrderRequest
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
-import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
@@ -20,11 +19,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
-import kotlin.math.roundToInt
 
 
 @HiltViewModel
@@ -100,11 +97,14 @@ class CartViewModel @Inject constructor(
                     getNavigator()?.showToast(response.body()?.gp_api_message)
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
                         getNavigator()?.openCheckoutStatusActivity(Bundle().apply {
-                            putString(Constants.ORDER_ID,
-                                response.body()?.gp_api_response_data?.order_ref_id.toString())
+                            putString(
+                                Constants.ORDER_ID,
+                                response.body()?.gp_api_response_data?.order_ref_id.toString()
+                            )
                         })
                         SharedPreferencesHelper.instance?.putInteger(
-                            SharedPreferencesKeys.CART_ITEM_COUNT, 0)
+                            SharedPreferencesKeys.CART_ITEM_COUNT, 0
+                        )
                     }
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
@@ -131,25 +131,22 @@ class CartViewModel @Inject constructor(
                     val response = productRepository.getCartData()
 
                     try {
-                        if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
-                            && response.body()?.gp_api_response_data?.cart_items != null
-                        ) {
+                        if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS && response.body()?.gp_api_response_data?.cart_items != null) {
                             SharedPreferencesHelper.instance?.putInteger(
                                 SharedPreferencesKeys.CART_ITEM_COUNT,
-                                response.body()?.gp_api_response_data?.cart_items!!.size)
+                                response.body()?.gp_api_response_data?.cart_items!!.size
+                            )
                         } else {
                             SharedPreferencesHelper.instance?.putInteger(
-                                SharedPreferencesKeys.CART_ITEM_COUNT,
-                                0)
+                                SharedPreferencesKeys.CART_ITEM_COUNT, 0
+                            )
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
 
 
-                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
-                        && response.body()?.gp_api_response_data?.cart_items != null && response.body()?.gp_api_response_data?.cart_items?.size!! > 0
-                    ) {
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS && response.body()?.gp_api_response_data?.cart_items != null && response.body()?.gp_api_response_data?.cart_items?.size!! > 0) {
                         showCartView.value = true
                         isProgressBgTransparent.value = true
                         itemCount.value = response.body()?.gp_api_response_data?.cart_items?.size
@@ -185,15 +182,14 @@ class CartViewModel @Inject constructor(
                                 removeCartItem(it.toInt())
                             },
                             { offerApplied, productName, productSku ->
-                                getNavigator()?.openActivity(
-                                    OfferDetailActivity::class.java,
+                                getNavigator()?.openActivity(OfferDetailActivity::class.java,
                                     Bundle().apply {
                                         val offersDataItem = DataItem()
                                         offersDataItem.name = offerApplied.offer_name
                                         offersDataItem.endDate =
                                             if (offerApplied.valid_till.isNotNullOrEmpty()) offerApplied.valid_till.replace(
-                                                "Valid till ",
-                                                "") else null
+                                                "Valid till ", ""
+                                            ) else null
                                         offersDataItem.productName = productName
                                         offersDataItem.productsku = productSku
                                         offersDataItem.image = offerApplied.image
@@ -201,7 +197,8 @@ class CartViewModel @Inject constructor(
                                         putParcelable(Constants.OFFERSDATA, offersDataItem)
 
                                     })
-                            }, {
+                            },
+                            {
                                 // on quantity increase and decrease clicked
                                 val productData = ProductData()
                                 productData.product_id = it.product_id.toInt()
@@ -272,5 +269,36 @@ class CartViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun onHelpClicked() {
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.value = true
+                    var producttoBeAdded = ProductData()
+                    producttoBeAdded.product_id = null
+                    producttoBeAdded.comments = ""
+
+                    val helpResponse = productRepository.getHelp(Constants.HELP, producttoBeAdded)
+                    progress.value = false
+
+                    if (helpResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+                        getNavigator()?.showToast(helpResponse.body()?.gp_api_message)
+                    } else {
+                        getNavigator()?.showToast(Utility.getErrorMessage(helpResponse.errorBody()))
+                    }
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                }
+            } catch (ex: Exception) {
+                progress.value = false
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+
     }
 }

@@ -65,7 +65,7 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.itemCart -> {
-                cartViewModel.onHelpClick()
+                cartViewModel.onHelpClicked()
             }
         }
     }
