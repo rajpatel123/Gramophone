@@ -23,6 +23,22 @@
           }
         },
         {
+          "client_id": "525118102961-djbmp8qhqfsgee784k6ammbbsm5fmifa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "agstack.gramophone",
+            "certificate_hash": "5d03d72eb2cdb8ce5636c65be57214b09f82631c"
+          }
+        },
+        {
+          "client_id": "525118102961-s798um0kr0ndttufe38gep41qdntep09.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "agstack.gramophone",
+            "certificate_hash": "83afd35f39ed1d657e543306f2f5d760aac8f1f5"
+          }
+        },
+        {
           "client_id": "525118102961-rc6v001acrpo3ace2ott706tim8d3b6v.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -30,6 +46,9 @@
       "api_key": [
         {
           "current_key": "AIzaSyD6HGLMvm-bUW0ZCX3wXztDZZXUQTfznZI"
+        },
+        {
+          "current_key": "AIzaSyBTxkjy635TwGWgFPjlkwfznHY8811JI0Q"
         }
       ],
       "services": {
@@ -45,20 +64,12 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:525118102961:android:512e18be57eb74ef",
+        "mobilesdk_app_id": "1:525118102961:android:3d95e644ddda6cf245b190",
         "android_client_info": {
-          "package_name": "agstack.gramophone.debug"
+          "package_name": "in.gramophone.fieldapp"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "525118102961-06ardtc4v08uo4n9kpkq7ohf79q60lfj.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "agstack.gramophone.debug",
-            "certificate_hash": "7b9c23941cfb08a6070de20614d4d7fab7f0f3b8"
-          }
-        },
         {
           "client_id": "525118102961-rc6v001acrpo3ace2ott706tim8d3b6v.apps.googleusercontent.com",
           "client_type": 3
@@ -67,6 +78,9 @@
       "api_key": [
         {
           "current_key": "AIzaSyD6HGLMvm-bUW0ZCX3wXztDZZXUQTfznZI"
+        },
+        {
+          "current_key": "AIzaSyBTxkjy635TwGWgFPjlkwfznHY8811JI0Q"
         }
       ],
       "services": {

@@ -13,6 +13,7 @@ import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.home.view.fragments.trading.TradeFragment
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.language.view.LanguageActivity
+import agstack.gramophone.ui.notification.view.NotificationActivity
 import agstack.gramophone.ui.search.view.GlobalSearchActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
@@ -309,6 +310,10 @@ class HomeActivity :
                 openActivity(GlobalSearchActivity::class.java, Bundle().apply {
                     putBoolean("searchInCommunity", (activeFragment is CommunityFragment))
                 })
+            }
+
+            R.id.item_notification -> {
+                openActivity(NotificationActivity::class.java)
             }
         }
         return true
