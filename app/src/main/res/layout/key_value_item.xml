@@ -9,12 +9,12 @@
         <import type="android.view.View" />
 
     </data>
+
     <LinearLayout
         android:id="@+id/mainContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="@dimen/_5sdp"
         android:weightSum="2">
 
         <TextView
@@ -25,11 +25,12 @@
             android:layout_weight=".8"
             android:background="@drawable/no_corner_with_grey_color"
             android:gravity="center"
-            android:hint="Insectictice/Fungicide/Herrbicide"
-            android:padding="@dimen/_4sdp"
-            tools:text="key"
-            android:textColor="@color/grey_weight" />
-
+            android:lineSpacingExtra="-2dp"
+            android:paddingHorizontal="@dimen/_4sdp"
+            android:paddingVertical="@dimen/_5sdp"
+            android:textColor="@color/grey_weight"
+            android:textSize="@dimen/_12ssp"
+            tools:text="Key" />
 
         <TextView
             android:id="@+id/tv_value"
@@ -39,11 +40,11 @@
             android:layout_weight="1.2"
             android:background="@drawable/no_corner_with_grey_color"
             android:gravity="center"
-            android:hint="Herbicide"
-            android:padding="@dimen/_4sdp"
-            android:text="value"
+            android:paddingHorizontal="@dimen/_4sdp"
+            android:paddingVertical="@dimen/_5sdp"
             android:textColor="@color/blakish"
-            android:textSize="@dimen/_12ssp" />
+            android:textSize="@dimen/_12ssp"
+            tools:text="Value" />
 
     </LinearLayout>
 

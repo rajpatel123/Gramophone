@@ -47,6 +47,8 @@ interface SubCategoryNavigator : BaseNavigator {
 
     fun disableSortAndFilter()
 
+    fun disableFilterOnly()
+
     fun enableSortAndFilter()
 
     fun loadUrl(url: String)

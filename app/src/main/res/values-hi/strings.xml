@@ -536,6 +536,7 @@
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://www.gramophone.in\",\n  }\n}]</string>
     <string name="notifications">Notifications</string>
 
+    <string name="click_back_to_exit">Please click back again to exit.</string>
 </resources>
 
 

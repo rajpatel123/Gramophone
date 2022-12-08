@@ -671,4 +671,5 @@
 
     <string name="no_expiry_points_available">No expiry points available</string>
     <string name="notifications">Notifications</string>
+    <string name="click_back_to_exit">Please click back again to exit.</string>
 </resources>
