@@ -39,6 +39,13 @@
         android:theme="@style/SplashTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".NotificationActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.advisory.view.CropProblemDetailActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
@@ -112,9 +119,9 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -127,9 +134,7 @@
                 <data
                     android:host="play.google.com"
                     android:scheme="app" />
-
             </intent-filter>
-
         </activity>
         <activity
             android:name=".ui.address.view.AddOrUpdateAddressActivity"
@@ -264,8 +269,8 @@
         <activity android:name=".ui.unitconverter.UnitConverterActivity" />
         <activity
             android:name=".ui.feedback.FeedbackActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.offerslist.OffersListActivity"
             android:screenOrientation="portrait" />
@@ -315,11 +320,21 @@
         <activity
             android:name=".ui.search.view.ViewAllPostsActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.notification.view.NotificationActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.search.view.ViewAllCropCategoriesActivity"
             android:screenOrientation="portrait" />
 
-        <service android:name=".pushnotification.MyFirebaseMessagingService" />
+        <service
+            android:name=".pushnotification.MyFirebaseMessagingService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
         <service
             android:name=".di.GetAddressIntentService"
             android:exported="true" />

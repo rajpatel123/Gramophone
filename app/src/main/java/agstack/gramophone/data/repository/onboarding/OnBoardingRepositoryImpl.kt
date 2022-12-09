@@ -30,6 +30,8 @@ import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
+import agstack.gramophone.ui.notification.model.NotificationRequestModel
+import agstack.gramophone.ui.notification.model.NotificationresponseModel
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
@@ -231,4 +233,9 @@ class OnBoardingRepositoryImpl @Inject constructor(
         blockedUsers
     }
 
+    override suspend fun getNotification(notificationRequestModel: NotificationRequestModel):Response<NotificationresponseModel>  = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = gramAppService.getNotifications(notificationRequestModel)
+        blockedUsers
+    }
 }

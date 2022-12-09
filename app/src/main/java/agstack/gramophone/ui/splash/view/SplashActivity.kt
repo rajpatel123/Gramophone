@@ -9,8 +9,8 @@ import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.ui.splash.SplashNavigator
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
 import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.LocaleManagerClass
 import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -35,6 +35,8 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
     }
 
     private fun startApp() {
+
+        Log.d("Token----","".plus(SharedPreferencesHelper.instance!!.getString(SharedPreferencesKeys.FirebaseTokenKey)))
         if (SharedPreferencesHelper.instance?.getBoolean(Constants.UTM_SOURCE_UPDATED) == true){
             splashViewModel.initSplash(resources)
         }else{

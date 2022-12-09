@@ -534,6 +534,7 @@
     <string name="not_able_to_add">Not able to add in cart</string>
     <string name="disclaimer_txt"><![CDATA[<font style=\"color:blue\"> Disclaimer: **</font> Actual dosage of the product may vary depending on various factors and should be adjusted accordingly. User should follow directions provided by manufacturer on the label claims.]]></string>
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://www.gramophone.in\",\n  }\n}]</string>
+    <string name="notifications">Notifications</string>
 
     <string name="click_back_to_exit">Please click back again to exit.</string>
 </resources>
