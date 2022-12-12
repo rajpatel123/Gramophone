@@ -19,6 +19,8 @@ import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_language.*
 
@@ -97,6 +99,15 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     override fun updateLanguageList(languageAdapter: LanguageAdapter,onLanguageClicked: (Language) -> Unit) {
         languageAdapter.selectedLanguage = onLanguageClicked
         rvLanguage.adapter=languageAdapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val properties = Properties()
+        properties.addAttribute("Language", "en")
+            .addAttribute("Customer_Acquisition_Source", "android")
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Language_Selection_Done_Onboarding", properties)
     }
 
 }

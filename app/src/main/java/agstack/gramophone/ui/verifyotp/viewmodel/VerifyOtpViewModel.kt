@@ -37,7 +37,6 @@ import javax.inject.Inject
 @HiltViewModel
 class VerifyOtpViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository,
-    private val gramAppApplication: GramAppApplication
 ) : BaseViewModel<VerifyOTPNavigator>() {
     var remaningDuration: Long = 0
     var otp = ObservableField<String>()
@@ -124,7 +123,6 @@ class VerifyOtpViewModel @Inject constructor(
                         } else {
                             getNavigator()?.openAndFinishActivity(StateListActivity::class.java)
                         }
-                        gramAppApplication.userLoginMoEngage()
                         //getNavigator()?.showToast(responseData?.gp_api_message)
                     } else {
                         val arrayTutorialType =

@@ -41,7 +41,6 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository,
     private val productRepository: ProductRepository,
-    private val gramAppApplication: GramAppApplication
 ) : BaseViewModel<HomeActivityNavigator>() {
 
     var progressBar = ObservableField<Boolean>()
@@ -151,7 +150,6 @@ class HomeViewModel @Inject constructor(
                             false
                         )
                         SharedPreferencesHelper.instance?.clear()
-                        gramAppApplication.userLogoutMoEngage()
                         getNavigator()?.logout()
 
                     } else {
