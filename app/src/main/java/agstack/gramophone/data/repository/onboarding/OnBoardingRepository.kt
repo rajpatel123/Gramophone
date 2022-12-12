@@ -24,6 +24,7 @@ import agstack.gramophone.ui.home.view.fragments.community.model.quiz.AnsweredQu
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
 import agstack.gramophone.ui.home.view.fragments.gramophone.model.MyGramophoneResponseModel
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
+import agstack.gramophone.ui.home.view.model.FCMRegistrationModel
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
@@ -104,6 +105,8 @@ interface OnBoardingRepository {
     suspend fun getCropProblems(cropProblemRequestModel: CropProblemRequestModel): Response<CropProblemResponseModel>
 
     suspend fun getNotification(notificationRequestModel: NotificationRequestModel): Response<NotificationresponseModel>
+
+    suspend fun saveToken(fcmRegistrationModel: FCMRegistrationModel): Response<NotificationresponseModel>
 
 
 }

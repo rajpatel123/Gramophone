@@ -11,6 +11,7 @@ import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
 import agstack.gramophone.ui.feedback.FeedbackActivity
 import agstack.gramophone.ui.gramcash.GramCashActivity
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
+import agstack.gramophone.ui.home.view.model.FCMRegistrationModel
 import agstack.gramophone.ui.offerslist.OffersListActivity
 import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.profile.model.GpApiResponseProfileData
@@ -272,5 +273,25 @@ class HomeViewModel @Inject constructor(
 
     fun onCreatePostClicked() {
         getNavigator()?.openActivity(CreatePostActivity::class.java, null)
+    }
+
+    fun sendFCMToServer(fcmRegistrationModel: FCMRegistrationModel) {
+        try {
+            viewModelScope.launch {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    val response = onBoardingRepository.saveToken(fcmRegistrationModel)
+                    if (response.isSuccessful) {
+
+                    } else {
+                        getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+                    }
+                }
+            }
+        } catch (ex: Exception) {
+            when (ex) {
+                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+            }
+        }
     }
 }

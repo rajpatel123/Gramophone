@@ -11,6 +11,7 @@ import agstack.gramophone.ui.home.view.fragments.gramophone.MyGramophoneFragment
 import agstack.gramophone.ui.home.view.fragments.market.MarketFragment
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.home.view.fragments.trading.TradeFragment
+import agstack.gramophone.ui.home.view.model.FCMRegistrationModel
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.ui.notification.view.NotificationActivity
@@ -22,19 +23,16 @@ import agstack.gramophone.utils.SharedPreferencesKeys
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.FrameLayout
-import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.forEach
@@ -79,6 +77,18 @@ class HomeActivity :
         super.onCreate(savedInstanceState)
         setupUi()
         setUpFirebaseConfig()
+        registerWithFCM()
+
+    }
+
+    private fun registerWithFCM() {
+        val fcmRegistrationModel = FCMRegistrationModel("fcm_token",
+            SharedPreferencesHelper.instance!!.getString(SharedPreferencesKeys.FirebaseTokenKey)
+                .toString()
+        )
+
+
+        homeViewModel.sendFCMToServer(fcmRegistrationModel)
 
     }
 
