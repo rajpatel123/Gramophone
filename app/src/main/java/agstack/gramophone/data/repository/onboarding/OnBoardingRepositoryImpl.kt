@@ -25,6 +25,7 @@ import agstack.gramophone.ui.home.view.fragments.community.model.quiz.AnsweredQu
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
 import agstack.gramophone.ui.home.view.fragments.gramophone.model.MyGramophoneResponseModel
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
+import agstack.gramophone.ui.home.view.model.FCMRegistrationModel
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
@@ -236,6 +237,13 @@ class OnBoardingRepositoryImpl @Inject constructor(
     override suspend fun getNotification(notificationRequestModel: NotificationRequestModel):Response<NotificationresponseModel>  = withContext(
         Dispatchers.IO) {
         val blockedUsers = gramAppService.getNotifications(notificationRequestModel)
+        blockedUsers
+    }
+
+
+    override suspend fun saveToken(fcmRegistrationModel: FCMRegistrationModel):Response<NotificationresponseModel>  = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = gramAppService.saveToken(fcmRegistrationModel)
         blockedUsers
     }
 }

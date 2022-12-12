@@ -31,7 +31,9 @@ class NotificationsAdapter(private val dataList: List<Data>) :
         var data: Data = dataList[position]!!
         holder.binding.setVariable(BR.model, data)
         val mBinding = holder.binding
-
+        holder.binding.root.setOnClickListener {
+            notificationClicked?.invoke(data)
+        }
     }
 
     override fun getItemCount(): Int {
