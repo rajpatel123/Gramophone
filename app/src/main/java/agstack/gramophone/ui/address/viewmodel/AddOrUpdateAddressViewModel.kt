@@ -23,6 +23,7 @@ import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNullOrBlank
+import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -229,6 +230,9 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                             getNavigator()?.updatePinCode(adapter) {
                                 pinCode.set(it.name)
                                 getNavigator()?.closePincodeDropDown()
+                            }
+                            if (dataList.isNotNullOrEmpty() && dataList.size == 1) {
+                                pinCode.set(dataList[0].name)
                             }
                         }
                     }
