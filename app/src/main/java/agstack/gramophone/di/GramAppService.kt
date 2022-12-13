@@ -32,11 +32,14 @@ import agstack.gramophone.ui.home.view.fragments.community.model.quiz.AnsweredQu
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
 import agstack.gramophone.ui.home.view.fragments.gramophone.model.MyGramophoneResponseModel
 import agstack.gramophone.ui.home.view.fragments.market.model.*
+import agstack.gramophone.ui.home.view.model.FCMRegistrationModel
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
+import agstack.gramophone.ui.notification.model.NotificationRequestModel
+import agstack.gramophone.ui.notification.model.NotificationresponseModel
 import agstack.gramophone.ui.order.model.OrderListResponse
 import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
@@ -373,4 +376,10 @@ interface GramAppService {
 
     @POST("api/v5/order/get-order-invoice")
     suspend fun getOrderInvoiceUrl(@Body request: OrderInvoiceRequest): Response<OrderInvoiceResponse>
+
+    @POST("api/v5/notifications/get-notifications")
+    suspend fun getNotifications(@Body notificationRequestModel: NotificationRequestModel): Response<NotificationresponseModel>
+
+    @POST("api/v5/general/save-customer-tokens")
+    suspend fun saveToken(@Body fcmRegistrationModel: FCMRegistrationModel): Response<NotificationresponseModel>
 }

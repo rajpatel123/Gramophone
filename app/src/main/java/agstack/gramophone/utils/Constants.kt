@@ -91,6 +91,21 @@ object Constants {
     val HOME_COMMUNITY = "community"
     val HOME_WEATHER = "home_weather"
 
+
+
+    //notification
+
+    const val PushNotificationDeepLinkKey = "deep_link"
+    private const val POST_ID_KEY = "postId"
+    private const val AUTHOR_ID_KEY = "authorId"
+    private const val ACTION_TYPE_KEY = "actionType"
+    private const val TITLE_KEY = "title"
+    private const val BODY_KEY = "body"
+    private const val ICON_KEY = "icon"
+    private const val ACTION_TYPE_NEW_LIKE = "new_like"
+    private const val ACTION_TYPE_NEW_COMMENT = "new_comment"
+    private const val ACTION_TYPE_NEW_POST = "new_post"
+    private const val ACTION_TYPE_DEEP_LINK = "deep_link"
     val HOME_EMPTY_VIEW_TYPE = 0
     val HOME_BANNER_VIEW_TYPE = 1
     val HOME_BANNER_EXCLUSIVE_VIEW_TYPE = 2
@@ -296,5 +311,8 @@ object Constants {
         const val QUIZ = "QUIZ"
         const val Loader = "LOADER"
         const val Banner = "Banner"
+    }
+    object PushNotification {
+        const val LARGE_ICONE_SIZE = 256 //px
     }
 }

@@ -1,11 +1,203 @@
 package agstack.gramophone.utils
 
-class IntentKeys {
+object IntentKeys {
+    const val LocationFoundEvent = "location-found-event"
+    const val Latitude = "latitude"
+    const val Longitude = "longitude"
+    const val selectedDate = "selectedDate"
+    const val FilteredProductCropId = "cropId"
+    const val FilteredProductCropName = "cropName"
+    const val FilteredProductDiseaseId = "diseaseId"
+    const val FilteredProductNutrientId = "nutrientId"
+    const val FilteredProductCategory = "category"
+    const val FilteredProductActivityTitle = "activityTitle"
+    const val ProductDetailProductId = "productId"
+    const val CropProblemKey = "CropProblem"
+    const val ProductDetailProductImages = "productImages"
+    const val ProductDetailProductImageUrlString = "productImageUrlString"
+    const val SettingsUpdatedMobileNumber = "updatedMobileNumber"
+    const val UpdatedMobileNumber = "updatedMobileNumber"
+    const val InputMobileNumber = "mobileNumber"
+    const val FirebaseUserId = "firebaseUserId"
+    const val SettingsUpdatedLocationName = "updatedLocation"
+    const val SettingsUpdatedCommaSeparatedCrops = "updatedCommaSeparatedCrops"
+    const val MoreSelectedCropsIds = "selectedCropsIds"
+    const val MoreCurrentLocation = "currentLocation"
+    const val WebViewContentUrlKey = "webUrl"
+    const val WebViewTitleKey = "webViewTitle"
+    const val WebViewContentTitleKey = "webViewContentTitle"
+    const val ContentProviderSocialMediaTitleKey = "contentProviderSocialMediaTitle"
+    const val ContentProviderSocialMediaDescriptionMsgKey =
+        "contentProviderSocialMediaDescriptionMsg"
+    const val ContentProviderShareCategoryKey = "contentProviderShareCategory"
+    const val WebContentUrlKey = "webContentUrl"
+    const val WebContentTitleKey = "webContentTitle"
+    const val SegmentImageUrlString = "segmentImageUrlString"
+    const val SegmentDescription = "segmentDescription"
 
-companion object{
-    val WhatsAppShareKey = "whatsAppShare"
-    val FacebookShareKey = "facebookShare"
-    val OtherShareKey = "otherShare"
+    // Used in case of push notification
+    const val MandiSelectedCropsIds = "selectedCropsIds"
+    const val MandiSelectionCropNameKey = "cropName"
+    const val MandiSelectionCropIdKey = "cropId"
+    const val MandiSelectionStateIdKey = "stateId"
+    const val MandiSelectionStateNameKey = "stateName"
+    const val ContentDialogContentKey = "dialogContent"
+    const val booleanFlagAcceptedRejected = "accepted_rejected"
+    const val BannerUrlLinkKey = "bannerUrl"
+
+    //Used in case of Sharing content from other application
+    const val IsUrlForPlayStore = ""
+    const val FinalTagList = "finalTagList"
+    const val IsOnBoardingCall = "isOnBoardingCall"
+
+    // pages Item Container
+    const val CropName = "cropName"
+    const val MandiName = "mandiName"
+    const val CropId = "cropId"
+    const val LimitKey = "limit"
+    const val StatusKey = "status"
+    const val FeaturedKey = "featured"
+    const val ListStyleKey = "listStyle"
+    const val BannerTypeKey = "bannerType"
+    const val MandiId = "mandiId"
+    const val UserLanguage = "userLanguage"
+    const val StageIdKey = "stageId"
+    const val CropProblemId = "cropProblemId"
+    const val PageName = "pageName"
+    const val ProductScreenLaunched = "Product"
+    const val CropProblemLaunched = "CropProblem"
+    const val CategoryProductLaunched = "CategoryProduct"
+    const val BrandsLaunched = "Brand"
+    const val BrandsProductLaunched = "BrandsProduct"
+    const val ProductDataKey = "ProductData"
+
+    // Filtered Product List
+    const val BrandIdKey = "brandId"
+    const val BrandNameKey = "brandName"
+    const val CategoryIdKey = "CategoryId"
+    const val CategoryNameKey = "CategoryName"
+    const val MessageKey = "message"
+    const val WhatsAppShareKey = "whatsAppShare"
+    const val FacebookShareKey = "facebookShare"
+    const val OtherShareKey = "otherShare"
+    const val PostIdKey = "postId"
+    const val PostAuthorIdKey = "authorID"
+    const val PostStatusKey = "status"
+    const val PostDataKey = "post"
+    const val CallingPageKey = "callingActivity"
+    const val FromUrlHandlerActivity = "UrlHandlerActivity"
+    const val EditCropPageKey = "editCrop"
+    const val SocialFragmentPageKey = "Social"
+    const val CommentIdKey = "commentId"
+    const val CommentTextKey = "text"
+    const val CommentImageKey = "image"
+    const val AuthorIdKey = "authorId"
+    const val SearchTagKey = "search"
+    const val PostCommentCountKey = "postCommentCount"
+    const val PostLikeCountKey = "postLikeCount"
+    const val ComplainTextKey = "complain"
+    const val ShareTypeKey = "type"
+    const val ShareRequestKey = 1
+    const val shareContentTypeText = "text"
+    const val shareContentTypeImage = "image"
+    const val shareContentTypeVideo = "video"
+    const val authorUUID = "authorUUID"
+    const val authorName = "authorName"
+    const val referralCode = "referral_code"
+    const val authorFollowerCount = "followersCount"
+    const val authorFollowingCount = "followingCount"
+    const val sharedContent = "sharedContent"
+
+    // public static final String ProductCategoryType="product";
+    const val ProductCategoryType = "product_category"
+
+    // public static final String CropCategoryType="crop";
+    const val CropCategoryType = "crop_category"
+    const val IntentCategoryType = "pageLaunch"
+    const val IntentCategoryCropProblemType = "cropProblems"
+    const val IntentCategoryAllBrandsType = "brands"
+    const val IntentCategoryBrandProductsType = "brandProducts"
+    const val IntentCategoryCropProductsType = "cropProducts"
+    const val ShareImageKey = "image"
+    const val LaunchFragmentKey = "launchFragment"
+    const val Language = "language"
+    const val UrlHandlerActivity = "UrlHandlerActivity"
+    const val widgetActivity = "widgetActivity"
+    const val SelectedPosition = "selectedPosition"
+    const val SelectedSearchCategory = "selectedSearchCategory"
+    const val SelectedSearchCategoryName = "selectedSearchCategoryName"
+    const val NoClearTaskKey = "clearTask"
+    const val GramophonetvKey = "gramoPhoneTv"
+
+    //EditProfile
+    const val ISEditNotClosable = "isEditNotClosable"
+
+    //Market
+    const val HorizontalListViewKey = "horizontal"
+    const val GridListViewKey = "grid"
+    const val LaunchFavProductsKey = "fav_products"
+    const val LaunchMyOrdersKey = "my_orders"
+
+    //Community Posts
+    const val PollQuestionViewKey = "question"
+    const val PollAnswerViewKey = "answer"
+    const val QuizAnswerViewKey = "quiz_answer"
+    const val QuizIdKey = "quiz_id"
+
+    //My Farm
+    const val FarmIdKey = "farmId"
+    const val ChemicalIdKey = "chemicalId"
+    const val FarmDataKey = "farmData"
+    const val FarmLat = "farm_lat"
+    const val FarmLng = "farm_lng"
+
+    //Youtube Player
+    const val PlayListId = "playListId"
+    const val VideoId = "videoId"
+    const val VideoName = "videoName"
+    const val PlayListName = "playListName"
+
+    //Follow
+    const val LaunchFollowersFragment = "followers"
+    const val LaunchFollowingFragment = "following"
+    const val FollowAction = "follow_action"
+
+    // In App Messaging
+    const val InAppImageUrl = "image_url"
+    const val PopUpType = "popup_type"
+    const val PopUpData = "popup_data"
+    const val PopUpEventName = "popup_event_name"
+    const val InAppTitle = "title"
+    const val InAppDescription = "description"
+    const val InAppButton1Title = "button1_title"
+    const val InAppButton2Title = "button2_title"
+    const val InAppButton1Url = "button1_url"
+    const val InAppButton2Url = "button2_url"
+
+    // Report Problem
+    const val IsReportProblem = "isReportProblem"
+    const val ReportImage = "reportImage"
+    const val ReportPath = "reportPath"
+
+    //vyapar
+    const val AppMode = "appmode"
+    const val CommodityId = "commodity_id"
+    const val CommodityName = "commodity_name"
+    const val CommodityDeleted = "commodity_deleted"
+    const val Commodity = "commodity"
+    const val ListingId = "listing_id"
+    const val Type = "type"
+    const val IsVerified = "verified"
+    const val Description = "description"
+    const val SellImages = "sell_images"
+    const val Firm = "firm"
+    const val EditMandiForProfilePageKey = "editMandiProfile"
+    const val FilterSelectionStateNameKey = "stateName"
+    const val FilterSelectedTehsilKey = "selectedTehsil"
+    const val ExpirePointKey = "expire_point"
+    const val ExpireDaysKey = "expire_days"
+    const val BuyCommodityData = "buy_commodity"
+
     val ShareKey = "Share"
-    val ShareImageKey = "image"
-}}
+
+}
