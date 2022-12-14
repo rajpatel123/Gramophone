@@ -38,20 +38,21 @@
         android:supportsRtl="true"
         android:theme="@style/SplashTheme"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".URLHandlerActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".NotificationActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
+<!--        <activity-->
+<!--            android:name=".URLHandlerActivity"-->
+<!--            android:exported="false">-->
+<!--            <meta-data-->
+<!--                android:name="android.app.lib_name"-->
+<!--                android:value="" />-->
+<!--        </activity>-->
+<!--        <activity-->
+<!--            android:name=".NotificationActivity"-->
+<!--            android:exported="false">-->
+<!--            <meta-data-->
+<!--                android:name="android.app.lib_name"-->
+<!--                android:value="" />-->
+<!--        </activity>-->
         <activity
             android:name=".ui.advisory.view.CropProblemDetailActivity"
             android:exported="false"
@@ -137,10 +138,10 @@
 
                 <data
                     android:host="www.gramophone.in"
-                    android:scheme="app" />
+                    android:scheme="http" />
                 <data
-                    android:host="play.google.com"
-                    android:scheme="app" />
+                    android:host="www.gramophone.in"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
@@ -358,6 +359,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
+        <meta-data
+            android:name="asset_statements"
+            android:resource="@string/asset_statements" />
     </application>
 
 </manifest>

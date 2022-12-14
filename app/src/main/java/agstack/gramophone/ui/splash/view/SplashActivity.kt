@@ -32,6 +32,8 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         startApp()
+
+       Log.d("URI",""+getIntent().getData()?.authority)
     }
 
     private fun startApp() {
