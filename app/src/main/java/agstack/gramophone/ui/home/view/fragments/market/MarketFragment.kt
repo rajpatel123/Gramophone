@@ -121,36 +121,13 @@ class MarketFragment :
 
     override fun setHomeAdapter(adapter: HomeAdapter, onItemClick: (String) -> Unit) {
         homeAdapter = adapter
+        homeAdapter?.updateFragmentManager(activity?.supportFragmentManager!!)
         adapter.onItemClicked = onItemClick
         binding?.rvHome?.adapter = homeAdapter
     }
 
     override fun showAppTourDialog() {
         AppTourDialog().show(childFragmentManager, null)
-    }
-
-    override fun notifyHomeAdapter(
-        allBannerResponse: BannerResponse?,
-        categoryResponse: CategoryResponse?,
-        allProductsResponse: AllProductsResponse?,
-        cropResponse: CropResponse?,
-        storeResponse: StoreResponse?,
-        companyResponse: CompanyResponse?,
-        cartList: List<CartItem>?,
-        farmResponse: FarmResponse?,
-        articlesData: HashMap<String, ArrayList<FormattedArticlesData>>,
-        weatherResponse: WeatherResponse?,
-    ) {
-        homeAdapter?.notifyAdapterOnDataChange(allBannerResponse,
-            categoryResponse,
-            allProductsResponse,
-            cropResponse,
-            storeResponse,
-            companyResponse,
-            cartList,
-            farmResponse,
-            articlesData,
-            weatherResponse)
     }
 
     override fun notifyBannerItemInserted(allBannerResponse: BannerResponse?, position: Int) {

@@ -47,5 +47,8 @@ data class GpApiResponseDataProduct (
     val productIdDefault: String? = null,
 
     @field:SerializedName("product_available")
-    val productAvailable: Int? = null
+    val productAvailable: Int? = null,
+
+    @field:SerializedName("youtube_video_id")
+    val youtubeVideoId: String? = null
 ) : Parcelable

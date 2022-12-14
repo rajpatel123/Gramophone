@@ -389,7 +389,7 @@
 
 
                 <RelativeLayout
-                    android:id="@+id/rl_howtouse"
+                    android:id="@+id/rl_howToUse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone">
@@ -418,16 +418,16 @@
 
                     <fragment
                         android:id="@+id/youtube_player_fragment"
-                        android:name="com.google.android.youtube.player.YouTubePlayerFragment"
+                        android:name="com.google.android.youtube.player.YouTubePlayerSupportFragmentX"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_216sdp"
+                        android:layout_height="wrap_content"
                         android:layout_below="@id/iv_video" />
 
 
                 </RelativeLayout>
 
                 <View
-                    android:id="@+id/seperator"
+                    android:id="@+id/v4_separator"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_4sdp"
                     android:layout_marginTop="@dimen/_10sdp"

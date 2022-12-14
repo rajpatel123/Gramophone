@@ -16,23 +16,23 @@ import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.shop.ShopByActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
-import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.*
+import agstack.gramophone.ui.tv.GramophoneTVActivity
+import agstack.gramophone.ui.tv.fragment.HomeTvFragment
 import agstack.gramophone.ui.weather.WeatherActivity
 import agstack.gramophone.ui.weather.model.WeatherResponse
 import agstack.gramophone.utils.Constants
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.bumptech.glide.Glide
-import java.lang.StringBuilder
 
 
 class HomeAdapter(
@@ -50,16 +50,10 @@ class HomeAdapter(
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onItemClicked: ((String) -> Unit)? = null
+    var fragmentManager: FragmentManager? = null
 
-    fun notifyAdapterOnDataChange(
-        allBannerResponse: BannerResponse?, categoryResponse: CategoryResponse?,
-        allProductsResponse: AllProductsResponse?, cropResponse: CropResponse?,
-        storeResponse: StoreResponse?, companyResponse: CompanyResponse?,
-        cartList: List<CartItem>?, farmResponse: FarmResponse?,
-        articlesData: HashMap<String, ArrayList<FormattedArticlesData>>,
-        weatherResponse: WeatherResponse?,
-    ) {
-
+    fun updateFragmentManager(fragmentManager: FragmentManager) {
+        this.fragmentManager = fragmentManager
     }
 
     fun notifyBannerItemInserted(allBannerResponse: BannerResponse?, position: Int) {
@@ -102,7 +96,10 @@ class HomeAdapter(
         notifyItemChanged(position)
     }
 
-    fun notifyArticleItemInserted(articlesData: HashMap<String, ArrayList<FormattedArticlesData>>, position: Int) {
+    fun notifyArticleItemInserted(
+        articlesData: HashMap<String, ArrayList<FormattedArticlesData>>,
+        position: Int,
+    ) {
         this.articlesData = articlesData
         notifyItemChanged(position)
     }
@@ -169,6 +166,10 @@ class HomeAdapter(
             }
             Constants.HOME_WEATHER_VIEW_TYPE -> {
                 return WeatherViewHolder(ItemHomeWeatherBinding.inflate(LayoutInflater.from(
+                    viewGroup.context)))
+            }
+            Constants.HOME_GRAMOPHONE_TV_VIEW_TYPE -> {
+                return GramophoneTvViewHolder(ItemHomeGramophoneTvBinding.inflate(LayoutInflater.from(
                     viewGroup.context)))
             }
         }
@@ -424,15 +425,15 @@ class HomeAdapter(
                 var isCustomerFarms = false
                 if (farmResponse?.gp_api_response_data?.customer_farm != null &&
                     farmResponse?.gp_api_response_data?.customer_farm?.data?.isNotNullOrEmpty() == true
-                ){
+                ) {
                     farmList = farmResponse?.gp_api_response_data?.customer_farm?.data
                     isCustomerFarms = true
-                }else if (farmResponse?.gp_api_response_data?.model_farm != null &&
+                } else if (farmResponse?.gp_api_response_data?.model_farm != null &&
                     farmResponse?.gp_api_response_data?.model_farm?.data?.isNotNullOrEmpty() == true
                 ) {
                     farmList = farmResponse?.gp_api_response_data?.model_farm?.data
                     isCustomerFarms = false
-                }else{
+                } else {
                     holder.binding.itemView.visibility = View.VISIBLE
                 }
 
@@ -440,25 +441,28 @@ class HomeAdapter(
                     holder.binding.rvFarms.adapter = FarmAdapter(
                         farmList,
                         headerListener = {
-                            if (it.size<2){
-                                openActivity(context =holder.binding.root.context, AdvisoryActivity::class.java,Bundle().apply {
-                                    putInt(Constants.FARM_ID,
-                                        it[0].farm_id?.toInt()!!
-                                    )
-                                    if (isCustomerFarms){
-                                        putString(Constants.FARM_TYPE,"customer_farm")
-                                    }else{
-                                        putString(Constants.FARM_TYPE,"model_farm")
-                                    }
-                                    putString(Constants.CROP_NAME,it[0].crop_name)
-                                    putString(Constants.CROP_IMAGE,it[0].crop_image)
-                                    putString(Constants.CROP_REF_ID,it[0].farm_ref_id)
-                                    putInt(Constants.CROP_ID,it[0].crop_id)
-                                    putString(Constants.CROP_DURATION,it[0].crop_sowing_date)
-                                    putString(Constants.CROP_END_DATE,it[0].crop_anticipated_completed_date)
-                                    putString(Constants.CROP_STAGE,it[0].stage_name)
-                                    putString(Constants.CROP_DAYS,it[0].days)
-                                })
+                            if (it.size < 2) {
+                                openActivity(context = holder.binding.root.context,
+                                    AdvisoryActivity::class.java,
+                                    Bundle().apply {
+                                        putInt(Constants.FARM_ID,
+                                            it[0].farm_id?.toInt()!!
+                                        )
+                                        if (isCustomerFarms) {
+                                            putString(Constants.FARM_TYPE, "customer_farm")
+                                        } else {
+                                            putString(Constants.FARM_TYPE, "model_farm")
+                                        }
+                                        putString(Constants.CROP_NAME, it[0].crop_name)
+                                        putString(Constants.CROP_IMAGE, it[0].crop_image)
+                                        putString(Constants.CROP_REF_ID, it[0].farm_ref_id)
+                                        putInt(Constants.CROP_ID, it[0].crop_id)
+                                        putString(Constants.CROP_DURATION, it[0].crop_sowing_date)
+                                        putString(Constants.CROP_END_DATE,
+                                            it[0].crop_anticipated_completed_date)
+                                        putString(Constants.CROP_STAGE, it[0].stage_name)
+                                        putString(Constants.CROP_DAYS, it[0].days)
+                                    })
 
                             }
                         },
@@ -583,7 +587,8 @@ class HomeAdapter(
                     when {
                         data?.address.isNotNullOrEmpty() -> holder.binding.tvLocation.text =
                             data?.address
-                        else -> holder.binding.tvLocation.text = holder.binding.tvLocation.context.getString(R.string.default_city_name)
+                        else -> holder.binding.tvLocation.text =
+                            holder.binding.tvLocation.context.getString(R.string.default_city_name)
                     }
                     val temp = StringBuilder("")
                     if (data?.temperature.isNotNull()) {
@@ -610,6 +615,18 @@ class HomeAdapter(
                         holder.binding.itemView.context,
                         WeatherActivity::class.java,
                         null
+                    )
+                }
+            }
+            is GramophoneTvViewHolder -> {
+                fragmentManager?.beginTransaction()?.add(R.id.frameTvContainer,
+                    HomeTvFragment(),
+                    HomeTvFragment::class.java.simpleName)?.commit()
+
+                holder.binding.viewAllTv.setOnClickListener {
+                    openActivity(
+                        holder.binding.viewAllTv.context,
+                        GramophoneTVActivity::class.java, null
                     )
                 }
             }
@@ -659,6 +676,9 @@ class HomeAdapter(
             }
             Constants.HOME_WEATHER -> {
                 return Constants.HOME_WEATHER_VIEW_TYPE
+            }
+            Constants.HOME_GRAMOPHONE_TV -> {
+                return Constants.HOME_GRAMOPHONE_TV_VIEW_TYPE
             }
         }
         return Constants.HOME_EMPTY_VIEW_TYPE
@@ -723,5 +743,8 @@ class HomeAdapter(
         RecyclerView.ViewHolder(binding.root)
 
     inner class WeatherViewHolder(var binding: ItemHomeWeatherBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    inner class GramophoneTvViewHolder(var binding: ItemHomeGramophoneTvBinding) :
         RecyclerView.ViewHolder(binding.root)
 }

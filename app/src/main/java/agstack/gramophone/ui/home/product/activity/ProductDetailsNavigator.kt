@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager
 interface ProductDetailsNavigator : BaseNavigator {
     fun getBundle(): Bundle?
     fun setToolbarTitle(title: String?)
+    fun initializeYoutube(videoId: String?)
     fun setProductSKUAdapter(
         productSKUAdapter: ProductSKUAdapter,
         onSKUItemClicked: (ProductSkuListItem) -> Unit,

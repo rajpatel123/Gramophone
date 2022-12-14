@@ -90,6 +90,7 @@ object Constants {
     val HOME_ARTICLES = "new_articles"
     val HOME_COMMUNITY = "community"
     val HOME_WEATHER = "home_weather"
+    val HOME_GRAMOPHONE_TV = "gramophone_tv"
 
 
 
@@ -121,6 +122,7 @@ object Constants {
     val HOME_ARTICLES_VIEW_TYPE = 12
     val HOME_COMMUNITY_VIEW_TYPE = 13
     val HOME_WEATHER_VIEW_TYPE = 14
+    val HOME_GRAMOPHONE_TV_VIEW_TYPE = 15
     val GramCashResponse = "GramCashResponse"
     val ReferralPointBalanceData = "ReferralPointBalanceData"
     val GramCashFAQList = "GramCashFAQList"
