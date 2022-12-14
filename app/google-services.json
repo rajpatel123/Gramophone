@@ -48,6 +48,44 @@
           "current_key": "AIzaSyD6HGLMvm-bUW0ZCX3wXztDZZXUQTfznZI"
         },
         {
+          "current_key": "AIzaSyAwwJHMKGcIhdIt4xhy2YFBnyMFfZo2QO8"
+        },
+        {
+          "current_key": "AIzaSyBTxkjy635TwGWgFPjlkwfznHY8811JI0Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "525118102961-9da3kofjvvhck8ad8tkmqbm4ojiie6sv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525118102961:android:f13fec044d0e464c45b190",
+        "android_client_info": {
+          "package_name": "agstack.gramophone.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "525118102961-rc6v001acrpo3ace2ott706tim8d3b6v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6HGLMvm-bUW0ZCX3wXztDZZXUQTfznZI"
+        },
+        {
+          "current_key": "AIzaSyAwwJHMKGcIhdIt4xhy2YFBnyMFfZo2QO8"
+        },
+        {
           "current_key": "AIzaSyBTxkjy635TwGWgFPjlkwfznHY8811JI0Q"
         }
       ],
@@ -80,6 +118,9 @@
           "current_key": "AIzaSyD6HGLMvm-bUW0ZCX3wXztDZZXUQTfznZI"
         },
         {
+          "current_key": "AIzaSyAwwJHMKGcIhdIt4xhy2YFBnyMFfZo2QO8"
+        },
+        {
           "current_key": "AIzaSyBTxkjy635TwGWgFPjlkwfznHY8811JI0Q"
         }
       ],
@@ -95,6 +136,5 @@
       }
     }
   ],
-  "configuration_version": "1",
-
+  "configuration_version": "1"
 }
