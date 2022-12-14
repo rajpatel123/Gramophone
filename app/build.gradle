@@ -71,21 +71,13 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             resValue "string", "app_name_different", " G.Debug"
-            /*buildConfigField "String", "BASE_URL_SOCIAL", "\"https://community-api-qa.gramophone.in/\""
+            buildConfigField "String", "BASE_URL_SOCIAL", "\"https://community-api-qa.gramophone.in/\""
             buildConfigField "String", "BASE_URL", "\"https://mobility-api-dev.gramophone.in/\""
             buildConfigField "String", "BASE_URL_YOUTUBE", "\"https://www.googleapis.com/youtube/v3/\""
             buildConfigField "String" , "BASE_URL_PROMOTION","\"https://promotions-api-qa.gramophone.in/\""
             buildConfigField "String" , "BASE_URL_ARTICLES_BLOG","\"https://blogs-dev.gramophone.in\""
             buildConfigField "String" , "BASE_URL_ARTICLES","\"https://articles-qa.gramophone.in\""
             buildConfigField "String" , "BASE_URL_SINGLE_ARTICLE","\"https://articles-qa.gramophone.in/single-article\""
-            buildConfigField "String", "BASE_URL_YOUTUBE", "\"https://www.googleapis.com/youtube/v3/\""*/
-            buildConfigField "String", "BASE_URL_SOCIAL", "\"https://community-api.gramophone.in/\""
-            buildConfigField "String", "BASE_URL", "\"https://mobility-api.gramophone.in/\""
-            buildConfigField "String", "BASE_URL_YOUTUBE", "\"https://www.googleapis.com/youtube/v3/\""
-            buildConfigField "String" , "BASE_URL_PROMOTION","\"https://promotions-api.gramophone.in/\""
-            buildConfigField "String" , "BASE_URL_ARTICLES_BLOG","\"https://kb.gramophone.in\""
-            buildConfigField "String" , "BASE_URL_ARTICLES","\"https://articles.gramophone.in\""
-            buildConfigField "String" , "BASE_URL_SINGLE_ARTICLE","\"https://articles.gramophone.in/single-article\""
             buildConfigField "String", "BASE_URL_YOUTUBE", "\"https://www.googleapis.com/youtube/v3/\""
             signingConfig signingConfigs.debug
         }

@@ -81,9 +81,9 @@
                     android:layout_marginEnd="@dimen/_16sdp"
                     android:fontFamily="@font/manrope_bold"
                     android:lineSpacingExtra="-1sp"
-                    app:reformatFloatPriceToInt="@{viewModel.totalPrice}"
                     android:textColor="@color/blakish"
                     android:textSize="20sp"
+                    app:reformatFloatPriceToInt="@{viewModel.totalPrice}"
                     tools:text="₹4320" />
 
                 <LinearLayout
@@ -141,14 +141,19 @@
                         android:visibility="gone" />
 
                     <TextView
-                        android:id="@+id/tv_invoice"
+                        android:id="@+id/tvInvoice"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_20sdp"
                         android:layout_marginStart="14dp"
                         android:layout_marginTop="9dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
                         android:drawablePadding="@dimen/_6sdp"
+                        android:focusable="true"
                         android:fontFamily="@font/manrope_bold"
+                        android:gravity="center_vertical"
                         android:lineSpacingExtra="0sp"
+                        android:onClick="@{()->viewModel.downloadInvoice()}"
                         android:text="@string/download_invoice"
                         android:textColor="@color/weather_orange"
                         android:textSize="14sp"
@@ -433,9 +438,9 @@
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    app:reformatPromotionalDiscountInt="@{viewModel.discount}"
                     android:textColor="@color/green_medium"
                     android:textSize="16sp"
+                    app:reformatPromotionalDiscountInt="@{viewModel.discount}"
                     tools:text="-₹ 0" />
 
                 <TextView
@@ -578,9 +583,9 @@
                         android:layout_centerVertical="true"
                         android:fontFamily="@font/manrope_bold"
                         android:lineSpacingExtra="1sp"
-                        app:reformatFloatPriceToInt="@{viewModel.totalPrice}"
                         android:textColor="@color/blakish"
                         android:textSize="20sp"
+                        app:reformatFloatPriceToInt="@{viewModel.totalPrice}"
                         tools:text="₹ 100" />
 
                 </RelativeLayout>

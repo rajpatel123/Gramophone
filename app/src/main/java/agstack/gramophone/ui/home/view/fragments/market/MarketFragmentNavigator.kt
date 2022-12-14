@@ -16,14 +16,6 @@ interface MarketFragmentNavigator : BaseNavigator {
         onItemClick: (String) -> Unit,
     )
 
-    fun notifyHomeAdapter(
-        allBannerResponse: BannerResponse?, categoryResponse: CategoryResponse?,
-        allProductsResponse: AllProductsResponse?, cropResponse: CropResponse?,
-        storeResponse: StoreResponse?, companyResponse: CompanyResponse?,
-        cartList: List<CartItem>?, farmResponse: FarmResponse?, articlesData: HashMap<String, ArrayList<FormattedArticlesData>>,
-        weatherResponse: WeatherResponse?
-    )
-
     fun notifyBannerItemInserted(allBannerResponse: BannerResponse?, position: Int)
 
     fun notifyCategoryItemInserted(categoryResponse: CategoryResponse?, position: Int)

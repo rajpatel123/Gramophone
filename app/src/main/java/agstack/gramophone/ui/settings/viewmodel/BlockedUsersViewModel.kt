@@ -4,7 +4,6 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.community.CommunityRepository
 import agstack.gramophone.data.repository.settings.SettingsRepository
-import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.BlockUserRequestModel
 import agstack.gramophone.ui.settings.BlockedUsersAdapter
 import agstack.gramophone.ui.settings.BlockedUsersNavigator
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel

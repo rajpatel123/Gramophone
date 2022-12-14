@@ -45,6 +45,8 @@ import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
+import agstack.gramophone.ui.orderdetails.model.OrderInvoiceRequest
+import agstack.gramophone.ui.orderdetails.model.OrderInvoiceResponse
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
@@ -355,7 +357,10 @@ interface GramAppService {
     suspend fun bookmarkVideo(@Body body: VideoBookMarkedRequest): Response<SuccessStatusResponse>
 
     @POST("api/v5/farm/crop-advisory-details/{type}")
-    suspend fun getCropAdvisoryDetails(@Body body: AdvisoryRequestModel, @Path("type") type: String): Response<AdvisoryResponseModel>
+    suspend fun getCropAdvisoryDetails(
+        @Body body: AdvisoryRequestModel,
+        @Path("type") type: String,
+    ): Response<AdvisoryResponseModel>
 
     @POST("api/v5/farm/recommended-products")
     suspend fun getRecommendedProducts(@Body body: RecommendedProductRequestModel): Response<RecommendedProductResponseModel>
@@ -368,6 +373,9 @@ interface GramAppService {
 
     @POST("api/v5/customer/get-gramophone-tv-bookmark")
     suspend fun getBookmarkedVideoList(): Response<BookmarkedListResponse>
+
+    @POST("api/v5/order/get-order-invoice")
+    suspend fun getOrderInvoiceUrl(@Body request: OrderInvoiceRequest): Response<OrderInvoiceResponse>
 
     @POST("api/v5/notifications/get-notifications")
     suspend fun getNotifications(@Body notificationRequestModel: NotificationRequestModel): Response<NotificationresponseModel>

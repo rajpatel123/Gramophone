@@ -537,6 +537,9 @@
     <string name="notifications">Notifications</string>
 
     <string name="click_back_to_exit">Please click back again to exit.</string>
+    <string name="download_failed">Download failed</string>
+    <string name="invoice_downloading">Invoice downloading...</string>
+    <string name="invoice_downloaded">Invoice downloaded successfully</string>
 </resources>
 
 

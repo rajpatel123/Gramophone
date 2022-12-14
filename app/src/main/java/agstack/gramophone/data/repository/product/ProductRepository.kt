@@ -17,6 +17,8 @@ import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderDetailResponse
+import agstack.gramophone.ui.orderdetails.model.OrderInvoiceRequest
+import agstack.gramophone.ui.orderdetails.model.OrderInvoiceResponse
 import agstack.gramophone.ui.search.model.GlobalSearchRequest
 import agstack.gramophone.ui.search.model.GlobalSearchResponse
 import agstack.gramophone.ui.search.model.SuggestionsRequest
@@ -107,4 +109,6 @@ interface ProductRepository {
     suspend fun getSuggestedCrops(): Response<SuggestedCropResponse>
 
     suspend fun getBookmarkedList(): Response<BookmarkedListResponse>
+
+    suspend fun getOrderInvoiceUrl(request: OrderInvoiceRequest): Response<OrderInvoiceResponse>
 }

@@ -161,6 +161,7 @@ class ProductDetailsViewModel @Inject constructor(
                     productData.let {
                         val productResponseData = productData.get()
                         getNavigator()?.setToolbarTitle(productResponseData?.productBaseName!!)
+                        getNavigator()?.initializeYoutube(productData.get()?.youtubeVideoId)
                         isHeartSelected.set(productResponseData?.isUserFavourite!!)
                         productResponseData.productImages?.let {
                             getNavigator()?.setProductImagesViewPagerAdapter(

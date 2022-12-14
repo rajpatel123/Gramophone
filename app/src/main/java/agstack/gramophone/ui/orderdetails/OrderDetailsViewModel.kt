@@ -10,22 +10,18 @@ import agstack.gramophone.ui.orderdetails.adapter.OrderedProductsAdapter
 import agstack.gramophone.ui.orderdetails.model.Address
 import agstack.gramophone.ui.orderdetails.model.GpApiResponseData
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
+import agstack.gramophone.ui.orderdetails.model.OrderInvoiceRequest
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Utility
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
-import java.io.OutputStream
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,6 +43,7 @@ class OrderDetailsViewModel @Inject constructor(
     var mobile = MutableLiveData<String>()
     var discount = MutableLiveData<Float>()
     var gramCash = MutableLiveData<Int>()
+    var invoiceUrl: String? = null
 
     init {
         progress.value = false
@@ -71,6 +68,7 @@ class OrderDetailsViewModel @Inject constructor(
         if (bundle?.containsKey(Constants.ORDER_ID)!! && bundle.getString(Constants.ORDER_ID) != null) {
             getOrderDetails(bundle.getString(Constants.ORDER_ID) as String,
                 bundle.getString(Constants.ORDER_TYPE) as String)
+            getInvoice(bundle.getString(Constants.ORDER_ID) as String)
         }
     }
 
@@ -147,7 +145,6 @@ class OrderDetailsViewModel @Inject constructor(
                         }
 
                         getNavigator()?.setColorOnOrderStatus(orderStatus.value!!)
-                        /*downloadInPdf(responseData.download_invoice)*/
 
                         getNavigator()?.setOrderListAdapter(
                             OrderedProductsAdapter(responseData.products),
@@ -184,7 +181,6 @@ class OrderDetailsViewModel @Inject constructor(
                 progress.value = false
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
             }
         }
@@ -214,50 +210,51 @@ class OrderDetailsViewModel @Inject constructor(
                 progress.value = false
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
             }
         }
-
     }
 
-    /*private fun downloadInPdf(downloadInvoice: String) {
+    private fun getInvoice(orderId: String) {
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.value = true
 
-        // TODO handle the response
-        try {
-            var gpxfile: File? = null
-            if (downloadInvoice != null) {
-                val r = Random()
-                val i1 = r.nextInt(80 - 65) + 65
-                fileName = "sample$i1.pdf"
-                root = File(Environment.getExternalStorageDirectory(), "WebPageToPdf")
-                if (!root.exists()) {
-                    root.mkdirs()
-                }
-                if (root.exists()) {
-                    if (gpxfile == null || !gpxfile.exists()) {
-                        gpxfile = File(root, "sample$i1.pdf")
-                        val op: OutputStream = FileOutputStream(gpxfile)
-                        gpxfile!!.setWritable(true)
-                        op.write(downloadInvoice)
-                        op.flush()
-                        op.close()
-                    } else {
-                        if (gpxfile.exists()) {
-                            val op: OutputStream = FileOutputStream(gpxfile, true)
-                            op.write(downloadInvoice)
-                            op.flush()
-                            op.close()
-                        }
+                    val orderInvoiceRequest = OrderInvoiceRequest()
+                    orderInvoiceRequest.order_id = orderId
+
+                    val response = productRepository.getOrderInvoiceUrl(orderInvoiceRequest)
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS && response.body()?.gp_api_response_data != null
+                        && response.body()?.gp_api_response_data?.invoice_url.isNotNullOrEmpty()
+                    ) {
+                        invoiceUrl = response.body()?.gp_api_response_data?.invoice_url
                     }
+                    progress.value = false
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                 }
-                getNavigator()?.showToast("Content Write To the file name sample$i1 .pdfin WebPageToPdf Directory")
-                print("Response ----------------------" + downloadInvoice)
+            } catch (ex: Exception) {
+                progress.value = false
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                }
             }
-        } catch (e: java.lang.Exception) {
-            Log.d("KEY_ERROR", "UNABLE TO DOWNLOAD FILE")
-            e.printStackTrace()
         }
-    }*/
+    }
+
+    fun downloadInvoice() {
+        if (invoiceUrl.isNotNullOrEmpty()) {
+            getNavigator()?.downloadInvoice(invoiceUrl!!)
+            progress.value = true
+            viewModelScope.launch {
+                delay(1000)
+                progress.value = false
+                getNavigator()?.showToast(getNavigator()?.getMessage(R.string.invoice_downloaded))
+            }
+        } else {
+            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.download_failed))
+        }
+    }
 
 }

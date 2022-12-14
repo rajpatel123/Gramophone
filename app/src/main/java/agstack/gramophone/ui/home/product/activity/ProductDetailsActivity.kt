@@ -12,7 +12,6 @@ import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.ShareSheetPresenter
 import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.widget.MultipleImageDetailDialog
 import android.content.ActivityNotFoundException
@@ -20,8 +19,6 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -32,6 +29,7 @@ import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerFragment
+import com.google.android.youtube.player.YouTubePlayerSupportFragmentX
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.item_menu_cart_with_counter.*
 import kotlin.math.roundToInt
@@ -50,12 +48,12 @@ class ProductDetailsActivity :
     private var isShowMoreClicked: Boolean = false
     private lateinit var showMoreOrLessText: String
     private lateinit var drawableEndArrow: Drawable
+    var videoId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         productDetailsViewModel.getBundleData()
         initProductDetailView()
-
     }
 
     override fun setRatingBarChangeListener() {
@@ -125,13 +123,16 @@ class ProductDetailsActivity :
         expertAdviceBottomSheet.dismiss()
     }
 
-    private fun initYoutubePlayer() {
-        val youTubePlayerFragment = supportFragmentManager
-            .findFragmentById(R.id.youtube_player_fragment) as? YouTubePlayerFragment?
-
-        val googleApiKey = instance!!.getString(SharedPreferencesKeys.GOOGLE_API_KEY)
-
-        youTubePlayerFragment?.initialize(googleApiKey, this)
+    override fun initializeYoutube(videoId: String?) {
+        if (videoId.isNotNullOrEmpty()) {
+            viewDataBinding.rlHowToUse.visibility = View.VISIBLE
+            viewDataBinding.v4Separator.visibility = View.VISIBLE
+            this.videoId = videoId
+            initYoutubePlayer()
+        } else {
+            viewDataBinding.rlHowToUse.visibility = View.GONE
+            viewDataBinding.v4Separator.visibility = View.GONE
+        }
     }
 
     private fun initProductDetailView() {
@@ -188,6 +189,15 @@ class ProductDetailsActivity :
         }
     }
 
+    private fun initYoutubePlayer() {
+        val playerFragment =
+            supportFragmentManager.findFragmentById(R.id.youtube_player_fragment) as YouTubePlayerSupportFragmentX?
+        if (playerFragment != null) {
+            val googleApiKey = getString(R.string.google_api)
+            playerFragment.initialize(googleApiKey, this)
+        }
+    }
+
     override fun onInitializationSuccess(
         provider: YouTubePlayer.Provider?,
         player: YouTubePlayer?,
@@ -196,10 +206,12 @@ class ProductDetailsActivity :
         if (!wasRestored) {
             player?.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT)
             try {
-                player?.loadVideo("5Eqb_-j3FDA")
+                player?.loadVideo(videoId)
                 player?.play()
-            } catch (e: IllegalStateException) {
+            } catch (e: Exception) {
                 e.printStackTrace()
+                viewDataBinding.rlHowToUse.visibility = View.GONE
+                viewDataBinding.v4Separator.visibility = View.GONE
             }
         }
     }
