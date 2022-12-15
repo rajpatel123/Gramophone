@@ -99,7 +99,6 @@ class HomeTvFragment :
             player?.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL)
             try {
                 player?.loadVideo(videoId)
-                player?.play()
             } catch (e: Exception) {
                 e.printStackTrace()
                 binding?.rlTv?.visibility = View.GONE
