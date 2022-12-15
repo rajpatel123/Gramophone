@@ -258,11 +258,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
                 val tab = binding?.tabLayout?.getTabAt(4)
                 tab!!.select()
             }, 300)
-        }else if(from.equals("advisory")){
-
+        }else if(from.equals("social")){
+            val tab = binding?.tabLayout?.getTabAt(1)
+            tab!!.select()
         }
-
-
 
     }
 

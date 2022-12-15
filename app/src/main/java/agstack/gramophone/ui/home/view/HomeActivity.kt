@@ -339,6 +339,14 @@ class HomeActivity :
         marketFragment.marketFragmentViewModel.getFarms()
         profileFragment.refreshProfile()
 
+        if (!TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(Constants.TARGET_PAGE))) {
+            when(SharedPreferencesHelper.instance?.getString(Constants.TARGET_PAGE)){
+                "social"->{
+                    showCommunityFragment("social")
+                }
+            }
+        }
+
 
     }
 
