@@ -4,7 +4,6 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentHomeTvBinding
-import android.app.FragmentManager
 import android.app.FragmentTransaction
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +15,6 @@ import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerFragment
-import com.google.android.youtube.player.YouTubePlayerSupportFragmentX
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -39,6 +37,7 @@ class HomeTvFragment :
     private var param1: String? = null
     private var param2: String? = null
     var videoId: String? = null
+    var youTubePlayer: YouTubePlayer? = null
 
     private val homeTvFragmentViewModel: HomeTvFragmentViewModel by viewModels()
 
@@ -75,17 +74,18 @@ class HomeTvFragment :
     }
 
     private fun initYoutubePlayer() {
-         /*val playerFragment =
-             activity?.supportFragmentManager?.findFragmentById(R.id.youtube_player_fragment) as YouTubePlayerSupportFragmentX?
-         if (playerFragment != null) {
-             val googleApiKey = getString(R.string.google_api)
-             playerFragment.initialize(googleApiKey, this)
-         }
-        */
+        /*val playerFragment =
+            activity?.supportFragmentManager?.findFragmentById(R.id.youtube_player_fragment) as YouTubePlayerSupportFragmentX?
+        if (playerFragment != null) {
+            val googleApiKey = getString(R.string.google_api)
+            playerFragment.initialize(googleApiKey, this)
+        }
+       */
 
         val youtubePlayerFragment = YouTubePlayerFragment()
         youtubePlayerFragment.initialize(getString(R.string.google_api), this)
-        val fragmentTransaction: FragmentTransaction = activity?.fragmentManager?.beginTransaction()!!
+        val fragmentTransaction: FragmentTransaction =
+            activity?.fragmentManager?.beginTransaction()!!
         fragmentTransaction.replace(R.id.rlTv, youtubePlayerFragment)
         fragmentTransaction.commit()
     }
@@ -95,10 +95,11 @@ class HomeTvFragment :
         player: YouTubePlayer?,
         wasRestored: Boolean,
     ) {
+        youTubePlayer = player
         if (!wasRestored) {
-            player?.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL)
+            youTubePlayer?.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL)
             try {
-                player?.loadVideo(videoId)
+                youTubePlayer?.cueVideo(videoId)
             } catch (e: Exception) {
                 e.printStackTrace()
                 binding?.rlTv?.visibility = View.GONE
@@ -115,6 +116,11 @@ class HomeTvFragment :
             resources.getString(R.string.ensureyoutubeversioninstalled),
             Toast.LENGTH_LONG
         ).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        youTubePlayer?.pause()
     }
 
     override fun getLayoutID(): Int {

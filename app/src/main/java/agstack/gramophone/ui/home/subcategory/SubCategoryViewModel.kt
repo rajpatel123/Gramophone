@@ -520,14 +520,12 @@ class SubCategoryViewModel @Inject constructor(
                             SharedPreferencesKeys.CART_ITEM_COUNT, cartCount + 1)
                         getNavigator()?.updateCartCount(cartCount + 1)
                     } else {
+                        getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                         if (response.errorBody().isNotNull() && response.errorBody()?.source()
                                 .toString().contains("alr")
                         ) {
-                            getNavigator()?.showToast(R.string.already_added_in_cart)
                             /*getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(
                                 R.string.gotocart)!!)*/
-                        } else {
-                            getNavigator()?.showToast((getNavigator()?.getMessage(R.string.not_able_to_add)))
                         }
                     }
                 }
