@@ -91,7 +91,6 @@ class FeaturedProductActivity :
                 viewDataBinding.collapsingToolbar.title = ""
             }
         })
-        updateCartCount(SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!)
     }
 
     /*
@@ -211,6 +210,7 @@ class FeaturedProductActivity :
     override fun onResume() {
         super.onResume()
         viewDataBinding.appbar.addOnOffsetChangedListener(this)
+        updateCartCount(SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!)
     }
 
     override fun onPause() {
