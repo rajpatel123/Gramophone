@@ -69,7 +69,6 @@ android {
 
         }
         debug {
-            applicationIdSuffix = ".debug"
             resValue "string", "app_name_different", " G.Debug"
             buildConfigField "String", "BASE_URL_SOCIAL", "\"https://community-api-qa.gramophone.in/\""
             buildConfigField "String", "BASE_URL", "\"https://mobility-api-dev.gramophone.in/\""
