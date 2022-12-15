@@ -345,6 +345,8 @@ class HomeActivity :
                     showCommunityFragment("social")
                 }
             }
+
+            SharedPreferencesHelper.instance?.putString(Constants.TARGET_PAGE,"")
         }
 
 
