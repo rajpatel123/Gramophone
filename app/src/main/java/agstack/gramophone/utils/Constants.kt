@@ -8,6 +8,7 @@ import android.content.Context
 object Constants {
 
 
+    val URI: String="uri"
     val UTM_SOURCE_UPDATED: String="utm_update"
     val CROP_END_DATE: String="end_date"
     val GO_TO_COMMUNITY: String="community_page"
@@ -276,6 +277,22 @@ object Constants {
     const val PlayListId = "playListId"
     const val PlayListName = "playListName"
     const val GramophoneVideo = "gramophoneVideo"
+
+
+    /**
+     * DeeplinkConstants
+     *
+     */
+
+    const val DEEP_LINK_CROP_LIST = "cropList"
+    const val DEEP_LINK_HOME = "home"
+    const val DEEP_LINK_MARKET = "market"
+    const val DEEP_LINK_MY_FARM = "myFarm"
+    const val DEEP_LINK_SOCIAL = "social"
+    const val DEEP_LINK_WEATHER_INFO = "weatherInfo"
+    const val DEEP_LINK_PRODUCT_LIST = "productList"
+    const val DEEP_LINK_PRODUCT_DETAIL = "productDetail"
+    const val DEEP_LINK_CROP_PRODUCT = "cropProduct"
 
     /**
      * For Broadcast

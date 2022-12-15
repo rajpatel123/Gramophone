@@ -15,6 +15,7 @@ import agstack.gramophone.ui.home.view.model.FCMRegistrationModel
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.ui.notification.view.NotificationActivity
+import agstack.gramophone.ui.notification.view.URLHandlerActivity
 import agstack.gramophone.ui.search.view.GlobalSearchActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
@@ -23,7 +24,7 @@ import agstack.gramophone.utils.SharedPreferencesKeys
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
+import android.text.TextUtils
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -78,6 +79,7 @@ class HomeActivity :
         setupUi()
         setUpFirebaseConfig()
         registerWithFCM()
+        processDeepLink()
 
     }
 
@@ -337,6 +339,16 @@ class HomeActivity :
         marketFragment.marketFragmentViewModel.getFarms()
         profileFragment.refreshProfile()
 
+
+    }
+
+    private fun processDeepLink() {
+        if (!TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(Constants.URI))) {
+            val intent = Intent(this, URLHandlerActivity::class.java)
+            intent.putExtra(Constants.URI, SharedPreferencesHelper.instance?.getString(Constants.URI))
+            startActivity(intent)
+            SharedPreferencesHelper.instance?.putString(Constants.URI,"")
+        }
     }
 
     override fun getLayoutID(): Int {
