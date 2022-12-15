@@ -16,10 +16,7 @@ import agstack.gramophone.ui.home.subcategory.AvailableProductOffersAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.NonNullObservableField
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.*
 import android.R.attr.order
 import android.os.Bundle
 import android.util.Log
@@ -62,6 +59,7 @@ class ProductDetailsViewModel @Inject constructor(
     private var updateProductFavoriteJob: Job? = null
     private var contactForPriceJob: Job? = null
     var progressLoader = ObservableField<Boolean>(false)
+    var estimatedDelivery = ObservableField<String>("")
 
     //Values selected by User
     var qtySelected = ObservableField<Int>(1)
@@ -160,6 +158,7 @@ class ProductDetailsViewModel @Inject constructor(
                     productData.set(productAPIResponse.body()?.gpApiResponseData!!)
                     productData.let {
                         val productResponseData = productData.get()
+                        estimatedDelivery.set(productData.get()?.shippingDetails?.estimatedDelivery?.trim())
                         getNavigator()?.setToolbarTitle(productResponseData?.productBaseName!!)
                         getNavigator()?.initializeYoutube(productData.get()?.youtubeVideoId)
                         isHeartSelected.set(productResponseData?.isUserFavourite!!)
@@ -773,12 +772,10 @@ class ProductDetailsViewModel @Inject constructor(
                     getNavigator()?.updateCartCount(cartCount + 1)
                     getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(R.string.gotocart)!!)
                 } else {
+                    getNavigator()?.showToast(Utility.getErrorMessage(addTocartResponse.errorBody()))
                     if (addTocartResponse.errorBody().isNotNull() && addTocartResponse.errorBody()?.source().toString().contains("alr")) {
-                        getNavigator()?.showToast(R.string.already_added_in_cart)
                         getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(
                             R.string.gotocart)!!)
-                    } else {
-                        getNavigator()?.showToast((getNavigator()?.getMessage(R.string.not_able_to_add)))
                     }
                 }
             }

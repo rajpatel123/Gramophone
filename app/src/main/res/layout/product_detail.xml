@@ -454,15 +454,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_deliveryLocation"
-                        android:layout_marginTop="@dimen/_19sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
                         android:orientation="horizontal">
-
 
                         <ImageView
                             android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_40sdp"
                             app:srcCompat="@drawable/ic_clock_orange" />
-
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -473,7 +471,8 @@
                             <TextView
                                 android:id="@+id/tv_estimated_title"
                                 style="@style/TextSize16Sp"
-                                android:layout_width="match_parent"
+                                android:fontFamily="@font/manrope_medium"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/estimated_delivery"
                                 android:textColor="@color/gray" />
@@ -481,10 +480,10 @@
                             <TextView
                                 android:id="@+id/tvProductWeight"
                                 style="@style/TextSize16Sp"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/manrope_bold"
-                                android:text="@{viewModel.productData.shippingDetails.estimatedDelivery}" />
+                                android:text="@{viewModel.estimatedDelivery}" />
 
 
                         </LinearLayout>
