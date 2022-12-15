@@ -6,11 +6,14 @@ import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityUrlhandlerBinding
 import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
+import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.notification.NotificationNavigator
 import agstack.gramophone.ui.notification.NotificationsAdapter
 import agstack.gramophone.ui.notification.model.Data
 import agstack.gramophone.ui.notification.viewmodel.NotificationViewModel
+import agstack.gramophone.ui.referandearn.ReferAndEarnActivity
+import agstack.gramophone.ui.weather.WeatherActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_LIST
 import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_PRODUCT
@@ -19,7 +22,12 @@ import agstack.gramophone.utils.Constants.DEEP_LINK_MARKET
 import agstack.gramophone.utils.Constants.DEEP_LINK_MY_FARM
 import agstack.gramophone.utils.Constants.DEEP_LINK_PRODUCT_DETAIL
 import agstack.gramophone.utils.Constants.DEEP_LINK_PRODUCT_LIST
+import agstack.gramophone.utils.Constants.DEEP_LINK_REFERRAL
 import agstack.gramophone.utils.Constants.DEEP_LINK_SOCIAL
+import agstack.gramophone.utils.Constants.DEEP_LINK_WEATHER_INFO
+import agstack.gramophone.utils.Constants.PAGE
+import agstack.gramophone.utils.SharedPreferencesHelper
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -60,11 +68,10 @@ class URLHandlerActivity :
             }
 
             DEEP_LINK_HOME -> {
-
             }
 
             DEEP_LINK_MARKET -> {
-
+                SharedPreferencesHelper.instance?.putString(Constants.TARGET_PAGE,"market")
             }
 
             DEEP_LINK_PRODUCT_DETAIL -> {
@@ -87,10 +94,19 @@ class URLHandlerActivity :
             }
 
             DEEP_LINK_SOCIAL -> {
+                SharedPreferencesHelper.instance?.putString(Constants.TARGET_PAGE,"social")
+            }
 
+            DEEP_LINK_WEATHER_INFO -> {
+                openActivity(WeatherActivity::class.java, null)
+            }
+
+            DEEP_LINK_REFERRAL -> {
+                openActivity(ReferAndEarnActivity::class.java, null)
             }
         }
 
+        finishActivity()
     }
 
 }
