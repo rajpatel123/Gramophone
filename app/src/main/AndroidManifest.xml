@@ -29,7 +29,9 @@
 
     <application
         android:name=".utils.GramAppApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
         android:configChanges="layoutDirection|locale"
         android:icon="@mipmap/leaf_logo"
         android:label="@string/app_name"
@@ -37,7 +39,8 @@
         android:roundIcon="@mipmap/leaf_logo"
         android:supportsRtl="true"
         android:theme="@style/SplashTheme"
-        android:usesCleartextTraffic="true" >
+        android:usesCleartextTraffic="true"
+        tools:ignore="UnusedAttribute">
 
         <activity
             android:name=".ui.notification.view.URLHandlerActivity"
