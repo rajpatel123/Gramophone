@@ -226,13 +226,14 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                                 val addressDataModel = AddressDataModel(it.pincode.toString())
                                 dataList.add(addressDataModel)
                             }
-                            val adapter = getNavigator()?.getAdapter(dataList)!!
-                            getNavigator()?.updatePinCode(adapter) {
-                                pinCode.set(it.name)
-                                getNavigator()?.closePincodeDropDown()
-                            }
                             if (dataList.isNotNullOrEmpty() && dataList.size == 1) {
                                 pinCode.set(dataList[0].name)
+                            } else {
+                                val adapter = getNavigator()?.getAdapter(dataList)!!
+                                getNavigator()?.updatePinCode(adapter) {
+                                    pinCode.set(it.name)
+                                    getNavigator()?.closePincodeDropDown()
+                                }
                             }
                         }
                     }

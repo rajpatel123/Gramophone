@@ -187,17 +187,6 @@ class AddOrUpdateAddressActivity :
             }
             override fun afterTextChanged(s: Editable) {
                 pincodeSpinner.threshold = 1
-
-                if (TextUtils.isEmpty(s)){
-                    addOrUpdateAddressViewModel.getPinCode(
-                        "pincode",
-                        addOrUpdateAddressViewModel.stateNameStr.get()!!,
-                        addOrUpdateAddressViewModel.districtName.get()!!,
-                        addOrUpdateAddressViewModel.tehsilName.get()!!,
-                        addOrUpdateAddressViewModel.villageName.get()!!,
-
-                        )
-                }
             }
         })
 

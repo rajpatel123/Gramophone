@@ -8,7 +8,10 @@ import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
 import agstack.gramophone.ui.home.product.fragment.*
 import agstack.gramophone.ui.home.subcategory.AvailableProductOffersAdapter
-import agstack.gramophone.ui.home.view.fragments.market.model.*
+import agstack.gramophone.ui.home.view.fragments.market.model.GpApiResponseData
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
+import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.ShareSheetPresenter
 import agstack.gramophone.utils.SharedPreferencesHelper
@@ -28,7 +31,6 @@ import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
-import com.google.android.youtube.player.YouTubePlayerFragment
 import com.google.android.youtube.player.YouTubePlayerSupportFragmentX
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.item_menu_cart_with_counter.*
@@ -48,6 +50,7 @@ class ProductDetailsActivity :
     private var isShowMoreClicked: Boolean = false
     private lateinit var showMoreOrLessText: String
     private lateinit var drawableEndArrow: Drawable
+    var youTubePlayer: YouTubePlayer? = null
     var videoId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -203,11 +206,11 @@ class ProductDetailsActivity :
         player: YouTubePlayer?,
         wasRestored: Boolean,
     ) {
+        youTubePlayer = player
         if (!wasRestored) {
-            player?.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT)
+            youTubePlayer?.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT)
             try {
-                player?.loadVideo(videoId)
-                player?.play()
+                youTubePlayer?.cueVideo(videoId)
             } catch (e: Exception) {
                 e.printStackTrace()
                 viewDataBinding.rlHowToUse.visibility = View.GONE
@@ -404,5 +407,10 @@ class ProductDetailsActivity :
         if (text != null)
             viewDataBinding.tvAddtocart.text = text
         return viewDataBinding.tvAddtocart.text.toString()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        youTubePlayer?.pause()
     }
 }
