@@ -244,7 +244,7 @@ class AdvisoryActivity :
         if (cropIssueListAdapter.dataList.size > 0) {
             viewDataBinding.rlCropProblems.visibility = VISIBLE
 
-            if (cropIssueListAdapter.dataList.size > 6) {
+            if (cropIssueListAdapter.dataList.size > 8) {
                 viewDataBinding.tvViewAllRl.visibility = VISIBLE
             } else {
                 viewDataBinding.tvViewAllRl.visibility = GONE

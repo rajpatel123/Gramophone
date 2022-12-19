@@ -296,6 +296,8 @@ object Constants {
     const val DEEP_LINK_PRODUCT_DETAIL = "productDetail"
     const val DEEP_LINK_CROP_PRODUCT = "cropProduct"
     const val DEEP_LINK_EDIT_LANGUAGE = "editLanguage"
+    const val DEEP_LINK_EDIT_PHONE_NO = "editPhoneNo"
+    const val DEEP_LINK_DISEASE_DETAILS = "diseaseDetails"
 
     /**
      * For Broadcast

@@ -4,6 +4,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityUrlhandlerBinding
+import agstack.gramophone.ui.advisory.view.AllCropProblemsActivity
 import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
@@ -13,11 +14,14 @@ import agstack.gramophone.ui.notification.model.Data
 import agstack.gramophone.ui.notification.viewmodel.NotificationViewModel
 import agstack.gramophone.ui.referandearn.ReferAndEarnActivity
 import agstack.gramophone.ui.settings.view.LanguageUpdateActivity
+import agstack.gramophone.ui.userprofile.EditProfileActivity
 import agstack.gramophone.ui.weather.WeatherActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_LIST
 import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_PRODUCT
+import agstack.gramophone.utils.Constants.DEEP_LINK_DISEASE_DETAILS
 import agstack.gramophone.utils.Constants.DEEP_LINK_EDIT_LANGUAGE
+import agstack.gramophone.utils.Constants.DEEP_LINK_EDIT_PHONE_NO
 import agstack.gramophone.utils.Constants.DEEP_LINK_HOME
 import agstack.gramophone.utils.Constants.DEEP_LINK_MARKET
 import agstack.gramophone.utils.Constants.DEEP_LINK_MY_FARM
@@ -113,6 +117,21 @@ class URLHandlerActivity :
 
             DEEP_LINK_REFERRAL -> {
                 openAndFinishActivity(ReferAndEarnActivity::class.java, null)
+            }
+
+            DEEP_LINK_EDIT_PHONE_NO -> {
+                openAndFinishActivity(EditProfileActivity::class.java, null)
+            }
+
+            DEEP_LINK_DISEASE_DETAILS -> {
+                val cropId = uri.getQueryParameter("cropId")!!.toInt()
+                val stageId = uri.getQueryParameter("stageId")!!.toInt()
+                openActivity(
+                    AllCropProblemsActivity::class.java,
+                    Bundle().apply {
+                        putInt(Constants.STAGE_ID, cropId)
+                        putInt(Constants.CROP_ID, stageId)
+                    })
             }
         }
 
