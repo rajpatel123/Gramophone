@@ -12,10 +12,12 @@ import agstack.gramophone.ui.notification.NotificationsAdapter
 import agstack.gramophone.ui.notification.model.Data
 import agstack.gramophone.ui.notification.viewmodel.NotificationViewModel
 import agstack.gramophone.ui.referandearn.ReferAndEarnActivity
+import agstack.gramophone.ui.settings.view.LanguageUpdateActivity
 import agstack.gramophone.ui.weather.WeatherActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_LIST
 import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_PRODUCT
+import agstack.gramophone.utils.Constants.DEEP_LINK_EDIT_LANGUAGE
 import agstack.gramophone.utils.Constants.DEEP_LINK_HOME
 import agstack.gramophone.utils.Constants.DEEP_LINK_MARKET
 import agstack.gramophone.utils.Constants.DEEP_LINK_MY_FARM
@@ -90,6 +92,10 @@ class URLHandlerActivity :
 
             DEEP_LINK_CROP_PRODUCT -> {
                 finishActivity()
+            }
+
+            DEEP_LINK_EDIT_LANGUAGE -> {
+                openAndFinishActivity(LanguageUpdateActivity::class.java, null)
             }
 
             DEEP_LINK_MY_FARM -> {
