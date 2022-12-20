@@ -540,6 +540,7 @@
     <string name="download_failed">Download failed</string>
     <string name="invoice_downloading">Invoice downloading...</string>
     <string name="invoice_downloaded">Invoice downloaded successfully</string>
+    <string name="enter_desc_validation">Please enter at least 20 character</string>
 </resources>
 
 
