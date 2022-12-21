@@ -182,7 +182,6 @@
     <string name="save_language">भाषा सेव करें</string>
     <string name="offers">ऑफर</string>
     <string name="share_app">ऐप शेयर करें</string>
-    <string name="app_url"><![CDATA[https://play.google.com/store/apps/details?id=agstack.gramophone&hl=en_IN&gl=US]]></string>
     <string name="share_app_link">ऐप लिंक  शेयर करें!</string>
     <string name="whatsapp">वाट्सऐप</string>
     <string name="whatsapp_in">वाट्सऐप पर हमसे जुड़ें</string>
@@ -213,7 +212,7 @@
     <string name="turn_on_location">कृपया लोकेशन चालू करें</string>
     <string name="opt_out">हमसे तुरंत हटें</string>
     <string name="opt_in_now">हमसे तुरंत जुड़ें</string>
-    <string name="seconds">सेकंड</string>
+    <string name="seconds">सेo</string>
     <string name="bottomsheet_tag">निचली शीट</string>
     <string name="payment_mode">पेमेंट का तरीका</string>
     <string name="pay_using_gram_cash">ग्रामकैश का उपयोग करके पेमेंट करें</string>
@@ -317,7 +316,7 @@
     <string name="enter_firm_name">कंपनी का नाम दर्ज करें </string>
     <string name="add_firm">कंपनी जोड़ें</string>
     <string name="check_referral_points">अपने रेफरल और अंक की जाँच करें</string>
-    <string name="share_earn">ग्रामोफोन ऐप शेयर करें और कमाएं \u20B9 150!</string>
+    <string name="share_earn">ग्रामोफोन ऐप शेयर करें और ₹150 तक कमाएं!</string>
     <string name="share_earn_message2">अपने किसान मित्रों के साथ ग्रामोफोन ऐप साझा करें, वे ऐप डाउनलोड करते हैं तो आप 150 रुपये तक कमा सकते हैं!</string>
     <string name="share_your_referral_qr_code">अपना रेफ़रल कोड और क्यूआर कोड शेयर करें</string>
     <string name="share_now">अभी शेयर करें</string>
@@ -346,14 +345,14 @@
     <string name="know_more_about_my_farm"><![CDATA[मेरे खेत के बारे में अधिक जानें >]]></string>
     <string name="checkout">चेक आउट</string>
     <string name="receive_order_related_information_on_whatsapp">आर्डर संबंधित जानकारी व्हाट्सएप पर प्राप्त करें</string>
-    <string name="gramophone_promise">ग्रामोफोन का वादा</string>
-    <string name="_100_genuine_nproducts">100% असली\nउत्पाद</string>
-    <string name="free_shipping_nat_doorstep">मुफ़्त शिपिंग\nदरवाज़े पर</string>
-    <string name="best_price_nguaranteed">सर्वोत्तम मूल्य\nगारंटी</string>
-    <string name="genuine_ngst_bill">असली\nजीएसटी बिल</string>
+    <string name="gramophone_promise">ग्रामोफ़ोन का विश्वास</string>
+    <string name="_100_genuine_nproducts">100% विश्वसनीय\nउत्पाद</string>
+    <string name="free_shipping_nat_doorstep">मुफ्त घर\nपहुँच सेवा</string>
+    <string name="best_price_nguaranteed">बेस्ट प्राइस की गारंटी</string>
+    <string name="genuine_ngst_bill">पक्का\nGST बिल</string>
     <string name="easy_return">आसान वापसी</string>
     <string name="free_expert_nadvice">नि:शुल्क विशेषज्ञ\nसलाह</string>
-    <string name="tab_latest">नवीनतम</string>
+    <string name="tab_latest">नए पोस्ट</string>
     <string name="tab_trending">चर्चित</string>
     <string name="tab_following">फॉलोइंग</string>
     <string name="tab_expert">विशेषज्ञ</string>
@@ -387,7 +386,7 @@
         <item>क्षेत्र</item>
     </string-array>
 
-    <string name="download_to_gallery">गैलरी में डाउनलोड किया गया</string>
+    <string name="download_to_gallery">फोन गैलरी में डाउनलोड किया गया</string>
     <string name="home_share_subject">ग्रामोफोन ऐप से सर्वोत्तम गुणवत्ता वाले कृषि उत्पाद प्राप्त करें</string>
     <string name="about_referral_point_balance">रेफरल पॉइंट्स बैलेंस के बारे में</string>
     <string name="watch_app_demo">ऐप डेमो देखें</string>
@@ -396,7 +395,7 @@
     <string name="for_you">आपके लिए</string>
     <string name="articles">लेख</string>
     <string name="mandi_bhav">मंडी भाव</string>
-    <string name="logout">लॉग आउट</string>
+    <string name="logout">लॉगआउट</string>
     <string name="my_crop_farms">मेरी फसल और खेत</string>
     <string name="my_crop_farms_subtext">अपनी फसलों पर नियमित अपडेट/जानकारी प्राप्त करें</string>
     <string name="new_text">नया</string>
@@ -478,9 +477,9 @@
     <string name="crop_sowing_date">"बुआई की तारीख: %1$s"</string>
     <string name="crop_sowing_dates">  बुआई की तारीख:</string>
     <string name="farm_area">"खेत का एरिया: %1$s"</string>
-    <string name="stage_name">"वर्तमान चरण: %1$s Days &#8226; %2$s"</string>
+    <string name="stage_name">"वर्तमान चरण: %1$s दिन &#8226; %2$s"</string>
     <string name="stage_names">  वर्तमान चरण:</string>
-    <string name="stage_name_modal_farm">"अनुमानित चरण: %1$s Days &#8226; %2$s"</string>
+    <string name="stage_name_modal_farm">"अनुमानित चरण: %1$s दिन &#8226; %2$s"</string>
     <string name="added_one_farm">"1 खेत जोड़ा गया है"</string>
     <string name="added_farm_count">"%1$s खेत जोड़े गये है"</string>
     <string name="message_select_crop">कृपया एक फसल का चयन करें</string>

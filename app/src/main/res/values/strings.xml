@@ -183,12 +183,12 @@
     <string name="save_language">Save Language</string>
     <string name="offers">Offers</string>
     <string name="share_app">Share App</string>
-    <string name="app_url"><![CDATA[https://play.google.com/store/apps/details?id=agstack.gramophone&hl=en_IN&gl=US]]></string>
+    <string name="app_url" translatable="false"><![CDATA[https://play.google.com/store/apps/details?id=agstack.gramophone&hl=en_IN&gl=US]]></string>
     <string name="share_app_link">Share App link!</string>
     <string name="whatsapp">Whatsapp</string>
     <string name="whatsapp_in">Whatsapp opt-in</string>
     <string name="whatsapp_update">Get updates over Whatsapp</string>
-    <string name="recieve_del">Recieve delivery updates and reminders from Gramophone with WhatsApp, Feel free to contact us too!</string>
+    <string name="recieve_del">Receive delivery updates and reminders from Gramophone with WhatsApp, Feel free to contact us too!</string>
     <string name="unblock">Unblock</string>
     <string name="payment_method">Payment Method</string>
     <string name="product">Products&#160;(</string>
