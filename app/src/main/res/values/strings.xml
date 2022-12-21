@@ -659,4 +659,5 @@
     <string name="invoice_downloaded">Invoice downloaded successfully</string>
     <string name="upcoming_soon">Upcoming soon!!</string>
     <string name="vyapart_upcoming_message">Vyapar will enable you to sell/buy your crop easily by connecting with the right buyers/sellers</string>
+    <string name="enter_desc_validation">Please enter at least 20 character</string>
 </resources>

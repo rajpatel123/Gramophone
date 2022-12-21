@@ -16,6 +16,7 @@ data class GpApiResponseData(
     val brands_list: List<Brands>,
     val crops_list: List<Crops>,
     val product_app_sub_categories_list: List<CategoryData>,
+    val product_app_category_image: String,
     val technical_data: List<TechnicalData>,
 )
 

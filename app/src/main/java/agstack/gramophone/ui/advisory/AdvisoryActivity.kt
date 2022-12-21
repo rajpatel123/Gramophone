@@ -244,7 +244,7 @@ class AdvisoryActivity :
         if (cropIssueListAdapter.dataList.size > 0) {
             viewDataBinding.rlCropProblems.visibility = VISIBLE
 
-            if (cropIssueListAdapter.dataList.size > 6) {
+            if (cropIssueListAdapter.dataList.size > 8) {
                 viewDataBinding.tvViewAllRl.visibility = VISIBLE
             } else {
                 viewDataBinding.tvViewAllRl.visibility = GONE
@@ -284,13 +284,11 @@ class AdvisoryActivity :
     }
 
     override fun openIssueImagesBottomSheet(it: GpApiResponseData) {
-        if (it.stage_description.isNotEmpty() || it.crop_stage_images.size > 0) {
             val bottomSheet = CropIssueBottomSheetDialog()
             bottomSheet.setData(it)
             bottomSheet.show(
                 supportFragmentManager, Constants.BOTTOM_SHEET
             )
-        }
 
     }
 

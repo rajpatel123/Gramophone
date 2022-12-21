@@ -40,16 +40,25 @@ class CropIssueBottomSheetDialog : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (gpApiResponse.isNotNull()){
-            binding?.llCropIssueImageBottom?.visibility=VISIBLE
-            binding?.llCropIssueDetails?.visibility= GONE
-            binding?.issueDesc?.text = gpApiResponse?.stage_description
-            rvCropImage.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
-            rvCropImage.setHasFixedSize(true)
-            rvCropImage.adapter = gpApiResponse?.crop_stage_images?.let {
-                CropIssueImageListAdapter(
-                    it
-                )
+            if (gpApiResponse?.stage_description?.isNotEmpty() == true || gpApiResponse?.crop_stage_images?.size!! > 0) {
+                binding?.llCropIssueImageBottom?.visibility=VISIBLE
+                binding?.llCropIssueDetails?.visibility= GONE
+                binding?.issueDesc?.text = gpApiResponse?.stage_description
+                rvCropImage.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+                rvCropImage.setHasFixedSize(true)
+                rvCropImage.adapter = gpApiResponse?.crop_stage_images?.let {
+                    CropIssueImageListAdapter(
+                        it
+                    )
+                }
+            }else{
+                llCropIssueImageBottom.minimumHeight=300
+                binding?.llCropIssueNoData?.visibility=VISIBLE
+                binding?.llCropIssueDetails?.visibility= GONE
+                binding?.noData?.text = getString(R.string.no_data_title)
+
             }
+
 
         }else{
             binding?.llCropIssueImageBottom?.visibility=GONE

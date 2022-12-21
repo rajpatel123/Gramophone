@@ -650,4 +650,5 @@
     <string name="invoice_downloaded">Invoice downloaded successfully</string>
     <string name="upcoming_soon">लवकरच येत आहे!!</string>
     <string name="vyapart_upcoming_message">व्यापार तुम्हाला योग्य खरेदीदार/विक्रेत्यांशी जोडून तुमचे पीक सहज विकण्यास/खरेदी करण्यास सक्षम करेल</string>
+    <string name="enter_desc_validation">Please enter at least 20 character</string>
 </resources>

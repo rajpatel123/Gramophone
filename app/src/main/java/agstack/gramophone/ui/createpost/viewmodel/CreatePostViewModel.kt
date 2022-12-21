@@ -22,6 +22,7 @@ import android.util.Log
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -39,6 +40,7 @@ class CreatePostViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository,
     private val productRepository: ProductRepository
 ) : BaseViewModel<CreatePostNavigator>() {
+    private var creatingPost: Boolean= false
     private lateinit var postId: String
     private lateinit var response: retrofit2.Response<CreatePostResponseModel>
     lateinit var imageUrls: List<Image>
@@ -117,84 +119,94 @@ class CreatePostViewModel @Inject constructor(
     }
 
     fun createPost() {
-        viewModelScope.launch {
-            try {
-                if (getNavigator()?.isNetworkAvailable() == true) {
-                    val desc: RequestBody =
-                        description.get()?.toRequestBody("text/plain".toMediaTypeOrNull()) ?: "".toRequestBody("text/plain".toMediaTypeOrNull())
-                        val tags: RequestBody = tags.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        if (!creatingPost){
+            creatingPost = true
+            viewModelScope.launch {
+                if (description.isNotNull() && description.get()?.length!! >=20 ){
+                    try {
+                        if (getNavigator()?.isNetworkAvailable() == true) {
+                            val desc: RequestBody =
+                                description.get()?.toRequestBody("text/plain".toMediaTypeOrNull()) ?: "".toRequestBody("text/plain".toMediaTypeOrNull())
+                            val tags: RequestBody = tags.toString().toRequestBody("text/plain".toMediaTypeOrNull())
 
-                    var image1: MultipartBody.Part? =null
-                    var image2:MultipartBody.Part? =null
-                    var image3: MultipartBody.Part? =null
-                    if (!listOfImages.isEmpty()){
-                      val keys = listOfImages.keys
-                       if (keys.size>0){
-                               keys.forEach {
-                                   when (it) {
-                                       "1" -> {
-                                           val imageUpoadRequestBody = FileUploadRequestBody(
-                                               listOfImages[it]!!
-                                           )
-                                           Log.d("Image", "" + listOfImages[it]?.path)
-                                           image1 = MultipartBody.Part.createFormData(
-                                               "image",
-                                               listOfImages.get(it)!!.name,
-                                               imageUpoadRequestBody
-                                           )
-                                       }
-                                       "2" -> {
-                                           val imageUpoadRequestBody = FileUploadRequestBody(
-                                               listOfImages[it]!!
-                                           )
-                                           Log.d("Image", "" + listOfImages[it]?.path)
+                            var image1: MultipartBody.Part? =null
+                            var image2:MultipartBody.Part? =null
+                            var image3: MultipartBody.Part? =null
+                            if (!listOfImages.isEmpty()){
+                                val keys = listOfImages.keys
+                                if (keys.size>0){
+                                    keys.forEach {
+                                        when (it) {
+                                            "1" -> {
+                                                val imageUpoadRequestBody = FileUploadRequestBody(
+                                                    listOfImages[it]!!
+                                                )
+                                                Log.d("Image", "" + listOfImages[it]?.path)
+                                                image1 = MultipartBody.Part.createFormData(
+                                                    "image",
+                                                    listOfImages.get(it)!!.name,
+                                                    imageUpoadRequestBody
+                                                )
+                                            }
+                                            "2" -> {
+                                                val imageUpoadRequestBody = FileUploadRequestBody(
+                                                    listOfImages[it]!!
+                                                )
+                                                Log.d("Image", "" + listOfImages[it]?.path)
 
-                                           image2 = MultipartBody.Part.createFormData(
-                                               "image",
-                                               listOfImages.get(it)!!.name,
-                                               imageUpoadRequestBody
-                                           )
-                                       }
-                                       "3" -> {
-                                           val imageUpoadRequestBody = FileUploadRequestBody(
-                                               listOfImages[it]!!
-                                           )
-                                           Log.d("Image", "" + listOfImages[it]?.path)
+                                                image2 = MultipartBody.Part.createFormData(
+                                                    "image",
+                                                    listOfImages.get(it)!!.name,
+                                                    imageUpoadRequestBody
+                                                )
+                                            }
+                                            "3" -> {
+                                                val imageUpoadRequestBody = FileUploadRequestBody(
+                                                    listOfImages[it]!!
+                                                )
+                                                Log.d("Image", "" + listOfImages[it]?.path)
 
-                                           image3 = MultipartBody.Part.createFormData(
-                                               "image",
-                                               listOfImages.get(it)!!.name,
-                                               imageUpoadRequestBody
-                                           )
-                                       }
-                                   }
+                                                image3 = MultipartBody.Part.createFormData(
+                                                    "image",
+                                                    listOfImages.get(it)!!.name,
+                                                    imageUpoadRequestBody
+                                                )
+                                            }
+                                        }
 
-                               }
-
-
-                       }
+                                    }
 
 
-                    }
-                    response = communityRepository.createPost(desc, tags, image1, image2, image3)
-                    if (response.isSuccessful) {
-                        getNavigator()?.openAndFinishActivity(PostDetailsActivity::class.java,
-                            Bundle().apply {
-                                putString(POST_ID, response.body()?.data?._id)
+                                }
+
+
                             }
-                        )
-                    } else {
-                        getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+                            response = communityRepository.createPost(desc, tags, image1, image2, image3)
+                            if (response.isSuccessful) {
+                                creatingPost = false
+                                getNavigator()?.openAndFinishActivity(PostDetailsActivity::class.java,
+                                    Bundle().apply {
+                                        putString(POST_ID, response.body()?.data?._id)
+                                    }
+                                )
+                            } else {
+                                getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+                            }
+
+                        } else
+                            getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+                    } catch (ex: Exception) {
+                        creatingPost = false
+
+                        when (ex) {
+                            is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                            else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                        }
                     }
-
-                } else
-                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
-            } catch (ex: Exception) {
-
-                when (ex) {
-                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                }else{
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.enter_desc_validation)!!)
                 }
+
             }
 
         }

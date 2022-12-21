@@ -8,6 +8,7 @@ import android.content.Context
 object Constants {
 
 
+    val TARGET_PAGE: String="target_page"
     val URI: String="uri"
     val UTM_SOURCE_UPDATED: String="utm_update"
     val CROP_END_DATE: String="end_date"
@@ -290,9 +291,13 @@ object Constants {
     const val DEEP_LINK_MY_FARM = "myFarm"
     const val DEEP_LINK_SOCIAL = "social"
     const val DEEP_LINK_WEATHER_INFO = "weatherInfo"
+    const val DEEP_LINK_REFERRAL = "referral"
     const val DEEP_LINK_PRODUCT_LIST = "productList"
     const val DEEP_LINK_PRODUCT_DETAIL = "productDetail"
     const val DEEP_LINK_CROP_PRODUCT = "cropProduct"
+    const val DEEP_LINK_EDIT_LANGUAGE = "editLanguage"
+    const val DEEP_LINK_EDIT_PHONE_NO = "editPhoneNo"
+    const val DEEP_LINK_DISEASE_DETAILS = "diseaseDetails"
 
     /**
      * For Broadcast
