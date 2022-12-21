@@ -1,29 +1,18 @@
 <resources>
     <string name="app_name">Gramophone</string>
 
-    <!-- Language selection message -->
-    <string name="select_language_msg_english">Please select a language</string>
-    <string name="select_language_msg_hindi">कृपया एक भाषा का चयन करें</string>
-    <string name="select_language_msgg_marathi">कृपया एक भाषा निवडा</string>
-    <string name="select_language_msg_gujarati">કૃપા કરીને એક ભાષા પસંદ કરો</string>
-
-    <!-- Language name -->
-
-
-    <!-- Phone Registration screen -->
+    <string name="please_select_language">Please select a language</string>
     <string name="select_language_eng">English</string>
     <string name="select_language_hi">हिन्दी</string>
     <string name="select_language_marathi">मराठी</string>
     <string name="select_language_gujarati">ગુજરાતી</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="profile_screen_title">Your account is ready</string>
     <string name="profile_screen_msg">Just fill below details to go</string>
     <string name="select_profile_type">Please select your profile type</string>
     <string name="i_m_a_trader">I\'m a Trader</string>
     <string name="i_m_a_farmer">I\'m a Farmer</string>
-    <string name="image">image</string>
+    <string name="image" translatable="false">image</string>
     <string name="shop_by_category">Shop by Category</string>
     <string name="view_all">View All</string>
     <string name="mandi_rates">Mandi Rates</string>
@@ -61,7 +50,6 @@
     <!--    OnBoarding strings-->
     <string name="skip">Skip</string>
     <string name="next">Next</string>
-    <string name="resource_img_icon">resource_img_icon</string>
     <string name="welcome_msg">Welcome to Gramophone</string>
     <string name="start_msg">TIP: Use your whatsapp number for notification</string>
     <string name="enter_mobile_lebel">Enter Mobile Number</string>
@@ -195,12 +183,12 @@
     <string name="save_language">Save Language</string>
     <string name="offers">Offers</string>
     <string name="share_app">Share App</string>
-    <string name="app_url"><![CDATA[https://play.google.com/store/apps/details?id=agstack.gramophone&hl=en_IN&gl=US]]></string>
+    <string name="app_url" translatable="false"><![CDATA[https://play.google.com/store/apps/details?id=agstack.gramophone&hl=en_IN&gl=US]]></string>
     <string name="share_app_link">Share App link!</string>
     <string name="whatsapp">Whatsapp</string>
     <string name="whatsapp_in">Whatsapp opt-in</string>
     <string name="whatsapp_update">Get updates over Whatsapp</string>
-    <string name="recieve_del">Recieve delivery updates and reminders from Gramophone with WhatsApp, Feel free to contact us too!</string>
+    <string name="recieve_del">Receive delivery updates and reminders from Gramophone with WhatsApp, Feel free to contact us too!</string>
     <string name="unblock">Unblock</string>
     <string name="payment_method">Payment Method</string>
     <string name="product">Products&#160;(</string>
@@ -242,10 +230,8 @@
     <string name="view_price_breakup">View Price Breakup</string>
     <string name="place_order">Place Order</string>
     <string name="start_shopping">Start Shopping</string>
-    <string name="menu_title">menu title</string>
     <string name="_0_off">0% off</string>
     <string name="item_added_as_a_free_giveaway">This item is added as a free giveaway.</string>
-    <string name="daily_object_backpack">Daily Object Backpack</string>
     <string name="rupee_0">\u20B9 0</string>
     <string name="dummy_price">\u20B9 1290</string>
     <string name="recent_orders">Recent Orders</string>
@@ -293,11 +279,11 @@
     <string name="shop_by_company">Shop by Company</string>
     <string name="pesticides">Pesticides</string>
     <string name="production_stages">Production Stages</string>
-    <string name="crop_stage_detail">CroOn the young seedlings initially, water soaked areas developed at the collar region and a brown sunken lesion which soon appeared as girdled resulting in seeding collapse.\n\nOn adult plant initially, slight drooping of leaves which led to drying of leaves starting from lower ones extended from root to stem region and plants exhibited wilting symptom.p Protection</string>
+    <string name="crop_stage_detail" translatable="false">Crop on the young seedlings initially, water soaked areas developed at the collar region and a brown sunken lesion which soon appeared as girdled resulting in seeding collapse.\n\nOn adult plant initially, slight drooping of leaves which led to drying of leaves starting from lower ones extended from root to stem region and plants exhibited wilting symptom.p Protection</string>
     <string name="gramophone_tv">Gramophone TV</string>
     <string name="my_profile">My Profile</string>
     <string name="my_gramophone">My Gramophone</string>
-    <string name="resend">Didn’t recieved OTP? Retry via</string>
+    <string name="resend">Didn’t received OTP? Retry via</string>
     <string name="call">Call</string>
     <string name="sms">SMS</string>
     <string name="feedback">Feedback</string>
@@ -306,7 +292,6 @@
     <string name="send">Send</string>
     <string name="please_enter_feedback">Please enter your feedback</string>
     <string name="all_offers">All Offers</string>
-    <string name="page_tag">pageTag</string>
     <string name="inclusiveoftaxes">(Inclusive of all taxes)</string>
     <string name="edit">Edit</string>
     <string name="followers">Followers</string>
@@ -334,7 +319,7 @@
     <string name="enter_firm_name">Enter Firm Name</string>
     <string name="add_firm">Add Firm</string>
     <string name="check_referral_points">Check your referral and points</string>
-    <string name="share_earn">Share Gramophone App and earn upto \u20B9 150!</string>
+    <string name="share_earn">Share Gramophone App and earn up to \u20B9 150!</string>
     <string name="share_earn_message2">Share gramophone app with your farmer friends, they download the app then you can earn up to Rs. 150!</string>
     <string name="share_your_referral_qr_code">SHARE YOUR REFERRAL CODE AND QR CODE</string>
     <string name="share_now">Share Now</string>
@@ -370,7 +355,7 @@
     <string name="genuine_ngst_bill">Genuine\nGST Bill</string>
     <string name="easy_return">Easy Return</string>
     <string name="free_expert_nadvice">Free Expert\nAdvice</string>
-    <string name="product_fungicide">Fungicides Crystal Bavistin 50% WP Fun gicide Carbe ...</string>
+    <string name="product_fungicide" translatable="false">Fungicides Crystal Bavistin 50% WP Fun gicide Carbe ...</string>
     <string name="tab_latest">Latest</string>
     <string name="tab_trending">Trending</string>
     <string name="tab_following">Following</string>
@@ -405,7 +390,6 @@
         <item>Area</item>
     </string-array>
 
-    <string name="aaa">All Tran_1111</string>
     <string name="download_to_gallery">Downloaded to Gallery</string>
     <string name="home_share_subject">Get best quality agriculture products from Gramophone App</string>
     <string name="about_referral_point_balance">About Referral Points Balance</string>
@@ -491,24 +475,24 @@
     <string name="no_orders_yet">No Orders Yet!</string>
     <string name="download_invoice">Download Invoice</string>
 
-    <string name="crop_duration_advisory">"बुआई का समय:"</string>
-    <string name="crop_duration">"बुआई का समय: %1$s"</string>
-    <string name="crop_durations">"बुआई का समय: %1$s"</string>
-    <string name="crop_sowing_date">"बुआई की तारीख: %1$s"</string>
-    <string name="crop_sowing_dates">  बुआई की तारीख:</string>
-    <string name="farm_area">"खेत का एरिया: %1$s"</string>
-    <string name="stage_name">"वर्तमान चरण: %1$s Days &#8226; %2$s"</string>
-    <string name="stage_names">  वर्तमान चरण:</string>
-    <string name="stage_name_modal_farm">"अनुमानित चरण: %1$s Days &#8226; %2$s"</string>
-    <string name="added_one_farm">"1 खेत जोड़ा गया है"</string>
-    <string name="added_farm_count">"%1$s खेत जोड़े गये है"</string>
+    <string name="crop_duration_advisory">"Sowing time:"</string>
+    <string name="crop_duration">"Sowing time: %1$s"</string>
+    <string name="crop_durations">"Sowing time: %1$s"</string>
+    <string name="crop_sowing_date">"Sowing date: %1$s"</string>
+    <string name="crop_sowing_dates">  Sowing date:</string>
+    <string name="farm_area">"Farm Area: %1$s"</string>
+    <string name="stage_name">"Present stage: %1$s Days &#8226; %2$s"</string>
+    <string name="stage_names">  Present stage:</string>
+    <string name="stage_name_modal_farm">"Estimated phase: %1$s Days &#8226; %2$s"</string>
+    <string name="added_one_farm">"1 Farm Added"</string>
+    <string name="added_farm_count">"%1$s Farms Added"</string>
     <string name="message_select_crop">Please select a crop</string>
     <string name="message_enter_area">Please enter the area</string>
     <string name="message_valid_area_upper_bound">The area should not be larger than 500</string>
     <string name="message_sowing_date">Please select sowing date</string>
     <string name="message_area_unit">Please select area unit</string>
     <string name="message_farm_added">you successfully added the farm</string>
-    <string name="message_buy_your_crop">अपनी फसलों द्वारा खरीदारी करें</string>
+    <string name="message_buy_your_crop">Shop by Crops</string>
     <string name="message_why_add_farm">Why Add Farm</string>
 
 
@@ -555,11 +539,10 @@
     <string name="trending_articles">Trending Articles</string>
     <string name="article_read">&#160;Read</string>
     <string name="article_views">&#160;Views</string>
-    <string name="farmer_image">farmer image</string>
     <string name="date_of_sowing">Date of sowing</string>
     <string name="area">Area</string>
-    <string name="old_farms">पुराने खेत देखे</string>
-    <string name="old_farms_title">पुराने खेत</string>
+    <string name="old_farms">See old farms</string>
+    <string name="old_farms_title">Old Farms</string>
     <string name="join_community">Join 5000+ farmers\nand get quick solution\nfrom agri experts</string>
     <string name="get_advise">Get Expert advice quickly</string>
     <string name="connect_farmer">Connect with farmers around you</string>
@@ -602,8 +585,8 @@
     <string name="gram_cash_not_applicable">Gram cash not applicable here</string>
     <string name="txt_checkout">Checkout special offers for you</string>
     <string name="no_post_yet">No Post Yet!</string>
-    <string name="addedfarms"> खेत जोड़ा गया है</string>
-    <string name="view_farms">अपने खेतों को देखें</string>
+    <string name="addedfarms"> Farm Added</string>
+    <string name="view_farms">See your farms</string>
     <string name="days">Days</string>
     <string name="favourite_products">Favorite Products</string>
     <string name="no_favourite_product">No Favorite Products!</string>
@@ -620,14 +603,14 @@
     <string name="day_remaining">Day Remaining</string>
     <string name="people_answered">Farmers answered</string>
     <string name="browsw_post_by_crops">Browse Posts By Crops</string>
-    <string name="add_your_farm">+ अपना खेत जोड़े</string>
-    <string name="give_your_crop_details">उपज की जानकारी देवे</string>
-    <string name="approx_end_date">अनुमानित समाप्ति: %1$s</string>
+    <string name="add_your_farm">+ Add your farm</string>
+    <string name="give_your_crop_details">Give yield information</string>
+    <string name="approx_end_date">Expected end: %1$s</string>
     <string name="quantity">Quantity</string>
     <string name="bigha">Bigha</string>
-    <string name="next_crop_desc">आप अपनी अगली फसल कौनसी लगाने वाले है</string>
-    <string name="take_suggestions_text">आज ही अपना नया फॉर्म जोड़ें और कृषि एक्सपर्ट द्वारा पाइये उचित सलाह</string>
-    <string name="not_now">अभी नहीं</string>
+    <string name="next_crop_desc">What are you going to plant next</string>
+    <string name="take_suggestions_text">Add your new form today and get proper advice from agriculture experts</string>
+    <string name="not_now">Not now</string>
     <!--youtube string-->
     <string name="channel_id" translatable="false">UCmJ7oQCcKzf-IU2QXaMVykQ</string>
     <string name="google_api" translatable="false">AIzaSyD6HGLMvm-bUW0ZCX3wXztDZZXUQTfznZI</string>
@@ -641,16 +624,16 @@
     <string name="anonymous">Anonymous</string>
     <string name="admin">ADMIN</string>
     <string name="spray">Spray</string>
-    <string name="all_problems_txt">यहां होने वाले सभी कीट और समस्याओं की जाँच करें इस चरण के साथ उनके विवरण, समाधान और अनुशंसित उत्पादों को लागू करने के लिए</string>
+    <string name="all_problems_txt">Check out all the pests and problems that may occur here with their description, solutions and recommended products to apply with this step by step guide.</string>
     <string name="tvUpcomingStages">UPCOMING STAGES</string>
-    <string name="other_suggessions_instructions">अन्य निर्देश और सुझाव</string>
-    <string name="crop_all_problems">सभी कीट और समस्याएं</string>
+    <string name="other_suggessions_instructions">Other Instructions and Tips</string>
+    <string name="crop_all_problems">All Pests and Problems</string>
     <string name="view_all_issues">View All Issues of this Stage</string>
-    <string name="crop_related_txt">फसल से संबंधित\n समस्या के लिए कम्युनिटी\n पर प्रश्न पूछे</string>
-    <string name="crop_related_description">आप चित्रों के साथ अपने प्रश्न पोस्ट करें एवं हमारे विशेषज्ञ शीघ्र ही उसका उत्तर देंगे ।</string>
-    <string name="ask_expert">विशेषज्ञ सलाह के लिए पूछें</string>
+    <string name="crop_related_txt">Ask questions on the community\n for crop related\n problems</string>
+    <string name="crop_related_description">Post your questions with pictures and our experts will respond shortly.</string>
+    <string name="ask_expert">Ask for expert advice</string>
     <string name="disclaimer">Disclaimer: ** Actual dosage of the product may vary depending on various factors and should be adjusted accordingly. User should follow directions provided by manufacturer on the label claims.</string>
-    <string name="required_quantity">अनुशंसित मात्रा प्रति एकड़</string>
+    <string name="required_quantity">Recommended amount per acre</string>
     <string name="no_activities">No activities applicable!</string>
     <string name="no_activity_desc">It seems there are no activity recommendation available or aplicable for this farm.</string>
     <string name="advisory_details_not_found">Advisory not available!</string>
@@ -658,14 +641,13 @@
     <string name="back_to_my_farm">Back to My Farm</string>
     <string name="recommended_product">Products Recommended</string>
     <string name="crop_instruction_desc">This Information is Based on your Current location, for more accurate info please add your farm</string>
-    <string name="expected_stage">अनुमानित  चरण:</string>
-    <string name="purchage_from_out">"बाहर से ख़रीदे जाने वाले उत्पाद"</string>
+    <string name="expected_stage">Estimated Phase:</string>
+    <string name="purchage_from_out">"Imported products"</string>
 
-    <string name="farm_crop">उपज</string>
+    <string name="farm_crop">Yield</string>
     <string name="loading_txt">Loading...</string>
     <string name="already_added_in_cart">Product is already added in cart</string>
     <string name="not_able_to_add">Not able to add in cart</string>
-    <string name="disclaimer_txt"><![CDATA[<font style=\"color:gray\"> Disclaimer: **</font> Actual dosage of the product may vary depending on various factors and should be adjusted accordingly. User should follow directions provided by manufacturer on the label claims.]]></string>
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://www.gramophone.in\",\n  }\n}]</string>
 
 
@@ -675,5 +657,7 @@
     <string name="download_failed">Download failed</string>
     <string name="invoice_downloading">Invoice downloading…</string>
     <string name="invoice_downloaded">Invoice downloaded successfully</string>
+    <string name="upcoming_soon">Upcoming soon!!</string>
+    <string name="vyapart_upcoming_message">Vyapar will enable you to sell/buy your crop easily by connecting with the right buyers/sellers</string>
     <string name="enter_desc_validation">Please enter at least 20 character</string>
 </resources>

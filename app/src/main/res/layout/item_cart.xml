@@ -291,7 +291,7 @@
                 android:textColor="@color/brand_color"
                 android:textSize="16sp"
                 android:translationY="-0.27sp"
-                tools:text="@string/daily_object_backpack" />
+                tools:text="Daily Object Backpack" />
 
             <TextView
                 android:id="@+id/tvGiftPrice"

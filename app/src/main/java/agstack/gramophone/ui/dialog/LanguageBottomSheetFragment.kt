@@ -73,7 +73,7 @@ class LanguageBottomSheetFragment : BottomSheetDialogFragment(),
             } else {
                 Toast.makeText(
                     activity,
-                    getString(R.string.select_language_msg_english),
+                    getString(R.string.please_select_language),
                     Toast.LENGTH_LONG
                 ).show()
 
