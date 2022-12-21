@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.home.view
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityHomeBinding
@@ -47,6 +48,8 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.item_menu_cart_with_counter.*
+import kotlinx.android.synthetic.main.navigation_layout.*
+import kotlinx.android.synthetic.main.navigation_layout.view.*
 
 @AndroidEntryPoint
 class HomeActivity :
@@ -84,13 +87,19 @@ class HomeActivity :
     }
 
     private fun registerWithFCM() {
-        val fcmRegistrationModel = FCMRegistrationModel("fcm_token",
-            SharedPreferencesHelper.instance!!.getString(SharedPreferencesKeys.FirebaseTokenKey)
-                .toString()
-        )
+        if (!TextUtils.isEmpty(
+                SharedPreferencesHelper.instance!!.getString(SharedPreferencesKeys.FirebaseTokenKey)
+                    .toString()
+            )
+        ) {
+            val fcmRegistrationModel = FCMRegistrationModel(
+                "fcm_token",
+                SharedPreferencesHelper.instance!!.getString(SharedPreferencesKeys.FirebaseTokenKey)
+                    .toString()
+            )
+            homeViewModel.sendFCMToServer(fcmRegistrationModel)
 
-
-        homeViewModel.sendFCMToServer(fcmRegistrationModel)
+        }
 
     }
 
@@ -224,6 +233,8 @@ class HomeActivity :
             }
             false
         }
+
+        tvAppVersion.text="v-".plus(BuildConfig.VERSION_NAME)
     }
 
     fun showCommunityFragment(from: String) {

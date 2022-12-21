@@ -28,6 +28,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
@@ -294,4 +295,6 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+
 }

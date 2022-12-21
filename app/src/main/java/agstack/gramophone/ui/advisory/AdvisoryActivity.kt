@@ -284,13 +284,11 @@ class AdvisoryActivity :
     }
 
     override fun openIssueImagesBottomSheet(it: GpApiResponseData) {
-        if (it.stage_description.isNotEmpty() || it.crop_stage_images.size > 0) {
             val bottomSheet = CropIssueBottomSheetDialog()
             bottomSheet.setData(it)
             bottomSheet.show(
                 supportFragmentManager, Constants.BOTTOM_SHEET
             )
-        }
 
     }
 
