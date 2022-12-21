@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/_14ssp"
             android:textColor="@color/gray"
-            android:text="Upcoming soon!!" />
+            android:text="@string/upcoming_soon" />
 
         <TextView
             android:layout_marginTop="@dimen/_4sdp"
@@ -34,6 +34,6 @@
             android:fontFamily="@font/manrope_regular"
             android:layout_height="wrap_content"
             android:textSize="@dimen/_11ssp"
-            android:text="Vyapar will enable you to sell/buy your crop easily by connecting with the right buyers/sellers" />
+            android:text="@string/vyapart_upcoming_message" />
     </LinearLayout>
 </layout>

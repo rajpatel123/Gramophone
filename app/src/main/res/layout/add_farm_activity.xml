@@ -39,7 +39,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/_1sdp"
                 android:layout_marginTop="@dimen/_16sdp"
-                android:contentDescription="@string/farmer_image"
+                android:contentDescription="@string/image"
                 android:elevation="@dimen/_2sdp"
                 app:srcCompat="@drawable/add_farmer_image" />
 

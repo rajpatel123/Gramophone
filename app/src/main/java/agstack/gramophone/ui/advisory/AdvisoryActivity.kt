@@ -63,7 +63,7 @@ class AdvisoryActivity :
         subCategoryViewModel.getCropAdvisoryDetails()
         viewDataBinding.llCommunityLL.goToCommunity.setOnClickListener { openCommunity() }
         viewDataBinding.llCommunityLL.tvDisclaimer.text =
-            Html.fromHtml(getString(R.string.disclaimer_txt), 0)
+            Html.fromHtml(getString(R.string.disclaimer), 0)
     }
 
     override fun onResume() {

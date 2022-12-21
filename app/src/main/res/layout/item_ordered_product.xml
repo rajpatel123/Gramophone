@@ -209,7 +209,7 @@
                 android:lineSpacingExtra="1sp"
                 android:maxLines="2"
                 android:text='@{model.free_products[0].product_name ?? ""}'
-                tools:text="@string/daily_object_backpack"
+                tools:text="Daily Object Backpack"
                 android:textColor="@color/brand_color"
                 android:textSize="16sp"
                 android:translationY="-0.27sp" />

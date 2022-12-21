@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="90sp"
-                android:contentDescription="@string/resource_img_icon"
+                android:contentDescription="@string/image"
                 android:src="@mipmap/logo" />
 
             <ProgressBar

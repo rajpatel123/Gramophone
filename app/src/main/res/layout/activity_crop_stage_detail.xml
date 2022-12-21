@@ -71,7 +71,7 @@
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/manrope_regular"
                     android:lineSpacingExtra="0sp"
-                    android:text="@string/crop_stage_detail"
+                    tools:text="@string/crop_stage_detail"
                     android:textColor="@color/blakish"
                     android:textSize="14sp"
                     android:translationY="-0.24sp" />

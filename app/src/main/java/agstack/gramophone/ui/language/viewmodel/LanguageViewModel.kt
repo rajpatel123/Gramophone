@@ -168,7 +168,7 @@ class LanguageViewModel @Inject constructor(
                       }
                   }
                 } else {
-                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.select_language_msg_english))
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.please_select_language))
                 }
             }
             R.id.btnSave -> {
@@ -178,7 +178,7 @@ class LanguageViewModel @Inject constructor(
                         updateLanguage(updateLanguageRequestModel)
                     }
                 } else {
-                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.select_language_msg_english))
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.please_select_language))
                 }
             }
         }
