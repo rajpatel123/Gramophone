@@ -36,7 +36,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class VerifyOtpViewModel @Inject constructor(
-    private val onBoardingRepository: OnBoardingRepository
+    private val onBoardingRepository: OnBoardingRepository,
 ) : BaseViewModel<VerifyOTPNavigator>() {
     var remaningDuration: Long = 0
     var otp = ObservableField<String>()

@@ -91,7 +91,7 @@ public abstract class SharedPreferencesKeys {
     public static final String comingFromSettings="comingFromSettings";
 
     public static final String GOOGLE_API_KEY = "google_api_key";
-
+    public static final String PROFILE_DATA="profile_data";
     @Nullable
     public static final String languageList="language_list";
     @Nullable

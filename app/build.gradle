@@ -2,7 +2,7 @@
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url 'https://plugins.gradle.org/m2/' }
     }
 
@@ -13,7 +13,6 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
-    id 'androidx.navigation.safeargs.kotlin'
     id 'dagger.hilt.android.plugin'
 }
 
@@ -171,10 +170,6 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
 
-    // Navigation Components
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
-    implementation 'androidx.navigation:navigation-runtime-ktx:2.5.1'
     implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
 
     // Dagger Hilt
@@ -227,6 +222,10 @@ dependencies {
 
     implementation("com.android.installreferrer:installreferrer:2.2")
 
+    // core mo-engage features
+    implementation(moengage.core)
+    // optionally add this to use the Push Templates feature
+    implementation(moengage.richNotification)
 }
 
 apply plugin: 'com.google.gms.google-services'
