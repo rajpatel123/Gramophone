@@ -18,6 +18,7 @@ import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProdu
 import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProductResponseModel
 import agstack.gramophone.ui.createnewpost.model.MentionRequestModel
 import agstack.gramophone.ui.createnewpost.model.MentionTagResponsemodel
+import agstack.gramophone.ui.createnewpost.model.problems.ProblemTagsResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
 import agstack.gramophone.ui.favourite.model.FavouriteRequestModel
 import agstack.gramophone.ui.favourite.model.FeaturedProductResponseModel
@@ -182,6 +183,15 @@ class OnBoardingRepositoryImpl @Inject constructor(
         Dispatchers.IO) {
         val validateOTPMobile = gramAppService.getHasTags(mentionRequestModel)
         validateOTPMobile
+    }
+
+
+    override suspend fun getProblemTags(mentionRequestModel: MentionRequestModel): Response<ProblemTagsResponseModel> = withContext(
+        Dispatchers.IO) {
+        val validateOTPMobile = gramAppService.getProblemTags(mentionRequestModel)
+        validateOTPMobile
+
+
     }
     override suspend fun getMyGramophoneData(): Response<MyGramophoneResponseModel> =
         withContext(

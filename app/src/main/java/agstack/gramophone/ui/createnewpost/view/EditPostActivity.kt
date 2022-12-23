@@ -497,6 +497,8 @@ class EditPostActivity: BaseActivityWrapper<EditPostsActivityBinding, CreatePost
     }
 
 
+
+
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
@@ -544,6 +546,13 @@ class EditPostActivity: BaseActivityWrapper<EditPostsActivityBinding, CreatePost
         viewDataBinding.descriptionEditText?.setAdapter(TagAdapter(this, R.layout.tag_layout, tags))
     }
 
+    override fun populateProblemList(tagArray: Array<Tag>) {
+        viewDataBinding.descriptionEditText?.setAdapter(TagAdapter(this, R.layout.tag_layout, tagArray))
+    }
+
+    override fun getText() :String {
+        return viewDataBinding.descriptionEditText.editableText.toString()
+    }
     override fun enablePostButton() {
         viewDataBinding.postButton?.isEnabled = true
     }
