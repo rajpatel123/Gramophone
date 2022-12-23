@@ -9,7 +9,7 @@
     android:textColor="@color/red"
     android:textSize="16sp"
     android:textStyle="bold"
-    android:textColorLink="@color/green_dark"
+    android:textColorLink="@color/weather_blue"
     android:maxLines="1"
     android:ellipsize="end"
     android:text="hsdufhiufsfhuisdfhisu"

@@ -3,7 +3,6 @@ package agstack.gramophone.ui.tagandmention;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-
 import androidx.annotation.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -36,11 +35,10 @@ public class Tag implements Parcelable {
                     this.url = Constants.SearchUrl + Constants.ProfileUrlPARAMETER + uuid;
             }
         }else {
-            if(prefix==null) {
-                this.prefix = '#';
-            }
-            if(tag!=null&&url==null&&prefix!=null&&prefix == '#') {
-                this. url=Constants.SearchUrl +Constants.SearchUrlPARAMETER+ tag;
+            if (prefix == '#' || prefix == '$') {
+                if (tag != null && url == null && prefix != null && prefix == '#') {
+                    this.url = Constants.SearchUrl + Constants.SearchUrlPARAMETER + tag;
+                }
             }
         }
         this.tag = tag;
@@ -98,19 +96,17 @@ public class Tag implements Parcelable {
 
     @NonNull
     public String getFormattedValue() {
-        if(url==null&&prefix=='#')
-        {
-            url=Constants.SearchUrl +Constants.SearchUrlPARAMETER+ tag;
-        } else if(url==null&&prefix=='@'&&uuid!=null)
-        {
-            url=Constants.SearchUrl +Constants.ProfileUrlPARAMETER+ uuid;
+
+        if (prefix == '#') {
+            url = Constants.SearchUrl + Constants.SearchUrlPARAMETER + tag;
+            return "<a href=\"" + url + "\"  style=\"color: #97651A\">" + String.format(Locale.US, "%c%s", prefix, tag) + "</a>";
+        } else if (prefix == '@' && uuid != null) {
+            url = Constants.SearchUrl + Constants.ProfileUrlPARAMETER + uuid;
+            return "<a href=\"" + url + "\"  style=\"color: #468600\">" + String.format(Locale.US, "%c%s", prefix, tag) + "</a>";
+        } else {
+            return "<a href=\"" + url + "\"  style=\"color: #389EFF\">" + String.format(Locale.US, "%c%s", prefix, tag) + "</a>";
         }
-        if(url!=null) {
-            String lastword = "<a href=\"" + url + "\">" + String.format(Locale.US, "%c%s", prefix, tag) + "</a>";
-            return lastword;
-        }else{
-            return String.format(Locale.US, "%c%s", prefix, tag);
-        }
+
     }
     @NonNull
     public String getFormattedValue1() {

@@ -20,6 +20,7 @@ import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.cart.model.PlaceOrderRequest
 import agstack.gramophone.ui.createnewpost.model.MentionRequestModel
 import agstack.gramophone.ui.createnewpost.model.MentionTagResponsemodel
+import agstack.gramophone.ui.createnewpost.model.problems.ProblemTagsResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.farm.model.*
@@ -327,6 +328,12 @@ interface GramAppService {
     suspend fun getHasTags(
         @Body mentionRequestModel: MentionRequestModel,
     ): Response<HasgTagResponseModel>
+
+
+    @POST("api/v5/search/mentions-crop-problems")
+    suspend fun getProblemTags(
+        @Body mentionRequestModel: MentionRequestModel,
+    ): Response<ProblemTagsResponseModel>
 
     @POST("api/v5/search/suggestions")
     suspend fun getSuggestions(@Body body: SuggestionsRequest): Response<SuggestionsResponse>

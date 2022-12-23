@@ -24,9 +24,19 @@ public class TagCompletionView extends TokenCompleteTextView<Tag> {
     @Override
     protected View getViewForObject(Tag object) {
         LayoutInflater l = (LayoutInflater)getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        TokenTextView token = (TokenTextView) l.inflate(R.layout.contact_token, (ViewGroup) getParent(), false);
-        token.setText(Html.fromHtml(object.getFormattedValue()));
-            return token;
+        TokenTextView token = null;
+        if (object.getPrefix()=='@'){
+            token = (TokenTextView) l.inflate(R.layout.contact_token, (ViewGroup) getParent(), false);
+            token.setText(Html.fromHtml(object.getFormattedValue()));
+        }else if(object.getPrefix()=='#'){
+            token = (TokenTextView) l.inflate(R.layout.tag_token, (ViewGroup) getParent(), false);
+            token.setText(Html.fromHtml(object.getFormattedValue()));
+        }else{
+            token = (TokenTextView) l.inflate(R.layout.problem_token, (ViewGroup) getParent(), false);
+            token.setText(Html.fromHtml(object.getFormattedValue()));
+        }
+        return token;
+
 
     }
 
@@ -39,7 +49,11 @@ public class TagCompletionView extends TokenCompleteTextView<Tag> {
                 String value = completionText.substring(1, completionText.length());
                 return new Tag(null, completionText.charAt(0), value, null, null, null);
 
-            } else {
+            } else if(completionText.charAt(0) == '$'){
+                String value = completionText.substring(1, completionText.length());
+                return new Tag(null, completionText.charAt(0), value, null, null, null);
+
+            }else {
                 String value = completionText.substring(1, completionText.length());
                 return new Tag(null, completionText.charAt(0), value, Constants.SearchUrl + Constants.SearchUrlPARAMETER + value, null, null);
             }
