@@ -493,7 +493,7 @@
     <string name="message_area_unit">Please select area unit</string>
     <string name="message_farm_added">you successfully added the farm</string>
     <string name="message_buy_your_crop">Shop by Crops</string>
-    <string name="message_why_add_farm">Why Add Farm</string>
+    <string name="message_why_add_farm">Why Add Farm?</string>
 
 
     <string name="hint_add_new_post">Write your question about your crop eg. how do I prevent this bug?</string>
@@ -660,4 +660,6 @@
     <string name="upcoming_soon">Upcoming soon!!</string>
     <string name="vyapart_upcoming_message">Vyapar will enable you to sell/buy your crop easily by connecting with the right buyers/sellers</string>
     <string name="enter_desc_validation">Please enter at least 20 character</string>
+    <string name="purchage_txt">Shop by your crops</string>
+    <string name="pirme_crop">Main crops of your area and your farm</string>
 </resources>

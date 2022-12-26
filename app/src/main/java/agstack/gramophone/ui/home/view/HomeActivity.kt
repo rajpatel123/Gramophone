@@ -363,6 +363,12 @@ class HomeActivity :
 
     }
 
+
+    override fun onRestart() {
+        super.onRestart()
+        openAndFinishActivity(HomeActivity::class.java,null)
+    }
+
     private fun processDeepLink() {
         if (!TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(Constants.URI))) {
             val intent = Intent(this, URLHandlerActivity::class.java)

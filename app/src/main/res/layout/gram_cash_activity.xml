@@ -82,7 +82,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="end"
                                     android:text="@{viewModel.gramCashResponseData.gramcashTotal.toString()}"
-                                    android:textSize="@dimen/_28ssp"
+                                    android:textSize="@dimen/_20ssp"
                                     tools:text="300" />
 
                                 <TextView
@@ -217,7 +217,7 @@
                             android:layout_marginEnd="@dimen/_15sdp"
                             android:text="@{viewModel.gramCashResponseData.gramcashPending.toString()}"
                             android:textColor="@color/blakish"
-                            android:textSize="@dimen/_22ssp"
+                            android:textSize="@dimen/_20ssp"
                             tools:text="200" />
 
                     </LinearLayout>

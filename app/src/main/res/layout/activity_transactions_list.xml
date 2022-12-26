@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/all" />
 
+
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabPast"
                 android:layout_width="wrap_content"
@@ -51,14 +52,14 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvAll"
-            app:recentSize="@{viewModel.allListSize}"
-            app:selectedTab="@{viewModel.selectedTab}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tab_separator"
             android:layout_marginBottom="?actionBarSize"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:recentSize="@{viewModel.allListSize}"
+            app:selectedTab="@{viewModel.selectedTab}"
             tools:itemCount="2"
             tools:listitem="@layout/item_transaction"
             tools:visibility="visible" />
@@ -66,10 +67,10 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvReferral"
-            android:layout_marginBottom="?actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tab_separator"
+            android:layout_marginBottom="?actionBarSize"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:pastSize="@{viewModel.referralsListSize}"
@@ -92,10 +93,7 @@
             android:visibility="gone"
             app:pastSize="@{viewModel.allListSize}"
             app:recentSize="@{viewModel.referralsListSize}"
-            app:selectedTab="@{viewModel.selectedTab}"
-           >
-
-
+            app:selectedTab="@{viewModel.selectedTab}">
 
 
             <TextView
@@ -107,7 +105,6 @@
                 android:text="@string/no_transactions"
                 android:textColor="@color/brand_color"
                 android:textSize="18sp" />
-
 
 
         </LinearLayout>

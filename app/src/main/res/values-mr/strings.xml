@@ -539,7 +539,7 @@
     <string name="area">क्षेत्रफळ</string>
     <string name="old_farms">जुनी शेती पहा</string>
     <string name="old_farms_title">जुनी शेती</string>
-    <string name="join_community">5000+ किसानों\nसे जुड़ें और कृषि विशेषज्ञों के लिए\nत्वरित समाधान पाएं</string>
+    <string name="join_community">हजारो शेतकर्‍यांमध्ये सामील\n व्हा आणि कृषी तज्ञांकडून\n उपाय मिळवा</string>
     <string name="get_advise">त्वरीत तज्ञांचा सल्ला घ्या</string>
     <string name="connect_farmer">तुमच्या आजूबाजूच्या शेतकऱ्यांशी संपर्क साधा</string>
     <string name="contributr_community">समाजात योगदान द्या</string>
@@ -651,4 +651,6 @@
     <string name="upcoming_soon">लवकरच येत आहे!!</string>
     <string name="vyapart_upcoming_message">व्यापार तुम्हाला योग्य खरेदीदार/विक्रेत्यांशी जोडून तुमचे पीक सहज विकण्यास/खरेदी करण्यास सक्षम करेल</string>
     <string name="enter_desc_validation">कृपया किमान 20 वर्ण प्रविष्ट करा</string>
+    <string name="purchage_txt">तुमच्या पिकांनुसार खरेदी करा</string>
+    <string name="pirme_crop">तुमच्या क्षेत्रातील आणि तुमच्या शेतातील मुख्य पिके</string>
 </resources>

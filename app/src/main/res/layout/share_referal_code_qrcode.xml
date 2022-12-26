@@ -57,8 +57,8 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:layout_width="@dimen/_88sdp"
-                    android:layout_height="match_parent"
+                    android:layout_width="@dimen/_98sdp"
+                    android:layout_height="@dimen/_88sdp"
                     android:layout_gravity="end"
                     android:gravity="end"
                     android:orientation="horizontal">
@@ -73,8 +73,8 @@
                             android:id="@+id/referralCodeImageView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center_horizontal"
                             android:background="@color/colorTransparent"
+                            android:scaleType="fitXY"
                             android:contentDescription="@string/image" />
                     </LinearLayout>
 
@@ -83,10 +83,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="@dimen/_minus24sdp"
-                        android:layout_marginBottom="@dimen/_minus16sdp"
+                        android:layout_marginEnd="@dimen/_minus6sdp"
+                        android:layout_marginBottom="@dimen/_1sdp"
                         android:layout_alignParentBottom="true"
                         android:contentDescription="@string/image"
+                        android:elevation="@dimen/_5sdp"
                         android:onClick="@{()->rvm.onDownloadQRClick()}"
                         android:scaleType="fitXY"
                         android:src="@drawable/ic_download_qr" />

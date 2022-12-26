@@ -41,7 +41,7 @@
                 android:textColor="@color/blakish"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="normal"
-                android:text="अपनी फसलों द्वारा खरीदारी करें" />
+                android:text="@string/purchage_txt" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
                 android:textColor="@color/gray_strike_through"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="normal"
-                android:text="आपके एरिया के मुख्य फसलें एवं आपके खेत " />
+                android:text="@string/pirme_crop" />
 
         </LinearLayout>
 
@@ -91,7 +91,7 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="center_vertical"
                 android:lines="1"
-                android:text="अपना खेत जोड़े"
+                android:text="@string/add_your_farm"
                 android:textColor="@color/blakish"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
@@ -111,9 +111,9 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:lines="1"
-            android:text="जानिये क्यों ?"
+            android:text="@string/message_why_add_farm"
             android:textColor="@color/orange"
-            android:textSize="@dimen/_13ssp"
+            android:textSize="@dimen/_10ssp"
             android:textStyle="bold" />
     </RelativeLayout>
 
