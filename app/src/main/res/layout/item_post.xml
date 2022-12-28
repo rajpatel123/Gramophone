@@ -536,7 +536,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_2sdp"
                 android:layout_toEndOf="@+id/ivCommentBottom"
-                android:text="Write a comment..."
+                android:text="@string/write_comment"
                 android:textColor="@color/gray" />
 
         </RelativeLayout>

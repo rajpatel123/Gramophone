@@ -366,7 +366,17 @@ class HomeActivity :
 
     override fun onRestart() {
         super.onRestart()
-        openAndFinishActivity(HomeActivity::class.java,null)
+        if (SharedPreferencesHelper.instance?.getBoolean(
+                SharedPreferencesKeys.LANGUAGE_UPDATE
+            ) == true
+        ) {
+            SharedPreferencesHelper.instance?.putBoolean(
+                SharedPreferencesKeys.LANGUAGE_UPDATE, false
+            )
+
+            openAndFinishActivity(HomeActivity::class.java, null)
+
+        }
     }
 
     private fun processDeepLink() {

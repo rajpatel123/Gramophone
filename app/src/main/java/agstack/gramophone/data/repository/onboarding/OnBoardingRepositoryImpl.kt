@@ -37,6 +37,7 @@ import agstack.gramophone.ui.notification.model.NotificationresponseModel
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
+import agstack.gramophone.ui.splash.model.language.CustomerLanguageResponseModel
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.ui.userprofile.verifyotp.model.VerifyOTPRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
@@ -79,6 +80,12 @@ class OnBoardingRepositoryImpl @Inject constructor(
     override suspend fun getLanguage(): Response<LanguageListResponse> = withContext(
         Dispatchers.IO) {
         val languageList = gramAppService.getLanguage()
+        languageList
+    }
+
+    override suspend fun getCustomerLanguage(): Response<CustomerLanguageResponseModel> = withContext(
+        Dispatchers.IO) {
+        val languageList = gramAppService.getCustomerLanguage()
         languageList
     }
 

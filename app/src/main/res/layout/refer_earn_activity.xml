@@ -95,70 +95,350 @@
 
                 </LinearLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+               <FrameLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/flHeader">
+                   <androidx.constraintlayout.widget.ConstraintLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:background="@drawable/ic_blueback"
+                       android:paddingLeft="@dimen/_21sdp"
+                       android:paddingRight="@dimen/_21sdp"
+                       android:paddingBottom="@dimen/_20sdp"
+                       app:layout_constraintTop_toBottomOf="@id/ll_checkReferral">
+
+                       <TextView
+                           android:id="@+id/tv_heading"
+                           style="@style/TextSize14Sp"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="@dimen/_10sdp"
+                           android:gravity="center_horizontal"
+                           android:text="@string/share_earn"
+                           android:textColor="@color/white"
+                           android:textSize="@dimen/_16ssp"
+                           app:layout_constraintLeft_toLeftOf="parent"
+                           app:layout_constraintRight_toRightOf="parent"
+                           app:layout_constraintTop_toTopOf="parent" />
+
+                       <TextView
+                           android:id="@+id/tv_subheading"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="@dimen/_8sdp"
+                           android:fontFamily="@font/manrope_regular"
+                           android:gravity="center_horizontal"
+                           android:text="@string/share_earn_message2"
+                           android:textColor="@color/state_bg"
+                           android:textSize="@dimen/_10ssp"
+                           app:layout_constraintLeft_toLeftOf="parent"
+                           app:layout_constraintRight_toRightOf="parent"
+                           app:layout_constraintTop_toBottomOf="@id/tv_heading" />
+
+                       <ImageView
+                           android:id="@+id/iv_top"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           app:layout_constraintTop_toBottomOf="@id/tv_subheading"
+                           app:srcCompat="@drawable/ic_graphic_refer_earn" />
+
+
+                   </androidx.constraintlayout.widget.ConstraintLayout>
+
+                   <androidx.core.widget.NestedScrollView
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:id="@+id/nsHowItWorks"
+                       android:elevation="1dp"
+                       android:layout_marginTop="@dimen/_225sdp"
+                       >
+
+                       <FrameLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent">
+
+                           <TextView
+                               android:id="@+id/tvActivityName"
+                               android:layout_width="wrap_content"
+                               android:layout_height="@dimen/_35sdp"
+                               android:layout_gravity="center_horizontal"
+                               android:gravity="center_vertical"
+                               android:layout_marginTop="@dimen/_8sdp"
+                               android:background="@drawable/hiwk_bg"
+                               android:elevation="@dimen/_3sdp"
+                               android:textSize="@dimen/_10ssp"
+                               android:fontFamily="@font/manrope_semibold"
+                               android:paddingStart="@dimen/_15sdp"
+                               android:paddingTop="@dimen/_10sdp"
+                               android:paddingEnd="@dimen/_15sdp"
+                               android:paddingBottom="@dimen/_10sdp"
+                               android:text="@string/how_it_work"
+
+                               android:textColor="@color/white"
+                                />
+
+                           <androidx.cardview.widget.CardView
+                               android:id="@+id/llActivityDetails"
+                               android:layout_width="match_parent"
+                               android:layout_height="match_parent"
+                               android:layout_marginStart="@dimen/_15sdp"
+                               android:layout_marginTop="@dimen/_20sdp"
+                               android:layout_marginEnd="@dimen/_15sdp"
+                               android:layout_marginBottom="@dimen/_5sdp"
+                               app:cardCornerRadius="@dimen/_10sdp"
+                               android:paddingBottom="@dimen/_30sdp"
+                               android:background="@drawable/how_it_work_border"
+                               android:orientation="vertical">
+
+                               <LinearLayout
+                                   android:layout_width="match_parent"
+                                   android:layout_height="match_parent"
+                                   android:orientation="vertical">
+                                   <LinearLayout
+                                       android:layout_width="match_parent"
+                                       android:layout_height="wrap_content"
+                                       android:layout_marginTop="@dimen/_38sdp"
+                                       android:orientation="horizontal">
+
+
+                                       <ImageView
+                                           android:layout_width="0dp"
+                                           android:layout_height="wrap_content"
+                                           android:layout_weight="1"
+                                           app:srcCompat="@drawable/how_it_works_whatsapp"/>
+
+                                       <RelativeLayout
+                                           android:layout_width="0dp"
+                                           android:layout_weight="3"
+                                           android:layout_height="match_parent"
+                                           android:gravity="center_vertical"
+                                           android:orientation="vertical">
+                                           <TextView
+                                               android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               android:fontFamily="@font/manrope_regular"
+                                               android:paddingEnd="@dimen/_20sdp"
+                                               android:layout_centerVertical="true"
+                                               android:textColor="@color/black"
+                                               android:text="@string/share_referral_link"/>
+
+                                           <View
+                                               android:layout_width="match_parent"
+                                               android:layout_height="3px"
+                                               android:layout_alignParentBottom="true"
+                                               android:background="@color/mute_grey"/>
+                                       </RelativeLayout>
+                                   </LinearLayout>
+
+                                   <LinearLayout
+                                       android:layout_width="match_parent"
+                                       android:layout_height="wrap_content"
+                                       android:layout_marginTop="@dimen/_5sdp"
+                                       android:orientation="horizontal">
+
+
+                                       <ImageView
+                                           android:layout_width="0dp"
+                                           android:layout_height="wrap_content"
+                                           android:layout_weight="1"
+                                           app:srcCompat="@drawable/how_it_works_2"/>
+
+                                       <RelativeLayout
+                                           android:layout_width="0dp"
+                                           android:layout_weight="3"
+                                           android:layout_height="match_parent"
+                                           android:gravity="center_vertical"
+                                           android:orientation="vertical">
+                                           <TextView
+                                               android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               android:fontFamily="@font/manrope_regular"
+                                               android:layout_centerVertical="true"
+                                               android:textColor="@color/black"
+                                               android:paddingEnd="@dimen/_20sdp"
+
+                                               android:text="@string/register_link"/>
+
+                                           <View
+                                               android:layout_width="match_parent"
+                                               android:layout_height="3px"
+                                               android:layout_alignParentBottom="true"
+                                               android:background="@color/mute_grey"/>
+                                       </RelativeLayout>
+                                   </LinearLayout>
+
+                                   <LinearLayout
+                                       android:layout_width="match_parent"
+                                       android:layout_height="wrap_content"
+                                       android:layout_marginTop="@dimen/_5sdp"
+                                       android:orientation="horizontal">
+
+
+                                       <ImageView
+                                           android:layout_width="0dp"
+                                           android:layout_height="wrap_content"
+                                           android:layout_weight="1"
+                                           app:srcCompat="@drawable/how_it_works_3"/>
+
+                                       <RelativeLayout
+                                           android:layout_width="0dp"
+                                           android:layout_weight="3"
+                                           android:layout_height="match_parent"
+                                           android:gravity="center_vertical"
+                                           android:orientation="vertical">
+                                           <TextView
+                                               android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               android:fontFamily="@font/manrope_regular"
+                                               android:layout_centerVertical="true"
+                                               android:paddingEnd="@dimen/_20sdp"
+
+                                               android:textColor="@color/black"
+                                               android:text="@string/get_50"/>
+
+                                           <View
+                                               android:layout_width="match_parent"
+                                               android:layout_height="3px"
+                                               android:layout_alignParentBottom="true"
+                                               android:background="@color/mute_grey"/>
+                                       </RelativeLayout>
+                                   </LinearLayout>
+
+                                   <LinearLayout
+                                       android:layout_width="match_parent"
+                                       android:layout_height="wrap_content"
+                                       android:layout_marginTop="@dimen/_5sdp"
+                                       android:orientation="horizontal">
+
+
+                                       <ImageView
+                                           android:layout_width="0dp"
+                                           android:layout_height="wrap_content"
+                                           android:layout_weight="1"
+                                           app:srcCompat="@drawable/how_it_works_4"/>
+
+                                       <RelativeLayout
+                                           android:layout_width="0dp"
+                                           android:layout_weight="3"
+                                           android:layout_height="match_parent"
+                                           android:gravity="center_vertical"
+                                           android:orientation="vertical">
+                                           <TextView
+                                               android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               android:fontFamily="@font/manrope_regular"
+                                               android:layout_centerVertical="true"
+                                               android:paddingEnd="@dimen/_20sdp"
+
+                                               android:textColor="@color/black"
+                                               android:text="@string/order_invite"/>
+
+                                           <View
+                                               android:layout_width="match_parent"
+                                               android:layout_height="3px"
+                                               android:layout_alignParentBottom="true"
+                                               android:background="@color/mute_grey"/>
+                                       </RelativeLayout>
+                                   </LinearLayout>
+
+                                   <LinearLayout
+                                       android:layout_width="match_parent"
+                                       android:layout_height="wrap_content"
+                                       android:layout_marginTop="@dimen/_5sdp"
+                                       android:orientation="horizontal">
+
+
+                                       <ImageView
+                                           android:layout_width="0dp"
+                                           android:layout_height="wrap_content"
+                                           android:layout_weight="1"
+                                           app:srcCompat="@drawable/how_it_works_5"/>
+
+                                       <RelativeLayout
+                                           android:layout_width="0dp"
+                                           android:layout_weight="3"
+                                           android:layout_height="match_parent"
+                                           android:gravity="center_vertical"
+                                           android:orientation="vertical">
+                                           <TextView
+                                               android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               android:fontFamily="@font/manrope_regular"
+                                               android:layout_centerVertical="true"
+                                               android:paddingEnd="@dimen/_20sdp"
+
+                                               android:textColor="@color/black"
+                                               android:text="@string/get_100"/>
+
+                                           <View
+                                               android:layout_width="match_parent"
+                                               android:layout_height="3px"
+                                               android:layout_alignParentBottom="true"
+                                               android:background="@color/mute_grey"/>
+                                       </RelativeLayout>
+                                   </LinearLayout>
+
+                                   <LinearLayout
+                                       android:layout_width="match_parent"
+                                       android:layout_height="wrap_content"
+                                       android:layout_marginTop="@dimen/_5sdp"
+                                       android:layout_marginBottom="@dimen/_20sdp"
+                                       android:orientation="horizontal">
+
+
+                                       <ImageView
+                                           android:layout_width="0dp"
+                                           android:layout_height="wrap_content"
+                                           android:layout_weight="1"
+                                           app:srcCompat="@drawable/how_it_works_6"/>
+
+                                       <RelativeLayout
+                                           android:layout_width="0dp"
+                                           android:layout_weight="3"
+                                           android:layout_height="match_parent"
+                                           android:gravity="center_vertical"
+                                           android:orientation="vertical">
+                                           <TextView
+                                               android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               android:fontFamily="@font/manrope_regular"
+                                               android:layout_centerVertical="true"
+                                               android:paddingEnd="@dimen/_20sdp"
+
+                                               android:textColor="@color/black"
+                                               android:text="@string/purchage_invite"/>
+
+
+                                       </RelativeLayout>
+                                   </LinearLayout>
+                               </LinearLayout>
+
+
+
+
+
+                           </androidx.cardview.widget.CardView>
+                       </FrameLayout>
+
+                   </androidx.core.widget.NestedScrollView>
+               </FrameLayout>
+
+
+                <androidx.cardview.widget.CardView
+                    app:layout_constraintTop_toBottomOf="@id/flHeader"
+                    android:layout_margin="@dimen/_15sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_blueback"
-                    android:paddingLeft="@dimen/_21sdp"
-                    android:paddingRight="@dimen/_21sdp"
-                    app:layout_constraintTop_toBottomOf="@id/ll_checkReferral">
-
-                    <TextView
-                        android:id="@+id/tv_heading"
-                        style="@style/TextSize14Sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_21sdp"
-                        android:gravity="center_horizontal"
-                        android:text="@string/share_earn"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_18ssp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tv_subheading"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_11sdp"
-                        android:fontFamily="@font/manrope_regular"
-                        android:gravity="center_horizontal"
-                        android:text="@string/share_earn_message2"
-                        android:textColor="@color/state_bg"
-                        android:textSize="@dimen/_12ssp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_heading" />
-
-                    <ImageView
-                        android:id="@+id/iv_top"
+                    app:cardCornerRadius="@dimen/_10sdp">
+                    <include
+                        android:id="@+id/shareyourreferal"
+                        layout="@layout/share_referal_code_qrcode"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        app:layout_constraintTop_toBottomOf="@id/tv_subheading"
-                        app:srcCompat="@drawable/ic_graphic_refer_earn" />
+                        android:layout_height="match_parent"
+                        bind:rvm="@{viewModel}" />
 
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_minus60sdp"
-                    android:scaleType="fitXY"
-                    android:layout_gravity="center_horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/iv_top"
-                    app:srcCompat="@drawable/ic_how_invite_works" />
-
-
-                <include
-                    android:id="@+id/shareyourreferal"
-                    layout="@layout/share_referal_code_qrcode"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/_minus45sdp"
-                    bind:rvm="@{viewModel}" />
+                </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:id="@+id/tv_FAQ"

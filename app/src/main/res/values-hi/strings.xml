@@ -653,4 +653,25 @@
     <string name="enter_desc_validation">कृपया कम से कम 20 वर्ण दर्ज करें</string>
     <string name="purchage_txt">अपनी फसलों द्वारा खरीदारी करें</string>
     <string name="pirme_crop">आपके एरिया के मुख्य फसलें एवं आपके खेत</string>
+    <string name="how_it_work">कैसे काम करता है आमंत्रित करें </string>
+    <string name="share_referral_link">Share referral link with your friends.</string>
+    <string name="register_link">Your friend will register on Gramophone app with your link.</string>
+    <string name="get_50">On successful registration of your friend you will get Rs. 50.</string>
+    <string name="order_invite">"Your friend will place order on Gramophone "</string>
+    <string name="get_100">On your friends successful purchase you will get Rs. 100.</string>
+    <string name="purchage_invite">Use this rewards for your gramophone purchase</string>
+    <string name="write_comment">कमेंट लिखें...</string>
+    <string name="filters">फिल्टर</string>
+    <string name="subcategory">उपश्रेणी</string>
+    <string name="brand">ब्रैंड</string>
+    <string name="crop">फसल</string>
+    <string name="technical">तकनीकी</string>
+    <string name="price_h_t_l">मूल्य - उच्च से निम्न</string>
+    <string name="price_l_t_h">कीमतों का उतार - चढ़ाव</string>
+    <string name="avg_rating">औसत ग्राहक रेटिंग</string>
+
+
+
+
+
 </resources>

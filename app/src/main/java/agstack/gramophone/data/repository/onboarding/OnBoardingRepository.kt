@@ -36,6 +36,7 @@ import agstack.gramophone.ui.notification.model.NotificationresponseModel
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
+import agstack.gramophone.ui.splash.model.language.CustomerLanguageResponseModel
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.ui.userprofile.verifyotp.model.VerifyOTPRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
@@ -47,7 +48,10 @@ import javax.inject.Singleton
 
 @Singleton
 interface OnBoardingRepository {
+
     suspend fun getLanguage(): Response<LanguageListResponse>
+
+    suspend fun getCustomerLanguage(): Response<CustomerLanguageResponseModel>
 
 
     suspend fun updateLanguage(updateLanguageRequestModel: UpdateLanguageRequestModel): Response<UpdateLanguageResponseModel>

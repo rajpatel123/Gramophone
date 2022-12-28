@@ -114,4 +114,6 @@ public abstract class SharedPreferencesKeys {
     public static final String CART_ITEM_COUNT = "cart_item_count";
     @Nullable
     public static final String UTM_SOURCE="utm_source";
+    @Nullable
+    public static final String LANGUAGE_UPDATE="isLangUpdate";
 }

@@ -61,6 +61,7 @@ import agstack.gramophone.ui.search.model.SuggestionsRequest
 import agstack.gramophone.ui.search.model.SuggestionsResponse
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
+import agstack.gramophone.ui.splash.model.language.CustomerLanguageResponseModel
 import agstack.gramophone.ui.tv.model.BookmarkedListResponse
 import agstack.gramophone.ui.tv.model.VideoBookMarkedRequest
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
@@ -84,6 +85,11 @@ interface GramAppService {
     @GET("api/v5/onboarding/get-language")
     @JvmSuppressWildcards
     suspend fun getLanguage(): Response<LanguageListResponse>
+
+
+   @GET("api/v5/customer/get-customer-language")
+    @JvmSuppressWildcards
+    suspend fun getCustomerLanguage(): Response<CustomerLanguageResponseModel>
 
     @POST("api/v5/general/address-list/{type}")
     @JvmSuppressWildcards
