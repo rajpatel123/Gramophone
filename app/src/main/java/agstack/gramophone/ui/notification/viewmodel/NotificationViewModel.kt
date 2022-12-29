@@ -45,9 +45,9 @@ class NotificationViewModel @Inject constructor(
                     if (notificationResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
                         getNavigator()?.updateNotificationList(NotificationsAdapter(
                             notificationResponse.body()!!.gp_api_response_data.data)){
-                            getNavigator()?.openActivity(URLHandlerActivity::class.java, Bundle().apply {
-                                putString("url",it.content.redirectUrl)
-                            })
+//                            getNavigator()?.openActivity(URLHandlerActivity::class.java, Bundle().apply {
+//                                putString("url",it.content.redirectUrl)
+//                            })
                         }
                     } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(notificationResponse.errorBody()))

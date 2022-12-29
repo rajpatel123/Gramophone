@@ -678,4 +678,6 @@
     <string name="price_h_t_l">Price - High to Low</string>
     <string name="price_l_t_h">Price - Low to High</string>
     <string name="avg_rating">Avg Customer Rating</string>
+    <string name="relevance">Relevance</string>
+
 </resources>

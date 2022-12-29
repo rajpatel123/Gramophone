@@ -431,6 +431,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="@dimen/_10sdp">
+
                     <include
                         android:id="@+id/shareyourreferal"
                         layout="@layout/share_referal_code_qrcode"

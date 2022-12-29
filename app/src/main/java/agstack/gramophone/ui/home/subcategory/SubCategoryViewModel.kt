@@ -174,7 +174,7 @@ class SubCategoryViewModel @Inject constructor(
         } else {
             sortDataList.clear()
         }
-        sortDataList.add(SortByData(true, Constants.RELEVANCE, Constants.RELAVENT_CODE))
+        sortDataList.add(SortByData(true, getNavigator()?.getMessage(R.string.relevance)!!, Constants.RELAVENT_CODE))
         sortDataList.add(SortByData(false,
             getNavigator()?.getMessage(R.string.avg_rating)!!,
             Constants.AVG_CUSTOMER_RATING_CODE))

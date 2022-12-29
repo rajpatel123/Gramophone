@@ -21,7 +21,7 @@ data class SelfRating(
 	@field:SerializedName("rating")
 	var rating: Double? = null,
 
-	@field:SerializedName("comment")
+	@field:SerializedName("comments")
 	var comment: String? = null,
 
 	@field:SerializedName("customer_name")

@@ -51,7 +51,7 @@ class SplashViewModel @Inject constructor(
         }else{
             updateLiveData()
         }
-    }
+        }
 
     private fun updateLiveData() {
         if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.logged_in) == true){

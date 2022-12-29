@@ -4,9 +4,9 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ProductReviewDialogBinding
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Bundle
-import android.view.MotionEvent
-import android.view.View
 import androidx.activity.viewModels
 import com.amnix.xtension.extensions.enableIf
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,9 +29,6 @@ class AddEditProductReviewActivity :
         viewDataBinding.ratingbarUser.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
             var rating =  rating.toDouble()
             mViewModel?.productRating?.set(rating)
-
-
-
         }
 
 
@@ -65,7 +62,8 @@ class AddEditProductReviewActivity :
         finish()
     }
 
-    override fun finishActivityandRefreshProductDetails(){
+    override fun finishActivityandRefreshProductDetails(b: Boolean) {
+        SharedPreferencesHelper.instance?.putBoolean(SharedPreferencesKeys.IS_GENUENE,b)
         finish()
         //write setResult functionality here
 

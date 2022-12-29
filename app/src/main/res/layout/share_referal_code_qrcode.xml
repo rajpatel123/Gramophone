@@ -104,7 +104,7 @@
                     <TextView
                         android:id="@+id/referralCodeButton"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_56sdp"
+                        android:layout_height="@dimen/_50sdp"
                         android:background="@drawable/rounded_corner_4_solid_greenish"
                         android:fontFamily="sans-serif"
                         android:gravity="center"

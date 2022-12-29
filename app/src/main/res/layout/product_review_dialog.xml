@@ -133,7 +133,7 @@
             android:layout_marginLeft="@dimen/_24sdp"
             android:layout_marginRight="@dimen/_24sdp"
             android:layout_marginBottom="@dimen/_20sdp"
-            android:background="@drawable/round_corner_rectangle_fill"
+            android:background="@{viewModel.isSubmitReviewEnabled?@drawable/round_corner_brand_color:@drawable/round_corner_rectangle_fill}"
             android:onClick="@{()->viewModel.onSubmitClick()}"
             android:text="@string/submit"
             android:textAllCaps="false"
