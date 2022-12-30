@@ -10,14 +10,12 @@ import agstack.gramophone.utils.NonNullObservableField
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import okhttp3.internal.notify
-import okhttp3.internal.notifyAll
-import java.lang.Exception
-import java.util.*
 import javax.inject.Inject
+import kotlin.Exception
 
 
 @HiltViewModel
@@ -86,53 +84,59 @@ class AddEditProductReviewViewModel @Inject constructor(
     }
 
     fun onSubmitClick() {
-        var rating = productRating.get()
-        var customerReview = customerReviewText.get()
-        if (productRatingData.get()?.comment.isNullOrEmpty() || productRatingData.get()?.comment?.length == 0) {
-            //Means data from bundle had no comments before
+      try {
+          var rating = productRating.get()
+          var customerReview = customerReviewText.get()
+          if (productRatingData.get()?.isNull() == true) {
+              //Means data from bundle had no comments before
 
-            addReviewJob.cancelIfActive()
-            addReviewJob = checkNetworkThenRun {
-                progressLoader.set(true)
-                var productDetailstoBeAdded = ProductData()
+              addReviewJob.cancelIfActive()
+              addReviewJob = checkNetworkThenRun {
+                  progressLoader.set(true)
+                  var productDetailstoBeAdded = ProductData()
 
-               // productDetailstoBeAdded.product_id = productRatingData?.get()?.productId!!
-                productDetailstoBeAdded.product_id = productId
-                productDetailstoBeAdded.rating = rating
-                productDetailstoBeAdded.comment = customerReview
-                val addTocartResponse =
-                    productRepository.addProductReviewsData(productDetailstoBeAdded)
+                  // productDetailstoBeAdded.product_id = productRatingData?.get()?.productId!!
+                  productDetailstoBeAdded.product_id = productId
+                  productDetailstoBeAdded.rating = rating
+                  productDetailstoBeAdded.comment = customerReview
+                  val addTocartResponse =
+                      productRepository.addProductReviewsData(productDetailstoBeAdded)
 
-                if (addTocartResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
-                    progressLoader.set(false)
-                    getNavigator()?.finishActivityandRefreshProductDetails()
-                } else {
-                    progressLoader.set(false)
-                    getNavigator()?.showToast(addTocartResponse.message())
-                }
-            }
-        } else if (rating != null && rating > 0) {
-            // check only on rating because button will only be enabled if text is not null
-            updateReviewJob.cancelIfActive()
-            updateReviewJob = checkNetworkThenRun {
-                progressLoader.set(true)
-                var productDetailstoBeUpdated = ProductData()
-                productDetailstoBeUpdated.product_id = productRatingData?.get()?.productId!!
-                productDetailstoBeUpdated.rating = rating
-                productDetailstoBeUpdated.comment = customerReview
-                val addTocartResponse =
-                    productRepository.updateProductReviewsData(productDetailstoBeUpdated)
+                  if (addTocartResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
+                      progressLoader.set(false)
+                      getNavigator()?.finishActivityandRefreshProductDetails(false)
+                  } else {
+                      progressLoader.set(false)
+                      getNavigator()?.finishActivityandRefreshProductDetails(true)
+                      //getNavigator()?.showToast(addTocartResponse.message())
+                  }
+              }
+          } else if (rating != null && rating > 0) {
+              // check only on rating because button will only be enabled if text is not null
+              updateReviewJob.cancelIfActive()
+              updateReviewJob = checkNetworkThenRun {
+                  progressLoader.set(true)
+                  var productDetailstoBeUpdated = ProductData()
+                  productDetailstoBeUpdated.product_id = productId
+                  productDetailstoBeUpdated.rating = rating
+                  productDetailstoBeUpdated.comment = customerReview
+                  val addTocartResponse =
+                      productRepository.updateProductReviewsData(productDetailstoBeUpdated)
 
-                if (addTocartResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
-                    progressLoader.set(false)
-                    getNavigator()?.finishActivityandRefreshProductDetails()
-                } else {
-                    progressLoader.set(false)
-                    getNavigator()?.showToast(addTocartResponse.message())
-                }
-            }
-        }
+                  if (addTocartResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
+                      progressLoader.set(false)
+                      getNavigator()?.finishActivityandRefreshProductDetails(false)
+                  } else {
+                      progressLoader.set(false)
+                      getNavigator()?.finishActivityandRefreshProductDetails(true)
+                      //getNavigator()?.showToast(addTocartResponse.message())
+                  }
+              }
+          }
 
+      }catch (ex:Exception){
+          ex.printStackTrace()
+      }
     }
 
     private fun checkNetworkThenRun(runCode: (suspend () -> Unit)): Job {

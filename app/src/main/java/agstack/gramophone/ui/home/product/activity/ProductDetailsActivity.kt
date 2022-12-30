@@ -55,7 +55,7 @@ class ProductDetailsActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        productDetailsViewModel.getBundleData()
+
         initProductDetailView()
     }
 
@@ -409,8 +409,20 @@ class ProductDetailsActivity :
         return viewDataBinding.tvAddtocart.text.toString()
     }
 
+
+    override fun onPause() {
+        super.onPause()
+        youTubePlayer?.pause()
+    }
     override fun onResume() {
         super.onResume()
         youTubePlayer?.pause()
+        if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.IS_GENUENE) == true){
+            productDetailsViewModel.notAGenuineBuyer()
+            SharedPreferencesHelper.instance?.putBoolean(SharedPreferencesKeys.IS_GENUENE,false)
+
+        }
+
+        productDetailsViewModel.getBundleData()
     }
 }

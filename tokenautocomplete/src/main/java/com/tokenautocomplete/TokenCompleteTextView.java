@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.UiThread;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
+import androidx.core.content.ContextCompat;
 
 import android.speech.tts.Voice;
 import android.text.Editable;
@@ -25,6 +26,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
@@ -63,6 +65,7 @@ public abstract class TokenCompleteTextView<T> extends AppCompatAutoCompleteText
         implements TextView.OnEditorActionListener, ViewSpan.Layout {
     //Logging
     public static final String TAG = "TokenAutoComplete";
+    SpannableStringBuilder description = new SpannableStringBuilder();
 
     //When the user clicks on a token...
     public enum TokenClickStyle {
@@ -421,7 +424,6 @@ public abstract class TokenCompleteTextView<T> extends AppCompatAutoCompleteText
             return getText();
         }
 
-        SpannableStringBuilder description = new SpannableStringBuilder();
         Editable text = getText();
         int selectionStart = -1;
         int selectionEnd = -1;

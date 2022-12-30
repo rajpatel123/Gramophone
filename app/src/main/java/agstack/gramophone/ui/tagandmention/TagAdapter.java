@@ -2,7 +2,6 @@ package agstack.gramophone.ui.tagandmention;
 
 import android.app.Activity;
 import android.content.Context;
-
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
-
 
 import agstack.gramophone.R;
 
@@ -36,14 +34,10 @@ public class TagAdapter extends FilteredArrayAdapter<Tag> {
         Tag t = getItem(position);
         TextView handleTextView= ((TextView)convertView.findViewById(R.id.handle));
         View lineView= ((View)convertView.findViewById(R.id.view));
-        if(t.getPrefix()=='@'&& t.getHandle()!=null)
-        {
+        if (t.getPrefix() == '@') {
             handleTextView.setText(t.getHandle());
             handleTextView.setVisibility(View.VISIBLE);
-            lineView.setVisibility(View.VISIBLE);
-
-        }else{
-
+        } else {
             handleTextView.setVisibility(View.GONE);
             lineView.setVisibility(View.GONE);
         }

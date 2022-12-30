@@ -119,14 +119,16 @@ class CreatePostViewModel @Inject constructor(
     }
 
     fun createPost() {
+
+
         if (!creatingPost){
             creatingPost = true
             viewModelScope.launch {
-                if (description.isNotNull() && description.get()?.length!! >=20 ){
+                if (getNavigator()?.getText().isNotNull() && getNavigator()?.getText()?.length!! >=20 ){
                     try {
                         if (getNavigator()?.isNetworkAvailable() == true) {
                             val desc: RequestBody =
-                                description.get()?.toRequestBody("text/plain".toMediaTypeOrNull()) ?: "".toRequestBody("text/plain".toMediaTypeOrNull())
+                                getNavigator()?.getText()?.toRequestBody("text/plain".toMediaTypeOrNull()) ?: "".toRequestBody("text/plain".toMediaTypeOrNull())
                             val tags: RequestBody = tags.toString().toRequestBody("text/plain".toMediaTypeOrNull())
 
                             var image1: MultipartBody.Part? =null
@@ -327,13 +329,29 @@ class CreatePostViewModel @Inject constructor(
                     val a = response.body()?.gp_api_response_data
                     val tags = arrayListOf<Tag>().apply {
                         for (n in 0..(a?.size!!) - 1) {
-                            add(Tag("", null, a?.get(n)?.tag, "", "", ""))
+                            add(Tag("", '#', a?.get(n)?.tag, "", "", ""))
                         }
                     }
                     val tagArray: Array<Tag> = tags.toTypedArray()
                     getNavigator()?.populateHasTagList(tagArray)
-                } else {
-                    getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+                }
+            }
+        }
+    }
+
+    fun getProblems(text: String?) {
+        viewModelScope.launch {
+            if (text != null && text.length > 0) {
+                val response = onBoardingRepository.getProblemTags(MentionRequestModel(text))
+                if (response.isSuccessful) {
+                    val a = response.body()?.gp_api_response_data
+                    val tags = arrayListOf<Tag>().apply {
+                        for (n in 0..(a?.size!!) - 1) {
+                            add(Tag("", '$', a?.get(n)?.name, "", "", ""))
+                        }
+                    }
+                    val tagArray: Array<Tag> = tags.toTypedArray()
+                    getNavigator()?.populateProblemList(tagArray)
                 }
             }
         }
@@ -347,7 +365,7 @@ class CreatePostViewModel @Inject constructor(
                     val a = response.body()?.gp_api_response_data
                     val tags =  arrayListOf<Tag>().apply {
                         for(n in 0..(a?.size!!)-1){
-                            add(Tag("", null, a?.get(n)?.tag, "", a?.get(n)?.uuid, a?.get(n)?.handle))
+                            add(Tag("", '@', a?.get(n)?.tag, "", a?.get(n)?.uuid, a?.get(n)?.handle))
                         }
                     }
                     val tagArray: Array<Tag> = tags.toTypedArray()

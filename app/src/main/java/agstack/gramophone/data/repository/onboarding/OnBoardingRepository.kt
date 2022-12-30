@@ -17,6 +17,7 @@ import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProdu
 import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProductResponseModel
 import agstack.gramophone.ui.createnewpost.model.MentionRequestModel
 import agstack.gramophone.ui.createnewpost.model.MentionTagResponsemodel
+import agstack.gramophone.ui.createnewpost.model.problems.ProblemTagsResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
 import agstack.gramophone.ui.favourite.model.FavouriteRequestModel
 import agstack.gramophone.ui.favourite.model.FeaturedProductResponseModel
@@ -35,6 +36,7 @@ import agstack.gramophone.ui.notification.model.NotificationresponseModel
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
+import agstack.gramophone.ui.splash.model.language.CustomerLanguageResponseModel
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.ui.userprofile.verifyotp.model.VerifyOTPRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
@@ -46,7 +48,10 @@ import javax.inject.Singleton
 
 @Singleton
 interface OnBoardingRepository {
+
     suspend fun getLanguage(): Response<LanguageListResponse>
+
+    suspend fun getCustomerLanguage(): Response<CustomerLanguageResponseModel>
 
 
     suspend fun updateLanguage(updateLanguageRequestModel: UpdateLanguageRequestModel): Response<UpdateLanguageResponseModel>
@@ -89,6 +94,8 @@ interface OnBoardingRepository {
 
 
     suspend fun getHasTags(mentionRequestModel: MentionRequestModel): Response<HasgTagResponseModel>
+
+    suspend fun getProblemTags(mentionRequestModel: MentionRequestModel): Response<ProblemTagsResponseModel>
 
     suspend fun getMyGramophoneData(): Response<MyGramophoneResponseModel>
 

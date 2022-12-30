@@ -281,7 +281,7 @@ class ProductDetailsViewModel @Inject constructor(
                     loadRelatedProductData(productDetailstoBeFetched)
 
                 } else {
-                    getNavigator()?.showToast(productAPIResponse.body()?.gpApiMessage)
+                    getNavigator()?.showToast(""+productAPIResponse.body()?.gpApiMessage)
                 }
 
 
@@ -693,10 +693,7 @@ class ProductDetailsViewModel @Inject constructor(
 
 
     fun openAddEditProductReview(rating: Double) {
-
         //If Genuine Customer
-
-        if (productReviewsData.get()?.selfRating?.is_certified_buyer!!) {
             getNavigator()?.openActivityWithBottomToTopAnimation(
                 AddEditProductReviewActivity::class.java,
                 Bundle().apply {
@@ -709,37 +706,34 @@ class ProductDetailsViewModel @Inject constructor(
                         productReviewsData.get()?.selfRating
                     )
                 })
-        } else {
 
-            // else if not genuine customer
+    }
 
+    fun notAGenuineBuyer(){
+        getNavigator()?.showGenuineCustomerRatingDialog(
+            GenuineCustomerRatingAlertFragment.newInstance(
+                addToCartEnabled.get()
+            ), addToCartEnabled.get()
+        ) {
+            //callback comes here when on add to cart is clicked
+            Log.d("Click", "Add to cart Clicked")
+            addToCartJob.cancelIfActive()
+            addToCartJob = checkNetworkThenRun {
+                progressLoader.set(true)
+                var producttoBeAdded = ProductData()
+                producttoBeAdded.product_id = productId
+                producttoBeAdded.quantity = 1
+                val addTocartResponse =
+                    productRepository.addToCart(producttoBeAdded)
 
-            getNavigator()?.showGenuineCustomerRatingDialog(
-                GenuineCustomerRatingAlertFragment.newInstance(
-                    addToCartEnabled.get()
-                ), addToCartEnabled.get()
-            ) {
-                //callback comes here when on add to cart is clicked
-                Log.d("Click", "Add to cart Clicked")
-                addToCartJob.cancelIfActive()
-                addToCartJob = checkNetworkThenRun {
-                    progressLoader.set(true)
-                    var producttoBeAdded = ProductData()
-                    producttoBeAdded.product_id = productId
-                    producttoBeAdded.quantity = 1
-                    val addTocartResponse =
-                        productRepository.addToCart(producttoBeAdded)
-
-                    if (addTocartResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
-                        progressLoader.set(false)
-                        getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
-                        onAddToCartClicked()
-                    } else {
-                        progressLoader.set(false)
-                        getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
-                    }
+                if (addTocartResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+                    progressLoader.set(false)
+                    getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
+                    onAddToCartClicked()
+                } else {
+                    progressLoader.set(false)
+                    getNavigator()?.showToast(addTocartResponse.body()?.gp_api_message)
                 }
-
             }
 
         }

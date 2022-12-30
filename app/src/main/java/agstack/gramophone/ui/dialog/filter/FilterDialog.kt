@@ -1,5 +1,6 @@
 package agstack.gramophone.ui.dialog.filter
 
+import agstack.gramophone.R
 import agstack.gramophone.databinding.DialogFilterBinding
 import agstack.gramophone.ui.home.subcategory.model.Brands
 import agstack.gramophone.ui.home.subcategory.model.Crops
@@ -197,7 +198,7 @@ class FilterDialog(
 
     private fun setSubFilterAdapter(filterType: String, filterPosition: Int) {
         when (filterType) {
-            Constants.SUB_CATEGORY -> {
+            getString(R.string.subcategory) -> {
                 if (!subCategoryList.isNullOrEmpty())
                     binding?.rvSubFilter?.adapter = FilterSubCategoryAdapter(subCategoryList) {
                         var selectedFilterCount = 0
@@ -208,7 +209,7 @@ class FilterDialog(
                         mainFilterAdapter?.notifyDataSetChanged()
                     }
             }
-            Constants.BRAND -> {
+            getString(R.string.brand) -> {
                 if (!brandsList.isNullOrEmpty())
                     binding?.rvSubFilter?.adapter = FilterBrandAdapter(brandsList) {
                         var selectedFilterCount = 0
@@ -219,7 +220,7 @@ class FilterDialog(
                         mainFilterAdapter?.notifyDataSetChanged()
                     }
             }
-            Constants.CROP -> {
+            getString(R.string.crop) -> {
                 if (!cropsList.isNullOrEmpty())
                     binding?.rvSubFilter?.adapter = FilterCropsAdapter(cropsList) {
                         var selectedFilterCount = 0
@@ -230,7 +231,7 @@ class FilterDialog(
                         mainFilterAdapter?.notifyDataSetChanged()
                     }
             }
-            Constants.TECHNICAL -> {
+            getString(R.string.technical) -> {
                 if (!technicalDataList.isNullOrEmpty())
                     binding?.rvSubFilter?.adapter = FilterTechnicalAdapter(technicalDataList) {
                         var selectedFilterCount = 0

@@ -18,6 +18,7 @@ import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProdu
 import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProductResponseModel
 import agstack.gramophone.ui.createnewpost.model.MentionRequestModel
 import agstack.gramophone.ui.createnewpost.model.MentionTagResponsemodel
+import agstack.gramophone.ui.createnewpost.model.problems.ProblemTagsResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
 import agstack.gramophone.ui.favourite.model.FavouriteRequestModel
 import agstack.gramophone.ui.favourite.model.FeaturedProductResponseModel
@@ -36,6 +37,7 @@ import agstack.gramophone.ui.notification.model.NotificationresponseModel
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
+import agstack.gramophone.ui.splash.model.language.CustomerLanguageResponseModel
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.ui.userprofile.verifyotp.model.VerifyOTPRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpRequestModel
@@ -78,6 +80,12 @@ class OnBoardingRepositoryImpl @Inject constructor(
     override suspend fun getLanguage(): Response<LanguageListResponse> = withContext(
         Dispatchers.IO) {
         val languageList = gramAppService.getLanguage()
+        languageList
+    }
+
+    override suspend fun getCustomerLanguage(): Response<CustomerLanguageResponseModel> = withContext(
+        Dispatchers.IO) {
+        val languageList = gramAppService.getCustomerLanguage()
         languageList
     }
 
@@ -182,6 +190,15 @@ class OnBoardingRepositoryImpl @Inject constructor(
         Dispatchers.IO) {
         val validateOTPMobile = gramAppService.getHasTags(mentionRequestModel)
         validateOTPMobile
+    }
+
+
+    override suspend fun getProblemTags(mentionRequestModel: MentionRequestModel): Response<ProblemTagsResponseModel> = withContext(
+        Dispatchers.IO) {
+        val validateOTPMobile = gramAppService.getProblemTags(mentionRequestModel)
+        validateOTPMobile
+
+
     }
     override suspend fun getMyGramophoneData(): Response<MyGramophoneResponseModel> =
         withContext(

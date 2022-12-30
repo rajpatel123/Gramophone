@@ -363,6 +363,22 @@ class HomeActivity :
 
     }
 
+
+    override fun onRestart() {
+        super.onRestart()
+        if (SharedPreferencesHelper.instance?.getBoolean(
+                SharedPreferencesKeys.LANGUAGE_UPDATE
+            ) == true
+        ) {
+            SharedPreferencesHelper.instance?.putBoolean(
+                SharedPreferencesKeys.LANGUAGE_UPDATE, false
+            )
+
+            openAndFinishActivity(HomeActivity::class.java, null)
+
+        }
+    }
+
     private fun processDeepLink() {
         if (!TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(Constants.URI))) {
             val intent = Intent(this, URLHandlerActivity::class.java)

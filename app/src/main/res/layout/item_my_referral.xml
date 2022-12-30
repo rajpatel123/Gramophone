@@ -65,7 +65,6 @@
             android:fontFamily="@font/manrope_regular"
             android:gravity="center_vertical"
             android:lineSpacingExtra="-2sp"
-            android:text="@{model.username}"
             android:textColor="@color/gray"
             android:textSize="13sp" />
 
@@ -82,7 +81,7 @@
             android:lineSpacingExtra="-2sp"
             android:textColor="@color/gray"
             android:textSize="13sp"
-            app:formatDate="@{model.createdAt}"
+            android:text="@{model.createdAt}"
             tools:text="Registered on Date" />
 
 

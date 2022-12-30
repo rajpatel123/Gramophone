@@ -11,7 +11,6 @@ import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.CropData
 import agstack.gramophone.ui.home.view.fragments.market.model.CropResponse
 import agstack.gramophone.ui.userprofile.UserProfileActivity
-import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Constants.BLOCK_USER
 import agstack.gramophone.utils.Constants.DELETE_POST
 import agstack.gramophone.utils.Constants.EDIT_POST
@@ -34,18 +33,17 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
-import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_poll.view.*
 import kotlinx.android.synthetic.main.item_poll_option.view.*
-import kotlinx.android.synthetic.main.item_poll_option.view.tvQuizOption
 import kotlinx.android.synthetic.main.item_quiz_layout.view.*
 import kotlinx.android.synthetic.main.item_quiz_options.view.*
 import kotlinx.android.synthetic.main.item_tags.view.*
 import java.util.*
+import java.util.regex.Pattern
 
 
 /**
@@ -283,10 +281,20 @@ class CommunityPostAdapter(
 
 
         if (!TextUtils.isEmpty(data?.description)){
+         var description = data?.description
+            val links: List<String>? = pullLinks(Html.fromHtml(description).toString())
+            if (links != null && links.size > 0) {
+                for (i in links.indices) {
+                    val url = links[i]
+                    val anchorLink = "<a href=\"$url\">$url</a>"
+                    description = description!!.replace(url, anchorLink)
+                }
+            }
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                holder.itemPostBinding.tvDesc.text = Html.fromHtml(data?.description,0)
+                holder.itemPostBinding.tvDesc.text = HtmlCompat.fromHtml(description!!,HtmlCompat.FROM_HTML_MODE_LEGACY)
             }else{
-                holder.itemPostBinding.tvDesc.text = Html.fromHtml(data?.description)
+                holder.itemPostBinding.tvDesc.text = HtmlCompat.fromHtml(description!!,HtmlCompat.FROM_HTML_MODE_LEGACY)
             }
         }
         holder.itemPostBinding.tvDesc.setOnClickListener {
@@ -491,7 +499,22 @@ class CommunityPostAdapter(
 
 
     }
-
+    fun pullLinks(text: String?): ArrayList<String>? {
+        val links = ArrayList<String>()
+        //String regex = "\\(?\\b(http://|www[.])[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]";
+        val regex =
+            "\\(?\\b(https?://|www[.]|ftp://)[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]"
+        val p = Pattern.compile(regex)
+        val m = p.matcher(text)
+        while (m.find()) {
+            var urlStr = m.group()
+            if (urlStr.startsWith("(") && urlStr.endsWith(")")) {
+                urlStr = urlStr.substring(1, urlStr.length - 1)
+            }
+            links.add(urlStr)
+        }
+        return links
+    }
     private fun showHideMenu(data: Data, show: Boolean, position: Int) {
         dataList?.get(lastSelectPosition)?.isSelected = false
         lastSelectPosition = position
@@ -549,6 +572,14 @@ class CommunityPostAdapter(
         internal const val FEATURED_PRODUCTS = "FEATURED_PRODUCTS"
         internal const val VIEW_TYPE_QUIZ = "QUIZ"
 
+    }
+
+    fun convertToHtml(htmlString: String?): String? {
+        val stringBuilder = StringBuilder()
+        stringBuilder.append("<![CDATA[")
+        stringBuilder.append(htmlString)
+        stringBuilder.append("]]>")
+        return stringBuilder.toString()
     }
 }
 

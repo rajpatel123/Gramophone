@@ -651,4 +651,27 @@
     <string name="upcoming_soon">लवकरच येत आहे!!</string>
     <string name="vyapart_upcoming_message">व्यापार तुम्हाला योग्य खरेदीदार/विक्रेत्यांशी जोडून तुमचे पीक सहज विकण्यास/खरेदी करण्यास सक्षम करेल</string>
     <string name="enter_desc_validation">कृपया किमान 20 वर्ण प्रविष्ट करा</string>
+    <string name="purchage_txt">तुमच्या पिकांनुसार खरेदी करा</string>
+    <string name="pirme_crop">तुमच्या क्षेत्रातील आणि तुमच्या शेतातील मुख्य पिके</string>
+    <string name="how_it_work">अशा प्रकारे मित्रांना आमंत्रित करा</string>
+    <string name="share_referral_link">आपल्या मित्रांसोबत रेफरल लिंक शेअर करा</string>
+    <string name="register_link">आपला मित्र पाठवलेल्या लिंक वरुन ग्रामोफोन अ‍प रजिस्टर करेल.</string>
+    <string name="get_50">आपल्या मित्राच्या यशस्वी नोंदणीवरती तुम्हाला ₹50 मिळतील.</string>
+    <string name="order_invite">आपला मित्र ग्रामोफोन अ‍ॅपवरुन ऑर्डर करेल.</string>
+    <string name="get_100">आपल्या मित्राच्या यशस्वी खरेदीवरती तुम्हाला ₹100 मिळतील.</string>
+    <string name="purchage_invite">या रकमेचा वापर तुम्ही ग्रामोफोनवरून खरेदी करण्यासाठी करा </string>
+    <string name="write_comment">कमेंट लिहा...</string>
+    <string name="filters">फिल्टर</string>
+    <string name="subcategory">उपवर्ग</string>
+    <string name="brand">ब्रँड</string>
+    <string name="crop">पीक</string>
+    <string name="technical">तांत्रिक</string>
+    <string name="price_h_t_l">किंमत - उच्च ते कमी</string>
+    <string name="price_l_t_h">किंमत - कमी ते जास्त</string>
+    <string name="avg_rating">सरासरी ग्राहक रेटिंग</string>
+    <string name="relevance">संबंधित</string>
+
+
+
+
 </resources>

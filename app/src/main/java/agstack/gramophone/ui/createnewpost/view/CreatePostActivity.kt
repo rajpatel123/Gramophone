@@ -230,6 +230,17 @@ class CreatePostActivity :
                 InputMethodManager.SHOW_IMPLICIT
             )
         }
+
+
+        viewDataBinding.dollerSymbol?.setOnClickListener { view: View? ->
+            viewDataBinding.descriptionEditText?.append("$")
+            viewDataBinding.descriptionEditText?.requestFocus()
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm?.showSoftInput(
+                viewDataBinding.descriptionEditText,
+                InputMethodManager.SHOW_IMPLICIT
+            )
+        }
         viewDataBinding.atSymbol?.setOnClickListener { view: View? ->
             viewDataBinding.descriptionEditText?.append("@")
             //            viewDataBinding.descriptionEditText?.setFocusable(true);
@@ -476,6 +487,7 @@ class CreatePostActivity :
     }
 
 
+
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
@@ -532,8 +544,27 @@ class CreatePostActivity :
         viewDataBinding.descriptionEditText?.setAdapter(TagAdapter(this, R.layout.tag_layout, tags))
     }
 
+    override fun populateProblemList(tagArray: Array<Tag>) {
+        viewDataBinding.descriptionEditText?.setAdapter(TagAdapter(this, R.layout.tag_layout, tagArray))
+    }
+
+    override fun getText() :String {
+        return viewDataBinding.descriptionEditText.editableText.toString()
+    }
+
+
     override fun populateHasTagList(tags: Array<Tag>) {
-        viewDataBinding.descriptionEditText?.setAdapter(TagAdapter(this, R.layout.tag_layout, tags))
+        try {
+            viewDataBinding.descriptionEditText?.setAdapter(
+                TagAdapter(
+                    this,
+                    R.layout.tag_layout,
+                    tags
+                )
+            )
+        }catch (ex:Exception){
+            ex.printStackTrace()
+        }
     }
 
     override fun enablePostButton() {
@@ -642,7 +673,7 @@ class CreatePostActivity :
 
 
                     if (!startSuggestion) {
-                        if (text != null && text?.length > 0 && (text[text?.length - 1] == '#' || text[text?.length - 1] == '@')) {
+                        if (text != null && text?.length > 0 && (text[text?.length - 1] == '#' || text[text?.length - 1] == '@' || text[text?.length - 1] == '$')) {
                             startSuggestion = true
                             startPosition = text?.length - 1
                         } else if (text != null && text?.length > 0 && text[text?.length - 1] == ' ') {
@@ -700,6 +731,8 @@ class CreatePostActivity :
                             presenter!!.getMentionSuggestion(searchText!!.substring(1))
                         } else if (searchText != null && searchText!![0] == '#' && searchText!!.length > 1) {
                             presenter!!.getSearchSuggestion(searchText!!.substring(1))
+                        }else if (searchText != null && searchText!![0] == '$' && searchText!!.length > 1) {
+                            presenter!!.getProblems(searchText!!.substring(1))
                         }
                     } else {
                         timer = null
@@ -722,7 +755,7 @@ class CreatePostActivity :
             }
             viewDataBinding.descriptionEditText?.performBestGuess(false)
             viewDataBinding.descriptionEditText?.preventFreeFormText(false)
-            viewDataBinding.descriptionEditText?.setTokenizer(TagTokenizer(Arrays.asList('#', '@')))
+            viewDataBinding.descriptionEditText?.setTokenizer(TagTokenizer(Arrays.asList('#', '@','$')))
             //    viewDataBinding.commentEditText?.setAdapter(new TagAdapter(this, R.layout.tag_layout, Tag.sampleTags()));
             viewDataBinding.descriptionEditText?.setTokenClickStyle(TokenCompleteTextView.TokenClickStyle.Select)
             viewDataBinding.descriptionEditText?.threshold = 1

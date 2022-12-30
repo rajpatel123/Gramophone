@@ -227,7 +227,7 @@
                                 android:textColor="@color/yellow_dark"
                                 android:textSize="14sp"
                                 app:drawableStartCompat="@drawable/ic_order_placed"
-                                tools:text="Order Placed" />
+                                tools:text="" />
 
                         </RelativeLayout>
 

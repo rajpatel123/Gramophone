@@ -174,30 +174,30 @@ class SubCategoryViewModel @Inject constructor(
         } else {
             sortDataList.clear()
         }
-        sortDataList.add(SortByData(true, Constants.RELEVANCE, Constants.RELAVENT_CODE))
+        sortDataList.add(SortByData(true, getNavigator()?.getMessage(R.string.relevance)!!, Constants.RELAVENT_CODE))
         sortDataList.add(SortByData(false,
-            Constants.AVG_CUSTOMER_RATING,
+            getNavigator()?.getMessage(R.string.avg_rating)!!,
             Constants.AVG_CUSTOMER_RATING_CODE))
         sortDataList.add(SortByData(false,
-            Constants.PRICE_LOW_TO_HIGH,
+            getNavigator()?.getMessage(R.string.price_l_t_h)!!,
             Constants.PRICE_LOW_TO_HIGH_CODE))
         sortDataList.add(SortByData(false,
-            Constants.PRICE_HIGH_TO_LOW,
+            getNavigator()?.getMessage(R.string.price_h_t_l)!!,
             Constants.PRICE_HIGH_TO_LOW_CODE))
     }
 
     private fun initMainFilterData() {
         mainFilterList = ArrayList()
         if (!subCategoryList.isNullOrEmpty()) mainFilterList?.add(MainFilterData(true, false,
-            Constants.SUB_CATEGORY, 0, 0))
+           getNavigator()?.getMessage(R.string.subcategory)!!, 0, 0))
         if (!brandsList.isNullOrEmpty()) mainFilterList?.add(MainFilterData(false, false,
-            Constants.BRAND,
+            getNavigator()?.getMessage(R.string.brand)!!,
             0, 0))
         if (!cropsList.isNullOrEmpty()) mainFilterList?.add(MainFilterData(false, false,
-            Constants.CROP,
+            getNavigator()?.getMessage(R.string.crop)!!,
             0, 0))
         if (!technicalDataList.isNullOrEmpty()) mainFilterList?.add(MainFilterData(false, false,
-            Constants.TECHNICAL, 0, 0))
+            getNavigator()?.getMessage(R.string.technical)!!, 0, 0))
     }
 
     fun getBanners() {

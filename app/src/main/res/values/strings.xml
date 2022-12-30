@@ -493,7 +493,7 @@
     <string name="message_area_unit">Please select area unit</string>
     <string name="message_farm_added">you successfully added the farm</string>
     <string name="message_buy_your_crop">Shop by Crops</string>
-    <string name="message_why_add_farm">Why Add Farm</string>
+    <string name="message_why_add_farm">Why Add Farm?</string>
 
 
     <string name="hint_add_new_post">Write your question about your crop eg. how do I prevent this bug?</string>
@@ -660,4 +660,24 @@
     <string name="upcoming_soon">Upcoming soon!!</string>
     <string name="vyapart_upcoming_message">Vyapar will enable you to sell/buy your crop easily by connecting with the right buyers/sellers</string>
     <string name="enter_desc_validation">Please enter at least 20 character</string>
+    <string name="purchage_txt">Shop by your crops</string>
+    <string name="pirme_crop">Main crops of your area and your farm</string>
+    <string name="how_it_work">How Invite Works</string>
+    <string name="share_referral_link">Share referral link with your friends.</string>
+    <string name="register_link">Your friend will register on Gramophone app with your link.</string>
+    <string name="get_50">On successful registration of your friend you will get Rs. 50.</string>
+    <string name="order_invite">"Your friend will place order on Gramophone "</string>
+    <string name="get_100">On your friends successful purchase you will get Rs. 100.</string>
+    <string name="purchage_invite">Use this rewards for your gramophone purchase</string>
+    <string name="write_comment">Write a comment...</string>
+    <string name="filters">Filters</string>
+    <string name="subcategory">Subcategory</string>
+    <string name="brand">Brand</string>
+    <string name="crop">Crop</string>
+    <string name="technical">Technical</string>
+    <string name="price_h_t_l">Price - High to Low</string>
+    <string name="price_l_t_h">Price - Low to High</string>
+    <string name="avg_rating">Avg Customer Rating</string>
+    <string name="relevance">Relevance</string>
+
 </resources>

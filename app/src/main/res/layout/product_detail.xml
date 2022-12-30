@@ -146,7 +146,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_200sdp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:foregroundGravity="center" />
+                    android:foregroundGravity="center"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
 
                 <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
@@ -243,7 +244,8 @@
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
                             android:background="@drawable/ic_minus_frame"
-                            android:onClick="@{()->viewModel.onMinusQtyClicked()}" />
+                            android:onClick="@{()->viewModel.onMinusQtyClicked()}"
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                         <TextView
                             format2Digit="@{viewModel.qtySelected}"
@@ -260,7 +262,8 @@
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
                             android:background="@drawable/ic_plus_frame"
-                            android:onClick="@{()->viewModel.onAddQtyClicked()}" />
+                            android:onClick="@{()->viewModel.onAddQtyClicked()}"
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     </LinearLayout>
 

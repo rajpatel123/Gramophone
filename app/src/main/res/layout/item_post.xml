@@ -262,7 +262,6 @@
                     android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginEnd="@dimen/_12sdp"
                     android:fontFamily="@font/manrope_bold"
-                    android:text="@{model.description}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14ssp" />
 
@@ -537,7 +536,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_2sdp"
                 android:layout_toEndOf="@+id/ivCommentBottom"
-                android:text="Write a comment..."
+                android:text="@string/write_comment"
                 android:textColor="@color/gray" />
 
         </RelativeLayout>

@@ -103,7 +103,7 @@ getNavigator()?.onReferralCodeClick(gramCashResponseData.get()?.referral_code!!)
                 progressLoader.set(false)
                 val gramCashResponse: GpApiResponseData? = gramCashResponsefromAPI.body()?.gpApiResponseData
                 gramCashResponseData.set(gramCashResponse)
-               generateQrCode(gramCashResponsefromAPI.body()?.gpApiResponseData?.referral_code!!)
+                generateQrCode(gramCashResponsefromAPI.body()?.gpApiResponseData?.referral_code!!)
 
               //  getNavigator()?.showToast(gramCashResponsefromAPI.body()?.gpApiMessage)
             } else {

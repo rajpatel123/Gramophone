@@ -18,4 +18,6 @@ interface CreatePostNavigator : BaseNavigator {
     fun showTags(selectedTagList: MutableList<CropData>)
     fun getPostDetails()
     fun loadImages(images: List<Image>)
+    fun populateProblemList(tagArray: Array<Tag>)
+    fun getText():String
 }

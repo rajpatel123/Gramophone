@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.amnix.xtension.extensions.isNotNull
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
@@ -38,7 +39,14 @@ class MyReferralsAdapter(arrayList: ArrayList<MyReferralsItem>) :
         var model: MyReferralsItem = mMyRefrralList[position]
         holder.binding.setVariable(BR.model, model)
         val mBinding = holder.binding as ItemMyReferralBinding
-
+        var name =""
+        if (model.firstName.isNotNull()){
+          name =  name.plus(model.firstName).plus(" ")
+        }
+        if (model.lastName.isNotNull()){
+           name =  name.plus(model.lastName)
+        }
+        holder.binding.tvName.text= name
         model.profileImage?.let {
             Glide.with(mContext)
                 .load(model.profileImage)

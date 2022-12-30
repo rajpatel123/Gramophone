@@ -153,6 +153,10 @@ class LanguageViewModel @Inject constructor(
                                       LocaleManagerClass.updateLocale(langIsoCode, getNavigator()?.getResource())
                                   }
 
+                                  SharedPreferencesHelper.instance?.putBoolean(
+                                      SharedPreferencesKeys.LANGUAGE_UPDATE,
+                                    true
+                                  )
                                   getNavigator()?.moveToNext()
                               } else {
                                   getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
@@ -237,6 +241,11 @@ class LanguageViewModel @Inject constructor(
                     if (langIsoCode != null && !langIsoCode.equals("", ignoreCase = true)) {
                         LocaleManagerClass.updateLocale(langIsoCode, getNavigator()?.getResource())
                     }
+
+                    SharedPreferencesHelper.instance?.putBoolean(
+                        SharedPreferencesKeys.LANGUAGE_UPDATE,
+                        true
+                    )
                     getNavigator()?.closeLanguageList()
                 } else {
                     getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))

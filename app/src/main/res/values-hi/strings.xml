@@ -539,7 +539,7 @@
     <string name="area">क्षेत्र</string>
     <string name="old_farms">पुराने खेत देखे</string>
     <string name="old_farms_title">पुराने खेत</string>
-    <string name="join_community">5000+ किसानों से जुड़ें\nऔर कृषि विशेषज्ञों के लिए\nत्वरित समाधान पाएं</string>
+    <string name="join_community">हजारों किसानों से जुड़ें\n और कृषि एक्सपर्ट से\n समाधान प्राप्त करें</string>
     <string name="get_advise">विशेषज्ञ की सलाह जल्दी लें</string>
     <string name="connect_farmer">अपने आसपास के किसानों से जुड़ें</string>
     <string name="contributr_community">समुदाय में योगदान करें</string>
@@ -651,4 +651,28 @@
     <string name="upcoming_soon">जल्द आ रहा है!!</string>
     <string name="vyapart_upcoming_message">व्यापार आपको सही खरीदारों/विक्रेताओं के साथ जुड़कर आसानी से अपनी फसल बेचने/खरीदने में सक्षम बनाता है</string>
     <string name="enter_desc_validation">कृपया कम से कम 20 वर्ण दर्ज करें</string>
+    <string name="purchage_txt">अपनी फसलों द्वारा खरीदारी करें</string>
+    <string name="pirme_crop">आपके एरिया के मुख्य फसलें एवं आपके खेत</string>
+    <string name="how_it_work">ऐसे करें मित्रों की आमंत्रित </string>
+    <string name="share_referral_link">अपने मित्रों के साथ रेफरल लिंक शेयर करें।</string>
+    <string name="register_link">आपका मित्र भेजे गए लिंक से ग्रामोफोन ऐप पर रजिस्टर करेगा।</string>
+    <string name="get_50">अपने मित्र के सफल रजिस्ट्रेशन पर आपको मिलेंगे ₹50 </string>
+    <string name="order_invite">आपका मित्र ग्रामोफोन ऐप से ऑर्डर करेगा</string>
+    <string name="get_100">अपने मित्र की सफल खरीदी पर आपको ₹100 मिलेंगे</string>
+    <string name="purchage_invite">इस राशि का उपयोग आप ग्रामोफोन से खरीदारी के लिए करेंe</string>
+    <string name="write_comment">कमेंट लिखें...</string>
+    <string name="filters">फिल्टर</string>
+    <string name="subcategory">उपश्रेणी</string>
+    <string name="brand">ब्रैंड</string>
+    <string name="crop">फसल</string>
+    <string name="technical">तकनीकी</string>
+    <string name="price_h_t_l">मूल्य - उच्च से निम्न</string>
+    <string name="price_l_t_h">कीमतों का उतार - चढ़ाव</string>
+    <string name="avg_rating">औसत ग्राहक रेटिंग</string>
+    <string name="relevance">आपके लिए</string>
+
+
+
+
+
 </resources>

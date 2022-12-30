@@ -20,6 +20,7 @@ import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.cart.model.PlaceOrderRequest
 import agstack.gramophone.ui.createnewpost.model.MentionRequestModel
 import agstack.gramophone.ui.createnewpost.model.MentionTagResponsemodel
+import agstack.gramophone.ui.createnewpost.model.problems.ProblemTagsResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.farm.model.*
@@ -60,6 +61,7 @@ import agstack.gramophone.ui.search.model.SuggestionsRequest
 import agstack.gramophone.ui.search.model.SuggestionsResponse
 import agstack.gramophone.ui.settings.model.WhatsAppOptInResponseModel
 import agstack.gramophone.ui.settings.model.blockedusers.BlockedUsersListResponseModel
+import agstack.gramophone.ui.splash.model.language.CustomerLanguageResponseModel
 import agstack.gramophone.ui.tv.model.BookmarkedListResponse
 import agstack.gramophone.ui.tv.model.VideoBookMarkedRequest
 import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
@@ -83,6 +85,11 @@ interface GramAppService {
     @GET("api/v5/onboarding/get-language")
     @JvmSuppressWildcards
     suspend fun getLanguage(): Response<LanguageListResponse>
+
+
+   @GET("api/v5/customer/get-customer-language")
+    @JvmSuppressWildcards
+    suspend fun getCustomerLanguage(): Response<CustomerLanguageResponseModel>
 
     @POST("api/v5/general/address-list/{type}")
     @JvmSuppressWildcards
@@ -327,6 +334,12 @@ interface GramAppService {
     suspend fun getHasTags(
         @Body mentionRequestModel: MentionRequestModel,
     ): Response<HasgTagResponseModel>
+
+
+    @POST("api/v5/search/mentions-crop-problems")
+    suspend fun getProblemTags(
+        @Body mentionRequestModel: MentionRequestModel,
+    ): Response<ProblemTagsResponseModel>
 
     @POST("api/v5/search/suggestions")
     suspend fun getSuggestions(@Body body: SuggestionsRequest): Response<SuggestionsResponse>
