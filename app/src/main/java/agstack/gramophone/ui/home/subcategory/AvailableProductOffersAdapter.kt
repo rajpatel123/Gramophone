@@ -77,6 +77,10 @@ class AvailableProductOffersAdapter(
             mBinding.tvPayOnly.visibility = View.GONE
             mBinding.tvSkuPrice.visibility = View.GONE
         }
+        mBinding.radioBtnSelected.setOnClickListener {
+            model.selected = false
+            notifyDataSetChanged()
+        }
         mBinding.radioBtn.setOnClickListener {
             mSKUOfferList[lastSelectPosition]?.selected = false
             lastSelectPosition = position

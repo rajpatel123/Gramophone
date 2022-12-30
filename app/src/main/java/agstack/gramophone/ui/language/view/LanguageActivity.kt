@@ -13,6 +13,8 @@ import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.languagelist.Language
 import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
 import agstack.gramophone.utils.LocaleManagerClass
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
@@ -71,6 +73,7 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     override fun getViewModel()  = languageViewModel
 
     override fun moveToNext() {
+        sendMoEngageEvents()
         openAndFinishActivity(AppTourActivity::class.java,null)
     }
 
@@ -101,11 +104,11 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
         rvLanguage.adapter=languageAdapter
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun sendMoEngageEvents() {
         val properties = Properties()
-        properties.addAttribute("Language", "en")
-            .addAttribute("Customer_Acquisition_Source", "android")
+        properties.addAttribute("Language", SharedPreferencesHelper.instance?.getString(
+            SharedPreferencesKeys.languageCode))
+            .addAttribute("Customer_Acquisition_Source", "Android")
             .setNonInteractive()
         MoEAnalyticsHelper.trackEvent(this, "KA_Language_Selection_Done_Onboarding", properties)
     }
