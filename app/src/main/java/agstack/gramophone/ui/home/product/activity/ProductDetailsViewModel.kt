@@ -2,6 +2,7 @@ package agstack.gramophone.ui.home.product.activity
 
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.cart.model.CartItem
@@ -37,6 +38,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductDetailsViewModel @Inject constructor(
     private val productRepository: ProductRepository,
+    private val onBoardingRepository: OnBoardingRepository
 ) : BaseViewModel<ProductDetailsNavigator>() {
     val productDetailstoBeFetched = ProductData()
     var mSKUList = ArrayList<ProductSkuListItem?>()
@@ -141,6 +143,7 @@ class ProductDetailsViewModel @Inject constructor(
 
             productId = (bundle.getParcelable<ProductData>("product") as ProductData).product_id!!
 
+            getProductRatingEligibility()
             productDetailstoBeFetched.product_id = productId
 
             loadProductDataJob?.takeIf { it.isActive }?.cancel()
@@ -288,6 +291,19 @@ class ProductDetailsViewModel @Inject constructor(
             }
 
 
+        }
+    }
+
+    private fun getProductRatingEligibility() {
+        if (getNavigator()?.isNetworkAvailable()==true){
+            viewModelScope.launch {
+                val response = onBoardingRepository.getRatingEligibilityData(ProductData(productId))
+                if (response.isSuccessful){
+                    if (response.body()?.gp_api_response_data?.is_genuine == true){
+                        getNavigator()?.showRating()
+                    }
+                }
+            }
         }
     }
 

@@ -23,6 +23,8 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -190,6 +192,11 @@ class ProductDetailsActivity :
         } catch (ex: Exception) {
             ex.printStackTrace()
         }
+    }
+
+    override fun showRating() {
+        viewDataBinding.ratingbarReviews.llRateThisProduct.visibility = VISIBLE
+        viewDataBinding.ratingbarReviews.llSelfRating.visibility = VISIBLE
     }
 
     private fun initYoutubePlayer() {
@@ -416,7 +423,7 @@ class ProductDetailsActivity :
     }
     override fun onResume() {
         super.onResume()
-        youTubePlayer?.pause()
+        youTubePlayer?.play()
         if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.IS_GENUENE) == true){
             productDetailsViewModel.notAGenuineBuyer()
             SharedPreferencesHelper.instance?.putBoolean(SharedPreferencesKeys.IS_GENUENE,false)

@@ -5,10 +5,12 @@ import agstack.gramophone.databinding.SubItemPostBinding
 import agstack.gramophone.ui.search.model.Item
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.amnix.xtension.extensions.toggle
@@ -31,7 +33,11 @@ class PostsAdapter(
         holder.binding.item = post
 
         if (post.description.isNotNullOrEmpty())
-            holder.binding.txtPost.text = Html.fromHtml(post.description)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                holder.binding.txtPost.text=HtmlCompat.fromHtml(post.description!!, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            }else{
+                holder.binding.txtPost.text=HtmlCompat.fromHtml(post.description!!, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            }
 
         holder.binding.postContainer.setOnClickListener {
             listener.invoke(post.id!!)

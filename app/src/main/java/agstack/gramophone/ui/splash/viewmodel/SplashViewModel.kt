@@ -48,6 +48,8 @@ class SplashViewModel @Inject constructor(
                     }
                 }
             }
+            updateLiveData()
+
         }else{
             updateLiveData()
         }

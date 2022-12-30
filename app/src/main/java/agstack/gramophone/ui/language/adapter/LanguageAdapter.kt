@@ -11,8 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * binding will be replaced later
  */
-class LanguageAdapter(private val languageList: List<Language>) :
-    RecyclerView.Adapter<LanguageAdapter.DeveloperViewHolder>() {
+class LanguageAdapter(private val languageList: List<Language>) : RecyclerView.Adapter<LanguageAdapter.DeveloperViewHolder>() {
     private var langaugeCode: String? = null
     var selectedLanguage: ((Language) -> Unit)? = null
     var lastSelectPosition: Int = 0

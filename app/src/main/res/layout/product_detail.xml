@@ -171,10 +171,10 @@
 
                     <TextView
                         android:id="@+id/tv_productname"
-                        style="@style/TextSize16Sp"
+                        style="@style/TextSize14Sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="Bioenzyme Organic Cold Pressed Water Soluble Pure Neem Oil"
+                        android:hint=""
                         android:text="@{viewModel.productData.productBaseName}" />
 
                     <LinearLayout
@@ -193,7 +193,7 @@
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:textColor="@color/blakish"
-                            android:textSize="@dimen/_16ssp"
+                            android:textSize="@dimen/_14ssp"
                             app:qtySelected="@{viewModel.qtySelected}"
                             app:salesPrice="@{viewModel.selectedSkuListItem.salesPrice}"
                             tools:text="₹799.00" />
@@ -207,7 +207,7 @@
                             android:background="@drawable/strike_through"
                             android:gravity="center"
                             android:textColor="@color/oldmrpcolor"
-                            android:textSize="@dimen/_12ssp"
+                            android:textSize="@dimen/_10ssp"
                             app:mrpPrice="@{viewModel.selectedSkuListItem.mrpPrice.toString()}"
                             app:qtySelected="@{viewModel.qtySelected}"
                             tools:text="₹1,290" />
@@ -222,7 +222,7 @@
                             android:layout_marginStart="@dimen/_7sdp"
                             android:gravity="center"
                             android:textColor="@color/green"
-                            android:textSize="@dimen/_12ssp"
+                            android:textSize="@dimen/_10ssp"
                             tools:text="60% off" />
 
                     </LinearLayout>
@@ -356,7 +356,7 @@
                         app:srcCompat="@drawable/ic_available_offers" />
 
                     <TextView
-                        style="@style/TextSize16Sp"
+                        style="@style/TextSize14Sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/iv_availableoffers"
@@ -446,7 +446,7 @@
 
                     <TextView
                         android:id="@+id/tv_deliveryLocation"
-                        style="@style/TextSize16Sp"
+                        style="@style/TextSize14Sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="Delivery-"
@@ -522,7 +522,7 @@
 
                     <TextView
                         android:id="@+id/product_detail_title"
-                        style="@style/TextSize16Sp"
+                        style="@style/TextSize14Sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_9sdp"
@@ -728,7 +728,7 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corner"
+                android:background="@drawable/rounded_corner1"
                 android:backgroundTint="@color/mute_grey"
                 android:gravity="center"
                 android:onClick="@{()->viewModel.onExpertAdviceClicked()}"

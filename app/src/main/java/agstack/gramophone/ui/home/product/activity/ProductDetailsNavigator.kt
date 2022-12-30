@@ -66,4 +66,5 @@ interface ProductDetailsNavigator : BaseNavigator {
     fun showContactForPriceBottomSheetDialog(contactForPriceBottomSheetDialog: ContactForPriceBottomSheetDialog)
     fun updateAddToCartButtonText(text: String? = null): String
     fun updateCartCount(cartCount: Int)
+    fun showRating()
 }

@@ -12,9 +12,11 @@ import agstack.gramophone.ui.home.view.fragments.market.model.CropResponse
 import agstack.gramophone.ui.postdetails.PostDetailNavigator
 import agstack.gramophone.ui.postdetails.model.Data
 import agstack.gramophone.utils.*
+import android.os.Build
 
 import android.os.Bundle
 import android.text.TextUtils
+import androidx.core.text.HtmlCompat
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNullOrEmpty
@@ -72,7 +74,13 @@ class PostDetailViewModel @Inject constructor(
       data = response.body()?.data
       authorName.set(data?.author?.username)
       // authorLocation.set(data?.author)
-     if (data?.description != null)
+     if (data?.description != null){
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+       getNavigator()?.setText(HtmlCompat.fromHtml(data?.description!!, HtmlCompat.FROM_HTML_MODE_LEGACY))
+      }else{
+       getNavigator()?.setText(HtmlCompat.fromHtml(data?.description!!, HtmlCompat.FROM_HTML_MODE_LEGACY))
+      }
+     }
       postDesc.set(data?.description.toString())
 
       postDate.set(data?.createdDate)

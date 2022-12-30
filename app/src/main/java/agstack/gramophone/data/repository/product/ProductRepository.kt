@@ -54,6 +54,7 @@ interface ProductRepository {
 
     suspend fun getCartData(): Response<CartDataResponse>
 
+
     suspend fun removeCartItem(productId: Int): Response<SuccessStatusResponse>
 
     suspend fun updateCartItem(productData: ProductData): Response<SuccessStatusResponse>
