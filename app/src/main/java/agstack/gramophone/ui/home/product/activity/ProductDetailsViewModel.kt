@@ -595,6 +595,12 @@ class ProductDetailsViewModel @Inject constructor(
                                         putParcelable(Constants.OFFERSDATA, offersDataItem)
 
                                     })
+                            },
+                            {
+                                calculateDiscountAndPromotion(
+                                    selectedSkuListItem.get()!!,
+                                    null
+                                )
                             }), if (mSkuOfferList.isNotNullOrEmpty()) {
                             mSkuOfferList.size
                         } else {

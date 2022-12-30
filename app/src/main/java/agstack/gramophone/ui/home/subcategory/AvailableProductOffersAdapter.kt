@@ -18,6 +18,7 @@ class AvailableProductOffersAdapter(
     private var selectedSkuPrice: Float,
     private val selectedOfferProduct: ((PromotionListItem) -> Unit)?,
     private val onOfferDetailClicked: ((PromotionListItem) -> Unit)?,
+    private val deselectOfferProduct: ((String) -> Unit)?,
 ) :
     RecyclerView.Adapter<AvailableProductOffersAdapter.CustomViewHolder>() {
     var mSKUOfferList = SKUOfferList
@@ -76,6 +77,11 @@ class AvailableProductOffersAdapter(
             mBinding.tvPayOnlyTitle.visibility = View.GONE
             mBinding.tvPayOnly.visibility = View.GONE
             mBinding.tvSkuPrice.visibility = View.GONE
+        }
+        mBinding.radioBtnSelected.setOnClickListener {
+            model.selected = false
+            notifyDataSetChanged()
+            deselectOfferProduct?.invoke("")
         }
         mBinding.radioBtn.setOnClickListener {
             mSKUOfferList[lastSelectPosition]?.selected = false
