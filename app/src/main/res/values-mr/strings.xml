@@ -670,8 +670,9 @@
     <string name="price_l_t_h">किंमत - कमी ते जास्त</string>
     <string name="avg_rating">सरासरी ग्राहक रेटिंग</string>
     <string name="relevance">संबंधित</string>
-
-
+    <string name="no_videos_favorite">No videos favorite!</string>
+    <string name="no_video_added_in_favourite">You haven\'t added any video yet in\nyour favourite videos list.</string>
+    <string name="explore_videos">Explore Videos</string>
 
 
 </resources>

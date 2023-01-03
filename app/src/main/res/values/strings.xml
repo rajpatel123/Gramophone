@@ -679,5 +679,8 @@
     <string name="price_l_t_h">Price - Low to High</string>
     <string name="avg_rating">Avg Customer Rating</string>
     <string name="relevance">Relevance</string>
+    <string name="no_videos_favorite">No videos favorite!</string>
+    <string name="no_video_added_in_favourite">You haven\'t added any video yet in\nyour favourite videos list.</string>
+    <string name="explore_videos">Explore Videos</string>
 
 </resources>

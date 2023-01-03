@@ -27,5 +27,9 @@ data class Bookmark(
     val customer_id: String,
     val status: Int,
     val updated_at: String,
-    val youtube_video_id: String
+    val youtube_video_id: String,
+    val youtube_video_title: String,
+    val youtube_video_desc: String,
+    val youtube_video_duration: String,
+    val youtube_channel_name: String,
 )

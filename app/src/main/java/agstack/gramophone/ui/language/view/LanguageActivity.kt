@@ -113,4 +113,13 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
         MoEAnalyticsHelper.trackEvent(this, "KA_Language_Selection_Done_Onboarding", properties)
     }
 
+    private fun sendMoEngageEvents2() {
+        val properties = Properties()
+        properties.addAttribute("Language", SharedPreferencesHelper.instance?.getString(
+            SharedPreferencesKeys.languageCode))
+            .addAttribute("Customer_Acquisition_Source", "Android")
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Language_Selection_Done_Onboarding", properties)
+    }
+
 }

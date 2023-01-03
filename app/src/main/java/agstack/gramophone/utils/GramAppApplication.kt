@@ -54,7 +54,7 @@ class GramAppApplication : Application() {
             .build()
         MoEngage.initialiseDefaultInstance(moEngage)
 
-        userInfoMoEngage()
+    //    userInfoMoEngage()
     }
 
     fun userLoginMoEngage() {

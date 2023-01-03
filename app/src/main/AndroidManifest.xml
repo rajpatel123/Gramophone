@@ -335,7 +335,9 @@
         <activity
             android:name=".ui.search.view.ViewAllCropCategoriesActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".ui.bookmarked.BookmarkedVideosActivity"
+            android:screenOrientation="portrait" />
         <service
             android:name=".pushnotification.MyFirebaseMessagingService"
             android:exported="true" >
