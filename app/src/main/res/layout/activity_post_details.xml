@@ -152,7 +152,6 @@
                                 android:layout_marginTop="@dimen/_30sdp"
                                 android:layout_marginEnd="@dimen/_12sdp"
                                 android:fontFamily="@font/manrope_bold"
-                                android:text="@{viewModel.postDesc}"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_14ssp"
                                 android:visibility="@{viewModel.postDesc!=null?View.VISIBLE:View.GONE}" />

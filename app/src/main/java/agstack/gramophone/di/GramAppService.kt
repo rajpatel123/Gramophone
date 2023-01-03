@@ -27,6 +27,7 @@ import agstack.gramophone.ui.farm.model.*
 import agstack.gramophone.ui.farm.model.unit.FarmUnitResponse
 import agstack.gramophone.ui.favourite.model.FavouriteRequestModel
 import agstack.gramophone.ui.favourite.model.FeaturedProductResponseModel
+import agstack.gramophone.ui.home.featured.ratingeligibility.RatingEligibilityResponseModel
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.AnsweredQuizPollRequestModel
@@ -395,4 +396,7 @@ interface GramAppService {
 
     @POST("api/v5/general/save-customer-tokens")
     suspend fun saveToken(@Body fcmRegistrationModel: FCMRegistrationModel): Response<NotificationresponseModel>
+
+    @POST("api/v5/review/check-genuine-customer")
+    suspend fun getRatingEligibilityData(@Body productData: ProductData): Response<RatingEligibilityResponseModel>
 }

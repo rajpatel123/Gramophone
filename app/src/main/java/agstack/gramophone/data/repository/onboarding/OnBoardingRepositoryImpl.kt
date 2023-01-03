@@ -16,16 +16,19 @@ import agstack.gramophone.ui.advisory.models.cropproblems.CropProblemRequestMode
 import agstack.gramophone.ui.advisory.models.cropproblems.CropProblemResponseModel
 import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProductRequestModel
 import agstack.gramophone.ui.advisory.models.recomondedproducts.RecommendedProductResponseModel
+import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.createnewpost.model.MentionRequestModel
 import agstack.gramophone.ui.createnewpost.model.MentionTagResponsemodel
 import agstack.gramophone.ui.createnewpost.model.problems.ProblemTagsResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
 import agstack.gramophone.ui.favourite.model.FavouriteRequestModel
 import agstack.gramophone.ui.favourite.model.FeaturedProductResponseModel
+import agstack.gramophone.ui.home.featured.ratingeligibility.RatingEligibilityResponseModel
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.AnsweredQuizPollRequestModel
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.QuizPollResponseModel
 import agstack.gramophone.ui.home.view.fragments.gramophone.model.MyGramophoneResponseModel
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.model.FCMRegistrationModel
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
@@ -261,6 +264,12 @@ class OnBoardingRepositoryImpl @Inject constructor(
     override suspend fun saveToken(fcmRegistrationModel: FCMRegistrationModel):Response<NotificationresponseModel>  = withContext(
         Dispatchers.IO) {
         val blockedUsers = gramAppService.saveToken(fcmRegistrationModel)
+        blockedUsers
+    }
+
+    override suspend fun getRatingEligibilityData(productData: ProductData):Response<RatingEligibilityResponseModel>  = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = gramAppService.getRatingEligibilityData(productData)
         blockedUsers
     }
 }

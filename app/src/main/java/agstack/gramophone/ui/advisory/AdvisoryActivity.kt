@@ -190,6 +190,7 @@ class AdvisoryActivity :
                         this, R.drawable.advisory_border
                     )
                 } else {
+
                     view.tvActivityName.background = AppCompatResources.getDrawable(
                         this, R.drawable.advisoryhead_blue_bg
                     )

@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_5sdp"
             android:layout_below="@+id/rvActivity"
+            android:visibility="invisible"
             android:layout_marginTop="@dimen/_5sdp"
             android:background="@color/grey" />
 

@@ -124,11 +124,17 @@ class AddToCartBottomSheetDialog(
                 availableProductOffersAdapter =
                     AvailableProductOffersAdapter(mSkuOfferList, selectedSkuPrice, {
                         selectedOfferItem = it
-                        applyOfferOnProduct?.invoke(VerifyPromotionRequestModel(selectedSkuListItem.get()?.productId!!,
-                            quantity,
-                            it.promotion_id.toString()))
+                        applyOfferOnProduct?.invoke(
+                            VerifyPromotionRequestModel(
+                                selectedSkuListItem.get()?.productId!!,
+                                quantity,
+                                it.promotion_id.toString()
+                            )
+                        )
                     }, {
                         viewOfferDetail?.invoke(it)
+                    }, {
+                        calculateDiscountAndPromotion(selectedSkuListItem.get()!!, null)
                     })
 
                 binding?.rvAvailableoffers?.adapter = availableProductOffersAdapter

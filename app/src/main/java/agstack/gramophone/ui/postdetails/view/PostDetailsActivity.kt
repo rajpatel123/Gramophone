@@ -24,6 +24,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.text.Spanned
 import android.view.View
 import android.view.View.VISIBLE
 import androidx.activity.result.ActivityResultLauncher
@@ -195,6 +196,10 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
 
     override fun onLoadingTextMessage() {
         viewDataBinding.loadingText.text = getString(R.string.no_data_title)
+    }
+
+    override fun setText(fromHtml: Spanned) {
+       viewDataBinding.tvDesc.text = fromHtml
     }
 
 

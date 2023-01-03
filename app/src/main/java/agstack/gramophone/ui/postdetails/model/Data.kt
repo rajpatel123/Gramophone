@@ -10,7 +10,7 @@ data class Data(
     val commentsCount: Int,
     val complainCount: Int,
     val createdDate: String,
-    val description: Any,
+    val description: String,
     val facebookShare: Int,
     val imagePath: Any,
     val images: List<Image>,

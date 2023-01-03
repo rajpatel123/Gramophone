@@ -87,7 +87,7 @@
                         android:text="@{model.issue_type}"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/_12ssp"
-
+                        android:visibility="gone"
                         tools:text="Nutritional Issue" />
 
                     <TextView

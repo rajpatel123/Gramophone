@@ -11,6 +11,7 @@ import android.text.Html
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
+import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.view.View
@@ -123,7 +124,7 @@ fun bindLoginBannerImage(view: ImageView, imageUrl: String?) {
 
 @BindingAdapter(value = ["product_image", "error"], requireAll = false)
 fun loadImage(view: ImageView, profileImage: String, error: Int) {
-    if (profileImage.isNullOrEmpty()) {
+    if (profileImage.isNullOrEmpty() || TextUtils.isEmpty(profileImage)) {
         view.setImageResource(R.drawable.ic_gramophone_leaf)
     } else {
         Glide.with(view.context)
