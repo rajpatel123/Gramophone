@@ -42,7 +42,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository,
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
 ) : BaseViewModel<HomeActivityNavigator>() {
 
     var progressBar = ObservableField<Boolean>()
@@ -75,15 +75,14 @@ class HomeViewModel @Inject constructor(
                                     if (gpApiResponseData.gramcashpoints.isNull()) "" else gpApiResponseData.gramcashpoints.toString()
                                 val customerId =
                                     if (gpApiResponseData.customer_id.isNullOrEmpty()) "" else gpApiResponseData.customer_id
-                                val customerAddress=
-                                    if (gpApiResponseData.address_data==null) "" else (gpApiResponseData.address_data?.district.plus(
+                                val customerAddress =
+                                    if (gpApiResponseData.address_data == null) "" else (gpApiResponseData.address_data.district.plus(
                                         ", "
-                                    ).plus(gpApiResponseData.address_data?.state))
+                                    ).plus(gpApiResponseData.address_data.state))
 
-                                Log.d("Address",customerAddress)
-
-
-
+                                SharedPreferencesHelper.instance?.putParcelable(
+                                    SharedPreferencesKeys.PROFILE_DATA,
+                                    gpApiResponseData)
 
                                 SharedPreferencesHelper.instance?.putString(
                                     SharedPreferencesKeys.USERNAME,
@@ -108,7 +107,7 @@ class HomeViewModel @Inject constructor(
                                     customerAddress
                                 )
 
-                                Log.d("Address",customerAddress)
+                                Log.d("Address", customerAddress)
 
                                 getNavigator()?.setImageNameMobile(
                                     name,
@@ -179,9 +178,9 @@ class HomeViewModel @Inject constructor(
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     val response = productRepository.getCrops()
                     if (response.isSuccessful) {
-                       SharedPreferencesHelper.instance?.putParcelable(SharedPreferencesKeys.CROPS,
-                           response.body()!!
-                       )
+                        SharedPreferencesHelper.instance?.putParcelable(SharedPreferencesKeys.CROPS,
+                            response.body()!!
+                        )
                     } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                     }

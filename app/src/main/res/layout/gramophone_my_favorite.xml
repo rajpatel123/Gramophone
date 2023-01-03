@@ -255,8 +255,8 @@
                        android:layout_marginTop="@dimen/_18sdp"
                        android:fontFamily="@font/manrope_semibold"
                        android:text="@string/gramophone_tv"
-                       android:textSize="@dimen/_12ssp"
-                       android:textColor="@color/brand_color"/>
+                       android:textColor="@color/brand_color"
+                       android:textSize="@dimen/_12ssp" />
 
                    <FrameLayout
                        android:layout_width="wrap_content"

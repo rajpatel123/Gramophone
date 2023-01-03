@@ -26,6 +26,8 @@ import android.view.View.VISIBLE
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.google.android.gms.auth.api.phone.SmsRetriever
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_verify_otp.*
 import java.util.regex.Pattern
@@ -77,6 +79,13 @@ class VerifyOtpActivity :
         updateUI()
     }
 
+    override fun onResume() {
+        super.onResume()
+        val properties = Properties()
+        properties
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_OTP_Verified_Successfully", properties)
+    }
 
     private fun startSmartUserConsent() {
         val client = SmsRetriever.getClient(this)
