@@ -87,4 +87,5 @@
     <color name="article_tag_bg">#C9FDEA</color>
     <color name="article_tag_text">#1DBC83</color>
     <color name="light_red">#FAB5AE</color>
+    <color name="color_logo">#b0ad45</color>
 </resources>

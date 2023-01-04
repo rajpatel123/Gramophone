@@ -13,12 +13,16 @@ import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.languagelist.Language
 import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
 import agstack.gramophone.utils.LocaleManagerClass
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_language.*
 
@@ -69,6 +73,7 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     override fun getViewModel()  = languageViewModel
 
     override fun moveToNext() {
+        sendMoEngageEvents()
         openAndFinishActivity(AppTourActivity::class.java,null)
     }
 
@@ -97,6 +102,24 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     override fun updateLanguageList(languageAdapter: LanguageAdapter,onLanguageClicked: (Language) -> Unit) {
         languageAdapter.selectedLanguage = onLanguageClicked
         rvLanguage.adapter=languageAdapter
+    }
+
+    private fun sendMoEngageEvents() {
+        val properties = Properties()
+        properties.addAttribute("Language", SharedPreferencesHelper.instance?.getString(
+            SharedPreferencesKeys.languageCode))
+            .addAttribute("Customer_Acquisition_Source", "Android")
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Language_Selection_Done_Onboarding", properties)
+    }
+
+    private fun sendMoEngageEvents2() {
+        val properties = Properties()
+        properties.addAttribute("Language", SharedPreferencesHelper.instance?.getString(
+            SharedPreferencesKeys.languageCode))
+            .addAttribute("Customer_Acquisition_Source", "Android")
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Language_Selection_Done_Onboarding", properties)
     }
 
 }

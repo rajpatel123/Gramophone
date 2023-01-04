@@ -41,7 +41,8 @@ class GramophoneTVViewModel @Inject constructor(
                         RetrofitInstanceForYoutube.getInstance()!!.create(
                             GramophoneTVApiService::class.java)
 
-                    val call: Call<YoutubeModel> = service.getPlayLists(part, channelId, key, maxResults)
+                    val call: Call<YoutubeModel> =
+                        service.getPlayLists(part, channelId, key, maxResults)
                     call.enqueue(object : Callback<YoutubeModel?> {
                         override fun onResponse(
                             call: Call<YoutubeModel?>,
@@ -91,7 +92,8 @@ class GramophoneTVViewModel @Inject constructor(
                         RetrofitInstanceForYoutube.getInstance()!!.create(
                             GramophoneTVApiService::class.java)
 
-                    val call: Call<YoutubeModel> = service.getPlayListsNextPage(part, channelId, key, pageToken, maxResults)
+                    val call: Call<YoutubeModel> =
+                        service.getPlayListsNextPage(part, channelId, key, pageToken, maxResults)
                     call.enqueue(object : Callback<YoutubeModel?> {
                         override fun onResponse(
                             call: Call<YoutubeModel?>,
@@ -132,7 +134,8 @@ class GramophoneTVViewModel @Inject constructor(
                         RetrofitInstanceForYoutube.getInstance()!!.create(
                             GramophoneTVApiService::class.java)
 
-                    val call: Call<ItemsModelResponse> = service.getVideoIds(part, maxResults, playListId, key)
+                    val call: Call<ItemsModelResponse> =
+                        service.getVideoIds(part, maxResults, playListId, key)
                     call.enqueue(object : Callback<ItemsModelResponse?> {
                         override fun onResponse(
                             call: Call<ItemsModelResponse?>,
@@ -175,7 +178,8 @@ class GramophoneTVViewModel @Inject constructor(
                         RetrofitInstanceForYoutube.getInstance()!!.create(
                             GramophoneTVApiService::class.java)
 
-                    val call: Call<ItemsModelResponse> = service.getVideoIdsNextPage(part, playListId, key, pageToken, maxResults)
+                    val call: Call<ItemsModelResponse> =
+                        service.getVideoIdsNextPage(part, playListId, key, pageToken, maxResults)
                     call.enqueue(object : Callback<ItemsModelResponse?> {
                         override fun onResponse(
                             call: Call<ItemsModelResponse?>,
@@ -231,13 +235,25 @@ class GramophoneTVViewModel @Inject constructor(
         }
     }
 
-    fun bookmarkVideo(currentPlayingVideoId: String, isBookmark: Boolean) {
+    fun bookmarkVideo(
+        videoId: String,
+        videoTitle: String,
+        videoChanelName: String,
+        videoThumbnail: String,
+        isBookmark: Boolean,
+    ) {
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
 
-                    val response = productRepository.bookmarkVideo(VideoBookMarkedRequest(currentPlayingVideoId, isBookmark))
+                    val response =
+                        productRepository.bookmarkVideo(VideoBookMarkedRequest(videoId,
+                            videoTitle,
+                            videoThumbnail,
+                            "",
+                            videoChanelName,
+                            isBookmark))
                     progress.value = false
                     if (response.isSuccessful) {
                         getNavigator()?.showToast(response.body()?.gp_api_message)

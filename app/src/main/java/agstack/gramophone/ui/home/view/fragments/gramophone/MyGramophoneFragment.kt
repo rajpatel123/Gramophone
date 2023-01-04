@@ -7,6 +7,7 @@ import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentMyGramophoneBinding
 import agstack.gramophone.ui.advisory.AdvisoryActivity
 import agstack.gramophone.ui.articles.ArticlesWebViewActivity
+import agstack.gramophone.ui.bookmarked.BookmarkedVideosActivity
 import agstack.gramophone.ui.comments.view.CommentsActivity
 import agstack.gramophone.ui.farm.model.Data
 import agstack.gramophone.ui.farm.model.FarmResponse
@@ -565,7 +566,7 @@ class MyGramophoneFragment :
         }
 
         binding?.layoutFavorite?.llTVLinearLayout?.setOnClickListener {
-            openActivity(GramophoneTVActivity::class.java, null)
+            openActivity(BookmarkedVideosActivity::class.java, null)
         }
 
     }

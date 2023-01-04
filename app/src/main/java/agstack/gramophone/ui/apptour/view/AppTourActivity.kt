@@ -18,6 +18,8 @@ import androidx.activity.viewModels
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import androidx.viewpager2.widget.ViewPager2
 import com.amnix.xtension.extensions.setPaddingStart
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_apptour.*
 import kotlinx.android.synthetic.main.activity_apptour.llIndicator
@@ -32,7 +34,13 @@ class AppTourActivity :
     private lateinit var loginBanners: List<LoginBanner>
     private val appTourViewModel: AppTourViewModel by viewModels()
 
-
+    override fun onResume() {
+        super.onResume()
+        val properties = Properties()
+        properties
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Walkthrough_Login_Clicked", properties)
+    }
 
 
     var pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {

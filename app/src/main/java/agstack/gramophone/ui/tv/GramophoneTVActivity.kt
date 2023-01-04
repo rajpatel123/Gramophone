@@ -49,6 +49,7 @@ class GramophoneTVActivity :
     private var currentPlayingPlayListId: String? = null
     private var currentPlayingPlayListName: String? = null
     private var currentPlayingVideoId: String? = null
+    private var currentPlayingVideoDescriptionUrl: String? = null
     private var currentPlayingVideoName: String? = null
     var playListAdapter: PlayListAdapter? = null
     private var videoListAdapter: VideoListAdapter? = null
@@ -120,11 +121,11 @@ class GramophoneTVActivity :
                 if (currentPlayingVideoId.isNotNullOrEmpty()) {
                     if (viewDataBinding.chkBookmark.isChecked) {
                         viewDataBinding.chkBookmark.isChecked = false
-                        gramophoneTVViewModel.bookmarkVideo(currentPlayingVideoId!!, false)
+                        gramophoneTVViewModel.bookmarkVideo(currentPlayingVideoId!!, currentPlayingVideoName!!, currentPlayingPlayListName!!, currentPlayingVideoDescriptionUrl!!,false)
                         viewDataBinding.ivBookmark.setImageResource(R.drawable.ic_bookmark)
                     } else {
                         viewDataBinding.chkBookmark.isChecked = true
-                        gramophoneTVViewModel.bookmarkVideo(currentPlayingVideoId!!, true)
+                        gramophoneTVViewModel.bookmarkVideo(currentPlayingVideoId!!, currentPlayingVideoName!!, currentPlayingPlayListName!!, currentPlayingVideoDescriptionUrl!!, true)
                         viewDataBinding.ivBookmark.setImageResource(R.drawable.ic_bookmarked)
                     }
                 }
@@ -443,6 +444,7 @@ class GramophoneTVActivity :
                     try {
                         if (playListItemModels.isNotNull()) {
                             val title: String = playListItemModels!!.snippet.title
+                            currentPlayingVideoDescriptionUrl = playListItemModels.snippet.thumbnails.default.url
                             currentPlayingVideoName = title
                             viewDataBinding.playListTitleTextView.text = title
                             viewDataBinding.shareContainer.visibility = View.VISIBLE

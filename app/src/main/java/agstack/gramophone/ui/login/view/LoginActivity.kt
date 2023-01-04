@@ -29,6 +29,8 @@ import androidx.activity.viewModels
 import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.zxing.integration.android.IntentIntegrator
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -91,6 +93,10 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
     }
 
     override fun onHelpClick(number: String) {
+        val properties = Properties()
+        properties
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Help_Call_Now", properties)
         loginViewModel.onHelpClick()
     }
 
@@ -101,9 +107,18 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
             getSupportFragmentManager(),
             getMessage(R.string.bottomsheet_tag)
         )
+
+        val properties = Properties()
+        properties
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Language_Updated", properties)
     }
 
     override fun openWebView(bundle: Bundle) {
+        val properties = Properties()
+        properties
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_View_Terms_of_Service", properties)
         openActivity(WebViewActivity::class.java, bundle)
     }
 
@@ -121,6 +136,11 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
     override fun moveToNext(bundle: Bundle) {
         progress.visibility = View.GONE
+        val properties = Properties()
+        properties.addAttribute("Customer_Mobile_Number", "7651881710")
+            .addAttribute("Referral_Code", "")
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Login_OTP_Sent", properties)
         openAndFinishActivity(VerifyOtpActivity::class.java, bundle)
     }
 

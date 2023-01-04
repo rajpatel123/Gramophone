@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="agstack.gramophone.ui.tv.model.Bookmark" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#99000000"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardUseCompatPadding="false">
+
+            <LinearLayout
+                android:id="@+id/listItemTitleContainer"
+                android:layout_width="match_parent"
+                android:layout_height="96dp"
+                android:orientation="horizontal"
+                android:padding="6dp">
+
+                <ImageView
+                    android:id="@+id/youtube_thumbnail"
+                    android:layout_width="126dp"
+                    android:scaleType="fitXY"
+                    android:layout_height="80dp"
+                    app:product_image='@{model.youtube_video_desc ?? ""}'
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/blakish"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingVertical="3dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
+
+                    <TextView
+                        android:id="@+id/videoTitleTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/blakish"
+                        android:textSize="13sp"
+                        android:text='@{model.youtube_video_title ?? ""}'
+                        android:textStyle="normal"
+                        tools:text="Video Title" />
+
+                    <TextView
+                        android:id="@+id/videoDescriptionTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/manrope_medium"
+                        android:maxLines="2"
+                        android:text='@{model.youtube_channel_name?? ""}'
+                        android:textColor="@color/gray_strike_through"
+                        android:textSize="13sp"
+                        android:visibility="visible"
+                        tools:text="Video Description" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_stroke" />
+
+    </LinearLayout>
+</layout>
