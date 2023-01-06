@@ -2,6 +2,7 @@ package agstack.gramophone.ui.order.view
 
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityOrderListBinding
@@ -10,12 +11,16 @@ import agstack.gramophone.ui.order.OrderListNavigator
 import agstack.gramophone.ui.order.adapter.OrderListAdapter
 import agstack.gramophone.ui.order.viewmodel.OrderListViewModel
 import agstack.gramophone.ui.orderdetails.OrderDetailsActivity
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
+import com.amnix.xtension.extensions.isNotNull
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -34,6 +39,7 @@ class OrderListActivity :
     }
 
     private fun setupUi() {
+        sendViewRecentMoEngageEvent()
         setUpToolBar(true, getString(R.string.my_orders), R.drawable.ic_arrow_left)
         viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
         viewDataBinding.swipeRefresh.setOnRefreshListener {
@@ -43,9 +49,11 @@ class OrderListActivity :
         viewDataBinding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 if (viewDataBinding.tabLayout.selectedTabPosition == 0) {
+                    sendViewRecentMoEngageEvent()
                     orderListViewModel.selectedTab.value = 0
                     orderListViewModel.emptyText.value = getString(R.string.no_recent_order)
                 } else if (viewDataBinding.tabLayout.selectedTabPosition == 1) {
+                    sendViewPastMoEngageEvent()
                     orderListViewModel.selectedTab.value = 1
                     orderListViewModel.emptyText.value = getString(R.string.no_past_order)
                 }
@@ -119,6 +127,24 @@ class OrderListActivity :
 
     override fun getViewModel(): OrderListViewModel {
         return orderListViewModel
+    }
+
+    private fun sendViewRecentMoEngageEvent() {
+        val properties = Properties()
+        properties
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_View_Recent_Orders", properties)
+    }
+
+    private fun sendViewPastMoEngageEvent() {
+        val properties = Properties()
+        properties
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_View_Past_Orders", properties)
     }
 
 }

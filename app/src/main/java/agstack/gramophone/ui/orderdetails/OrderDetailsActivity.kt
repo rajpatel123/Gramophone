@@ -2,6 +2,7 @@ package agstack.gramophone.ui.orderdetails
 
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityOrderDetailsBinding
@@ -9,10 +10,13 @@ import agstack.gramophone.ui.cart.model.OfferApplied
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.orderdetails.adapter.OrderedProductsAdapter
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.app.DownloadManager
 import android.content.Context
 import android.content.res.ColorStateList
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -20,6 +24,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import com.amnix.xtension.extensions.isNotNullOrEmpty
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -143,6 +149,7 @@ class OrderDetailsActivity :
     }
 
     override fun downloadInvoice(invoiceUrl: String) {
+        sendDownloadInvoiceMoEngageEvent()
         val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val getPdf = DownloadManager.Request(Uri.parse(invoiceUrl))
         getPdf.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
@@ -163,6 +170,38 @@ class OrderDetailsActivity :
 
     override fun getViewModel(): OrderDetailsViewModel {
         return orderDetailsViewModel
+    }
+
+    override fun sendOrderDetailsMoEngageEvent(
+        orderId: String,
+        orderDate: String,
+        totalOrderValue: Float,
+        orderStatus: String,
+    ) {
+        val properties = Properties()
+        properties.addAttribute("Order_Id", orderId)
+            .addAttribute("Order_Date", orderDate)
+            .addAttribute("Total_Order_Value", totalOrderValue)
+            .addAttribute("Order_Status", orderStatus)
+            .addAttribute("Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Order_Details", properties)
+    }
+
+    private fun sendDownloadInvoiceMoEngageEvent() {
+        val properties = Properties()
+        properties.addAttribute("Order_Id", orderDetailsViewModel.orderId.value)
+            .addAttribute("Order_Date", orderDetailsViewModel.orderDate.value)
+            .addAttribute("Total_Order_Value", orderDetailsViewModel.totalPrice.value)
+            .addAttribute("Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Invoice_Downloaded", properties)
     }
 
 }
