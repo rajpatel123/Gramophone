@@ -34,9 +34,9 @@ import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.tabs.TabLayout
+import com.moengage.core.Properties
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
@@ -444,8 +444,9 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
-    fun getPostByUUID(uuid: String) {
-
+    fun getPostByUUID(uuid: String, id: String) {
+        this.uuid = uuid
+        this.id = id
         viewModelScope.launch {
             getNavigator()?.onLoading()
             try {
@@ -784,7 +785,7 @@ class CommunityViewModel @Inject constructor(
     }
 
     fun onFollowClicked() {
-        followPost(uuid)
+        followUser(uuid)
     }
 
     fun onOutSideClick() {
@@ -839,7 +840,8 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
-    private fun followPost(uuid: String) {
+    private fun followUser(uuid: String) {
+        var action = "Fallow"
         showProgress.set(true)
         viewModelScope.launch {
             try {
@@ -854,6 +856,18 @@ class CommunityViewModel @Inject constructor(
                         following.set(false)
                         showProgress.set(false)
                     }
+                    val properties = Properties()
+                    properties.addAttribute(
+                        "Customer_Id",
+                        SharedPreferencesHelper.instance?.getString(
+                            SharedPreferencesKeys.CUSTOMER_ID
+                        )!!
+                    )
+                        .addAttribute("Customer_Id_FollowedUnFollowed", id)
+                        .addAttribute("Action", action)
+                    getNavigator()?.sendMoEngageEvent("KA_FollowUnFollow_User", properties)
+
+
                 } else
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
             } catch (ex: Exception) {

@@ -45,7 +45,7 @@ class OtherUserProfileActivity :
         otherProfileViewModel.postId = intent.extras?.getString(Constants.POST_ID)!!
 
         otherProfileViewModel.getProfile(intent.getIntExtra(BLOCKED_STATUS,0))
-        otherProfileViewModel.getPostByUUID(otherProfileViewModel.uuid)
+        otherProfileViewModel.getPostByUUID(otherProfileViewModel.uuid,otherProfileViewModel.id)
 
     }
 

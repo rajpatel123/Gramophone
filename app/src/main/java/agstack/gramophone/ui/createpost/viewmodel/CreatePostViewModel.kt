@@ -13,16 +13,15 @@ import agstack.gramophone.ui.home.view.fragments.market.model.CropResponse
 import agstack.gramophone.ui.postdetails.model.Image
 import agstack.gramophone.ui.postdetails.view.PostDetailsActivity
 import agstack.gramophone.ui.tagandmention.Tag
-import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.*
 import agstack.gramophone.utils.Constants.POST_ID
-import agstack.gramophone.utils.FileUploadRequestBody
-import agstack.gramophone.utils.Utility
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
+import com.moengage.core.Properties
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -120,7 +119,7 @@ class CreatePostViewModel @Inject constructor(
 
     fun createPost() {
 
-
+        var hasImage = "No"
         if (!creatingPost){
             creatingPost = true
             viewModelScope.launch {
@@ -135,6 +134,7 @@ class CreatePostViewModel @Inject constructor(
                             var image2:MultipartBody.Part? =null
                             var image3: MultipartBody.Part? =null
                             if (!listOfImages.isEmpty()){
+                                hasImage = "Yes"
                                 val keys = listOfImages.keys
                                 if (keys.size>0){
                                     keys.forEach {
@@ -186,6 +186,22 @@ class CreatePostViewModel @Inject constructor(
                             response = communityRepository.createPost(desc, tags, image1, image2, image3)
                             if (response.isSuccessful) {
                                 creatingPost = false
+
+
+                                val properties = Properties()
+                                properties.addAttribute(
+                                    "Customer_Id",
+                                    SharedPreferencesHelper.instance?.getString(
+                                        SharedPreferencesKeys.CUSTOMER_ID
+                                    )!!)
+                                    .addAttribute("Redirection_Source", "Home Page")
+                                    .addAttribute("Post_ID", response.body()?.data?._id)
+                                    .addAttribute("Post_Text",response.body()?.data?.description)
+                                    .addAttribute("Has_Images",hasImage)
+                                    .addAttribute("Crop",tags.toString())
+                                    .setNonInteractive()
+
+                                getNavigator()?.sendMoEngageEvent("KA_Save_Post",properties)
                                 getNavigator()?.openAndFinishActivity(PostDetailsActivity::class.java,
                                     Bundle().apply {
                                         putString(POST_ID, response.body()?.data?._id)

@@ -156,6 +156,7 @@ class CreatePostActivity :
             R.drawable.ic_cross
         )
 
+
         viewDataBinding.myToolbar.myToolbar.setBackgroundResource(R.color.brand_color)
         viewDataBinding.myToolbar.myToolbar.setTitleTextColor(
             ContextCompat.getColor(
@@ -321,6 +322,8 @@ class CreatePostActivity :
 
 
     }
+
+
 
     private fun intiEasyImagePicker() {
 

@@ -33,6 +33,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNull
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -272,6 +273,14 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onCreatePostClicked() {
+        val properties = com.moengage.core.Properties()
+        properties.addAttribute(
+            "Customer_Id",
+            SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!
+        ).addAttribute("Redirection_Source", "Home Page").setNonInteractive()
+
+        getNavigator()?.sendMoEngageEvent("",properties)
+
         getNavigator()?.openActivity(CreatePostActivity::class.java, null)
     }
 

@@ -12,9 +12,7 @@ import agstack.gramophone.ui.postdetails.DisplayTagAdapter
 import agstack.gramophone.ui.postdetails.PostDetailNavigator
 import agstack.gramophone.ui.postdetails.model.Tag
 import agstack.gramophone.ui.postdetails.viewmodel.PostDetailViewModel
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.ImagePicker
-import agstack.gramophone.utils.ShareSheetPresenter
+import agstack.gramophone.utils.*
 import agstack.gramophone.widget.FilePicker
 import android.app.Activity
 import android.content.ActivityNotFoundException
@@ -39,6 +37,7 @@ import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.options
+import com.moengage.core.Properties
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_post_details.*
 import kotlinx.android.synthetic.main.item_tags.view.*
@@ -276,6 +275,7 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
                 postDetailViewModel.tags.add(tagMap)
 
             }
+
 
             postDetailViewModel.updatePost(area,date)
         }

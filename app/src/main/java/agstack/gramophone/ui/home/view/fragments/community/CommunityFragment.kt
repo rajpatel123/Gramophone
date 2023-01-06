@@ -13,6 +13,8 @@ import agstack.gramophone.ui.home.view.fragments.community.model.quiz.Option
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
 import agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel
 import agstack.gramophone.utils.ShareSheetPresenter
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -32,6 +34,7 @@ import com.amnix.xtension.extensions.runOnUIThread
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.moengage.core.Properties
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_community.*
 
@@ -241,6 +244,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     }
 
     fun selectTab(from: String) {
+        var source = ""
         if (from.equals("gramophone")) {
             communityViewModel.loadData("bookmark")
             Handler().postDelayed(Runnable {
@@ -253,15 +257,31 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
                     tab!!.select()
                 }
             }, 300)
+
+            source = "My Gramophone"
         } else if (from.equals("gramophone_my_post")) {
+            source = "My Gramophone My Post"
+
             Handler().postDelayed(Runnable {
                 val tab = binding?.tabLayout?.getTabAt(4)
                 tab!!.select()
             }, 300)
-        }else if(from.equals("social")){
+        } else if (from.equals("social")) {
+            source = "Deeplink"
+
             val tab = binding?.tabLayout?.getTabAt(1)
             tab!!.select()
         }
+
+        val properties = Properties()
+        properties.addAttribute(
+            "Customer_Id",
+            SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.CUSTOMER_ID
+            )!!
+        )
+            .addAttribute("Redirection_Source", source)
+        sendMoEngageEvent("KA_View_Community_Wall", properties)
 
     }
 
