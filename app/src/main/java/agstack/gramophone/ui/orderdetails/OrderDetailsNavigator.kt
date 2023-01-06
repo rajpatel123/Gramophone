@@ -22,4 +22,6 @@ interface OrderDetailsNavigator : BaseNavigator {
 
     fun downloadInvoice(invoiceUrl: String)
 
+    fun sendOrderDetailsMoEngageEvent(orderId:String, orderDate:String, totalOrderValue: Float, orderStatus: String)
+
 }

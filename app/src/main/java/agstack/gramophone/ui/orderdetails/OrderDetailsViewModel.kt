@@ -145,7 +145,7 @@ class OrderDetailsViewModel @Inject constructor(
                         }
 
                         getNavigator()?.setColorOnOrderStatus(orderStatus.value!!)
-
+                        getNavigator()?.sendOrderDetailsMoEngageEvent(orderId, orderDate.value!!, totalPrice.value!!, orderStatus.value!!)
                         getNavigator()?.setOrderListAdapter(
                             OrderedProductsAdapter(responseData.products),
                             {
