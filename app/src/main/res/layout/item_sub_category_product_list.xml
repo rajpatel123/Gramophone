@@ -24,7 +24,7 @@
             android:layout_marginTop="@dimen/_16sdp"
             android:contentDescription="@string/image"
             app:product_image='@{model.product_image ?? ""}'
-            tools:src="@drawable/dummy_neem_cake" />
+            />
 
         <TextView
             android:id="@+id/tvProductName"

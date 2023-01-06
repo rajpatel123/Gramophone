@@ -54,7 +54,7 @@
                 android:contentDescription="@string/image"
                 android:layout_gravity="center_horizontal"
                 app:product_image='@{model.product_image ?? ""}'
-                tools:src="@drawable/dummy_neem_cake" />
+             />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -25,7 +25,6 @@
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:contentDescription="@string/image"
-            android:src="@drawable/dummy_neem_cake"
             app:product_image="@{model.product_image}" />
 
         <TextView
@@ -190,8 +189,7 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/image"
                     android:padding="4dp"
-                    app:product_image='@{model.free_products[0].product_image ?? ""}'
-                    android:src="@drawable/dummy_feature_product" />
+                    app:product_image='@{model.free_products[0].product_image ?? ""}'/>
 
             </FrameLayout>
 

@@ -32,7 +32,7 @@
                 android:contentDescription="@string/image"
                 android:scaleType="fitXY"
                 app:product_image='@{model.product_sku_list[0].image ?? ""}'
-                tools:src="@drawable/dummy_neem_cake" />
+               />
 
             <TextView
                 android:id="@+id/tvProductNames"

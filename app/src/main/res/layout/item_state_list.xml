@@ -25,7 +25,6 @@
                 android:layout_width="@dimen/_90sdp"
                 android:layout_height="@dimen/_90sdp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/state_img"
                 app:civ_border_color="@color/green"
                 app:civ_border_width="@dimen/_4sdp" />
 

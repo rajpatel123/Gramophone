@@ -49,8 +49,7 @@
                 android:id="@+id/iv_productimage"
                 android:layout_width="@dimen/_110sdp"
                 android:layout_height="@dimen/_110sdp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/dummy_feature_product" />
+                android:layout_gravity="center_horizontal"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
