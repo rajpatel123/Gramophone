@@ -107,7 +107,7 @@
                     android:contentDescription="@string/image"
                     android:visibility="visible"
                     app:product_image='@{model.product_images ?? ""}'
-                    tools:src="@drawable/dummy_neem_cake" />
+                    />
 
                 <TextView
                     android:id="@+id/tvProductNames"

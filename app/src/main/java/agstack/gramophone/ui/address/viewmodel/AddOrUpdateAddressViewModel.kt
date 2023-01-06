@@ -1,5 +1,6 @@
 package agstack.gramophone.ui.address.viewmodel
 
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
@@ -314,7 +315,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                     val addressResponse =
                         onBoardingRepository.getLocationAddress(
                             "" + latitude + "," + longitude,
-                            "AIzaSyAgy7OYQrHaPSXndFDMjXU2pMcpk48uyt0"
+                            BuildConfig.PLACE_API
                         )
                     if (addressResponse.isSuccessful) {
                         parseAddressDetail(latitude, longitude,addressResponse.body())

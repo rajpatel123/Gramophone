@@ -9,9 +9,7 @@ import agstack.gramophone.ui.tv.adapter.PlayListAdapter
 import agstack.gramophone.ui.tv.adapter.VideoListAdapter
 import agstack.gramophone.ui.tv.model.PlayListItemModels
 import agstack.gramophone.ui.tv.model.YoutubeChannelItem
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.PaginationScrollListener
-import agstack.gramophone.utils.ShareSheetPresenter
+import agstack.gramophone.utils.*
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -137,11 +135,15 @@ class GramophoneTVActivity :
     }
 
     private fun getPlayLists() {
-        val googleApiKey = getString(R.string.google_api)
-        gramophoneTVViewModel.getPlayLists("snippet,contentDetails",
-            6,
-            getString(R.string.channel_id),
-            googleApiKey)
+        val googleApiKey = SharedPreferencesHelper.instance!!.getString(
+            SharedPreferencesKeys.GOOGLE_API_KEY)
+        googleApiKey?.let {
+            gramophoneTVViewModel.getPlayLists("snippet,contentDetails",
+                6,
+                getString(R.string.channel_id),
+                it
+            )
+        }
     }
 
     private fun getPlayListsNextPage(nextPageToken: String) {
@@ -154,20 +156,27 @@ class GramophoneTVActivity :
     }
 
     private fun getVideoList() {
-        val googleApiKey = getString(R.string.google_api)
-        gramophoneTVViewModel.getVideoIds("snippet, contentDetails",
-            5,
-            currentPlayingPlayListId!!,
-            googleApiKey)
+        val googleApiKey = SharedPreferencesHelper.instance!!.getString(
+            SharedPreferencesKeys.GOOGLE_API_KEY)
+        googleApiKey?.let {
+            gramophoneTVViewModel.getVideoIds("snippet, contentDetails",
+                5,
+                currentPlayingPlayListId!!,
+                it
+            )
+        }
     }
 
     private fun getVideoListNextPage(nextPageToken: String) {
-        val googleApiKey = getString(R.string.google_api)
-        gramophoneTVViewModel.getVideoIdsNextPage("snippet, contentDetails",
-            currentPlayingPlayListId!!,
-            googleApiKey,
-            nextPageToken,
-            10)
+        val googleApiKey = SharedPreferencesHelper.instance!!.getString(
+            SharedPreferencesKeys.GOOGLE_API_KEY)
+        googleApiKey?.let {
+            gramophoneTVViewModel.getVideoIdsNextPage("snippet, contentDetails",
+                currentPlayingPlayListId!!,
+                it,
+                nextPageToken,
+                10)
+        }
     }
 
     private fun initPaginationListener() {
@@ -231,7 +240,8 @@ class GramophoneTVActivity :
             val playerFragment =
                 supportFragmentManager.findFragmentById(R.id.youtube_player_fragment) as YouTubePlayerSupportFragmentX?
             if (playerFragment != null) {
-                val googleApiKey = getString(R.string.google_api)
+                val googleApiKey = SharedPreferencesHelper.instance!!.getString(
+                    SharedPreferencesKeys.GOOGLE_API_KEY)
                 playerFragment.initialize(googleApiKey, this)
             }
         } else {

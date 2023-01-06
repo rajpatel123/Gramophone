@@ -80,7 +80,9 @@ class HomeActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
-        setUpFirebaseConfig()
+        if (TextUtils.isEmpty(instance!!.getString(SharedPreferencesKeys.GOOGLE_API_KEY))){
+            setUpFirebaseConfig()
+        }
         registerWithFCM()
         processDeepLink()
 
