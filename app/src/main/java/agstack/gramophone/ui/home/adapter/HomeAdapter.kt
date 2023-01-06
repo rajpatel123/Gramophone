@@ -412,7 +412,9 @@ class HomeAdapter(
                             })
                     }
                     holder.binding.frameCheckout.setOnClickListener {
-                        openActivity(holder.itemView.context, CartActivity::class.java, null)
+                        openActivity(holder.itemView.context, CartActivity::class.java, Bundle().apply {
+                            putString(Constants.REDIRECTION_SOURCE, Constants.LANDING_SCREEN)
+                        })
                     }
                 } else {
                     holder.binding.itemView.visibility = View.GONE

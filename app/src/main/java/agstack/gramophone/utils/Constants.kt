@@ -278,6 +278,8 @@ object Constants {
     const val PlayListId = "playListId"
     const val PlayListName = "playListName"
     const val GramophoneVideo = "gramophoneVideo"
+    const val REDIRECTION_SOURCE = "redirection_source"
+    const val LANDING_SCREEN = "Landing Screen"
 
 
     /**

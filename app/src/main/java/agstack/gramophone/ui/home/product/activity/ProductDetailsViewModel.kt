@@ -38,7 +38,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductDetailsViewModel @Inject constructor(
     private val productRepository: ProductRepository,
-    private val onBoardingRepository: OnBoardingRepository
+    private val onBoardingRepository: OnBoardingRepository,
 ) : BaseViewModel<ProductDetailsNavigator>() {
     val productDetailstoBeFetched = ProductData()
     var mSKUList = ArrayList<ProductSkuListItem?>()
@@ -83,7 +83,9 @@ class ProductDetailsViewModel @Inject constructor(
             val updateProductFavJobResponse =
                 productRepository.updateProductFavorite(producttoBeAdded)
             progressLoader.set(false)
-
+            getNavigator()?.sendFavouriteMoEngageEvent(productId,
+                productData.get()?.productBaseName!!,
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!, isHeartSelected.get())
             if (updateProductFavJobResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
                 getNavigator()?.showToast(updateProductFavJobResponse.body()?.gp_api_message)
             } else {
@@ -284,7 +286,7 @@ class ProductDetailsViewModel @Inject constructor(
                     loadRelatedProductData(productDetailstoBeFetched)
 
                 } else {
-                    getNavigator()?.showToast(""+productAPIResponse.body()?.gpApiMessage)
+                    getNavigator()?.showToast("" + productAPIResponse.body()?.gpApiMessage)
                 }
 
 
@@ -295,11 +297,11 @@ class ProductDetailsViewModel @Inject constructor(
     }
 
     private fun getProductRatingEligibility() {
-        if (getNavigator()?.isNetworkAvailable()==true){
+        if (getNavigator()?.isNetworkAvailable() == true) {
             viewModelScope.launch {
                 val response = onBoardingRepository.getRatingEligibilityData(ProductData(productId))
-                if (response.isSuccessful){
-                    if (response.body()?.gp_api_response_data?.is_genuine == true){
+                if (response.isSuccessful) {
+                    if (response.body()?.gp_api_response_data?.is_genuine == true) {
                         getNavigator()?.showRating()
                     }
                 }
@@ -509,7 +511,11 @@ class ProductDetailsViewModel @Inject constructor(
             }
         }
 
-
+        getNavigator()?.sendProductViewMoEngageEvent(productId,
+            productData.get()?.productBaseName!!,
+            productReviewsData.get()?.rating?.totalRating!!,
+            "Landing Screen",
+            SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
     }
 
     private fun loadOffersData(productDetailstoBeFetched: ProductData, quantity: Int? = 0) {
@@ -716,22 +722,22 @@ class ProductDetailsViewModel @Inject constructor(
 
     fun openAddEditProductReview(rating: Double) {
         //If Genuine Customer
-            getNavigator()?.openActivityWithBottomToTopAnimation(
-                AddEditProductReviewActivity::class.java,
-                Bundle().apply {
+        getNavigator()?.openActivityWithBottomToTopAnimation(
+            AddEditProductReviewActivity::class.java,
+            Bundle().apply {
 
-                    putInt(Constants.Product_Id_Key, productId)
-                    putString(Constants.Product_Base_Name, productData.get()?.productBaseName)
-                    putDouble(Constants.RATING_SELECTED, rating)
-                    putParcelable(
-                        Constants.PRODUCT_RATING_DATA_KEY,
-                        productReviewsData.get()?.selfRating
-                    )
-                })
+                putInt(Constants.Product_Id_Key, productId)
+                putString(Constants.Product_Base_Name, productData.get()?.productBaseName)
+                putDouble(Constants.RATING_SELECTED, rating)
+                putParcelable(
+                    Constants.PRODUCT_RATING_DATA_KEY,
+                    productReviewsData.get()?.selfRating
+                )
+            })
 
     }
 
-    fun notAGenuineBuyer(){
+    fun notAGenuineBuyer() {
         getNavigator()?.showGenuineCustomerRatingDialog(
             GenuineCustomerRatingAlertFragment.newInstance(
                 addToCartEnabled.get()
@@ -789,14 +795,18 @@ class ProductDetailsViewModel @Inject constructor(
                     getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(R.string.gotocart)!!)
                 } else {
                     getNavigator()?.showToast(Utility.getErrorMessage(addTocartResponse.errorBody()))
-                    if (addTocartResponse.errorBody().isNotNull() && addTocartResponse.errorBody()?.source().toString().contains("alr")) {
+                    if (addTocartResponse.errorBody().isNotNull() && addTocartResponse.errorBody()
+                            ?.source().toString().contains("alr")
+                    ) {
                         getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(
                             R.string.gotocart)!!)
                     }
                 }
             }
         } else {
-            getNavigator()?.openActivity(CartActivity::class.java)
+            getNavigator()?.openActivity(CartActivity::class.java, Bundle().apply {
+                putString(Constants.REDIRECTION_SOURCE, "Product Details")
+            })
         }
 
 

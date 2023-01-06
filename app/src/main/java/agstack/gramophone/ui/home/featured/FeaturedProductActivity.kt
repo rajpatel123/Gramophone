@@ -113,7 +113,9 @@ class FeaturedProductActivity :
                 frameCartRedCircle!!.visibility = View.GONE
             }
             rlItemMenuCart.setOnClickListener {
-                openActivity(CartActivity::class.java)
+                openActivity(CartActivity::class.java, Bundle().apply {
+                    putString(Constants.REDIRECTION_SOURCE, "Featured Product")
+                })
             }
             ivItemMenuCart.setColorFilter(ContextCompat.getColor(this, R.color.blakish), android.graphics.PorterDuff.Mode.SRC_IN)
         } catch (ex: Exception) {
@@ -179,7 +181,9 @@ class FeaturedProductActivity :
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_cart -> {
-                openActivity(CartActivity::class.java)
+                openActivity(CartActivity::class.java, Bundle().apply {
+                    putString(Constants.REDIRECTION_SOURCE, "Featured Product")
+                })
             }
             R.id.item_sort -> {
                 val bottomSheet = BottomSheetSortByDialog(subCategoryViewModel.sortDataList) {

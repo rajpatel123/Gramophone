@@ -2,27 +2,35 @@ package agstack.gramophone.ui.cart.view
 
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityCartBinding
 import agstack.gramophone.ui.cart.CartNavigator
 import agstack.gramophone.ui.cart.adapter.CartAdapter
 import agstack.gramophone.ui.cart.model.CartItem
+import agstack.gramophone.ui.cart.model.GpApiResponseData
 import agstack.gramophone.ui.cart.model.OfferApplied
 import agstack.gramophone.ui.cart.viewmodel.CartViewModel
 import agstack.gramophone.ui.checkout.CheckoutStatusActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.profile.model.GpApiResponseProfileData
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.Utility
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
-import com.amnix.xtension.extensions.setOnSwipeListener
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_cart.*
+import java.lang.StringBuilder
 
 
 @AndroidEntryPoint
@@ -35,6 +43,7 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
+        cartViewModel.getBundleData()
         cartViewModel.getCartData()
     }
 
@@ -73,7 +82,7 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
     override fun setCartAdapter(
         cartAdapter: CartAdapter,
         onItemDetailClicked: (productId: String) -> Unit,
-        onCartItemDeleteClicked: (productId: String) -> Unit,
+        onCartItemDeleteClicked: (productId: String, cartItem: CartItem) -> Unit,
         onOfferClicked: (offerAppliedList: OfferApplied, productName: String, productSku: String) -> Unit,
         onQuantityClicked: (cartItem: CartItem) -> Unit,
     ) {
@@ -106,6 +115,10 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
         progress.visibility = View.GONE
     }
 
+    override fun getBundle(): Bundle? {
+        return intent?.extras
+    }
+
     override fun getLayoutID(): Int {
         return R.layout.activity_cart
     }
@@ -118,4 +131,74 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
         return cartViewModel
     }
 
+    override fun sendGoToCartMoEngageEvent(redirectionFrom: String) {
+        val properties = Properties()
+        properties
+            .addAttribute("Redirection_Source", redirectionFrom)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Go_To_Cart", properties)
+    }
+
+    override fun sendRemoveProductFromCartMoEngageEvent(
+        productId: Int,
+        productBaseName: String,
+        sellingPrice: Float,
+        mrpPrice: Float,
+        sellingPriceAfterDiscount: Float,
+        productSku: String,
+        productQuantity: Int,
+        offerId: String,
+        productDiscount: Float,
+    ) {
+        val properties = Properties()
+        properties.addAttribute("Product_Id", productId)
+            .addAttribute("Product_Base_Name", productBaseName)
+            .addAttribute("Krishi_App_Selling_Price", sellingPrice)
+            .addAttribute("Product_MRP", mrpPrice)
+            .addAttribute("Selling_Price_After_Discount", sellingPriceAfterDiscount)
+            .addAttribute("Product_SKU", productSku)
+            .addAttribute("Product_Quantity", productQuantity)
+            .addAttribute("Offer_Id", offerId)
+            .addAttribute("Product_Discount", productDiscount)
+            .addAttribute("Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Remove_Product_From_Cart", properties)
+    }
+
+    override fun sendPlaceOrderMoEngageEvent(
+        cartData: GpApiResponseData,
+        orderReferenceId: String,
+    ) {
+        val userData = SharedPreferencesHelper.instance?.getParcelable(
+            SharedPreferencesKeys.CUSTOMER_DATA, GpApiResponseProfileData::class.java
+        )
+        val productIds: StringBuilder = StringBuilder("[")
+        for (cartItem in cartData.cart_items) {
+            productIds.append(cartItem.product_id).append(", ")
+        }
+        productIds.append("]")
+        val properties = Properties()
+        properties
+            .addAttribute("Order Reference ID", orderReferenceId)
+            .addAttribute("Customer_Id", userData?.customer_id)
+            .addAttribute("Customer_Area", userData?.address_data?.tehsil)
+            .addAttribute("Customer_Territory", userData?.address_data?.district)
+            .addAttribute("Customer_Cluster", userData?.address_data?.district)
+            .addAttribute("Conversion_Source", "ANDROID")
+            .addAttribute("Order_Date", Utility.getCurrentDate())
+            .addAttribute("Total_Order_Value", cartData.total)
+            .addAttribute("Total_Discount_Amount", cartData.promotional_discount_total)
+            .addAttribute("Gramcash_Used_In_Order", cartData.gramcash_coins)
+            .addAttribute("Item_Count_In_Cart", cartData.cart_items.size)
+            .addAttribute("Total_Product_Ids_In_Cart", productIds.toString())
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Place_Order", properties)
+    }
 }

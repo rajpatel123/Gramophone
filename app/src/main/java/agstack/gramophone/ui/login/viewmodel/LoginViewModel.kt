@@ -64,9 +64,11 @@ class LoginViewModel @Inject constructor(
                 getNavigator()?.hideProgressBar()
                 if (Constants.GP_API_STATUS.equals(sendOtpResponseModel?.gp_api_status)) {
 
-                    var loginData = handleLoginResponse(response)
+                    val loginData = handleLoginResponse(response)
+                    getNavigator()?.sendOtpSentMoEngageEvent(mobileNo.get()!!)
                     getNavigator()?.moveToNext(Bundle().apply {
                         putString(Constants.MOBILE_NO, mobileNo.get())
+                        putString(Constants.REFERRAL_CODE, referralCode.get())
                         putInt(
                             Constants.OTP_REFERENCE,
                             loginData.data?.gp_api_response_data?.otp_reference_id!!
@@ -102,12 +104,12 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onPrivacyClicked() {
-        var initiateAppDataResponseModel =
+        val initiateAppDataResponseModel =
             SharedPreferencesHelper.instance?.getParcelable(
                 SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java
             )
 
-
+        getNavigator()?.sendPrivacyMoEngageEvent()
         getNavigator()?.openWebView(Bundle().apply {
             putString(
                 Constants.PAGE_URL,
@@ -118,12 +120,12 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onTermsClicked() {
-        var initiateAppDataResponseModel =
+        val initiateAppDataResponseModel =
             SharedPreferencesHelper.instance?.getParcelable(
                 SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java
             )
 
-
+        getNavigator()?.sendTermsMoEngageEvent()
         getNavigator()?.openWebView(Bundle().apply {
             putString(
                 Constants.PAGE_TITLE,
@@ -142,7 +144,7 @@ class LoginViewModel @Inject constructor(
             SharedPreferencesHelper.instance?.getParcelable(
                 SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java
             )
-
+        getNavigator()?.sendTermsMoEngageEvent()
         getNavigator()?.openWebView(Bundle().apply {
             putString(
                 Constants.PAGE_URL,
@@ -184,7 +186,7 @@ class LoginViewModel @Inject constructor(
                 val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
-                    //getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
+                    getNavigator()?.sendLanguageUpdateMoEngageEvent()
                     getNavigator()?.openAndFinishActivity(
                         LoginActivity::class.java,
                         Bundle().apply {

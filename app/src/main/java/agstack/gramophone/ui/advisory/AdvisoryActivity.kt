@@ -268,7 +268,9 @@ class AdvisoryActivity :
                 viewDataBinding.frameCartRedCircle.visibility = View.GONE
             }
             viewDataBinding.rlItemMenuCart.setOnClickListener {
-                openActivity(CartActivity::class.java)
+                openActivity(CartActivity::class.java, Bundle().apply {
+                    putString(Constants.REDIRECTION_SOURCE, "Advisory")
+                })
             }
             viewDataBinding.ivItemMenuCart.setColorFilter(ContextCompat.getColor(this, R.color.blakish), android.graphics.PorterDuff.Mode.SRC_IN)
         } catch (ex: Exception) {

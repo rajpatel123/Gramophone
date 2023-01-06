@@ -42,6 +42,7 @@ class VerifyOtpViewModel @Inject constructor(
     var otp = ObservableField<String>()
     var otpHint: String = ""
     var mobileNo = ObservableField<String>()
+    var referralCode = ObservableField<String>()
     var otpReference = ObservableField<String>()
     var resendOTPType = ObservableField<String>()
     var remainigTimeForOTP = ObservableField<String>()
@@ -120,6 +121,7 @@ class VerifyOtpViewModel @Inject constructor(
                                 SharedPreferencesKeys.APP_TOUR_SKIP_COUNT,
                                 0
                             )
+                            getNavigator()?.sendVerifiedOTPMoEngageEvent(mobileNo.get()!!, referralCode.get()!!)
                             getNavigator()?.openAndFinishActivity(HomeActivity::class.java)
                         } else {
                             getNavigator()?.openAndFinishActivity(StateListActivity::class.java)
@@ -164,6 +166,7 @@ class VerifyOtpViewModel @Inject constructor(
             otpHint =
                 getNavigator()?.getMessage(R.string.otp_hint)!!
             mobileNo.set(bundle?.getString(Constants.MOBILE_NO).toString())
+            referralCode.set(bundle?.getString(Constants.REFERRAL_CODE).toString())
             otpReference.set(bundle?.getInt(Constants.OTP_REFERENCE).toString())
             if (!TextUtils.isEmpty(bundle?.getString(Constants.Otp)))
                 otp.set(bundle?.getString(Constants.Otp).toString())
@@ -193,6 +196,7 @@ class VerifyOtpViewModel @Inject constructor(
     }
 
     fun changeNumber(v: View) {
+        getNavigator()?.sendChangeMobileNoMoEngageEvent()
         getNavigator()?.openAndFinishActivity(LoginActivity::class.java, Bundle().apply {
             putString(Constants.MOBILE_NO, mobileNo.get())
         })
@@ -200,7 +204,7 @@ class VerifyOtpViewModel @Inject constructor(
     }
 
     fun resendOTP() = viewModelScope.launch {
-
+        getNavigator()?.sendResendOTPMoEngageEvent(mobileNo.get().toString())
         val sendOtpRequestModel = SendOtpRequestModel()
 
         sendOtpRequestModel.phone = mobileNo.get().toString()
@@ -288,7 +292,7 @@ class VerifyOtpViewModel @Inject constructor(
                 val updateLanguageResponseModel = handleLanguageUpdateResponse(response).data
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
-                    //getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
+                    getNavigator()?.sendLanguageUpdateMoEngageEvent()
                     getNavigator()?.openAndFinishActivity(
                         VerifyOtpActivity::class.java,
                         Bundle().apply {

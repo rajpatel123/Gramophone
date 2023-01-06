@@ -82,7 +82,8 @@ class VerifyOtpActivity :
     override fun onResume() {
         super.onResume()
         val properties = Properties()
-        properties
+        properties.addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
             .setNonInteractive()
         MoEAnalyticsHelper.trackEvent(this, "KA_OTP_Verified_Successfully", properties)
     }
@@ -147,7 +148,7 @@ class VerifyOtpActivity :
     override fun onBackPressed() {
         super.onBackPressed()
         openActivity(LoginActivity::class.java, Bundle().apply {
-            putString(Constants.MOBILE_NO,verifyOtpViewModel.mobileNo.get())
+            putString(Constants.MOBILE_NO, verifyOtpViewModel.mobileNo.get())
         })
     }
 
@@ -168,7 +169,7 @@ class VerifyOtpActivity :
         ivSMS.setImageResource(R.drawable.ic_sms_grey)
         object : CountDownTimer(duration, 1000) {
             override fun onTick(millis: Long) {
-                verifyOtpViewModel.remaningDuration=millis
+                verifyOtpViewModel.remaningDuration = millis
                 verifyOtpViewModel.calculateRemainigTime(millis)
                 //here you can have your logic to set text to edittext
             }
@@ -176,7 +177,7 @@ class VerifyOtpActivity :
             override fun onFinish() {
                 verifyOtpViewModel.timeOver.set(true)
                 verifyOtpViewModel.resendOTPType.set(getMessage(R.string.resend))
-                verifyOtpViewModel.remaningDuration=0
+                verifyOtpViewModel.remaningDuration = 0
                 ivCall.setImageResource(R.drawable.ic_call_enabled)
                 ivSMS.setImageResource(R.drawable.ic_sms)
                 tvTime.visibility = View.INVISIBLE
@@ -201,5 +202,45 @@ class VerifyOtpActivity :
         verifyOtpViewModel.updateLanguage()
     }
 
+    override fun sendLanguageUpdateMoEngageEvent() {
+        val properties = Properties()
+        properties.addAttribute("Language", getLanguage())
+            .addAttribute("Source_Screen", "Verify OTP")
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Language_Updated", properties)
+    }
 
+    override fun sendChangeMobileNoMoEngageEvent() {
+        val properties = Properties()
+        properties
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Change_Mobile_Number", properties)
+    }
+
+    override fun sendResendOTPMoEngageEvent(mobileNo: String) {
+        val properties = Properties()
+        properties
+            .addAttribute("Customer_Mobile_Number", mobileNo)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_OTP_Resend", properties)
+    }
+
+    override fun sendVerifiedOTPMoEngageEvent(mobileNo: String, referralCode: String) {
+        val properties = Properties()
+        properties
+            .addAttribute("Customer_Mobile_Number", mobileNo)
+            .addAttribute("Referral_Code", referralCode)
+            .addAttribute("Customer_Acquisition_Source", "ANDROID")
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_OTP_Verified_Successfully\n" +
+                "\n", properties)
+    }
 }

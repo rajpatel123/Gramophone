@@ -309,7 +309,9 @@ class HomeActivity :
                 frameCartRedCircle!!.visibility = GONE
             }
             rlItemMenuCart.setOnClickListener {
-                openActivity(CartActivity::class.java)
+                openActivity(CartActivity::class.java, Bundle().apply {
+                    putString(Constants.REDIRECTION_SOURCE, Constants.LANDING_SCREEN)
+                })
             }
         } catch (ex: Exception) {
             ex.printStackTrace()
@@ -321,13 +323,17 @@ class HomeActivity :
     }
 
     override fun onClick(p0: View?) {
-        openActivity(CartActivity::class.java)
+        openActivity(CartActivity::class.java, Bundle().apply {
+            putString(Constants.REDIRECTION_SOURCE, Constants.LANDING_SCREEN)
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_cart -> {
-                openActivity(CartActivity::class.java)
+                openActivity(CartActivity::class.java, Bundle().apply {
+                    putString(Constants.REDIRECTION_SOURCE, Constants.LANDING_SCREEN)
+                })
             }
             R.id.item_search -> {
                 openActivity(GlobalSearchActivity::class.java, Bundle().apply {

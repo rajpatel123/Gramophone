@@ -11,5 +11,8 @@ interface VerifyOTPNavigator :BaseNavigator {
     fun getMobileBundle(): Bundle?
     fun updateOTPView()
     fun getInitModel(): InitiateAppDataRequestModel
-
+    fun sendLanguageUpdateMoEngageEvent()
+    fun sendChangeMobileNoMoEngageEvent()
+    fun sendResendOTPMoEngageEvent(mobileNo: String)
+    fun sendVerifiedOTPMoEngageEvent(mobileNo: String, referralCode: String)
 }

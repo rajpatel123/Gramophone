@@ -5,8 +5,12 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.cart.CartNavigator
 import agstack.gramophone.ui.cart.adapter.CartAdapter
+import agstack.gramophone.ui.cart.model.CartDataResponse
+import agstack.gramophone.ui.cart.model.CartItem
+import agstack.gramophone.ui.cart.model.GpApiResponseData
 import agstack.gramophone.ui.cart.model.PlaceOrderRequest
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
@@ -15,8 +19,10 @@ import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.Utility
 import android.os.Bundle
 import android.widget.CompoundButton
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -39,6 +45,7 @@ class CartViewModel @Inject constructor(
     var showGramCashCoinView = MutableLiveData<Boolean>()
     var showCartView = MutableLiveData<Boolean>()
     var isProgressBgTransparent = MutableLiveData<Boolean>()
+    var cartData = ObservableField<GpApiResponseData>()
 
     init {
         itemCount.value = 0
@@ -51,6 +58,17 @@ class CartViewModel @Inject constructor(
         showGramCashCoinView.value = false
         showCartView.value = true
         isProgressBgTransparent.value = false
+    }
+
+    fun getBundleData() {
+        val bundle = getNavigator()?.getBundle()
+        if (bundle.isNotNull()) {
+            if (bundle?.containsKey(Constants.REDIRECTION_SOURCE)!! && bundle.getString(
+                    Constants.REDIRECTION_SOURCE) != null
+            ) {
+                getNavigator()?.sendGoToCartMoEngageEvent(bundle.getString(Constants.REDIRECTION_SOURCE)!!)
+            }
+        }
     }
 
     fun onCheckedChange(button: CompoundButton, check: Boolean) {
@@ -96,6 +114,7 @@ class CartViewModel @Inject constructor(
                     progress.value = false
                     getNavigator()?.showToast(response.body()?.gp_api_message)
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
+                        getNavigator()?.sendPlaceOrderMoEngageEvent(cartData.get()!!, response.body()?.gp_api_response_data?.order_ref_id.toString())
                         getNavigator()?.openCheckoutStatusActivity(Bundle().apply {
                             putString(
                                 Constants.ORDER_ID,
@@ -129,7 +148,7 @@ class CartViewModel @Inject constructor(
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
                     val response = productRepository.getCartData()
-
+                    cartData.set(response.body()?.gp_api_response_data)
                     try {
                         if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS && response.body()?.gp_api_response_data?.cart_items != null) {
                             SharedPreferencesHelper.instance?.putInteger(
@@ -177,9 +196,9 @@ class CartViewModel @Inject constructor(
                                 //on cartItem clicked for details page
                                 getNavigator()?.openProductDetailsActivity(ProductData(it.toInt()))
                             },
-                            {
+                            { id, cartItem ->
                                 //on cartItem delete clicked
-                                removeCartItem(it.toInt())
+                                removeCartItem(id.toInt(), cartItem)
                             },
                             { offerApplied, productName, productSku ->
                                 getNavigator()?.openActivity(OfferDetailActivity::class.java,
@@ -223,11 +242,13 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    private fun removeCartItem(productId: Int) {
+    private fun removeCartItem(productId: Int, cartItem: CartItem) {
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
+                    getNavigator()?.sendRemoveProductFromCartMoEngageEvent(Integer.parseInt(cartItem.product_id), cartItem.product_name, cartItem.discount_price, cartItem.cost_price,
+                    cartItem.discount_price, cartItem.product_sku, cartItem.quantity, cartItem?.offer_applied?.promotion_id!!,  cartItem.promotional_discount)
                     val response = productRepository.removeCartItem(productId)
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
                         getCartData()

@@ -70,6 +70,7 @@ class AppTourViewModel @Inject constructor(
 
                 if (Constants.GP_API_STATUS.equals(updateLanguageResponseModel?.gp_api_status)) {
                     getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
+                    getNavigator()?.sendMoEngageEvent(false)
                     getNavigator()?.openAndFinishActivity(AppTourActivity::class.java,null)
                 } else {
                     getNavigator()?.showToast(updateLanguageResponseModel?.gp_api_message)
@@ -105,6 +106,7 @@ class AppTourViewModel @Inject constructor(
 
     fun moveToLogin() {
         scrollImagesJob?.cancel()
+        getNavigator()?.sendMoEngageEvent(true)
         getNavigator()?.openAndFinishActivity(LoginActivity::class.java, null)
     }
 

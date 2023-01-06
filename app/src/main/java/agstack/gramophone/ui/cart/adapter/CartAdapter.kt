@@ -15,7 +15,7 @@ class CartAdapter(cartItemList: List<CartItem>) :
     RecyclerView.Adapter<CartAdapter.CustomViewHolder>() {
     var cartList = cartItemList
     var onItemDetailClicked: ((productId: String) -> Unit)? = null
-    var onItemDeleteClicked: ((productId: String) -> Unit)? = null
+    var onItemDeleteClicked: ((productId: String, cartItem: CartItem) -> Unit)? = null
     var onOfferClicked: ((offerAppliedList: OfferApplied, productName: String, productSku: String) -> Unit)? = null
     var onQuantityClicked: ((cartItem: CartItem) -> Unit)? = null
 
@@ -32,7 +32,7 @@ class CartAdapter(cartItemList: List<CartItem>) :
             onItemDetailClicked?.invoke(cartList[position].product_id.toString())
         }
         holder.binding.ivDelete.setOnClickListener {
-            onItemDeleteClicked?.invoke(cartList[position].product_id.toString())
+            onItemDeleteClicked?.invoke(cartList[position].product_id.toString(), cartList[position])
         }
         holder.binding.tvOffersApplied.setOnClickListener {
             if (cartList[position].offer_applied.isNotNull()) {

@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.apptour.view
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityApptourBinding
@@ -10,6 +11,9 @@ import agstack.gramophone.ui.apptour.viewmodel.AppTourViewModel
 import agstack.gramophone.ui.dialog.LanguageBottomSheetFragment
 import agstack.gramophone.ui.language.model.LoginBanner
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.LinearLayout
@@ -34,18 +38,9 @@ class AppTourActivity :
     private lateinit var loginBanners: List<LoginBanner>
     private val appTourViewModel: AppTourViewModel by viewModels()
 
-    override fun onResume() {
-        super.onResume()
-        val properties = Properties()
-        properties
-            .setNonInteractive()
-        MoEAnalyticsHelper.trackEvent(this, "KA_Walkthrough_Login_Clicked", properties)
-    }
-
-
     var pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
-            appTourViewModel.updateIndicator(position,llIndicator)
+            appTourViewModel.updateIndicator(position, llIndicator)
 
         }
     }
@@ -85,7 +80,7 @@ class AppTourActivity :
 
     override fun updateImages(currentPage: Int) {
         view_pager.setCurrentItem(currentPage, true)
-        appTourViewModel.updateIndicator(currentPage,llIndicator)
+        appTourViewModel.updateIndicator(currentPage, llIndicator)
     }
 
     override fun setupViewPager(loginBanners: List<LoginBanner>?) {
@@ -99,12 +94,11 @@ class AppTourActivity :
             zoomOutPageTransformer.transformPage(page, position)
         }
 
-        appTourViewModel.updateIndicator(0,llIndicator)
+        appTourViewModel.updateIndicator(0, llIndicator)
 
         appTourViewModel.startScroller()
 
         view_pager.registerOnPageChangeCallback(pageChangeCallback)
-
 
 
     }
@@ -121,9 +115,9 @@ class AppTourActivity :
         val layoutParams = LinearLayout.LayoutParams(130, 30)
         layoutParams.setMargins(14, 0, 14, 0)
         pageIndicator.setTag(llIndicator.childCount)
-        llIndicator.addView(pageIndicator,layoutParams)
+        llIndicator.addView(pageIndicator, layoutParams)
         pageIndicator.setOnClickListener {
-            appTourViewModel.updateIndicator(pageIndicator.tag as Int,llIndicator)
+            appTourViewModel.updateIndicator(pageIndicator.tag as Int, llIndicator)
         }
     }
 
@@ -135,5 +129,21 @@ class AppTourActivity :
         appTourViewModel.updateLanguage()
     }
 
+    override fun sendMoEngageEvent(isLoginClicked: Boolean) {
+        val properties = Properties()
+        if (isLoginClicked) {
+            properties.addAttribute("App Version", BuildConfig.VERSION_NAME)
+                .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+                .setNonInteractive()
+            MoEAnalyticsHelper.trackEvent(this, "KA_Walkthrough_Login_Clicked", properties)
+        } else {
+            properties.addAttribute("Language", getLanguage())
+                .addAttribute("Source_Screen", "App Tour")
+                .addAttribute("App Version", BuildConfig.VERSION_NAME)
+                .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+                .setNonInteractive()
+            MoEAnalyticsHelper.trackEvent(this, "KA_Language_Updated", properties)
+        }
+    }
 
 }

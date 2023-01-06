@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.settings.view
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityLanguageUpdateBinding
@@ -10,8 +11,11 @@ import agstack.gramophone.ui.language.model.languagelist.Language
 import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
 import agstack.gramophone.utils.LocaleManagerClass
 import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_language.*
 
@@ -39,7 +43,13 @@ class LanguageUpdateActivity :
     override fun getViewModel() = languageViewModel
 
     override fun moveToNext() {
-
+        val properties = Properties()
+        properties.addAttribute("Language", getLanguage())
+            .addAttribute("Source_Screen", "Settings")
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Language_Updated", properties)
     }
 
     override fun updateLanguageList(

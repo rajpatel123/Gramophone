@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 
 interface LoginNavigator : BaseNavigator{
-    fun onHelpClick(bundle: String)
     fun onLanguageChangeClick()
     fun openWebView(bundle: Bundle)
     fun openReferralDialog()
@@ -14,5 +13,9 @@ interface LoginNavigator : BaseNavigator{
     fun getBundle(): Bundle?
     fun getMobileBundle(): Bundle?
     fun showMobileNumberHint()
+    fun sendLanguageUpdateMoEngageEvent()
+    fun sendTermsMoEngageEvent()
+    fun sendPrivacyMoEngageEvent()
+    fun sendOtpSentMoEngageEvent(mobileNo: String)
     fun scanQR()
 }

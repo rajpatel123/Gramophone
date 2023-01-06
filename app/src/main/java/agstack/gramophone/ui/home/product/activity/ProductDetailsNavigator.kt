@@ -67,4 +67,6 @@ interface ProductDetailsNavigator : BaseNavigator {
     fun updateAddToCartButtonText(text: String? = null): String
     fun updateCartCount(cartCount: Int)
     fun showRating()
+    fun sendProductViewMoEngageEvent(productId: Int, productBaseName: String, avgRating: Double, redirectionSource: String, customerId: String)
+    fun sendFavouriteMoEngageEvent(productId: Int, productBaseName: String, customerId: String, isFavourite: Boolean)
 }

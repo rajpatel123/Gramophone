@@ -2,6 +2,7 @@ package agstack.gramophone.ui.login.view
 
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityLoginBinding
@@ -15,6 +16,7 @@ import agstack.gramophone.utils.Constants
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
@@ -26,6 +28,7 @@ import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import com.amnix.xtension.extensions.isNotNull
 import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.zxing.integration.android.IntentIntegrator
@@ -35,7 +38,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 
 @AndroidEntryPoint
-class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, LoginViewModel>(), LoginNavigator,LanguageBottomSheetFragment.LanguageUpdateListener {
+class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, LoginViewModel>(),
+    LoginNavigator, LanguageBottomSheetFragment.LanguageUpdateListener {
     val REQUEST_CODE = 0x0000c0de
     var qrLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -92,14 +96,6 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
     }
 
-    override fun onHelpClick(number: String) {
-        val properties = Properties()
-        properties
-            .setNonInteractive()
-        MoEAnalyticsHelper.trackEvent(this, "KA_Help_Call_Now", properties)
-        loginViewModel.onHelpClick()
-    }
-
     override fun onLanguageChangeClick() {
         val bottomSheet = LanguageBottomSheetFragment()
         bottomSheet.setLanguageListener(this)
@@ -107,16 +103,12 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
             getSupportFragmentManager(),
             getMessage(R.string.bottomsheet_tag)
         )
-
-        val properties = Properties()
-        properties
-            .setNonInteractive()
-        MoEAnalyticsHelper.trackEvent(this, "KA_Language_Updated", properties)
     }
 
     override fun openWebView(bundle: Bundle) {
         val properties = Properties()
-        properties
+        properties.addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
             .setNonInteractive()
         MoEAnalyticsHelper.trackEvent(this, "KA_View_Terms_of_Service", properties)
         openActivity(WebViewActivity::class.java, bundle)
@@ -136,11 +128,6 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
 
     override fun moveToNext(bundle: Bundle) {
         progress.visibility = View.GONE
-        val properties = Properties()
-        properties.addAttribute("Customer_Mobile_Number", "7651881710")
-            .addAttribute("Referral_Code", "")
-            .setNonInteractive()
-        MoEAnalyticsHelper.trackEvent(this, "KA_Login_OTP_Sent", properties)
         openAndFinishActivity(VerifyOtpActivity::class.java, bundle)
     }
 
@@ -201,4 +188,45 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
         qrLauncher.launch(qrScan?.createScanIntent())
     }
 
+    override fun sendLanguageUpdateMoEngageEvent() {
+        val properties = Properties()
+        properties.addAttribute("Language", getLanguage())
+            .addAttribute("Source_Screen", "Login")
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Language_Updated", properties)
+    }
+
+    override fun sendTermsMoEngageEvent() {
+        val properties = Properties()
+        properties
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_View_Terms_of_Service", properties)
+    }
+
+    override fun sendPrivacyMoEngageEvent() {
+        val properties = Properties()
+        properties
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_View_Privacy_Policy", properties)
+    }
+
+    override fun sendOtpSentMoEngageEvent(mobileNo: String) {
+        val properties = Properties()
+        properties.addAttribute("Customer_Mobile_Number", mobileNo)
+            .addAttribute("Referral_Code", if (loginViewModel.referralCode.isNotNull()) {
+                loginViewModel.referralCode.get()
+            } else {
+                ""
+            })
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Login_OTP_Sent", properties)
+    }
 }

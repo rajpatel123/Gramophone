@@ -189,9 +189,10 @@ abstract class BaseDialogFragment<B : ViewDataBinding, N : BaseNavigator, V : Ba
     }
 
 
-    override fun proceedCall(helpLineNo: String) {
+    override fun proceedCall(helpLineNo: String, screenName: String) {
         val bottomSheet = BottomSheetDialog()
         bottomSheet.customerSupportNumber = helpLineNo
+        bottomSheet.sourceScreen = screenName
         bottomSheet.show(
             requireActivity().supportFragmentManager,
             Constants.BOTTOM_SHEET

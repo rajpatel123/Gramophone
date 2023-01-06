@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.home.product.activity
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ProductDetailBinding
@@ -20,6 +21,7 @@ import agstack.gramophone.widget.MultipleImageDetailDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -34,6 +36,8 @@ import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerSupportFragmentX
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.item_menu_cart_with_counter.*
 import kotlin.math.roundToInt
@@ -54,6 +58,7 @@ class ProductDetailsActivity :
     private lateinit var drawableEndArrow: Drawable
     var youTubePlayer: YouTubePlayer? = null
     var videoId: String? = null
+    var salesPriceAfterDiscount: Float = 0F
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +75,7 @@ class ProductDetailsActivity :
             if (fromUser) {
                 val ratingfinal = rating.toDouble()
                 mViewModel?.ratingSelected?.set(ratingfinal)
+                sendReviewOpenMoEngageEvent()
                 mViewModel?.openAddEditProductReview(ratingfinal)
             }
         }
@@ -119,6 +125,7 @@ class ProductDetailsActivity :
         onOkayClick: () -> Unit,
         onCancelClick: () -> Unit,
     ) {
+        sendExpertAdviceMoEngageEvent()
         expertAdviceBottomSheet = expertAdviceBottomSheetFragment
         expertAdviceBottomSheet.setOnClickSelectedListener(onOkayClick, onCancelClick)
         expertAdviceBottomSheet.show(supportFragmentManager, "expertAdviceBottomSheet")
@@ -171,6 +178,7 @@ class ProductDetailsActivity :
         }
 
         viewDataBinding.whatsAppShare.setOnClickListener {
+            sendShareMoEngageEvent()
             share()
         }
         updateCartCount(SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!)
@@ -185,7 +193,9 @@ class ProductDetailsActivity :
                 frameCartRedCircle?.visibility = View.GONE
             }
             rlItemMenuCart?.setOnClickListener {
-                openActivity(CartActivity::class.java)
+                openActivity(CartActivity::class.java, Bundle().apply {
+                    putString(Constants.REDIRECTION_SOURCE, "Product Detail")
+                })
             }
             ivItemMenuCart?.setColorFilter(ContextCompat.getColor(this, R.color.blakish),
                 android.graphics.PorterDuff.Mode.SRC_IN)
@@ -224,6 +234,34 @@ class ProductDetailsActivity :
                 viewDataBinding.v4Separator.visibility = View.GONE
             }
         }
+
+        youTubePlayer!!.setPlayerStateChangeListener(object :
+            YouTubePlayer.PlayerStateChangeListener {
+            override fun onLoading() {
+
+            }
+
+            override fun onLoaded(arg0: String?) {
+
+            }
+
+            override fun onAdStarted() {
+
+            }
+
+            override fun onVideoStarted() {
+                sendWatchVideoMoEngageEvent()
+            }
+
+            override fun onVideoEnded() {
+
+            }
+
+            override fun onError(p0: YouTubePlayer.ErrorReason?) {
+
+            }
+
+        })
     }
 
     override fun onInitializationFailure(
@@ -236,6 +274,7 @@ class ProductDetailsActivity :
             Toast.LENGTH_LONG
         ).show()
     }
+
 
     override fun getBundle(): Bundle? {
         return intent.extras
@@ -324,6 +363,7 @@ class ProductDetailsActivity :
     }
 
     private fun setSalesPrice(priceAfterDiscount: Float) {
+        salesPriceAfterDiscount = priceAfterDiscount
         if (priceAfterDiscount.toString().endsWith(".0") || priceAfterDiscount.toString()
                 .contains(".00")
         ) {
@@ -398,6 +438,7 @@ class ProductDetailsActivity :
         productId: Int,
         productReviewsData: GpApiResponseData?,
     ) {
+        sendViewAllReviewMoEngageEvent()
         openActivity(ProductAllReviewsActivity::class.java, Bundle().apply {
             putParcelable(Constants.PRODUCTREVIEWDATA, productReviewsData)
             putInt(Constants.PRODUCTID, productId)
@@ -411,8 +452,10 @@ class ProductDetailsActivity :
     }
 
     override fun updateAddToCartButtonText(text: String?): String {
-        if (text != null)
+        if (text != null) {
             viewDataBinding.tvAddtocart.text = text
+            sendAddToCartMoEngageEvent()
+        }
         return viewDataBinding.tvAddtocart.text.toString()
     }
 
@@ -421,15 +464,152 @@ class ProductDetailsActivity :
         super.onPause()
         youTubePlayer?.pause()
     }
+
     override fun onResume() {
         super.onResume()
         youTubePlayer?.play()
-        if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.IS_GENUENE) == true){
+        if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.IS_GENUENE) == true) {
             productDetailsViewModel.notAGenuineBuyer()
-            SharedPreferencesHelper.instance?.putBoolean(SharedPreferencesKeys.IS_GENUENE,false)
+            SharedPreferencesHelper.instance?.putBoolean(SharedPreferencesKeys.IS_GENUENE, false)
 
         }
 
         productDetailsViewModel.getBundleData()
+    }
+
+    override fun sendProductViewMoEngageEvent(
+        productId: Int,
+        productBaseName: String,
+        avgRating: Double,
+        redirectionSource: String,
+        customerId: String,
+    ) {
+        val properties = Properties()
+        properties.addAttribute("Product_Id", productId)
+            .addAttribute("Product_Category_Id", "")
+            .addAttribute("Product_Category_Name", "")
+            .addAttribute("Product_Sub_Category_Id", "")
+            .addAttribute("Product_Sub_Category_Name", "")
+            .addAttribute("Product_Base_Name", productBaseName)
+            .addAttribute("Associated_Crop_Id", "")
+            .addAttribute("Associated_Farm_Crop_Problem_Id", "")
+            .addAttribute("Product_Avg_Rating", avgRating)
+            .addAttribute("Redirection_Source", redirectionSource)
+            .addAttribute("Customer_Id", customerId)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_View_Product", properties)
+    }
+
+    override fun sendFavouriteMoEngageEvent(
+        productId: Int,
+        productBaseName: String,
+        customerId: String, isFavourite: Boolean,
+    ) {
+        val properties = Properties()
+        properties.addAttribute("Product_Id", productId)
+            .addAttribute("Product_Base_Name", productBaseName)
+            .addAttribute("Customer_Id", customerId)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        if (isFavourite) {
+            MoEAnalyticsHelper.trackEvent(this, "KA_Add_Product_To_Favorite", properties)
+        } else {
+            MoEAnalyticsHelper.trackEvent(this, "KA_Remove_Product_From_Favorite", properties)
+        }
+    }
+
+    private fun sendShareMoEngageEvent() {
+        val properties = Properties()
+        properties.addAttribute("Product_Id", productDetailsViewModel.productId)
+            .addAttribute("Product_Base_Name",
+                productDetailsViewModel.productData.get()?.productBaseName)
+            .addAttribute("Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Share_Product", properties)
+    }
+
+    private fun sendWatchVideoMoEngageEvent() {
+        val properties = Properties()
+        properties.addAttribute("Product_Id", productDetailsViewModel.productId)
+            .addAttribute("Product_Base_Name",
+                productDetailsViewModel.productData.get()?.productBaseName)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Watch_How_To_Use_Product", properties)
+    }
+
+    private fun sendReviewOpenMoEngageEvent() {
+        val properties = Properties()
+        properties.addAttribute("Product_Id", productDetailsViewModel.productId)
+            .addAttribute("Product_Base_Name",
+                productDetailsViewModel.productData.get()?.productBaseName)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Write_Product_Review_Open", properties)
+    }
+
+    private fun sendViewAllReviewMoEngageEvent() {
+        val properties = Properties()
+        properties.addAttribute("Product_Id", productDetailsViewModel.productId)
+            .addAttribute("Product_Base_Name",
+                productDetailsViewModel.productData.get()?.productBaseName)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_View_All_Reviews", properties)
+    }
+
+    private fun sendExpertAdviceMoEngageEvent() {
+        val properties = Properties()
+        properties.addAttribute("Product_Id", productDetailsViewModel.productId)
+            .addAttribute("Product_Base_Name",
+                productDetailsViewModel.productData.get()?.productBaseName)
+            .addAttribute("Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Get_Expert_Advice", properties)
+    }
+
+    private fun sendAddToCartMoEngageEvent() {
+        val properties = Properties()
+        properties.addAttribute("Product_Id", productDetailsViewModel.productId)
+            .addAttribute("Product_Category_Id", "")
+            .addAttribute("Product_Category_Name", "")
+            .addAttribute("Product_Sub_Category_Id", "")
+            .addAttribute("Product_Sub_Category_Name", "")
+            .addAttribute("Product_Base_Name",
+                productDetailsViewModel.productData.get()?.productBaseName)
+            .addAttribute("Associated_Crop_Id", "")
+            .addAttribute("Associated_Farm_Crop_Problem_Id", "")
+            .addAttribute("Product_Avg_Rating",
+                productDetailsViewModel.productReviewsData.get()?.rating?.totalRating!!)
+            .addAttribute("Krishi_App_Selling_Price",
+                productDetailsViewModel.selectedSkuListItem.get()?.salesPrice)
+            .addAttribute("Product_MRP",
+                productDetailsViewModel.selectedSkuListItem.get()?.mrpPrice)
+            .addAttribute("Selling_Price_After_Discount", salesPriceAfterDiscount)
+            .addAttribute("Product_SKU",
+                productDetailsViewModel.selectedSkuListItem.get()?.productSku)
+            .addAttribute("Product_Quantity", productDetailsViewModel.qtySelected)
+            .addAttribute("Offer_Id", productDetailsViewModel.selectedOfferItem?.promotion_id)
+            .addAttribute("Product_Discount_By_Offer",
+                productDetailsViewModel.selectedOfferItem?.benefit?.amount_saved)
+            .addAttribute("Redirection_Source", "Home")
+            .addAttribute("Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Add_Product_To_Cart", properties)
     }
 }

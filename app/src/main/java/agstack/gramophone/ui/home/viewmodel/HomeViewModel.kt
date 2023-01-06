@@ -107,7 +107,7 @@ class HomeViewModel @Inject constructor(
                                     customerAddress
                                 )
 
-                                Log.d("Address", customerAddress)
+                                SharedPreferencesHelper.instance?.putParcelable(SharedPreferencesKeys.CUSTOMER_DATA, gpApiResponseData)
 
                                 getNavigator()?.setImageNameMobile(
                                     name,

@@ -2,9 +2,7 @@ package agstack.gramophone.base
 
 import agstack.gramophone.R
 import agstack.gramophone.ui.dialog.BottomSheetDialog
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.LocaleManagerClass
-import agstack.gramophone.utils.hasInternetConnection
+import agstack.gramophone.utils.*
 import android.Manifest
 import android.app.Activity
 import android.content.Context
@@ -27,6 +25,8 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import java.util.*
 
 abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : BaseViewModel<N>> :
@@ -231,9 +231,10 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         }
     }
 
-    override fun proceedCall(helpLineNo: String) {
+    override fun proceedCall(helpLineNo: String, screenName: String) {
         val bottomSheet = BottomSheetDialog()
         bottomSheet.customerSupportNumber = helpLineNo
+        bottomSheet.sourceScreen = screenName
         bottomSheet.show(
             supportFragmentManager,
             Constants.BOTTOM_SHEET
@@ -255,13 +256,13 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (grantResults!=null && grantResults.size>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             if (ContextCompat.checkSelfPermission(
                     this,
                     Manifest.permission.CALL_PHONE
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
-                mViewModel?.onHelpClick()
+                mViewModel?.onHelpClick("Login")
             }
         }
     }

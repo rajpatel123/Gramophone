@@ -25,5 +25,5 @@ interface AddressNavigator : BaseNavigator{
     fun requestForLocation()
     fun updateUi()
     fun openStateList()
-
+    fun sendMoEngageEvents()
 }

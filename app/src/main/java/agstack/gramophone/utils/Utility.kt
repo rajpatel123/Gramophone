@@ -40,6 +40,7 @@ object Utility {
     public const val YEAR_MONTH_DATA_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"  /*2022-11-19 19:18:00*/
     public const val HOUR_MIN_12_TIME_FORMAT = "hh:mm a"  /*12:08 PM*/
     public const val HOUR_MIN_SECOND_TIME_FORMAT = "HH:mm:ss"  /*09:18:46*/
+    public const val ORDER_PLACED_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"  /*2001-07-04T12:08:56*/
 
 
     fun List<String>.toBulletedList(): CharSequence {
@@ -255,7 +256,7 @@ object Utility {
 
     fun getCurrentDate(): String? {
         val date = Date()
-        val formatter = SimpleDateFormat(YEAR_MONTH_DATA_FORMAT)
+        val formatter = SimpleDateFormat(ORDER_PLACED_DATE_FORMAT)
         return formatter.format(date)
     }
 }

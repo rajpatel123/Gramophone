@@ -34,7 +34,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddOrUpdateAddressViewModel @Inject constructor(
-    private val onBoardingRepository: OnBoardingRepository
+    private val onBoardingRepository: OnBoardingRepository,
 ) : BaseViewModel<AddressNavigator>() {
     var state: State? = null
     var stateNameStr = ObservableField<String>()
@@ -71,11 +71,11 @@ class AddOrUpdateAddressViewModel @Inject constructor(
         }
 
 
-        if (!TextUtils.isEmpty(pinCode.get()) && pinCode.get()?.length!=6) {
+        if (!TextUtils.isEmpty(pinCode.get()) && pinCode.get()?.length != 6) {
             getNavigator()?.onError(getNavigator()?.getMessage(R.string.pincode_required))
             return
         }
-
+        getNavigator()?.sendMoEngageEvents()
         val updateAddressRequestModel = UpdateAddressRequestModel(
             address.get(),
             districtName.get(),
@@ -100,7 +100,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                 loading.set(false)
 
                 if (Constants.GP_API_STATUS.equals(updateAddress?.gp_api_status)) {
-                   // getNavigator()?.onSuccess(updateAddress?.gp_api_message!!)
+                    // getNavigator()?.onSuccess(updateAddress?.gp_api_message!!)
                     SharedPreferencesHelper.instance?.putBoolean(
                         SharedPreferencesKeys.logged_in,
                         true
@@ -150,7 +150,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
         state: String,
         district: String,
         tehsil: String,
-        village: String
+        village: String,
     ) {
         loading.set(true)
         try {
@@ -294,7 +294,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
             val latitude: Double = gps.getLatitude()
             val longitude: Double = gps.getLongitude()
 
-            getAddressByLocationFromApi(latitude,longitude)
+            getAddressByLocationFromApi(latitude, longitude)
 
         } else {
             // Can't get location.
@@ -303,7 +303,6 @@ class AddOrUpdateAddressViewModel @Inject constructor(
             gps?.showSettingsAlert()
         }
     }
-
 
 
     private fun getAddressByLocationFromApi(latitude: Double, longitude: Double) {
@@ -317,10 +316,10 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                             "AIzaSyAgy7OYQrHaPSXndFDMjXU2pMcpk48uyt0"
                         )
                     if (addressResponse.isSuccessful) {
-                        parseAddressDetail(latitude, longitude,addressResponse.body())
+                        parseAddressDetail(latitude, longitude, addressResponse.body())
                     }
                 }
-             } else
+            } else
                 getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
         } catch (ex: Exception) {
             when (ex) {
@@ -331,7 +330,11 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
     }
 
-    private fun parseAddressDetail(latitude: Double, longitude: Double, locationObj: GoogleAddressResponseModel?) {
+    private fun parseAddressDetail(
+        latitude: Double,
+        longitude: Double,
+        locationObj: GoogleAddressResponseModel?,
+    ) {
         val addressData = HashMap<String, String>()
 
         val item = locationObj?.results!![0]
@@ -507,11 +510,11 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
         }
 
-        if (address?.state_top_list?.size!! >0){
+        if (address?.state_top_list?.size!! > 0) {
             isImageAvailable.set(true)
             stateImageUrl.set(address?.state_top_list?.get(0).image)
             getNavigator()?.setStateImage(stateImageUrl.get().toString())
-        }else{
+        } else {
             isImageAvailable.set(false)
             stateNameInitial.set(stateNameStr.get()?.subSequence(0, 1).toString())
         }
@@ -530,8 +533,8 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
 
     fun checkPermissionAndUpdateUi() {
-               getNavigator()?.updateUi()
-        }
+        getNavigator()?.updateUi()
+    }
 
     fun setAddressdata(userAddress: UserAddress) {
         Log.d("fetched address", userAddress?.district!!)
@@ -551,7 +554,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
         }
 
         if (userAddress?.tehsil != null) tehsilName.set(userAddress.tehsil)
-        else{
+        else {
             getTehsil(
                 "tehsil",
                 stateNameStr.get()!!,
@@ -561,7 +564,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
             return
         }
 
-        if (userAddress?.village != null) villageName.set(userAddress.village) else{
+        if (userAddress?.village != null) villageName.set(userAddress.village) else {
             getVillage(
                 "village",
                 stateNameStr.get()!!,
@@ -574,14 +577,14 @@ class AddOrUpdateAddressViewModel @Inject constructor(
 
         if (userAddress?.address != null) address.set(userAddress.address)
 
-        if (userAddress?.pincode != null){
-           // getNavigator()?.setPinCode(userAddress.pincode)
+        if (userAddress?.pincode != null) {
+            // getNavigator()?.setPinCode(userAddress.pincode)
             viewModelScope.launch {
                 delay(2000)
                 pinCode.set(userAddress.pincode)
 
             }
-        } else{
+        } else {
             getPinCode(
                 "pincode",
                 stateNameStr.get()!!,

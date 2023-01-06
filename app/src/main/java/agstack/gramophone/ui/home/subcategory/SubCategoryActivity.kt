@@ -102,7 +102,9 @@ class SubCategoryActivity :
                 frameCartRedCircle!!.visibility = View.GONE
             }
             rlItemMenuCart.setOnClickListener {
-                openActivity(CartActivity::class.java)
+                openActivity(CartActivity::class.java, Bundle().apply {
+                    putString(Constants.REDIRECTION_SOURCE, "SubCategory")
+                })
             }
             ivItemMenuCart.setColorFilter(ContextCompat.getColor(this, R.color.blakish), android.graphics.PorterDuff.Mode.SRC_IN)
         } catch (ex: Exception) {
@@ -168,7 +170,9 @@ class SubCategoryActivity :
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_cart -> {
-                openActivity(CartActivity::class.java)
+                openActivity(CartActivity::class.java, Bundle().apply {
+                    putString(Constants.REDIRECTION_SOURCE, "SubCategory")
+                })
             }
             R.id.item_search -> {
                 openActivity(GlobalSearchActivity::class.java, Bundle().apply {

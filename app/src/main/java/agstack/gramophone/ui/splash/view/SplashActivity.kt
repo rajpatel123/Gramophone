@@ -32,14 +32,14 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         startApp()
-        if (getIntent().getData()!=null)
-        SharedPreferencesHelper.instance?.putString(Constants.URI,getIntent().getData().toString())
+        if (intent.data !=null)
+        instance?.putString(Constants.URI, intent.data.toString())
     }
 
     private fun startApp() {
 
-        Log.d("Token----","".plus(SharedPreferencesHelper.instance!!.getString(SharedPreferencesKeys.FirebaseTokenKey)))
-        if (SharedPreferencesHelper.instance?.getBoolean(Constants.UTM_SOURCE_UPDATED) == true){
+        Log.d("Token----","".plus(instance!!.getString(SharedPreferencesKeys.FirebaseTokenKey)))
+        if (instance?.getBoolean(Constants.UTM_SOURCE_UPDATED) == true){
             splashViewModel.initSplash(resources)
         }else{
             referrerClient = InstallReferrerClient.newBuilder(this).build()
@@ -59,9 +59,9 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
                             Log.d("Raj","".plus(appInstallTime))
                             Log.d("Raj","".plus(instantExperienceLaunched))
 
-                            SharedPreferencesHelper.instance?.putString(SharedPreferencesKeys.UTM_SOURCE,referrerUrl)
+                            instance?.putString(SharedPreferencesKeys.UTM_SOURCE,referrerUrl)
                             referrerClient.endConnection()//end connection to avoid leaks and smooth transition in app
-                            SharedPreferencesHelper.instance?.putBoolean(Constants.UTM_SOURCE_UPDATED,true)
+                            instance?.putBoolean(Constants.UTM_SOURCE_UPDATED,true)
 
                             splashViewModel.initSplash(resources)
                         }
