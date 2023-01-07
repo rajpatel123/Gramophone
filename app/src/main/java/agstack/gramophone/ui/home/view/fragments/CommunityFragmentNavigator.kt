@@ -30,4 +30,6 @@ interface CommunityFragmentNavigator: BaseNavigator {
     fun stopRefresh()
     fun hideViews()
     fun selecttab(i: Int)
+    fun sendBlockUserMoEngageEvent()
+    fun sendEditFollowStatusMoEngageEvent()
 }

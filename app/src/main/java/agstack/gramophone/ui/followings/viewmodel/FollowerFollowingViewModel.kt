@@ -58,6 +58,7 @@ class FollowerFollowingViewModel @Inject constructor(
                                 putString(Constants.AUTHER_ID, it._id)
                                 putString(Constants.AUTHER_UUID, it.uuid)
                                 putInt(Constants.BLOCKED_STATUS, it.blockStatus)
+                                putString(Constants.REDIRECTION_SOURCE, "Follower Following Screen")
                             })
                     })
                 } else {
@@ -99,7 +100,7 @@ class FollowerFollowingViewModel @Inject constructor(
                                     putString(Constants.AUTHER_ID, it._id)
                                     putString(Constants.AUTHER_UUID, it.uuid)
                                     putInt(Constants.BLOCKED_STATUS, it.blockStatus)
-
+                                    putString(Constants.REDIRECTION_SOURCE, "Follower Following Screen")
                                 })
                         })
                 } else {
@@ -132,6 +133,7 @@ class FollowerFollowingViewModel @Inject constructor(
                         communityRepository.followPost(FollowRequestModel(it.uuid))
                     if (response.isSuccessful) {
                         getFollowing()
+                        getNavigator()?.sendFollowingMoEngageEvents(it._id, if (it.following) { "Follow" } else { "Not Follow" }, "Following")
                     } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                     }
@@ -157,6 +159,7 @@ class FollowerFollowingViewModel @Inject constructor(
                         communityRepository.followPost(FollowRequestModel(it.uuid))
                     if (response.isSuccessful) {
                         getFollowers()
+                        getNavigator()?.sendFollowerMoEngageEvents(it._id, if (it.following) { "Follow" } else { "Not Follow" }, "Followers")
                     } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                     }

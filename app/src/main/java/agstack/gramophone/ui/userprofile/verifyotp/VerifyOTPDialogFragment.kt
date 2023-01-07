@@ -1,14 +1,20 @@
 package agstack.gramophone.ui.userprofile.verifyotp
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseDialogFragment
 import agstack.gramophone.databinding.VerifyOtpDialogBinding
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import androidx.fragment.app.viewModels
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -103,4 +109,30 @@ class VerifyOTPDialogFragment :
         this.update = update
     }
 
+    override fun sendResendOtpMoEngageEvent() {
+        val properties = Properties()
+        properties.addAttribute("Customer_Mobile_Number", verifyOtpDialogViewModel.mobileNo.get())
+            .addAttribute("Profile ID",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(requireContext(), "KA_resend_OTP", properties)
+    }
+
+    override fun sendIsOtpVerifiedMoEngageEvent(isOTPVerified: Boolean) {
+        val properties = Properties()
+        properties.addAttribute("Customer_Mobile_Number", verifyOtpDialogViewModel.mobileNo.get())
+            .addAttribute("Profile ID",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        if (isOTPVerified) {
+            MoEAnalyticsHelper.trackEvent(requireContext(), "KA_OTP_Verified_Successfully", properties)
+            MoEAnalyticsHelper.trackEvent(requireContext(), "KA_update", properties)
+        } else {
+            MoEAnalyticsHelper.trackEvent(requireContext(), "KA_OTP_Verification_Failed", properties)
+        }
+    }
 }

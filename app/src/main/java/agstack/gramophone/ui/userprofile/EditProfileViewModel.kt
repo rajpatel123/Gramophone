@@ -44,7 +44,7 @@ class EditProfileViewModel @Inject constructor(
 
             if (userProfileResponse?.code() == 200) {
                 if (userProfileResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
-
+                    getNavigator()?.sendEditProfileMoEngageEvent()
                     getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)
                     getNavigator()?.finishActivity()
                 } else {

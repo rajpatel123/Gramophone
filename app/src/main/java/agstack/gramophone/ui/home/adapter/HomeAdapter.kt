@@ -22,8 +22,11 @@ import agstack.gramophone.ui.tv.fragment.HomeTvFragment
 import agstack.gramophone.ui.weather.WeatherActivity
 import agstack.gramophone.ui.weather.model.WeatherResponse
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +36,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.bumptech.glide.Glide
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 
 
 class HomeAdapter(
@@ -412,9 +417,11 @@ class HomeAdapter(
                             })
                     }
                     holder.binding.frameCheckout.setOnClickListener {
-                        openActivity(holder.itemView.context, CartActivity::class.java, Bundle().apply {
-                            putString(Constants.REDIRECTION_SOURCE, Constants.LANDING_SCREEN)
-                        })
+                        openActivity(holder.itemView.context,
+                            CartActivity::class.java,
+                            Bundle().apply {
+                                putString(Constants.REDIRECTION_SOURCE, Constants.LANDING_SCREEN)
+                            })
                     }
                 } else {
                     holder.binding.itemView.visibility = View.GONE
@@ -513,13 +520,14 @@ class HomeAdapter(
                     if (articlesData.containsKey(Constants.FEATURED_ARTICLES) && articlesData[Constants.FEATURED_ARTICLES].isNotNullOrEmpty()) {
                         holder.binding.itemViewFeatured.visibility = View.VISIBLE
                         holder.binding.rvFeaturedArticles.adapter =
-                            ArticlesAdapter(articlesData[Constants.FEATURED_ARTICLES]!!) {
+                            ArticlesAdapter(articlesData[Constants.FEATURED_ARTICLES]!!) { id, viewCount, readTime ->
+                                sendViewArticlesMoEngageEvent(holder.binding.rvFeaturedArticles.context, id, "Yes", "No", "No", viewCount, "No", readTime)
                                 openActivity(
                                     holder.binding.viewAllArticles.context,
                                     ArticlesWebViewActivity::class.java,
                                     Bundle().apply {
                                         putString(Constants.PAGE_URL,
-                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + "/" + it)
+                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + "/" + id)
                                     }
                                 )
                             }
@@ -529,13 +537,14 @@ class HomeAdapter(
                     if (articlesData.containsKey(Constants.TRENDING_ARTICLES) && articlesData[Constants.TRENDING_ARTICLES].isNotNullOrEmpty()) {
                         holder.binding.itemViewTrending.visibility = View.VISIBLE
                         holder.binding.rvTrendingArticles.adapter =
-                            ArticlesAdapter(articlesData[Constants.TRENDING_ARTICLES]!!) {
+                            ArticlesAdapter(articlesData[Constants.TRENDING_ARTICLES]!!) {id, viewCount, readTime ->
+                                sendViewArticlesMoEngageEvent(holder.binding.rvFeaturedArticles.context, id, "No", "Yes", "No", viewCount, "No", readTime)
                                 openActivity(
                                     holder.binding.viewAllArticles.context,
                                     ArticlesWebViewActivity::class.java,
                                     Bundle().apply {
                                         putString(Constants.PAGE_URL,
-                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + "/" + it)
+                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + "/" + id)
                                     }
                                 )
                             }
@@ -545,13 +554,14 @@ class HomeAdapter(
                     if (articlesData.containsKey(Constants.SUGGESTED_ARTICLES) && articlesData[Constants.SUGGESTED_ARTICLES].isNotNullOrEmpty()) {
                         holder.binding.itemViewSuggested.visibility = View.VISIBLE
                         holder.binding.rvSuggestedArticles.adapter =
-                            ArticlesAdapter(articlesData[Constants.SUGGESTED_ARTICLES]!!) {
+                            ArticlesAdapter(articlesData[Constants.SUGGESTED_ARTICLES]!!) {id, viewCount, readTime ->
+                                sendViewArticlesMoEngageEvent(holder.binding.rvFeaturedArticles.context, id, "No", "No", "Yes", viewCount, "No", readTime)
                                 openActivity(
                                     holder.binding.viewAllArticles.context,
                                     ArticlesWebViewActivity::class.java,
                                     Bundle().apply {
                                         putString(Constants.PAGE_URL,
-                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + "/" + it)
+                                            BuildConfig.BASE_URL_SINGLE_ARTICLE + "/" + id)
                                     }
                                 )
                             }
@@ -559,6 +569,7 @@ class HomeAdapter(
                         holder.binding.itemViewSuggested.visibility = View.GONE
                     }
                     holder.binding.viewAllArticles.setOnClickListener {
+                        sendViewAllArticlesMoEngageEvent(holder.binding.viewAllArticles.context)
                         openActivity(
                             holder.binding.viewAllArticles.context,
                             ArticlesWebViewActivity::class.java,
@@ -749,4 +760,43 @@ class HomeAdapter(
 
     inner class GramophoneTvViewHolder(var binding: ItemHomeGramophoneTvBinding) :
         RecyclerView.ViewHolder(binding.root)
+}
+
+private fun sendViewAllArticlesMoEngageEvent(context: Context) {
+    val properties = Properties()
+        .addAttribute("Profile ID",
+            SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+        .addAttribute("App Version", BuildConfig.VERSION_NAME)
+        .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+        .setNonInteractive()
+    MoEAnalyticsHelper.trackEvent(context, "KA_View_All_Articles", properties)
+}
+
+private fun sendViewArticlesMoEngageEvent(
+    context: Context,
+    articleId: String,
+    featuredArticle: String,
+    trendingArticle: String,
+    suggestedArticle: String,
+    viewsCount: String,
+    bookmarked: String,
+    readDuration: String,
+) {
+    val properties = Properties()
+        .addAttribute("Profile ID",
+            SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+        .addAttribute("Redirection_Source", "Home")
+        .addAttribute("Article_ID", articleId)
+        .addAttribute("Category_ID", "")
+        .addAttribute("Crop ID", SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.SUGGESTED_CROPS))
+        .addAttribute("Featured article", featuredArticle)
+        .addAttribute("Trending", trendingArticle)
+        .addAttribute("Suggested", suggestedArticle)
+        .addAttribute("Views count", viewsCount)
+        .addAttribute("Book marked", bookmarked)
+        .addAttribute("Read duration", readDuration)
+        .addAttribute("App Version", BuildConfig.VERSION_NAME)
+        .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+        .setNonInteractive()
+    MoEAnalyticsHelper.trackEvent(context, "KA_View_All_Articles", properties)
 }

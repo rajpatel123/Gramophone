@@ -2,20 +2,26 @@ package agstack.gramophone.ui.weather
 
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityWeatherBinding
 import agstack.gramophone.di.GPSTracker
 import agstack.gramophone.ui.dialog.LocationAccessDialog
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,6 +31,9 @@ class WeatherActivity :
 
     //initialise ViewModel
     private val weatherViewModel: WeatherViewModel by viewModels()
+    private val VIEW_WEATHER = 0
+    private val SHARE_ON_WHATSAPP = 1
+    private val CHANGE_LOCATION = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +49,7 @@ class WeatherActivity :
             weatherViewModel.getWeatherData()
             viewDataBinding.swipeRefresh.isRefreshing = false
         }
+        sendWeatherMoEngageEvent(VIEW_WEATHER)
     }
 
     override fun setToolbarTitle(title: String) {
@@ -61,6 +71,7 @@ class WeatherActivity :
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.itemShare -> {
+                sendWeatherMoEngageEvent(SHARE_ON_WHATSAPP)
                 val whatsappIntent = Intent(Intent.ACTION_SEND)
                 whatsappIntent.type = "text/plain"
                 whatsappIntent.setPackage("com.whatsapp")
@@ -73,6 +84,7 @@ class WeatherActivity :
                 }
             }
             R.id.tvChangeLoc -> {
+                sendWeatherMoEngageEvent(CHANGE_LOCATION)
                 val locationAccessDialog = LocationAccessDialog() {
                     if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
                         weatherViewModel.getLatitudeLongitude()
@@ -110,6 +122,39 @@ class WeatherActivity :
 
     override fun getViewModel(): WeatherViewModel {
         return weatherViewModel
+    }
+
+    private fun sendWeatherMoEngageEvent(eventType: Int) {
+        val properties = Properties()
+            .addAttribute("Profile ID",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+
+        when (eventType) {
+            0 -> {
+                properties.addAttribute("Redirection_Source ID", "Home Screen")
+                MoEAnalyticsHelper.trackEvent(this, "KA_View weather", properties)
+            }
+            1 -> {
+                MoEAnalyticsHelper.trackEvent(this, "KA_share_on_whatsapp", properties)
+            }
+            else -> {
+                MoEAnalyticsHelper.trackEvent(this, "KA_Change_Location", properties)
+            }
+        }
+    }
+
+    private fun sendWeatherMoEngageEvent() {
+        val properties = Properties()
+        properties.addAttribute("Redirection_Source ID", "Home Screen")
+            .addAttribute("Profile ID",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_View weather", properties)
     }
 
 }

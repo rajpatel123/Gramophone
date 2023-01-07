@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.articles
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityArticlesBinding
@@ -20,7 +21,10 @@ import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.KeyEvent
@@ -28,6 +32,8 @@ import android.view.View
 import android.webkit.*
 import androidx.activity.viewModels
 import com.amnix.xtension.extensions.isNotNull
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -91,6 +97,7 @@ class ArticlesWebViewActivity :
                     }
                     lastTimeClicked = SystemClock.elapsedRealtime()
                     subCategoryViewModel.fetchProductDetail(productId.toInt())
+                    sendViewProductFromArticleMoEngageEvent(productId.toInt())
                     /*val productData = ProductData()
                     productData.product_id = productId.toInt()
                     val bundle = Bundle()
@@ -104,7 +111,10 @@ class ArticlesWebViewActivity :
                     e.printStackTrace()
                 }
             }
-
+            @JavascriptInterface
+            override fun shareProduct(productId: String) {
+                sendShareProductFromArticleMoEngageEvent(productId.toInt())
+            }
         }, "Android")
 
         viewDataBinding.viewBack.setOnClickListener {
@@ -312,5 +322,27 @@ class ArticlesWebViewActivity :
         return subCategoryViewModel
     }
 
+    private fun sendViewProductFromArticleMoEngageEvent(productId: Int) {
+        val properties = Properties()
+            .addAttribute("Product_Id", productId)
+            .addAttribute("Redirection_Source", "ArticleWebView")
+            .addAttribute("Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_View_Product", properties)
+    }
 
+    private fun sendShareProductFromArticleMoEngageEvent(productId: Int) {
+        val properties = Properties()
+            .addAttribute("Product_Id", productId)
+            .addAttribute("Redirection_Source", "ArticleWebView")
+            .addAttribute("Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Share_Article", properties)
+    }
 }

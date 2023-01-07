@@ -436,6 +436,8 @@ class HomeActivity :
                 SharedPreferencesKeys.BANNER_DATA,
                 BannerResponse("")
             )
+
+            SharedPreferencesHelper.instance?.putString(SharedPreferencesKeys.SUGGESTED_CROPS, "")
         } catch (e: Exception) {
             e.printStackTrace()
         }

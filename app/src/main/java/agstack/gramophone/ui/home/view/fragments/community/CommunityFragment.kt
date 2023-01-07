@@ -265,5 +265,8 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     }
 
-
+    override fun sendBlockUserMoEngageEvent() {
+        //no need to send event from here
+        // because event (KA_Block_User) has already been sent from OtherUserProfileActivity
+    }
 }

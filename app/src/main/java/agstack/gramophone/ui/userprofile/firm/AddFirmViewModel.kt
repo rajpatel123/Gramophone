@@ -39,7 +39,7 @@ class AddFirmViewModel @Inject constructor(
                 onBoardingRepository.updateProfile(updateProfileModel)
             progressLoader.set(false)
             if (userProfileResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
-
+                getNavigator()?.sendSaveFirmMoEngageEvent(firmName.get()!!)
                 getNavigator()?.showToast(userProfileResponse.body()?.gp_api_message)
                 getNavigator()?.finishActivity()
             } else {
