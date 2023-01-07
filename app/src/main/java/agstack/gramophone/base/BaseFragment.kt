@@ -23,6 +23,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import java.util.*
 
 abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewModel<N>> : Fragment(),
@@ -217,6 +219,11 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
 
     override fun finishActivity() {
         activity?.finish()
+    }
+
+    override fun sendMoEngageEvent(event: String, properties: Properties) {
+        activity?.let { MoEAnalyticsHelper.trackEvent(it, event, properties) }
+
     }
 
 }

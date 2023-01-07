@@ -19,7 +19,9 @@ import android.text.TextUtils
 import androidx.core.text.HtmlCompat
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
+import com.moengage.core.Properties
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -153,6 +155,17 @@ class PostDetailViewModel @Inject constructor(
    }
   }
  }
+
+
+  val properties = Properties()
+  properties.addAttribute(
+   "Customer_Id",
+   SharedPreferencesHelper.instance?.getString(
+    SharedPreferencesKeys.CUSTOMER_ID
+   )!!)
+   .addAttribute("Post_ID",postId)
+   .setNonInteractive()
+  getNavigator()?.sendMoEngageEvent("KA_View_Post_Detail", properties)
  }
  fun getPostComments(postId:String) {
 
@@ -361,6 +374,28 @@ class PostDetailViewModel @Inject constructor(
 
      val response = communityRepository.updatePost(postID,tags,area,showDate)
      if (response.isSuccessful) {
+      var hasImages = "No"
+      if (response.body()?.data?.images.isNotNull() && response.body()?.data?.images?.size!! >0){
+       hasImages ="Yes"
+      }
+
+      val properties = Properties()
+      properties.addAttribute(
+       "Customer_Id",
+       SharedPreferencesHelper.instance?.getString(
+        SharedPreferencesKeys.CUSTOMER_ID
+       )!!)
+       .addAttribute("Post_ID",postID)
+       .addAttribute("Post_Text",response.body()?.data?.description)
+       .addAttribute("Has_Images",hasImages)
+       .addAttribute("Crop",tags.toString())
+       .addAttribute("Area",area)
+       .addAttribute("Sowing_Date",date)
+       .setNonInteractive()
+      getNavigator()?.sendMoEngageEvent("KA_Save_Post",properties)
+
+
+
       getPostDetails(data?._id!!)
      }else{
       getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))

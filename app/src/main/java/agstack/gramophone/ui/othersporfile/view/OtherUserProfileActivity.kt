@@ -52,8 +52,8 @@ class OtherUserProfileActivity :
         if (intent.extras?.getString(Constants.POST_ID).isNotNullOrEmpty())
             otherProfileViewModel.postId = intent.extras?.getString(Constants.POST_ID)!!
 
-        otherProfileViewModel.getProfile(intent.getIntExtra(BLOCKED_STATUS, 0))
-        otherProfileViewModel.getPostByUUID(otherProfileViewModel.uuid)
+        otherProfileViewModel.getProfile(intent.getIntExtra(BLOCKED_STATUS,0))
+        otherProfileViewModel.getPostByUUID(otherProfileViewModel.uuid,otherProfileViewModel.id)
         sendOtherUserProfileViewMoEngageEvent()
     }
 

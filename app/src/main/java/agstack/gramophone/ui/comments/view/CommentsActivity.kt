@@ -10,6 +10,8 @@ import agstack.gramophone.ui.comments.viewModel.CommentsViewModel
 import agstack.gramophone.ui.home.adapter.CommentsAdapter
 import agstack.gramophone.utils.Constants.POST_ID
 import agstack.gramophone.utils.ImagePicker
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.widget.FilePicker
 import android.app.Activity
 import android.content.Context
@@ -32,6 +34,7 @@ import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.options
+import com.moengage.core.Properties
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_comments.*
 import java.io.ByteArrayOutputStream
@@ -55,6 +58,16 @@ class CommentsActivity :
         tvCommentBottom.requestFocus()
         val imm: InputMethodManager =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager;
+
+        val properties = Properties()
+        properties.addAttribute(
+            "Customer_Id",
+            SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.CUSTOMER_ID
+            )!!)
+            .addAttribute("Post_ID",intent.extras?.getString(POST_ID)!!)
+            .setNonInteractive()
+        sendMoEngageEvent("KA_View_Comments", properties)
         imm.showSoftInput(tvCommentBottom, InputMethodManager.SHOW_IMPLICIT);
 
 

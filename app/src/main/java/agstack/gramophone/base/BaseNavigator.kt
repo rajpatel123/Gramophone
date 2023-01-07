@@ -1,10 +1,14 @@
 package agstack.gramophone.base
 
 import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.app.Activity
 import android.location.Geocoder
 import android.os.Bundle
 import android.view.View
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 
 /*
 
@@ -61,4 +65,6 @@ interface BaseNavigator {
     fun hideSoftKeyboard(view : View){}
 
     fun showSoftKeyboard(view : View){}
+
+    fun sendMoEngageEvent(event: String, properties: Properties)
 }

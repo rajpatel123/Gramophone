@@ -46,6 +46,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.FirebaseApp
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import com.moengage.core.Properties
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.item_menu_cart_with_counter.*
 import kotlinx.android.synthetic.main.navigation_layout.*
@@ -80,7 +81,9 @@ class HomeActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
-        setUpFirebaseConfig()
+        if (TextUtils.isEmpty(instance!!.getString(SharedPreferencesKeys.GOOGLE_API_KEY))){
+            setUpFirebaseConfig()
+        }
         registerWithFCM()
         processDeepLink()
 
@@ -204,6 +207,16 @@ class HomeActivity :
                     supportFragmentManager.beginTransaction().hide(activeFragment)
                         .show(communityFragment).commit()
                     activeFragment = communityFragment
+
+                    val properties = Properties()
+                    properties.addAttribute(
+                        "Customer_Id",
+                        SharedPreferencesHelper.instance?.getString(
+                            SharedPreferencesKeys.CUSTOMER_ID
+                        )!!
+                    )
+                        .addAttribute("Redirection_Source", "Home Tab")
+                    sendMoEngageEvent("KA_View_Community_Wall", properties)
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_profile -> {
@@ -215,6 +228,16 @@ class HomeActivity :
                         .show(profileFragment).commit()
                     activeFragment = profileFragment
                     viewDataBinding.llCreateAPost.visibility = GONE
+
+                    val properties = Properties()
+                    properties.addAttribute(
+                        "Customer_Id",
+                        SharedPreferencesHelper.instance?.getString(
+                            SharedPreferencesKeys.CUSTOMER_ID
+                        )!!)
+                        .addAttribute("Redirection_Source","Main Navigation")
+                        .setNonInteractive()
+                        sendMoEngageEvent("KA_View_MyGramophone", properties)
 
                     return@setOnItemSelectedListener true
                 }

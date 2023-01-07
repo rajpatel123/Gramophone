@@ -11,7 +11,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="@dimen/_40sdp"
         android:layout_marginRight="@dimen/_50sdp"
-        android:src="@drawable/dummy_feature_product" />
+      />
 
 
 

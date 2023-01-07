@@ -53,12 +53,6 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
                             val referrerClickTime: Long = response.referrerClickTimestampSeconds
                             val appInstallTime: Long = response.installBeginTimestampSeconds
                             val instantExperienceLaunched: Boolean = response.googlePlayInstantParam
-
-                            Log.d("Raj",referrerUrl)
-                            Log.d("Raj","".plus(referrerClickTime))
-                            Log.d("Raj","".plus(appInstallTime))
-                            Log.d("Raj","".plus(instantExperienceLaunched))
-
                             instance?.putString(SharedPreferencesKeys.UTM_SOURCE,referrerUrl)
                             referrerClient.endConnection()//end connection to avoid leaks and smooth transition in app
                             instance?.putBoolean(Constants.UTM_SOURCE_UPDATED,true)

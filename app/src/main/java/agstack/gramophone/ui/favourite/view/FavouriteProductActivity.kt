@@ -10,10 +10,13 @@ import agstack.gramophone.ui.favourite.FavouriteProductAdapter
 import agstack.gramophone.ui.favourite.FavouriteProductNavigator
 import agstack.gramophone.ui.favourite.model.Data
 import agstack.gramophone.ui.favourite.viewmodel.FavouriteProductViewModel
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.moengage.core.Properties
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_community.*
 
@@ -29,6 +32,7 @@ class FavouriteProductActivity : BaseActivityWrapper<ActivityFavouriteProductBin
             R.drawable.ic_arrow_left
         )
         favouriteProductViewModel.getFavouriteProduct()
+
     }
 
     override fun getLayoutID(): Int {

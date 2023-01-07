@@ -7,8 +7,11 @@ import agstack.gramophone.di.GramophoneTVApiService
 import agstack.gramophone.di.RetrofitInstanceForYoutube
 import agstack.gramophone.ui.tv.model.*
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.moengage.core.Properties
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -53,6 +56,20 @@ class GramophoneTVViewModel @Inject constructor(
                             for (i in 0 until youtubeModel.items.size) {
                                 val playlist: YoutubeChannelItem = youtubeModel.items.get(i)
                                 playlistIds.add(playlist)
+                            }
+
+                            if (playlistIds.size<1){
+                                val properties = Properties()
+                                properties.addAttribute(
+                                    "Customer_Id",
+                                    SharedPreferencesHelper.instance?.getString(
+                                        SharedPreferencesKeys.CUSTOMER_ID
+                                    )!!
+                                ).addAttribute(
+                                    "Redirection_Source", "My Gramophone"
+                                )
+                                    .setNonInteractive()
+                                getNavigator()?.sendMoEngageEvent("KA_View_FavouriteGramophoneTV_NoData", properties)
                             }
                             getNavigator()?.populatePlayLists(playlistIds)
                             getNavigator()?.setNextPageToken(youtubeModel.nextPageToken)

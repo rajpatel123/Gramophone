@@ -37,7 +37,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -48,8 +47,11 @@ import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_community.*
+import java.util.*
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -73,9 +75,7 @@ class MyGramophoneFragment :
      * Create Binding
      */
     override fun onCreateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): FragmentMyGramophoneBinding = FragmentMyGramophoneBinding.inflate(inflater, container, false)
 
     /**
@@ -160,11 +160,25 @@ class MyGramophoneFragment :
             gramCashResponseModel.gpApiResponseData?.gramcashPending.toString()
         binding?.layoutGramCash?.tvCashDetails?.setOnClickListener {
             openActivity(GramCashActivity::class.java, null)
+
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!
+            ).setNonInteractive()
+            sendMoEngageEvent("KA_Click_GramCashDetails", properties)
         }
         binding?.layoutReferral?.tvReferralCount?.text =
             gramCashResponseModel.gpApiResponseData?.myReferrals?.size.toString()
         binding?.layoutReferral?.rlReferral?.setOnClickListener {
             openActivity(ReferAndEarnActivity::class.java, null)
+
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!
+            ).setNonInteractive()
+            sendMoEngageEvent("KA_Click_MyReferrals", properties)
         }
 
         binding?.layoutReferral?.itemReferral?.setOnClickListener {
@@ -195,9 +209,15 @@ class MyGramophoneFragment :
                 String.format(getMessage(R.string.my_post), communityHomeResponseModel.meta.pages)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                binding?.layoutMyPost?.tvPostDesc?.text = HtmlCompat.fromHtml(communityHomeResponseModel.data[0].description, HtmlCompat.FROM_HTML_MODE_LEGACY)
-            }else{
-                binding?.layoutMyPost?.tvPostDesc?.text  = HtmlCompat.fromHtml(communityHomeResponseModel.data[0].description!!, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                binding?.layoutMyPost?.tvPostDesc?.text = HtmlCompat.fromHtml(
+                    communityHomeResponseModel.data[0].description,
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
+            } else {
+                binding?.layoutMyPost?.tvPostDesc?.text = HtmlCompat.fromHtml(
+                    communityHomeResponseModel.data[0].description!!,
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
             }
 
             binding?.layoutMyPost?.dateTime?.text = getMessage(R.string.posted_on).plus(" ")
@@ -212,16 +232,14 @@ class MyGramophoneFragment :
             if (data.liked) {
                 binding?.layoutMyPost?.tvLikes?.setTextColor(
                     ContextCompat.getColor(
-                        activity as HomeActivity,
-                        R.color.red
+                        activity as HomeActivity, R.color.red
                     )
                 )
                 binding?.layoutMyPost?.ivLike?.setImageResource(R.drawable.ic_liked)
             } else {
                 binding?.layoutMyPost?.tvLikes?.setTextColor(
                     ContextCompat.getColor(
-                        activity as HomeActivity,
-                        R.color.gray
+                        activity as HomeActivity, R.color.gray
                     )
                 )
                 binding?.layoutMyPost?.ivLike?.setImageResource(R.drawable.ic_like)
@@ -233,30 +251,37 @@ class MyGramophoneFragment :
 
 
 
-            if (communityHomeResponseModel.data[0].images != null && communityHomeResponseModel.data[0].images.size > 0)
-                Glide.with(this).load(communityHomeResponseModel.data[0].images[0].url)
-                    .into(binding?.layoutMyPost?.ivPost!!)
+            if (communityHomeResponseModel.data[0].images != null && communityHomeResponseModel.data[0].images.size > 0) Glide.with(
+                this
+            ).load(communityHomeResponseModel.data[0].images[0].url)
+                .into(binding?.layoutMyPost?.ivPost!!)
 
             binding?.layoutMyPost?.tvGoToPosts?.setOnClickListener {
                 if (activity is HomeActivity) {
                     (activity as HomeActivity).showCommunityFragment("gramophone_my_post")
                 }
+
+                val properties = Properties()
+                properties.addAttribute(
+                    "Customer_Id",
+                    SharedPreferencesHelper.instance?.getString(
+                        SharedPreferencesKeys.CUSTOMER_ID
+                    )!!
+                )
+                    .setNonInteractive()
+                sendMoEngageEvent("KA_Click_ViewMyPosts", properties)
             }
 
             binding?.layoutMyPost?.tvLikes?.setOnClickListener {
-                openActivity(
-                    LikedPostUserListActivity::class.java,
-                    Bundle().apply {
-                        putString(Constants.POST_ID, communityHomeResponseModel.data[0]._id)
-                    })
+                openActivity(LikedPostUserListActivity::class.java, Bundle().apply {
+                    putString(Constants.POST_ID, communityHomeResponseModel.data[0]._id)
+                })
             }
 
             binding?.layoutMyPost?.tvComment?.setOnClickListener {
-                openActivity(
-                    CommentsActivity::class.java,
-                    Bundle().apply {
-                        putString(Constants.POST_ID, communityHomeResponseModel.data[0]._id)
-                    })
+                openActivity(CommentsActivity::class.java, Bundle().apply {
+                    putString(Constants.POST_ID, communityHomeResponseModel.data[0]._id)
+                })
             }
 
         } else {
@@ -270,6 +295,7 @@ class MyGramophoneFragment :
 
 
         binding?.layoutMyPost?.llCreatePost?.setOnClickListener {
+            sendOpenEvent()
             openActivity(CreatePostActivity::class.java)
         }
 
@@ -280,6 +306,15 @@ class MyGramophoneFragment :
 
     }
 
+    private fun sendOpenEvent() {
+        val properties = com.moengage.core.Properties()
+        properties.addAttribute(
+            "Customer_Id",
+            SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!
+        ).addAttribute("Redirection_Source", "My Gramophone").setNonInteractive()
+        activity?.let { MoEAnalyticsHelper.trackEvent(it, "KA_Open_CreatePost", properties) }
+    }
+
     override fun updateLike(data: LikeUpdate?) {
         binding?.layoutMyPost?.tvLikes?.text =
             data?.likesCount.toString().plus(" ").plus(getMessage(R.string.like))
@@ -288,16 +323,14 @@ class MyGramophoneFragment :
             binding?.layoutMyPost?.ivLike?.setImageResource(R.drawable.ic_liked)
             binding?.layoutMyPost?.tvLikes?.setTextColor(
                 ContextCompat.getColor(
-                    activity as HomeActivity,
-                    R.color.red
+                    activity as HomeActivity, R.color.red
                 )
             )
         } else {
             binding?.layoutMyPost?.ivLike?.setImageResource(R.drawable.ic_like)
             binding?.layoutMyPost?.tvLikes?.setTextColor(
                 ContextCompat.getColor(
-                    activity as HomeActivity,
-                    R.color.gray
+                    activity as HomeActivity, R.color.gray
                 )
             )
         }
@@ -330,24 +363,52 @@ class MyGramophoneFragment :
             binding?.layoutOrder?.tvOrderStatus?.text =
                 placedList.data[0].order_status_name.toString()
 
-            if (placedList.data[0].product_image != null)
-                Glide.with(this).load(placedList.data[0].product_image)
-                    .into(binding?.layoutOrder?.productImage!!)
+            if (placedList.data[0].product_image != null) Glide.with(this)
+                .load(placedList.data[0].product_image).into(binding?.layoutOrder?.productImage!!)
 
             binding?.layoutOrder?.tvDetail?.setOnClickListener {
                 openActivity(OrderDetailsActivity::class.java, Bundle().apply {
                     putString(Constants.ORDER_ID, placedList.data[0].order_id.toString())
                     putString(Constants.ORDER_TYPE, type)
                 })
+                val properties = Properties()
+                properties.addAttribute(
+                    "Customer_Id",
+                    SharedPreferencesHelper.instance?.getString(
+                        SharedPreferencesKeys.CUSTOMER_ID
+                    )!!
+                )
+                    .setNonInteractive()
+                sendMoEngageEvent("KA_Click_OrderDetail", properties)
+
             }
 
             binding?.layoutOrder?.tvGoToOrders?.setOnClickListener {
                 openActivity(OrderListActivity::class.java)
+                val properties = Properties()
+                properties.addAttribute(
+                    "Customer_Id",
+                    SharedPreferencesHelper.instance?.getString(
+                        SharedPreferencesKeys.CUSTOMER_ID
+                    )!!
+                )
+                    .setNonInteractive()
+                sendMoEngageEvent("KA_Click_GoToMyOrders", properties)
             }
         }
 
         binding?.layoutOrder?.rlCheckoutOffer?.setOnClickListener {
             openActivity(OffersListActivity::class.java)
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(
+                    SharedPreferencesKeys.CUSTOMER_ID
+                )!!
+            )
+                .setNonInteractive()
+            sendMoEngageEvent("KA_Click_CheckOffers", properties)
+
         }
         binding?.layoutOrder?.btnShopNow?.setOnClickListener {
             if (activity is HomeActivity) {
@@ -388,8 +449,7 @@ class MyGramophoneFragment :
 
 
             binding?.myFarmsTitle?.text = String.format(
-                getMessage(R.string.myfarm),
-                farms.gp_api_response_data.customer_farm.total
+                getMessage(R.string.myfarm), farms.gp_api_response_data.customer_farm.total
             )
             binding?.layoutFarm?.txtCropName?.text =
                 farms.gp_api_response_data.customer_farm.data[0][0].crop_name
@@ -424,8 +484,7 @@ class MyGramophoneFragment :
 
             binding?.layoutFarm?.txtStage?.text =
                 farms.gp_api_response_data.customer_farm.data[0][0].days.plus(" ")
-                    .plus(getString(R.string.days))
-                    .plus(", ").plus(
+                    .plus(getString(R.string.days)).plus(", ").plus(
                         farms.gp_api_response_data.customer_farm.data[0][0].stage_name
                     )
 
@@ -450,10 +509,29 @@ class MyGramophoneFragment :
                 )
                 putString(Constants.REDIRECTION_SOURCE, "My Gramophone")
             })
+
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(
+                    SharedPreferencesKeys.CUSTOMER_ID
+                )!!
+            )
+                .setNonInteractive()
+            sendMoEngageEvent("KA_Click_AddFarm", properties)
         }
 
         binding?.btnAddfarm?.setOnClickListener {
             openActivity(SelectCropActivity::class.java)
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(
+                    SharedPreferencesKeys.CUSTOMER_ID
+                )!!
+            )
+                .setNonInteractive()
+            sendMoEngageEvent("KA_Click_AddFarm_Crop", properties)
         }
 
         binding?.layoutFarm?.contentLayoutLL?.setOnClickListener {
@@ -481,6 +559,54 @@ class MyGramophoneFragment :
                   putString(Constants.REDIRECTION_SOURCE, "My Gramophone")
               })
           }
+            if (farms?.gp_api_response_data?.customer_farm?.data!![0].size < 2) {
+                openActivity(AdvisoryActivity::class.java, Bundle().apply {
+                    putInt(
+                        Constants.FARM_ID,
+                        farms?.gp_api_response_data?.customer_farm?.data!![0][0].farm_id?.toInt()!!
+                    )
+                    putString(Constants.FARM_TYPE, "customer_farm")
+                    putString(
+                        Constants.CROP_NAME,
+                        farms.gp_api_response_data.customer_farm.data[0][0].crop_name
+                    )
+                    putString(
+                        Constants.CROP_IMAGE,
+                        farms.gp_api_response_data.customer_farm.data[0][0].crop_image
+                    )
+                    putString(
+                        Constants.CROP_REF_ID,
+                        farms.gp_api_response_data.customer_farm.data[0][0].farm_ref_id
+                    )
+                    putInt(
+                        Constants.CROP_ID,
+                        farms.gp_api_response_data.customer_farm.data[0][0].crop_id
+                    )
+                    putString(
+                        Constants.CROP_DURATION,
+                        farms.gp_api_response_data.customer_farm.data[0][0].crop_sowing_date
+                    )
+                    putString(
+                        Constants.CROP_END_DATE,
+                        farms.gp_api_response_data.customer_farm.data[0][0].crop_anticipated_completed_date
+                    )
+                    putString(
+                        Constants.CROP_STAGE,
+                        farms.gp_api_response_data.customer_farm.data[0][0].stage_name
+                    )
+                    putString(
+                        Constants.CROP_DAYS,
+                        farms.gp_api_response_data.customer_farm.data[0][0].days
+                    )
+                })
+            } else {
+                openActivity(CropGroupExplorerActivity::class.java, Bundle().apply {
+                    putParcelableArrayList(
+                        "cropList",
+                        farms?.gp_api_response_data?.customer_farm?.data?.get(0) as ArrayList<Data>
+                    )
+                })
+            }
         }
 
         binding?.layoutFarm?.txtAddFarm?.setOnClickListener {
@@ -508,27 +634,23 @@ class MyGramophoneFragment :
 
     override fun updateMyFavoriteSection(myGramophoneResponseModel: MyGramophoneResponseModel) {
 
-        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.products > 0)
-            binding?.layoutFavorite?.tvProductCount?.text =
-                myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.products.toString()
+        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.products > 0) binding?.layoutFavorite?.tvProductCount?.text =
+            myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.products.toString()
         else binding?.layoutFavorite?.tvProductCount?.text = "--"
 
-        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.orders > 0)
-            binding?.layoutOrder?.myOrderTitle?.text =
-                String.format(
-                    getMessage(R.string.total_orders),
-                    myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.orders
-                )
+        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.orders > 0) binding?.layoutOrder?.myOrderTitle?.text =
+            String.format(
+                getMessage(R.string.total_orders),
+                myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.orders
+            )
         else binding?.layoutOrder?.myOrderTitle?.text = getMessage(R.string.my_orders)
 
-        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles > 0)
-            binding?.layoutFavorite?.tvArticleCount?.text =
-                myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles.toString()
+        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles > 0) binding?.layoutFavorite?.tvArticleCount?.text =
+            myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles.toString()
         else binding?.layoutFavorite?.tvArticleCount?.text = "--"
 
-        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.gramophone_tv > 0)
-            binding?.layoutFavorite?.tvTVCount?.text =
-                myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.gramophone_tv.toString()
+        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.gramophone_tv > 0) binding?.layoutFavorite?.tvTVCount?.text =
+            myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.gramophone_tv.toString()
         else binding?.layoutFavorite?.tvTVCount?.text = "--"
 
         binding?.layoutFavorite?.llPostLinearLayout?.setOnClickListener {
@@ -546,40 +668,105 @@ class MyGramophoneFragment :
                     )
 
                     putString(
-                        Constants.PAGE_SOURCE,
-                        "gramo"
+                        Constants.PAGE_SOURCE, "gramo"
                     )
                 })
+                val properties = Properties()
+                properties.addAttribute(
+                    "Customer_Id",
+                    SharedPreferencesHelper.instance?.getString(
+                        SharedPreferencesKeys.CUSTOMER_ID
+                    )!!
+                )
+                    .setNonInteractive()
+                sendMoEngageEvent("KA_Click_FavouriteArticles", properties)
+
             } else {
                 openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
                     putString(
-                        Constants.PAGE_URL,
-                        BuildConfig.BASE_URL_ARTICLES + Constants.ARTICLES
+                        Constants.PAGE_URL, BuildConfig.BASE_URL_ARTICLES + Constants.ARTICLES
                     )
 
                     putString(
-                        Constants.PAGE_SOURCE,
-                        "gramo"
+                        Constants.PAGE_SOURCE, "gramo"
                     )
                 })
             }
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(
+                    SharedPreferencesKeys.CUSTOMER_ID
+                )!!
+            )
+                .setNonInteractive()
+            sendMoEngageEvent("KA_View_FavouriteArticles_NoData", properties)
+
 
         }
 
         binding?.layoutFavorite?.llProductLinearLayout?.setOnClickListener {
             openActivity(FavouriteProductActivity::class.java)
+
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(
+                    SharedPreferencesKeys.CUSTOMER_ID
+                )!!
+            )
+                .setNonInteractive()
+            sendMoEngageEvent("KA_Click_FavouriteProducts", properties)
+
+            val properties1 = Properties()
+            properties1.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(
+                    SharedPreferencesKeys.CUSTOMER_ID
+                )!!
+            ).addAttribute(
+                "Redirection_Source", "My Gramophone"
+            )
+                .setNonInteractive()
+            sendMoEngageEvent("KA_View_FavouriteProducts", properties1)
         }
 
         binding?.layoutFavorite?.llTVLinearLayout?.setOnClickListener {
-            openActivity(BookmarkedVideosActivity::class.java, null)
+            if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.gramophone_tv > 0) {
+                openActivity(BookmarkedVideosActivity::class.java, null)
+                val properties = Properties()
+                properties.addAttribute(
+                    "Customer_Id",
+                    SharedPreferencesHelper.instance?.getString(
+                        SharedPreferencesKeys.CUSTOMER_ID
+                    )!!
+                ).addAttribute(
+                    "Redirection_Source", "My Gramophone"
+                )
+                    .setNonInteractive()
+                sendMoEngageEvent("KA_View_FavouriteGramophoneTV", properties)
+            } else {
+                openActivity(GramophoneTVActivity::class.java, null)
+                val properties = Properties()
+                properties.addAttribute(
+                    "Customer_Id",
+                    SharedPreferencesHelper.instance?.getString(
+                        SharedPreferencesKeys.CUSTOMER_ID
+                    )!!
+                ).addAttribute(
+                    "Redirection_Source", "My Gramophone"
+                )
+                    .setNonInteractive()
+                sendMoEngageEvent("KA_Click_GramophoneTV", properties)
+            }
+
         }
 
     }
 
     override fun updateMyFavoritePostCount(bookMarkedPostCounts: Int) {
-        if (bookMarkedPostCounts > 0)
-            binding?.layoutFavorite?.tvPostCount?.text =
-                bookMarkedPostCounts.toString()
+        if (bookMarkedPostCounts > 0) binding?.layoutFavorite?.tvPostCount?.text =
+            bookMarkedPostCounts.toString()
         else binding?.layoutFavorite?.tvPostCount?.text = "--"
     }
 

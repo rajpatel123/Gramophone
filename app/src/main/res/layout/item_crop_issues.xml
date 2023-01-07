@@ -26,7 +26,7 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivStage"
-                product_image="@{model.category_image}"
+                app:product_image='@{model.category_image ?? ""}'
                 android:layout_width="match_parent"
                 android:layout_height="104dp"
                 android:layout_gravity="center_horizontal"

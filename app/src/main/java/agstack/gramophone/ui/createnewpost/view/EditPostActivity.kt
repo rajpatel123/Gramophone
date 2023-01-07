@@ -64,9 +64,11 @@ import com.google.gson.Gson
 import com.leocardz.link.preview.library.LinkPreviewCallback
 import com.leocardz.link.preview.library.SourceContent
 import com.leocardz.link.preview.library.TextCrawler
+import com.moengage.core.Properties
 import com.tokenautocomplete.TagTokenizer
 import com.tokenautocomplete.TokenCompleteTextView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_comments.*
 import kotlinx.android.synthetic.main.card_items.*
 import kotlinx.android.synthetic.main.create_posts_activity.*
 import kotlinx.android.synthetic.main.item_tags.view.*
@@ -299,6 +301,15 @@ class EditPostActivity: BaseActivityWrapper<EditPostsActivityBinding, CreatePost
             }
         }
 
+        val properties = Properties()
+        properties.addAttribute(
+            "Customer_Id",
+            SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.CUSTOMER_ID
+            )!!)
+            .addAttribute("Post_ID",intent.extras?.getString(POST_ID)!!)
+            .setNonInteractive()
+        sendMoEngageEvent("KA_Edit_Post", properties)
 
     }
 

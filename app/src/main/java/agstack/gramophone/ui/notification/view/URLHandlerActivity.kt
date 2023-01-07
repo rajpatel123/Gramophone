@@ -31,9 +31,11 @@ import agstack.gramophone.utils.Constants.DEEP_LINK_REFERRAL
 import agstack.gramophone.utils.Constants.DEEP_LINK_SOCIAL
 import agstack.gramophone.utils.Constants.DEEP_LINK_WEATHER_INFO
 import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
+import com.moengage.core.Properties
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -123,6 +125,18 @@ class URLHandlerActivity :
 
             DEEP_LINK_EDIT_PHONE_NO -> {
                 openAndFinishActivity(EditProfileActivity::class.java, null)
+
+                val properties1 = Properties()
+                properties1.addAttribute(
+                    "Customer_Id",
+                    SharedPreferencesHelper.instance?.getString(
+                        SharedPreferencesKeys.CUSTOMER_ID
+                    )!!
+                ).addAttribute(
+                    "Redirection_Source","DeepLink"
+                )
+                    .setNonInteractive()
+                sendMoEngageEvent("KA_View_ReferAndEarn", properties1)
             }
 
             DEEP_LINK_DISEASE_DETAILS -> {

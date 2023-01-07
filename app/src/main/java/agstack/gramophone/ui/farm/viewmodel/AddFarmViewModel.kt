@@ -7,8 +7,11 @@ import agstack.gramophone.ui.farm.model.AddFarmRequest
 import agstack.gramophone.ui.farm.navigator.AddFarmNavigator
 import agstack.gramophone.ui.home.view.fragments.market.model.CropData
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.moengage.core.Properties
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -70,7 +73,16 @@ class AddFarmViewModel @Inject constructor(
     private fun addFarm(addFarmRequest: AddFarmRequest) {
         progress.value = true
         enableSaveButton.value = false
-
+        val properties = Properties()
+        properties.addAttribute(
+            "Customer_Id",
+            SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.CUSTOMER_ID
+            )!!)
+            .addAttribute("Crop",addFarmRequest.field_name)
+            .addAttribute(" Sowing Date",addFarmRequest.crop_sowing_date)
+            .addAttribute("Area",addFarmRequest.area)
+            .setNonInteractive()
         viewModelScope.launch {
             try {
                 val response = productRepository.addFarm(addFarmRequest)
@@ -80,6 +92,10 @@ class AddFarmViewModel @Inject constructor(
                     val addFarmResponse = response.body()
                     getNavigator()?.onFarmAdded()
                     getNavigator()?.sendSaveFarmMoEngageEvents("", addFarmRequest.field_name!!, addFarmRequest.crop_sowing_date!!, addFarmRequest.area.toString().plus(" ").plus(addFarmRequest.unit))
+
+                    getNavigator()?.sendMoEngageEvent("KA_Add_Farm_Info", properties)
+
+
                 }else{
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }

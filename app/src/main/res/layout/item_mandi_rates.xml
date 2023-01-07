@@ -16,7 +16,7 @@
             android:layout_height="@dimen/_64sdp"
             android:layout_gravity="center"
             android:contentDescription="@string/image"
-            android:src="@drawable/dummy_mandi_rates" />
+       />
 
         <LinearLayout
             android:layout_width="wrap_content"

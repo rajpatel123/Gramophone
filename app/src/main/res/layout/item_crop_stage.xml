@@ -22,7 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="104dp"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/dummy_crop_stage"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.SelectedCornerRadius" />
 
         <TextView

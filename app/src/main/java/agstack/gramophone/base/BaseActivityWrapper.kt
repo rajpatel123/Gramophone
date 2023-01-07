@@ -291,4 +291,9 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
             )
         }
     }
+
+    override fun sendMoEngageEvent(event: String, properties: Properties) {
+        MoEAnalyticsHelper.trackEvent(this, event, properties)
+
+    }
 }

@@ -23,8 +23,8 @@ android {
         applicationId "agstack.gramophone"
         minSdk 21
         targetSdk 31
-        versionCode 185
-        versionName "4.1.35"
+        versionCode 186
+        versionName "4.1.36"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
 
@@ -52,8 +52,9 @@ android {
         release {
             minifyEnabled false
             shrinkResources false
-            debuggable true
+            debuggable false
             resValue "string", "app_name_different", "Gramophone"
+            buildConfigField "String", "PLACE_API", "\"AIzaSyAgopa2TyrbNgE_qpnbvc6XiV7dLa9KHF0\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "facebook_app_name", '"fbContentProvider"'
             buildConfigField "String", "BASE_URL_SOCIAL", "\"https://community-api.gramophone.in/\""
@@ -70,6 +71,7 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             resValue "string", "app_name_different", " G.Debug"
+            buildConfigField "String", "PLACE_API", "\"AIzaSyAgopa2TyrbNgE_qpnbvc6XiV7dLa9KHF0\""
             buildConfigField "String", "BASE_URL_SOCIAL", "\"https://community-api-qa.gramophone.in/\""
             buildConfigField "String", "BASE_URL", "\"https://mobility-api-dev.gramophone.in/\""
             buildConfigField "String", "BASE_URL_YOUTUBE", "\"https://www.googleapis.com/youtube/v3/\""
@@ -84,6 +86,7 @@ android {
             initWith debug
             matchingFallbacks = ['debug']
             resValue "string", "app_name_different", " G.Uat"
+            buildConfigField "String", "PLACE_API", "\"AIzaSyAgopa2TyrbNgE_qpnbvc6XiV7dLa9KHF0\""
             buildConfigField "String", "BASE_URL_SOCIAL", "\"https://community-api-qa.gramophone.in/api/v1/\""
             buildConfigField "String", "BASE_URL", "\"https://mobility-api-dev.gramophone.in/\""
             buildConfigField "String", "BASE_URL_YOUTUBE", "\"https://www.googleapis.com/youtube/v3/\""
