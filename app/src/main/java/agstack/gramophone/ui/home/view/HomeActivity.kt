@@ -229,6 +229,16 @@ class HomeActivity :
                     activeFragment = profileFragment
                     viewDataBinding.llCreateAPost.visibility = GONE
 
+                    val properties = Properties()
+                    properties.addAttribute(
+                        "Customer_Id",
+                        SharedPreferencesHelper.instance?.getString(
+                            SharedPreferencesKeys.CUSTOMER_ID
+                        )!!)
+                        .addAttribute("Redirection_Source","Main Navigation")
+                        .setNonInteractive()
+                        sendMoEngageEvent("KA_View_MyGramophone", properties)
+
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_trade -> {

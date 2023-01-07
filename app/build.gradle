@@ -52,7 +52,7 @@ android {
         release {
             minifyEnabled false
             shrinkResources false
-            debuggable true
+            debuggable false
             resValue "string", "app_name_different", "Gramophone"
             buildConfigField "String", "PLACE_API", "\"AIzaSyAgopa2TyrbNgE_qpnbvc6XiV7dLa9KHF0\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

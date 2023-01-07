@@ -103,6 +103,8 @@ class LoginViewModel @Inject constructor(
 
     }
 
+
+
     fun onPrivacyClicked() {
         val initiateAppDataResponseModel =
             SharedPreferencesHelper.instance?.getParcelable(

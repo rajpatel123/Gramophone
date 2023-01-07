@@ -12,8 +12,11 @@ import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodel
 import agstack.gramophone.ui.home.view.fragments.gramophone.MyGramophoneFragmentNavigator
 import agstack.gramophone.ui.userprofile.UserProfileActivity
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.Utility
 import androidx.lifecycle.viewModelScope
+import com.moengage.core.Properties
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -31,6 +34,14 @@ class MyGramophoneFragmentViewModel
 
     fun onViewProfileClicked() {
         getNavigator()?.openActivity(UserProfileActivity::class.java, null)
+        val properties = Properties()
+        properties.addAttribute(
+            "Customer_Id",
+            SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.CUSTOMER_ID
+            )!!)
+            .setNonInteractive()
+        getNavigator()?.sendMoEngageEvent("KA_Click_ViewProfile", properties)
     }
 
     fun initProfile() {

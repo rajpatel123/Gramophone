@@ -155,6 +155,17 @@ class PostDetailViewModel @Inject constructor(
    }
   }
  }
+
+
+  val properties = Properties()
+  properties.addAttribute(
+   "Customer_Id",
+   SharedPreferencesHelper.instance?.getString(
+    SharedPreferencesKeys.CUSTOMER_ID
+   )!!)
+   .addAttribute("Post_ID",postId)
+   .setNonInteractive()
+  getNavigator()?.sendMoEngageEvent("KA_View_Post_Detail", properties)
  }
  fun getPostComments(postId:String) {
 

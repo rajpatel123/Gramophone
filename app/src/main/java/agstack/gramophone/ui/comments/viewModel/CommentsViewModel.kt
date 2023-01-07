@@ -7,13 +7,12 @@ import agstack.gramophone.ui.comments.CommentNavigator
 import agstack.gramophone.ui.comments.model.Data
 import agstack.gramophone.ui.comments.model.sendcomment.GetCommentRequestModel
 import agstack.gramophone.ui.home.adapter.CommentsAdapter
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.FileUploadRequestBody
-import agstack.gramophone.utils.Utility
+import agstack.gramophone.utils.*
 import android.os.SystemClock
 import android.text.TextUtils
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.moengage.core.Properties
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -75,6 +74,8 @@ class CommentsViewModel @Inject constructor(
 
 
         }
+
+
     }
 
     fun onImageClose(){
@@ -136,6 +137,21 @@ class CommentsViewModel @Inject constructor(
 
                             commentInput.set("")
                             getComments(postId = postId)
+
+
+                            val properties = Properties()
+                            properties.addAttribute(
+                                "Customer_Id",
+                                SharedPreferencesHelper.instance?.getString(
+                                    SharedPreferencesKeys.CUSTOMER_ID
+                                )!!)
+                                .addAttribute("Post_ID",postID)
+                                .addAttribute("Comment ID",response.body()?.data?._id)
+                                .addAttribute("Comment",comment)
+                                .setNonInteractive()
+                            getNavigator()?.sendMoEngageEvent("KA_Write_Comment", properties)
+
+
                         }else{
                             isLoading.set(false)
 
@@ -189,6 +205,18 @@ class CommentsViewModel @Inject constructor(
                             commentInput.set("")
                             getComments(postId = postId)
                             getNavigator()?.clearImage()
+
+                            val properties = Properties()
+                            properties.addAttribute(
+                                "Customer_Id",
+                                SharedPreferencesHelper.instance?.getString(
+                                    SharedPreferencesKeys.CUSTOMER_ID
+                                )!!)
+                                .addAttribute("Post_ID",postId)
+                                .addAttribute("Comment ID",id)
+                                .setNonInteractive()
+                            getNavigator()?.sendMoEngageEvent("KA_Edit_Comment", properties)
+
                         }else{
                             isLoading.set(false)
 
@@ -201,6 +229,16 @@ class CommentsViewModel @Inject constructor(
 
                             commentInput.set("")
                             getComments(postId = postId)
+                            val properties = Properties()
+                            properties.addAttribute(
+                                "Customer_Id",
+                                SharedPreferencesHelper.instance?.getString(
+                                    SharedPreferencesKeys.CUSTOMER_ID
+                                )!!)
+                                .addAttribute("Post_ID",postId)
+                                .addAttribute("Comment ID",id)
+                                .setNonInteractive()
+                            getNavigator()?.sendMoEngageEvent("KA_Edit_Comment", properties)
                         }else{
                             isLoading.set(false)
 
@@ -229,6 +267,17 @@ class CommentsViewModel @Inject constructor(
             val deleteCommentResponse = communityRepository.deleteComment(data.postId,data._id)
             if (deleteCommentResponse.isSuccessful && deleteCommentResponse.body()?.data == true){
                 getComments(data.postId)
+
+                val properties = Properties()
+                properties.addAttribute(
+                    "Customer_Id",
+                    SharedPreferencesHelper.instance?.getString(
+                        SharedPreferencesKeys.CUSTOMER_ID
+                    )!!)
+                    .addAttribute("Post_ID",postId)
+                    .addAttribute("Comment ID",data?._id)
+                    .setNonInteractive()
+                getNavigator()?.sendMoEngageEvent("KA_Delete_Comment", properties)
             }else{
                 getNavigator()?.showToast(Utility.getErrorMessage(deleteCommentResponse.errorBody()))
             }

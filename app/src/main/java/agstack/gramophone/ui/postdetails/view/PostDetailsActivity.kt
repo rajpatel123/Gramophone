@@ -87,6 +87,9 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
             }
         }
         shareSheetPresenter = this?.let { ShareSheetPresenter(this) }
+
+
+
     }
 
     override fun showBottomSheet() {

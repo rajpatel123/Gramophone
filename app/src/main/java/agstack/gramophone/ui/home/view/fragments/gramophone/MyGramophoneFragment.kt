@@ -30,6 +30,7 @@ import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.orderdetails.OrderDetailsActivity
 import agstack.gramophone.ui.referandearn.ReferAndEarnActivity
 import agstack.gramophone.ui.referandearn.model.GramCashResponseModel
+import agstack.gramophone.ui.tv.GramophoneTVActivity
 import agstack.gramophone.utils.*
 import agstack.gramophone.view.activity.CreatePostActivity
 import android.content.Intent
@@ -46,6 +47,7 @@ import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_community.*
@@ -158,11 +160,25 @@ class MyGramophoneFragment :
             gramCashResponseModel.gpApiResponseData?.gramcashPending.toString()
         binding?.layoutGramCash?.tvCashDetails?.setOnClickListener {
             openActivity(GramCashActivity::class.java, null)
+
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!
+            ).setNonInteractive()
+            sendMoEngageEvent("KA_Click_GramCashDetails", properties)
         }
         binding?.layoutReferral?.tvReferralCount?.text =
             gramCashResponseModel.gpApiResponseData?.myReferrals?.size.toString()
         binding?.layoutReferral?.rlReferral?.setOnClickListener {
             openActivity(ReferAndEarnActivity::class.java, null)
+
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!
+            ).setNonInteractive()
+            sendMoEngageEvent("KA_Click_MyReferrals", properties)
         }
 
         binding?.layoutReferral?.itemReferral?.setOnClickListener {
@@ -244,6 +260,16 @@ class MyGramophoneFragment :
                 if (activity is HomeActivity) {
                     (activity as HomeActivity).showCommunityFragment("gramophone_my_post")
                 }
+
+                val properties = Properties()
+                properties.addAttribute(
+                    "Customer_Id",
+                    SharedPreferencesHelper.instance?.getString(
+                        SharedPreferencesKeys.CUSTOMER_ID
+                    )!!
+                )
+                    .setNonInteractive()
+                sendMoEngageEvent("KA_Click_ViewMyPosts", properties)
             }
 
             binding?.layoutMyPost?.tvLikes?.setOnClickListener {
@@ -345,15 +371,44 @@ class MyGramophoneFragment :
                     putString(Constants.ORDER_ID, placedList.data[0].order_id.toString())
                     putString(Constants.ORDER_TYPE, type)
                 })
+                val properties = Properties()
+                properties.addAttribute(
+                    "Customer_Id",
+                    SharedPreferencesHelper.instance?.getString(
+                        SharedPreferencesKeys.CUSTOMER_ID
+                    )!!
+                )
+                    .setNonInteractive()
+                sendMoEngageEvent("KA_Click_OrderDetail", properties)
+
             }
 
             binding?.layoutOrder?.tvGoToOrders?.setOnClickListener {
                 openActivity(OrderListActivity::class.java)
+                val properties = Properties()
+                properties.addAttribute(
+                    "Customer_Id",
+                    SharedPreferencesHelper.instance?.getString(
+                        SharedPreferencesKeys.CUSTOMER_ID
+                    )!!
+                )
+                    .setNonInteractive()
+                sendMoEngageEvent("KA_Click_GoToMyOrders", properties)
             }
         }
 
         binding?.layoutOrder?.rlCheckoutOffer?.setOnClickListener {
             openActivity(OffersListActivity::class.java)
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(
+                    SharedPreferencesKeys.CUSTOMER_ID
+                )!!
+            )
+                .setNonInteractive()
+            sendMoEngageEvent("KA_Click_CheckOffers", properties)
+
         }
         binding?.layoutOrder?.btnShopNow?.setOnClickListener {
             if (activity is HomeActivity) {
@@ -451,10 +506,29 @@ class MyGramophoneFragment :
                     farms?.gp_api_response_data?.customer_farm?.data?.get(0) as ArrayList<Data>
                 )
             })
+
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(
+                    SharedPreferencesKeys.CUSTOMER_ID
+                )!!
+            )
+                .setNonInteractive()
+            sendMoEngageEvent("KA_Click_AddFarm", properties)
         }
 
         binding?.btnAddfarm?.setOnClickListener {
             openActivity(SelectCropActivity::class.java)
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(
+                    SharedPreferencesKeys.CUSTOMER_ID
+                )!!
+            )
+                .setNonInteractive()
+            sendMoEngageEvent("KA_Click_AddFarm_Crop", properties)
         }
 
         binding?.layoutFarm?.contentLayoutLL?.setOnClickListener {
@@ -569,6 +643,16 @@ class MyGramophoneFragment :
                         Constants.PAGE_SOURCE, "gramo"
                     )
                 })
+                val properties = Properties()
+                properties.addAttribute(
+                    "Customer_Id",
+                    SharedPreferencesHelper.instance?.getString(
+                        SharedPreferencesKeys.CUSTOMER_ID
+                    )!!
+                )
+                    .setNonInteractive()
+                sendMoEngageEvent("KA_Click_FavouriteArticles", properties)
+
             } else {
                 openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
                     putString(
@@ -580,15 +664,74 @@ class MyGramophoneFragment :
                     )
                 })
             }
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(
+                    SharedPreferencesKeys.CUSTOMER_ID
+                )!!
+            )
+                .setNonInteractive()
+            sendMoEngageEvent("KA_View_FavouriteArticles_NoData", properties)
+
 
         }
 
         binding?.layoutFavorite?.llProductLinearLayout?.setOnClickListener {
             openActivity(FavouriteProductActivity::class.java)
+
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(
+                    SharedPreferencesKeys.CUSTOMER_ID
+                )!!
+            )
+                .setNonInteractive()
+            sendMoEngageEvent("KA_Click_FavouriteProducts", properties)
+
+            val properties1 = Properties()
+            properties1.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(
+                    SharedPreferencesKeys.CUSTOMER_ID
+                )!!
+            ).addAttribute(
+                "Redirection_Source", "My Gramophone"
+            )
+                .setNonInteractive()
+            sendMoEngageEvent("KA_View_FavouriteProducts", properties1)
         }
 
         binding?.layoutFavorite?.llTVLinearLayout?.setOnClickListener {
-            openActivity(BookmarkedVideosActivity::class.java, null)
+            if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.gramophone_tv > 0) {
+                openActivity(BookmarkedVideosActivity::class.java, null)
+                val properties = Properties()
+                properties.addAttribute(
+                    "Customer_Id",
+                    SharedPreferencesHelper.instance?.getString(
+                        SharedPreferencesKeys.CUSTOMER_ID
+                    )!!
+                ).addAttribute(
+                    "Redirection_Source", "My Gramophone"
+                )
+                    .setNonInteractive()
+                sendMoEngageEvent("KA_View_FavouriteGramophoneTV", properties)
+            } else {
+                openActivity(GramophoneTVActivity::class.java, null)
+                val properties = Properties()
+                properties.addAttribute(
+                    "Customer_Id",
+                    SharedPreferencesHelper.instance?.getString(
+                        SharedPreferencesKeys.CUSTOMER_ID
+                    )!!
+                ).addAttribute(
+                    "Redirection_Source", "My Gramophone"
+                )
+                    .setNonInteractive()
+                sendMoEngageEvent("KA_Click_GramophoneTV", properties)
+            }
+
         }
 
     }

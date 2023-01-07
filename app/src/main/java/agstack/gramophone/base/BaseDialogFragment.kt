@@ -30,6 +30,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.viewbinding.ViewBinding
+import com.moengage.core.Properties
 import java.util.*
 
 abstract class BaseDialogFragment<B : ViewDataBinding, N : BaseNavigator, V : BaseViewModel<N>> :
@@ -247,5 +248,8 @@ abstract class BaseDialogFragment<B : ViewDataBinding, N : BaseNavigator, V : Ba
                 Log.i("Permission: ", "Denied")
             }
         }
+
+    override fun sendMoEngageEvent(event: String, properties: Properties) {
+    }
 
 }

@@ -1,5 +1,6 @@
 package agstack.gramophone.ui.home.view.fragments.community.viewmodel
 
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.community.CommunityRepository
@@ -28,6 +29,7 @@ import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.Utility
 import agstack.gramophone.view.activity.EditPostActivity
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -35,6 +37,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.tabs.TabLayout
 import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -103,6 +106,17 @@ class CommunityViewModel @Inject constructor(
             }
         }
 
+
+
+        val properties = Properties()
+        properties.addAttribute(
+            "Customer_Id",
+            SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.CUSTOMER_ID
+            )!!)
+            .addAttribute("Filter",sorting.get())
+            .setNonInteractive()
+        getNavigator()?.sendMoEngageEvent("KA_Filter_Feed", properties)
         loadData(sorting.get()!!)
     }
 
@@ -142,6 +156,16 @@ class CommunityViewModel @Inject constructor(
                     } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                     }
+
+                    val properties = Properties()
+                    properties.addAttribute(
+                        "Customer_Id",
+                        SharedPreferencesHelper.instance?.getString(
+                            SharedPreferencesKeys.CUSTOMER_ID
+                        )!!)
+                        .addAttribute("Post_ID",menuClickedData._id)
+                        .setNonInteractive()
+                    getNavigator()?.sendMoEngageEvent("KA_Delete_Post", properties)
                 } else
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
             } catch (ex: Exception) {
@@ -223,9 +247,12 @@ class CommunityViewModel @Inject constructor(
         mAlertDialog?.dismiss()
         if (!TextUtils.isEmpty(reportReason)) {
             reportPost()
+
         } else {
             getNavigator()?.showToast(getNavigator()?.getMessage(R.string.select_report_reason))
         }
+
+
 
     }
 
@@ -249,6 +276,17 @@ class CommunityViewModel @Inject constructor(
                     if (response.isSuccessful) {
                         getPost(sorting = sorting.get().toString())
                         getNavigator()?.showToast(getNavigator()?.getMessage(R.string.complain_logged))
+
+                        val properties = Properties()
+                        properties.addAttribute(
+                            "Customer_Id",
+                            SharedPreferencesHelper.instance?.getString(
+                                SharedPreferencesKeys.CUSTOMER_ID
+                            )!!)
+                            .addAttribute("Post_ID",menuClickedData._id)
+                            .setNonInteractive()
+                        getNavigator()?.sendMoEngageEvent("KA_View_Likes_On_Post", properties)
+
                     } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                     }
@@ -290,6 +328,20 @@ class CommunityViewModel @Inject constructor(
                     )
                     if (response.isSuccessful) {
                         getPost(sorting = sorting.get().toString())
+
+                        val properties = Properties()
+                        properties.addAttribute(
+                            "Customer_Id",
+                            SharedPreferencesHelper.instance?.getString(
+                                SharedPreferencesKeys.CUSTOMER_ID
+                            )!!)
+                            .addAttribute("Customer_ID_Blocked",menuClickedData._id)
+                            .setNonInteractive()
+                       getNavigator()?.sendMoEngageEvent("KA_Block_User", properties)
+
+
+
+
                     } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                     }
@@ -346,6 +398,16 @@ class CommunityViewModel @Inject constructor(
                                 Bundle().apply {
                                     putString(Constants.POST_ID, it)
                                 })
+
+                            val properties = Properties()
+                            properties.addAttribute(
+                                "Customer_Id",
+                                SharedPreferencesHelper.instance?.getString(
+                                    SharedPreferencesKeys.CUSTOMER_ID
+                                )!!)
+                                .addAttribute("Post_ID",it)
+                                .setNonInteractive()
+                            getNavigator()?.sendMoEngageEvent("KA_View_Likes_On_Post", properties)
                         },
                         {//comments click
                             getNavigator()?.openActivity(
@@ -589,6 +651,16 @@ class CommunityViewModel @Inject constructor(
                         showProgress.set(false)
                         getPost(sorting.get()!!)
 
+                        val properties = Properties()
+                        properties.addAttribute(
+                            "Customer_Id",
+                            SharedPreferencesHelper.instance?.getString(
+                                SharedPreferencesKeys.CUSTOMER_ID
+                            )!!)
+                            .addAttribute("AnsweredEntity",it.option_id)
+                            .addAttribute("Answer",it.answer)
+                            .setNonInteractive()
+                        getNavigator()?.sendMoEngageEvent("KA_Answer_QuizPoll", properties)
                     } else {
                         showProgress.set(false)
 
@@ -655,6 +727,8 @@ class CommunityViewModel @Inject constructor(
             } else {
                 status = "pin"
             }
+
+
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     val response =
@@ -664,7 +738,16 @@ class CommunityViewModel @Inject constructor(
                         post?.pinned = status.equals("pin")
                         communityPostAdapter.notifyItemChanged(it.position!!)
 
-
+                        val properties = Properties()
+                        properties.addAttribute(
+                            "Customer_Id",
+                            SharedPreferencesHelper.instance?.getString(
+                                SharedPreferencesKeys.CUSTOMER_ID
+                            )!!)
+                            .addAttribute("Post_ID",menuClickedData._id)
+                            .addAttribute("Action",status)
+                            .setNonInteractive()
+                        getNavigator()?.sendMoEngageEvent("KA_Pin_Post", properties)
                     } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                     }
@@ -739,6 +822,19 @@ class CommunityViewModel @Inject constructor(
                         post?.likesCount = data?.likesCount!!
                         post?.liked = data.liked
                         communityPostAdapter.notifyItemChanged(position)
+
+                        var action  = if (post?.liked == true) "Like" else "Unlike"
+                        val properties = Properties()
+                        properties.addAttribute(
+                            "Customer_Id",
+                            SharedPreferencesHelper.instance?.getString(
+                                SharedPreferencesKeys.CUSTOMER_ID
+                            )!!)
+                            .addAttribute("Post_ID",post?._id)
+                            .addAttribute("Action",action)
+                            .setNonInteractive()
+                        getNavigator()?.sendMoEngageEvent("KA_LikeUnlike_Post", properties)
+
 
                     }
                 } else
@@ -822,8 +918,18 @@ class CommunityViewModel @Inject constructor(
                         } else {
                             block = "block"
                             blockStr.set("Block User")
+                            val properties = Properties()
+                            properties.addAttribute(
+                                "Customer_Id",
+                                SharedPreferencesHelper.instance?.getString(
+                                    SharedPreferencesKeys.CUSTOMER_ID
+                                )!!)
+                                .addAttribute("Customer_ID_Blocked",id)
+                                .setNonInteractive()
+                            getNavigator()?.sendMoEngageEvent("KA_Block_User", properties)
 
                         }
+
                     } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                     }
