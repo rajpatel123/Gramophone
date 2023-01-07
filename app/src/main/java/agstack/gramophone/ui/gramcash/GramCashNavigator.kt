@@ -7,5 +7,5 @@ interface GramCashNavigator :BaseNavigator {
     fun setFAQAdapter(faqAdapter: FAQAdapter)
     fun setGramCashRulesAdapter(faqAdapter: FAQAdapter)
     fun manageaboutBottomPopup()
-
+    fun sendMoEngageEvent(eventName: String)
 }

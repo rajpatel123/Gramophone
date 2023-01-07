@@ -79,8 +79,7 @@
                 android:onClick="@{()->viewModel.onBlock()}"
                 android:text="@string/block_user"
                 android:textColor="@color/brand_color"
-                android:textSize="@dimen/_14ssp"
-                />
+                android:textSize="@dimen/_14ssp" />
         </RelativeLayout>
 
 

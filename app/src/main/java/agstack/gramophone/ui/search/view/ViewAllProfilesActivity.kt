@@ -32,6 +32,7 @@ class ViewAllProfilesActivity :
                 Bundle().apply {
                     putString(Constants.AUTHER_ID, id)
                     putString(Constants.AUTHER_UUID, id)
+                    putString(Constants.REDIRECTION_SOURCE, "View All Profile Screen")
                 })
         }
 

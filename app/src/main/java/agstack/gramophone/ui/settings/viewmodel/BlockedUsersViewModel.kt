@@ -20,34 +20,34 @@ import javax.inject.Inject
 @HiltViewModel
 class BlockedUsersViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
-    private val communityRepository: CommunityRepository
+    private val communityRepository: CommunityRepository,
 ) : BaseViewModel<BlockedUsersNavigator>() {
     fun getBlockedUsersList() {
         viewModelScope.launch {
-                try {
-                    if (getNavigator()?.isNetworkAvailable() == true) {
-                        val blockedUsersList = communityRepository.getBlockedUsersList()
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    val blockedUsersList = communityRepository.getBlockedUsersList()
 
-                        val optInResponseData = handleResponse(blockedUsersList).data
+                    val optInResponseData = handleResponse(blockedUsersList).data
 
-                        if (optInResponseData?.data!=null) {
-                            getNavigator()?.updateUserList(BlockedUsersAdapter(optInResponseData?.data!!)){
-                                unblockUser(it._id)
-                            }
-                        } else {
-                            getNavigator()?.updateUserList(null){
-                                unblockUser(it._id)
-                            }
-                            getNavigator()?.onError(Utility.getErrorMessage(blockedUsersList.errorBody()))
+                    if (optInResponseData?.data != null) {
+                        getNavigator()?.updateUserList(BlockedUsersAdapter(optInResponseData?.data!!)) {
+                            unblockUser(it._id)
                         }
-                    } else
-                        getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
-                } catch (ex: Exception) {
-                    when (ex) {
-                        is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                        else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                    } else {
+                        getNavigator()?.updateUserList(null) {
+                            unblockUser(it._id)
+                        }
+                        getNavigator()?.onError(Utility.getErrorMessage(blockedUsersList.errorBody()))
                     }
+                } else
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
+            }
 
         }
 
@@ -55,26 +55,26 @@ class BlockedUsersViewModel @Inject constructor(
 
     private fun unblockUser(customerId: String) {
         viewModelScope.launch {
-                try {
-                    if (getNavigator()?.isNetworkAvailable() == true) {
-                        val blockedUserResponse = communityRepository.unBlockUser(
-                            UnblockRequestModel("unblock",customerId))
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    val blockedUserResponse = communityRepository.unBlockUser(
+                        UnblockRequestModel("unblock", customerId))
 
+                    getNavigator()?.sendUnBlockUserMoEngageEvent(customerId)
 
-
-                        if (blockedUserResponse.isSuccessful) {
-                            getBlockedUsersList()
-                        } else {
-                            getNavigator()?.onError(Utility.getErrorMessage(blockedUserResponse.errorBody()))
-                        }
-                    } else
-                        getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
-                } catch (ex: Exception) {
-                    when (ex) {
-                        is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                        else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                    if (blockedUserResponse.isSuccessful) {
+                        getBlockedUsersList()
+                    } else {
+                        getNavigator()?.onError(Utility.getErrorMessage(blockedUserResponse.errorBody()))
                     }
+                } else
+                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
+            }
         }
 
     }

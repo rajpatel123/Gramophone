@@ -40,7 +40,9 @@ import kotlinx.android.synthetic.main.fragment_community.*
 
 
 @AndroidEntryPoint
-class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragmentNavigator,CommunityViewModel>() , CommunityFragmentNavigator,
+class CommunityFragment :
+    BaseFragment<FragmentCommunityBinding, CommunityFragmentNavigator, CommunityViewModel>(),
+    CommunityFragmentNavigator,
     CommunityPostAdapter.SetImage {
 
     private lateinit var reportReason: CharSequence
@@ -54,7 +56,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
 
         binding?.swipeRefresh?.setOnRefreshListener {
-            binding?.swipeRefresh?.isRefreshing=true
+            binding?.swipeRefresh?.isRefreshing = true
             communityViewModel.loadData(communityViewModel.sorting.get().toString())
         }
 
@@ -70,7 +72,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     override fun onCreateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): FragmentCommunityBinding = FragmentCommunityBinding.inflate(inflater, container, false)
 
 
@@ -84,6 +86,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
     }
+
     override fun updatePostList(
         communityPostAdapter: CommunityPostAdapter,
         quizPollAnswered: (option: Option) -> Unit,
@@ -96,38 +99,39 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         onLikeClicked: (post: Data) -> Unit,
         onBookMarkClicked: (post: Data) -> Unit,
         onFollowClicked: (post: Data) -> Unit,
-        onProfileImageClicked: (post: Data) -> Unit
+        onProfileImageClicked: (post: Data) -> Unit,
 
-    ) {
+        ) {
         runOnUIThread {//will be removed while api integrations
-            communityPostAdapter.quizPollAnswered=quizPollAnswered
-            communityPostAdapter.onItemCommentsClicked=onItemCommentsClicked
-            communityPostAdapter.onItemLikesClicked=onItemLikesClicked
-            communityPostAdapter.onItemDetailClicked=onItemDetailClicked
-            communityPostAdapter.onShareClicked=onWhatsAppClicked
-            communityPostAdapter.onTripleDotMenuClicked=onTripleDotMenuClicked
-            communityPostAdapter.onMenuOptionClicked=onMenuOptionClicked
-            communityPostAdapter.onLikeClicked=onLikeClicked
-            communityPostAdapter.onBookMarkClicked=onBookMarkClicked
-            communityPostAdapter.onFollowClicked=onFollowClicked
-            communityPostAdapter.onProfileImageClicked=onProfileImageClicked
+            communityPostAdapter.quizPollAnswered = quizPollAnswered
+            communityPostAdapter.onItemCommentsClicked = onItemCommentsClicked
+            communityPostAdapter.onItemLikesClicked = onItemLikesClicked
+            communityPostAdapter.onItemDetailClicked = onItemDetailClicked
+            communityPostAdapter.onShareClicked = onWhatsAppClicked
+            communityPostAdapter.onTripleDotMenuClicked = onTripleDotMenuClicked
+            communityPostAdapter.onMenuOptionClicked = onMenuOptionClicked
+            communityPostAdapter.onLikeClicked = onLikeClicked
+            communityPostAdapter.onBookMarkClicked = onBookMarkClicked
+            communityPostAdapter.onFollowClicked = onFollowClicked
+            communityPostAdapter.onProfileImageClicked = onProfileImageClicked
             communityPostAdapter.setImage = this
-            rvPost.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            rvPost.layoutManager =
+                LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             rvPost.setHasFixedSize(false)
             rvPost.adapter = communityPostAdapter
-            if (communityPostAdapter.dataList?.size!! >0){
-                tvNoPost.visibility=GONE
-                rvPost.visibility= VISIBLE
-            }else{
-                tvNoPost.visibility= VISIBLE
-                rvPost.visibility= GONE
+            if (communityPostAdapter.dataList?.size!! > 0) {
+                tvNoPost.visibility = GONE
+                rvPost.visibility = VISIBLE
+            } else {
+                tvNoPost.visibility = VISIBLE
+                rvPost.visibility = GONE
             }
-            progress.visibility= GONE
+            progress.visibility = GONE
 
 
 
             swipeRefresh.setOnRefreshListener {
-                swipeRefresh.isRefreshing=true
+                swipeRefresh.isRefreshing = true
                 communityViewModel.loadData(communityViewModel.sorting.get().toString())
             }
         }
@@ -135,10 +139,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       // communityViewModel.loadData(communityViewModel.sorting.get().toString())
+        // communityViewModel.loadData(communityViewModel.sorting.get().toString())
         tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                progress.visibility= VISIBLE
+                progress.visibility = VISIBLE
                 communityViewModel.filterPost(tab)
             }
 
@@ -146,6 +150,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
     }
+
     override fun sharePost(link: String) {
         val whatsappIntent = Intent(Intent.ACTION_SEND)
         whatsappIntent.type = "text/plain"
@@ -190,7 +195,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         })
 
 
-
         //AlertDialogBuilder
         val mBuilder = AlertDialog.Builder(activity)
             .setView(dialogBinding.root)
@@ -221,7 +225,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         TODO("Not yet implemented")
     }
 
-    override fun setProfileImage(url:String) {
+    override fun setProfileImage(url: String) {
     }
 
     override fun stopRefresh() {
@@ -269,6 +273,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         } else if (from.equals("social")) {
             source = "Deeplink"
 
+        } else if (from == "social") {
             val tab = binding?.tabLayout?.getTabAt(1)
             tab!!.select()
         }
@@ -285,5 +290,13 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     }
 
+    override fun sendBlockUserMoEngageEvent() {
+        //no need to send event from here
+        // because event (KA_Block_User) has already been sent from OtherUserProfileActivity
+    }
 
+    override fun sendEditFollowStatusMoEngageEvent() {
+        //no need to send event from here
+        // because event has already been sent from OtherUserProfileActivity
+    }
 }

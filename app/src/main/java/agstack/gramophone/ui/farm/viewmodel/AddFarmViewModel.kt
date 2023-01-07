@@ -91,6 +91,7 @@ class AddFarmViewModel @Inject constructor(
                 ) {
                     val addFarmResponse = response.body()
                     getNavigator()?.onFarmAdded()
+                    getNavigator()?.sendSaveFarmMoEngageEvents("", addFarmRequest.field_name!!, addFarmRequest.crop_sowing_date!!, addFarmRequest.area.toString().plus(" ").plus(addFarmRequest.unit))
 
                     getNavigator()?.sendMoEngageEvent("KA_Add_Farm_Info", properties)
 

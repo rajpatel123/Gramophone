@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.followings.view
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityFollowerFaloweeBinding
@@ -8,6 +9,9 @@ import agstack.gramophone.ui.followings.FollowerFollowingNavigator
 import agstack.gramophone.ui.followings.FollowsAdapter
 import agstack.gramophone.ui.followings.model.Data
 import agstack.gramophone.ui.followings.viewmodel.FollowerFollowingViewModel
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
@@ -18,6 +22,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.amnix.xtension.extensions.setOnSwipeListener
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_community.*
 
@@ -26,30 +32,32 @@ class FollowerFollowedActivity :
     BaseActivityWrapper<ActivityFollowerFaloweeBinding, FollowerFollowingNavigator, FollowerFollowingViewModel>(),
     FollowerFollowingNavigator, FollowsAdapter.SetImage {
     private val followerFollowingViewModel: FollowerFollowingViewModel by viewModels()
-    private var isListLoaded:Boolean = false
+    private var isListLoaded: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         followerFollowingViewModel.initList()
-        isListLoaded=true
-        setUpToolBar(true, getString(R.string.followers).plus(" & ").plus(getString(R.string.following)), R.drawable.ic_arrow_left)
+        isListLoaded = true
+        setUpToolBar(true,
+            getString(R.string.followers).plus(" & ").plus(getString(R.string.following)),
+            R.drawable.ic_arrow_left)
 
         swipeRefresh.setOnRefreshListener {
-            swipeRefresh.isRefreshing=true
+            swipeRefresh.isRefreshing = true
             refreshList()
 
         }
         viewDataBinding.tabLayout.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
-           override fun onTabSelected(tab: TabLayout.Tab) {
+            override fun onTabSelected(tab: TabLayout.Tab) {
 
                 when (tab.position) {
                     0 -> {
                         followerFollowingViewModel.getFollowers()
-                        viewDataBinding.rvFollowerFollowed.visibility= GONE
+                        viewDataBinding.rvFollowerFollowed.visibility = GONE
                     }
 
                     1 -> {
-                        viewDataBinding.rvFollower.visibility= GONE
+                        viewDataBinding.rvFollower.visibility = GONE
                         followerFollowingViewModel.getFollowing()
                     }
                 }
@@ -61,28 +69,30 @@ class FollowerFollowedActivity :
     }
 
     private fun refreshList() {
-        when(viewDataBinding.tabLayout.selectedTabPosition){
-            0->{
+        when (viewDataBinding.tabLayout.selectedTabPosition) {
+            0 -> {
                 followerFollowingViewModel.getFollowers()
             }
 
-            1->{
+            1 -> {
                 followerFollowingViewModel.getFollowing()
             }
         }
-        isListLoaded=true
+        isListLoaded = true
     }
 
 
     override fun onPause() {
         super.onPause()
-        isListLoaded=false
+        isListLoaded = false
     }
+
     override fun onResume() {
         super.onResume()
         if (!isListLoaded)
-        refreshList()
+            refreshList()
     }
+
     override fun getLayoutID(): Int {
         return R.layout.activity_follower_falowee
     }
@@ -95,8 +105,12 @@ class FollowerFollowedActivity :
         return followerFollowingViewModel
     }
 
-    override fun updateList(followsAdapter: FollowsAdapter, followClciked: (Data) -> Unit,profileClciked: (Data) -> Unit) {
-        swipeRefresh.isRefreshing=false
+    override fun updateList(
+        followsAdapter: FollowsAdapter,
+        followClciked: (Data) -> Unit,
+        profileClciked: (Data) -> Unit,
+    ) {
+        swipeRefresh.isRefreshing = false
         followsAdapter.followClicked = followClciked
         followsAdapter.profileClicked = profileClciked
         followsAdapter.setImage = this
@@ -104,15 +118,19 @@ class FollowerFollowedActivity :
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         viewDataBinding.rvFollower.setHasFixedSize(true)
         viewDataBinding.rvFollower.adapter = followsAdapter
-        viewDataBinding.rvFollowerFollowed.visibility= GONE
-        viewDataBinding.rvFollower.visibility= VISIBLE
+        viewDataBinding.rvFollowerFollowed.visibility = GONE
+        viewDataBinding.rvFollower.visibility = VISIBLE
         val tab = viewDataBinding?.tabLayout?.getTabAt(0)
         tab!!.select()
 
     }
 
-    override fun updateListFollowee(followsAdapter: FollowsAdapter, followClciked: (Data) -> Unit,profileClciked: (Data) -> Unit) {
-        swipeRefresh.isRefreshing=false
+    override fun updateListFollowee(
+        followsAdapter: FollowsAdapter,
+        followClciked: (Data) -> Unit,
+        profileClciked: (Data) -> Unit,
+    ) {
+        swipeRefresh.isRefreshing = false
 
         followsAdapter.followClicked = followClciked
         followsAdapter.profileClicked = profileClciked
@@ -121,8 +139,8 @@ class FollowerFollowedActivity :
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         viewDataBinding.rvFollowerFollowed.setHasFixedSize(true)
         viewDataBinding.rvFollowerFollowed.adapter = followsAdapter
-        viewDataBinding.rvFollowerFollowed.visibility= VISIBLE
-        viewDataBinding.rvFollower.visibility= GONE
+        viewDataBinding.rvFollowerFollowed.visibility = VISIBLE
+        viewDataBinding.rvFollower.visibility = GONE
         val tab = viewDataBinding?.tabLayout?.getTabAt(1)
         tab!!.select()
     }
@@ -133,5 +151,27 @@ class FollowerFollowedActivity :
 
     override fun onImageSet(imageUrl: String, iv: ImageView) {
         Glide.with(this).load(imageUrl).into(iv)
+    }
+
+    override fun sendFollowerMoEngageEvents(_id: String, isFollow: String, source: String) {
+        val properties = Properties()
+            .addAttribute("Profile ID", _id)
+            .addAttribute("Follow status", isFollow)
+            .addAttribute("Source screen", source)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Edit_follow status", properties)
+    }
+
+    override fun sendFollowingMoEngageEvents(_id: String, isFollow: String, source: String) {
+        val properties = Properties()
+            .addAttribute("Profile ID", _id)
+            .addAttribute("Follow status", isFollow)
+            .addAttribute("Source screen", source)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Edit_Follow status", properties)
     }
 }

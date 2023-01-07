@@ -1,17 +1,21 @@
 package agstack.gramophone.ui.userprofile
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.UserProfileActivityBinding
 import agstack.gramophone.ui.userprofile.model.PostImageModel
 import agstack.gramophone.utils.ImagePicker
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.widget.FilePicker
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,6 +27,8 @@ import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.options
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -109,11 +115,12 @@ class UserProfileActivity :
             fos.write(bitmapData)
             fos.flush()
             fos.close()
-        } catch (e: Exception) {externalCacheDir
+        } catch (e: Exception) {
+            externalCacheDir
             e.printStackTrace()
         }
         postImageModel?.postImage = f
-        mViewModel?.updateProfile(null,null,null,f)
+        mViewModel?.updateProfile(null, null, null, f)
     }
 
 
@@ -174,7 +181,7 @@ class UserProfileActivity :
 
 
     override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -184,7 +191,11 @@ class UserProfileActivity :
         }
     }
 
-
-
-
+    override fun sendSaveProfileImageMoengageEvent() {
+        val properties = Properties()
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_Save_Profile_Image", properties)
+    }
 }

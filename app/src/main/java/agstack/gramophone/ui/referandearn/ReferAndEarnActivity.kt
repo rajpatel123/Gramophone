@@ -1,21 +1,27 @@
 package agstack.gramophone.ui.referandearn
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ReferEarnActivityBinding
 import agstack.gramophone.utils.ShareSheetPresenter
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.Utility
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.drawToBitmap
 import com.google.zxing.qrcode.encoder.QRCode
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 
@@ -144,4 +150,24 @@ class ReferAndEarnActivity :
         Toast.makeText(this, getString(R.string.copied), Toast.LENGTH_SHORT).show();
     }
 
+    override fun sendReferEarnMoEngageEvents(eventName: String) {
+        val properties = Properties()
+            .addAttribute("Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        if (eventName == "KA_View_Refer&Earn") {
+            properties.addAttribute("Redirection_Source", "Home")
+            properties.addAttribute("Referral_Point_Balance",
+                referandEarnViewModel.gramCashResponseData.get()?.gramcashTotal)
+        } else if (eventName == "KA_Click_CheckReferralPoints") {
+            properties.addAttribute("Referral_Point_Balance",
+                referandEarnViewModel.gramCashResponseData.get()?.gramcashTotal)
+            MoEAnalyticsHelper.trackEvent(this, "KA_View_Referrals", properties)
+        }
+
+
+        MoEAnalyticsHelper.trackEvent(this, eventName, properties)
+    }
 }

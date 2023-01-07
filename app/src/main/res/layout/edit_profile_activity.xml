@@ -230,17 +230,16 @@
             android:id="@+id/tv_updateProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:background="@color/orange"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
-            android:layout_alignParentBottom="true"
             android:onClick="@{ ()-> viewModel.updateProfile() }"
             android:padding="@dimen/_13sdp"
             android:text="@string/update_profile"
             android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp"
-           />
+            android:textSize="@dimen/_14ssp" />
     </RelativeLayout>
 
 </layout>

@@ -10,7 +10,7 @@ import java.util.ArrayList
 
 class ArticlesAdapter(
     private val articlesList: ArrayList<FormattedArticlesData>,
-    private val listener: (String) -> Unit,
+    private val listener: (String, String, String) -> Unit,
 ) :
     RecyclerView.Adapter<ArticlesAdapter.CustomViewHolder>() {
 
@@ -23,7 +23,7 @@ class ArticlesAdapter(
     override fun onBindViewHolder(holder: CustomViewHolder, i: Int) {
         holder.binding.model = articlesList[i]
         holder.binding.llArticlesItem.setOnClickListener {
-            listener.invoke(articlesList[i].id.toString())
+            listener.invoke(articlesList[i].id.toString(), articlesList[i].post_views!!, articlesList[i].min_to_read!!)
         }
     }
 

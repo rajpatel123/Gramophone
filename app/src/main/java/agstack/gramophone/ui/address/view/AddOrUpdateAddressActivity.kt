@@ -11,8 +11,11 @@ import agstack.gramophone.ui.address.adapter.AddressDataListAdapter
 import agstack.gramophone.ui.address.model.AddressDataModel
 import agstack.gramophone.ui.address.viewmodel.AddOrUpdateAddressViewModel
 import agstack.gramophone.ui.home.view.HomeActivity
+import agstack.gramophone.ui.profile.model.GpApiResponseProfileData
 import agstack.gramophone.ui.profile.model.UserAddress
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
@@ -40,6 +43,7 @@ class AddOrUpdateAddressActivity :
     AddressNavigator {
 
     private var addressReceivedfromBundle: UserAddress? = null
+    private var fromEditProfile: Boolean = false
     private val addOrUpdateAddressViewModel: AddOrUpdateAddressViewModel by viewModels()
     var stateListIntentLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -269,7 +273,7 @@ class AddOrUpdateAddressActivity :
     override fun updateUi() {
 
         if (intent?.extras?.containsKey(Constants.FROM_EDIT_PROFILE) == true) {
-
+            fromEditProfile = true
             viewDataBinding.ivBack.visibility = View.VISIBLE
             viewDataBinding.saveBtn.visibility = View.VISIBLE
             if (intent?.extras?.containsKey(Constants.ADDRESSOBJECT) == true) {
@@ -282,7 +286,7 @@ class AddOrUpdateAddressActivity :
 
 
         } else {
-
+            fromEditProfile = false
             viewDataBinding.ivBack.visibility = View.GONE
             viewDataBinding.saveBtn.visibility = View.GONE
             if (intent?.extras?.containsKey(Constants.STATE) == true) {
@@ -400,6 +404,18 @@ class AddOrUpdateAddressActivity :
             .addAttribute("App Version", BuildConfig.VERSION_NAME)
             .addAttribute("SDK Version", Build.VERSION.SDK_INT)
             .setNonInteractive()
-        MoEAnalyticsHelper.trackEvent(this, "KA_Login_OTP_Sent", properties)
+        if (fromEditProfile) {
+            val userData = SharedPreferencesHelper.instance?.getParcelable(
+                SharedPreferencesKeys.CUSTOMER_DATA, GpApiResponseProfileData::class.java
+            )
+            properties.addAttribute("Profile ID", userData?.customer_id)
+            properties.addAttribute("First Name", userData?.first_name)
+            properties.addAttribute("Last Name", userData?.last_name)
+            properties.addAttribute("Mobile number", userData?.mobile_no)
+            MoEAnalyticsHelper.trackEvent(this, "KA_Save (Edit Address)", properties)
+        } else {
+            MoEAnalyticsHelper.trackEvent(this, "KA_Address_Add_Onboarding", properties)
+        }
+
     }
 }

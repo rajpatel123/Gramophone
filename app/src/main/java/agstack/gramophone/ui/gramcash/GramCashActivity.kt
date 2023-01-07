@@ -1,20 +1,27 @@
 package agstack.gramophone.ui.gramcash
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.GramCashActivityBinding
 import agstack.gramophone.ui.faq.FAQAdapter
 import agstack.gramophone.ui.home.view.HomeActivity
+import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.app.Dialog
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.viewModels
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -76,5 +83,26 @@ class GramCashActivity :
 
     }
 
-
+    override fun sendMoEngageEvent(eventName: String) {
+        val properties = Properties()
+            .addAttribute("Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        if (eventName == "KA_View_GramCash") {
+            properties.addAttribute("Redirection_Source", Constants.HAMBURGER_HOME)
+                .addAttribute("GramCash_Balance",
+                    gramCashViewModel.gramCashResponseData.get()?.gramcashTotal)
+        } else if(eventName == "KA_Click_GramCashExpiringSoon") {
+            properties.addAttribute("GramCash_ExpiringSoon_Balance", gramCashViewModel.gramCashResponseData.get()?.gramcashExpiringSoon.toString())
+        } else if (eventName == "KA_View_AboutGramCash") {
+            properties.addAttribute("Redirection_Source", "GramCashLanding")
+        } else if (eventName == "KA_View_GramCashExpiringSoon") {
+            properties.addAttribute("Redirection_Source", "GramCashLanding")
+        } else if (eventName == "KA_View_GramCashTransaction") {
+            properties.addAttribute("Redirection_Source", "GramCashLanding")
+        }
+        MoEAnalyticsHelper.trackEvent(this, eventName, properties)
+    }
 }

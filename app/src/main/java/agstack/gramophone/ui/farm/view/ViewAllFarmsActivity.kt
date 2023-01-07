@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.farm.view
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityViewAllFarmsBinding
@@ -15,9 +16,15 @@ import agstack.gramophone.ui.farm.viewmodel.ViewAllFarmsViewModel
 import agstack.gramophone.ui.home.view.fragments.market.model.CropData
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.EventBus
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
@@ -37,7 +44,8 @@ class ViewAllFarmsActivity :
         setToolbarTitle(getMessage(R.string.message_buy_your_crop))
         getViewModel().getFarms()
         getViewModel().getFarmUnits("harvest")
-
+        getViewModel().redirectionScreen = intent?.extras?.getString(Constants.REDIRECTION_SOURCE)!!
+        sendViewFormMoEngageEvents()
         viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
         viewDataBinding.swipeRefresh.setOnRefreshListener {
             refresh()
@@ -63,10 +71,10 @@ class ViewAllFarmsActivity :
             getViewModel().getOldFarms()
         }
 
-        disposable =  EventBus.subscribe<FarmEvent>()
+        disposable = EventBus.subscribe<FarmEvent>()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                if(it.text ==  "harvest_info_added")
+                if (it.text == "harvest_info_added")
                     refresh()
             }
     }
@@ -105,18 +113,18 @@ class ViewAllFarmsActivity :
 
     override fun onDestroy() {
         super.onDestroy()
-        disposable?.let { if(!it.isDisposed) it.dispose() }
+        disposable?.let { if (!it.isDisposed) it.dispose() }
     }
 
     override fun setViewAllFarmsAdapter(
         farmsList: List<List<Data>>,
         isCustomerFarms: Boolean,
-        isOldFarms: Boolean
+        isOldFarms: Boolean,
     ) {
-        if(farmsList.isEmpty()){
+        if (farmsList.isEmpty()) {
             viewDataBinding.emptyView.visibility = View.VISIBLE
             viewDataBinding.rvFarms.visibility = View.GONE
-        }else{
+        } else {
             viewDataBinding.emptyView.visibility = View.GONE
             viewDataBinding.rvFarms.visibility = View.VISIBLE
         }
@@ -124,28 +132,28 @@ class ViewAllFarmsActivity :
         viewDataBinding.rvFarms.adapter = ViewAllFarmsAdapter(
             farmsList,
             headerListener = {
-                if (it.size<2){
-                    openActivity(AdvisoryActivity::class.java,Bundle().apply {
+                if (it.size < 2) {
+                    openActivity(AdvisoryActivity::class.java, Bundle().apply {
                         putInt(
                             Constants.FARM_ID,
                             it[0].farm_id?.toInt()!!
                         )
-                        if (isCustomerFarms){
-                            putString(Constants.FARM_TYPE,"customer_farm")
-                        }else{
-                            putString(Constants.FARM_TYPE,"model_farm")
+                        if (isCustomerFarms) {
+                            putString(Constants.FARM_TYPE, "customer_farm")
+                        } else {
+                            putString(Constants.FARM_TYPE, "model_farm")
                         }
-                        putString(Constants.CROP_NAME,it[0].crop_name)
-                        putString(Constants.CROP_IMAGE,it[0].crop_image)
-                        putString(Constants.CROP_REF_ID,it[0].farm_ref_id)
-                        putInt(Constants.CROP_ID,it[0].crop_id)
-                        putString(Constants.CROP_DURATION,it[0].crop_sowing_date)
-                        putString(Constants.CROP_END_DATE,it[0].crop_anticipated_completed_date)
-                        putString(Constants.CROP_STAGE,it[0].stage_name)
-                        putString(Constants.CROP_DAYS,it[0].days)
+                        putString(Constants.CROP_NAME, it[0].crop_name)
+                        putString(Constants.CROP_IMAGE, it[0].crop_image)
+                        putString(Constants.CROP_REF_ID, it[0].farm_ref_id)
+                        putInt(Constants.CROP_ID, it[0].crop_id)
+                        putString(Constants.CROP_DURATION, it[0].crop_sowing_date)
+                        putString(Constants.CROP_END_DATE, it[0].crop_anticipated_completed_date)
+                        putString(Constants.CROP_STAGE, it[0].stage_name)
+                        putString(Constants.CROP_DAYS, it[0].days)
                     })
 
-                }else{
+                } else {
                     if (isCustomerFarms) {
                         openActivity(CropGroupExplorerActivity::class.java, Bundle().apply {
                             putParcelableArrayList(
@@ -155,6 +163,7 @@ class ViewAllFarmsActivity :
                             putBoolean("isCustomerFarms", isCustomerFarms)
                             putParcelableArrayList("unitsList", units as ArrayList)
                             putString("farm_ref_id", it[0].farm_ref_id)
+                            putString(Constants.REDIRECTION_SOURCE, "My Farms")
                         })
                     }
                 }
@@ -169,6 +178,7 @@ class ViewAllFarmsActivity :
                         putBoolean("isCustomerFarms", isCustomerFarms)
                         putParcelableArrayList("unitsList", units as ArrayList)
                         putString("farm_ref_id", it[0].farm_ref_id)
+                        putString(Constants.REDIRECTION_SOURCE, "My Farms")
                     })
                 }
             },
@@ -246,5 +256,16 @@ class ViewAllFarmsActivity :
     override fun onResume() {
         super.onResume()
         refresh()
+    }
+
+    private fun sendViewFormMoEngageEvents() {
+        val properties = Properties()
+            .addAttribute("Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("Redirection_Source", getViewModel().redirectionScreen)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_View_AddFarm", properties)
     }
 }

@@ -356,9 +356,9 @@
                             style="@style/TextSize14Sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_semibold"
                             android:hint="250"
                             android:text="@string/farmer"
-                            android:fontFamily="@font/manrope_semibold"
                             android:textColor="@color/blakish" />
                     </LinearLayout>
 

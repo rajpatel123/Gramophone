@@ -78,6 +78,7 @@ class CommunityViewModel @Inject constructor(
     var limit = ObservableField<Int>()
     lateinit var uuid: String
     lateinit var id: String
+    lateinit var redirectionSource: String
     lateinit var communityPostAdapter: CommunityPostAdapter
     lateinit var reportReason: String
 
@@ -326,6 +327,7 @@ class CommunityViewModel @Inject constructor(
                             menuClickedData._id
                         )
                     )
+                    getNavigator()?.sendBlockUserMoEngageEvent()
                     if (response.isSuccessful) {
                         getPost(sorting = sorting.get().toString())
 
@@ -485,6 +487,7 @@ class CommunityViewModel @Inject constructor(
                                         putString(POST_ID, it._id)
                                         putString(AUTHER_ID, it.author._id)
                                         putString(AUTHER_UUID, it.author.uuid)
+                                        putString(Constants.REDIRECTION_SOURCE, "Community Screen")
                                     })
                             }
 
@@ -617,6 +620,7 @@ class CommunityViewModel @Inject constructor(
                                             putString(POST_ID, it._id)
                                             putString(AUTHER_ID, it.author._id)
                                             putString(AUTHER_UUID, it.author.uuid)
+                                            putString(Constants.REDIRECTION_SOURCE, "Community Screen")
                                         })
                                 }
 
@@ -954,6 +958,7 @@ class CommunityViewModel @Inject constructor(
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     val response =
                         communityRepository.followPost(FollowRequestModel(uuid))
+                    getNavigator()?.sendEditFollowStatusMoEngageEvent()
                     if (response.isSuccessful && response.body() != null && response.body()!!.data.following) {
                         following.set(true)
                         showProgress.set(false)

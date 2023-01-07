@@ -35,6 +35,7 @@ class SettingsViewModel @Inject constructor(
 
     fun onAppTourCheckChanged(switchCompat: SwitchCompat) {
         if (switchCompat.isPressed) {
+            getNavigator()?.sendCommonMoEngageEvent("KA_App_tour")
             if (switchCompat.isChecked) {
                 SharedPreferencesHelper.instance?.putBoolean(SharedPreferencesKeys.APP_TOUR_ENABLED,
                     true)
@@ -63,6 +64,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onAppFeatureClicked() {
+        getNavigator()?.sendCommonMoEngageEvent("KA_App_Features")
         getNavigator()?.openWebView(Bundle().apply {
             putString(Constants.PAGE_URL,
                 initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.app_features_url)
@@ -87,6 +89,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onTermsClick() {
+        getNavigator()?.sendCommonMoEngageEvent("KA_Terms_of_Service")
         getNavigator()?.openWebView(Bundle().apply {
             putString(Constants.PAGE_URL,
                 initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.terms_of_service_url)
@@ -95,6 +98,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onPrivacyClick() {
+        getNavigator()?.sendCommonMoEngageEvent("KA_Privacy_Policy")
         getNavigator()?.openWebView(Bundle().apply {
             putString(Constants.PAGE_URL,
                 initiateAppDataResponseModel?.gp_api_response_data?.external_link_list?.privacy_policy_url)

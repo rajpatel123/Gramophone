@@ -44,7 +44,7 @@ class GramCashViewModel @Inject constructor(
                     gramCashResponseData.set(gramCashResponse)
                     getNavigator()?.setFAQAdapter(FAQAdapter(gramCashResponse?.gramcashFaq as ArrayList<GramcashFaqItem>))
 
-
+                    getNavigator()?.sendMoEngageEvent("KA_View_GramCash")
                     getNavigator()?.setGramCashRulesAdapter(FAQAdapter(gramCashResponse?.gramcashRules as ArrayList<GramcashFaqItem>))
 
                   //  getNavigator()?.showToast(gramCashResponsefromAPI.body()?.gpApiMessage)
@@ -74,27 +74,32 @@ class GramCashViewModel @Inject constructor(
 
 
     fun viewAllTransactionClick() {
+        getNavigator()?.sendMoEngageEvent("KA_Click_ViewAllTransactions")
+        getNavigator()?.sendMoEngageEvent("KA_View_GramCashTransaction")
         getNavigator()?.openActivity(AllTransactionsListActivity::class.java)
-
-
     }
 
     fun manageaboutgramcash(){
+        getNavigator()?.sendMoEngageEvent("KA_Click_AboutGramCash")
+        getNavigator()?.sendMoEngageEvent("KA_View_AboutGramCash")
         getNavigator()?.manageaboutBottomPopup()
     }
 
     fun OnClickGCexpiringin30days(){
+        getNavigator()?.sendMoEngageEvent("KA_Click_GramCashExpiringSoon")
+        getNavigator()?.sendMoEngageEvent("KA_View_GramCashExpiringSoon")
         getNavigator()?.openActivity(GCExpiringSoonActivity::class.java, Bundle().apply {
             putString(Constants.GC_Expiring_soon,gramCashResponseData.get()?.gramcashExpiringSoon.toString())
         })
     }
 
     fun onRedeemNowClicked(){
-
+        getNavigator()?.sendMoEngageEvent("KA_Click_RedeemNow")
         getNavigator()?.openAndFinishActivityWithClearTopNewTaskClearTaskFlags(HomeActivity::class.java, null)
     }
 
     fun onInviteNowClicked(){
+        getNavigator()?.sendMoEngageEvent("KA_Click_ReferralBanner")
         getNavigator()?.openAndFinishActivity(ReferAndEarnActivity::class.java)
 
     }

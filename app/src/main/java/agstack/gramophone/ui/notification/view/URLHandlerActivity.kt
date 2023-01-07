@@ -105,7 +105,9 @@ class URLHandlerActivity :
             }
 
             DEEP_LINK_MY_FARM -> {
-                openAndFinishActivity(ViewAllFarmsActivity::class.java, null)
+                openAndFinishActivity(ViewAllFarmsActivity::class.java, Bundle().apply {
+                    putString(Constants.REDIRECTION_SOURCE, "Home")
+                })
             }
 
             DEEP_LINK_SOCIAL -> {
