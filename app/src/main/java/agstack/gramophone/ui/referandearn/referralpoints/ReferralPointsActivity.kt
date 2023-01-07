@@ -1,18 +1,19 @@
 package agstack.gramophone.ui.referandearn.referralpoints
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ReferralPointsActivityBinding
-import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import agstack.gramophone.ui.referandearn.model.GpApiResponseData
-import agstack.gramophone.utils.IntentKeys
-import agstack.gramophone.utils.ShareSheetPresenter
-import agstack.gramophone.utils.Utility
+import agstack.gramophone.utils.*
 import android.net.Uri
+import android.os.Build
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 
 @AndroidEntryPoint
 class ReferralPointsActivity :
@@ -83,6 +84,17 @@ class ReferralPointsActivity :
 
     override fun setMyReferralsAdapter(myReferralsAdapter: MyReferralsAdapter) {
         viewDataBinding.rvMyreferrals.adapter = myReferralsAdapter
+    }
+
+    override fun sendMoEngageEvents(eventName: String) {
+        val properties = Properties()
+            .addAttribute("Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+
+        MoEAnalyticsHelper.trackEvent(this, eventName, properties)
     }
 
 }

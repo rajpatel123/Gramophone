@@ -24,14 +24,13 @@ class ReferralPointsViewModel @Inject constructor(
     var gramCashResponseDataFromBundle = ObservableField<GpApiResponseData>()
 
     fun viewAllReferralTransactionClick() {
+        getNavigator()?.sendMoEngageEvents("KA_Click_ViewReferralTransaction")
         getNavigator()?.openActivity(AllTransactionsListActivity::class.java)
-
-
     }
 
 
     fun knowMoreReferralPointBalanceClick() {
-
+        getNavigator()?.sendMoEngageEvents("KA_Click_KnowMore")
         getNavigator()?.openActivity(AboutReferralPointsBalanceActivity::class.java, Bundle().apply {
             putParcelableArrayList(Constants.ReferralPointBalanceData,gramCashResponseDataFromBundle.get()?.referralPoints as ArrayList<ReferralPointsItem>)
         })

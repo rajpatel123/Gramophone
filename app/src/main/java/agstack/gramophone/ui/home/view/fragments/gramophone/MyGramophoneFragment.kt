@@ -437,7 +437,9 @@ class MyGramophoneFragment :
             }
         }
         binding?.tvGoToFarms?.setOnClickListener {
-            openActivity(ViewAllFarmsActivity::class.java)
+            openActivity(ViewAllFarmsActivity::class.java, Bundle().apply {
+                putString(Constants.REDIRECTION_SOURCE, "My Gramophone")
+            })
         }
 
         binding?.layoutFarm?.txtMultipleFarms?.setOnClickListener {
@@ -446,6 +448,7 @@ class MyGramophoneFragment :
                     "cropList",
                     farms?.gp_api_response_data?.customer_farm?.data?.get(0) as ArrayList<Data>
                 )
+                putString(Constants.REDIRECTION_SOURCE, "My Gramophone")
             })
         }
 
@@ -475,6 +478,7 @@ class MyGramophoneFragment :
                       "cropList",
                       farms?.gp_api_response_data?.customer_farm?.data?.get(0) as ArrayList<Data>
                   )
+                  putString(Constants.REDIRECTION_SOURCE, "My Gramophone")
               })
           }
         }
@@ -495,6 +499,7 @@ class MyGramophoneFragment :
                     "cropList",
                     farms?.gp_api_response_data?.customer_farm?.data?.get(0) as ArrayList<Data>
                 )
+                putString(Constants.REDIRECTION_SOURCE, "My Gramophone")
             })
         }
 

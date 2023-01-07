@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.farm.view
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityCropGroupExplorerBinding
@@ -15,8 +16,13 @@ import agstack.gramophone.ui.farm.viewmodel.CropGroupExplorerViewModel
 import agstack.gramophone.ui.home.view.fragments.market.model.CropData
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.EventBus
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,6 +31,7 @@ class CropGroupExplorerActivity :
     CropGroupExplorerNavigator {
     var isOldFarms = false
     var isCustomerFarms = false
+    var redirectionFrom = "Home"
     var units: List<GpApiResponseData>? = null
     var farmRefId: String? = null
     var bottomSheet: BottomSheetFarmInformation? = null
@@ -54,12 +61,15 @@ class CropGroupExplorerActivity :
 
             if (it.containsKey("unitsList")) {
                 units = it.getParcelableArrayList("unitsList")
-            }else{
+            } else {
                 getViewModel().getFarmUnits("harvest")
             }
 
             if (it.containsKey("farm_ref_id")) {
                 farmRefId = it.getString("farm_ref_id")
+            }
+            if (it.containsKey(Constants.REDIRECTION_SOURCE)) {
+                redirectionFrom = it.getString(Constants.REDIRECTION_SOURCE, "Home")
             }
         }
     }
@@ -85,20 +95,21 @@ class CropGroupExplorerActivity :
         viewDataBinding.rvCrops.adapter = CropGroupExplorerAdapter(
             cropList,
             headerListener = {
-                openActivity(AdvisoryActivity::class.java,Bundle().apply {
+                sendFarmDetailMoEngageEvents(it)
+                openActivity(AdvisoryActivity::class.java, Bundle().apply {
                     putInt(
                         Constants.FARM_ID,
                         it.farm_id?.toInt()!!
                     )
-                    putString(Constants.FARM_TYPE,"customer_farm")
-                    putString(Constants.CROP_NAME,it.crop_name)
-                    putString(Constants.CROP_IMAGE,it.crop_image)
-                    putString(Constants.CROP_REF_ID,it.farm_ref_id)
-                    putInt(Constants.CROP_ID,it.crop_id)
-                    putString(Constants.CROP_DURATION,it.crop_sowing_date)
-                    putString(Constants.CROP_END_DATE,it.crop_anticipated_completed_date)
-                    putString(Constants.CROP_STAGE,it.stage_name)
-                    putString(Constants.CROP_DAYS,it.days)
+                    putString(Constants.FARM_TYPE, "customer_farm")
+                    putString(Constants.CROP_NAME, it.crop_name)
+                    putString(Constants.CROP_IMAGE, it.crop_image)
+                    putString(Constants.CROP_REF_ID, it.farm_ref_id)
+                    putInt(Constants.CROP_ID, it.crop_id)
+                    putString(Constants.CROP_DURATION, it.crop_sowing_date)
+                    putString(Constants.CROP_END_DATE, it.crop_anticipated_completed_date)
+                    putString(Constants.CROP_STAGE, it.stage_name)
+                    putString(Constants.CROP_DAYS, it.days)
                 })
             },
             contentListener = {
@@ -177,5 +188,24 @@ class CropGroupExplorerActivity :
 
     override fun setFarmUnits(units: List<GpApiResponseData>) {
         this.units = units
+    }
+
+    private fun sendFarmDetailMoEngageEvents(data: Data) {
+        val properties = Properties()
+            .addAttribute("Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("Redirection_Source", redirectionFrom)
+            .addAttribute("Farm_Type", data.farm_ref_id)
+            .addAttribute("Farm_ID", data.farm_id)
+            .addAttribute("Crop", data.crop_name)
+            .addAttribute("Crop_Age", data.days)
+            .addAttribute("Current_Stage", data.stage_name)
+            .addAttribute("Sowing_Date", data.crop_sowing_date)
+            .addAttribute("Area", data.farm_area)
+            .addAttribute("GeoLocationcoordinates", "")
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_View_FarmDetailAndAdvisory", properties)
     }
 }

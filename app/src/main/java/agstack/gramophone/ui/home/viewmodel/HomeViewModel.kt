@@ -222,7 +222,9 @@ class HomeViewModel @Inject constructor(
 
     fun openCropsNFarms() {
         getNavigator()?.closeDrawer()
-        getNavigator()?.openActivity(ViewAllFarmsActivity::class.java, null)
+        getNavigator()?.openActivity(ViewAllFarmsActivity::class.java, Bundle().apply {
+            putString(Constants.REDIRECTION_SOURCE, "Home")
+        })
     }
 
     fun shareApp() {

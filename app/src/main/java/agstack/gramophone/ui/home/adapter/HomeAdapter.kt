@@ -451,6 +451,13 @@ class HomeAdapter(
                         farmList,
                         headerListener = {
                             if (it.size < 2) {
+                                sendFarmMoEngageEvents(holder.itemView.context,
+                                    "KA_Click_ViewFarmsCrop",
+                                    it[0].crop_name!!)
+                                sendFarmMoEngageEvents(holder.itemView.context,
+                                    "KA_Click_ViewModelFarmAdvisory",
+                                    it[0].crop_name!!)
+                                sendFarmDetailMoEngageEvents(holder.itemView.context, it[0])
                                 openActivity(context = holder.binding.root.context,
                                     AdvisoryActivity::class.java,
                                     Bundle().apply {
@@ -476,6 +483,9 @@ class HomeAdapter(
                             }
                         },
                         contentListener = {
+                            sendFarmMoEngageEvents(holder.itemView.context,
+                                "KA_Click_ViewFarms",
+                                "")
                             openActivity(
                                 holder.binding.itemView.context,
                                 CropGroupExplorerActivity::class.java,
@@ -485,6 +495,7 @@ class HomeAdapter(
                                         "cropList",
                                         it as ArrayList<agstack.gramophone.ui.farm.model.Data>
                                     )
+                                    putString(Constants.REDIRECTION_SOURCE, "Home")
                                 })
                         },
                         footerListener = {
@@ -493,6 +504,9 @@ class HomeAdapter(
                                 cropName = it[0].crop_name,
                                 cropImage = it[0].crop_image,
                             )
+                            sendFarmMoEngageEvents(holder.itemView.context,
+                                "KA_Click_AddFarmCropListing",
+                                "")
                             openActivity(
                                 holder.binding.itemView.context,
                                 AddFarmActivity::class.java,
@@ -504,14 +518,18 @@ class HomeAdapter(
                 }
 
                 holder.binding.viewAllFarms.setOnClickListener {
-                    openActivity(holder.itemView.context, ViewAllFarmsActivity::class.java, null)
+                    openActivity(holder.itemView.context, ViewAllFarmsActivity::class.java, Bundle().apply {
+                        putString(Constants.REDIRECTION_SOURCE, "Home")
+                    })
                 }
 
                 holder.binding.addFarmWrapper.addFarmTitleLayout.setOnClickListener {
+                    sendFarmMoEngageEvents(holder.itemView.context, "KA_Click_AddFarmGeneral", "")
                     openActivity(holder.itemView.context, SelectCropActivity::class.java, null)
                 }
 
                 holder.binding.addFarmWrapper.txtWhyAddFarm.setOnClickListener {
+                    sendFarmMoEngageEvents(holder.itemView.context, "KA_Click_WhyAddFarm", "")
                     openActivity(holder.itemView.context, WhyAddFarmActivity::class.java, null)
                 }
             }
@@ -521,7 +539,14 @@ class HomeAdapter(
                         holder.binding.itemViewFeatured.visibility = View.VISIBLE
                         holder.binding.rvFeaturedArticles.adapter =
                             ArticlesAdapter(articlesData[Constants.FEATURED_ARTICLES]!!) { id, viewCount, readTime ->
-                                sendViewArticlesMoEngageEvent(holder.binding.rvFeaturedArticles.context, id, "Yes", "No", "No", viewCount, "No", readTime)
+                                sendViewArticlesMoEngageEvent(holder.binding.rvFeaturedArticles.context,
+                                    id,
+                                    "Yes",
+                                    "No",
+                                    "No",
+                                    viewCount,
+                                    "No",
+                                    readTime)
                                 openActivity(
                                     holder.binding.viewAllArticles.context,
                                     ArticlesWebViewActivity::class.java,
@@ -537,8 +562,15 @@ class HomeAdapter(
                     if (articlesData.containsKey(Constants.TRENDING_ARTICLES) && articlesData[Constants.TRENDING_ARTICLES].isNotNullOrEmpty()) {
                         holder.binding.itemViewTrending.visibility = View.VISIBLE
                         holder.binding.rvTrendingArticles.adapter =
-                            ArticlesAdapter(articlesData[Constants.TRENDING_ARTICLES]!!) {id, viewCount, readTime ->
-                                sendViewArticlesMoEngageEvent(holder.binding.rvFeaturedArticles.context, id, "No", "Yes", "No", viewCount, "No", readTime)
+                            ArticlesAdapter(articlesData[Constants.TRENDING_ARTICLES]!!) { id, viewCount, readTime ->
+                                sendViewArticlesMoEngageEvent(holder.binding.rvFeaturedArticles.context,
+                                    id,
+                                    "No",
+                                    "Yes",
+                                    "No",
+                                    viewCount,
+                                    "No",
+                                    readTime)
                                 openActivity(
                                     holder.binding.viewAllArticles.context,
                                     ArticlesWebViewActivity::class.java,
@@ -554,8 +586,15 @@ class HomeAdapter(
                     if (articlesData.containsKey(Constants.SUGGESTED_ARTICLES) && articlesData[Constants.SUGGESTED_ARTICLES].isNotNullOrEmpty()) {
                         holder.binding.itemViewSuggested.visibility = View.VISIBLE
                         holder.binding.rvSuggestedArticles.adapter =
-                            ArticlesAdapter(articlesData[Constants.SUGGESTED_ARTICLES]!!) {id, viewCount, readTime ->
-                                sendViewArticlesMoEngageEvent(holder.binding.rvFeaturedArticles.context, id, "No", "No", "Yes", viewCount, "No", readTime)
+                            ArticlesAdapter(articlesData[Constants.SUGGESTED_ARTICLES]!!) { id, viewCount, readTime ->
+                                sendViewArticlesMoEngageEvent(holder.binding.rvFeaturedArticles.context,
+                                    id,
+                                    "No",
+                                    "No",
+                                    "Yes",
+                                    viewCount,
+                                    "No",
+                                    readTime)
                                 openActivity(
                                     holder.binding.viewAllArticles.context,
                                     ArticlesWebViewActivity::class.java,
@@ -788,7 +827,8 @@ private fun sendViewArticlesMoEngageEvent(
         .addAttribute("Redirection_Source", "Home")
         .addAttribute("Article_ID", articleId)
         .addAttribute("Category_ID", "")
-        .addAttribute("Crop ID", SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.SUGGESTED_CROPS))
+        .addAttribute("Crop ID",
+            SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.SUGGESTED_CROPS))
         .addAttribute("Featured article", featuredArticle)
         .addAttribute("Trending", trendingArticle)
         .addAttribute("Suggested", suggestedArticle)
@@ -799,4 +839,35 @@ private fun sendViewArticlesMoEngageEvent(
         .addAttribute("SDK Version", Build.VERSION.SDK_INT)
         .setNonInteractive()
     MoEAnalyticsHelper.trackEvent(context, "KA_View_All_Articles", properties)
+}
+
+private fun sendFarmMoEngageEvents(context: Context, eventName: String, cropName: String) {
+    val properties = Properties()
+        .addAttribute("Customer_Id",
+            SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+        .addAttribute("App Version", BuildConfig.VERSION_NAME)
+        .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+    if (eventName == "KA_Click_ViewFarmsCrop" || eventName == "KA_Click_ViewModelFarmAdvisory") {
+        properties.addAttribute("Crop", cropName)
+    }
+    properties.setNonInteractive()
+    MoEAnalyticsHelper.trackEvent(context, eventName, properties)
+}
+
+private fun sendFarmDetailMoEngageEvents(
+    context: Context,
+    data: agstack.gramophone.ui.farm.model.Data,
+) {
+    val properties = Properties()
+        .addAttribute("Customer_Id",
+            SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+        .addAttribute("Crop", data.crop_name)
+        .addAttribute("Farm_ID", data.farm_id)
+        .addAttribute("Sowing_Date", data.crop_sowing_date)
+        .addAttribute("Area", data.farm_area)
+        .addAttribute("GeoLocationcoordinates", "")
+        .addAttribute("App Version", BuildConfig.VERSION_NAME)
+        .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+        .setNonInteractive()
+    MoEAnalyticsHelper.trackEvent(context, "KA_Click_ViewFarmDetailAndAdvisory", properties)
 }

@@ -79,6 +79,7 @@ class AddFarmViewModel @Inject constructor(
                 ) {
                     val addFarmResponse = response.body()
                     getNavigator()?.onFarmAdded()
+                    getNavigator()?.sendSaveFarmMoEngageEvents("", addFarmRequest.field_name!!, addFarmRequest.crop_sowing_date!!, addFarmRequest.area.toString().plus(" ").plus(addFarmRequest.unit))
                 }else{
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
