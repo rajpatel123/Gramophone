@@ -338,7 +338,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
     ) {
         val addressData = HashMap<String, String>()
 
-        val item = locationObj?.results!![0]
+        val item = locationObj?.results?.get(0)
         val address_components = item?.address_components
 
         for (j in 0 until address_components?.size!!) {

@@ -85,7 +85,8 @@ class ProductDetailsViewModel @Inject constructor(
             progressLoader.set(false)
             getNavigator()?.sendFavouriteMoEngageEvent(productId,
                 productData.get()?.productBaseName!!,
-                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!, isHeartSelected.get())
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!,
+                isHeartSelected.get())
             if (updateProductFavJobResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
                 getNavigator()?.showToast(updateProductFavJobResponse.body()?.gp_api_message)
             } else {
@@ -512,8 +513,16 @@ class ProductDetailsViewModel @Inject constructor(
         }
 
         getNavigator()?.sendProductViewMoEngageEvent(productId,
-            productData.get()?.productBaseName!!,
-            productReviewsData.get()?.rating?.totalRating!!,
+            if (productData.get()?.productBaseName?.isNotNullOrEmpty() == true) {
+                productData.get()?.productBaseName!!
+            } else {
+                ""
+            },
+            if (productReviewsData.get()?.rating?.totalRating.isNotNull()) {
+            productReviewsData.get()?.rating?.totalRating!!
+            } else {
+                0.0
+            },
             "Landing Screen",
             SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
     }
