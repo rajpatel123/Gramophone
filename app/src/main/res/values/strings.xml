@@ -612,7 +612,6 @@
     <string name="take_suggestions_text">Add your new form today and get proper advice from agriculture experts</string>
     <string name="not_now">Not now</string>
     <!--youtube string-->
-    <string name="channel_id" translatable="false">UCmJ7oQCcKzf-IU2QXaMVykQ</string>
     <string name="google_api" translatable="false">AIzaSyD6HGLMvm-bUW0ZCX3wXztDZZXUQTfznZI</string>
     <string name="video_count">%1$d videos</string>
     <string name="invalid_value">Nat a valid value</string>

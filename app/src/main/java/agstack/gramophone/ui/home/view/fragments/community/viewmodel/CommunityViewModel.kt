@@ -383,6 +383,18 @@ class CommunityViewModel @Inject constructor(
                     getNavigator()?.updatePostList(
                         communityPostAdapter,
                         {
+                            val properties = Properties()
+                            properties.addAttribute(
+                                "Customer_Id",
+                                SharedPreferencesHelper.instance?.getString(
+                                    SharedPreferencesKeys.CUSTOMER_ID
+                                )!!
+                            )
+                                .addAttribute("SharedEntity", it)
+                            getNavigator()?.sendMoEngageEvent("KA_Share", properties)
+                            getNavigator()?.sharePost(it)
+                        },
+                        {
                           answerQuizPoll(it)
                         },
                         {//postDetail click
@@ -530,6 +542,19 @@ class CommunityViewModel @Inject constructor(
                         )
 
                         getNavigator()?.updatePostList(communityPostAdapter,
+                            {
+                                val properties = Properties()
+                                properties.addAttribute(
+                                    "Customer_Id",
+                                    SharedPreferencesHelper.instance?.getString(
+                                        SharedPreferencesKeys.CUSTOMER_ID
+                                    )!!
+                                )
+                                    .addAttribute("SharedEntity", it)
+                               getNavigator()?.sendMoEngageEvent("KA_Share", properties)
+                                getNavigator()?.sharePost(it)
+
+                            },
                             {
                               answerQuizPoll(it)
                             },

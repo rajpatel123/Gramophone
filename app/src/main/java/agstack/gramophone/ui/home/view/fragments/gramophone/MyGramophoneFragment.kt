@@ -296,7 +296,15 @@ class MyGramophoneFragment :
 
         binding?.layoutMyPost?.llCreatePost?.setOnClickListener {
             sendOpenEvent()
+            val properties = com.moengage.core.Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!
+            ).addAttribute("Redirection_Source", "My Gramophone").setNonInteractive()
+            activity?.let { MoEAnalyticsHelper.trackEvent(it, "KA_Click_PostNow", properties) }
             openActivity(CreatePostActivity::class.java)
+
+
         }
 
         binding?.layoutMyPost?.ivLike?.setOnClickListener {
@@ -414,11 +422,31 @@ class MyGramophoneFragment :
             if (activity is HomeActivity) {
                 (activity as HomeActivity).showHomeFragment()
             }
+
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(
+                    SharedPreferencesKeys.CUSTOMER_ID
+                )!!
+            )
+                .setNonInteractive()
+            sendMoEngageEvent("KA_Click_ShopNow", properties)
         }
         binding?.layoutOrder?.btnShopNowOrrange?.setOnClickListener {
             if (activity is HomeActivity) {
                 (activity as HomeActivity).showHomeFragment()
             }
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(
+                    SharedPreferencesKeys.CUSTOMER_ID
+                )!!
+            )
+                .setNonInteractive()
+            sendMoEngageEvent("KA_Click_ShopNow", properties)
+
         }
 
 
@@ -605,25 +633,46 @@ class MyGramophoneFragment :
     }
 
     override fun updateMyFavoriteSection(myGramophoneResponseModel: MyGramophoneResponseModel) {
+        var event = ""
+        val properties = Properties()
+        properties.addAttribute(
+            "Customer_Id",
+            SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.CUSTOMER_ID
+            )!!
+        ).addAttribute(
+            "Redirection_Source", "My Gramophone"
+        ).setNonInteractive()
+        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.products > 0){
+            binding?.layoutFavorite?.tvProductCount?.text =
+                myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.products.toString()
+        }else{
+            binding?.layoutFavorite?.tvProductCount?.text = "--"
+        }
 
-        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.products > 0) binding?.layoutFavorite?.tvProductCount?.text =
-            myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.products.toString()
-        else binding?.layoutFavorite?.tvProductCount?.text = "--"
+        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.orders > 0) {
+            binding?.layoutOrder?.myOrderTitle?.text =
+                String.format(
+                    getMessage(R.string.total_orders),
+                    myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.orders
+                )
+        } else {
+            binding?.layoutOrder?.myOrderTitle?.text = getMessage(R.string.my_orders)
+        }
 
-        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.orders > 0) binding?.layoutOrder?.myOrderTitle?.text =
-            String.format(
-                getMessage(R.string.total_orders),
-                myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.orders
-            )
-        else binding?.layoutOrder?.myOrderTitle?.text = getMessage(R.string.my_orders)
+        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles > 0){
+            binding?.layoutFavorite?.tvArticleCount?.text =
+                myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles.toString()
+        }else {
+            binding?.layoutFavorite?.tvArticleCount?.text = "--"
+        }
 
-        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles > 0) binding?.layoutFavorite?.tvArticleCount?.text =
-            myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles.toString()
-        else binding?.layoutFavorite?.tvArticleCount?.text = "--"
-
-        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.gramophone_tv > 0) binding?.layoutFavorite?.tvTVCount?.text =
-            myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.gramophone_tv.toString()
-        else binding?.layoutFavorite?.tvTVCount?.text = "--"
+        if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.gramophone_tv > 0){
+            binding?.layoutFavorite?.tvTVCount?.text =
+                myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.gramophone_tv.toString()
+        }else{
+            binding?.layoutFavorite?.tvTVCount?.text = "--"
+        }
 
         binding?.layoutFavorite?.llPostLinearLayout?.setOnClickListener {
             if (activity is HomeActivity) {
@@ -737,9 +786,29 @@ class MyGramophoneFragment :
     }
 
     override fun updateMyFavoritePostCount(bookMarkedPostCounts: Int) {
-        if (bookMarkedPostCounts > 0) binding?.layoutFavorite?.tvPostCount?.text =
-            bookMarkedPostCounts.toString()
-        else binding?.layoutFavorite?.tvPostCount?.text = "--"
+        var event = "KA_View_FavouritePosts"
+        val properties = Properties()
+        properties.addAttribute(
+            "Customer_Id",
+            SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.CUSTOMER_ID
+            )!!
+        ).addAttribute(
+            "Redirection_Source", "My Gramophone"
+        ).setNonInteractive()
+
+        if (bookMarkedPostCounts > 0){
+            event="KA_View_FavouritePosts"
+            binding?.layoutFavorite?.tvPostCount?.text =
+                bookMarkedPostCounts.toString()
+
+            sendMoEngageEvent(event, properties)
+        }else {
+            event="KA_View_FavouritePost_NoData"
+
+            sendMoEngageEvent(event, properties)
+            binding?.layoutFavorite?.tvPostCount?.text = "--"
+        }
     }
 
     override fun processGenericUri(genericUri: Uri) {

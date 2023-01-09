@@ -279,7 +279,7 @@ class HomeViewModel @Inject constructor(
             SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!
         ).addAttribute("Redirection_Source", "Home Page").setNonInteractive()
 
-        getNavigator()?.sendMoEngageEvent("",properties)
+        getNavigator()?.sendMoEngageEvent("KA_Open_CreatePost",properties)
 
         getNavigator()?.openActivity(CreatePostActivity::class.java, null)
     }

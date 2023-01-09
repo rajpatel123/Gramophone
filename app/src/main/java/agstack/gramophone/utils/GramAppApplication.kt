@@ -7,6 +7,7 @@ import agstack.gramophone.utils.SharedPreferencesHelper.Companion.initializeInst
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.amnix.xtension.extensions.isNotNull
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.moengage.core.LogLevel
 import com.moengage.core.MoECoreHelper
 import com.moengage.core.MoEngage
@@ -29,8 +30,17 @@ class GramAppApplication : Application() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         initializeMoEngage()
+
+        try {
+            configureCrashReporting()
+        } catch (e: Exception) {
+        }
     }
 
+
+    private fun configureCrashReporting() {
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
+    }
     private fun initializeMoEngage() {
 
         // this is the instance of the application class and "moEngageAppId" is the APP ID from the dashboard.

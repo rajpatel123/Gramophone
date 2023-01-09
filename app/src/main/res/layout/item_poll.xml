@@ -130,7 +130,7 @@
 
 
             <ImageView
-                android:id="@+id/ivWhatsapp"
+                android:id="@+id/ivWhatsappPoll"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
                 android:adjustViewBounds="true"
@@ -144,7 +144,7 @@
                 android:fontFamily="@font/manrope_regular"
                 android:text="@string/share"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/ivWhatsapp"
+                android:layout_toEndOf="@+id/ivWhatsappPoll"
                 android:textAlignment="center"
                 android:textColor="@color/blakish"
                 android:textSize="@dimen/_12sdp" />

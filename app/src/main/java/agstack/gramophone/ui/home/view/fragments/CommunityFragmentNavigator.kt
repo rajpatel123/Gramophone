@@ -8,6 +8,7 @@ import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodel
 interface CommunityFragmentNavigator: BaseNavigator {
     fun updatePostList(
         postList: CommunityPostAdapter,
+        sharePoll: (type:String) -> Unit,
         quizPollAnswered: (option: Option) -> Unit,
         postDetailClicked: (postId: String) -> Unit,
         onItemLikesClicked: (postId: String) -> Unit,

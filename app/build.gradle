@@ -13,6 +13,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'com.google.firebase.crashlytics'
     id 'dagger.hilt.android.plugin'
 }
 
@@ -23,7 +24,7 @@ android {
         applicationId "agstack.gramophone"
         minSdk 21
         targetSdk 31
-        versionCode 186
+        versionCode 187
         versionName "4.1.36"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -52,9 +53,12 @@ android {
         release {
             minifyEnabled false
             shrinkResources false
-            debuggable false
+            debuggable true
+
+
             resValue "string", "app_name_different", "Gramophone"
             buildConfigField "String", "PLACE_API", "\"AIzaSyAgopa2TyrbNgE_qpnbvc6XiV7dLa9KHF0\""
+            buildConfigField "String", "CHANNEL_API", "\"UCmJ7oQCcKzf-IU2QXaMVykQ\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "facebook_app_name", '"fbContentProvider"'
             buildConfigField "String", "BASE_URL_SOCIAL", "\"https://community-api.gramophone.in/\""
@@ -71,7 +75,9 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             resValue "string", "app_name_different", " G.Debug"
+            buildConfigField "String", "CHANNEL_API", "\"UCmJ7oQCcKzf-IU2QXaMVykQ\""
             buildConfigField "String", "PLACE_API", "\"AIzaSyAgopa2TyrbNgE_qpnbvc6XiV7dLa9KHF0\""
+            buildConfigField "String", "GOOGLE_API", "\"AIzaSyD6HGLMvm-bUW0ZCX3wXztDZZXUQTfznZI\""
             buildConfigField "String", "BASE_URL_SOCIAL", "\"https://community-api-qa.gramophone.in/\""
             buildConfigField "String", "BASE_URL", "\"https://mobility-api-dev.gramophone.in/\""
             buildConfigField "String", "BASE_URL_YOUTUBE", "\"https://www.googleapis.com/youtube/v3/\""
@@ -86,6 +92,7 @@ android {
             initWith debug
             matchingFallbacks = ['debug']
             resValue "string", "app_name_different", " G.Uat"
+            buildConfigField "String", "CHANNEL_API", "\"UCmJ7oQCcKzf-IU2QXaMVykQ\""
             buildConfigField "String", "PLACE_API", "\"AIzaSyAgopa2TyrbNgE_qpnbvc6XiV7dLa9KHF0\""
             buildConfigField "String", "BASE_URL_SOCIAL", "\"https://community-api-qa.gramophone.in/api/v1/\""
             buildConfigField "String", "BASE_URL", "\"https://mobility-api-dev.gramophone.in/\""
@@ -139,6 +146,8 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.preference:preference-ktx:1.2.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+
+    implementation 'com.google.firebase:firebase-crashlytics:18.3.2'
 
     //Image Rendering Glide
     implementation 'com.github.bumptech.glide:glide:4.13.2'

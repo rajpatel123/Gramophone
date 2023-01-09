@@ -2,6 +2,7 @@ package agstack.gramophone.ui.tv
 
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityGramophoneTvBinding
@@ -140,24 +141,25 @@ class GramophoneTVActivity :
         googleApiKey?.let {
             gramophoneTVViewModel.getPlayLists("snippet,contentDetails",
                 6,
-                getString(R.string.channel_id),
+                BuildConfig.CHANNEL_API,
                 it
             )
         }
     }
 
     private fun getPlayListsNextPage(nextPageToken: String) {
-        val googleApiKey = getString(R.string.google_api)
-        gramophoneTVViewModel.getPlayListsNextPage("snippet,contentDetails",
-            getString(R.string.channel_id),
-            googleApiKey,
-            nextPageToken,
-            5)
+        val googleApiKey = SharedPreferencesHelper.instance!!.getString(SharedPreferencesKeys.GOOGLE_API_KEY)
+        if (googleApiKey != null) {
+            gramophoneTVViewModel.getPlayListsNextPage("snippet,contentDetails",
+                BuildConfig.CHANNEL_API,
+                googleApiKey,
+                nextPageToken,
+                5)
+        }
     }
 
     private fun getVideoList() {
-        val googleApiKey = SharedPreferencesHelper.instance!!.getString(
-            SharedPreferencesKeys.GOOGLE_API_KEY)
+        val googleApiKey = SharedPreferencesHelper.instance!!.getString(SharedPreferencesKeys.GOOGLE_API_KEY)
         googleApiKey?.let {
             gramophoneTVViewModel.getVideoIds("snippet, contentDetails",
                 5,

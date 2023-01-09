@@ -368,16 +368,18 @@ class PostDetailViewModel @Inject constructor(
    try {
     if (getNavigator()?.isNetworkAvailable() == true) {
      val postID: RequestBody = data?._id!!.toRequestBody("text/plain".toMediaTypeOrNull())
-     val tags: RequestBody = tags.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+     val tagss: RequestBody = tags.toString().toRequestBody("text/plain".toMediaTypeOrNull())
      val showDate: RequestBody = date.toString().toRequestBody("text/plain".toMediaTypeOrNull())
      val area: RequestBody = area.toString().toRequestBody("text/plain".toMediaTypeOrNull())
 
-     val response = communityRepository.updatePost(postID,tags,area,showDate)
+     val response = communityRepository.updatePost(postID,tagss,area,showDate)
      if (response.isSuccessful) {
       var hasImages = "No"
       if (response.body()?.data?.images.isNotNull() && response.body()?.data?.images?.size!! >0){
        hasImages ="Yes"
       }
+
+
 
       val properties = Properties()
       properties.addAttribute(

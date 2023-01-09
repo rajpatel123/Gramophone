@@ -86,6 +86,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     }
     override fun updatePostList(
         communityPostAdapter: CommunityPostAdapter,
+        sharePoll: (type:String) -> Unit,
         quizPollAnswered: (option: Option) -> Unit,
         onItemDetailClicked: (postId: String) -> Unit,
         onItemLikesClicked: (postId: String) -> Unit,
@@ -100,6 +101,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     ) {
         runOnUIThread {//will be removed while api integrations
+            communityPostAdapter.sharePoll=sharePoll
             communityPostAdapter.quizPollAnswered=quizPollAnswered
             communityPostAdapter.onItemCommentsClicked=onItemCommentsClicked
             communityPostAdapter.onItemLikesClicked=onItemLikesClicked
@@ -156,6 +158,16 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         } catch (ex: ActivityNotFoundException) {
             showToast("Whatsapp have not been installed.")
         }
+
+        val properties = Properties()
+        properties.addAttribute(
+            "Customer_Id",
+            SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.CUSTOMER_ID
+            )!!
+        )
+            .addAttribute("SharedEntity", "POST")
+        sendMoEngageEvent("KA_Share", properties)
 
     }
 

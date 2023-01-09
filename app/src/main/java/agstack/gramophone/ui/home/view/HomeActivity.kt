@@ -82,7 +82,11 @@ class HomeActivity :
         super.onCreate(savedInstanceState)
         setupUi()
         if (TextUtils.isEmpty(instance!!.getString(SharedPreferencesKeys.GOOGLE_API_KEY))){
-            setUpFirebaseConfig()
+           if (BuildConfig.DEBUG){
+               instance!!.putString(SharedPreferencesKeys.GOOGLE_API_KEY, BuildConfig.GOOGLE_API)
+           }else{
+               setUpFirebaseConfig()
+           }
         }
         registerWithFCM()
         processDeepLink()

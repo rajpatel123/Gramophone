@@ -14,6 +14,8 @@ import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodel
 import agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Constants.BLOCKED_STATUS
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -27,6 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.amnix.xtension.extensions.runOnUIThread
 import com.bumptech.glide.Glide
+import com.moengage.core.Properties
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_otheruserprofile.*
 
@@ -57,6 +60,7 @@ class OtherUserProfileActivity :
     override fun getViewModel(): CommunityViewModel = otherProfileViewModel
     override fun updatePostList(
         communityPostAdapter: CommunityPostAdapter,
+        sharePoll: (type:String) -> Unit,
         quizPollAnswered: (option: Option) -> Unit,
         onItemDetailClicked: (postId: String) -> Unit,
         onItemLikesClicked: (postId: String) -> Unit,
@@ -71,6 +75,8 @@ class OtherUserProfileActivity :
     ) {
 
         runOnUIThread {//will be removed while api integrations
+            communityPostAdapter.sharePoll = sharePoll
+            communityPostAdapter.quizPollAnswered = quizPollAnswered
             communityPostAdapter.onItemCommentsClicked = onItemCommentsClicked
             communityPostAdapter.onItemLikesClicked = onItemLikesClicked
             communityPostAdapter.onItemDetailClicked = onItemDetailClicked
@@ -108,7 +114,15 @@ class OtherUserProfileActivity :
         } catch (ex: ActivityNotFoundException) {
             showToast("Whatsapp have not been installed.")
         }
-
+        val properties = Properties()
+        properties.addAttribute(
+            "Customer_Id",
+            SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.CUSTOMER_ID
+            )!!
+        )
+            .addAttribute("SharedEntity", "POST")
+        sendMoEngageEvent("KA_Share", properties)
     }
 
     override fun deletePostDialog() {

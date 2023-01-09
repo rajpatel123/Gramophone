@@ -86,7 +86,7 @@
                                         android:inputType="text|textNoSuggestions|textMultiLine"
                                         android:lineSpacingExtra="1dp"
                                         android:padding="@dimen/_10sdp"
-                                        android:text="@={viewModel.description}"
+
                                         android:textColorHint="@color/gray"
                                         android:textColorLink="@color/brand_color"
                                         android:textSize="20sp"
