@@ -725,7 +725,9 @@ class SubCategoryViewModel @Inject constructor(
     }
 
     fun goToMyFarm() {
-        getNavigator()?.openActivity(ViewAllFarmsActivity::class.java, null)
+        getNavigator()?.openActivity(ViewAllFarmsActivity::class.java, Bundle().apply {
+            putString(Constants.REDIRECTION_SOURCE, "FarmAdvisory")
+        })
     }
 
     fun openHelpClicked() {

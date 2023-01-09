@@ -1,15 +1,21 @@
 package agstack.gramophone.ui.unitconverter
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.UnitConverterActivityBinding
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import com.amnix.xtension.extensions.enableIf
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -36,6 +42,7 @@ class UnitConverterActivity :
         super.onCreate(savedInstanceState)
         setUpToolBar(true, resources.getString(R.string.unit_convertor), R.drawable.ic_arrow_left)
         initViews()
+        sendViewConverterMoEngageEvent()
     }
 
     private fun initViews() {
@@ -58,7 +65,8 @@ class UnitConverterActivity :
 
         })
         val mUnitsList = resources.getStringArray(R.array.units_kind_array)
-        val unitKindArrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, R.layout.spinner_item, mUnitsList)
+        val unitKindArrayAdapter: ArrayAdapter<String> =
+            ArrayAdapter<String>(this, R.layout.spinner_item, mUnitsList)
         unitKindArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         viewDataBinding.spinnerArea.enableIf(false)
         viewDataBinding.spinnerArea.isClickable = false
@@ -92,6 +100,15 @@ class UnitConverterActivity :
     override fun switchValues(itemValPosSpinner1: Int, itemValPosSpinner2: Int) {
         viewDataBinding.spinnerUnit1.setSelection(itemValPosSpinner2)
         viewDataBinding.spinnerUnit2.setSelection(itemValPosSpinner1)
+    }
 
+    private fun sendViewConverterMoEngageEvent() {
+        val properties = Properties()
+            .addAttribute("Profile ID",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_View converter", properties)
     }
 }

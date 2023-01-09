@@ -7,4 +7,5 @@ import android.os.Bundle
 interface SettingsNavigator:BaseNavigator {
     fun getLanguageCode(): String?
     fun openWebView(apply: Bundle)
+    fun sendCommonMoEngageEvent(eventName: String)
 }

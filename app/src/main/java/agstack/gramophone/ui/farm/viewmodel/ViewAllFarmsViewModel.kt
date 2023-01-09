@@ -24,6 +24,7 @@ class ViewAllFarmsViewModel @Inject constructor(
     private val oldFarm = "historical"
     private val activeFarm = "active"
     private var farmType = activeFarm
+    lateinit var redirectionScreen: String
     var progress = MutableLiveData<Boolean>()
 
     init {

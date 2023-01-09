@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.othersporfile.view
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityOtheruserprofileBinding
@@ -19,6 +20,7 @@ import agstack.gramophone.utils.SharedPreferencesKeys
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +32,7 @@ import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.amnix.xtension.extensions.runOnUIThread
 import com.bumptech.glide.Glide
 import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_otheruserprofile.*
 
@@ -44,12 +47,14 @@ class OtherUserProfileActivity :
         super.onCreate(savedInstanceState)
         otherProfileViewModel.uuid = intent.extras?.getString(Constants.AUTHER_UUID)!!
         otherProfileViewModel.id = intent.extras?.getString(Constants.AUTHER_ID)!!
+        otherProfileViewModel.redirectionSource =
+            intent.extras?.getString(Constants.REDIRECTION_SOURCE)!!
         if (intent.extras?.getString(Constants.POST_ID).isNotNullOrEmpty())
-        otherProfileViewModel.postId = intent.extras?.getString(Constants.POST_ID)!!
+            otherProfileViewModel.postId = intent.extras?.getString(Constants.POST_ID)!!
 
         otherProfileViewModel.getProfile(intent.getIntExtra(BLOCKED_STATUS,0))
         otherProfileViewModel.getPostByUUID(otherProfileViewModel.uuid,otherProfileViewModel.id)
-
+        sendOtherUserProfileViewMoEngageEvent()
     }
 
 
@@ -71,7 +76,7 @@ class OtherUserProfileActivity :
         onLikeClicked: (post: Data) -> Unit,
         onBookMarkClicked: (post: Data) -> Unit,
         onFollowClicked: (post: Data) -> Unit,
-        onProfileImageClicked: (post: Data) -> Unit
+        onProfileImageClicked: (post: Data) -> Unit,
     ) {
 
         runOnUIThread {//will be removed while api integrations
@@ -202,5 +207,34 @@ class OtherUserProfileActivity :
 
     override fun onImageSet(imageUrl: String, iv: ImageView) {
         Glide.with(this).load(imageUrl).into(iv)
+    }
+
+    private fun sendOtherUserProfileViewMoEngageEvent() {
+        val properties = Properties()
+            .addAttribute("Profile ID", otherProfileViewModel.id)
+            .addAttribute("Source screen", otherProfileViewModel.redirectionSource)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_2nd user_Profile", properties)
+    }
+
+    override fun sendBlockUserMoEngageEvent() {
+        val properties = Properties()
+            .addAttribute("Profile ID", otherProfileViewModel.id)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_2nd KA_Block_User", properties)
+    }
+
+    override fun sendEditFollowStatusMoEngageEvent() {
+        val properties = Properties()
+            .addAttribute("Profile ID", otherProfileViewModel.id)
+            .addAttribute("Source screen", otherProfileViewModel.redirectionSource)
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(this, "KA_2nd KA_Edit_Follow_status", properties)
     }
 }

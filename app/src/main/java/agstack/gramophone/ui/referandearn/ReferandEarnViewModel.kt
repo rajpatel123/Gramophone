@@ -23,31 +23,36 @@ import agstack.gramophone.ui.referralrules.ReferralRulesActivity
 
 @HiltViewModel
 class ReferandEarnViewModel @Inject constructor(
-    private val settingsRepository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
 ) : BaseViewModel<ReferandEarnNavigator>() {
-    private var currentShareOption=""
-    var QR_BitmapfromURL: Bitmap? =null
+    private var currentShareOption = ""
+    var QR_BitmapfromURL: Bitmap? = null
     private var getGramCashJob: Job? = null
     var progressLoader = ObservableField<Boolean>(false)
     var gramCashResponseData = ObservableField<GpApiResponseData>()
 
     fun showReferralPointsActivity() {
+        getNavigator()?.sendReferEarnMoEngageEvents("KA_Click_CheckReferralPoints")
         getNavigator()?.openActivity(ReferralPointsActivity::class.java, Bundle().apply {
-            putParcelable(Constants.GramCashResponse,gramCashResponseData.get())
-            putString(Constants.SHAREIMAGEURIStRING,getNavigator()?.getQRCodeURI())
+            putParcelable(Constants.GramCashResponse, gramCashResponseData.get())
+            putString(Constants.SHAREIMAGEURIStRING, getNavigator()?.getQRCodeURI())
 
         })
     }
 
     fun onFAQClicked() {
-        getNavigator()?.openActivity(FAQActivity::class.java,Bundle().apply {
-            putParcelableArrayList(Constants.GramCashFAQList,gramCashResponseData.get()?.gramcashFaq as ArrayList<GramcashFaqItem>)
+        getNavigator()?.sendReferEarnMoEngageEvents("KA_Click_FAQ")
+        getNavigator()?.openActivity(FAQActivity::class.java, Bundle().apply {
+            putParcelableArrayList(Constants.GramCashFAQList,
+                gramCashResponseData.get()?.gramcashFaq as ArrayList<GramcashFaqItem>)
         })
     }
 
-    fun onReferralRulesClicked(){
-        getNavigator()?.openActivity(ReferralRulesActivity::class.java,Bundle().apply {
-            putStringArrayList(Constants.GramCashReferralRulesList,gramCashResponseData.get()?.referralRules as ArrayList<String>)
+    fun onReferralRulesClicked() {
+        getNavigator()?.sendReferEarnMoEngageEvents("KA_Click_HowReferralWorks")
+        getNavigator()?.openActivity(ReferralRulesActivity::class.java, Bundle().apply {
+            putStringArrayList(Constants.GramCashReferralRulesList,
+                gramCashResponseData.get()?.referralRules as ArrayList<String>)
         })
 
     }
@@ -55,64 +60,69 @@ class ReferandEarnViewModel @Inject constructor(
     fun generateQrCode(extraText: String) {
         var contentText = extraText
 
-        if(gramCashResponseData.get()?.referral_code!=null){
+        if (gramCashResponseData.get()?.referral_code != null) {
             contentText = gramCashResponseData.get()?.referral_code!!
         }
 
-        QR_BitmapfromURL= generateQR(contentText, 512)
+        QR_BitmapfromURL = generateQR(contentText, 512)
         getNavigator()?.setQRCodeImage(QR_BitmapfromURL)
 
 
     }
 
     fun onDownloadQRClick() {
-
+        getNavigator()?.sendReferEarnMoEngageEvents("KA_Click_DownloadQR")
         getNavigator()?.convertedReferralLayoutsBitmap()
-
-
     }
 
-    fun onShareClick(){
+    fun onShareClick() {
+        getNavigator()?.sendReferEarnMoEngageEvents("KA_Click_ShareNow")
         currentShareOption = IntentKeys.OtherShareKey
-        getNavigator()?.share(currentShareOption,gramCashResponseData.get()?.share_message)
+        getNavigator()?.share(currentShareOption, gramCashResponseData.get()?.share_message)
     }
 
-    fun onShareReferalClick(){
+    fun onShareReferalClick() {
+        getNavigator()?.sendReferEarnMoEngageEvents("KA_Click_ShareGeneral")
         currentShareOption = IntentKeys.OtherShareKey
-        getNavigator()?.shareReferalCode(currentShareOption,gramCashResponseData.get()?.share_message,gramCashResponseData.get()?.referral_code)
+        getNavigator()?.shareReferalCode(currentShareOption,
+            gramCashResponseData.get()?.share_message,
+            gramCashResponseData.get()?.referral_code)
     }
 
-    fun onReferralCodeClick(){
-getNavigator()?.onReferralCodeClick(gramCashResponseData.get()?.referral_code!!)
+    fun onReferralCodeClick() {
+        getNavigator()?.onReferralCodeClick(gramCashResponseData.get()?.referral_code!!)
     }
 
-    fun onWhatsappShareClick(){
+    fun onWhatsappShareClick() {
+        getNavigator()?.sendReferEarnMoEngageEvents("KA_Click_ShareWhatsapp")
         currentShareOption = IntentKeys.WhatsAppShareKey
-        getNavigator()?.share(currentShareOption,gramCashResponseData.get()?.share_message)
+        getNavigator()?.share(currentShareOption, gramCashResponseData.get()?.share_message)
     }
 
     fun getGramCash() {
         getGramCashJob.cancelIfActive()
         getGramCashJob = checkNetworkThenRun {
             progressLoader.set(true)
-            try{
+            try {
 
-            val gramCashResponsefromAPI = settingsRepository.getGramCash()
+                val gramCashResponsefromAPI = settingsRepository.getGramCash()
 
-            if (gramCashResponsefromAPI.body()?.gpApiStatus!!.equals(Constants.GP_API_STATUS)) {
-                progressLoader.set(false)
-                val gramCashResponse: GpApiResponseData? = gramCashResponsefromAPI.body()?.gpApiResponseData
-                gramCashResponseData.set(gramCashResponse)
-                generateQrCode(gramCashResponsefromAPI.body()?.gpApiResponseData?.referral_code!!)
+                if (gramCashResponsefromAPI.body()?.gpApiStatus!!.equals(Constants.GP_API_STATUS)) {
+                    progressLoader.set(false)
+                    val gramCashResponse: GpApiResponseData? =
+                        gramCashResponsefromAPI.body()?.gpApiResponseData
+                    gramCashResponseData.set(gramCashResponse)
+                    generateQrCode(gramCashResponsefromAPI.body()?.gpApiResponseData?.referral_code!!)
 
-              //  getNavigator()?.showToast(gramCashResponsefromAPI.body()?.gpApiMessage)
-            } else {
-                progressLoader.set(false)
-                getNavigator()?.showToast(gramCashResponsefromAPI.body()?.gpApiMessage)
+                    getNavigator()?.sendReferEarnMoEngageEvents("KA_View_Refer&Earn")
+                } else {
+                    progressLoader.set(false)
+                    getNavigator()?.showToast(gramCashResponsefromAPI.body()?.gpApiMessage)
+                }
+            } catch (e: Exception) {
+                Log.d("Exception", e.toString())
             }
-        }catch (e:Exception){
-            Log.d("Exception",e.toString())
-        }}
+        }
     }
 
     private fun checkNetworkThenRun(runCode: (suspend () -> Unit)): Job {

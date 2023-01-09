@@ -482,6 +482,7 @@ class MarketFragmentViewModel
                     for (item in list) {
                         suggestedCrops = suggestedCrops + item.crop_name + ","
                     }
+                    SharedPreferencesHelper.instance?.putString(SharedPreferencesKeys.SUGGESTED_CROPS, suggestedCrops)
                     if (suggestedCrops.isNotNullOrEmpty()) {
                         viewModelScope.launch {
                             try {

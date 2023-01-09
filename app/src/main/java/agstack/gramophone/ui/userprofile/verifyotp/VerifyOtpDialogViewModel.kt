@@ -74,7 +74,7 @@ class VerifyOtpDialogViewModel @Inject constructor(
             resendOtpRequestModel.otp_reference_id = otp_reference_id
             resendOtpRequestModel.retryType = type
 
-
+            getNavigator()?.sendResendOtpMoEngageEvent()
             val reSendOTPResponse =
                 onBoardingRepository.resendOTPMobile(resendOtpRequestModel)
 
@@ -111,7 +111,7 @@ class VerifyOtpDialogViewModel @Inject constructor(
             } else if (otp.get()?.length!! < 6) {
                 getNavigator()?.showToast(getNavigator()?.getMessage(R.string.please_enter_6_digit_otp)!!)
             } else {
-                var validateOtpRequestModel =
+                val validateOtpRequestModel =
                     ValidateOtpMobileRequestModel( otp.get()!!, otp_reference_id.toString())
                 val validateOTPResponse =
                     onBoardingRepository.validateOtpMobile(validateOtpRequestModel)
@@ -122,11 +122,11 @@ class VerifyOtpDialogViewModel @Inject constructor(
                     progressLoader.set(false)
                     getNavigator()?.showToast(body?.gp_api_message)
                     getNavigator()?.dismissDialogFragment(Constants.GP_API_STATUS)
-
+                    getNavigator()?.sendIsOtpVerifiedMoEngageEvent(true)
                 } else {
                     progressLoader.set(false)
                     getNavigator()?.showToast(body?.gp_api_message)
-
+                    getNavigator()?.sendIsOtpVerifiedMoEngageEvent(false)
                 }
             }
 

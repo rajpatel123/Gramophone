@@ -280,6 +280,7 @@ object Constants {
     const val GramophoneVideo = "gramophoneVideo"
     const val REDIRECTION_SOURCE = "redirection_source"
     const val LANDING_SCREEN = "Landing Screen"
+    const val HAMBURGER_HOME = "Burger Drawer / Home"
 
 
     /**

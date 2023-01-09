@@ -524,7 +524,9 @@ class MyGramophoneFragment :
             }
         }
         binding?.tvGoToFarms?.setOnClickListener {
-            openActivity(ViewAllFarmsActivity::class.java)
+            openActivity(ViewAllFarmsActivity::class.java, Bundle().apply {
+                putString(Constants.REDIRECTION_SOURCE, "My Gramophone")
+            })
         }
 
         binding?.layoutFarm?.txtMultipleFarms?.setOnClickListener {
@@ -533,6 +535,7 @@ class MyGramophoneFragment :
                     "cropList",
                     farms?.gp_api_response_data?.customer_farm?.data?.get(0) as ArrayList<Data>
                 )
+                putString(Constants.REDIRECTION_SOURCE, "My Gramophone")
             })
 
             val properties = Properties()
@@ -560,6 +563,30 @@ class MyGramophoneFragment :
         }
 
         binding?.layoutFarm?.contentLayoutLL?.setOnClickListener {
+          if (farms?.gp_api_response_data?.customer_farm?.data!![0].size<2){
+              openActivity(AdvisoryActivity::class.java,Bundle().apply {
+                  putInt(Constants.FARM_ID,
+                      farms?.gp_api_response_data?.customer_farm?.data!![0][0].farm_id?.toInt()!!
+                  )
+                  putString(Constants.FARM_TYPE,"customer_farm")
+                  putString(Constants.CROP_NAME,farms.gp_api_response_data.customer_farm.data[0][0].crop_name)
+                  putString(Constants.CROP_IMAGE,farms.gp_api_response_data.customer_farm.data[0][0].crop_image)
+                  putString(Constants.CROP_REF_ID,farms.gp_api_response_data.customer_farm.data[0][0].farm_ref_id)
+                  putInt(Constants.CROP_ID,farms.gp_api_response_data.customer_farm.data[0][0].crop_id)
+                  putString(Constants.CROP_DURATION,farms.gp_api_response_data.customer_farm.data[0][0].crop_sowing_date)
+                  putString(Constants.CROP_END_DATE,farms.gp_api_response_data.customer_farm.data[0][0].crop_anticipated_completed_date)
+                  putString(Constants.CROP_STAGE,farms.gp_api_response_data.customer_farm.data[0][0].stage_name)
+                  putString(Constants.CROP_DAYS,farms.gp_api_response_data.customer_farm.data[0][0].days)
+              })
+          }else{
+              openActivity(CropGroupExplorerActivity::class.java, Bundle().apply {
+                  putParcelableArrayList(
+                      "cropList",
+                      farms?.gp_api_response_data?.customer_farm?.data?.get(0) as ArrayList<Data>
+                  )
+                  putString(Constants.REDIRECTION_SOURCE, "My Gramophone")
+              })
+          }
             if (farms?.gp_api_response_data?.customer_farm?.data!![0].size < 2) {
                 openActivity(AdvisoryActivity::class.java, Bundle().apply {
                     putInt(
@@ -626,6 +653,7 @@ class MyGramophoneFragment :
                     "cropList",
                     farms?.gp_api_response_data?.customer_farm?.data?.get(0) as ArrayList<Data>
                 )
+                putString(Constants.REDIRECTION_SOURCE, "My Gramophone")
             })
         }
 

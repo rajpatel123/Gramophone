@@ -97,9 +97,9 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         onLikeClicked: (post: Data) -> Unit,
         onBookMarkClicked: (post: Data) -> Unit,
         onFollowClicked: (post: Data) -> Unit,
-        onProfileImageClicked: (post: Data) -> Unit
+        onProfileImageClicked: (post: Data) -> Unit,
 
-    ) {
+        ) {
         runOnUIThread {//will be removed while api integrations
             communityPostAdapter.sharePoll=sharePoll
             communityPostAdapter.quizPollAnswered=quizPollAnswered
@@ -297,5 +297,13 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     }
 
+    override fun sendBlockUserMoEngageEvent() {
+        //no need to send event from here
+        // because event (KA_Block_User) has already been sent from OtherUserProfileActivity
+    }
 
+    override fun sendEditFollowStatusMoEngageEvent() {
+        //no need to send event from here
+        // because event has already been sent from OtherUserProfileActivity
+    }
 }

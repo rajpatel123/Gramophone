@@ -234,7 +234,7 @@ class UserProfileViewModel @Inject constructor(
                     if(response.isSuccessful){
                         Log.d("Picture Posted","User Profile Updated")
                         userHandle.set(response.body()?.data?.handle)
-
+                        getNavigator()?.sendSaveProfileImageMoengageEvent()
                     }
 
 

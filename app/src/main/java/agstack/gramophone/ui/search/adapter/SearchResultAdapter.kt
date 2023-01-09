@@ -129,7 +129,7 @@ class SearchResultAdapter(val viewModel : GlobalSearchViewModel,
                             putString(Constants.AUTHER_ID, id)
                             putString(Constants.AUTHER_UUID, id)
                             putInt(Constants.BLOCKED_STATUS, 0)
-
+                            putString(Constants.REDIRECTION_SOURCE, "Search Screen")
                         })
                 }
                 holder.binding.viewAllProfiles.setOnClickListener {
