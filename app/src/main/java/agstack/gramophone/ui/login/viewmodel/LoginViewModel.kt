@@ -106,12 +106,11 @@ class LoginViewModel @Inject constructor(
 
 
     fun onPrivacyClicked() {
+        getNavigator()?.sendPrivacyMoEngageEvent()
         val initiateAppDataResponseModel =
             SharedPreferencesHelper.instance?.getParcelable(
                 SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java
             )
-
-        getNavigator()?.sendPrivacyMoEngageEvent()
         getNavigator()?.openWebView(Bundle().apply {
             putString(
                 Constants.PAGE_URL,

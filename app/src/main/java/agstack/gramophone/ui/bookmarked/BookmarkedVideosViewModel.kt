@@ -3,6 +3,8 @@ package agstack.gramophone.ui.bookmarked
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.ui.postdetails.view.PostDetailsActivity
+import agstack.gramophone.ui.tv.SingleVideoActivity
 import agstack.gramophone.utils.Constants
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
@@ -36,7 +38,13 @@ class BookmarkedVideosViewModel @Inject constructor(
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
                         && response.body()?.gp_api_response_data?.bookmarks?.size!! > 0
                     ) {
-                        getNavigator()?.setBookmarkedAdapter(BookmarkedVideosAdapter(response.body()?.gp_api_response_data?.bookmarks!!))
+                        getNavigator()?.setBookmarkedAdapter(BookmarkedVideosAdapter(response.body()?.gp_api_response_data?.bookmarks!!)) {
+                            getNavigator()?.openActivity(
+                                SingleVideoActivity::class.java,
+                                Bundle().apply {
+                                    putString(Constants.VideoId, it)
+                                })
+                        }
                     }
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))

@@ -42,7 +42,11 @@ class BookmarkedVideosActivity :
         }
     }
 
-    override fun setBookmarkedAdapter(adapter: BookmarkedVideosAdapter) {
+    override fun setBookmarkedAdapter(
+        adapter: BookmarkedVideosAdapter,
+        onVideoClicked: (videoId: String) -> Unit,
+    ) {
+        adapter.onVideoClicked = onVideoClicked
         viewDataBinding.rvBookmarkedVideos.adapter = adapter
     }
 
