@@ -49,7 +49,7 @@
            android:paddingEnd="@dimen/_10sdp"
            >
            <TextView
-               android:id="@+id/tvQuizOption"
+               android:id="@+id/tvPollOption"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:fontFamily="@font/manrope_semibold"

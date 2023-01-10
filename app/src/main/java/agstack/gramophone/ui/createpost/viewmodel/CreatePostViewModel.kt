@@ -208,11 +208,14 @@ class CreatePostViewModel @Inject constructor(
                                     }
                                 )
                             } else {
+                                creatingPost=false
                                 getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                             }
 
-                        } else
+                        } else {
+                            creatingPost=false
                             getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+                        }
                     } catch (ex: Exception) {
                         creatingPost = false
 
@@ -222,6 +225,7 @@ class CreatePostViewModel @Inject constructor(
                         }
                     }
                 }else{
+                    creatingPost=false
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.enter_desc_validation)!!)
                 }
 
@@ -238,7 +242,7 @@ class CreatePostViewModel @Inject constructor(
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     val desc: RequestBody =
-                        description.get()?.toRequestBody("text/plain".toMediaTypeOrNull())
+                        getNavigator()?.getDesc()?.toRequestBody("text/plain".toMediaTypeOrNull())
                             ?: "".toRequestBody("text/plain".toMediaTypeOrNull())
                     val tags: RequestBody =
                         tags.toString().toRequestBody("text/plain".toMediaTypeOrNull())
@@ -403,7 +407,8 @@ class CreatePostViewModel @Inject constructor(
                     val response = communityRepository.getPostDetails(postId)
                     if (response.isSuccessful) {
                         val data = response.body()?.data
-                        description.set(data?.description.toString())
+                        getNavigator()?.setDesc(data?.description.toString())
+                       // description.set(data?.description.toString())
 
                         if (data?.images != null && data.images.size > 0) {
                             getNavigator()?.loadImages(data.images)

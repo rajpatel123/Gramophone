@@ -65,6 +65,7 @@ class OtherUserProfileActivity :
     override fun getViewModel(): CommunityViewModel = otherProfileViewModel
     override fun updatePostList(
         communityPostAdapter: CommunityPostAdapter,
+        sharePoll: (type:String) -> Unit,
         quizPollAnswered: (option: Option) -> Unit,
         onItemDetailClicked: (postId: String) -> Unit,
         onItemLikesClicked: (postId: String) -> Unit,
@@ -79,6 +80,8 @@ class OtherUserProfileActivity :
     ) {
 
         runOnUIThread {//will be removed while api integrations
+            communityPostAdapter.sharePoll = sharePoll
+            communityPostAdapter.quizPollAnswered = quizPollAnswered
             communityPostAdapter.onItemCommentsClicked = onItemCommentsClicked
             communityPostAdapter.onItemLikesClicked = onItemLikesClicked
             communityPostAdapter.onItemDetailClicked = onItemDetailClicked
@@ -116,7 +119,15 @@ class OtherUserProfileActivity :
         } catch (ex: ActivityNotFoundException) {
             showToast("Whatsapp have not been installed.")
         }
-
+        val properties = Properties()
+        properties.addAttribute(
+            "Customer_Id",
+            SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.CUSTOMER_ID
+            )!!
+        )
+            .addAttribute("SharedEntity", "POST")
+        sendMoEngageEvent("KA_Share", properties)
     }
 
     override fun deletePostDialog() {
@@ -182,7 +193,7 @@ class OtherUserProfileActivity :
 
     override fun setProfileImage(profileImage: String) {
         if (profileImage.isNotNullOrEmpty() && !profileImage.equals("null"))
-            Glide.with(this).load(profileImage).into(cv_profile_pic)
+        Glide.with(this).load(profileImage).into(cv_profile_pic)
     }
 
     override fun stopRefresh() {

@@ -20,4 +20,6 @@ interface CreatePostNavigator : BaseNavigator {
     fun loadImages(images: List<Image>)
     fun populateProblemList(tagArray: Array<Tag>)
     fun getText():String
+    fun setDesc(toString: String)
+    fun getDesc(): String?
 }

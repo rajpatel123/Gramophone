@@ -213,7 +213,7 @@ class ProductDetailsActivity :
         val playerFragment =
             supportFragmentManager.findFragmentById(R.id.youtube_player_fragment) as YouTubePlayerSupportFragmentX?
         if (playerFragment != null) {
-            val googleApiKey = getString(R.string.google_api)
+            val googleApiKey = SharedPreferencesHelper.instance!!.getString(SharedPreferencesKeys.GOOGLE_API_KEY)
             playerFragment.initialize(googleApiKey, this)
         }
     }

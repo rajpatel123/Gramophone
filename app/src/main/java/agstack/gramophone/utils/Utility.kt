@@ -259,4 +259,10 @@ object Utility {
         val formatter = SimpleDateFormat(ORDER_PLACED_DATE_FORMAT)
         return formatter.format(date)
     }
+
+
+    fun getShowingDate(date: Date): String? {
+        val formatter = SimpleDateFormat(ORDER_PLACED_DATE_FORMAT)
+        return formatter.format(date)
+    }
 }

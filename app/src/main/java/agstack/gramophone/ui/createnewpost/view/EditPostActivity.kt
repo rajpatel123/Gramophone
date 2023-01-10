@@ -35,10 +35,12 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.text.Editable
 import android.text.Html
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
@@ -50,6 +52,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.amnix.xtension.extensions.inflater
@@ -564,6 +567,22 @@ class EditPostActivity: BaseActivityWrapper<EditPostsActivityBinding, CreatePost
     override fun getText() :String {
         return viewDataBinding.descriptionEditText.editableText.toString()
     }
+
+    override fun setDesc(toString: String) {
+        if (TextUtils.isEmpty(toString)){
+            return
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            viewDataBinding.descriptionEditText.setText(HtmlCompat.fromHtml(toString!!, HtmlCompat.FROM_HTML_MODE_LEGACY))
+        }else{
+            viewDataBinding.descriptionEditText.setText(Html.fromHtml(toString!!))
+        }
+    }
+
+    override fun getDesc(): String? {
+      return viewDataBinding.descriptionEditText.text.toString()
+    }
+
     override fun enablePostButton() {
         viewDataBinding.postButton?.isEnabled = true
     }

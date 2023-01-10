@@ -555,6 +555,13 @@ class CreatePostActivity :
         return viewDataBinding.descriptionEditText.editableText.toString()
     }
 
+    override fun setDesc(toString: String) {
+    }
+
+    override fun getDesc(): String? {
+        return null
+    }
+
 
     override fun populateHasTagList(tags: Array<Tag>) {
         try {
