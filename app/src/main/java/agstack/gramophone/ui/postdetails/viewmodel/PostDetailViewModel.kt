@@ -31,7 +31,9 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @HiltViewModel
 class PostDetailViewModel @Inject constructor(
@@ -363,7 +365,7 @@ class PostDetailViewModel @Inject constructor(
   }
  }
 
- fun updatePost(area: JSONObject, date: String?) {
+ fun updatePost(area: JSONObject, date: String?, showingDate: Date) {
   viewModelScope.launch {
    try {
     if (getNavigator()?.isNetworkAvailable() == true) {
@@ -392,7 +394,7 @@ class PostDetailViewModel @Inject constructor(
        .addAttribute("Has_Images",hasImages)
        .addAttribute("Crop",tags.toString())
        .addAttribute("Area",area)
-       .addAttribute("Sowing_Date",date)
+       .addAttribute("Sowing_Date",Utility.getShowingDate(showingDate))
        .setNonInteractive()
       getNavigator()?.sendMoEngageEvent("KA_Save_Post",properties)
 

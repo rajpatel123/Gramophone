@@ -33,6 +33,15 @@ class FavouriteProductActivity : BaseActivityWrapper<ActivityFavouriteProductBin
         )
         favouriteProductViewModel.getFavouriteProduct()
 
+        val properties = Properties()
+        properties.addAttribute(
+            "Customer_Id",
+            SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.CUSTOMER_ID
+            )!!
+        )
+            .setNonInteractive()
+        sendMoEngageEvent(" KA_Click_ExploreProducts", properties)
     }
 
     override fun getLayoutID(): Int {

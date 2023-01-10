@@ -19,6 +19,7 @@ import androidx.activity.viewModels
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
 import com.android.installreferrer.api.ReferrerDetails
+import com.moengage.core.Properties
 import dagger.hilt.android.AndroidEntryPoint
 
 @SuppressLint("CustomSplashScreen")
@@ -31,9 +32,12 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         startApp()
         if (intent.data !=null)
         instance?.putString(Constants.URI, intent.data.toString())
+
+
     }
 
     private fun startApp() {

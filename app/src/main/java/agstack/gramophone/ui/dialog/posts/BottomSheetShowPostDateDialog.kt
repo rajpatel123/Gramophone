@@ -37,7 +37,7 @@ class BottomSheetShowPostDateDialog(
     val cropListOnSheet = ArrayList<CropData>()
      val cal = Calendar.getInstance()
     lateinit var mActivity : PostDetailsActivity
-
+     lateinit var dateObj: Date
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -90,7 +90,7 @@ class BottomSheetShowPostDateDialog(
             val farmArea = JSONObject()
             farmArea.put("area",binding!!.edtArea.text.toString())
             farmArea.put("unit",unit)
-            listener.onSelectionDone(cropList,farmArea,binding?.tvDate?.text.toString())
+            listener.onSelectionDone(cropList,farmArea,binding?.tvDate?.text.toString(),dateObj)
             dismiss()
         }
 
@@ -104,6 +104,7 @@ class BottomSheetShowPostDateDialog(
                 cal.set(Calendar.YEAR, year)
                 cal.set(Calendar.MONTH, monthOfYear)
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                dateObj = cal.time
                 updateDateInView()
             }
         }
@@ -131,7 +132,7 @@ class BottomSheetShowPostDateDialog(
 
     override fun getTheme(): Int = R.style.CustomBottomSheetDialogTheme
     interface OnSelectionShowDone {
-        fun onSelectionDone(cropList: MutableList<CropData>, unit: JSONObject, date: String?)
+        fun onSelectionDone(cropList: MutableList<CropData>, unit: JSONObject, date: String?,dateObj: Date)
     }
 
     override fun onOtherClicked() {

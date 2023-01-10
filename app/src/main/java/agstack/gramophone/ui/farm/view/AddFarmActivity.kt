@@ -37,6 +37,7 @@ class AddFarmActivity :
     var myCalendar: Calendar = Calendar.getInstance()
     var units: List<GpApiResponseData>? = null
     var selectedUnit: GpApiResponseData? = null
+    lateinit var dateObj: Date
 
     companion object {
         fun start(activity: AppCompatActivity) {
@@ -106,6 +107,8 @@ class AddFarmActivity :
             myCalendar.set(Calendar.YEAR, year)
             myCalendar.set(Calendar.MONTH, month)
             myCalendar.set(Calendar.DAY_OF_MONTH, day)
+
+            dateObj = myCalendar.time
             updateLabel()
         }
 
@@ -156,6 +159,10 @@ class AddFarmActivity :
             .addAttribute("SDK Version", Build.VERSION.SDK_INT)
             .setNonInteractive()
         MoEAnalyticsHelper.trackEvent(this, "KA_Click_SaveFarm", properties)
+    }
+
+    override fun getDateForEvent(): Date {
+        return dateObj
     }
 }
 

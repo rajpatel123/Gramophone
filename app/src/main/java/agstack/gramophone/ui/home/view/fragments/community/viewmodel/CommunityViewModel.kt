@@ -107,8 +107,6 @@ class CommunityViewModel @Inject constructor(
             }
         }
 
-
-
         val properties = Properties()
         properties.addAttribute(
             "Customer_Id",
@@ -118,6 +116,7 @@ class CommunityViewModel @Inject constructor(
             .addAttribute("Filter",sorting.get())
             .setNonInteractive()
         getNavigator()?.sendMoEngageEvent("KA_Filter_Feed", properties)
+
         loadData(sorting.get()!!)
     }
 
@@ -286,7 +285,7 @@ class CommunityViewModel @Inject constructor(
                             )!!)
                             .addAttribute("Post_ID",menuClickedData._id)
                             .setNonInteractive()
-                        getNavigator()?.sendMoEngageEvent("KA_View_Likes_On_Post", properties)
+                        getNavigator()?.sendMoEngageEvent("KA_Report_Post", properties)
 
                     } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
@@ -398,6 +397,8 @@ class CommunityViewModel @Inject constructor(
                         },
                         {
                           answerQuizPoll(it)
+
+
                         },
                         {//postDetail click
                             getNavigator()?.openActivity(
@@ -439,6 +440,7 @@ class CommunityViewModel @Inject constructor(
                         {
                             when (it.menu) {
                                 Constants.PIN_POST -> {
+                                    menuClickedData = it
                                     updatePinPost(it)
                                 }
 

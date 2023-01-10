@@ -182,6 +182,16 @@ class MyGramophoneFragment :
         }
 
         binding?.layoutReferral?.itemReferral?.setOnClickListener {
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(
+                    SharedPreferencesKeys.CUSTOMER_ID
+                )!!
+            )
+                .setNonInteractive()
+            sendMoEngageEvent("KA_Click_ReferBanner", properties)
+
             openActivity(ReferAndEarnActivity::class.java, null)
         }
 
@@ -195,6 +205,17 @@ class MyGramophoneFragment :
             shareIntent.type = "text/plain"
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
             startActivity(Intent.createChooser(shareIntent, ""))
+
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(
+                    SharedPreferencesKeys.CUSTOMER_ID
+                )!!
+            )
+                .setNonInteractive()
+            sendMoEngageEvent("KA_Click_ShareNow", properties)
+
         }
     }
 
@@ -674,9 +695,12 @@ class MyGramophoneFragment :
         if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.products > 0){
             binding?.layoutFavorite?.tvProductCount?.text =
                 myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.products.toString()
+            event = "KA_Click_ExploreProducts"
         }else{
             binding?.layoutFavorite?.tvProductCount?.text = "--"
+            event="KA_View_FavouriteProducts_NoData"
         }
+        sendMoEngageEvent(event, properties)
 
         if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.orders > 0) {
             binding?.layoutOrder?.myOrderTitle?.text =
@@ -691,22 +715,33 @@ class MyGramophoneFragment :
         if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles > 0){
             binding?.layoutFavorite?.tvArticleCount?.text =
                 myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles.toString()
+
         }else {
             binding?.layoutFavorite?.tvArticleCount?.text = "--"
+            event="KA_View_FavouriteArticles_NoData"
         }
+        sendMoEngageEvent(event, properties)
 
         if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.gramophone_tv > 0){
             binding?.layoutFavorite?.tvTVCount?.text =
                 myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.gramophone_tv.toString()
         }else{
             binding?.layoutFavorite?.tvTVCount?.text = "--"
+            event = "KA_View_FavouriteGramophoneTV_NoData"
         }
+
+        sendMoEngageEvent(event, properties)
+
 
         binding?.layoutFavorite?.llPostLinearLayout?.setOnClickListener {
             if (activity is HomeActivity) {
                 (activity as HomeActivity).showCommunityFragment("gramophone")
             }
+
+            sendMoEngageEvent("KA_Click_FavouritePosts", properties)
+
         }
+
 
         binding?.layoutFavorite?.llArticleLinearLayout?.setOnClickListener {
             if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.articles > 0) {
@@ -794,6 +829,7 @@ class MyGramophoneFragment :
                 )
                     .setNonInteractive()
                 sendMoEngageEvent("KA_View_FavouriteGramophoneTV", properties)
+                sendMoEngageEvent("KA_Click_FavouriteGramphoneTV", properties)
             } else {
                 openActivity(GramophoneTVActivity::class.java, null)
                 val properties = Properties()

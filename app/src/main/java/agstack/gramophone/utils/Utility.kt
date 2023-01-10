@@ -41,7 +41,7 @@ object Utility {
     public const val HOUR_MIN_12_TIME_FORMAT = "hh:mm a"  /*12:08 PM*/
     public const val HOUR_MIN_SECOND_TIME_FORMAT = "HH:mm:ss"  /*09:18:46*/
     public const val ORDER_PLACED_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"  /*2001-07-04T12:08:56*/
-
+    public const val COMMUNITY_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"  /*2001-07-04T12:08:56*/
 
     fun List<String>.toBulletedList(): CharSequence {
         return SpannableString(this.joinToString("\n")).apply {
@@ -262,7 +262,7 @@ object Utility {
 
 
     fun getShowingDate(date: Date): String? {
-        val formatter = SimpleDateFormat(ORDER_PLACED_DATE_FORMAT)
-        return formatter.format(date)
+        val formatter = SimpleDateFormat(COMMUNITY_DATE_FORMAT)
+        return formatter.format(date).plus("Z")
     }
 }

@@ -388,6 +388,9 @@ class HomeActivity :
                 "social"->{
                     showCommunityFragment("social")
                 }
+                "market"->{
+                    showHomeFragment()
+                }
             }
 
             SharedPreferencesHelper.instance?.putString(Constants.TARGET_PAGE,"")

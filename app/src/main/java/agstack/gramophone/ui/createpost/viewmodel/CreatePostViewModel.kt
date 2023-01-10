@@ -128,7 +128,7 @@ class CreatePostViewModel @Inject constructor(
                         if (getNavigator()?.isNetworkAvailable() == true) {
                             val desc: RequestBody =
                                 getNavigator()?.getText()?.toRequestBody("text/plain".toMediaTypeOrNull()) ?: "".toRequestBody("text/plain".toMediaTypeOrNull())
-                            val tags: RequestBody = tags.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+                            val tagss: RequestBody = tags.toString().toRequestBody("text/plain".toMediaTypeOrNull())
 
                             var image1: MultipartBody.Part? =null
                             var image2:MultipartBody.Part? =null
@@ -183,7 +183,7 @@ class CreatePostViewModel @Inject constructor(
 
 
                             }
-                            response = communityRepository.createPost(desc, tags, image1, image2, image3)
+                            response = communityRepository.createPost(desc, tagss, image1, image2, image3)
                             if (response.isSuccessful) {
                                 creatingPost = false
 

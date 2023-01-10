@@ -2,6 +2,7 @@ package agstack.gramophone.ui.farm.navigator
 
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.ui.farm.model.unit.GpApiResponseData
+import java.util.*
 
 interface AddFarmNavigator : BaseNavigator {
     fun onFarmAdded()
@@ -11,4 +12,5 @@ interface AddFarmNavigator : BaseNavigator {
     fun getArea(): Double
     fun getAreaUnit(): GpApiResponseData?
     fun sendSaveFarmMoEngageEvents(farmId: String, crop: String, sowingDate: String, area: String)
+    fun getDateForEvent(): Date
 }

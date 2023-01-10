@@ -59,6 +59,7 @@ android {
             resValue "string", "app_name_different", "Gramophone"
             buildConfigField "String", "PLACE_API", "\"AIzaSyAgopa2TyrbNgE_qpnbvc6XiV7dLa9KHF0\""
             buildConfigField "String", "CHANNEL_API", "\"UCmJ7oQCcKzf-IU2QXaMVykQ\""
+            buildConfigField "String", "GOOGLE_API", "\"AIzaSyD6HGLMvm-bUW0ZCX3wXztDZZXUQTfznZI\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "facebook_app_name", '"fbContentProvider"'
             buildConfigField "String", "BASE_URL_SOCIAL", "\"https://community-api.gramophone.in/\""

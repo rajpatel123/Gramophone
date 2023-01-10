@@ -9,6 +9,7 @@ import agstack.gramophone.ui.home.view.fragments.market.model.CropData
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.Utility
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.moengage.core.Properties
@@ -80,7 +81,8 @@ class AddFarmViewModel @Inject constructor(
                 SharedPreferencesKeys.CUSTOMER_ID
             )!!)
             .addAttribute("Crop",addFarmRequest.field_name)
-            .addAttribute(" Sowing Date",addFarmRequest.crop_sowing_date)
+            .addAttribute(" Sowing Date",
+                getNavigator()?.getDateForEvent()?.let { Utility.getShowingDate(it) })
             .addAttribute("Area",addFarmRequest.area)
             .setNonInteractive()
         viewModelScope.launch {
