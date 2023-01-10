@@ -4,5 +4,5 @@ import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.ui.cart.adapter.CartAdapter
 
 interface BookmarkedVideosNavigator : BaseNavigator {
-    fun setBookmarkedAdapter(adapter: BookmarkedVideosAdapter)
+    fun setBookmarkedAdapter(adapter: BookmarkedVideosAdapter, onVideoClicked: (videoID: String) -> Unit,)
 }

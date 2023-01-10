@@ -247,8 +247,13 @@ class CartViewModel @Inject constructor(
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.value = true
+                    val promotionId = if (cartItem.offer_applied.isNotNull() && cartItem.offer_applied.promotion_id.isNotNull()) {
+                        cartItem.offer_applied.promotion_id!!
+                    } else {
+                        ""
+                    }
                     getNavigator()?.sendRemoveProductFromCartMoEngageEvent(Integer.parseInt(cartItem.product_id), cartItem.product_name, cartItem.discount_price, cartItem.cost_price,
-                    cartItem.discount_price, cartItem.product_sku, cartItem.quantity, cartItem?.offer_applied?.promotion_id!!,  cartItem.promotional_discount)
+                    cartItem.discount_price, cartItem.product_sku, cartItem.quantity, promotionId,  cartItem.promotional_discount)
                     val response = productRepository.removeCartItem(productId)
                     if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS) {
                         getCartData()

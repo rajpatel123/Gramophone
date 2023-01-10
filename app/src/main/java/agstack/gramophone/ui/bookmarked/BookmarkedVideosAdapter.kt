@@ -16,6 +16,7 @@ import javax.inject.Singleton
 class BookmarkedVideosAdapter(bookmarkList: List<Bookmark>) :
     RecyclerView.Adapter<BookmarkedVideosAdapter.CustomViewHolder>() {
     var bookmarkVideoList = bookmarkList
+    var onVideoClicked: ((videoId: String) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         return CustomViewHolder(
@@ -25,6 +26,9 @@ class BookmarkedVideosAdapter(bookmarkList: List<Bookmark>) :
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.binding.model = bookmarkVideoList[position]
+        holder.binding.listItemTitleContainer.setOnClickListener {
+            onVideoClicked?.invoke(bookmarkVideoList[position].youtube_video_id)
+        }
     }
 
     override fun getItemCount(): Int {

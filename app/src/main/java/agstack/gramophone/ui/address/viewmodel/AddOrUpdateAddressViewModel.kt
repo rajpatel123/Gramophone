@@ -315,7 +315,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                         onBoardingRepository.getLocationAddress(
                             "" + latitude + "," + longitude,
                             BuildConfig.PLACE_API
-                        )
+                        )  
                     if (addressResponse.isSuccessful) {
                         parseAddressDetail(latitude, longitude, addressResponse.body())
                     }
@@ -337,51 +337,52 @@ class AddOrUpdateAddressViewModel @Inject constructor(
         locationObj: GoogleAddressResponseModel?,
     ) {
         val addressData = HashMap<String, String>()
+        if (locationObj?.results?.isNotNullOrEmpty() == true) {
+            val item = locationObj?.results?.get(0)
+            val address_components = item?.address_components
 
-        val item = locationObj?.results?.get(0)
-        val address_components = item?.address_components
+            for (j in 0 until address_components?.size!!) {
+                val addressObj = address_components[j]
+                val itemTypeArray = addressObj.types
+                for (k in 0 until itemTypeArray.size) {
+                    val itemType = itemTypeArray[k]
+                    when (itemType) {
+                        "sublocality_level_1" -> {
+                            addressData.put("village", addressObj.long_name)
+                        }
+                        "postal_code" -> {
+                            addressData.put("pincode", addressObj.long_name)
+                        }
 
-        for (j in 0 until address_components?.size!!) {
-            val addressObj = address_components[j]
-            val itemTypeArray = addressObj.types
-            for (k in 0 until itemTypeArray.size) {
-                val itemType = itemTypeArray[k]
-                when (itemType) {
-                    "sublocality_level_1" -> {
-                        addressData.put("village", addressObj.long_name)
-                    }
-                    "postal_code" -> {
-                        addressData.put("pincode", addressObj.long_name)
+                        "locality" -> {
+                            addressData.put("tehsil", addressObj.long_name)
+                        }
+
+                        "administrative_area_level_2" -> {
+                            addressData.put("dist", addressObj.long_name)
+                        }
+
+                        "administrative_area_level_1" -> {
+                            addressData.put("state", addressObj.long_name)
+                        }
                     }
 
-                    "locality" -> {
-                        addressData.put("tehsil", addressObj.long_name)
-                    }
-
-                    "administrative_area_level_2" -> {
-                        addressData.put("dist", addressObj.long_name)
-                    }
-
-                    "administrative_area_level_1" -> {
-                        addressData.put("state", addressObj.long_name)
-                    }
                 }
-
             }
-        }
 
-        if (addressData.keys.size > 0) {
-            var addressRequest = AddressRequestWithLatLongModel(
-                latitude.toString(),
-                longitude.toString(),
-                addressData.get("state"),
-                addressData.get("dist"),
-                addressData.get("tehsil"),
-                addressData.get("village"),
-                addressData.get("pincode"),
-            )
+            if (addressData.keys.size > 0) {
+                var addressRequest = AddressRequestWithLatLongModel(
+                    latitude.toString(),
+                    longitude.toString(),
+                    addressData.get("state"),
+                    addressData.get("dist"),
+                    addressData.get("tehsil"),
+                    addressData.get("village"),
+                    addressData.get("pincode"),
+                )
 
-            getAddressByLatLng(addressRequest)
+                getAddressByLatLng(addressRequest)
+            }
         }
     }
 
