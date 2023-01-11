@@ -670,10 +670,10 @@
     <string name="price_l_t_h">कीमतों का उतार - चढ़ाव</string>
     <string name="avg_rating">औसत ग्राहक रेटिंग</string>
     <string name="relevance">आपके लिए</string>
-    <string name="no_videos_favorite">No videos favorite!</string>
-    <string name="no_video_added_in_favourite">You haven\'t added any video yet in\nyour favourite videos list.</string>
-    <string name="explore_videos">Explore Videos</string>
-    <string name="remove_from_favorite">Remove from favorite</string>
+    <string name="no_videos_favorite">कोई वीडियो पसंदीदा नहीं!</string>
+    <string name="no_video_added_in_favourite">आपने अभी तक अपने पसंदीदा वीडियो सूची में\nकोई वीडियो नहीं जोड़ा है।</string>
+    <string name="explore_videos">वीडियो एक्सप्लोर करें</string>
+    <string name="remove_from_favorite">पसंदीदा से हटाएं</string>
 
 
 </resources>
