@@ -7,6 +7,7 @@ import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.cart.model.OfferApplied
 import agstack.gramophone.ui.tv.model.Bookmark
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.amnix.xtension.extensions.isNotNull
@@ -17,6 +18,8 @@ class BookmarkedVideosAdapter(bookmarkList: List<Bookmark>) :
     RecyclerView.Adapter<BookmarkedVideosAdapter.CustomViewHolder>() {
     var bookmarkVideoList = bookmarkList
     var onVideoClicked: ((videoId: String) -> Unit)? = null
+    var onRemoveClick: ((bookmarkedVideo: Bookmark) -> Unit)? = null
+    var lastSelectPosition: Int = 0
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         return CustomViewHolder(
@@ -28,6 +31,17 @@ class BookmarkedVideosAdapter(bookmarkList: List<Bookmark>) :
         holder.binding.model = bookmarkVideoList[position]
         holder.binding.listItemTitleContainer.setOnClickListener {
             onVideoClicked?.invoke(bookmarkVideoList[position].youtube_video_id)
+        }
+
+        holder.binding.rlMenu.setOnClickListener {
+            bookmarkVideoList[position].isSelected = !bookmarkVideoList[position].isSelected
+            notifyDataSetChanged()
+        }
+
+        holder.binding.rlMenuAction.setOnClickListener {
+            bookmarkVideoList[position].isSelected = !bookmarkVideoList[position].isSelected
+            holder.binding.rlMenuAction.visibility = View.GONE
+            onRemoveClick?.invoke(bookmarkVideoList[position])
         }
     }
 

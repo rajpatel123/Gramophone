@@ -670,9 +670,10 @@
     <string name="price_l_t_h">किंमत - कमी ते जास्त</string>
     <string name="avg_rating">सरासरी ग्राहक रेटिंग</string>
     <string name="relevance">संबंधित</string>
-    <string name="no_videos_favorite">No videos favorite!</string>
-    <string name="no_video_added_in_favourite">You haven\'t added any video yet in\nyour favourite videos list.</string>
-    <string name="explore_videos">Explore Videos</string>
+    <string name="no_videos_favorite">कोणतेही व्हिडिओ आवडते नाहीत!</string>
+    <string name="no_video_added_in_favourite">तुम्ही तुमच्या आवडत्या व्हिडिओंच्या सूचीमध्ये अद्याप\nकोणताही व्हिडिओ जोडलेला नाही.</string>
+    <string name="explore_videos">व्हिडिओ एक्सप्लोर करा</string>
+    <string name="remove_from_favorite">आवडत्यामधून काढा</string>
 
 
 </resources>

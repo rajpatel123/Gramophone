@@ -32,4 +32,5 @@ data class Bookmark(
     val youtube_video_desc: String,
     val youtube_video_duration: String,
     val youtube_channel_name: String,
+    var isSelected: Boolean = false,
 )
