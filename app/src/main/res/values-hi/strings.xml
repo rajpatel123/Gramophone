@@ -673,6 +673,7 @@
     <string name="no_videos_favorite">No videos favorite!</string>
     <string name="no_video_added_in_favourite">You haven\'t added any video yet in\nyour favourite videos list.</string>
     <string name="explore_videos">Explore Videos</string>
+    <string name="remove_from_favorite">Remove from favorite</string>
 
 
 </resources>
