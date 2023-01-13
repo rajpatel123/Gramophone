@@ -5,6 +5,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityBookmarkedVideosListBinding
+import agstack.gramophone.ui.tv.model.Bookmark
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -45,8 +46,10 @@ class BookmarkedVideosActivity :
     override fun setBookmarkedAdapter(
         adapter: BookmarkedVideosAdapter,
         onVideoClicked: (videoId: String) -> Unit,
+        onRemoveClick: (bookmarkedVideo: Bookmark) -> Unit,
     ) {
         adapter.onVideoClicked = onVideoClicked
+        adapter.onRemoveClick = onRemoveClick
         viewDataBinding.rvBookmarkedVideos.adapter = adapter
     }
 
