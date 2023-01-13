@@ -15,4 +15,5 @@ interface VerifyOTPNavigator :BaseNavigator {
     fun sendChangeMobileNoMoEngageEvent()
     fun sendResendOTPMoEngageEvent(mobileNo: String)
     fun sendVerifiedOTPMoEngageEvent(mobileNo: String, referralCode: String)
+    fun setMoEngageUniqueID()
 }

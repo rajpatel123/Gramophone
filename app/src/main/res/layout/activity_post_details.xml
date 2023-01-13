@@ -363,6 +363,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="@dimen/_2sdp"
+                                    android:textColor="@{viewModel.isLiked?@color/red:@color/gray}"
                                     android:layout_toEndOf="@+id/ivLike"
                                     android:onClick="@{()->viewModel.openLikedUserList()}"
                                     android:text="@{viewModel.likeCount}" />

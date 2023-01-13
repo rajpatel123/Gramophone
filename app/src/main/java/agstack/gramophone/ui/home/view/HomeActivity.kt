@@ -220,6 +220,7 @@ class HomeActivity :
                         )!!
                     )
                         .addAttribute("Redirection_Source", "Home Tab")
+                        .addAttribute("User ID", SharedPreferencesHelper.instance?.getString( SharedPreferencesKeys.UUIdKey)!!)
                     sendMoEngageEvent("KA_View_Community_Wall", properties)
                     return@setOnItemSelectedListener true
                 }

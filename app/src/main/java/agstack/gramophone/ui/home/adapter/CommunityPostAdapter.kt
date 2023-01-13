@@ -95,140 +95,140 @@ class CommunityPostAdapter(
         val textHolder = holder as TextItemHolder
 
 
-        if (position == 5 || position == 20) {
-            if (quizPoll.isNotNull() && quizPoll?.size!! > 0) {
-                quizPoll.forEach {
-                    when (it.quiz_type) {
-                        Constants.POLL -> {
-                            holder.itemPostBinding.pollLayoutLL.removeAllViews()
-                            val itemPollLayout = inflater.inflate(R.layout.item_poll, null)
-                            itemPollLayout.pollRemaining.text =
-                                "".plus(it.total_days_remaining).plus(" ")
-                                    .plus(context.applicationContext.getString(R.string.day_remaining))
-                            itemPollLayout.tvAnsweredFarmer.text =
-                                "".plus(it.total_people_answered).plus(" ")
-                                    .plus(context.applicationContext.getString(R.string.people_answered))
-
-                            holder.itemPostBinding.pollLayoutLL.addView(itemPollLayout)
-
-                            holder.itemPostBinding.pollLayoutLL.visibility = VISIBLE
-                            holder.itemPostBinding.rlPosts.visibility = GONE
-                            holder.itemPostBinding.rlPosts.visibility = GONE
-
-                            holder.itemPostBinding.pollLayoutLL.tvPollQuestion.text = it.question
-                            if (!TextUtils.isEmpty(it.image)) {
-                                Glide.with(context)
-                                    .load(it.image)
-                                    .into(holder.itemPostBinding.pollLayoutLL.poll_banner)
-                            }
-
-                            itemPollLayout.ivWhatsappPoll.setOnClickListener {
-                                sharePoll?.invoke("Quiz")
-                            }
-
-                            if (it.answered) {
-                                holder.itemPostBinding.pollLayoutLL.llOptions.removeAllViews()
-                                it.options.forEach { option ->
-                                    val view = inflater.inflate(R.layout.item_poll_option, null)
-                                    view.fmLayout.visibility = VISIBLE
-                                    view.tvOption.visibility = GONE
-                                    view.tvPollOption.setText(option.answer)
-                                    view.progress.progress = option.votes_percent!!.toInt()
-                                    view.tvQuizOptionPercent.setText(
-                                        "".plus(option.votes_percent).plus("%")
-                                    )
-                                    view.progress.setPadding(0, 0, 0, 0)
-                                    holder.itemPostBinding.pollLayoutLL.llOptions.addView(view)
-
-                                }
-                            } else {
-                                holder.itemPostBinding.pollLayoutLL.llOptions.removeAllViews()
-                                it.options.forEach { option ->
-                                    val view = inflater.inflate(R.layout.item_poll_option, null)
-                                    view.tvOption.visibility = VISIBLE
-                                    view.fmLayout.visibility = GONE
-
-                                    view.tvOption.setText(option.answer)
-                                    holder.itemPostBinding.pollLayoutLL.llOptions.addView(view)
-
-                                    view.setOnClickListener { view ->
-                                        option.position = position
-                                        option.question_id = it.question_id
-                                        quizPollAnswered?.invoke(option)
-                                    }
-                                }
-                            }
-
-
-                        }
-                        Constants.QUIZ -> {
-                            holder.itemPostBinding.quizLayoutLL.removeAllViews()
-                            val itemQquizLayout = inflater.inflate(R.layout.item_quiz_layout, null)
-
-                            itemQquizLayout.quizRemaining.text =
-                                "".plus(it.total_days_remaining).plus(" ")
-                                    .plus(context.applicationContext.getString(R.string.day_remaining))
-                            holder.itemPostBinding.quizLayoutLL.addView(itemQquizLayout)
-
-                            itemQquizLayout.llQuizOptions.removeAllViews()
-
-                            holder.itemPostBinding.quizLayoutLL.visibility = VISIBLE
-                            holder.itemPostBinding.rlPosts.visibility = GONE
-                            holder.itemPostBinding.rlPosts.visibility = GONE
-
-                            itemQquizLayout.tvQuizQuestion.text =
-                                "".plus(it.question)
-                            if (!TextUtils.isEmpty(it.image)) {
-                                Glide.with(context)
-                                    .load(it.image)
-                                    .into(itemQquizLayout.quizBanner)
-                            }
-
-                            if (it.answered) {
-                                it.options.forEach { option ->
-                                    val view = inflater.inflate(R.layout.item_quiz_options, null)
-                                    view.tvQuizOption.setText(option.answer)
-                                    itemQquizLayout.llQuizOptions.addView(view)
-
-                                    if (option.valid_answer && option.option_selected) {
-                                        view.rlOption.setBackgroundResource(R.drawable.correct_answer)
-                                        view.ivAnswer.setImageResource(R.drawable.ic_tick_check)
-                                        view.ivAnswer.visibility = VISIBLE
-
-                                    } else {
-                                        view.ivAnswer.visibility = VISIBLE
-                                        view.rlOption.setBackgroundResource(R.drawable.wrong_answer)
-                                        view.ivAnswer.setImageResource(R.drawable.ic_error)
-                                    }
-                                }
-
-                            } else {
-                                it.options.forEach { option ->
-                                    val view = inflater.inflate(R.layout.item_quiz_options, null)
-                                    view.tvQuizOption.setText(option.answer)
-                                    holder.itemPostBinding.quizLayoutLL.llQuizOptions.addView(view)
-
-                                    view.setOnClickListener { view ->
-                                        option.position = position
-                                        option.question_id = it.question_id
-                                        quizPollAnswered?.invoke(option)
-                                    }
-                                }
-                            }
-
-
-                        }
-                    }
-                }
-
-
-            }
-
-        } else {
-            holder.itemPostBinding.quizLayoutLL.visibility = GONE
-
-            holder.itemPostBinding.pollLayoutLL.visibility = GONE
-        }
+//        if (position == 5 || position == 20) {
+//            if (quizPoll.isNotNull() && quizPoll?.size!! > 0) {
+//                quizPoll.forEach {
+//                    when (it.quiz_type) {
+//                        Constants.POLL -> {
+//                            holder.itemPostBinding.pollLayoutLL.removeAllViews()
+//                            val itemPollLayout = inflater.inflate(R.layout.item_poll, null)
+//                            itemPollLayout.pollRemaining.text =
+//                                "".plus(it.total_days_remaining).plus(" ")
+//                                    .plus(context.applicationContext.getString(R.string.day_remaining))
+//                            itemPollLayout.tvAnsweredFarmer.text =
+//                                "".plus(it.total_people_answered).plus(" ")
+//                                    .plus(context.applicationContext.getString(R.string.people_answered))
+//
+//                            holder.itemPostBinding.pollLayoutLL.addView(itemPollLayout)
+//
+//                            holder.itemPostBinding.pollLayoutLL.visibility = VISIBLE
+//                            holder.itemPostBinding.rlPosts.visibility = GONE
+//                            holder.itemPostBinding.rlPosts.visibility = GONE
+//
+//                            holder.itemPostBinding.pollLayoutLL.tvPollQuestion.text = it.question
+//                            if (!TextUtils.isEmpty(it.image)) {
+//                                Glide.with(context)
+//                                    .load(it.image)
+//                                    .into(holder.itemPostBinding.pollLayoutLL.poll_banner)
+//                            }
+//
+//                            itemPollLayout.ivWhatsappPoll.setOnClickListener {
+//                                sharePoll?.invoke("Quiz")
+//                            }
+//
+//                            if (it.answered) {
+//                                holder.itemPostBinding.pollLayoutLL.llOptions.removeAllViews()
+//                                it.options.forEach { option ->
+//                                    val view = inflater.inflate(R.layout.item_poll_option, null)
+//                                    view.fmLayout.visibility = VISIBLE
+//                                    view.tvOption.visibility = GONE
+//                                    view.tvPollOption.setText(option.answer)
+//                                    view.progress.progress = option.votes_percent!!.toInt()
+//                                    view.tvQuizOptionPercent.setText(
+//                                        "".plus(option.votes_percent).plus("%")
+//                                    )
+//                                    view.progress.setPadding(0, 0, 0, 0)
+//                                    holder.itemPostBinding.pollLayoutLL.llOptions.addView(view)
+//
+//                                }
+//                            } else {
+//                                holder.itemPostBinding.pollLayoutLL.llOptions.removeAllViews()
+//                                it.options.forEach { option ->
+//                                    val view = inflater.inflate(R.layout.item_poll_option, null)
+//                                    view.tvOption.visibility = VISIBLE
+//                                    view.fmLayout.visibility = GONE
+//
+//                                    view.tvOption.setText(option.answer)
+//                                    holder.itemPostBinding.pollLayoutLL.llOptions.addView(view)
+//
+//                                    view.setOnClickListener { view ->
+//                                        option.position = position
+//                                        option.question_id = it.question_id
+//                                        quizPollAnswered?.invoke(option)
+//                                    }
+//                                }
+//                            }
+//
+//
+//                        }
+//                        Constants.QUIZ -> {
+//                            holder.itemPostBinding.quizLayoutLL.removeAllViews()
+//                            val itemQquizLayout = inflater.inflate(R.layout.item_quiz_layout, null)
+//
+//                            itemQquizLayout.quizRemaining.text =
+//                                "".plus(it.total_days_remaining).plus(" ")
+//                                    .plus(context.applicationContext.getString(R.string.day_remaining))
+//                            holder.itemPostBinding.quizLayoutLL.addView(itemQquizLayout)
+//
+//                            itemQquizLayout.llQuizOptions.removeAllViews()
+//
+//                            holder.itemPostBinding.quizLayoutLL.visibility = VISIBLE
+//                            holder.itemPostBinding.rlPosts.visibility = GONE
+//                            holder.itemPostBinding.rlPosts.visibility = GONE
+//
+//                            itemQquizLayout.tvQuizQuestion.text =
+//                                "".plus(it.question)
+//                            if (!TextUtils.isEmpty(it.image)) {
+//                                Glide.with(context)
+//                                    .load(it.image)
+//                                    .into(itemQquizLayout.quizBanner)
+//                            }
+//
+//                            if (it.answered) {
+//                                it.options.forEach { option ->
+//                                    val view = inflater.inflate(R.layout.item_quiz_options, null)
+//                                    view.tvQuizOption.setText(option.answer)
+//                                    itemQquizLayout.llQuizOptions.addView(view)
+//
+//                                    if (option.valid_answer && option.option_selected) {
+//                                        view.rlOption.setBackgroundResource(R.drawable.correct_answer)
+//                                        view.ivAnswer.setImageResource(R.drawable.ic_tick_check)
+//                                        view.ivAnswer.visibility = VISIBLE
+//
+//                                    } else {
+//                                        view.ivAnswer.visibility = VISIBLE
+//                                        view.rlOption.setBackgroundResource(R.drawable.wrong_answer)
+//                                        view.ivAnswer.setImageResource(R.drawable.ic_error)
+//                                    }
+//                                }
+//
+//                            } else {
+//                                it.options.forEach { option ->
+//                                    val view = inflater.inflate(R.layout.item_quiz_options, null)
+//                                    view.tvQuizOption.setText(option.answer)
+//                                    holder.itemPostBinding.quizLayoutLL.llQuizOptions.addView(view)
+//
+//                                    view.setOnClickListener { view ->
+//                                        option.position = position
+//                                        option.question_id = it.question_id
+//                                        quizPollAnswered?.invoke(option)
+//                                    }
+//                                }
+//                            }
+//
+//
+//                        }
+//                    }
+//                }
+//
+//
+//            }
+//
+//        } else {
+//            holder.itemPostBinding.quizLayoutLL.visibility = GONE
+//
+//            holder.itemPostBinding.pollLayoutLL.visibility = GONE
+//        }
 
         Log.d("List","".plus(position > 1 && (position == 2 || (position>4 && (position-1)%5 == 0))))
         if (position > 1 && (position == 2 || (position>4 && (position-2)%5 == 0))) {

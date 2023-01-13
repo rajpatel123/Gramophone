@@ -19,6 +19,7 @@ import dagger.hilt.android.HiltAndroidApp
 class GramAppApplication : Application() {
 
     private var moEngageAppId: String? = null
+    lateinit var instance : GramAppApplication
 
     override fun onCreate() {
         super.onCreate()
@@ -36,6 +37,7 @@ class GramAppApplication : Application() {
         } catch (e: Exception) {
         }
     }
+
 
 
     private fun configureCrashReporting() {
@@ -64,12 +66,12 @@ class GramAppApplication : Application() {
             .build()
         MoEngage.initialiseDefaultInstance(moEngage)
 
-    //    userInfoMoEngage()
+       userInfoMoEngage()
+
+
+
     }
 
-    fun userLoginMoEngage() {
-        MoEAnalyticsHelper.setUniqueId(this, SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.UUIdKey)!!)
-    }
 
     fun userLogoutMoEngage() {
         MoECoreHelper.logoutUser(this)
@@ -80,7 +82,7 @@ class GramAppApplication : Application() {
             SharedPreferencesHelper.instance?.getParcelable(SharedPreferencesKeys.PROFILE_DATA,
                 GpApiResponseProfileData::class.java)
         if (profileData.isNotNull()) {
-            MoEAnalyticsHelper.setFirstName(this, profileData?.firm_name!!)
+            MoEAnalyticsHelper.setFirstName(this, profileData?.first_name!!)
             MoEAnalyticsHelper.setLastName(this, profileData.last_name!!)
             MoEAnalyticsHelper.setUserName(this,
                 SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.USERNAME)!!)

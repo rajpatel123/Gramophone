@@ -198,4 +198,13 @@ class UserProfileActivity :
             .setNonInteractive()
         MoEAnalyticsHelper.trackEvent(this, "KA_Save_Profile_Image", properties)
     }
+
+    override fun setImage(profileImage: String) {
+        Glide.with(this)
+            .load(profileImage)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
+            .fitCenter()
+            .into(viewDataBinding.cvProfilePic)
+    }
 }

@@ -26,6 +26,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -92,6 +93,8 @@ class VerifyOtpViewModel @Inject constructor(
                             SharedPreferencesKeys.UUIdKey,
                             responseData?.gp_api_response_data?.uuid
                         )
+
+                       getNavigator()?.setMoEngageUniqueID()
 
                         SharedPreferencesHelper.instance?.putString(
                             SharedPreferencesKeys.IS_ADMIN,

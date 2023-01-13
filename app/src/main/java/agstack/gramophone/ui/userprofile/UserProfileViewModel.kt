@@ -114,6 +114,9 @@ class UserProfileViewModel @Inject constructor(
                     userProfileResponse.body()?.gp_api_response_data
                 userProfileData.set(userProfileResponseData)
 
+                if (!TextUtils.isEmpty(userProfileResponseData?.profile_image))
+                getNavigator()?.setImage(userProfileResponseData?.profile_image!!)
+
                 if (userProfileResponseData?.is_farmer == false && userProfileResponseData?.is_trader==false){
                     onFarmerLayoutSelected()
                 }else{
@@ -232,8 +235,11 @@ class UserProfileViewModel @Inject constructor(
                     )
                     val response: Response<TestUserModel> = communityRepository.updateUserProfileImage(content)
                     if(response.isSuccessful){
-                        Log.d("Picture Posted","User Profile Updated")
+                        Log.d("Picture Posted","User Profile Updated"+response.body()?.data?.photoUrl)
                         userHandle.set(response.body()?.data?.handle)
+                        if (!TextUtils.isEmpty(response.body()?.data?.photoUrl))
+                            getNavigator()?.setImage(response.body()?.data?.photoUrl!!)
+
                         getNavigator()?.sendSaveProfileImageMoengageEvent()
                     }
 

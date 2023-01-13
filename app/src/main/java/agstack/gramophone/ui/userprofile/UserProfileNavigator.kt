@@ -8,4 +8,5 @@ interface UserProfileNavigator: BaseNavigator {
     fun openCameraToCapture()
     fun refreshPage()
     fun sendSaveProfileImageMoengageEvent()
+    fun setImage(profileImage: String)
 }

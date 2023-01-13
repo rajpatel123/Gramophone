@@ -52,6 +52,7 @@ class PostDetailViewModel @Inject constructor(
 
  var postDesc = ObservableField<String>()
  var likeCount = ObservableField<String>()
+ var isLiked = ObservableField<Boolean>()
  var commentCount = ObservableField<String>()
  var imageAvailable = ObservableField<Boolean>()
  var isDate = ObservableField<Boolean>()
@@ -104,8 +105,10 @@ class PostDetailViewModel @Inject constructor(
      likeCount.set(data?.likesCount.toString() +" "+getNavigator()?.getMessage(R.string.like))
      commentCount.set(data?.commentsCount.toString()+" "+getNavigator()?.getMessage(R.string.comment_count))
      if (data?.liked == true) {
+      isLiked.set(true)
       getNavigator()?.setLikeImage(R.drawable.ic_liked)
      } else {
+      isLiked.set(false)
       getNavigator()?.setLikeImage(R.drawable.ic_like)
      }
 

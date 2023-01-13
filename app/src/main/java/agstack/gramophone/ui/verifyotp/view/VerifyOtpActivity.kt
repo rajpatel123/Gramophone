@@ -13,6 +13,8 @@ import agstack.gramophone.ui.login.view.SmsBroadcastReceiver
 import agstack.gramophone.ui.verifyotp.VerifyOTPNavigator
 import agstack.gramophone.ui.verifyotp.viewmodel.VerifyOtpViewModel
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.SharedPreferencesKeys
 import android.app.Activity
 import android.content.Intent
 import android.content.IntentFilter
@@ -233,14 +235,22 @@ class VerifyOtpActivity :
 
     override fun sendVerifiedOTPMoEngageEvent(mobileNo: String, referralCode: String) {
         val properties = Properties()
-        properties
-            .addAttribute("Customer_Mobile_Number", mobileNo)
+        properties.addAttribute("Customer_Mobile_Number", mobileNo)
             .addAttribute("Referral_Code", referralCode)
             .addAttribute("Customer_Acquisition_Source", "ANDROID")
             .addAttribute("App Version", BuildConfig.VERSION_NAME)
-            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
-            .setNonInteractive()
-        MoEAnalyticsHelper.trackEvent(this, "KA_OTP_Verified_Successfully\n" +
-                "\n", properties)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT).setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(
+            this, "KA_OTP_Verified_Successfully\n" + "\n", properties
+        )
+    }
+
+    override fun setMoEngageUniqueID() {
+        MoEAnalyticsHelper.setUniqueId(
+            this, SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.UUIdKey
+            )!!
+        )
+
     }
 }
