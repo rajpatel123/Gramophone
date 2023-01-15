@@ -120,4 +120,6 @@ public abstract class SharedPreferencesKeys {
     public static final String LANGUAGE_UPDATE="isLangUpdate";
     @Nullable
     public static final String IS_GENUENE="genuene";
+    @Nullable
+    public static final String ADDRESS_API="address_api";
 }

@@ -37,6 +37,7 @@ import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.home.view.model.FCMRegistrationModel
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
+import agstack.gramophone.ui.language.model.SecretKeysResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
@@ -110,6 +111,9 @@ interface GramAppService {
     @PUT("api/v5/general/language-update")
     @JvmSuppressWildcards
     suspend fun updateLanguage(@Body updateLanguageRequestModel: UpdateLanguageRequestModel): Response<UpdateLanguageResponseModel>
+
+    @GET("api/v5/onboarding/apigetSecreteKeys")
+    suspend fun getSecretKeys(): Response<SecretKeysResponseModel>
 
     @PUT("api/v5/onboarding/update-language")
     @JvmSuppressWildcards

@@ -32,6 +32,7 @@ import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.model.FCMRegistrationModel
 import agstack.gramophone.ui.language.model.InitiateAppDataRequestModel
 import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
+import agstack.gramophone.ui.language.model.SecretKeysResponseModel
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
@@ -96,6 +97,13 @@ class OnBoardingRepositoryImpl @Inject constructor(
     override suspend fun updateLanguage(updateLanguageRequestModel: UpdateLanguageRequestModel):Response<UpdateLanguageResponseModel> = withContext(
         Dispatchers.IO) {
         val resendOtp = gramAppService.updateLanguage(updateLanguageRequestModel)
+        resendOtp
+    }
+
+
+    override suspend fun getSecretKeys():Response<SecretKeysResponseModel> = withContext(
+        Dispatchers.IO) {
+        val resendOtp = gramAppService.getSecretKeys()
         resendOtp
     }
 

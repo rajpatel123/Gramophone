@@ -5,6 +5,7 @@ import agstack.gramophone.R
 import agstack.gramophone.ui.profile.model.GpApiResponseProfileData
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.initializeInstance
 import android.app.Application
+import android.text.TextUtils
 import androidx.appcompat.app.AppCompatDelegate
 import com.amnix.xtension.extensions.isNotNull
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -83,7 +84,9 @@ class GramAppApplication : Application() {
                 GpApiResponseProfileData::class.java)
         if (profileData.isNotNull()) {
             MoEAnalyticsHelper.setFirstName(this, profileData?.first_name!!)
-            MoEAnalyticsHelper.setLastName(this, profileData.last_name!!)
+            if (!TextUtils.isEmpty(profileData.last_name)){
+                MoEAnalyticsHelper.setLastName(this, profileData.last_name!!)
+            }
             MoEAnalyticsHelper.setUserName(this,
                 SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.USERNAME)!!)
             MoEAnalyticsHelper.setLocation(this, 0.0, 0.0)

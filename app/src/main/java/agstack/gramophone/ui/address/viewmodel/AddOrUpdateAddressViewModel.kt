@@ -1,6 +1,5 @@
 package agstack.gramophone.ui.address.viewmodel
 
-import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
@@ -8,7 +7,6 @@ import agstack.gramophone.ui.address.AddressNavigator
 import agstack.gramophone.ui.address.model.*
 import agstack.gramophone.ui.address.model.addressdetails.AddressRequestWithLatLongModel
 import agstack.gramophone.ui.address.model.googleapiresponse.GoogleAddressResponseModel
-import agstack.gramophone.ui.address.view.StateListActivity
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.profile.model.UserAddress
 import agstack.gramophone.utils.*
@@ -17,13 +15,10 @@ import agstack.gramophone.utils.Constants.DISTRICT
 import agstack.gramophone.utils.Constants.PINCODE
 import agstack.gramophone.utils.Constants.TEHSIL
 import agstack.gramophone.utils.Constants.VILLAGE
-import android.Manifest
-import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
-import com.amnix.xtension.extensions.isNotNullOrBlank
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -314,7 +309,8 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                     val addressResponse =
                         onBoardingRepository.getLocationAddress(
                             "" + latitude + "," + longitude,
-                            BuildConfig.PLACE_API
+                            "AIzaSyAgopa2TyrbNgE_qpnbvc6XiV7dLa9KHF0"
+
                         )  
                     if (addressResponse.isSuccessful) {
                         parseAddressDetail(latitude, longitude, addressResponse.body())

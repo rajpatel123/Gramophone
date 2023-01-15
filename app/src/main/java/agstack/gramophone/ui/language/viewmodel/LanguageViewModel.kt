@@ -1,5 +1,6 @@
 package agstack.gramophone.ui.language.viewmodel
 
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.model.UpdateLanguageRequestModel
@@ -268,6 +269,34 @@ class LanguageViewModel @Inject constructor(
             }
         }
         return ApiResponse.Error(response.message())
+    }
+
+     fun getSecretKeys() {
+         viewModelScope.launch {
+             try {
+                 if (getNavigator()?.isNetworkAvailable() == true) {
+                     val response = onBoardingRepository.getSecretKeys()
+
+
+                     if (response.isSuccessful && GP_API_STATUS.equals(response?.body()?.gp_api_status)) {
+                         // getNavigator()?.onSuccess(updateLanguageResponseModel?.gp_api_message)
+
+                         SharedPreferencesHelper.instance!!.putString(SharedPreferencesKeys.GOOGLE_API_KEY, response?.body()?.gp_api_response_data?.googleApi)
+                         SharedPreferencesHelper.instance!!.putString(SharedPreferencesKeys.ADDRESS_API, response?.body()?.gp_api_response_data?.placeApi)
+                     } else {
+                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+                     }
+
+                 } else
+                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+             } catch (ex: Exception) {
+                 when (ex) {
+                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                     else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+                 }
+             }
+         }
+
     }
 
 }
