@@ -36,7 +36,7 @@ class ProductSKUAdapter(
         holder.binding.setVariable(BR.model, model)
         val mBinding = holder.binding as ItemRadioProductPackingBinding
 
-        mBinding.radioBtn.setOnClickListener {
+        mBinding.skuLL.setOnClickListener {
             if (lastSelectPosition == 0) {
                 for (item in mSKUList) {
                     item?.selected = false

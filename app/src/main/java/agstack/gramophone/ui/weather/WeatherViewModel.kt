@@ -6,6 +6,7 @@ import agstack.gramophone.data.repository.weather.WeatherRepository
 import agstack.gramophone.di.GPSTracker
 import agstack.gramophone.ui.weather.model.WeatherRequest
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.Utility
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -59,7 +60,7 @@ class WeatherViewModel @Inject constructor(
     }
 
     private fun getWeatherDetail() {
-        val weatherRequest = WeatherRequest(latitude, longitude)
+        val weatherRequest = WeatherRequest(SharedPreferencesHelper.instance?.getString(Constants.LATITUDE), SharedPreferencesHelper.instance?.getString(Constants.LONGITUDE))
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -153,6 +154,9 @@ class WeatherViewModel @Inject constructor(
                 if (latitude.equals("0.0")) {
                     latitude = null
                     longitude = null
+                }else{
+                    SharedPreferencesHelper.instance?.putString(Constants.LATITUDE,latitude.toString())
+                    SharedPreferencesHelper.instance?.putString(Constants.LONGITUDE,longitude.toString())
                 }
                 getWeatherData()
             } else {

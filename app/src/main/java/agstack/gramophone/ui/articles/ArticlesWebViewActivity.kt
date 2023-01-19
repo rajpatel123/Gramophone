@@ -115,6 +115,14 @@ class ArticlesWebViewActivity :
             override fun shareProduct(productId: String) {
                 sendShareProductFromArticleMoEngageEvent(productId.toInt())
             }
+
+            override fun shareArticle(
+                contentUrlString: String,
+                contentTitle: String,
+                imageUrlString: String,
+                summaryEmbeddedTag: String
+            ) {
+            }
         }, "Android")
 
         viewDataBinding.viewBack.setOnClickListener {

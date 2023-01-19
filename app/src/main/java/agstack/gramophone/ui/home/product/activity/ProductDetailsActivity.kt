@@ -302,6 +302,13 @@ class ProductDetailsActivity :
     ) {
         productSKUAdapter.selectedProduct = onSKUItemClicked
         viewDataBinding.rvProductSku.adapter = productSKUAdapter
+
+        productSKUAdapter.mSKUList[productSKUAdapter.mSKUList.size-1]?.product_app_name?.let {
+            setUpToolBar(true,
+                it,R.drawable.ic_arrow_left)
+
+            viewDataBinding.tvProductname.text=it
+        }
     }
 
     override fun refreshSKUAdapter() {
@@ -455,6 +462,7 @@ class ProductDetailsActivity :
         if (text != null) {
             viewDataBinding.tvAddtocart.text = text
             sendAddToCartMoEngageEvent()
+
         }
         return viewDataBinding.tvAddtocart.text.toString()
     }

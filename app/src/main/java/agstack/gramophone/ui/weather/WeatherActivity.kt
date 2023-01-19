@@ -14,12 +14,15 @@ import agstack.gramophone.utils.SharedPreferencesKeys
 import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +41,20 @@ class WeatherActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
-        weatherViewModel.getWeatherData()
+        if (TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(Constants.LATITUDE)
+            )){
+            if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                weatherViewModel.getLatitudeLongitude()
+            } else {
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    1)
+            }
+        }else{
+          weatherViewModel.getWeatherData()
+        }
+
+
     }
 
     private fun setupUi() {
@@ -155,6 +171,24 @@ class WeatherActivity :
             .addAttribute("SDK Version", Build.VERSION.SDK_INT)
             .setNonInteractive()
         MoEAnalyticsHelper.trackEvent(this, "KA_View weather", properties)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                weatherViewModel.getLatitudeLongitude()
+            }
+        }
+
     }
 
 }

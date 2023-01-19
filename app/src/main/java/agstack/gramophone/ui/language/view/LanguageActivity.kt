@@ -66,14 +66,12 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     }
 
     private fun getSecretKeys() {
-        if (TextUtils.isEmpty(SharedPreferencesHelper.instance!!.getString(SharedPreferencesKeys.GOOGLE_API_KEY))){
             if (BuildConfig.DEBUG){
                 SharedPreferencesHelper.instance!!.putString(SharedPreferencesKeys.GOOGLE_API_KEY, BuildConfig.GOOGLE_API)
                 SharedPreferencesHelper.instance!!.putString(SharedPreferencesKeys.ADDRESS_API, BuildConfig.ADDRESS)
             }else{
                 languageViewModel.getSecretKeys()
             }
-        }
     }
 
     private fun setupUi() {

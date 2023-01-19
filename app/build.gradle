@@ -24,8 +24,8 @@ android {
         applicationId "agstack.gramophone"
         minSdk 21
         targetSdk 31
-        versionCode 190
-        versionName "4.1.38"
+        versionCode 191
+        versionName "4.1.39"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
 
@@ -53,7 +53,7 @@ android {
         release {
             minifyEnabled false
             shrinkResources false
-            debuggable true
+            debuggable false
             resValue "string", "app_name_different", "Gramophone"
             buildConfigField "String", "ADDRESS", "\"\""
             buildConfigField "String", "CHANNEL_API", "\"UCmJ7oQCcKzf-IU2QXaMVykQ\""

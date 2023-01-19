@@ -8,6 +8,8 @@ import android.content.Context
 object Constants {
 
 
+    val LATITUDE: String="lat"
+    val LONGITUDE: String="longitude"
     val TARGET_PAGE: String="target_page"
     val URI: String="uri"
     val UTM_SOURCE_UPDATED: String="utm_update"
