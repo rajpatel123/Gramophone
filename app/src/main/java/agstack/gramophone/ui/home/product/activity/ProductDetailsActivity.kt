@@ -13,19 +13,16 @@ import agstack.gramophone.ui.home.view.fragments.market.model.GpApiResponseData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.ShareSheetPresenter
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.*
 import agstack.gramophone.widget.MultipleImageDetailDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -48,6 +45,8 @@ class ProductDetailsActivity :
     BaseActivityWrapper<ProductDetailBinding, ProductDetailsNavigator, ProductDetailsViewModel>(),
     ProductDetailsNavigator, ProductImagesFragment.ProductImagesFragmentInterface,
     YouTubePlayer.OnInitializedListener {
+    private var shareSheetPresenter: ShareHelperClass? = null
+    private var productMainImageUrl: String? = null
 
     private var contactforPriceDialog = ContactForPriceBottomSheetDialog.newInstance()
     private val productDetailsViewModel: ProductDetailsViewModel by viewModels()
@@ -82,25 +81,100 @@ class ProductDetailsActivity :
     }
 
     private fun share() {
-        var extraText: String? = null
-        if (productDetailsViewModel.productData.get().isNotNull()) {
-            extraText =
-                productDetailsViewModel.productData.get()?.productBaseName + " " + ShareSheetPresenter.BASE_URI + " \n Check "
-            if (productDetailsViewModel.productData.get()?.productImages.isNotNullOrEmpty()) {
-                extraText += productDetailsViewModel.productData.get()?.productImages!![0]
-            }
-            extraText += " and other products on Gramophone App. Buy best quality agricultural products, get info on weather, mandi price and best advice for better production from Gramophone App."
+//        var extraText: String? = null
+//        if (productDetailsViewModel.productData.get().isNotNull()) {
+//            extraText =
+//                productDetailsViewModel.productData.get()?.productBaseName + " " + ShareSheetPresenter.BASE_URI + " \n Check "
+//            if (productDetailsViewModel.productData.get()?.productImages.isNotNullOrEmpty()) {
+//                extraText += productDetailsViewModel.productData.get()?.productImages!![0]
+//            }
+//            extraText += " and other products on Gramophone App. Buy best quality agricultural products, get info on weather, mandi price and best advice for better production from Gramophone App."
+//
+//            val whatsappIntent = Intent(Intent.ACTION_SEND)
+//            whatsappIntent.type = "text/plain"
+//            whatsappIntent.setPackage("com.whatsapp")
+//            whatsappIntent.putExtra(Intent.EXTRA_TEXT, extraText)
+//            try {
+//                startActivity(whatsappIntent)
+//            } catch (ex: ActivityNotFoundException) {
+//                showToast(getString(R.string.whatsapp_not_installed))
+//            }
+//        }
 
-            val whatsappIntent = Intent(Intent.ACTION_SEND)
-            whatsappIntent.type = "text/plain"
-            whatsappIntent.setPackage("com.whatsapp")
-            whatsappIntent.putExtra(Intent.EXTRA_TEXT, extraText)
-            try {
-                startActivity(whatsappIntent)
-            } catch (ex: ActivityNotFoundException) {
-                showToast(getString(R.string.whatsapp_not_installed))
+        if (shareSheetPresenter == null) {
+            val parameterizedUri = ShareSheetPresenter.BASE_URI.buildUpon()
+                .appendQueryParameter(ShareKeys.CategoryKey, ShareCategories.ProductDetail)
+                .appendQueryParameter(ShareKeys.ProductDetailProductId,
+                    productDetailsViewModel.productId.toString()
+                ).build()
+            val shortUriHandler = object : ShortUriHandler {
+                override fun processShortUri(shortUri: Uri) {
+                    // Frame text as per short Uri
+                    // This shall be used when short link is obtained
+                    val extraText = java.lang.String.format(
+                        getString(R.string.product_detail_embeded_sharing_msg_short_link),
+                        shortUri.toString(),
+                        getString(R.string.app_name)
+                    )
+                    //  shareSheetPresenter.shareDeepLinkWithExtraText(extraText, getString(R.string.product_detail_share_subject));
+                    shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(
+                        extraText,
+                        getString(R.string.product_detail_share_subject),
+                        IntentKeys.WhatsAppShareKey
+                    )
+                }
+            }
+            val genericUriHandler: GenericUriHandler = object : GenericUriHandler {
+                override fun processGenericUri(genericUri: Uri) {
+                    // Frame text as per long Uri
+                    // This shall be used when short link cannot be generated
+                    val extraText = java.lang.String.format(
+                        getString(R.string.product_detail_embeded_sharing_msg_generic_link),
+                        productDetailsViewModel.productData.get()?.productBaseName,
+                        getString(R.string.app_name),
+                        genericUri.toString()
+                    )
+                    //shareSheetPresenter.shareDeepLinkWithExtraText(extraText, getString(R.string.product_detail_share_subject));
+                    shareSheetPresenter?.shareDeepLinkWithExtraTextWithOption(
+                        extraText,
+                        getString(R.string.product_detail_share_subject),
+                        IntentKeys.WhatsAppShareKey
+                    )
+                }
+            }
+            if (productDetailsViewModel.productData.get()?.productImages?.get(0) != null) {
+                //    getImageUri(productMainImageUrl);
+                shareSheetPresenter = ShareHelperClass(
+                    this,
+                    parameterizedUri,
+                    ShareAnalyticsSource.androidApp,
+                    ShareAnalyticsMedium.social,
+                    ShareAnalyticsCampaign.userInitiated,
+                    productDetailsViewModel.productData.get()?.productBaseName,
+                    "".plus(productDetailsViewModel.productData.get()?.productDetails),
+                    Uri.parse(productDetailsViewModel.productData.get()?.productImages?.get(0)),
+                    shortUriHandler,
+                    genericUriHandler
+                )
+            } else {
+                productMainImageUrl = resources.getDrawable(R.drawable.ic_leaf).toString()
+                shareSheetPresenter = ShareHelperClass(
+                    this,
+                    parameterizedUri,
+                    ShareAnalyticsSource.androidApp,
+                    ShareAnalyticsMedium.social,
+                    ShareAnalyticsCampaign.userInitiated,
+                    productDetailsViewModel.productData.get()?.productBaseName,
+                    "".plus(productDetailsViewModel.productData.get()?.productDetails),
+                    Uri.parse(productMainImageUrl),
+                    shortUriHandler,
+                    genericUriHandler
+                )
             }
         }
+        shareSheetPresenter?.shareDynamicLink()
+
+
     }
 
     override fun showGenuineCustomerRatingDialog(

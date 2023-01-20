@@ -648,6 +648,11 @@
     <string name="already_added_in_cart">Product is already added in cart</string>
     <string name="not_able_to_add">Not able to add in cart</string>
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://www.gramophone.in\",\n  }\n}]</string>
+    <string name="product_detail_share_subject">Get best quality agriculture products from Gramophone App</string>
+
+    <string name="product_detail_embeded_sharing_msg_short_link">Check %1$s and other agriculture related products on %2$s app. Buy best quality agricultural products, get info on weather, mandi price and best advice for better production from Gramophone App.</string>
+
+    <string name="product_detail_embeded_sharing_msg_generic_link">Check %1$s and other products on %2$s app - %3$s. Buy best quality agricultural products, get info on weather, mandi price and best advice for better production from Gramophone App.</string>
 
 
     <string name="no_expiry_points_available">No expiry points available</string>
@@ -682,5 +687,6 @@
     <string name="no_video_added_in_favourite">You haven\'t added any video yet in\nyour favourite videos list.</string>
     <string name="explore_videos">Explore Videos</string>
     <string name="remove_from_favorite">Remove from favorite</string>
+    <string name="share_button_title">Share</string>
 
 </resources>

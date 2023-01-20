@@ -125,8 +125,7 @@ class VerifyOtpViewModel @Inject constructor(
                                 0
                             )
                             getNavigator()?.sendVerifiedOTPMoEngageEvent(mobileNo.get()!!, referralCode.get()!!)
-                           // getNavigator()?.openAndFinishActivity(HomeActivity::class.java)
-                            getNavigator()?.openAndFinishActivity(StateListActivity::class.java)
+                            getNavigator()?.openAndFinishActivity(HomeActivity::class.java)
 
                         } else {
                             getNavigator()?.openAndFinishActivity(StateListActivity::class.java)

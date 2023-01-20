@@ -20,10 +20,10 @@ import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.*
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
@@ -31,6 +31,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.webkit.*
 import androidx.activity.viewModels
+import com.amnix.xtension.extensions.append
 import com.amnix.xtension.extensions.isNotNull
 import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
@@ -39,11 +40,15 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ArticlesWebViewActivity :
     BaseActivityWrapper<ActivityArticlesBinding, SubCategoryNavigator, SubCategoryViewModel>(),
-    SubCategoryNavigator {
+    SubCategoryNavigator,ShortUriHandler, GenericUriHandler {
 
     private val subCategoryViewModel: SubCategoryViewModel by viewModels()
     var bottomSheet: AddToCartBottomSheetDialog? = null
     private var lastTimeClicked: Long = 0
+    var shareCategory="articles"
+    private var summaryEmbeddedTags: String? = null
+    private var contentTitles: String? = null
+    private var shareSheetPresenter: ShareHelperClass? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,12 +121,29 @@ class ArticlesWebViewActivity :
                 sendShareProductFromArticleMoEngageEvent(productId.toInt())
             }
 
+            @JavascriptInterface
             override fun shareArticle(
                 contentUrlString: String,
                 contentTitle: String,
                 imageUrlString: String,
                 summaryEmbeddedTag: String
             ) {
+                summaryEmbeddedTags = summaryEmbeddedTag
+                contentTitles = contentTitle
+                var shareCategoryName= shareCategory.substring(0,1).uppercase()+ shareCategory.substring(1)
+
+                val parameterizedUri = ShareHelperClass.BASE_URI.buildUpon().appendQueryParameter(ShareKeys.CategoryKey, shareCategory).appendQueryParameter(IntentKeys.WebContentTitleKey, contentTitle).build()
+                shareSheetPresenter = ShareHelperClass(this@ArticlesWebViewActivity,
+                    parameterizedUri,
+                    ShareAnalyticsSource.androidApp,
+                    ShareAnalyticsMedium.social,
+                    ShareAnalyticsCampaign.userInitiated,
+                    contentTitle,
+                    summaryEmbeddedTag,
+                    Uri.parse(imageUrlString),
+                    this@ArticlesWebViewActivity,
+                    this@ArticlesWebViewActivity)
+                shareSheetPresenter?.shareDynamicLink()
             }
         }, "Android")
 
@@ -352,5 +374,27 @@ class ArticlesWebViewActivity :
             .addAttribute("SDK Version", Build.VERSION.SDK_INT)
             .setNonInteractive()
         MoEAnalyticsHelper.trackEvent(this, "KA_Share_Article", properties)
+    }
+
+    override fun processShortUri(shortUri: Uri) {
+        val completeString = summaryEmbeddedTags?.append(shortUri.toString())
+        if (completeString != null && contentTitles != null) {
+            shareSheetPresenter!!.shareDeepLinkWithExtraText(completeString, contentTitles!!)
+        }
+    }
+
+    override fun processGenericUri(genericUri: Uri) {
+        // Frame text as per short Uri
+        // This shall be used when short link is obtained
+        val completeString = summaryEmbeddedTags?.replace(CONTENT_URL_TAG, genericUri.toString())
+        if (completeString != null && contentTitles != null) {
+            shareSheetPresenter?.shareDeepLinkWithExtraText(completeString, contentTitles!!)
+        }
+    }
+
+    companion object {
+        private val CONTENT_URL_TAG = "_content_url"
+        private val GENERIC_IMAGE_URI = Uri.parse("http://res.cloudinary.com/agstack/image/upload/v1/web/logo.png")
+
     }
 }
