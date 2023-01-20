@@ -1,10 +1,12 @@
 package agstack.gramophone.ui.notification.view
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityUrlhandlerBinding
 import agstack.gramophone.ui.advisory.view.AllCropProblemsActivity
+import agstack.gramophone.ui.articles.ArticlesWebViewActivity
 import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
@@ -17,6 +19,7 @@ import agstack.gramophone.ui.settings.view.LanguageUpdateActivity
 import agstack.gramophone.ui.userprofile.EditProfileActivity
 import agstack.gramophone.ui.weather.WeatherActivity
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.Constants.DEEP_LINK_ARTICLE_DETAILS
 import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_LIST
 import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_PRODUCT
 import agstack.gramophone.utils.Constants.DEEP_LINK_DISEASE_DETAILS
@@ -149,6 +152,19 @@ class URLHandlerActivity :
                         putInt(Constants.CROP_ID, stageId)
                     })
             }
+            DEEP_LINK_ARTICLE_DETAILS->{
+                openAndFinishActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
+                    putString(
+                        Constants.PAGE_URL, uri.toString()
+                    )
+
+                    putString(
+                        Constants.PAGE_SOURCE, "gramo"
+                    )
+                })
+            }
+
+
         }
 
 
