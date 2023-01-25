@@ -67,6 +67,8 @@ class ShareHelperClass(
             socialMetaTagParametersBuilder?.setImageUrl(socialMetaImageUrl)
             imageUri = socialMetaImageUrl
         }
+
+        completeDynamicLinkUri =appendedUri
         // Prepare the completeDynamicLinkUri
         val completeDynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
             .setLink(appendedUri) //https://app.gramophone.in/gM7N
@@ -83,7 +85,7 @@ class ShareHelperClass(
             )
             .setSocialMetaTagParameters(socialMetaTagParametersBuilder?.build()!!)
             .buildDynamicLink()
-        completeDynamicLinkUri = completeDynamicLink.uri
+          completeDynamicLinkUri = completeDynamicLink.uri
         //completeDynamicLinkUri = Uri.parse("https://app.gramophone.in?utm_campaign=userInitiated&sd=Obtaining%20agricultural%20products%20and%20advisory%20from%20your%20home%20became%20easier!&si=https%3A%2F%2Fgramophone-images.s3.ap-south-1.amazonaws.com%2Frefer-n-earn-en.jpg&st=Gramophone&amv=89&apn=agstack.gramophone.debug&link=http%3A%2F%2Fwww.gramophone.in%2F%3Fcategory%3DfirstAppOpen%26referralCode%3D208db7f&utm_medium=social&utm_source=androidApp")
     }
 

@@ -21,6 +21,7 @@ import agstack.gramophone.ui.home.view.fragments.market.model.PromotionListItem
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.*
+import agstack.gramophone.utils.IntentKeys.WebContentUrlKey
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -132,7 +133,7 @@ class ArticlesWebViewActivity :
                 contentTitles = contentTitle
                 var shareCategoryName= shareCategory.substring(0,1).uppercase()+ shareCategory.substring(1)
 
-                val parameterizedUri = ShareHelperClass.BASE_URI.buildUpon().appendQueryParameter(ShareKeys.CategoryKey, shareCategory).appendQueryParameter(IntentKeys.WebContentTitleKey, contentTitle).build()
+                val parameterizedUri = ShareHelperClass.BASE_URI.buildUpon().appendQueryParameter(ShareKeys.CategoryKey, shareCategory).appendQueryParameter(WebContentUrlKey, contentUrlString).appendQueryParameter(IntentKeys.WebContentTitleKey, contentTitle).build()
                 shareSheetPresenter = ShareHelperClass(this@ArticlesWebViewActivity,
                     parameterizedUri,
                     ShareAnalyticsSource.androidApp,

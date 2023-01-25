@@ -30,6 +30,7 @@ class BottomSheetCropsDialog(
     }
 
     private fun setupUi() {
+
      addCropAdapter = AddCropAdapter(cropList = cropResponse.gpApiResponseData?.cropsList)
         val layoutManager = GridLayoutManager(activity, 3)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {

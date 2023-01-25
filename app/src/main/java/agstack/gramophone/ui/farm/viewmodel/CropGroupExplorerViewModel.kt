@@ -2,10 +2,14 @@ package agstack.gramophone.ui.farm.viewmodel
 
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.farm.model.AddHarvestRequest
+import agstack.gramophone.ui.farm.model.Data
+import agstack.gramophone.ui.farm.model.DeletefarmReqquestModel
 import agstack.gramophone.ui.farm.navigator.CropGroupExplorerNavigator
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.Utility
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +19,10 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class CropGroupExplorerViewModel @Inject constructor(private val productRepository: ProductRepository) :
+class CropGroupExplorerViewModel @Inject constructor(
+    private val productRepository: ProductRepository,
+    private val onBoardingRepository: OnBoardingRepository
+    ) :
     BaseViewModel<CropGroupExplorerNavigator>() {
 
     var progress = MutableLiveData<Boolean>()
@@ -72,5 +79,31 @@ class CropGroupExplorerViewModel @Inject constructor(private val productReposito
                 }
             }
         }
+    }
+
+    fun deleteFarm(it: Data) {
+        viewModelScope.launch {
+            try {
+                progress.value = true
+
+                val response = onBoardingRepository.deleteFarm(DeletefarmReqquestModel(it.crop_id.toString(),it.farm_id.toString()))
+                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                    && response.body()?.gp_api_response_data != null
+                ) {
+                    progress.value = false
+                    getNavigator()?.refreshFarm(it)
+                }else{
+                    progress.value = false
+                    getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+                }
+            } catch (ex: Exception) {
+                progress.value = false
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+            }
+        }
+
     }
 }

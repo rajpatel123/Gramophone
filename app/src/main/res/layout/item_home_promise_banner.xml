@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/ic_gramophone_promise_bg"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/_60sdp"
+        android:paddingBottom="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

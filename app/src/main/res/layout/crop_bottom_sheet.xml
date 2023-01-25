@@ -25,8 +25,8 @@
                 android:textSize="16sp"
                 android:translationY="-0.24sp" />
 
-            <ImageView
-                android:id="@+id/ivCloseDialog"
+            <TextView
+                android:id="@+id/doneButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -34,6 +34,9 @@
                 android:layout_marginTop="@dimen/_14sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:clickable="true"
+                android:text="Done"
+                android:textColor="@color/brand_color"
+                android:fontFamily="@font/manrope_bold"
                 android:contentDescription="@string/image"
                 android:focusable="true"
                 android:padding="@dimen/_2sdp"
@@ -62,19 +65,7 @@
                 tools:listitem="@layout/item_select_crop" />
 
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:id="@+id/doneButton"
-                android:fontFamily="sans-serif-medium"
-                android:textStyle="normal"
-                android:textColor="@color/white"
-                android:layout_gravity="end|center_vertical"
-                android:background="@color/brand_color"
-                android:gravity="center"
-                android:layout_alignParentBottom="true"
-                android:text="@string/app_tour_done"/>
+
         </RelativeLayout>
 
 

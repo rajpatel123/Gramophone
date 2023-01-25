@@ -13,10 +13,11 @@ class CropGroupExplorerAdapter (
     private val headerListener: (Data) -> Unit,
     private val contentListener: (Data) -> Unit,
     private val footerListener: (Data) -> Unit,
+    private val deleteListener: (Data) -> Unit,
     private val isOldFarms : Boolean = false,
     private val isCustomerFarms : Boolean = false,
 ) : RecyclerView.Adapter<CropGroupExplorerAdapter.CropGroupExplorerViewHolder>() {
-    private var list = ArrayList<Data>()
+    public var list = ArrayList<Data>()
 
     init {
         if(cropList?.isNotEmpty() == true){
@@ -47,6 +48,10 @@ class CropGroupExplorerAdapter (
             footerListener.invoke(list[position])
         }
 
+        holder.binding.txtDeleteFarm.setOnClickListener {
+            deleteListener.invoke(list[position])
+        }
+
         holder.binding.txtAddFarm.setTextColor(holder.binding.root.context.resources.getColor(R.color.orange))
         if(/*isOldFarms && */ isCustomerFarms && list[position].is_crop_cycle_completed!!){
             if(list[position].harvested_quantity.isNullOrEmpty()){
@@ -61,6 +66,8 @@ class CropGroupExplorerAdapter (
             }else{
                 holder.binding.txtAddFarm.text = holder.binding.root.context.getString(R.string.add_your_farm)
             }
+
+            holder.binding.txtDeleteFarm.text=holder.binding.root.context.getString(R.string.delete)
         }
     }
 

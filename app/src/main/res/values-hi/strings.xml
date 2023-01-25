@@ -678,5 +678,8 @@
     <string name="product_detail_share_subject">बेहतर गुणवत्ता वाले कृषि उत्पाद खरीदें, ग्रामोफ़ोन एप्प से!</string>
     <string name="product_detail_embeded_sharing_msg_short_link">%1$s एवं अन्य कृषि संबंधित उत्पादों की जानकारी प्राप्त करें %2$s एप्प से | बेहतर गुणवत्ता वाले कृषि उत्पाद खरीदें, मौसम जानकारी, मंडी भाव और बेहतर उत्पादन के लिए सर्वोत्तम सलाह पाएं ग्रामोफ़ोन एप्प से |</string>
     <string name="product_detail_embeded_sharing_msg_generic_link">%1$s एवं अन्य उत्पादों की जानकारी प्राप्त करें %2$s एप्प में - %3$s | बेहतर गुणवत्ता वाले कृषि उत्पाद खरीदें, मौसम जानकारी, मंडी भाव और बेहतर उत्पादन के लिए सर्वोत्तम सलाह पाएं ग्रामोफ़ोन एप्प से |</string>
+    <string name="sure_to_delete">Are you sure want to delete?</string>
+    <string name="minmum">Min</string>
+    <string name="maximum">Max</string>
 
 </resources>

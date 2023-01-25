@@ -238,6 +238,8 @@
                                                 android:minWidth="@dimen/_210sdp"
                                                 android:minHeight="@dimen/_210sdp"
                                                 android:scaleType="fitXY"
+                                                android:onClick="@{()->viewModel.onAddImageClicked(iveOne)}"
+
                                                 android:src="@drawable/preview_frame" />
 
                                             <ImageView
@@ -285,6 +287,8 @@
                                                     android:layout_height="@dimen/_98sdp"
                                                     android:minWidth="@dimen/_110sdp"
                                                     android:scaleType="fitXY"
+                                                    android:onClick="@{()->viewModel.onAddImageClicked(ivTwo)}"
+
                                                     android:src="@drawable/preview_frame" />
 
                                                 <ImageView
@@ -329,6 +333,8 @@
                                                     android:layout_height="@dimen/_100sdp"
                                                     android:minWidth="@dimen/_110sdp"
                                                     android:scaleType="fitXY"
+                                                    android:onClick="@{()->viewModel.onAddImageClicked(ivThree)}"
+
                                                     android:src="@drawable/preview_frame" />
 
                                                 <ImageView

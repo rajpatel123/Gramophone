@@ -327,6 +327,9 @@ interface GramAppService {
     @POST("api/v5/farm/add-farm")
     suspend fun addFarm(@Body request: AddFarmRequest): Response<AddFarmResponse>
 
+    @POST("api/v5/farm/delete-farm")
+    suspend fun deleteFarm(@Body request: DeletefarmReqquestModel): Response<AddFarmResponse>
+
     @GET("api/v5/farm/unit/{type}")
     suspend fun getFarmUnits(@Path("type") type: String): Response<FarmUnitResponse>
 

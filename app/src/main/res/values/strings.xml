@@ -688,5 +688,8 @@
     <string name="explore_videos">Explore Videos</string>
     <string name="remove_from_favorite">Remove from favorite</string>
     <string name="share_button_title">Share</string>
+    <string name="sure_to_delete">Are you sure want to delete?</string>
+    <string name="minmum">Min</string>
+    <string name="maximum">Max</string>
 
 </resources>

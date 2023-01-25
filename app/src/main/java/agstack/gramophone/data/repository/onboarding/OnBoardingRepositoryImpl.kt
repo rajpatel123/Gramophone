@@ -21,6 +21,8 @@ import agstack.gramophone.ui.createnewpost.model.MentionRequestModel
 import agstack.gramophone.ui.createnewpost.model.MentionTagResponsemodel
 import agstack.gramophone.ui.createnewpost.model.problems.ProblemTagsResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
+import agstack.gramophone.ui.farm.model.AddFarmResponse
+import agstack.gramophone.ui.farm.model.DeletefarmReqquestModel
 import agstack.gramophone.ui.favourite.model.FavouriteRequestModel
 import agstack.gramophone.ui.favourite.model.FeaturedProductResponseModel
 import agstack.gramophone.ui.home.featured.ratingeligibility.RatingEligibilityResponseModel
@@ -278,6 +280,13 @@ class OnBoardingRepositoryImpl @Inject constructor(
     override suspend fun getRatingEligibilityData(productData: ProductData):Response<RatingEligibilityResponseModel>  = withContext(
         Dispatchers.IO) {
         val blockedUsers = gramAppService.getRatingEligibilityData(productData)
+        blockedUsers
+    }
+
+
+    override suspend fun deleteFarm(deleteFarm: DeletefarmReqquestModel):Response<AddFarmResponse>  = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = gramAppService.deleteFarm(deleteFarm)
         blockedUsers
     }
 }

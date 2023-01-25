@@ -678,5 +678,8 @@
 
     <string name="product_detail_embeded_sharing_msg_short_link">%2$s अॅपवर %1$s आणि इतर शेतीशी संबंधित उत्पादने तपासा. ग्रामोफोन अॅप वरून चांगल्या उत्पादनासाठी उत्तम सल्ले मिळवा, उत्कृष्ट दर्जेचे कृषी उत्पादने खरेदी करा आणि हवामान, मंडीच्या किंमतीची माहिती मिळवा</string>
     <string name="product_detail_embeded_sharing_msg_generic_link">%2$s अॅपवर %1$s आणि इतर संबंधित उत्पादने तपासा - %3$s.ग्रामोफोन अॅप वरून चांगल्या उत्पादनासाठी उत्तम सल्ले मिळवा, उत्कृष्ट दर्जेचे कृषी उत्पादने खरेदी करा आणि हवामान, मंडीच्या किंमतीची माहिती मिळवा.</string>
+    <string name="sure_to_delete">Are you sure want to delete?</string>
+    <string name="minmum">Min</string>
+    <string name="maximum">Max</string>
 
 </resources>

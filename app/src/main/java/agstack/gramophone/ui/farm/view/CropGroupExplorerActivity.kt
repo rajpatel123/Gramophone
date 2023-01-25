@@ -21,6 +21,7 @@ import agstack.gramophone.utils.SharedPreferencesKeys
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,7 +37,9 @@ class CropGroupExplorerActivity :
     var farmRefId: String? = null
     var bottomSheet: BottomSheetFarmInformation? = null
     var selectedCrop: CropData? = null
-
+    lateinit var farmList: List<Data>
+    lateinit var  adapter: CropGroupExplorerAdapter
+    val cropViewModel: CropGroupExplorerViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUi()
@@ -56,6 +59,7 @@ class CropGroupExplorerActivity :
                 it.getParcelableArrayList<Data>("cropList")?.let { list ->
                     setToolbarTitle(list[0]?.crop_name ?: "")
                     setAdapter(list)
+                  farmList=  list
                 }
             }
 
@@ -87,12 +91,11 @@ class CropGroupExplorerActivity :
     }
 
     override fun getViewModel(): CropGroupExplorerViewModel {
-        val viewModel: CropGroupExplorerViewModel by viewModels()
-        return viewModel
+        return cropViewModel
     }
 
     override fun setAdapter(cropList: List<Data>) {
-        viewDataBinding.rvCrops.adapter = CropGroupExplorerAdapter(
+         adapter = CropGroupExplorerAdapter(
             cropList,
             headerListener = {
                 sendFarmDetailMoEngageEvents(it)
@@ -156,10 +159,27 @@ class CropGroupExplorerActivity :
                             })
                     }
                 }
+            }, {
+                showConfirmation(it)
             },
             isOldFarms = isOldFarms,
             isCustomerFarms = isCustomerFarms
         )
+
+        viewDataBinding.rvCrops.adapter= adapter
+    }
+
+    private fun showConfirmation(it: Data) {
+
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(R.string.sure_to_delete)
+            .setNegativeButton(R.string.button_title_cancel, null)
+            .setPositiveButton(R.string.button_ok) { dialogInterface, i ->
+                dialogInterface.dismiss()
+               cropViewModel.deleteFarm(it)
+            }
+        builder.create().show()
+
     }
 
     override fun onAddHarvestQues() {
@@ -188,6 +208,11 @@ class CropGroupExplorerActivity :
 
     override fun setFarmUnits(units: List<GpApiResponseData>) {
         this.units = units
+    }
+
+    override fun refreshFarm(data: Data) {
+        adapter.list.remove(data)
+        adapter.notifyDataSetChanged()
     }
 
     private fun sendFarmDetailMoEngageEvents(data: Data) {

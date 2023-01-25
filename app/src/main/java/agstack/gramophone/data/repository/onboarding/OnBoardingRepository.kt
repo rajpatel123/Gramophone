@@ -20,6 +20,8 @@ import agstack.gramophone.ui.createnewpost.model.MentionRequestModel
 import agstack.gramophone.ui.createnewpost.model.MentionTagResponsemodel
 import agstack.gramophone.ui.createnewpost.model.problems.ProblemTagsResponseModel
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
+import agstack.gramophone.ui.farm.model.AddFarmResponse
+import agstack.gramophone.ui.farm.model.DeletefarmReqquestModel
 import agstack.gramophone.ui.favourite.model.FavouriteRequestModel
 import agstack.gramophone.ui.favourite.model.FeaturedProductResponseModel
 import agstack.gramophone.ui.home.featured.ratingeligibility.RatingEligibilityResponseModel
@@ -123,5 +125,6 @@ interface OnBoardingRepository {
 
     suspend fun getRatingEligibilityData(productData: ProductData): Response<RatingEligibilityResponseModel>
 
+    suspend fun deleteFarm(request: DeletefarmReqquestModel): Response<AddFarmResponse>
 
 }

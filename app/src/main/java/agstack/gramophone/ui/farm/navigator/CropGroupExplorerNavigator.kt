@@ -9,4 +9,5 @@ interface CropGroupExplorerNavigator  : BaseNavigator {
     fun setAdapter(cropList: List<Data>)
     fun onAddHarvestQues()
     fun setFarmUnits(units: List<GpApiResponseData>)
+    fun refreshFarm(data: Data)
 }

@@ -153,9 +153,13 @@ class URLHandlerActivity :
                     })
             }
             DEEP_LINK_ARTICLE_DETAILS->{
+
+                val url = uri.getQueryParameter("webContentUrl")
+
+
                 openAndFinishActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
                     putString(
-                        Constants.PAGE_URL, uri.toString()
+                        Constants.PAGE_URL, url
                     )
 
                     putString(

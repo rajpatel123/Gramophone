@@ -60,11 +60,23 @@ class CreatePostViewModel @Inject constructor(
                 imageNo = Constants.IV_TWO
             }
 
+            R.id.ivTwo -> {
+                imageNo = Constants.IV_TWO
+            }
+
             R.id.ivPlusBig -> {
                 imageNo = Constants.IV_ONE
             }
 
+            R.id.iveOne -> {
+                imageNo = Constants.IV_ONE
+            }
+
             R.id.ivPlusSmall2 -> {
+                imageNo = Constants.IV_THREE
+            }
+
+            R.id.ivThree -> {
                 imageNo = Constants.IV_THREE
             }
         }

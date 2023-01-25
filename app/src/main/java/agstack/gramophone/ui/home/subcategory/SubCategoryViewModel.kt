@@ -157,13 +157,13 @@ class SubCategoryViewModel @Inject constructor(
                     getNavigator()?.loadUrl(webUrl)
                 }
 
-                if (webUrl.isNotNullOrEmpty() && bundle.containsKey(Constants.PAGE_SOURCE)) {
-                    viewModelScope.launch {
-                        delay(1000)
-                        getNavigator()?.reload()
-
-                    }
-                }
+//                if (webUrl.isNotNullOrEmpty() && bundle.containsKey(Constants.PAGE_SOURCE)) {
+//                    viewModelScope.launch {
+//                        delay(1000)
+//                        getNavigator()?.reload()
+//
+//                    }
+//                }
             }
         }
     }
