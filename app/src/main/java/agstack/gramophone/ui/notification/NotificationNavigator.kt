@@ -5,4 +5,5 @@ import agstack.gramophone.ui.notification.model.Data
 
 interface NotificationNavigator : BaseNavigator {
      fun updateNotificationList(body: NotificationsAdapter, notificationClicked: ((Data) -> Unit)? )
+     fun handleDeepLink(it: Data)
 }

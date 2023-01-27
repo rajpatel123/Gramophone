@@ -128,10 +128,10 @@ class AppTourDialog : DialogFragment() {
                 binding?.llCommunity?.visibility == View.VISIBLE -> {
                     binding?.llCommunity?.visibility = View.INVISIBLE
                     binding?.llProfile?.visibility = View.VISIBLE
-                    binding?.llTrade?.visibility = View.INVISIBLE
-
+                    binding?.llTrade?.visibility = View.GONE
+                    binding?.tvNextCommunity?.text = getString(R.string.app_tour_done)
                     binding?.ivThumbCommon?.setImageResource(R.drawable.ic_app_tour_profile)
-                    binding?.tvTitleCommon?.text = getString(R.string.my_profile)
+                    binding?.tvTitleCommon?.text = getString(R.string.my_gramophone)
                     binding?.tvDescriptionCommon?.text =
                         getString(R.string.app_tour_descrition_profile)
                 }
@@ -139,13 +139,19 @@ class AppTourDialog : DialogFragment() {
                     binding?.llCommunity?.visibility = View.INVISIBLE
                     binding?.tvSkip3?.visibility = View.INVISIBLE
                     binding?.llProfile?.visibility = View.INVISIBLE
-                    binding?.llTrade?.visibility = View.VISIBLE
+                    binding?.llTrade?.visibility = View.GONE
 
-                    binding?.ivThumbCommon?.setImageResource(R.drawable.ic_app_tour_trade)
-                    binding?.tvNextCommunity?.text = getString(R.string.app_tour_done)
-                    binding?.tvTitleCommon?.text = getString(R.string.vyapar)
-                    binding?.tvDescriptionCommon?.text =
-                        getString(R.string.app_tour_descrition_trade)
+//                    binding?.ivThumbCommon?.setImageResource(R.drawable.ic_app_tour_trade)
+//                    binding?.tvNextCommunity?.text = getString(R.string.app_tour_done)
+//                    binding?.tvTitleCommon?.text = getString(R.string.vyapar)
+//                    binding?.tvDescriptionCommon?.text =
+//                        getString(R.string.app_tour_descrition_trade)
+
+                    SharedPreferencesHelper.instance?.putBoolean(
+                        SharedPreferencesKeys.APP_TOUR_ENABLED, false)
+                    SharedPreferencesHelper.instance?.putInteger(
+                        SharedPreferencesKeys.APP_TOUR_SKIP_COUNT, 0)
+                    dismiss()
                 }
                 binding?.llTrade?.visibility == View.VISIBLE -> {
                     SharedPreferencesHelper.instance?.putBoolean(

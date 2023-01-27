@@ -67,6 +67,9 @@ class URLHandlerActivity :
     ) {
     }
 
+    override fun handleDeepLink(it: Data) {
+    }
+
 
     private fun openDeepLinkForIntent(uri: Uri) {
         val pageName = uri.getQueryParameter("category")

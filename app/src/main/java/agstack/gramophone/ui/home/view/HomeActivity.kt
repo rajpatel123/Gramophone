@@ -63,7 +63,7 @@ class HomeActivity :
     private lateinit var marketFragment: MarketFragment
     private lateinit var communityFragment: CommunityFragment
     private lateinit var profileFragment: MyGramophoneFragment
-    private lateinit var tradeFragment: TradeFragment
+//    private lateinit var tradeFragment: TradeFragment
     private lateinit var activeFragment: Fragment
     var drawer: DrawerLayout? = null
     var backPressedTime: Long = 0
@@ -96,7 +96,8 @@ class HomeActivity :
             val fcmRegistrationModel = FCMRegistrationModel(
                 "fcm_token",
                 SharedPreferencesHelper.instance!!.getString(SharedPreferencesKeys.FirebaseTokenKey)
-                    .toString()
+                    .toString(),
+                BuildConfig.VERSION_NAME
             )
             homeViewModel.sendFCMToServer(fcmRegistrationModel)
 
@@ -161,12 +162,12 @@ class HomeActivity :
         marketFragment = MarketFragment()
         communityFragment = CommunityFragment()
         profileFragment = MyGramophoneFragment()
-        tradeFragment = TradeFragment()
+//        tradeFragment = TradeFragment()
         activeFragment = marketFragment
 
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, tradeFragment, TradeFragment::class.java.simpleName)
-            .hide(tradeFragment).commit()
+//        supportFragmentManager.beginTransaction()
+//            .add(R.id.fragment_container, tradeFragment, TradeFragment::class.java.simpleName)
+//            .hide(tradeFragment).commit()
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container,
                 profileFragment,
@@ -240,18 +241,18 @@ class HomeActivity :
 
                     return@setOnItemSelectedListener true
                 }
-                R.id.navigation_trade -> {
-                    viewDataBinding.toolbar.myToolbar.title =
-                        "  " + resources.getString(R.string.vyapar)
-
-                    updateMenuItemVisibility(false, false)
-                    supportFragmentManager.beginTransaction().hide(activeFragment)
-                        .show(tradeFragment).commit()
-                    activeFragment = tradeFragment
-                    viewDataBinding.llCreateAPost.visibility = GONE
-
-                    return@setOnItemSelectedListener true
-                }
+//                R.id.navigation_trade -> {
+//                    viewDataBinding.toolbar.myToolbar.title =
+//                        "  " + resources.getString(R.string.vyapar)
+//
+//                    updateMenuItemVisibility(false, false)
+//                    supportFragmentManager.beginTransaction().hide(activeFragment)
+//                        .show(tradeFragment).commit()
+//                    activeFragment = tradeFragment
+//                    viewDataBinding.llCreateAPost.visibility = GONE
+//
+//                    return@setOnItemSelectedListener true
+//                }
             }
             false
         }

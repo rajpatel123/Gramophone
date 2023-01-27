@@ -8,10 +8,11 @@ import agstack.gramophone.ui.notification.NotificationNavigator
 import agstack.gramophone.ui.notification.NotificationsAdapter
 import agstack.gramophone.ui.notification.model.Data
 import agstack.gramophone.ui.notification.viewmodel.NotificationViewModel
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_likedpost_user_list.*
 import kotlinx.android.synthetic.main.activity_notification.*
@@ -48,5 +49,26 @@ class NotificationActivity : BaseActivityWrapper<ActivityNotificationBinding, No
         rvNotification.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvNotification.setHasFixedSize(true)
         rvNotification.adapter = notificationsAdapter
+    }
+
+    override fun handleDeepLink(it: Data) {
+
+        intent.data = Uri.parse(it.content.redirectUrl)
+
+        FirebaseDynamicLinks.getInstance()
+            .getDynamicLink(intent)
+            .addOnSuccessListener(this) { pendingDynamicLinkData ->
+                // Get deep link from result (may be null if no link is found)
+                var deepLink: Uri? = null
+                if (pendingDynamicLinkData != null) {
+                    deepLink = pendingDynamicLinkData.link
+                    var delay = 0
+
+
+                }
+            }
+            .addOnFailureListener(this) { e ->
+            }
+
     }
 }

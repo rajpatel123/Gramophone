@@ -24,7 +24,7 @@ android {
         applicationId "agstack.gramophone"
         minSdk 21
         targetSdk 31
-        versionCode 191
+        versionCode 192
         versionName "4.1.39"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true

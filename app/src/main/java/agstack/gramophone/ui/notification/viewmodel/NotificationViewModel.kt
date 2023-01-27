@@ -12,10 +12,13 @@ import agstack.gramophone.ui.notification.model.NotificationRequestModel
 import agstack.gramophone.ui.notification.view.URLHandlerActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Utility
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -43,11 +46,20 @@ class NotificationViewModel @Inject constructor(
 
 
                     if (notificationResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+
                         getNavigator()?.updateNotificationList(NotificationsAdapter(
-                            notificationResponse.body()!!.gp_api_response_data.data)){
-//                            getNavigator()?.openActivity(URLHandlerActivity::class.java, Bundle().apply {
-//                                putString("url",it.content.redirectUrl)
-//                            })
+                            notificationResponse.body()!!.gp_api_response_data.data)) {
+//                            val intent = Intent()
+//                            intent.data = Uri.parse(it.content.redirectUrl)
+                            getNavigator()?.handleDeepLink(it)
+//
+//                            getNavigator()?.openActivity(
+//                                URLHandlerActivity::class.java,
+//                                Bundle().apply {
+//                                    putString("url", it.content.redirectUrl)
+//                                })
+//
+
                         }
                     } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(notificationResponse.errorBody()))

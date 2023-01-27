@@ -77,9 +77,9 @@
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/manrope_medium"
                         android:textStyle="normal"
+                        android:text="@{model.created_at}"
                         android:layout_gravity="center_vertical|left"
                         android:textColor="#FF666666"
-
                         android:id="@+id/eventDate"
                         />
 
