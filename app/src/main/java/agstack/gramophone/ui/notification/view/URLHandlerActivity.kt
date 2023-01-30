@@ -1,7 +1,6 @@
 package agstack.gramophone.ui.notification.view
 
 import agstack.gramophone.BR
-import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityUrlhandlerBinding
@@ -19,8 +18,10 @@ import agstack.gramophone.ui.settings.view.LanguageUpdateActivity
 import agstack.gramophone.ui.userprofile.EditProfileActivity
 import agstack.gramophone.ui.weather.WeatherActivity
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.Constants.DEEP_LINK_ADVISORY
 import agstack.gramophone.utils.Constants.DEEP_LINK_ARTICLE_DETAILS
 import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_LIST
+import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_PROBLEM
 import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_PRODUCT
 import agstack.gramophone.utils.Constants.DEEP_LINK_DISEASE_DETAILS
 import agstack.gramophone.utils.Constants.DEEP_LINK_EDIT_LANGUAGE
@@ -52,6 +53,7 @@ class URLHandlerActivity :
         super.onCreate(savedInstanceState)
 
         val uri = Uri.parse(intent?.getStringExtra(Constants.URI))
+//        val uri = Uri.parse("https://mobility-api-dev.gramophone.in/app?category=advisory&farmId=1542&cropId=100029&stageId=12321&isCustomerFarms=true")
         openDeepLinkForIntent(uri)
 
     }
@@ -108,6 +110,19 @@ class URLHandlerActivity :
 
             DEEP_LINK_EDIT_LANGUAGE -> {
                 openAndFinishActivity(LanguageUpdateActivity::class.java, null)
+            }
+
+            DEEP_LINK_CROP_PROBLEM -> {
+            finishActivity()
+
+            }
+
+            DEEP_LINK_ADVISORY -> {
+                val farmId = uri.getQueryParameter("farmId")
+                val cropId = uri.getQueryParameter("cropId")
+                val isCustomerFarms = uri.getQueryParameter("isCustomerFarms")
+
+                notificationViewModel.getCropDetails(farmId,cropId,isCustomerFarms)
             }
 
             DEEP_LINK_MY_FARM -> {

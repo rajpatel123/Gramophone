@@ -309,7 +309,7 @@ class AddOrUpdateAddressViewModel @Inject constructor(
                     val addressResponse =
                         onBoardingRepository.getLocationAddress(
                             "" + latitude + "," + longitude,
-                            "AIzaSyAgopa2TyrbNgE_qpnbvc6XiV7dLa9KHF0"
+                            SharedPreferencesHelper.instance!!.getString(SharedPreferencesKeys.ADDRESS_API)!!
 
                         )  
                     if (addressResponse.isSuccessful) {

@@ -43,6 +43,7 @@ import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.notification.model.NotificationRequestModel
 import agstack.gramophone.ui.notification.model.NotificationresponseModel
+import agstack.gramophone.ui.notification.model.cropdetails.CropDetailsResponse
 import agstack.gramophone.ui.order.model.OrderListResponse
 import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
@@ -406,4 +407,7 @@ interface GramAppService {
 
     @POST("api/v5/review/check-genuine-customer")
     suspend fun getRatingEligibilityData(@Body productData: ProductData): Response<RatingEligibilityResponseModel>
+
+    @GET("api/v5/farm/crop-details/{farm_id}/{crop_id}")
+    suspend fun getCropDetails(@Path("farm_id") farm_id: String, @Path("crop_id") crop_id : String): Response<CropDetailsResponse>
 }

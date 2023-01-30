@@ -47,7 +47,11 @@ class CropIssueListAdapter(public val dataList: List<GpApiResponseData>) :
     }
 
     override fun getItemCount(): Int {
-        return dataList.size ?: 0
+        if (dataList.size>8){
+            return 8
+        }else{
+            return dataList.size ?: 0
+        }
     }
 
     inner class DeveloperViewHolder(var binding: ItemCropIssuesBinding) :

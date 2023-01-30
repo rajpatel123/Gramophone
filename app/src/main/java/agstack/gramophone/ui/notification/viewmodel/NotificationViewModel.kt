@@ -4,21 +4,18 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.ui.advisory.AdvisoryActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.notification.NotificationNavigator
 import agstack.gramophone.ui.notification.NotificationsAdapter
 import agstack.gramophone.ui.notification.model.NotificationRequestModel
-import agstack.gramophone.ui.notification.view.URLHandlerActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Utility
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -111,6 +108,56 @@ class NotificationViewModel @Inject constructor(
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
                     else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
+            }
+        }
+    }
+    fun getCropDetails(farm_id: String?, crop_id: String?, isCustomerFarms: String?){
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.set(true)
+                    val catResponse = onBoardingRepository.getCropDetails(farm_id!!,crop_id.toString())
+                    progress.set(false)
+                    if (catResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+
+                        val data = catResponse?.body()?.gp_api_response_data
+                        getNavigator()?.openAndFinishActivity(AdvisoryActivity::class.java,
+                            Bundle().apply {
+                                putInt(Constants.FARM_ID,
+                                  farm_id.toInt()!!
+                                )
+                                if (isCustomerFarms.equals("true")) {
+                                    putString(Constants.FARM_TYPE, "customer_farm")
+                                } else {
+                                    putString(Constants.FARM_TYPE, "model_farm")
+                                }
+                                putString(Constants.CROP_NAME,data?.crop_name)
+                                putString(Constants.CROP_IMAGE, data?.crop_image)
+                                putString(Constants.CROP_REF_ID, data?.farm_ref_id)
+                                putInt(Constants.CROP_ID, data?.crop_id!!)
+                                putString(Constants.CROP_DURATION, data?.crop_sowing_date)
+                                putString(Constants.CROP_END_DATE,
+                                    data?.crop_anticipated_completed_date)
+                                putString(Constants.CROP_STAGE, data?.stage_name)
+                                putString(Constants.CROP_DAYS, "".plus(data?.days))
+                            })
+
+                    } else {
+                        getNavigator()?.showToast(Utility.getErrorMessage(catResponse.errorBody()))
+                        getNavigator()?.finishActivity()
+                    }
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                    getNavigator()?.finishActivity()
+                }
+            } catch (ex: Exception) {
+                progress.set(false)
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+                getNavigator()?.finishActivity()
+
             }
         }
     }

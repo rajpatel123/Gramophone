@@ -40,6 +40,7 @@ import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.notification.model.NotificationRequestModel
 import agstack.gramophone.ui.notification.model.NotificationresponseModel
+import agstack.gramophone.ui.notification.model.cropdetails.CropDetailsResponse
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
@@ -287,6 +288,15 @@ class OnBoardingRepositoryImpl @Inject constructor(
     override suspend fun deleteFarm(deleteFarm: DeletefarmReqquestModel):Response<AddFarmResponse>  = withContext(
         Dispatchers.IO) {
         val blockedUsers = gramAppService.deleteFarm(deleteFarm)
+        blockedUsers
+    }
+
+    override suspend fun getCropDetails(
+        farm_id: String,
+        crop_id: String
+    ): Response<CropDetailsResponse>  = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = gramAppService.getCropDetails(farm_id,crop_id)
         blockedUsers
     }
 }
