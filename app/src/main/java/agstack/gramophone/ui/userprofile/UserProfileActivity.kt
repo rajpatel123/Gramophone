@@ -6,6 +6,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.UserProfileActivityBinding
 import agstack.gramophone.ui.userprofile.model.PostImageModel
+import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.ImagePicker
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
@@ -69,6 +70,19 @@ class UserProfileActivity :
 
             } else {
             }
+        }
+
+        if (intent.hasExtra(Constants.ADDRESSOBJECT)){
+            val properties = Properties()
+            properties.addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(
+                    SharedPreferencesKeys.CUSTOMER_ID
+                )!!)
+
+                .setNonInteractive()
+
+            sendMoEngageEvent("KA_Community_Add_Address_Click",properties)
         }
     }
 

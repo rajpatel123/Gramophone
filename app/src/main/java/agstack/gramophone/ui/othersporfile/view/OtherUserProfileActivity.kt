@@ -225,7 +225,7 @@ class OtherUserProfileActivity :
             .addAttribute("App Version", BuildConfig.VERSION_NAME)
             .addAttribute("SDK Version", Build.VERSION.SDK_INT)
             .setNonInteractive()
-        MoEAnalyticsHelper.trackEvent(this, "KA_2nd KA_Block_User", properties)
+        MoEAnalyticsHelper.trackEvent(this, "KA_Block_User", properties)
     }
 
     override fun sendEditFollowStatusMoEngageEvent() {

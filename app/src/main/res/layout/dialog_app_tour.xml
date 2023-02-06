@@ -455,7 +455,7 @@
                     android:id="@+id/llProfile"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.2"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:visibility="invisible">
@@ -481,9 +481,10 @@
                             android:src="@drawable/ic_menu_profile_inactive" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/my_profile"
+                            android:text="@string/my_gramophone"
+                            android:gravity="center"
                             android:textColor="@color/gray_strike_through" />
 
                     </LinearLayout>

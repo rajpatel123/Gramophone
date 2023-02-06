@@ -53,7 +53,8 @@ class URLHandlerActivity :
         super.onCreate(savedInstanceState)
 
         val uri = Uri.parse(intent?.getStringExtra(Constants.URI))
-//        val uri = Uri.parse("https://mobility-api-dev.gramophone.in/app?category=advisory&farmId=1542&cropId=100029&stageId=12321&isCustomerFarms=true")
+//        val uri =
+//            Uri.parse("https://www.gramophone.in/app?category=cropProblem&problemId=338001&cropId=100029")
         openDeepLinkForIntent(uri)
 
     }
@@ -113,7 +114,8 @@ class URLHandlerActivity :
             }
 
             DEEP_LINK_CROP_PROBLEM -> {
-            finishActivity()
+                val problemId = uri.getQueryParameter("problemId")
+                notificationViewModel.getCropProblemDetails(problemId!!)
 
             }
 

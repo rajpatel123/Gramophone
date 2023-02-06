@@ -1,5 +1,6 @@
 package agstack.gramophone.ui.settings.viewmodel
 
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.settings.SettingsRepository
@@ -9,8 +10,10 @@ import agstack.gramophone.utils.ApiResponse
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import android.os.Build
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.moengage.core.Properties
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -55,6 +58,36 @@ class WhatsAppOptINOutViewModel @Inject constructor(
                             progressBar.set(false)
 
                             getNavigator()?.onSuccess(optInResponseData?.gp_api_message)
+                            val properties = Properties()
+                                .addAttribute(
+                                    "App Profile ID",
+                                    SharedPreferencesHelper.instance?.getString(
+                                        SharedPreferencesKeys.CUSTOMER_ID
+                                    )!!
+                                )
+                                .addAttribute(
+                                    "mobile number",
+                                    SharedPreferencesHelper.instance?.getString(
+                                        SharedPreferencesKeys.USER_MOBILE
+                                    )!!
+                                )
+                                .addAttribute("App Version", BuildConfig.VERSION_NAME)
+                                .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+                                .setNonInteractive()
+                            if ("opt-out".equals(type)) {
+                                SharedPreferencesHelper.instance?.putBoolean(
+                                    SharedPreferencesKeys.WHATSAPP_OPT_IN,
+                                    false
+                                )
+
+                                getNavigator()?.sendMoEngageEvent("KA_WhatsApp_Opt_Out", properties)
+                            } else {
+                                SharedPreferencesHelper.instance?.putBoolean(
+                                    SharedPreferencesKeys.WHATSAPP_OPT_IN,
+                                    true
+                                )
+                                getNavigator()?.sendMoEngageEvent("KA_WhatsApp_Opt_In", properties)
+                            }
                         } else {
                             getNavigator()?.onError(optInResponseData?.gp_api_message)
                         }

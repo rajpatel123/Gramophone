@@ -60,7 +60,7 @@ class BlockedUsersViewModel @Inject constructor(
                     val blockedUserResponse = communityRepository.unBlockUser(
                         UnblockRequestModel("unblock", customerId))
 
-                    getNavigator()?.sendUnBlockUserMoEngageEvent(customerId)
+                     getNavigator()?.sendUnBlockUserMoEngageEvent(customerId)
 
                     if (blockedUserResponse.isSuccessful) {
                         getBlockedUsersList()

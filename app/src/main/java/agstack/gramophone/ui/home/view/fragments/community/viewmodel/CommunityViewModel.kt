@@ -716,6 +716,8 @@ class CommunityViewModel @Inject constructor(
         showProgress.set(true)
         viewModelScope.launch {
             try {
+                var action= ""
+                var event= "KA_Follow_User"
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     val response =
                         communityRepository.followPost(FollowRequestModel(it.author.uuid))
@@ -724,11 +726,24 @@ class CommunityViewModel @Inject constructor(
                         var post = communityPostAdapter.getItem(it.position!!)
                         if (response.body()?.data?.following == true) {
                             post?.following = true
+                           event="KA_Follow_User"
+                           action="Customer_Id_Followed"
                         } else {
                             post?.following = false
+                            event="KA_UnFollow_User"
+                            action="Customer_Id_UnFollowed"
                         }
                         communityPostAdapter.notifyItemChanged(it.position!!)
 
+                        val properties = Properties()
+                        properties.addAttribute(
+                            "Customer_Id",
+                            SharedPreferencesHelper.instance?.getString(
+                                SharedPreferencesKeys.CUSTOMER_ID
+                            )!!)
+                            .addAttribute(action,FollowRequestModel(it.author._id))
+                            .setNonInteractive()
+                        getNavigator()?.sendMoEngageEvent(event, properties)
 
                     } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))

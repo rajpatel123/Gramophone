@@ -39,9 +39,6 @@ class WhatsAppOptInOptOutActivity :
 
     override fun onSuccess(message: String?) {
         showToast(message)
-        if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.WHATSAPP_OPT_IN) == true) {
-            sendOptInMoEngageEvent()
-        }
         finish()
     }
 
@@ -49,13 +46,5 @@ class WhatsAppOptInOptOutActivity :
         showToast(message)
     }
 
-    private fun sendOptInMoEngageEvent() {
-        val properties = Properties()
-            .addAttribute("App Profile ID", SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
-            .addAttribute("mobile number", SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.USER_MOBILE)!!)
-            .addAttribute("App Version", BuildConfig.VERSION_NAME)
-            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
-            .setNonInteractive()
-        MoEAnalyticsHelper.trackEvent(this, "KA_WhatsApp_Opt_In", properties)
-    }
+
 }

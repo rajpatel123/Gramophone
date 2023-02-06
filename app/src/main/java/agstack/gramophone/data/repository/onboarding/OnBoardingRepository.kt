@@ -40,6 +40,7 @@ import agstack.gramophone.ui.login.model.SendOtpResponseModel
 import agstack.gramophone.ui.notification.model.NotificationRequestModel
 import agstack.gramophone.ui.notification.model.NotificationresponseModel
 import agstack.gramophone.ui.notification.model.cropdetails.CropDetailsResponse
+import agstack.gramophone.ui.notification.model.cropproblem.CropProblemResponse
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
@@ -130,6 +131,8 @@ interface OnBoardingRepository {
     suspend fun deleteFarm(request: DeletefarmReqquestModel): Response<AddFarmResponse>
 
     suspend fun getCropDetails( farm_id: String,  crop_id : String): Response<CropDetailsResponse>
+
+    suspend fun getCropProblemDetails(problemId : String) : Response<CropProblemResponse>
 
 
 }

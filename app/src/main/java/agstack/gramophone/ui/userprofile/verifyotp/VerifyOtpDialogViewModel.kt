@@ -5,9 +5,9 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
-import agstack.gramophone.ui.userprofile.verifyotp.model.VerifyOTPRequestModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Constants.RESEND_OTP_TIME
+import agstack.gramophone.utils.Utility
 import android.util.Log
 import android.view.View
 import androidx.databinding.ObservableField
@@ -103,37 +103,39 @@ class VerifyOtpDialogViewModel @Inject constructor(
     fun onVerifyClick() {
         //If OTP is! null and OTP_reference_id!=null
         verifyOTPJob.cancelIfActive()
-        verifyOTPJob = checkNetworkThenRun {
+        try {
+            verifyOTPJob = checkNetworkThenRun {
 
-            progressLoader.set(true)
-            if (otp.get().isNullOrEmpty()) {
-                getNavigator()?.showToast(getNavigator()?.getMessage(R.string.please_enter_otp)!!)
-            } else if (otp.get()?.length!! < 6) {
-                getNavigator()?.showToast(getNavigator()?.getMessage(R.string.please_enter_6_digit_otp)!!)
-            } else {
-                val validateOtpRequestModel =
-                    ValidateOtpMobileRequestModel( otp.get()!!, otp_reference_id.toString())
-                val validateOTPResponse =
-                    onBoardingRepository.validateOtpMobile(validateOtpRequestModel)
-
-                val body = validateOTPResponse.body()
-
-                if (body?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
-                    progressLoader.set(false)
-                    getNavigator()?.showToast(body?.gp_api_message)
-                    getNavigator()?.dismissDialogFragment(Constants.GP_API_STATUS)
-                    getNavigator()?.sendIsOtpVerifiedMoEngageEvent(true)
+                progressLoader.set(true)
+                if (otp.get().isNullOrEmpty()) {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.please_enter_otp)!!)
+                } else if (otp.get()?.length!! < 6) {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.please_enter_6_digit_otp)!!)
                 } else {
-                    progressLoader.set(false)
-                    getNavigator()?.showToast(body?.gp_api_message)
-                    getNavigator()?.sendIsOtpVerifiedMoEngageEvent(false)
+                    val validateOtpRequestModel =
+                        ValidateOtpMobileRequestModel(otp.get()!!, otp_reference_id.toString())
+                    val validateOTPResponse =
+                        onBoardingRepository.validateOtpMobile(validateOtpRequestModel)
+
+                    val body = validateOTPResponse.body()
+
+                    if (body != null && body?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+                        progressLoader.set(false)
+                        getNavigator()?.showToast(body?.gp_api_message)
+                        getNavigator()?.dismissDialogFragment(Constants.GP_API_STATUS)
+                        getNavigator()?.sendIsOtpVerifiedMoEngageEvent(true)
+                    } else {
+                        progressLoader.set(false)
+                        getNavigator()?.showToast(Utility.getErrorMessage(validateOTPResponse.errorBody()))
+                        getNavigator()?.sendIsOtpVerifiedMoEngageEvent(false)
+                    }
                 }
+
+
             }
 
-
-
-
-
+        } catch (e: Exception) {
+            getNavigator()?.sendIsOtpVerifiedMoEngageEvent(false)
 
         }
     }

@@ -97,7 +97,7 @@ class HomeActivity :
                 "fcm_token",
                 SharedPreferencesHelper.instance!!.getString(SharedPreferencesKeys.FirebaseTokenKey)
                     .toString(),
-                BuildConfig.VERSION_NAME
+                BuildConfig.VERSION_CODE.toString()
             )
             homeViewModel.sendFCMToServer(fcmRegistrationModel)
 

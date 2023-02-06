@@ -5,6 +5,7 @@ import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.advisory.AdvisoryActivity
+import agstack.gramophone.ui.advisory.view.CropProblemDetailActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.notification.NotificationNavigator
@@ -161,4 +162,50 @@ class NotificationViewModel @Inject constructor(
             }
         }
     }
+
+
+    fun getCropProblemDetails(problemId: String){
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.set(true)
+                    val catResponse = onBoardingRepository.getCropProblemDetails(problemId)
+                    progress.set(false)
+                    if (catResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+
+                        val data = catResponse?.body()?.gp_api_response_data
+                        getNavigator()?.openActivity(
+                            CropProblemDetailActivity::class.java,
+                            Bundle().apply {
+                                putInt(Constants.DESEASE_ID,problemId.toInt())
+                                putString(Constants.DESEASE_NAME,data?.category_name)
+                                putString(Constants.DESEASE_DESC,data?.category_description)
+                                putString(Constants.DESEASE_IMAGE,data?.category_image)
+                                putString(Constants.DESEASE_TYPE,data?.category_type)
+                            }
+                        )
+
+                    } else {
+                        getNavigator()?.showToast(Utility.getErrorMessage(catResponse.errorBody()))
+                        getNavigator()?.finishActivity()
+                    }
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                    getNavigator()?.finishActivity()
+                }
+            } catch (ex: Exception) {
+                progress.set(false)
+                when (ex) {
+                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+                getNavigator()?.finishActivity()
+
+            }
+        }
+    }
+
+
+
+
 }

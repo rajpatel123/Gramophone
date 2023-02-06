@@ -396,7 +396,9 @@ class CommunityPostAdapter(
             if (data.author.address == null) {
                 holder.itemPostBinding.tvCity.visibility = VISIBLE
                 holder.itemPostBinding.tvCity.setOnClickListener {
-                    context.startActivity(Intent(context, UserProfileActivity::class.java))
+                    val intent = Intent(context, UserProfileActivity::class.java)
+                    intent.putExtra(Constants.ADDRESSOBJECT,"")
+                    context.startActivity(intent)
                 }
             }
 

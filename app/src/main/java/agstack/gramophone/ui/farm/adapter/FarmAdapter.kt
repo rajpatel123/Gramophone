@@ -34,7 +34,7 @@ class FarmAdapter(
         }
 
         holder.binding.contentLayoutLL.setOnClickListener {
-            contentListener.invoke(farmList[position])
+            headerListener.invoke(farmList[position])
         }
 
         holder.binding.txtAddFarm.setOnClickListener {

@@ -41,6 +41,7 @@ import agstack.gramophone.ui.login.model.SendOtpRequestModel
 import agstack.gramophone.ui.notification.model.NotificationRequestModel
 import agstack.gramophone.ui.notification.model.NotificationresponseModel
 import agstack.gramophone.ui.notification.model.cropdetails.CropDetailsResponse
+import agstack.gramophone.ui.notification.model.cropproblem.CropProblemResponse
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
@@ -297,6 +298,12 @@ class OnBoardingRepositoryImpl @Inject constructor(
     ): Response<CropDetailsResponse>  = withContext(
         Dispatchers.IO) {
         val blockedUsers = gramAppService.getCropDetails(farm_id,crop_id)
+        blockedUsers
+    }
+
+    override suspend fun getCropProblemDetails(problemId: String): Response<CropProblemResponse>  = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = gramAppService.getCropProblemDetails(problemId)
         blockedUsers
     }
 }
