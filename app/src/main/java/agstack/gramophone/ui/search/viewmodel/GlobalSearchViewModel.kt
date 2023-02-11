@@ -11,6 +11,7 @@ import agstack.gramophone.ui.search.model.GlobalSearchResponse
 import agstack.gramophone.ui.search.model.SuggestionsRequest
 import agstack.gramophone.ui.search.navigator.GlobalSearchNavigator
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.Utility
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -83,6 +84,9 @@ open class GlobalSearchViewModel @Inject constructor(
                     && response.body()?.gp_api_response_data != null
                 ) {
                     val searchResponse = response.body()
+                   SharedPreferencesHelper.instance?.putString(Constants.AFTER_KEY,
+                       searchResponse?.gp_api_response_data?.data!![0].afterKey.product_base_name)
+
                     getNavigator()?.notifySearchResultAdapter(searchResponse?.gp_api_response_data!!.data)
                 } else {
                     getNavigator()?.notifySearchResultAdapter(arrayListOf())

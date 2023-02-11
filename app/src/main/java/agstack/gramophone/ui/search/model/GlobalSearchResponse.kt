@@ -22,12 +22,20 @@ data class GpApiResponseData(
 @Parcelize
 data class Data(
     var items: List<Item>,
-    var type: String?
+    var type: String?,
+    val afterKey : AfterKey
 ) : Parcelable
 
 @Parcelize
 data class Meta(
     var pages: Int?
+) : Parcelable
+
+
+@Parcelize
+data class AfterKey(
+    @field:SerializedName("product_base_name.keyword")
+    var product_base_name: String?
 ) : Parcelable
 
 @Parcelize

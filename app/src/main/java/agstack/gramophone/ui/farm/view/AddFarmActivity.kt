@@ -12,6 +12,7 @@ import agstack.gramophone.ui.farm.viewmodel.AddFarmViewModel
 import agstack.gramophone.utils.EventBus
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.Utility
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Intent
@@ -143,17 +144,19 @@ class AddFarmActivity :
     }
 
     override fun sendSaveFarmMoEngageEvents(
-        farmId: String,
+        farmId: Int?,
         crop: String,
         sowingDate: String,
         area: String,
     ) {
+
+
         val properties = Properties()
             .addAttribute("Customer_Id",
                 SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
             .addAttribute("Farm_ID", farmId)
             .addAttribute("Crop", crop)
-            .addAttribute("Sowing_Date", sowingDate)
+            .addAttribute("Sowing_Date", Utility.getShowingFromStringSplitDate(sowingDate))
             .addAttribute("Area", area)
             .addAttribute("App Version", BuildConfig.VERSION_NAME)
             .addAttribute("SDK Version", Build.VERSION.SDK_INT)

@@ -93,6 +93,7 @@ class ActivityListAdapter(val dataList: List<GpApiResponseData>) :
         return dataList.size ?: 0
     }
 
+
     inner class DeveloperViewHolder(var binding: ItemActivityBinding) :
         RecyclerView.ViewHolder(binding.root)
 }

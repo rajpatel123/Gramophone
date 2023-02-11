@@ -103,7 +103,8 @@
                                 android:layout_height="@dimen/_18sdp"
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="@dimen/_7sdp"
-                                app:srcCompat="@drawable/ic_whatsapp" />
+                                app:srcCompat="@drawable/ic_whatsapp"
+                                tools:ignore="ImageContrastCheck" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/whatsAppShare"

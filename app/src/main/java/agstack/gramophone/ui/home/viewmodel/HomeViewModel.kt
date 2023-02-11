@@ -11,6 +11,7 @@ import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
 import agstack.gramophone.ui.feedback.FeedbackActivity
 import agstack.gramophone.ui.gramcash.GramCashActivity
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
+import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.model.FCMRegistrationModel
 import agstack.gramophone.ui.offerslist.OffersListActivity
 import agstack.gramophone.ui.order.view.OrderListActivity
@@ -284,6 +285,22 @@ class HomeViewModel @Inject constructor(
         getNavigator()?.sendMoEngageEvent("KA_Open_CreatePost",properties)
 
         getNavigator()?.openActivity(CreatePostActivity::class.java, null)
+    }
+
+    fun onCallClicked() {
+       viewModelScope.launch {
+           var producttoBeAdded = ProductData()
+           producttoBeAdded.product_id=null
+
+           val expertAdviceResponse =
+               productRepository.getHelp(Constants.HELP, producttoBeAdded)
+
+           if (expertAdviceResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+               getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
+           } else {
+               getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
+           }
+       }
     }
 
     fun sendFCMToServer(fcmRegistrationModel: FCMRegistrationModel) {

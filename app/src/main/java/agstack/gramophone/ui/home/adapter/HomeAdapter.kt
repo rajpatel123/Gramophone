@@ -24,6 +24,7 @@ import agstack.gramophone.ui.weather.model.WeatherResponse
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.Utility
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -480,6 +481,18 @@ class HomeAdapter(
                                         putString(Constants.CROP_DAYS, it[0].days)
                                     })
 
+                            }else{
+                                openActivity(
+                                    holder.binding.itemView.context,
+                                    CropGroupExplorerActivity::class.java,
+                                    Bundle().apply {
+                                        putBoolean("isCustomerFarms", isCustomerFarms)
+                                        putParcelableArrayList(
+                                            "cropList",
+                                            it as ArrayList<agstack.gramophone.ui.farm.model.Data>
+                                        )
+                                        putString(Constants.REDIRECTION_SOURCE, "Home")
+                                    })
                             }
                         },
                         contentListener = {
@@ -858,14 +871,18 @@ private fun sendFarmDetailMoEngageEvents(
     context: Context,
     data: agstack.gramophone.ui.farm.model.Data,
 ) {
+
+    val geo = ArrayList<String>()
+    SharedPreferencesHelper.instance?.getString(Constants.LATITUDE)?.let { geo.add(it) }
+    SharedPreferencesHelper.instance?.getString(Constants.LONGITUDE)?.let { geo.add(it) }
     val properties = Properties()
         .addAttribute("Customer_Id",
             SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
         .addAttribute("Crop", data.crop_name)
         .addAttribute("Farm_ID", data.farm_id)
-        .addAttribute("Sowing_Date", data.crop_sowing_date)
+        .addAttribute("Sowing_Date", Utility.getShowingFromStringDate(data?.crop_sowing_date!!))
         .addAttribute("Area", data.farm_area)
-        .addAttribute("GeoLocationcoordinates", "")
+        .addAttribute("GeoLocationcoordinates", geo.toString())
         .addAttribute("App Version", BuildConfig.VERSION_NAME)
         .addAttribute("SDK Version", Build.VERSION.SDK_INT)
         .setNonInteractive()

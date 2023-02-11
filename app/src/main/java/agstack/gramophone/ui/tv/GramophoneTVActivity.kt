@@ -330,6 +330,21 @@ class GramophoneTVActivity :
                 currentPlayingPlayListName = playList.snippet.title
                 getVideoList()
             }
+
+            override fun onPlayListClick(view: View?, position: Int) {
+                if (viewDataBinding.showMoreButton.isSelected) {
+                    viewDataBinding.showMoreButton.isSelected = false
+                    viewDataBinding.linearVideoList.visibility = View.GONE
+                } else {
+                    viewDataBinding.showMoreButton.isSelected = true
+                    viewDataBinding.linearVideoList.visibility = View.VISIBLE
+                }
+
+                val playList: YoutubeChannelItem = playListAdapter!!.getItemByPosition(position)
+                currentPlayingPlayListId = playList.id
+                currentPlayingPlayListName = playList.snippet.title
+                getVideoList()
+            }
         })
         viewDataBinding.playListView.layoutManager = layoutManager
         viewDataBinding.playListView.adapter = playListAdapter
@@ -385,7 +400,8 @@ class GramophoneTVActivity :
                         if (youTubePlayer != null) {
                             try {
                                 viewDataBinding.linearVideoList.visibility = View.GONE
-                                youTubePlayer?.cuePlaylist(currentPlayingPlayListId)
+                                youTubePlayer?.loadVideo(videoId)
+//                                youTubePlayer?.cuePlaylist(currentPlayingPlayListId)
                                 youTubePlayer?.play()
                             } catch (e: IllegalStateException) {
                                 e.printStackTrace()
@@ -399,7 +415,7 @@ class GramophoneTVActivity :
                     LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
                 viewDataBinding.videoListRecyclerView.layoutManager = linearLayoutManager
                 viewDataBinding.videoListRecyclerView.adapter = videoListAdapter
-                videoListAdapter!!.setSelectedPosition(0)
+                videoListAdapter!!.setSelectedPosition(position)
                 viewDataBinding.videoListRecyclerView.smoothScrollToPosition(position + 1)
                 initVideosPaginationListener(linearLayoutManager)
                 initYoutubePlayer()

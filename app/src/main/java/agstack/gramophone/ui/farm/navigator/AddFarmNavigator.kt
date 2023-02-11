@@ -11,6 +11,6 @@ interface AddFarmNavigator : BaseNavigator {
     fun getDate(): String
     fun getArea(): Double
     fun getAreaUnit(): GpApiResponseData?
-    fun sendSaveFarmMoEngageEvents(farmId: String, crop: String, sowingDate: String, area: String)
+    fun sendSaveFarmMoEngageEvents(farmId: Int?, crop: String, sowingDate: String, area: String)
     fun getDateForEvent(): Date
 }

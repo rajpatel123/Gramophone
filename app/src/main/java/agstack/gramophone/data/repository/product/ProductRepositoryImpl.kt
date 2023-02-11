@@ -8,6 +8,7 @@ import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.cart.model.PlaceOrderRequest
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.farm.model.*
+import agstack.gramophone.ui.farm.model.addfarm.AddFarmResponseModel
 import agstack.gramophone.ui.farm.model.unit.FarmUnitResponse
 import agstack.gramophone.ui.home.product.model.CheckPromotionResponseModel
 import agstack.gramophone.ui.home.subcategory.model.SubCategoryResponse
@@ -249,7 +250,7 @@ class ProductRepositoryImpl @Inject constructor(
         response
     }
 
-    override suspend fun addFarm(addFarmRequest: AddFarmRequest): Response<AddFarmResponse> = withContext(
+    override suspend fun addFarm(addFarmRequest: AddFarmRequest): Response<AddFarmResponseModel> = withContext(
         Dispatchers.IO
     ) {
         val response = gramoAppService.addFarm(addFarmRequest)

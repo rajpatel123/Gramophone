@@ -20,6 +20,7 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.viewModels
+import com.bumptech.glide.Glide
 import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -105,4 +106,12 @@ class GramCashActivity :
         }
         MoEAnalyticsHelper.trackEvent(this, eventName, properties)
     }
+
+    override fun loadBannerImage(referralAndShareImage: String?) {
+        Glide.with(this)
+            .load(referralAndShareImage)
+            .into(viewDataBinding.bannerImg)
+    }
+
+
 }

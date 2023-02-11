@@ -8,6 +8,8 @@ import android.content.Context
 object Constants {
 
 
+    val AFTER_KEY: String="after_key"
+    val REFERRAL_CODE_VALUE: String="referralValue"
     val LATITUDE: String="lat"
     val LONGITUDE: String="longitude"
     val TARGET_PAGE: String="target_page"

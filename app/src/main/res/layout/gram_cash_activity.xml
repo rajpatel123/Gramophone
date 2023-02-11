@@ -353,11 +353,12 @@
                     android:background="@color/gray_stroke" />
 
                 <ImageView
+                    android:id="@+id/bannerImg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="@{()->viewModel.onInviteNowClicked()}"
                     android:scaleType="fitXY"
-                    android:src="@drawable/gcinvite" />
+                     />
 
                 <View
                     android:id="@+id/view5"

@@ -219,8 +219,8 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
     override fun sendOtpSentMoEngageEvent(mobileNo: String) {
         val properties = Properties()
         properties.addAttribute("Customer_Mobile_Number", mobileNo)
-            .addAttribute("Referral_Code", if (loginViewModel.referralCode.isNotNull()) {
-                loginViewModel.referralCode.get()
+            .addAttribute("Referral_Code", if (loginViewModel.referralCodeValue.isNotNull()) {
+                loginViewModel.referralCodeValue
             } else {
                 ""
             })

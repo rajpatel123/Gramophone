@@ -14,10 +14,7 @@ import agstack.gramophone.ui.farm.model.unit.GpApiResponseData
 import agstack.gramophone.ui.farm.navigator.CropGroupExplorerNavigator
 import agstack.gramophone.ui.farm.viewmodel.CropGroupExplorerViewModel
 import agstack.gramophone.ui.home.view.fragments.market.model.CropData
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.EventBus
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.*
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -217,17 +214,24 @@ class CropGroupExplorerActivity :
 
     private fun sendFarmDetailMoEngageEvents(data: Data) {
         val properties = Properties()
-            .addAttribute("Customer_Id",
-                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+
+
+        val geo = ArrayList<String>()
+        SharedPreferencesHelper.instance?.getString(Constants.LATITUDE)?.let { geo.add(it) }
+        SharedPreferencesHelper.instance?.getString(Constants.LONGITUDE)?.let { geo.add(it) }
+        properties.addAttribute(
+            "Customer_Id",
+            SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!
+        )
             .addAttribute("Redirection_Source", redirectionFrom)
             .addAttribute("Farm_Type", data.farm_ref_id)
             .addAttribute("Farm_ID", data.farm_id)
             .addAttribute("Crop", data.crop_name)
             .addAttribute("Crop_Age", data.days)
             .addAttribute("Current_Stage", data.stage_name)
-            .addAttribute("Sowing_Date", data.crop_sowing_date)
+            .addAttribute("Sowing_Date", Utility.getShowingFromStringDate(data?.crop_sowing_date!!))
             .addAttribute("Area", data.farm_area)
-            .addAttribute("GeoLocationcoordinates", "")
+            .addAttribute("GeoLocationcoordinates", geo.toString())
             .addAttribute("App Version", BuildConfig.VERSION_NAME)
             .addAttribute("SDK Version", Build.VERSION.SDK_INT)
             .setNonInteractive()

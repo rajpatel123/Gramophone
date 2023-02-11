@@ -78,6 +78,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         super.onResume()
         shareSheetPresenter = this?.let { ShareSheetPresenter(requireActivity()) }
         communityViewModel.sorting.set("latest")
+        communityViewModel.loadData(communityViewModel.sorting.get()!!)
         communityViewModel.getQuiz()
     }
 

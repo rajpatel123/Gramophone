@@ -9,7 +9,6 @@ import agstack.gramophone.ui.dialog.AppTourDialog
 import agstack.gramophone.ui.farm.model.FarmResponse
 import agstack.gramophone.ui.home.adapter.HomeAdapter
 import agstack.gramophone.ui.home.view.HomeActivity
-import agstack.gramophone.ui.home.view.fragments.market.model.FeaturedArticlesResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.weather.model.WeatherResponse
 import android.os.Bundle

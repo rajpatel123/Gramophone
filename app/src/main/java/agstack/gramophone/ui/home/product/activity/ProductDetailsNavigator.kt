@@ -8,6 +8,7 @@ import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFra
 import agstack.gramophone.ui.home.product.fragment.RelatedProductFragmentAdapter
 import agstack.gramophone.ui.home.subcategory.AvailableProductOffersAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.*
+import agstack.gramophone.ui.home.view.fragments.market.model.sku.ProductCategory
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager
 
@@ -67,6 +68,13 @@ interface ProductDetailsNavigator : BaseNavigator {
     fun updateAddToCartButtonText(text: String? = null): String
     fun updateCartCount(cartCount: Int)
     fun showRating()
-    fun sendProductViewMoEngageEvent(productId: Int, productBaseName: String, avgRating: Double, redirectionSource: String, customerId: String)
+    fun sendProductViewMoEngageEvent(
+        productId: Int,
+        productBaseName: String,
+        avgRating: Double,
+        redirectionSource: String,
+        customerId: String,
+        productCategory: List<ProductCategory>
+    )
     fun sendFavouriteMoEngageEvent(productId: Int, productBaseName: String, customerId: String, isFavourite: Boolean)
 }

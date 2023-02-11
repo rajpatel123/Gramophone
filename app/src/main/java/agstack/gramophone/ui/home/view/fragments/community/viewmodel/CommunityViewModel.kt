@@ -717,7 +717,7 @@ class CommunityViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 var action= ""
-                var event= "KA_Follow_User"
+                var event: String
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     val response =
                         communityRepository.followPost(FollowRequestModel(it.author.uuid))

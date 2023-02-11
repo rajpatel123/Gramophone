@@ -21,13 +21,9 @@ import androidx.core.content.FileProvider
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import java.io.*
 import okhttp3.ResponseBody
 import org.json.JSONObject
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
+import java.io.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -256,7 +252,7 @@ object Utility {
 
     fun getCurrentDate(): String? {
         val date = Date()
-        val formatter = SimpleDateFormat(ORDER_PLACED_DATE_FORMAT)
+        val formatter = SimpleDateFormat(COMMUNITY_DATE_FORMAT)
         return formatter.format(date)
     }
 
@@ -264,5 +260,32 @@ object Utility {
     fun getShowingDate(date: Date): String? {
         val formatter = SimpleDateFormat(COMMUNITY_DATE_FORMAT)
         return formatter.format(date).plus("Z")
+    }
+
+    fun getShowingFromStringDate(date: String): String? {
+        val dateObj = Date(date)
+        val formatter = SimpleDateFormat(COMMUNITY_DATE_FORMAT)
+        return formatter.format(dateObj).plus("Z")
+
+    }
+
+    fun getShowingFromStringDate1(date: String): String? {
+        val str_date = date
+        val formatter: DateFormat = SimpleDateFormat("dd-MMM-yyyy")
+        val dateString = formatter.parse(str_date)
+
+        val formatter2 = SimpleDateFormat(COMMUNITY_DATE_FORMAT)
+        return formatter2.format(dateString).plus("Z")
+
+    }
+
+    fun getShowingFromStringSplitDate(sowingDate: String): Any? {
+        val dateStr = sowingDate.split("-")
+        val cal =  Calendar.getInstance()
+        cal.set(Calendar.YEAR, dateStr[0].toInt())
+        cal.set(Calendar.MONTH, dateStr[1].toInt())
+        cal.set(Calendar.DAY_OF_MONTH, dateStr[2].toInt())
+        val formatter = SimpleDateFormat(COMMUNITY_DATE_FORMAT)
+        return formatter.format(cal.time).plus("Z")
     }
 }

@@ -13,10 +13,9 @@ import agstack.gramophone.ui.home.view.fragments.market.model.GpApiResponseData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
 import agstack.gramophone.ui.home.view.fragments.market.model.RelatedProductItem
+import agstack.gramophone.ui.home.view.fragments.market.model.sku.ProductCategory
 import agstack.gramophone.utils.*
 import agstack.gramophone.widget.MultipleImageDetailDialog
-import android.content.ActivityNotFoundException
-import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
@@ -28,7 +27,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
-import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
@@ -45,6 +43,11 @@ class ProductDetailsActivity :
     BaseActivityWrapper<ProductDetailBinding, ProductDetailsNavigator, ProductDetailsViewModel>(),
     ProductDetailsNavigator, ProductImagesFragment.ProductImagesFragmentInterface,
     YouTubePlayer.OnInitializedListener {
+    private var productCatId: ArrayList<Int> = ArrayList()
+    private var subCatId: ArrayList<Int> = ArrayList()
+    private var productCatName: ArrayList<String> = ArrayList()
+    private var subCatName: ArrayList<String> = ArrayList()
+
     private var shareSheetPresenter: ShareHelperClass? = null
     private var productMainImageUrl: String? = null
 
@@ -565,13 +568,36 @@ class ProductDetailsActivity :
         avgRating: Double,
         redirectionSource: String,
         customerId: String,
+        productCategory: List<ProductCategory>,
     ) {
         val properties = Properties()
+
+        if (productCategory!=null && productCategory.size>0){
+            productCategory.forEach {
+                productCatId.add(it.category_id)
+                productCatName.add(it.category_name)
+
+                if (it.sub_category != null && it.sub_category.size > 0) {
+                    productCategory.forEach {
+                        subCatId.add(it.category_id)
+                        subCatName.add(it.category_name)
+                    }
+                }
+
+
+
+            }
+
+        }
+
+
+
+
         properties.addAttribute("Product_Id", productId)
-            .addAttribute("Product_Category_Id", "")
-            .addAttribute("Product_Category_Name", "")
-            .addAttribute("Product_Sub_Category_Id", "")
-            .addAttribute("Product_Sub_Category_Name", "")
+            .addAttribute("Product_Category_Id", productCatId.toString())
+            .addAttribute("Product_Category_Name", productCatName.toString())
+            .addAttribute("Product_Sub_Category_Id", subCatId.toString())
+            .addAttribute("Product_Sub_Category_Name", subCatName.toString())
             .addAttribute("Product_Base_Name", productBaseName)
             .addAttribute("Associated_Crop_Id", "")
             .addAttribute("Associated_Farm_Crop_Problem_Id", "")
@@ -664,25 +690,37 @@ class ProductDetailsActivity :
 
     private fun sendAddToCartMoEngageEvent() {
         val properties = Properties()
+
+
         properties.addAttribute("Product_Id", productDetailsViewModel.productId)
-            .addAttribute("Product_Category_Id", "")
-            .addAttribute("Product_Category_Name", "")
-            .addAttribute("Product_Sub_Category_Id", "")
-            .addAttribute("Product_Sub_Category_Name", "")
-            .addAttribute("Product_Base_Name",
-                productDetailsViewModel.productData.get()?.productBaseName)
+            .addAttribute("Product_Category_Id", productCatId.toString())
+            .addAttribute("Product_Category_Name", productCatName.toString())
+            .addAttribute("Product_Sub_Category_Id", subCatId.toString())
+            .addAttribute("Product_Sub_Category_Name", subCatName.toString())
+            .addAttribute(
+                "Product_Base_Name",
+                productDetailsViewModel.productData.get()?.productBaseName
+            )
             .addAttribute("Associated_Crop_Id", "")
             .addAttribute("Associated_Farm_Crop_Problem_Id", "")
-            .addAttribute("Product_Avg_Rating",
-                productDetailsViewModel.productReviewsData.get()?.rating?.totalRating!!)
-            .addAttribute("Krishi_App_Selling_Price",
-                productDetailsViewModel.selectedSkuListItem.get()?.salesPrice)
-            .addAttribute("Product_MRP",
-                productDetailsViewModel.selectedSkuListItem.get()?.mrpPrice)
+            .addAttribute(
+                "Product_Avg_Rating",
+                productDetailsViewModel.productReviewsData.get()?.rating?.totalRating!!
+            )
+            .addAttribute(
+                "Krishi_App_Selling_Price",
+                productDetailsViewModel.selectedSkuListItem.get()?.salesPrice
+            )
+            .addAttribute(
+                "Product_MRP",
+                productDetailsViewModel.selectedSkuListItem.get()?.mrpPrice
+            )
             .addAttribute("Selling_Price_After_Discount", salesPriceAfterDiscount)
-            .addAttribute("Product_SKU",
-                productDetailsViewModel.selectedSkuListItem.get()?.productSku)
-            .addAttribute("Product_Quantity", productDetailsViewModel.qtySelected)
+            .addAttribute(
+                "Product_SKU",
+                productDetailsViewModel.selectedSkuListItem.get()?.productSku
+            )
+            .addAttribute("Product_Quantity", productDetailsViewModel.qtySelected.get())
             .addAttribute("Offer_Id", productDetailsViewModel.selectedOfferItem?.promotion_id)
             .addAttribute("Product_Discount_By_Offer",
                 productDetailsViewModel.selectedOfferItem?.benefit?.amount_saved)

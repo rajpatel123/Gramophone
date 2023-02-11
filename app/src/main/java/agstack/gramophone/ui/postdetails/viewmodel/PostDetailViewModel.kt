@@ -392,7 +392,7 @@ class PostDetailViewModel @Inject constructor(
        SharedPreferencesHelper.instance?.getString(
         SharedPreferencesKeys.CUSTOMER_ID
        )!!)
-       .addAttribute("Post_ID",postID)
+       .addAttribute("Post_ID",data?._id!!)
        .addAttribute("Post_Text",response.body()?.data?.description)
        .addAttribute("Has_Images",hasImages)
        .addAttribute("Crop",tags.toString())

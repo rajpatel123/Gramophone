@@ -69,6 +69,7 @@ class LoginViewModel @Inject constructor(
                     getNavigator()?.moveToNext(Bundle().apply {
                         putString(Constants.MOBILE_NO, mobileNo.get())
                         putString(Constants.REFERRAL_CODE, referralCode.get())
+                        putString(Constants.REFERRAL_CODE_VALUE, referralCodeValue)
                         putInt(
                             Constants.OTP_REFERENCE,
                             loginData.data?.gp_api_response_data?.otp_reference_id!!

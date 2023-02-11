@@ -167,5 +167,6 @@ public class PlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public interface Callback {
         void onListItemClick(View view, int position);
+        void onPlayListClick(View view, int position);
     }
 }

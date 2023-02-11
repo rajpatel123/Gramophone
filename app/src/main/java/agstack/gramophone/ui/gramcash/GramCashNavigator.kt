@@ -8,4 +8,5 @@ interface GramCashNavigator :BaseNavigator {
     fun setGramCashRulesAdapter(faqAdapter: FAQAdapter)
     fun manageaboutBottomPopup()
     fun sendMoEngageEvent(eventName: String)
+    fun loadBannerImage(referralAndShareImage: String?)
 }

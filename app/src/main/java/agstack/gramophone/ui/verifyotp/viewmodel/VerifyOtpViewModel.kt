@@ -44,6 +44,7 @@ class VerifyOtpViewModel @Inject constructor(
     var otpHint: String = ""
     var mobileNo = ObservableField<String>()
     var referralCode = ObservableField<String>()
+    var referralCodeValue = ObservableField<String>()
     var otpReference = ObservableField<String>()
     var resendOTPType = ObservableField<String>()
     var remainigTimeForOTP = ObservableField<String>()
@@ -124,7 +125,7 @@ class VerifyOtpViewModel @Inject constructor(
                                 SharedPreferencesKeys.APP_TOUR_SKIP_COUNT,
                                 0
                             )
-                            getNavigator()?.sendVerifiedOTPMoEngageEvent(mobileNo.get()!!, referralCode.get()!!)
+                            getNavigator()?.sendVerifiedOTPMoEngageEvent(mobileNo.get()!!, referralCodeValue.get()!!)
                             getNavigator()?.openAndFinishActivity(HomeActivity::class.java)
 
                         } else {
@@ -171,6 +172,7 @@ class VerifyOtpViewModel @Inject constructor(
                 getNavigator()?.getMessage(R.string.otp_hint)!!
             mobileNo.set(bundle?.getString(Constants.MOBILE_NO).toString())
             referralCode.set(bundle?.getString(Constants.REFERRAL_CODE).toString())
+            referralCodeValue.set(bundle?.getString(Constants.REFERRAL_CODE_VALUE).toString())
             otpReference.set(bundle?.getInt(Constants.OTP_REFERENCE).toString())
             if (!TextUtils.isEmpty(bundle?.getString(Constants.Otp)))
                 otp.set(bundle?.getString(Constants.Otp).toString())

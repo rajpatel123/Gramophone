@@ -20,5 +20,8 @@ data class GramCashResponseModel(
 	val gpApiTrace: GpApiTrace? = null,
 
 	@field:SerializedName("gp_api_message")
-	val gpApiMessage: String? = null
+	val gpApiMessage: String? = null,
+
+	@field:SerializedName("referral_and_share_image")
+	val referralAndShareImage: String? = null
 ) : Parcelable

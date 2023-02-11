@@ -24,6 +24,7 @@ import agstack.gramophone.ui.createnewpost.model.problems.ProblemTagsResponseMod
 import agstack.gramophone.ui.createnewpost.view.model.hashtags.HasgTagResponseModel
 import agstack.gramophone.ui.dialog.filter.FilterRequest
 import agstack.gramophone.ui.farm.model.*
+import agstack.gramophone.ui.farm.model.addfarm.AddFarmResponseModel
 import agstack.gramophone.ui.farm.model.unit.FarmUnitResponse
 import agstack.gramophone.ui.favourite.model.FavouriteRequestModel
 import agstack.gramophone.ui.favourite.model.FeaturedProductResponseModel
@@ -327,7 +328,7 @@ interface GramAppService {
     ): Response<FarmResponse>
 
     @POST("api/v5/farm/add-farm")
-    suspend fun addFarm(@Body request: AddFarmRequest): Response<AddFarmResponse>
+    suspend fun addFarm(@Body request: AddFarmRequest): Response<AddFarmResponseModel>
 
     @POST("api/v5/farm/delete-farm")
     suspend fun deleteFarm(@Body request: DeletefarmReqquestModel): Response<AddFarmResponse>

@@ -496,7 +496,7 @@
     <string name="collapse_text_label">कम दिखाएं</string>
     <string name="expand_text_label">और दिखाएं</string>
     <string name="failed_preview">विफल पूर्वावलोकन</string>
-    <string name="no_data_title">कोई डेटा उपलब्ध नहीं है।</string>
+    <string name="no_data_title">कोई जानकारी उपलब्ध नहीं है।</string>
     <string name="expert_advice_needed_label">विशेषज्ञ से सलाह लेने के लिए यहां दो बार टैप करें</string>
     <string name="error_out_of_memory"> आपके फ़ोन में मेमोरी नहीं है</string>
     <string name="confirm_url_preview_off_post">इस पोस्ट के लिए लिंक पूर्वावलोकन बंद करें?</string>

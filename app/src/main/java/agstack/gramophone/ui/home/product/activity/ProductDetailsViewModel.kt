@@ -4,7 +4,6 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.product.ProductRepository
-import agstack.gramophone.ui.cart.model.CartDataResponse
 import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
@@ -18,7 +17,6 @@ import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.*
-import android.R.attr.order
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
@@ -26,11 +24,9 @@ import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.amnix.xtension.extensions.isNull
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import java.io.IOException
 import javax.inject.Inject
 
@@ -524,7 +520,9 @@ class ProductDetailsViewModel @Inject constructor(
                 0.0
             },
             "Landing Screen",
-            SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!,
+            productData.get()?.productSkuList!![0]?.product_category!!
+        )
     }
 
     private fun loadOffersData(productDetailstoBeFetched: ProductData, quantity: Int? = 0) {

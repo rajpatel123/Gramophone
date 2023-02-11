@@ -26,7 +26,6 @@ import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -323,6 +322,15 @@ class AdvisoryActivity :
             viewDataBinding.llActivityStageAvailable.visibility = VISIBLE
             viewDataBinding.llNoActivityStage.visibility = GONE
             rvActivity.scrollToPosition(activityListAdapter.lastSelectedActivityPosition)
+            var  position =0
+            activityListAdapter.dataList.forEach {
+                if (it.isSelected) {
+                    activityListAdapter.lastSelectedActivityPosition =position
+                    rvActivity.scrollToPosition(activityListAdapter.lastSelectedActivityPosition)
+                    position++
+                }
+            }
+
 
         } else {
             viewDataBinding.llActivityStageAvailable.visibility = GONE

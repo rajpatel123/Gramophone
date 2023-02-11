@@ -40,6 +40,16 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
     //initialise ViewModel
     private val cartViewModel: CartViewModel by viewModels()
 
+    val product_Serial_No = ArrayList<String>()
+    val product_Id = ArrayList<String>()
+    val product_Base_Name = ArrayList<String>()
+    val product_Avg_Rating = ArrayList<String>()
+    val krishi_App_Selling_Price = ArrayList<String>()
+    val product_MRP = ArrayList<String>()
+    val selling_Price_After_Discount = ArrayList<String>()
+    val product_SKU = ArrayList<String>()
+    val product_Quantity = ArrayList<String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
@@ -91,6 +101,22 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
         cartAdapter.onOfferClicked = onOfferClicked
         cartAdapter.onQuantityClicked = onQuantityClicked
         viewDataBinding.rvCart.adapter = cartAdapter
+
+        cartAdapter.cartList.forEach {
+            product_Id.add(it.product_id)
+            product_Base_Name.add(it.product_name)
+            product_MRP.add("".plus(" ").plus(it.cost_price))
+            krishi_App_Selling_Price.add(it.selling_price)
+            product_SKU.add(it.product_sku)
+            product_Quantity.add("".plus("").plus(it.quantity))
+            selling_Price_After_Discount.add(it.item_product_discount)
+        }
+
+
+
+
+
+
     }
 
     override fun openProductDetailsActivity(productData: ProductData) {
@@ -192,10 +218,17 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
             .addAttribute("Conversion_Source", "ANDROID")
             .addAttribute("Order_Date", Utility.getCurrentDate())
             .addAttribute("Total_Order_Value", cartData.total)
-            .addAttribute("Total_Discount_Amount", cartData.promotional_discount_total)
+            .addAttribute("Redirection_Source", "Cart")
+            .addAttribute("Product_Base_Name", product_Base_Name.toString())
+            .addAttribute("Product_MRP", product_MRP.toString())
+            .addAttribute("Product_SKU", product_SKU.toString())
+            .addAttribute("Krishi_App_Selling_Price", krishi_App_Selling_Price.toString())
+            .addAttribute("Product_Discount_By_Offer", cartData.promotional_discount_total)
             .addAttribute("Gramcash_Used_In_Order", cartData.gramcash_coins)
-            .addAttribute("Item_Count_In_Cart", cartData.cart_items.size)
-            .addAttribute("Total_Product_Ids_In_Cart", productIds.toString())
+            .addAttribute("Product_Quantity", product_Quantity.toString())
+            .addAttribute("Total_Product_In_Cart", cartData.cart_items.size)
+            .addAttribute("Product_Id", product_Id.toString())
+            .addAttribute("Product_Avg_Rating", "")
             .addAttribute("App Version", BuildConfig.VERSION_NAME)
             .addAttribute("SDK Version", Build.VERSION.SDK_INT)
             .setNonInteractive()

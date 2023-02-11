@@ -47,4 +47,8 @@ data class GpApiResponseData(
 	val share_message: String? = null,
 
 
+	@field:SerializedName("referral_and_share_image")
+	val referral_and_share_image: String? = null,
+
+
 ) : Parcelable

@@ -14,6 +14,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.moengage.core.Properties
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -39,7 +40,7 @@ class CommentsViewModel @Inject constructor(
     fun getComments(postId: String) {
         this.postId = postId
         tags = ArrayList()
-        commentInput.set("")
+        //commentInput.set("")
         viewModelScope.launch {
 
             try {
@@ -87,6 +88,7 @@ class CommentsViewModel @Inject constructor(
     }
 
     fun sendComment(){
+        var commentText = commentInput.get()
         if (SystemClock.elapsedRealtime() - mLastClickTime < 2000){
             return;
         }
@@ -96,7 +98,7 @@ class CommentsViewModel @Inject constructor(
             updateComment()
             return
         }
-        if (TextUtils.isEmpty(commentInput.get())){
+        if (TextUtils.isEmpty(commentText)){
             getNavigator()?.showToast(getNavigator()?.getMessage(R.string.enter_description))
             return
         }
@@ -106,7 +108,7 @@ class CommentsViewModel @Inject constructor(
                     isLoading.set(true)
 
                     val postID: RequestBody = postId.toRequestBody("text/plain".toMediaTypeOrNull())
-                    val text: RequestBody = commentInput.get()!!.toRequestBody("text/plain".toMediaTypeOrNull())
+                    val text: RequestBody = commentText!!.toRequestBody("text/plain".toMediaTypeOrNull())
                     val tags: RequestBody = tags.toString().toRequestBody("text/plain".toMediaTypeOrNull())
 
                     if (postImage.get()!=null){
@@ -121,21 +123,37 @@ class CommentsViewModel @Inject constructor(
                         if (response.isSuccessful) {
                             isLoading.set(false)
 
-                            commentInput.set("")
                             getComments(postId = postId)
                             getNavigator()?.clearImage()
+
+                            val properties = Properties()
+                            properties.addAttribute(
+                                "Customer_Id",
+                                SharedPreferencesHelper.instance?.getString(
+                                    SharedPreferencesKeys.CUSTOMER_ID
+                                )!!)
+                                .addAttribute("Post_ID",postID)
+                                .addAttribute("Comment ID",response.body()?.data?._id)
+                                .addAttribute("Comment",commentInput.get()!!)
+                                .setNonInteractive()
+                            getNavigator()?.sendMoEngageEvent("KA_Write_Comment", properties)
+
+
                         }else{
                             isLoading.set(false)
 
                             getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                         }
 
+                        delay(2000)
+                        commentInput.set("")
+
                     }else{
                         val response = communityRepository.postComment(postID,text,tags)
                         if (response.isSuccessful) {
                             isLoading.set(false)
 
-                            commentInput.set("")
+
                             getComments(postId = postId)
 
 
@@ -147,10 +165,9 @@ class CommentsViewModel @Inject constructor(
                                 )!!)
                                 .addAttribute("Post_ID",postID)
                                 .addAttribute("Comment ID",response.body()?.data?._id)
-                                .addAttribute("Comment",comment)
+                                .addAttribute("Comment",commentInput.get()!!)
                                 .setNonInteractive()
                             getNavigator()?.sendMoEngageEvent("KA_Write_Comment", properties)
-
 
                         }else{
                             isLoading.set(false)
@@ -158,6 +175,8 @@ class CommentsViewModel @Inject constructor(
                             getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                         }
 
+                        delay(2000)
+                        commentInput.set("")
 
                     }
 
@@ -180,6 +199,17 @@ class CommentsViewModel @Inject constructor(
             getNavigator()?.showToast(getNavigator()?.getMessage(R.string.enter_description))
             return
         }
+        val properties = Properties()
+        properties.addAttribute(
+            "Customer_Id",
+            SharedPreferencesHelper.instance?.getString(
+                SharedPreferencesKeys.CUSTOMER_ID
+            )!!)
+            .addAttribute("Post_ID",postId)
+            .addAttribute("Comment ID",comment?._id)
+            .addAttribute("Comment",commentInput.get())
+            .setNonInteractive()
+        getNavigator()?.sendMoEngageEvent("KA_Edit_Comment", properties)
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -202,48 +232,31 @@ class CommentsViewModel @Inject constructor(
                         if (response.isSuccessful) {
                             isLoading.set(false)
 
-                            commentInput.set("")
                             getComments(postId = postId)
                             getNavigator()?.clearImage()
 
-                            val properties = Properties()
-                            properties.addAttribute(
-                                "Customer_Id",
-                                SharedPreferencesHelper.instance?.getString(
-                                    SharedPreferencesKeys.CUSTOMER_ID
-                                )!!)
-                                .addAttribute("Post_ID",postId)
-                                .addAttribute("Comment ID",id)
-                                .setNonInteractive()
-                            getNavigator()?.sendMoEngageEvent("KA_Edit_Comment", properties)
 
                         }else{
                             isLoading.set(false)
 
                             getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                         }
+                        commentInput.set("")
+
                     }else{
                         val response = communityRepository.updateComment(postID,id,text,tags)
                         if (response.isSuccessful) {
                             isLoading.set(false)
 
-                            commentInput.set("")
                             getComments(postId = postId)
-                            val properties = Properties()
-                            properties.addAttribute(
-                                "Customer_Id",
-                                SharedPreferencesHelper.instance?.getString(
-                                    SharedPreferencesKeys.CUSTOMER_ID
-                                )!!)
-                                .addAttribute("Post_ID",postId)
-                                .addAttribute("Comment ID",id)
-                                .setNonInteractive()
-                            getNavigator()?.sendMoEngageEvent("KA_Edit_Comment", properties)
+
                         }else{
                             isLoading.set(false)
 
                             getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                         }
+                        commentInput.set("")
+
                     }
                   comment = null
                 } else

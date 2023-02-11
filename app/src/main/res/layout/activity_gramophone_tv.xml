@@ -152,6 +152,7 @@
                             android:backgroundTint="@color/pink"
                             android:paddingStart="16dp"
                             android:paddingTop="6dp"
+                            android:visibility="gone"
                             android:paddingEnd="12dp"
                             android:paddingBottom="6dp">
 

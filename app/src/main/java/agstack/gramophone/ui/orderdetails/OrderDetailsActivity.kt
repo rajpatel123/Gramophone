@@ -12,6 +12,7 @@ import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.orderdetails.adapter.OrderedProductsAdapter
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.Utility
 import android.app.DownloadManager
 import android.content.Context
 import android.content.res.ColorStateList
@@ -180,7 +181,7 @@ class OrderDetailsActivity :
     ) {
         val properties = Properties()
         properties.addAttribute("Order_Id", orderId)
-            .addAttribute("Order_Date", orderDate)
+            .addAttribute("Order_Date", Utility.getShowingFromStringDate1(orderDate))
             .addAttribute("Total_Order_Value", totalOrderValue)
             .addAttribute("Order_Status", orderStatus)
             .addAttribute("Customer_Id",
@@ -194,7 +195,7 @@ class OrderDetailsActivity :
     private fun sendDownloadInvoiceMoEngageEvent() {
         val properties = Properties()
         properties.addAttribute("Order_Id", orderDetailsViewModel.orderId.value)
-            .addAttribute("Order_Date", orderDetailsViewModel.orderDate.value)
+            .addAttribute("Order_Date", Utility.getShowingFromStringDate1(orderDetailsViewModel.orderDate.value!!))
             .addAttribute("Total_Order_Value", orderDetailsViewModel.totalPrice.value)
             .addAttribute("Customer_Id",
                 SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)

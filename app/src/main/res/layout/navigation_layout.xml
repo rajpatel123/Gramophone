@@ -64,7 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_name"
-                        android:text="@string/dummy_mobile_no"
+                        android:text=""
                         android:textColor="@color/gray"
                         android:textSize="@dimen/_12ssp" />
 
@@ -117,7 +117,7 @@
                                 style="@style/heading_title_bold_large"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/dummy_price"
+                                android:text=""
                                 android:textColor="@color/blakish"
                                 android:textSize="@dimen/_12ssp" />
 

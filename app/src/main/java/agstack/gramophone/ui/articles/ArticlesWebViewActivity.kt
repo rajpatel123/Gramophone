@@ -11,6 +11,7 @@ import agstack.gramophone.ui.advisory.adapter.RecommendedLinkedProductsListAdapt
 import agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData
 import agstack.gramophone.ui.dialog.cart.AddToCartBottomSheetDialog
 import agstack.gramophone.ui.home.adapter.ShopByCategoryAdapter
+import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.subcategory.ProductListAdapter
 import agstack.gramophone.ui.home.subcategory.SubCategoryNavigator
 import agstack.gramophone.ui.home.subcategory.SubCategoryViewModel
@@ -117,6 +118,14 @@ class ArticlesWebViewActivity :
                     e.printStackTrace()
                 }
             }
+
+            @JavascriptInterface
+            override fun openProduct(productId: String) {
+                val bundle = Bundle()
+                bundle.putParcelable(Constants.PRODUCT, ProductData(productId.toInt()))
+                openActivity(ProductDetailsActivity::class.java, bundle)
+            }
+
             @JavascriptInterface
             override fun shareProduct(productId: String) {
                 sendShareProductFromArticleMoEngageEvent(productId.toInt())

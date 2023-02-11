@@ -25,7 +25,6 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -45,6 +44,34 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
+                    <LinearLayout
+                        android:id="@+id/llCallPost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/create_a_post_bg"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:onClick="@{()->viewModel.onCallClicked()}"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_15sdp"
+
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <ImageView
+                            android:id="@+id/callButton"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:contentDescription="@string/image"
+                            android:src="@drawable/ic_call"
+                            android:visibility="visible"
+                            app:tint="@color/white" />
+
+                    </LinearLayout>
                     <LinearLayout
                         android:id="@+id/llCreateAPost"
                         android:layout_width="wrap_content"
@@ -66,7 +93,7 @@
                         app:layout_constraintEnd_toEndOf="parent">
 
                         <ImageView
-                            android:id="@+id/callButton"
+                            android:id="@+id/button"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_marginEnd="4dp"

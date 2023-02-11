@@ -56,11 +56,11 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/playListImg"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="3dp"
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/action_bar_list_icon" />

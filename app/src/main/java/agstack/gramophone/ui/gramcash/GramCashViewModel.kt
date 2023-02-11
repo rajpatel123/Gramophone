@@ -43,7 +43,7 @@ class GramCashViewModel @Inject constructor(
                     val gramCashResponse: GpApiResponseData? = gramCashResponsefromAPI.body()?.gpApiResponseData
                     gramCashResponseData.set(gramCashResponse)
                     getNavigator()?.setFAQAdapter(FAQAdapter(gramCashResponse?.gramcashFaq as ArrayList<GramcashFaqItem>))
-
+                    getNavigator()?.loadBannerImage(gramCashResponse?.referral_and_share_image)
                     getNavigator()?.sendMoEngageEvent("KA_View_GramCash")
                     getNavigator()?.setGramCashRulesAdapter(FAQAdapter(gramCashResponse?.gramcashRules as ArrayList<GramcashFaqItem>))
 
