@@ -349,6 +349,7 @@ object Constants {
         const val Banner = "Banner"
     }
     object PushNotification {
-        const val LARGE_ICONE_SIZE = 256 //px
+        const val LARGE_ICON_WIDTH_SIZE = 355 //px
+        const val LARGE_ICONE_SIZE = 267 //px
     }
 }

@@ -26,6 +26,7 @@ import android.graphics.Bitmap;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -62,6 +63,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TITLE_KEY = "title";
     private static final String BODY_KEY = "body";
     private static final String ICON_KEY = "icon";
+    private static final String BIG_PICTURE = "big_picture";
+
     private static final String ACTION_TYPE_NEW_LIKE = "new_like";
     private static final String ACTION_TYPE_NEW_COMMENT = "new_comment";
     private static final String ACTION_TYPE_NEW_POST = "new_post";
@@ -110,27 +113,47 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void parseDeepLink(RemoteMessage remoteMessage) {
         String notificationTitle = remoteMessage.getData().get(TITLE_KEY);
         String notificationBody = remoteMessage.getData().get(BODY_KEY);
-        String notificationImageUrl = remoteMessage.getData().get(ICON_KEY);
+        String notificationImageUrl = null;
+        boolean isBig = false;
+        if (!TextUtils.isEmpty(remoteMessage.getData().get(BIG_PICTURE))) {
+            notificationImageUrl = remoteMessage.getData().get(BIG_PICTURE);
+            isBig=true;
+        } else {
+            notificationImageUrl = remoteMessage.getData().get(ICON_KEY);
+            isBig= false;
+        }
+
         String deep_link = remoteMessage.getData().get(Constants.PushNotificationDeepLinkKey);
 
         Intent backIntent = new Intent(this, HomeActivity.class);
         Intent intent = new Intent(this, SplashActivity.class);
         intent.setData(Uri.parse(deep_link));
         Bitmap bitmap = getBitmapFromUrl(notificationImageUrl);
-        sendNotification(notificationTitle, notificationBody, bitmap, intent, backIntent);
+
+        sendNotification(notificationTitle, notificationBody, bitmap, intent, backIntent,isBig);
     }
 
     private void parseCommentOrLike(RemoteMessage remoteMessage) {
         String notificationTitle = remoteMessage.getData().get(TITLE_KEY);
         String notificationBody = remoteMessage.getData().get(BODY_KEY);
-        String notificationImageUrl = remoteMessage.getData().get(ICON_KEY);
+
+        String notificationImageUrl = null;
+        boolean isBig = false;
+        if (!TextUtils.isEmpty(remoteMessage.getData().get(BIG_PICTURE))) {
+            notificationImageUrl = remoteMessage.getData().get(BIG_PICTURE);
+            isBig=true;
+        } else {
+            notificationImageUrl = remoteMessage.getData().get(ICON_KEY);
+            isBig= false;
+        }
+
         String postId = remoteMessage.getData().get(POST_ID_KEY);
         Intent backIntent = new Intent(this, HomeActivity.class);
         Intent intent = new Intent(this, SplashActivity.class);
         intent.putExtra(IntentKeys.PostIdKey, postId);
         Bitmap bitmap = getBitmapFromUrl(notificationImageUrl);
 
-        sendNotification(notificationTitle, notificationBody, bitmap, intent, backIntent);
+        sendNotification(notificationTitle, notificationBody, bitmap, intent, backIntent, isBig);
 
     }
 
@@ -141,7 +164,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .load(imageUrl)
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.DATA)
-                    .into(Constants.PushNotification.LARGE_ICONE_SIZE, Constants.PushNotification.LARGE_ICONE_SIZE)
+                    .into(Constants.PushNotification.LARGE_ICON_WIDTH_SIZE, Constants.PushNotification.LARGE_ICONE_SIZE)
                     .get();
 
         } catch (Exception e) {
@@ -150,7 +173,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
 
-    private void sendNotification(String notificationTitle, String notificationBody, Bitmap bitmap, Intent intent, Intent backIntent) {
+    private void sendNotification(String notificationTitle, String notificationBody, Bitmap bitmap, Intent intent, Intent backIntent, boolean isBig) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         PendingIntent pendingIntent;
@@ -196,15 +219,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 }
             }
 
-            notificationBuilder = new NotificationCompat.Builder(this, id)
-                    .setAutoCancel(true)   //Automatically delete the notification
-                    .setSmallIcon(R.drawable.ic_gramophone_leaf) //Notification icon
-                    .setContentIntent(pendingIntent)
-                    .setContentTitle(notificationTitle)
-                    .setContentText(notificationBody)
-                    .setLargeIcon(bitmap)
-                    .setSound(defaultSoundUri);
+            if (!isBig){
+                notificationBuilder = new NotificationCompat.Builder(this, id)
+                        .setAutoCancel(true)   //Automatically delete the notification
+                        .setSmallIcon(R.drawable.ic_gramophone_leaf) //Notification icon
+                        .setContentIntent(pendingIntent)
+                        .setContentTitle(notificationTitle)
+                        .setContentText(notificationBody)
+                        .setLargeIcon(bitmap)
+                        .setSound(defaultSoundUri);
 
+            }else{
+                NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle()
+                        .bigPicture(bitmap)
+                        .setSummaryText("");
+                notificationBuilder = new NotificationCompat.Builder(this, id)
+                        .setContentIntent(pendingIntent)
+                        .setContentTitle(notificationTitle)
+                        .setContentText(notificationBody)
+                        .setSmallIcon(R.drawable.ic_gramophone_leaf)
+                        .setLargeIcon(bitmap)
+                        .setStyle(style);
+            }
         } else {
             notificationBuilder = new NotificationCompat.Builder(this)
                     .setAutoCancel(true)   //Automatically delete the notification
@@ -216,9 +252,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setSound(defaultSoundUri);
 
         }
-        if (notificationManager != null) {
-            notificationManager.notify(notificationId++ /* ID of notification */, notificationBuilder.build());
+        try {
+            if (notificationManager != null) {
+                notificationManager.notify(notificationId++ /* ID of notification */, notificationBuilder.build());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+
     }
 
     /**
