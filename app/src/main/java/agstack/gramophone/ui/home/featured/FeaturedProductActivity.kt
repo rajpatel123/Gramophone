@@ -61,6 +61,9 @@ class FeaturedProductActivity :
         subCategoryViewModel.getBundleData()
     }
 
+    override fun scrollToActivity(i: Int) {
+    }
+
     private fun setupUi() {
         disableSortAndFilter()
         viewDataBinding.tvSortBy.setOnClickListener(this)
@@ -245,7 +248,7 @@ class FeaturedProductActivity :
 
     override fun setViewPagerAdapter(bannerList: List<Banner>?) {
         if (bannerList.isNotNullOrEmpty()) {
-            val adapter = ViewPagerAdapter(bannerList!!)
+            val adapter = ViewPagerAdapter(bannerList!!, this)
             viewDataBinding.viewPager.adapter = adapter
             if (bannerList.size > 1) {
                 viewDataBinding.dotsIndicator.attachTo(viewDataBinding.viewPager)
@@ -350,7 +353,8 @@ class FeaturedProductActivity :
     override fun setAdvisoryActivity(
         activityListAdapter: ActivityListAdapter,
         function: (GpApiResponseData) -> Unit,
-        infoClicked: (GpApiResponseData) -> Unit
+        infoClicked: (GpApiResponseData) -> Unit,
+        position: (Int) -> Unit
     ) {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
 

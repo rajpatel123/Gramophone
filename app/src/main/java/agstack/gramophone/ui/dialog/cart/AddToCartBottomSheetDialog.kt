@@ -77,6 +77,8 @@ class AddToCartBottomSheetDialog(
             binding?.progressBar?.visibility = View.VISIBLE
             refreshOfferOnQuantityChange?.invoke(selectedSkuListItem.get()!!.productId!!.toInt(),
                 quantity)
+
+
         }
         setOffersUI()
         binding?.tvContactForPrice?.setOnClickListener {

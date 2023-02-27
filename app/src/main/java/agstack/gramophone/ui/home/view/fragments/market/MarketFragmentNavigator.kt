@@ -7,6 +7,7 @@ import agstack.gramophone.ui.home.adapter.HomeAdapter
 import agstack.gramophone.ui.home.view.fragments.market.model.FeaturedArticlesResponse
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.weather.model.WeatherResponse
+import android.app.Activity
 
 interface MarketFragmentNavigator : BaseNavigator {
     fun showAppTourDialog()
@@ -37,4 +38,6 @@ interface MarketFragmentNavigator : BaseNavigator {
     fun notifyWeatherItemInserted(weatherResponse: WeatherResponse?, position: Int)
 
     fun launchCommunityFragment()
+
+    fun getActivityContext(): Activity
 }

@@ -741,7 +741,7 @@ class CommunityViewModel @Inject constructor(
                             SharedPreferencesHelper.instance?.getString(
                                 SharedPreferencesKeys.CUSTOMER_ID
                             )!!)
-                            .addAttribute(action,FollowRequestModel(it.author._id))
+                            .addAttribute(action,it.author.uuid)
                             .setNonInteractive()
                         getNavigator()?.sendMoEngageEvent(event, properties)
 

@@ -20,8 +20,12 @@ import dagger.hilt.android.HiltAndroidApp
 class GramAppApplication : Application() {
 
     private var moEngageAppId: String? = null
-    lateinit var instance : GramAppApplication
 
+    companion object{
+        fun getAppContext(): GramAppApplication{
+            return GramAppApplication()
+        }
+    }
     override fun onCreate() {
         super.onCreate()
         initializeInstance(this)
@@ -29,6 +33,7 @@ class GramAppApplication : Application() {
         if (langIsoCode != null && !langIsoCode.equals("", ignoreCase = true)) {
             LocaleManagerClass.updateLocale(langIsoCode, resources)
         }
+
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         initializeMoEngage()
@@ -41,7 +46,12 @@ class GramAppApplication : Application() {
 
 
 
+
     private fun configureCrashReporting() {
+        if (!TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.UUIdKey)!!))
+            FirebaseCrashlytics.getInstance()
+                .setUserId(SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.UUIdKey)!!)
+
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
     }
     private fun initializeMoEngage() {
@@ -79,16 +89,23 @@ class GramAppApplication : Application() {
     }
 
     private fun userInfoMoEngage() {
+        if (TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.PROFILE_DATA))) {
+            return
+        }
         val profileData =
-            SharedPreferencesHelper.instance?.getParcelable(SharedPreferencesKeys.PROFILE_DATA,
-                GpApiResponseProfileData::class.java)
+            SharedPreferencesHelper.instance?.getParcelable(
+                SharedPreferencesKeys.PROFILE_DATA,
+                GpApiResponseProfileData::class.java
+            )
         if (profileData.isNotNull()) {
             MoEAnalyticsHelper.setFirstName(this, profileData?.first_name!!)
-            if (!TextUtils.isEmpty(profileData.last_name)){
+            if (!TextUtils.isEmpty(profileData.last_name)) {
                 MoEAnalyticsHelper.setLastName(this, profileData.last_name!!)
             }
-            MoEAnalyticsHelper.setUserName(this,
-                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.USERNAME)!!)
+            MoEAnalyticsHelper.setUserName(
+                this,
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.USERNAME)!!
+            )
             MoEAnalyticsHelper.setLocation(this, 0.0, 0.0)
             MoEAnalyticsHelper.setMobileNumber(this, profileData.mobile_no!!)
         }

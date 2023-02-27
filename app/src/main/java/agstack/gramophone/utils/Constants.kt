@@ -308,6 +308,8 @@ object Constants {
     const val DEEP_LINK_EDIT_PHONE_NO = "editPhoneNo"
     const val DEEP_LINK_DISEASE_DETAILS = "diseaseDetails"
     const val DEEP_LINK_ARTICLE_DETAILS = "articles"
+    const val DEEP_LINK_SHOP_BY_STORE = "shop_by_store"
+    const val DEEP_LINK_SHOP_BY_CATEGORY = "shop_by_category"
 
     /**
      * For Broadcast

@@ -1,13 +1,12 @@
 package agstack.gramophone.ui.tv.adapter;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
@@ -21,7 +20,7 @@ import agstack.gramophone.utils.Constants;
 public class PlayListViewHolder extends RecyclerView.ViewHolder {
 
     private TextView playListName, playListId, videoCountTextView;
-    ImageView playListImg;
+    LinearLayout playListImg;
     YouTubeThumbnailView youTubeThumbnailView;
     private Boolean isThumbnailLoaded = false;
     private Context context;
@@ -49,9 +48,9 @@ public class PlayListViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void initViews(View itemView) {
-        playListImg = (ImageView) itemView.findViewById(R.id.playListImg);
-        playListName = (TextView) itemView.findViewById(R.id.playListNameView);
-        videoCountTextView = (TextView) itemView.findViewById(R.id.videoCountTextView);
+        playListImg = itemView.findViewById(R.id.playListImg);
+        playListName =  itemView.findViewById(R.id.playListNameView);
+        videoCountTextView =  itemView.findViewById(R.id.videoCountTextView);
         youTubeThumbnailView = (YouTubeThumbnailView) itemView.findViewById(R.id.youtube_thumbnail);
 
     }

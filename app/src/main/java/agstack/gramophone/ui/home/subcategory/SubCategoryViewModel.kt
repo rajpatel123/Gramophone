@@ -37,7 +37,6 @@ import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.amnix.xtension.extensions.isNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
@@ -592,6 +591,10 @@ class SubCategoryViewModel @Inject constructor(
                                 getNavigator()?.updateActivitiesList(it)
                             }, {
                                 getNavigator()?.openIssueImagesBottomSheet(it)
+                            },{
+                                activityListAdapter.lastSelectedActivityPosition = it
+                                getNavigator()?.scrollToActivity(it)
+
                             })
                         }
                     }

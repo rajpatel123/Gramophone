@@ -52,6 +52,7 @@ class AdvisoryActivity :
     BaseActivityWrapper<ActivityAdvisoryBinding, SubCategoryNavigator, SubCategoryViewModel>(),
     SubCategoryNavigator {
 
+    private lateinit var activityListAdapter: ActivityListAdapter
     private val subCategoryViewModel: SubCategoryViewModel by viewModels()
     var bottomSheet: AddToCartBottomSheetDialog? = null
 
@@ -204,7 +205,6 @@ class AdvisoryActivity :
                 advisoryLayout.tvActivityName.text = activityToBeDone.activity_name
                 advisoryLayout.tvBriefDesc.text = activityToBeDone.activity_brief_description
                 advisoryLayout.tvShortDesc.text = activityToBeDone.short_application
-
                 if (activityToBeDone.linked_issues.isNotNullOrEmpty()) {
 
                     advisoryLayout.rvLikedIssues.layoutManager =
@@ -277,6 +277,11 @@ class AdvisoryActivity :
         }
     }
 
+    override fun scrollToActivity(i: Int) {
+        (rvActivity.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(i, 0)
+
+    }
+
     override fun showInfoBottomSheet() {
         val bottomSheet = CropIssueBottomSheetDialog()
         bottomSheet.bundle = intent.extras
@@ -310,9 +315,13 @@ class AdvisoryActivity :
         activityListAdapter: ActivityListAdapter,
         function: (GpApiResponseData) -> Unit,
         infoClicked: (GpApiResponseData) -> Unit,
+        positionSelected: (Int) -> Unit,
     ) {
-
+        viewDataBinding.contentLayouts.visibility= VISIBLE
+        viewDataBinding.progressBar.visibility= GONE
+        this.activityListAdapter= activityListAdapter
         if (activityListAdapter.dataList.isNotEmpty()) {
+            activityListAdapter.selectedPosition = positionSelected
             activityListAdapter.onActivitySelected = function
             activityListAdapter.onActivityInfoClicked = infoClicked
             rvActivity.layoutManager =
@@ -321,15 +330,10 @@ class AdvisoryActivity :
             rvActivity.adapter = activityListAdapter
             viewDataBinding.llActivityStageAvailable.visibility = VISIBLE
             viewDataBinding.llNoActivityStage.visibility = GONE
-            rvActivity.scrollToPosition(activityListAdapter.lastSelectedActivityPosition)
-            var  position =0
-            activityListAdapter.dataList.forEach {
-                if (it.isSelected) {
-                    activityListAdapter.lastSelectedActivityPosition =position
-                    rvActivity.scrollToPosition(activityListAdapter.lastSelectedActivityPosition)
-                    position++
-                }
-            }
+//            rvActivity.scrollToPosition(activityListAdapter.lastSelectedActivityPosition)
+
+            viewDataBinding.progressBar.visibility= GONE
+
 
 
         } else {

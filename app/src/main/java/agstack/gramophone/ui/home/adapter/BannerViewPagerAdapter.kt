@@ -5,6 +5,8 @@ import agstack.gramophone.ui.home.model.Banner
 import agstack.gramophone.ui.home.view.fragments.community.LikedPostUserListActivity
 import agstack.gramophone.ui.home.view.fragments.community.model.likes.PagerItem
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
+import agstack.gramophone.ui.notification.view.URLHandlerActivity
+import agstack.gramophone.utils.Constants
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -42,7 +44,10 @@ class BannerViewPagerAdapter(private  val list: ArrayList<agstack.gramophone.ui.
         container.addView(rootView)
 
         rootView.setOnClickListener {
-            //container.context.startActivity(Intent(container.context,LikedPostUserListActivity::class.java))
+            val intent = Intent(rootView.context, URLHandlerActivity::class.java)
+            intent.putExtra(
+                Constants.URI, list[position].bannerLink)
+            rootView.context?.startActivity(intent)
         }
 
         return rootView

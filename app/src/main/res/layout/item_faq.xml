@@ -69,17 +69,12 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/lltop">
 
-            <TextView
-                android:id="@+id/tv_answer"
-                style="@style/TextSize14Sp"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/answerLL"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:text="@{model.answer.get(0)}"
-                android:textColor="@color/blakish"
-                android:textSize="@dimen/_12ssp"
-                android:fontFamily="@font/manrope_regular"
-                tools:text="Answer" />
+                />
 
         </LinearLayout>
 

@@ -8,15 +8,18 @@ import agstack.gramophone.databinding.DeletePostDailogueBinding
 import agstack.gramophone.databinding.FragmentCommunityBinding
 import agstack.gramophone.databinding.ReportPostDailogueBinding
 import agstack.gramophone.ui.home.adapter.CommunityPostAdapter
+import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.Option
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
 import agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel
+import agstack.gramophone.utils.GramAppApplication
 import agstack.gramophone.utils.ShareSheetPresenter
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -48,10 +51,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     private val communityViewModel: CommunityViewModel by viewModels()
     private var recyclerView: RecyclerView? = null
 
-
+    private lateinit var mContext : HomeActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        mContext = activity as HomeActivity
 
         binding?.swipeRefresh?.setOnRefreshListener {
             binding?.swipeRefresh?.isRefreshing=true
@@ -115,7 +118,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
             communityPostAdapter.onFollowClicked=onFollowClicked
             communityPostAdapter.onProfileImageClicked=onProfileImageClicked
             communityPostAdapter.setImage = this
-            rvPost.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            rvPost.layoutManager = LinearLayoutManager(GramAppApplication.getAppContext(), LinearLayoutManager.VERTICAL, false)
             rvPost.setHasFixedSize(false)
             rvPost.adapter = communityPostAdapter
             if (communityPostAdapter.dataList?.size!! >0){
@@ -174,11 +177,11 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     override fun deletePostDialog() {
         val mDialogView =
-            LayoutInflater.from(activity).inflate(R.layout.delete_post_dailogue, null)
+            LayoutInflater.from(mContext).inflate(R.layout.delete_post_dailogue, null)
         val dialogBinding = DeletePostDailogueBinding.bind(mDialogView)
         dialogBinding.setVariable(BR.viewModel, communityViewModel)
         //AlertDialogBuilder
-        val mBuilder = AlertDialog.Builder(activity)
+        val mBuilder = AlertDialog.Builder(mContext)
             .setView(dialogBinding.root)
         //show dialog
         val mAlertDialog = mBuilder.show()
@@ -189,7 +192,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     override fun reportPostDialog() {
         val mDialogView =
-            LayoutInflater.from(activity).inflate(R.layout.report_post_dailogue, null)
+            LayoutInflater.from(mContext).inflate(R.layout.report_post_dailogue, null)
         val dialogBinding = ReportPostDailogueBinding.bind(mDialogView)
         communityViewModel.unWanted.set(getMessage(R.string.unwanted))
         communityViewModel.hateStr.set(getMessage(R.string.hate))
@@ -205,7 +208,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
 
         //AlertDialogBuilder
-        val mBuilder = AlertDialog.Builder(activity)
+        val mBuilder = AlertDialog.Builder(mContext)
             .setView(dialogBinding.root)
         //show dialog
         val mAlertDialog = mBuilder.show()
@@ -216,11 +219,11 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
     override fun blockUserDialog() {
         val mDialogView =
-            LayoutInflater.from(activity).inflate(R.layout.block_user_dailogue, null)
+            LayoutInflater.from(mContext).inflate(R.layout.block_user_dailogue, null)
         val dialogBinding = BlockUserDailogueBinding.bind(mDialogView)
         dialogBinding.setVariable(BR.viewModel, communityViewModel)
         //AlertDialogBuilder
-        val mBuilder = AlertDialog.Builder(activity)
+        val mBuilder = AlertDialog.Builder(mContext)
             .setView(dialogBinding.root)
         //show dialog
         val mAlertDialog = mBuilder.show()
@@ -253,7 +256,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     }
 
     override fun onImageSet(imageUrl: String, iv: ImageView) {
-        activity?.let { Glide.with(it).load(imageUrl).into(iv) }
+        mContext.let { Glide.with(it).load(imageUrl).into(iv) }
     }
 
     fun selectTab(from: String) {

@@ -41,6 +41,8 @@ import agstack.gramophone.ui.notification.model.NotificationRequestModel
 import agstack.gramophone.ui.notification.model.NotificationresponseModel
 import agstack.gramophone.ui.notification.model.cropdetails.CropDetailsResponse
 import agstack.gramophone.ui.notification.model.cropproblem.CropProblemResponse
+import agstack.gramophone.ui.notification.model.shopbycat.ShopByCatResponseModel
+import agstack.gramophone.ui.notification.model.shopbystore.ShopByStoreResponseModel
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
@@ -133,6 +135,10 @@ interface OnBoardingRepository {
     suspend fun getCropDetails( farm_id: String,  crop_id : String): Response<CropDetailsResponse>
 
     suspend fun getCropProblemDetails(problemId : String) : Response<CropProblemResponse>
+
+    suspend fun getSubCatDetails(subcatId: String): Response<ShopByCatResponseModel>
+
+    suspend fun getStoreDetails(storeId: String): Response<ShopByStoreResponseModel>
 
 
 }

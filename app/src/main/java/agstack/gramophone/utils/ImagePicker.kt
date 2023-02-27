@@ -90,6 +90,55 @@ class ImagePicker {
         return chooserIntent
     }
 
+        fun getGallaryIntent(context: Context): Intent? {
+
+        // Determine Uri of camera image to save.
+        val outputFileUri: Uri? = ImagePicker.getCaptureImageOutputUri(context)
+
+        outputFileUri?.let {
+           // it.toFile()
+            val file: File = File(ImagePicker.getRealPathFromURI(outputFileUri, context))
+            if (file.exists()) file.delete()
+        }
+        val allIntents: MutableList<Intent> = ArrayList()
+        val packageManager = context.packageManager
+
+        // collect all gallery intents
+        val galleryIntent = Intent(Intent.ACTION_PICK)
+        galleryIntent.type = "image/*"
+        val listGallery = packageManager.queryIntentActivities(galleryIntent, 0)
+
+        // priority to only gallery app if not present all app related to image
+        val onlyGalleryIntents: List<Intent>? =
+            ImagePicker.getGalleryIntent(listGallery, galleryIntent)
+
+        onlyGalleryIntents?.let {
+            for (intent in onlyGalleryIntents) {
+                if (intent != null) {
+                    allIntents.add(intent)
+                }
+            }
+        }
+
+        // the main intent is the last in the list (fucking android) so pickup the useless one
+        var mainIntent = allIntents[allIntents.size - 1]
+        for (intent in allIntents) {
+            if (intent.component!!.className == "com.android.documentsui.DocumentsActivity") {
+                mainIntent = intent
+                break
+            }
+        }
+        allIntents.remove(mainIntent)
+
+        // Create a chooser from the main intent
+        val chooserIntent =
+            Intent.createChooser(mainIntent, context.getString(R.string.select_image_title))
+
+        // Add all other intents
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toTypedArray())
+        return chooserIntent
+    }
+
         /**
          * Get URI to image received from capture  by camera.
          */

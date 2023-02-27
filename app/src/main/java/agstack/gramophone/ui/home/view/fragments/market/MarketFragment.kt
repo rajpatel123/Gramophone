@@ -11,6 +11,8 @@ import agstack.gramophone.ui.home.adapter.HomeAdapter
 import agstack.gramophone.ui.home.view.HomeActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.weather.model.WeatherResponse
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -196,5 +198,9 @@ class MarketFragment :
 
     override fun getViewModel(): MarketFragmentViewModel {
         return marketFragmentViewModel
+    }
+
+    override fun getActivityContext(): Activity {
+        return activity as HomeActivity
     }
 }

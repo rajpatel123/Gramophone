@@ -283,7 +283,7 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:drawablePadding="@dimen/_8sdp"
                     android:fontFamily="@font/manrope_medium"
-                    android:text="+ अपना खेत जोड़े"
+                    android:text="@string/add_your_farm"
                     android:textColor="@color/orange"
                     android:textSize="@dimen/_13ssp" />
 

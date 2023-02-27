@@ -159,7 +159,9 @@ class UserProfileActivity :
         cropImage?.launch(
             options(uri = currentImageUri) {
                 setGuidelines(CropImageView.Guidelines.ON)
+                setCropMenuCropButtonTitle(getString(R.string.ok))
                 setOutputCompressFormat(Bitmap.CompressFormat.PNG)
+
             }
         )
 
@@ -172,7 +174,6 @@ class UserProfileActivity :
         imageSelectDialog.setOnOptionSelectedListener(onCamera, onGallery)
         imageSelectDialog.show(supportFragmentManager, "image")
     }
-
 
     override fun getLayoutID(): Int {
         return R.layout.user_profile_activity
@@ -221,4 +222,6 @@ class UserProfileActivity :
             .fitCenter()
             .into(viewDataBinding.cvProfilePic)
     }
+
+
 }

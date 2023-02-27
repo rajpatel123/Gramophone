@@ -104,13 +104,13 @@
                     android:paddingEnd="@dimen/_10sdp">
 
                     <TextView
+                        android:id="@+id/productPrice"
                         style="@style/heading_title_bold_large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="3"
                         tools:text="₹ 900"
-                        priceWithSymbol="@{model.salesPrice}"
                         android:textColor="@color/blakish"
                         android:textSize="16sp" />
 

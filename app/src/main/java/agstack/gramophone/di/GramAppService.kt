@@ -46,6 +46,8 @@ import agstack.gramophone.ui.notification.model.NotificationRequestModel
 import agstack.gramophone.ui.notification.model.NotificationresponseModel
 import agstack.gramophone.ui.notification.model.cropdetails.CropDetailsResponse
 import agstack.gramophone.ui.notification.model.cropproblem.CropProblemResponse
+import agstack.gramophone.ui.notification.model.shopbycat.ShopByCatResponseModel
+import agstack.gramophone.ui.notification.model.shopbystore.ShopByStoreResponseModel
 import agstack.gramophone.ui.order.model.OrderListResponse
 import agstack.gramophone.ui.order.model.PageLimitRequest
 import agstack.gramophone.ui.order.model.PlaceOrderResponse
@@ -407,14 +409,25 @@ interface GramAppService {
     @POST("api/v5/general/save-customer-tokens")
     suspend fun saveToken(@Body fcmRegistrationModel: FCMRegistrationModel): Response<NotificationresponseModel>
 
-    @POST("api/v5/review/check-genuine-customer")
-    suspend fun getRatingEligibilityData(@Body productData: ProductData): Response<RatingEligibilityResponseModel>
+ @POST("api/v5/review/check-genuine-customer")
+ suspend fun getRatingEligibilityData(@Body productData: ProductData): Response<RatingEligibilityResponseModel>
 
-    @GET("api/v5/farm/crop-details/{farm_id}/{crop_id}")
-    suspend fun getCropDetails(@Path("farm_id") farm_id: String, @Path("crop_id") crop_id : String): Response<CropDetailsResponse>
+ @GET("api/v5/farm/crop-details/{farm_id}/{crop_id}")
+ suspend fun getCropDetails(
+  @Path("farm_id") farm_id: String,
+  @Path("crop_id") crop_id: String
+ ): Response<CropDetailsResponse>
 
-    @GET("api/v5/farm/crop-problems/single/{problemId}")
-    suspend fun getCropProblemDetails(@Path("problemId") problemId : String) : Response<CropProblemResponse>
+ @GET("api/v5/farm/crop-problems/single/{problemId}")
+ suspend fun getCropProblemDetails(@Path("problemId") problemId: String): Response<CropProblemResponse>
+
+
+ @GET("api/v5/category/app-category/{subcatId}")
+ suspend fun getSubCatDetails(@Path("subcatId") subcatId: String): Response<ShopByCatResponseModel>
+
+
+ @GET("api/v5/category/stores-details/{storeId}")
+ suspend fun getStoreDetails(@Path("storeId") storeId: String): Response<ShopByStoreResponseModel>
 
 
 }

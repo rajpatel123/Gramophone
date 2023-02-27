@@ -182,13 +182,19 @@ class AddOrUpdateAddressActivity :
                 pincodeSpinner.setAdapter(null)
 
                 if (TextUtils.isEmpty(s)) {
-                    addOrUpdateAddressViewModel.getVillage(
-                        "village",
-                        addOrUpdateAddressViewModel.stateNameStr.get()!!,
-                        addOrUpdateAddressViewModel.districtName.get()!!,
-                        addOrUpdateAddressViewModel.tehsilName.get()!!,
-                        ""
-                    )
+                    addOrUpdateAddressViewModel.stateNameStr.get()?.let {
+                        addOrUpdateAddressViewModel.districtName.get()?.let { it1 ->
+                            addOrUpdateAddressViewModel.tehsilName.get()?.let { it2 ->
+                                addOrUpdateAddressViewModel.getVillage(
+                                    "village",
+                                    it,
+                                    it1,
+                                    it2,
+                                    ""
+                                )
+                            }
+                        }
+                    }
                 }
             }
         })

@@ -32,6 +32,7 @@
                     android:visibility="visible" />
 
                 <LinearLayout
+                    android:id="@+id/playListImg"
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
@@ -56,7 +57,6 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/playListImg"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:layout_alignParentEnd="true"

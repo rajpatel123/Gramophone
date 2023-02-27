@@ -682,4 +682,7 @@
     <string name="minmum">Min</string>
     <string name="maximum">Max</string>
 
+    <string name="scan_qr">QR कोड स्कॅन करा</string>
+    <string name="invalid_qr">कृपया वैध QR कोड स्कॅन करा</string>
+
 </resources>

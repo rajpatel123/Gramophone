@@ -2,7 +2,13 @@ package agstack.gramophone.ui.home.adapter
 
 import agstack.gramophone.R
 import agstack.gramophone.ui.home.view.fragments.market.model.Banner
+import agstack.gramophone.ui.notification.view.URLHandlerActivity
+import agstack.gramophone.utils.Constants
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +20,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import java.util.*
 
-class ViewPagerAdapter(private val imageList: List<Banner>) : PagerAdapter() {
+class ViewPagerAdapter(private val imageList: List<Banner>, private val activity: Activity?) :
+    PagerAdapter() {
     // on below line we are creating a method
     // as get count to return the size of the list.
     override fun getCount(): Int {
@@ -42,6 +49,27 @@ class ViewPagerAdapter(private val imageList: List<Banner>) : PagerAdapter() {
         // our image view with the id.
         val imageView: ImageView = itemView.findViewById<View>(R.id.iv_banner) as ImageView
 
+
+        imageView.setOnClickListener {
+            Log.d("Banner", "" + imageList[position].bannerLink)
+            val uri = Uri.parse(imageList[position].bannerLink)
+            try {
+                val pageName = uri.getQueryParameter("category")
+
+                if (pageName!=null){
+                    val intent = Intent(activity, URLHandlerActivity::class.java)
+                    intent.putExtra(
+                        Constants.URI, imageList[position].bannerLink
+                    )
+                    activity?.startActivity(intent)
+                }
+
+            } catch (ex: Exception) {
+                return@setOnClickListener
+            }
+
+
+        }
         // on below line we are setting
         // image resource for image view.
         //imageView.setImageResource(imageList[position].id)

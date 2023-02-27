@@ -25,6 +25,7 @@ import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.Utility
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -53,6 +54,7 @@ class HomeAdapter(
     private var farmResponse: FarmResponse?,
     private var articlesData: HashMap<String, ArrayList<FormattedArticlesData>>,
     private var weatherResponse: WeatherResponse?,
+    private var activity: Activity?
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onItemClicked: ((String) -> Unit)? = null
@@ -192,7 +194,7 @@ class HomeAdapter(
                 ) {
                     holder.binding.itemView.visibility = View.VISIBLE
                     holder.binding.viewPager.adapter =
-                        ViewPagerAdapter(allBannerResponse!!.gpApiResponseData?.homeBanner1!!)
+                        ViewPagerAdapter(allBannerResponse!!.gpApiResponseData?.homeBanner1!!,activity)
                     holder.binding.dotsIndicator.attachTo(holder.binding.viewPager)
                 } else {
                     holder.binding.itemView.visibility = View.GONE
@@ -394,7 +396,7 @@ class HomeAdapter(
                 holder.binding.rvReferral.adapter = referralBannerAdapter*/
 
                     holder.binding.viewPager.adapter =
-                        ViewPagerAdapter(referralBanner)
+                        ViewPagerAdapter(referralBanner, activity)
                     holder.binding.rlDotsIndicator.visibility = View.GONE
                 } else {
                     holder.binding.itemView.visibility = View.GONE
@@ -873,8 +875,8 @@ private fun sendFarmDetailMoEngageEvents(
 ) {
 
     val geo = ArrayList<String>()
-    SharedPreferencesHelper.instance?.getString(Constants.LATITUDE)?.let { geo.add(it) }
-    SharedPreferencesHelper.instance?.getString(Constants.LONGITUDE)?.let { geo.add(it) }
+    SharedPreferencesHelper.instance?.getString(Constants.LATITUDE)?.let { geo.add("".plus(it)) }
+    SharedPreferencesHelper.instance?.getString(Constants.LONGITUDE)?.let { geo.add("".plus(it)) }
     val properties = Properties()
         .addAttribute("Customer_Id",
             SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)

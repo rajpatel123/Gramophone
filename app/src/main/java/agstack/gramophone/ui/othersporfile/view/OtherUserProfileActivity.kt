@@ -211,7 +211,7 @@ class OtherUserProfileActivity :
 
     private fun sendOtherUserProfileViewMoEngageEvent() {
         val properties = Properties()
-            .addAttribute("Profile ID", otherProfileViewModel.id)
+            .addAttribute("Profile ID", otherProfileViewModel.uuid)
             .addAttribute("Source screen", otherProfileViewModel.redirectionSource)
             .addAttribute("App Version", BuildConfig.VERSION_NAME)
             .addAttribute("SDK Version", Build.VERSION.SDK_INT)
@@ -221,7 +221,7 @@ class OtherUserProfileActivity :
 
     override fun sendBlockUserMoEngageEvent() {
         val properties = Properties()
-            .addAttribute("Profile ID", otherProfileViewModel.id)
+            .addAttribute("Profile ID", otherProfileViewModel.uuid)
             .addAttribute("App Version", BuildConfig.VERSION_NAME)
             .addAttribute("SDK Version", Build.VERSION.SDK_INT)
             .setNonInteractive()
@@ -230,7 +230,7 @@ class OtherUserProfileActivity :
 
     override fun sendEditFollowStatusMoEngageEvent() {
         val properties = Properties()
-            .addAttribute("Profile ID", otherProfileViewModel.id)
+            .addAttribute("Profile ID", otherProfileViewModel.uuid)
             .addAttribute("Source screen", otherProfileViewModel.redirectionSource)
             .addAttribute("App Version", BuildConfig.VERSION_NAME)
             .addAttribute("SDK Version", Build.VERSION.SDK_INT)

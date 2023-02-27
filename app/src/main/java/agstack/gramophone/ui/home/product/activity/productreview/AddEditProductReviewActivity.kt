@@ -78,6 +78,8 @@ class AddEditProductReviewActivity :
         val properties = Properties()
         properties.addAttribute("Product_Id", addEditProductReviewViewModel.productId)
             .addAttribute("Product_Base_Name", addEditProductReviewViewModel.productBaseName.get())
+            .addAttribute("Rating", addEditProductReviewViewModel.productRating.get())
+            .addAttribute("Review_Text_Submitted", addEditProductReviewViewModel.customerReviewText.get())
             .addAttribute("App Version", BuildConfig.VERSION_NAME)
             .addAttribute("SDK Version", Build.VERSION.SDK_INT)
             .setNonInteractive()

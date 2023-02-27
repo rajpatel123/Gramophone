@@ -18,14 +18,14 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "agstack.gramophone"
         minSdk 21
-        targetSdk 31
-        versionCode 195
-        versionName "4.1.42"
+        targetSdk 33
+        versionCode 198
+        versionName "4.1.45"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

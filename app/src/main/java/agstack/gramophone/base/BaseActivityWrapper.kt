@@ -32,7 +32,6 @@ import java.util.*
 abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : BaseViewModel<N>> :
     AppCompatActivity(), BaseNavigator {
 
-
     protected var mViewModel: V? = null
     protected lateinit var viewDataBinding: B
 
@@ -60,6 +59,8 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
             null,
             false
         )
+
+
         this.mViewModel = getViewModel()
         viewDataBinding.setVariable(getBindingVariable(), mViewModel)
         setContentView(viewDataBinding.root)
@@ -178,15 +179,15 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     }
 
     override fun getMessage(stringResourceId: Int): String {
-        return getString(stringResourceId)
+        return ""+getString(stringResourceId)
     }
 
     override fun showToast(stringResourceId: Int) {
-        Toast.makeText(this, getString(stringResourceId), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, ""+getString(stringResourceId), Toast.LENGTH_LONG).show()
     }
 
     override fun showToast(message: String?) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, ""+message, Toast.LENGTH_LONG).show()
     }
 
     override fun onError(message: String?) {

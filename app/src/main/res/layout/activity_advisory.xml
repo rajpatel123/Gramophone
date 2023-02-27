@@ -13,7 +13,7 @@
             type="agstack.gramophone.ui.home.subcategory.SubCategoryViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -111,8 +111,11 @@
         </RelativeLayout>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/contentLayouts"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/myToolbar"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -556,7 +559,13 @@
 
         </androidx.core.widget.NestedScrollView>
 
-    </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:elevation="@dimen/_2sdp" />
+    </RelativeLayout>
 
 
 </layout>

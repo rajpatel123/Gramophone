@@ -89,7 +89,7 @@ class MarketFragmentViewModel
                         cartList,
                         farmResponse,
                         articlesData,
-                        weatherResponse)) {
+                        weatherResponse, getNavigator()?.getActivityContext())) {
                         getNavigator()?.launchCommunityFragment()
                     }
                 }

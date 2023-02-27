@@ -137,7 +137,10 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     }
 
     override fun getLanguage(): String {
+        if (activity!=null)
         return LocaleManagerClass.getLangCodeFromPreferences(activity)
+        else
+            return "hi"
     }
 
     override fun getMessage(stringResourceId: Int): String {
@@ -149,6 +152,7 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     }
 
     override fun showToast(message: String?) {
+        if (activity!=null)
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }
 
@@ -185,8 +189,8 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
         TODO("Not yet implemented")
     }*/
 
-    override fun getGeoCoder(): Geocoder {
-        return Geocoder(activity, Locale.getDefault())
+    override fun getGeoCoder(): Geocoder? {
+        return activity?.let { Geocoder(it, Locale.getDefault()) }
     }
 
     override fun checkPermission(permission: String): Boolean {

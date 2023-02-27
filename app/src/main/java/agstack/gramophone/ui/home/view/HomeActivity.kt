@@ -11,7 +11,6 @@ import agstack.gramophone.ui.home.view.fragments.community.CommunityFragment
 import agstack.gramophone.ui.home.view.fragments.gramophone.MyGramophoneFragment
 import agstack.gramophone.ui.home.view.fragments.market.MarketFragment
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
-import agstack.gramophone.ui.home.view.fragments.trading.TradeFragment
 import agstack.gramophone.ui.home.view.model.FCMRegistrationModel
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
 import agstack.gramophone.ui.language.view.LanguageActivity
@@ -194,11 +193,13 @@ class HomeActivity :
                         .show(marketFragment).commit()
                     activeFragment = marketFragment
                     viewDataBinding.llCreateAPost.visibility = GONE
+                    viewDataBinding.llCallPost.visibility = VISIBLE
 
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_community -> {
                     viewDataBinding.llCreateAPost.visibility = VISIBLE
+                    viewDataBinding.llCallPost.visibility = GONE
                     viewDataBinding.toolbar.myToolbar.title =
                         "  " + resources.getString(R.string.community)
                     updateMenuItemVisibility(showHomeItems = false, showCommunityItems = true)
@@ -228,6 +229,7 @@ class HomeActivity :
                         .show(profileFragment).commit()
                     activeFragment = profileFragment
                     viewDataBinding.llCreateAPost.visibility = GONE
+                    viewDataBinding.llCallPost.visibility = GONE
 
                     val properties = Properties()
                     properties.addAttribute(

@@ -55,7 +55,7 @@ interface SubCategoryNavigator : BaseNavigator {
 
     fun reload()
 
-    fun setAdvisoryActivity(activityListAdapter: ActivityListAdapter, function: (GpApiResponseData) -> Unit,infoClicked: (GpApiResponseData) -> Unit)
+    fun setAdvisoryActivity(activityListAdapter: ActivityListAdapter, function: (GpApiResponseData) -> Unit,infoClicked: (GpApiResponseData) -> Unit, position: (Int) -> Unit)
 
     fun updateActivitiesList(it: GpApiResponseData)
 
@@ -69,6 +69,8 @@ interface SubCategoryNavigator : BaseNavigator {
                        onProductDetailClick: ((productId: Int) -> Unit),)
 
     fun updateCartCount(cartCount: Int)
+
+    fun scrollToActivity(i: Int)
 
 
 }

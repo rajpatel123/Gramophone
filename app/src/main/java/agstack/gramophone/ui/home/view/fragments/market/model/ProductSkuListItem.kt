@@ -25,5 +25,8 @@ data class ProductSkuListItem(
 	@field:SerializedName("selected")
 	var selected: Boolean? = false,
 	@field:SerializedName("product_app_name")
-	var product_app_name: String?=null
+	var product_app_name: String?=null,
+
+	@field:SerializedName("product_images")
+	val productImages: List<String?>? = null,
 ) : Parcelable

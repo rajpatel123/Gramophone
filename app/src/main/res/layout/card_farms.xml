@@ -214,7 +214,7 @@
                            android:layout_height="wrap_content"
                            android:drawablePadding="@dimen/_8sdp"
                            android:fontFamily="@font/manrope_medium"
-                           android:text='अपने खेतों को देखें'
+                           android:text="@string/view_farms"
                            android:textColor="@color/oldmrpcolor"
                            android:textSize="@dimen/_12ssp" />
 

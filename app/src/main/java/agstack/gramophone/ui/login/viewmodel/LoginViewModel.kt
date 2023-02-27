@@ -268,8 +268,7 @@ class LoginViewModel @Inject constructor(
         mAlertDialog?.dismiss()
     }
 
-    fun setReferralCodeFromQR(resultData: IntentResult) {
-        referralCodeValue=resultData.contents
+    fun setReferralCodeFromQR(referralCodeValue: String) {
         isReferralCodeApplied.set(true)
         referralCode.set(
             getNavigator()?.getMessage(R.string.referral_code) +referralCodeValue + getNavigator()?.getMessage(

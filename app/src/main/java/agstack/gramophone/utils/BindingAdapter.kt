@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -46,7 +47,7 @@ class BindingAdapter {
         @BindingAdapter("priceWithSymbol")
         @JvmStatic
         fun priceWithSymbol(view: TextView, price: String?) {
-            if (price != null)
+            if (price != null && !TextUtils.isEmpty(price))
                 view.setText("\u20B9" + price) else
                 view.visibility = View.GONE
 

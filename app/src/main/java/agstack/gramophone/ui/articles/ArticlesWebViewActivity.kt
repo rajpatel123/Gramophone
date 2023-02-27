@@ -23,7 +23,6 @@ import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.*
 import agstack.gramophone.utils.IntentKeys.WebContentUrlKey
-import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
@@ -56,6 +55,9 @@ class ArticlesWebViewActivity :
         super.onCreate(savedInstanceState)
         setupUi()
         subCategoryViewModel.getBundleData()
+    }
+
+    override fun scrollToActivity(i: Int) {
     }
 
     private fun setupUi() {
@@ -212,7 +214,9 @@ class ArticlesWebViewActivity :
     override fun setAdvisoryActivity(
         activityListAdapter: ActivityListAdapter,
         function: (GpApiResponseData) -> Unit,
-        infoClicked: (GpApiResponseData) -> Unit
+        infoClicked: (GpApiResponseData) -> Unit,
+        position: (Int) -> Unit
+
     ) {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
 

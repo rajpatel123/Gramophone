@@ -93,6 +93,10 @@ class SubCategoryActivity :
         updateCartCount(SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!)
     }
 
+
+    override fun scrollToActivity(i: Int) {
+    }
+
     override fun updateCartCount(cartCount: Int) {
         try {
             if (cartCount > 0) {
@@ -216,7 +220,7 @@ class SubCategoryActivity :
     override fun setViewPagerAdapter(bannerList: List<Banner>?) {
         if (bannerList.isNotNullOrEmpty()) {
             viewDataBinding.rlBanner.visibility = View.VISIBLE
-            val adapter = ViewPagerAdapter(bannerList!!)
+            val adapter = ViewPagerAdapter(bannerList!!, this)
             viewDataBinding.viewPager.adapter = adapter
             if (bannerList.size > 1) {
                 viewDataBinding.dotsIndicator.attachTo(viewDataBinding.viewPager)
@@ -326,7 +330,9 @@ class SubCategoryActivity :
     override fun setAdvisoryActivity(
         activityListAdapter: ActivityListAdapter,
         function: (GpApiResponseData) -> Unit,
-        infoClicked: (GpApiResponseData) -> Unit
+        infoClicked: (GpApiResponseData) -> Unit,
+        position: (Int) -> Unit
+
     ) {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
 

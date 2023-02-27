@@ -162,17 +162,22 @@ class ProductDetailsViewModel @Inject constructor(
                         val productResponseData = productData.get()
                         estimatedDelivery.set(productData.get()?.shippingDetails?.estimatedDelivery?.trim())
                         getNavigator()?.setToolbarTitle(productResponseData?.productBaseName!!)
-                        getNavigator()?.initializeYoutube(productData.get()?.youtubeVideoId)
+                        try{
+                            getNavigator()?.initializeYoutube(productData.get()?.youtubeVideoId)
+                        }catch (ex: Exception){
+
+                        }
                         isHeartSelected.set(productResponseData?.isUserFavourite!!)
                         productResponseData.productImages?.let {
                             getNavigator()?.setProductImagesViewPagerAdapter(
                                 ProductImagesAdapter(
                                     getNavigator()?.getFragmentManagerPager()!!,
-                                    productResponseData.productImages
+                                    productResponseData.productSkuList!![0]!!.productImages
                                 )
                             )
                         }
 
+                        //                                    productResponseData.productSkuList[0].productImages
                         productResponseData.productDetails?.let {
                             //product Details could be null
 
@@ -234,6 +239,13 @@ class ProductDetailsViewModel @Inject constructor(
                                     getNavigator()?.getMessage(
                                         R.string.add_to_cart
                                     )!!
+                                )
+
+                                getNavigator()?.setProductImagesViewPagerAdapter(
+                                    ProductImagesAdapter(
+                                        getNavigator()?.getFragmentManagerPager()!!,
+                                        it.productImages
+                                    )
                                 )
                                 checkIfSelectedSKUPresentInCart_UpdateQty(selectedSkuListItem)
                                 productDetailstoBeFetched.product_id =

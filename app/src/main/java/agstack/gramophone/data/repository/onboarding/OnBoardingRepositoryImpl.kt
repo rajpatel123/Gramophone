@@ -42,6 +42,8 @@ import agstack.gramophone.ui.notification.model.NotificationRequestModel
 import agstack.gramophone.ui.notification.model.NotificationresponseModel
 import agstack.gramophone.ui.notification.model.cropdetails.CropDetailsResponse
 import agstack.gramophone.ui.notification.model.cropproblem.CropProblemResponse
+import agstack.gramophone.ui.notification.model.shopbycat.ShopByCatResponseModel
+import agstack.gramophone.ui.notification.model.shopbystore.ShopByStoreResponseModel
 import agstack.gramophone.ui.profile.model.LogoutResponseModel
 import agstack.gramophone.ui.profile.model.ProfileResponse
 import agstack.gramophone.ui.profile.model.ValidateOtpMobileRequestModel
@@ -304,6 +306,18 @@ class OnBoardingRepositoryImpl @Inject constructor(
     override suspend fun getCropProblemDetails(problemId: String): Response<CropProblemResponse>  = withContext(
         Dispatchers.IO) {
         val blockedUsers = gramAppService.getCropProblemDetails(problemId)
+        blockedUsers
+    }
+
+    override suspend fun getSubCatDetails(subcatId: String): Response<ShopByCatResponseModel> = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = gramAppService.getSubCatDetails(subcatId)
+        blockedUsers
+    }
+
+    override suspend fun getStoreDetails(storeId: String): Response<ShopByStoreResponseModel> = withContext(
+        Dispatchers.IO) {
+        val blockedUsers = gramAppService.getStoreDetails(storeId)
         blockedUsers
     }
 }

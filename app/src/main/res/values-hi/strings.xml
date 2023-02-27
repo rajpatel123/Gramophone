@@ -681,5 +681,6 @@
     <string name="sure_to_delete">Are you sure want to delete?</string>
     <string name="minmum">Min</string>
     <string name="maximum">Max</string>
-
+    <string name="scan_qr">QR कोड स्कैन करें</string>
+    <string name="invalid_qr">कृपया मान्य QR स्कैन करें</string>
 </resources>

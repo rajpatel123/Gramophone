@@ -6,13 +6,16 @@ import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.advisory.AdvisoryActivity
 import agstack.gramophone.ui.advisory.view.CropProblemDetailActivity
+import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.notification.NotificationNavigator
 import agstack.gramophone.ui.notification.NotificationsAdapter
 import agstack.gramophone.ui.notification.model.NotificationRequestModel
+import agstack.gramophone.ui.notification.view.URLHandlerActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Utility
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
@@ -198,6 +201,82 @@ class NotificationViewModel @Inject constructor(
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
                     else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+                getNavigator()?.finishActivity()
+
+            }
+        }
+    }
+
+
+    fun getSubCatDetails(subcatId: String){
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.set(true)
+                    val catResponse = onBoardingRepository.getSubCatDetails(subcatId)
+                    if (catResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+
+                        val data = catResponse?.body()?.gp_api_response_data
+                        getNavigator()?. openAndFinishActivity(
+                            SubCategoryActivity::class.java,
+                            Bundle().apply {
+                                putString(Constants.CATEGORY_ID, "".plus(data?.category_id))
+                                putString(Constants.CATEGORY_NAME, data?.category_name)
+                                putString(Constants.CATEGORY_IMAGE, data?.category_image)
+                            })
+
+                    } else {
+                        getNavigator()?.showToast(Utility.getErrorMessage(catResponse.errorBody()))
+                        getNavigator()?.finishActivity()
+                    }
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                    getNavigator()?.finishActivity()
+                }
+            } catch (ex: Exception) {
+                progress.set(false)
+                when (ex) {
+//                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+//                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+                getNavigator()?.finishActivity()
+
+            }
+        }
+    }
+
+
+    fun getStoreDetails(storeId: String ){
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.set(true)
+                    val catResponse = onBoardingRepository.getStoreDetails(storeId)
+                    progress.set(false)
+                    if (catResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+
+                        val data = catResponse?.body()?.gp_api_response_data
+                        getNavigator()?.openAndFinishActivity(FeaturedProductActivity::class.java,
+                            Bundle().apply {
+                                putString(Constants.STORE_ID, "".plus(data?.id))
+                                putString(Constants.STORE_NAME, data?.store_name)
+                                putString(Constants.STORE_IMAGE, data?.store_image)
+                            })
+
+                    } else {
+                        getNavigator()?.showToast(Utility.getErrorMessage(catResponse.errorBody()))
+                        getNavigator()?.finishActivity()
+                    }
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                    getNavigator()?.finishActivity()
+                }
+            } catch (ex: Exception) {
+                progress.set(false)
+                when (ex) {
+//                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+//                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
                 getNavigator()?.finishActivity()
 

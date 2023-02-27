@@ -166,7 +166,9 @@ class CropProblemDetailActivity :
     override fun setAdvisoryActivity(
         activityListAdapter: ActivityListAdapter,
         function: (agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData) -> Unit,
-        infoClicked: (agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData) -> Unit
+        infoClicked: (agstack.gramophone.ui.advisory.models.advisory.GpApiResponseData) -> Unit,
+        position: (Int) -> Unit
+
     ) {
         // Don't write anything here. This method is only used in ArticleWebViewActivity
     }
@@ -208,6 +210,9 @@ class CropProblemDetailActivity :
         } catch (ex: Exception) {
             ex.printStackTrace()
         }
+    }
+
+    override fun scrollToActivity(i: Int) {
     }
 
     override fun setProductList(

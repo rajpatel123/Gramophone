@@ -608,6 +608,8 @@ class ProductDetailsActivity :
             .addAttribute("SDK Version", Build.VERSION.SDK_INT)
             .setNonInteractive()
         MoEAnalyticsHelper.trackEvent(this, "KA_View_Product", properties)
+
+        sendViewAllReviewMoEngageEvent()
     }
 
     override fun sendFavouriteMoEngageEvent(

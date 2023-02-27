@@ -13,12 +13,15 @@ import agstack.gramophone.ui.login.viewmodel.LoginViewModel
 import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.ui.webview.view.WebViewActivity
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.ImagePicker
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -31,15 +34,20 @@ import androidx.activity.viewModels
 import com.amnix.xtension.extensions.isNotNull
 import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
 import com.google.android.gms.auth.api.identity.Identity
+import com.google.zxing.*
+import com.google.zxing.common.HybridBinarizer
 import com.google.zxing.integration.android.IntentIntegrator
+import com.google.zxing.qrcode.QRCodeReader
 import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 
+
 @AndroidEntryPoint
 class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, LoginViewModel>(),
-    LoginNavigator, LanguageBottomSheetFragment.LanguageUpdateListener {
+    LoginNavigator, LanguageBottomSheetFragment.LanguageUpdateListener,
+    BottomSheetDialogScanQR.OnClickEvents {
     val REQUEST_CODE = 0x0000c0de
     var qrLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -47,7 +55,7 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
                 val data: Intent? = result.data
                 val resultData =
                     IntentIntegrator.parseActivityResult(REQUEST_CODE, result.resultCode, data)
-                loginViewModel.setReferralCodeFromQR(resultData)
+                loginViewModel.setReferralCodeFromQR(referralCodeValue = resultData.contents)
 
 
             }
@@ -183,9 +191,14 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
     }
 
     override fun scanQR() {
-        qrScan = IntentIntegrator(this@LoginActivity)
-        qrScan?.setOrientationLocked(false)
-        qrLauncher.launch(qrScan?.createScanIntent())
+        val bottomSheet = BottomSheetDialogScanQR()
+        bottomSheet.setOnClickEventsListener(this)
+        bottomSheet.show(
+            supportFragmentManager,
+            Constants.BOTTOM_SHEET
+        )
+
+
     }
 
     override fun sendLanguageUpdateMoEngageEvent() {
@@ -219,14 +232,83 @@ class LoginActivity : BaseActivityWrapper<ActivityLoginBinding, LoginNavigator, 
     override fun sendOtpSentMoEngageEvent(mobileNo: String) {
         val properties = Properties()
         properties.addAttribute("Customer_Mobile_Number", mobileNo)
-            .addAttribute("Referral_Code", if (loginViewModel.referralCodeValue.isNotNull()) {
-                loginViewModel.referralCodeValue
-            } else {
-                ""
-            })
+            .addAttribute(
+                "Referral_Code", if (loginViewModel.referralCodeValue.isNotNull()) {
+                    loginViewModel.referralCodeValue
+                } else {
+                    ""
+                }
+            )
             .addAttribute("App Version", BuildConfig.VERSION_NAME)
             .addAttribute("SDK Version", Build.VERSION.SDK_INT)
             .setNonInteractive()
         MoEAnalyticsHelper.trackEvent(this, "KA_Login_OTP_Sent", properties)
     }
+
+
+    fun decodeQRImage(bMap: Bitmap): String? {
+        var decoded: String? = null
+        val intArray = IntArray(bMap.getWidth() * bMap.getHeight())
+        bMap.getPixels(
+            intArray, 0, bMap.getWidth(), 0, 0, bMap.getWidth(),
+            bMap.getHeight()
+        )
+        val source: LuminanceSource = RGBLuminanceSource(
+            bMap.getWidth(),
+            bMap.getHeight(), intArray
+        )
+        val bitmap = BinaryBitmap(HybridBinarizer(source))
+        val reader: Reader = QRCodeReader()
+        try {
+            val result = reader.decode(bitmap)
+            decoded = result.getText()
+        } catch (e: NotFoundException) {
+            e.printStackTrace()
+        } catch (e: ChecksumException) {
+            e.printStackTrace()
+        } catch (e: FormatException) {
+            e.printStackTrace()
+        }
+        if (!TextUtils.isEmpty(decoded)) {
+            loginViewModel.setReferralCodeFromQR(decoded!!)
+        } else {
+            Toast.makeText(this@LoginActivity, getString(R.string.invalid_qr), Toast.LENGTH_LONG)
+                .show()
+        }
+
+        return decoded
+    }
+
+    override fun onCameraCLick() {
+        qrScan = IntentIntegrator(this@LoginActivity)
+        qrScan?.setOrientationLocked(false)
+//        qrScan?.setBarcodeImageEnabled(true)
+        qrScan?.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES)
+        qrScan?.setBeepEnabled(true)
+        qrLauncher.launch(qrScan?.createScanIntent())
+    }
+
+    override fun onGallaryClick() {
+        val cameraIntent = ImagePicker.getGallaryIntent(this)
+        gallaryIntentLauncher.launch(cameraIntent)
+    }
+
+
+    var gallaryIntentLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+
+                val imageUri = ImagePicker.getImageFromResult(this, result.resultCode, data)
+                if (imageUri != null) {
+                    val bitmap = ImagePicker.getImageResized(this, imageUri!!)
+                    bitmap?.let { decodeQRImage(bitmap) }
+                }else{
+                    showToast(getMessage(R.string.invalid_qr))
+                }
+
+
+            }
+        }
+
 }

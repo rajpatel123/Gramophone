@@ -167,10 +167,12 @@ abstract class BaseDialogFragment<B : ViewDataBinding, N : BaseNavigator, V : Ba
     }
 
     override fun showToast(stringResourceId: Int) {
+        if (mContext!=null)
         Toast.makeText(mContext, stringResourceId, Toast.LENGTH_LONG).show()
     }
 
     override fun showToast(message: String?) {
+        if (mContext!=null)
         Toast.makeText(mContext, message, Toast.LENGTH_LONG).show()
 
 
@@ -205,8 +207,8 @@ abstract class BaseDialogFragment<B : ViewDataBinding, N : BaseNavigator, V : Ba
     }
 
 
-    override fun getGeoCoder(): Geocoder {
-        return Geocoder(activity, Locale.getDefault())
+    override fun getGeoCoder(): Geocoder? {
+        return activity?.let { Geocoder(it, Locale.getDefault()) }
     }
 
 
