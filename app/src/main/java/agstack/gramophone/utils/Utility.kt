@@ -177,19 +177,19 @@ object Utility {
         val bytes = ByteArrayOutputStream()
         bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
 
-   val path: String = MediaStore.Images.Media.insertImage(
-            inContext.getContentResolver(),
-            bitmap,
-            "Title",
-            null
-        )
-        return Uri.parse(path)
+//   val path: String = MediaStore.Images.Media.insertImage(
+//            inContext.getContentResolver(),
+//            bitmap,
+//            "Title",
+//            null
+//        )
+//        return Uri.parse(path)
 
 
 
-//          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-//            return saveImageInQ(inContext,bitmap)
-//        else return saveImageInLegacy(inContext,bitmap)
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+            return saveImageInQ(inContext,bitmap)
+        else return saveImageInLegacy(inContext,bitmap)
 
 
     }

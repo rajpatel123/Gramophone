@@ -683,4 +683,12 @@
     <string name="maximum">Max</string>
     <string name="scan_qr">QR कोड स्कैन करें</string>
     <string name="invalid_qr">कृपया मान्य QR स्कैन करें</string>
+    <string name="get_farm_help_title">अपने खेत की जरुरत के अनुसार एक्सपर्ट सलाह प्राप्त करें</string>
+
+    <string name="about_nutrition">खेत जोड़ें और फसल के हर स्टेज पर पाएं कृषि सलाहों के अलर्ट</string>
+    <string name="suggested"><![CDATA[संभावित कीट रोग प्रकोप व पोषण संबंधी जरूरतों की जानकारी]]></string>
+    <string name="suggested__why_info_crop_problem"><![CDATA[फसल समस्याओं के इलाज हेतु जरूरी प्रोडक्ट्स की जानकारी]]></string>
+    <string name="suggested_by_crop_name"><![CDATA[मिलेंगे फसल की जरूरत अनुसार हर जरूरी सुझाव]]></string>
+    <string name="suggested_40">इन सुझावों पर खेती कर लागत होगी कम और 40% तक बढ़ सकती है उपज</string>
+
 </resources>

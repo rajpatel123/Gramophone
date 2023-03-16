@@ -50,6 +50,20 @@ class ProductSKUAdapter(
             selectedSKUProduct?.invoke(model)
         }
 
+        mBinding.radioBtn.setOnClickListener {
+            if (lastSelectPosition == 0) {
+                for (item in mSKUList) {
+                    item?.selected = false
+                }
+            }
+            mSKUList[lastSelectPosition]?.selected = false
+            lastSelectPosition = position
+            model.selected = true
+            notifyDataSetChanged()
+            selectedProduct?.invoke(model)
+            selectedSKUProduct?.invoke(model)
+        }
+
 
     }
 

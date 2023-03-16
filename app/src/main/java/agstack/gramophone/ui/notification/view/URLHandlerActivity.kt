@@ -40,7 +40,9 @@ import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.moengage.core.Properties
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -57,7 +59,25 @@ class URLHandlerActivity :
         val uri = Uri.parse(intent?.getStringExtra(Constants.URI))
 //        val uri =
 //            Uri.parse("https://www.gramophone.in/app?category=cropProblem&problemId=338001&cropId=100029")
-        openDeepLinkForIntent(uri)
+        if (intent?.getStringExtra(Constants.URI)?.contains("category") == true){
+            openDeepLinkForIntent(uri)
+        }else{
+            intent.data = Uri.parse(intent?.getStringExtra(Constants.URI))
+
+            FirebaseDynamicLinks.getInstance()
+                .getDynamicLink(intent)
+                .addOnSuccessListener(this) { pendingDynamicLinkData ->
+                    // Get deep link from result (may be null if no link is found)
+                    var deepLink: Uri? = null
+                    if (pendingDynamicLinkData != null) {
+                        deepLink = pendingDynamicLinkData.link
+                      Log.d("LinkRaj", ""+deepLink)
+                    }
+                }
+                .addOnFailureListener(this) { e ->
+
+                }
+        }
 
     }
 
@@ -189,18 +209,30 @@ class URLHandlerActivity :
                 }
                 DEEP_LINK_ARTICLE_DETAILS->{
 
-                    val url = uri.getQueryParameter("webContentUrl")
+                    if (uri.toString().contains("articlesContentUrl")){
+                        val url = uri.getQueryParameter("articlesContentUrl")
+                        openAndFinishActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
+                            putString(
+                                Constants.PAGE_URL, url
+                            )
 
+                            putString(
+                                Constants.PAGE_SOURCE, "gramo"
+                            )
+                        })
+                    }else{
+                        val url = uri.getQueryParameter("webContentUrl")
+                        openAndFinishActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
+                            putString(
+                                Constants.PAGE_URL, url
+                            )
 
-                    openAndFinishActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
-                        putString(
-                            Constants.PAGE_URL, url
-                        )
+                            putString(
+                                Constants.PAGE_SOURCE, "gramo"
+                            )
+                        })
+                    }
 
-                        putString(
-                            Constants.PAGE_SOURCE, "gramo"
-                        )
-                    })
                 }
 
                 else -> {

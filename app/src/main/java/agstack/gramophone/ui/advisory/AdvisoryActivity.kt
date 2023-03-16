@@ -282,6 +282,9 @@ class AdvisoryActivity :
 
     }
 
+    override fun updateAddToCartButtonText(message: String) {
+    }
+
     override fun showInfoBottomSheet() {
         val bottomSheet = CropIssueBottomSheetDialog()
         bottomSheet.bundle = intent.extras

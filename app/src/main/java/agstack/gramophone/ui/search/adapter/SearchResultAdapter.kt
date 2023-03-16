@@ -352,6 +352,8 @@ class SearchResultAdapter(val viewModel : GlobalSearchViewModel,
         Intent(context, cls).apply {
             if (extras != null)
                 putExtras(extras)
+
+            if (context!=null)
             context.startActivity(this)
         }
     }

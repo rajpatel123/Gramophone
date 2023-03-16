@@ -875,8 +875,8 @@ private fun sendFarmDetailMoEngageEvents(
 ) {
 
     val geo = ArrayList<String>()
-    SharedPreferencesHelper.instance?.getString(Constants.LATITUDE)?.let { geo.add("".plus(it)) }
-    SharedPreferencesHelper.instance?.getString(Constants.LONGITUDE)?.let { geo.add("".plus(it)) }
+    SharedPreferencesHelper.instance?.getString(Constants.LATITUDE)?.let { geo.add(""+it) }
+    SharedPreferencesHelper.instance?.getString(Constants.LONGITUDE)?.let { geo.add(""+it) }
     val properties = Properties()
         .addAttribute("Customer_Id",
             SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)

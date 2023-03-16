@@ -118,22 +118,22 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
             communityPostAdapter.onFollowClicked=onFollowClicked
             communityPostAdapter.onProfileImageClicked=onProfileImageClicked
             communityPostAdapter.setImage = this
-            rvPost.layoutManager = LinearLayoutManager(GramAppApplication.getAppContext(), LinearLayoutManager.VERTICAL, false)
-            rvPost.setHasFixedSize(false)
-            rvPost.adapter = communityPostAdapter
+            binding?.rvPost?.layoutManager = LinearLayoutManager(GramAppApplication.getAppContext(), LinearLayoutManager.VERTICAL, false)
+            binding?.rvPost?.setHasFixedSize(false)
+            binding?.rvPost?.adapter = communityPostAdapter
             if (communityPostAdapter.dataList?.size!! >0){
-                tvNoPost.visibility=GONE
-                rvPost.visibility= VISIBLE
+                binding?.tvNoPost?.visibility=GONE
+                binding?.rvPost?.visibility= VISIBLE
             }else{
-                tvNoPost.visibility= VISIBLE
-                rvPost.visibility= GONE
+                binding?.tvNoPost?.visibility= VISIBLE
+                binding?.rvPost?.visibility= GONE
             }
-            progress.visibility= GONE
+            binding?.progress?.visibility= GONE
 
 
 
-            swipeRefresh.setOnRefreshListener {
-                swipeRefresh.isRefreshing=true
+            binding?.swipeRefresh?.setOnRefreshListener {
+                binding?.swipeRefresh?.isRefreshing=true
                 communityViewModel.loadData(communityViewModel.sorting.get().toString())
             }
         }
@@ -241,12 +241,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     }
 
     override fun stopRefresh() {
-        swipeRefresh.isRefreshing = false
+        binding?.swipeRefresh?.isRefreshing = false
     }
 
     override fun hideViews() {
-        tvNoPost.visibility = GONE
-        rvPost.visibility = GONE
+        binding?.tvNoPost?.visibility = GONE
+        binding?.rvPost?.visibility = GONE
     }
 
     override fun selecttab(tabIndex: Int) {

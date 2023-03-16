@@ -35,7 +35,7 @@ data class Meta(
 @Parcelize
 data class AfterKey(
     @field:SerializedName("product_base_name.keyword")
-    var product_base_name: String?
+    var product_base_name: String?=""
 ) : Parcelable
 
 @Parcelize

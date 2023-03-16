@@ -18,6 +18,7 @@ import agstack.gramophone.ui.notification.view.NotificationActivity
 import agstack.gramophone.ui.notification.view.URLHandlerActivity
 import agstack.gramophone.ui.search.view.GlobalSearchActivity
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.GramAppApplication
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
@@ -148,6 +149,8 @@ class HomeActivity :
             getString(R.string.dialing_code).plus(mobile)
         viewDataBinding.navigationlayout.tvGc.text = gramCash
         profileFragment.refreshProfile()
+
+        GramAppApplication.userInfoMoEngage(this)
         if (profileImage.isNotNullOrEmpty())
             Glide.with(this)
                 .load(profileImage)

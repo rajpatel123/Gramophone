@@ -124,7 +124,7 @@ class AddOrUpdateAddressActivity :
                 villageNameSpinner.setAdapter(null)
                 pincodeSpinner.setAdapter(null)
 
-                if (TextUtils.isEmpty(s)) {
+                if (TextUtils.isEmpty(s) && !TextUtils.isEmpty(addOrUpdateAddressViewModel.stateNameStr.get())) {
                     addOrUpdateAddressViewModel.getDistrict(
                         "district",
                         addOrUpdateAddressViewModel.stateNameStr.get()!!,
@@ -154,7 +154,11 @@ class AddOrUpdateAddressActivity :
                 villageNameSpinner.setAdapter(null)
                 pincodeSpinner.setAdapter(null)
 
-                if (TextUtils.isEmpty(s)) {
+                if (TextUtils.isEmpty(s)
+                    && !TextUtils.isEmpty(addOrUpdateAddressViewModel.stateNameStr.get())
+                    && !TextUtils.isEmpty(addOrUpdateAddressViewModel.districtName.get())
+
+                ) {
                     addOrUpdateAddressViewModel.getTehsil(
                         "tehsil",
                         addOrUpdateAddressViewModel.stateNameStr.get()!!,

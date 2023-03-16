@@ -308,7 +308,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.tv.GramophoneTVActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".ui.search.view.ViewAllProductsActivity"
             android:screenOrientation="portrait" />

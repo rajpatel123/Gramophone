@@ -31,9 +31,12 @@ class ReferralPointsViewModel @Inject constructor(
 
     fun knowMoreReferralPointBalanceClick() {
         getNavigator()?.sendMoEngageEvents("KA_Click_KnowMore")
-        getNavigator()?.openActivity(AboutReferralPointsBalanceActivity::class.java, Bundle().apply {
-            putParcelableArrayList(Constants.ReferralPointBalanceData,gramCashResponseDataFromBundle.get()?.referralPoints as ArrayList<ReferralPointsItem>)
-        })
+        if (gramCashResponseDataFromBundle.get()?.referralPoints!=null){
+            getNavigator()?.openActivity(AboutReferralPointsBalanceActivity::class.java, Bundle().apply {
+                putParcelableArrayList(Constants.ReferralPointBalanceData,gramCashResponseDataFromBundle.get()?.referralPoints as ArrayList<ReferralPointsItem>)
+            })
+        }
+
 
     }
 

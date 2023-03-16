@@ -68,7 +68,7 @@
                    android:lineSpacingExtra="-1sp"
                    android:elevation="@dimen/_2sdp"
                    android:text="@string/get_help_call"
-                   android:textColor="@color/white"
+                   android:textColor="@color/brand_color"
                    android:textSize="@dimen/_14ssp" />
            </FrameLayout>
 

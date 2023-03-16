@@ -65,7 +65,6 @@ class ProductDetailsActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initProductDetailView()
     }
 
     override fun setRatingBarChangeListener() {
@@ -309,6 +308,7 @@ class ProductDetailsActivity :
                 e.printStackTrace()
                 viewDataBinding.rlHowToUse.visibility = View.GONE
                 viewDataBinding.v4Separator.visibility = View.GONE
+                initYoutubePlayer()
             }
         }
 
@@ -547,12 +547,28 @@ class ProductDetailsActivity :
 
     override fun onPause() {
         super.onPause()
-        youTubePlayer?.pause()
+
+        try {
+            if (youTubePlayer != null)
+                youTubePlayer?.pause()
+        }catch (ex:Exception){
+            initYoutubePlayer()
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        youTubePlayer?.play()
+        updateAddToCartButtonText(getMessage(
+            R.string.add_to_cart)!!)
+        initProductDetailView()
+
+        try {
+            if (youTubePlayer != null)
+                youTubePlayer?.play()
+        }catch (ex:Exception){
+            initYoutubePlayer()
+        }
+
         if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.IS_GENUENE) == true) {
             productDetailsViewModel.notAGenuineBuyer()
             SharedPreferencesHelper.instance?.putBoolean(SharedPreferencesKeys.IS_GENUENE, false)
@@ -707,15 +723,15 @@ class ProductDetailsActivity :
             .addAttribute("Associated_Farm_Crop_Problem_Id", "")
             .addAttribute(
                 "Product_Avg_Rating",
-                productDetailsViewModel.productReviewsData.get()?.rating?.totalRating!!
+                ""+productDetailsViewModel.productReviewsData.get()?.rating?.totalRating
             )
             .addAttribute(
                 "Krishi_App_Selling_Price",
-                productDetailsViewModel.selectedSkuListItem.get()?.salesPrice
+                ""+productDetailsViewModel.selectedSkuListItem.get()?.salesPrice
             )
             .addAttribute(
                 "Product_MRP",
-                productDetailsViewModel.selectedSkuListItem.get()?.mrpPrice
+                ""+productDetailsViewModel.selectedSkuListItem.get()?.mrpPrice
             )
             .addAttribute("Selling_Price_After_Discount", salesPriceAfterDiscount)
             .addAttribute(

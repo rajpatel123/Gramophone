@@ -90,11 +90,14 @@ class SubCategoryActivity :
                 viewDataBinding.collapsingToolbar.frameToolbarImage.visibility = View.GONE
             }
         })
-        updateCartCount(SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!)
     }
 
 
     override fun scrollToActivity(i: Int) {
+    }
+
+    override fun updateAddToCartButtonText(message: String) {
+        TODO("Not yet implemented")
     }
 
     override fun updateCartCount(cartCount: Int) {
@@ -195,6 +198,8 @@ class SubCategoryActivity :
     override fun onResume() {
         super.onResume()
         viewDataBinding.appbar.addOnOffsetChangedListener(this)
+        updateCartCount(SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!)
+
     }
 
     override fun onPause() {

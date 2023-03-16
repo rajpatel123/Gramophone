@@ -71,6 +71,7 @@ interface SubCategoryNavigator : BaseNavigator {
     fun updateCartCount(cartCount: Int)
 
     fun scrollToActivity(i: Int)
+    fun updateAddToCartButtonText(message: String)
 
 
 }

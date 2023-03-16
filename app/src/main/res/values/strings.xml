@@ -693,5 +693,13 @@
     <string name="maximum">Max</string>
     <string name="scan_qr">Scan QR Code</string>
     <string name="invalid_qr">Please scan valid QR</string>
+    <string name="get_farm_help_title">Get personalised expert advice for your farm</string>
+    <string name="why_add_farm_subtitle">Add your farm to get age and stage wise guidence like -</string>
+
+    <string name="about_nutrition">Add farms and get advice on nutritional and fertilizer requirements at every stage of the crop</string>
+    <string name="suggested"><![CDATA[Suggestions for protection and prevention against pests &amp;  diseases]]></string>
+    <string name="suggested__why_info_crop_problem"><![CDATA[Information about the products needed to treat crop problems]]></string>
+    <string name="suggested_by_crop_name"><![CDATA[Get necessary updates and suggestions according to the need of your crop]]></string>
+    <string name="suggested_40">These suggestions will reduce the cost of farming and can increase the yield by up to 40%.</string>
 
 </resources>

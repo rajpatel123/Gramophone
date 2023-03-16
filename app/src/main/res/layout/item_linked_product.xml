@@ -52,9 +52,10 @@
 
                 <TextView
                     android:id="@+id/tvQuantityTitle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/rlQty"
                     android:fontFamily="@font/manrope_medium"
                     android:text="@string/required_quantity"
                     android:textColor="@color/blakish"
@@ -184,7 +185,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@drawable/rounded_corner_8_solid_white_stroke_orange"
                     android:fontFamily="@font/manrope_bold"
                     android:gravity="center_vertical"

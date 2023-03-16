@@ -684,5 +684,14 @@
 
     <string name="scan_qr">QR कोड स्कॅन करा</string>
     <string name="invalid_qr">कृपया वैध QR कोड स्कॅन करा</string>
+    <string name="get_farm_help_title">तुमच्या शेतीच्या गरजेनुसार तज्ञांचा सल्ला घ्या</string>
+
+    <string name="about_nutrition">आपले शेत जोडा आणि पीक वाढीच्या प्रत्येक टप्प्यावर कृषी सल्ला मिळवा</string>
+    <string name="suggested"><![CDATA[संभाव्य रोग- कीटकांचा प्रादुर्भाव आणि पीक पोषण बद्दल माहिती]]></string>
+    <string name="suggested__why_info_crop_problem"><![CDATA[पीक समस्यांवर नियंत्रण करण्यासाठी आवश्यक उत्पादनांची माहिती]]></string>
+    <string name="suggested_by_crop_name"><![CDATA[पिकांच्या गरजेनुसार मिळतील प्रत्येक आवश्यक सूचना]]></string>
+    <string name="suggested_40">या सल्ल्यानुसार शेती केल्यास खर्च होईल कमी आणि उत्पादनात होऊ शकते  40% पर्यंत वाढ</string>
+
+
 
 </resources>

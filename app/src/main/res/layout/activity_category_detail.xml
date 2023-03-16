@@ -73,7 +73,8 @@
                                     android:padding="@dimen/_4sdp"
                                     android:src="@mipmap/leaf_logo"
                                     app:product_image='@{viewModel.toolbarImage ?? ""}'
-                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                                    tools:ignore="ImageContrastCheck" />
 
                             </FrameLayout>
 
@@ -112,6 +113,7 @@
                                 android:padding="@dimen/_2sdp"
                                 app:product_image='@{viewModel.toolbarImage ?? ""}'
                                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                                tools:ignore="ImageContrastCheck,ImageContrastCheck,ImageContrastCheck"
                                 tools:src="@mipmap/leaf_logo" />
                         </FrameLayout>
                     </androidx.appcompat.widget.Toolbar>
@@ -196,6 +198,7 @@
                                 android:textColor="@color/white"
                                 android:textSize="13sp"
                                 android:visibility="gone"
+                                tools:ignore="TextContrastCheck"
                                 tools:text="2"
                                 tools:visibility="visible" />
 
@@ -211,7 +214,8 @@
                         <androidx.viewpager.widget.ViewPager
                             android:id="@+id/view_pager"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_height="match_parent"
+                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
                         <RelativeLayout
                             android:id="@+id/rlDotsIndicator"

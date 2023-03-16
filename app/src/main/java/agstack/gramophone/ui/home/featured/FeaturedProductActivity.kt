@@ -64,6 +64,9 @@ class FeaturedProductActivity :
     override fun scrollToActivity(i: Int) {
     }
 
+    override fun updateAddToCartButtonText(message: String) {
+    }
+
     private fun setupUi() {
         disableSortAndFilter()
         viewDataBinding.tvSortBy.setOnClickListener(this)

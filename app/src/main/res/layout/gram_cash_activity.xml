@@ -49,8 +49,8 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/ic_blue_white_gradient"
+                        android:layout_height="@dimen/_160sdp"
+                        android:background="@drawable/ic_blue_gredient"
                         android:orientation="vertical"
                         android:paddingVertical="@dimen/_14sdp">
 

@@ -5,6 +5,7 @@ import agstack.gramophone.R
 import agstack.gramophone.ui.profile.model.GpApiResponseProfileData
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.initializeInstance
 import android.app.Application
+import android.content.Context
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatDelegate
 import com.amnix.xtension.extensions.isNotNull
@@ -25,6 +26,36 @@ class GramAppApplication : Application() {
         fun getAppContext(): GramAppApplication{
             return GramAppApplication()
         }
+
+        fun userInfoMoEngage(context: Context) {
+           try {
+               if (TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.PROFILE_DATA))) {
+                   return
+               }
+               val profileData =
+                   SharedPreferencesHelper.instance?.getParcelable(
+                       SharedPreferencesKeys.PROFILE_DATA,
+                       GpApiResponseProfileData::class.java
+                   )
+               if (profileData.isNotNull()) {
+                   MoEAnalyticsHelper.setFirstName(context, profileData?.first_name!!)
+                   if (!TextUtils.isEmpty(profileData.last_name)) {
+                       MoEAnalyticsHelper.setLastName(context, profileData.last_name!!)
+                   }
+                   MoEAnalyticsHelper.setUniqueId(context, profileData.mobile_no!!)
+                   MoEAnalyticsHelper.setUserName(
+                       context,
+                       SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.USERNAME)!!
+                   )
+                   MoEAnalyticsHelper.setLocation(context, 0.0, 0.0)
+                   MoEAnalyticsHelper.setMobileNumber(context, profileData.mobile_no!!)
+               }
+           }catch (ex:Exception){
+             ex.printStackTrace()
+           }
+
+        }
+
     }
     override fun onCreate() {
         super.onCreate()
@@ -57,7 +88,7 @@ class GramAppApplication : Application() {
     private fun initializeMoEngage() {
 
         // this is the instance of the application class and "moEngageAppId" is the APP ID from the dashboard.
-        moEngageAppId = if (BuildConfig.DEBUG) {
+        moEngageAppId = if (BuildConfig.BUILD_TYPE.equals("debug")) {
             "62YMO56GSDKATEJQ1SF3B9OZ"
         } else {
             "62YMO56GSDKATEJQ1SF3B9OZ"
@@ -77,7 +108,7 @@ class GramAppApplication : Application() {
             .build()
         MoEngage.initialiseDefaultInstance(moEngage)
 
-       userInfoMoEngage()
+       //userInfoMoEngage()
 
 
 
@@ -88,26 +119,4 @@ class GramAppApplication : Application() {
         MoECoreHelper.logoutUser(this)
     }
 
-    private fun userInfoMoEngage() {
-        if (TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.PROFILE_DATA))) {
-            return
-        }
-        val profileData =
-            SharedPreferencesHelper.instance?.getParcelable(
-                SharedPreferencesKeys.PROFILE_DATA,
-                GpApiResponseProfileData::class.java
-            )
-        if (profileData.isNotNull()) {
-            MoEAnalyticsHelper.setFirstName(this, profileData?.first_name!!)
-            if (!TextUtils.isEmpty(profileData.last_name)) {
-                MoEAnalyticsHelper.setLastName(this, profileData.last_name!!)
-            }
-            MoEAnalyticsHelper.setUserName(
-                this,
-                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.USERNAME)!!
-            )
-            MoEAnalyticsHelper.setLocation(this, 0.0, 0.0)
-            MoEAnalyticsHelper.setMobileNumber(this, profileData.mobile_no!!)
-        }
-    }
 }

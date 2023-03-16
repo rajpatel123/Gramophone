@@ -215,6 +215,9 @@ class CropProblemDetailActivity :
     override fun scrollToActivity(i: Int) {
     }
 
+    override fun updateAddToCartButtonText(message: String) {
+    }
+
     override fun setProductList(
         recommendedLinkedProductsListAdapter: RecommendedLinkedProductsListAdapter,
         onAddToCartClick: (productId: Int) -> Unit,

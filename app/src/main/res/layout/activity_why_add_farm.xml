@@ -8,39 +8,27 @@
         android:background="@drawable/add_farm_gradient_drawable">
 
         <ImageView
-            android:layout_width="@dimen/_240sdp"
-            android:layout_height="@dimen/_240sdp"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_200sdp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="@dimen/_minus32sdp"
+            android:layout_marginBottom="@dimen/_minus14sdp"
             android:contentDescription="@string/image"
             app:srcCompat="@drawable/farmer_first" />
 
-        <TextView
-            android:id="@+id/txtSubHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtHeader"
-            android:layout_marginLeft="@dimen/_16sdp"
-            android:layout_marginRight="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:fontFamily="@font/manrope_bold"
-            android:text='Add your farm to get age and stage wise guidence like -'
-            android:textColor="@color/gray"
-            android:textSize="@dimen/_12ssp" />
 
         <TextView
             android:id="@+id/txtStepFirst"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtSubHeader"
+            android:layout_below="@+id/txtHeader"
             android:layout_marginLeft="@dimen/_16sdp"
             android:layout_marginRight="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_12sdp"
             android:drawableLeft="@drawable/inset_arrow_drawable"
             android:drawablePadding="@dimen/_8sdp"
             android:fontFamily="@font/manrope_bold"
-            android:text='Recommendations about nutritional requirements and fertilisers'
+            android:text="@string/about_nutrition"
             android:textColor="@color/gray"
             android:textSize="@dimen/_12ssp" />
 
@@ -56,7 +44,7 @@
             android:drawableLeft="@drawable/inset_arrow_drawable"
             android:drawablePadding="@dimen/_8sdp"
             android:fontFamily="@font/manrope_bold"
-            android:text='Suggestions for protection and prevention against pests &amp;  diseases'
+            android:text="@string/suggested"
             android:textColor="@color/gray"
             android:textSize="@dimen/_12ssp" />
 
@@ -71,7 +59,37 @@
             android:drawableLeft="@drawable/ic_right_head_arrow"
             android:drawablePadding="@dimen/_12sdp"
             android:fontFamily="@font/manrope_bold"
-            android:text='Peronalized tips'
+            android:text="@string/suggested__why_info_crop_problem"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/txtStepFourth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtStepThird"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:drawableLeft="@drawable/ic_right_head_arrow"
+            android:drawablePadding="@dimen/_12sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:text="@string/suggested_by_crop_name"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/txtStepFifth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtStepFourth"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:drawableLeft="@drawable/ic_right_head_arrow"
+            android:drawablePadding="@dimen/_12sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:text="@string/suggested_40"
             android:textColor="@color/gray"
             android:textSize="@dimen/_12ssp" />
 
@@ -84,7 +102,7 @@
             android:layout_marginRight="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_24sdp"
             android:fontFamily="@font/manrope_bold"
-            android:text='Get personalised expert advice for your farm'
+            android:text="@string/get_farm_help_title"
             android:textColor="@color/yellow_dark"
             android:textSize="@dimen/_18ssp" />
 

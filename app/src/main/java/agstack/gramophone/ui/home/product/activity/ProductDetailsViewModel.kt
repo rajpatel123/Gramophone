@@ -813,10 +813,9 @@ class ProductDetailsViewModel @Inject constructor(
                     getNavigator()?.updateCartCount(cartCount + 1)
                     getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(R.string.gotocart)!!)
                 } else {
-                    getNavigator()?.showToast(Utility.getErrorMessage(addTocartResponse.errorBody()))
-                    if (addTocartResponse.errorBody().isNotNull() && addTocartResponse.errorBody()
-                            ?.source().toString().contains("alr")
-                    ) {
+                    var errorStr = Utility.getErrorMessage(addTocartResponse.errorBody())
+                    getNavigator()?.showToast(errorStr)
+                    if (errorStr?.contains("alr") == true) {
                         getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(
                             R.string.gotocart)!!)
                     }

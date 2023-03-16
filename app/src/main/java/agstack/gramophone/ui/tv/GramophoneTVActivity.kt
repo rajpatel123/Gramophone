@@ -16,8 +16,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
-import android.text.Html
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,8 +27,6 @@ import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerSupportFragmentX
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 @AndroidEntryPoint
@@ -400,9 +396,14 @@ class GramophoneTVActivity :
                         if (youTubePlayer != null) {
                             try {
                                 viewDataBinding.linearVideoList.visibility = View.GONE
-                                youTubePlayer?.loadVideo(videoId)
+                                try {
+                                    youTubePlayer?.loadVideo(videoId)
 //                                youTubePlayer?.cuePlaylist(currentPlayingPlayListId)
-                                youTubePlayer?.play()
+                                    youTubePlayer?.play()
+                                }catch (ex: java.lang.IllegalStateException){
+                                   initYoutubePlayer()
+                                }
+
                             } catch (e: IllegalStateException) {
                                 e.printStackTrace()
                             }
@@ -534,6 +535,7 @@ class GramophoneTVActivity :
                         }, 1000)
                     } catch (e: IllegalStateException) {
                         e.printStackTrace()
+                        initYoutubePlayer()
                     }
                 }
             }

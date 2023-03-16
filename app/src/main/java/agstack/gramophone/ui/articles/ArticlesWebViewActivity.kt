@@ -60,6 +60,9 @@ class ArticlesWebViewActivity :
     override fun scrollToActivity(i: Int) {
     }
 
+    override fun updateAddToCartButtonText(message: String) {
+    }
+
     private fun setupUi() {
         val webSettings: WebSettings = viewDataBinding.webView.settings
         if (webSettings.isNotNull()) {

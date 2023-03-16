@@ -155,8 +155,8 @@ class WeatherViewModel @Inject constructor(
                     latitude = null
                     longitude = null
                 }else{
-                    SharedPreferencesHelper.instance?.putString(Constants.LATITUDE,latitude.toString())
-                    SharedPreferencesHelper.instance?.putString(Constants.LONGITUDE,longitude.toString())
+                    SharedPreferencesHelper.instance?.putString(Constants.LATITUDE,"".plus(latitude))
+                    SharedPreferencesHelper.instance?.putString(Constants.LONGITUDE,"".plus(longitude))
                 }
                 getWeatherData()
             } else {
