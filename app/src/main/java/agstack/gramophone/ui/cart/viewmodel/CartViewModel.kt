@@ -52,7 +52,7 @@ class CartViewModel @Inject constructor(
         discount.value = 0f
         gramCash.value = 0
         applicableGramCash.value = 0
-        totalAmount.value = 0f
+        totalAmount.value = 120f
         subTotal.value = "0"
         progress.value = false
         showGramCashCoinView.value = false

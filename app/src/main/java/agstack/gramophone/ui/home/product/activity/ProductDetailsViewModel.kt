@@ -394,9 +394,15 @@ class ProductDetailsViewModel @Inject constructor(
 
         if (modelMrpPrice == 0f && modelSalesPrice > 0f) {
             modelMrpPrice = modelSalesPrice
+            addToCartEnabled.set(true)
+
         } else if (modelSalesPrice == 0f && modelMrpPrice > 0f) {
             modelSalesPrice = modelMrpPrice
+            addToCartEnabled.set(true)
+
         } else if (modelMrpPrice > 0f && modelSalesPrice > 0f) {
+            addToCartEnabled.set(true)
+
             // do no assignment in this case
         } else {
             modelMrpPrice = 0f
