@@ -12,6 +12,89 @@
    public *;
 }
 
+ -keep class agstack.gramophone.ui.home.subcategory.SubCategoryViewModel {
+     void goToMyFarm();
+ }
+-keepclasseswithmembers class * extends androidx.appcompat.app.AppCompatActivity {
+       public void *(android.view.View);
+}
+
+-keep class agstack.gramophone.ui.home.subcategory.* { *;}
+-keep class agstack.gramophone.ui.splash.model.language.*{*;}
+-keep class agstack.gramophone.base.* { *;}
+-keep class agstack.gramophone.data.model.* { *;}
+-keep class agstack.gramophone.ui.splash.* { *;}
+-keep class agstack.gramophone.ui.address.model.addressdetails.*{*;}
+-keep class agstack.gramophone.ui.address.model.googleapiresponse.*{*;}
+-keep class agstack.gramophone.ui.address.model.*{*;}
+-keep class agstack.gramophone.ui.advisory.models.advisory.*{*;}
+-keep class agstack.gramophone.ui.advisory.models.cropproblems.*{*;}
+-keep class agstack.gramophone.ui.advisory.models.recomondedproducts.*{*;}
+-keep class agstack.gramophone.ui.articles.JavaScriptInterface.* {*;}
+-keep class agstack.gramophone.ui.cart.model.* {*;}
+-keep class agstack.gramophone.ui.comments.model.* {*;}
+-keep class agstack.gramophone.ui.comments.model.sendcomment.* {*;}
+-keep class agstack.gramophone.ui.createnewpost.model.* {*;}
+-keep class agstack.gramophone.ui.createnewpost.model.create* {*;}
+-keep class agstack.gramophone.ui.createnewpost.model.hashtags* {*;}
+-keep class agstack.gramophone.ui.createnewpost.model.problems* {*;}
+-keep class agstack.gramophone.ui.dialog.filter.* {*;}
+-keep class agstack.gramophone.ui.faq.model.* {*;}
+-keep class agstack.gramophone.ui.farm.model.* {*;}
+-keep class agstack.gramophone.ui.farm.model.addfarm.* {*;}
+-keep class agstack.gramophone.ui.farm.model.unit.* {*;}
+-keep class agstack.gramophone.ui.favourite.model.* {*;}
+-keep class agstack.gramophone.ui.favourite.model.favouritecount.* {*;}
+-keep class agstack.gramophone.ui.followings.model.* {*;}
+-keep class agstack.gramophone.ui.home.model.* {*;}
+-keep class agstack.gramophone.ui.home.featured.ratingeligibility.* {*;}
+-keep class agstack.gramophone.ui.home.product.model.* {*;}
+-keep class agstack.gramophone.ui.home.product.test.* {*;}
+-keep class agstack.gramophone.ui.home.subcategory.model.* {*;}
+-keep class agstack.gramophone.ui.language.model.* {*;}
+-keep class agstack.gramophone.ui.language.model.languagelist.* {*;}
+-keep class agstack.gramophone.ui.login.model.* {*;}
+-keep class agstack.gramophone.ui.notification.model.* {*;}
+-keep class agstack.gramophone.ui.notification.model.cropdetails.* {*;}
+-keep class agstack.gramophone.ui.notification.model.cropproblem.* {*;}
+-keep class agstack.gramophone.ui.notification.model.shopbycat.* {*;}
+-keep class agstack.gramophone.ui.notification.model.shopbystore.* {*;}
+-keep class agstack.gramophone.ui.offerslist.model.* {*;}
+-keep class agstack.gramophone.ui.order.model.* {*;}
+-keep class agstack.gramophone.ui.orderdetails.model.* {*;}
+-keep class agstack.gramophone.ui.othersporfile.model.* {*;}
+-keep class agstack.gramophone.ui.postdetails.model.* {*;}
+-keep class agstack.gramophone.ui.profile.model.* {*;}
+-keep class agstack.gramophone.ui.profileselection.model.* {*;}
+-keep class agstack.gramophone.ui.referandearn.model.* {*;}
+-keep class agstack.gramophone.ui.search.model.* {*;}
+-keep class agstack.gramophone.ui.settings.model.* {*;}
+-keep class agstack.gramophone.ui.settings.model.blockedusers.* {*;}
+-keep class agstack.gramophone.ui.settings.model.blockmodels.* {*;}
+-keep class agstack.gramophone.ui.tagandmention.* {*;}
+-keep class agstack.gramophone.ui.tv.model.* {*;}
+-keep class agstack.gramophone.ui.userprofile.model.* {*;}
+-keep class agstack.gramophone.ui.userprofile.verifyotp.model.* {*;}
+-keep class agstack.gramophone.ui.verifyotp.model.* {*;}
+-keep class agstack.gramophone.ui.weather.model.* {*;}
+-keep class agstack.gramophone.ui.home.view.model.* {*;}
+-keep class agstack.gramophone.ui.home.view.fragments.market.model.* {*;}
+-keep class agstack.gramophone.ui.home.view.fragments.market.model.sku.* {*;}
+-keep class agstack.gramophone.ui.home.view.fragments.gramophone.model.* {*;}
+-keep class agstack.gramophone.ui.home.view.fragments.community.model.* {*;}
+-keep class agstack.gramophone.ui.home.view.fragments.community.model.likes.* {*;}
+-keep class agstack.gramophone.ui.home.view.fragments.community.model.pin.* {*;}
+-keep class agstack.gramophone.ui.home.view.fragments.community.model.quiz.* {*;}
+-keep class agstack.gramophone.ui.home.view.fragments.community.model.reportpost.* {*;}
+-keep class agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.* {*;}
+-keep class agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.block.* {*;}
+-keep class agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.follow.* {*;}
+-keep class agstack.gramophone.utils.ApiResponse.* {*;}
+-keep class agstack.gramophone.utils.* {*;}
+
+
+
+
 -keep class android.animation.Animator { *; }
 -keep class android.animation.AnimatorListenerAdapter { *; }
 -keep class android.animation.AnimatorSet { *; }

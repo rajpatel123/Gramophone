@@ -301,7 +301,7 @@
                             android:layout_marginTop="@dimen/_15sdp"
                             android:background="@drawable/rounded_corner_orange"
                             android:fontFamily="@font/manrope_bold"
-                            android:onClick="@{()->viewModel.goToMyFarm()"
+                            android:onClick="@{()->viewModel.goToMyFarm()}"
                             android:paddingStart="@dimen/_15sdp"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_15sdp"
