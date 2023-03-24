@@ -14,12 +14,12 @@ import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import androidx.activity.viewModels
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
 import com.android.installreferrer.api.ReferrerDetails
-import com.moengage.core.Properties
 import dagger.hilt.android.AndroidEntryPoint
 
 @SuppressLint("CustomSplashScreen")
@@ -33,9 +33,28 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.languageCode))) {
+          viewDataBinding.splashLL.setBackgroundResource(R.drawable.splashen)
+        }else{
+            when(SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.languageCode)){
+                "en"->{
+                    viewDataBinding.splashLL.setBackgroundResource(R.drawable.splashen)
+                }
+
+                "hi"->{
+                    viewDataBinding.splashLL.setBackgroundResource(R.drawable.splashhi)
+                }
+
+                "mr"->{
+                    viewDataBinding.splashLL.setBackgroundResource(R.drawable.splashmr)
+                }
+            }
+
+        }
+
         startApp()
-        if (intent.data !=null)
-        instance?.putString(Constants.URI, intent.data.toString())
+        if (intent.data != null)
+            instance?.putString(Constants.URI, intent.data.toString())
 
 
     }
@@ -64,6 +83,8 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
                             splashViewModel.initSplash(resources)
                         }
                         InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED -> {
+                            splashViewModel.initSplash(resources)
+
                             // API not available on the current Play Store app.
                         }
                         InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE -> {

@@ -691,7 +691,9 @@
     <string name="suggested__why_info_crop_problem"><![CDATA[पीक समस्यांवर नियंत्रण करण्यासाठी आवश्यक उत्पादनांची माहिती]]></string>
     <string name="suggested_by_crop_name"><![CDATA[पिकांच्या गरजेनुसार मिळतील प्रत्येक आवश्यक सूचना]]></string>
     <string name="suggested_40">या सल्ल्यानुसार शेती केल्यास खर्च होईल कमी आणि उत्पादनात होऊ शकते  40% पर्यंत वाढ</string>
-
+    <string name="allow_notification">सूचनांना अनुमती द्या</string>
+    <string name="allow">अनुमती द्या</string>
+    <string name="allow_message">ग्रामोफोनला तुम्हाला सूचना पाठवण्याची परवानगी द्या?</string>
 
 
 </resources>

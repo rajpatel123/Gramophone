@@ -38,15 +38,15 @@ class ShopByViewModel @Inject constructor(
             shopByType = bundle.getString(Constants.SHOP_BY_TYPE)!!
             when (shopByType) {
                 Constants.SHOP_BY_CROP -> {
-                    showWeatherView.value = true
-                    val cropResponse: CropResponse =
-                        bundle.getParcelable<ProductData>(Constants.SHOP_BY_CROP) as CropResponse
-                    getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.shop_by_crops)!!)
-                    getNavigator()?.setShopByCropAdapter(ShopByCropsAdapter(cropResponse.gpApiResponseData?.cropsList) {
-                        getNavigator()?.openCropStageActivity(it)
-                    }) {
-                        getNavigator()?.openCropStageActivity(it)
-                    }
+//                    showWeatherView.value = true
+//                    val cropResponse: CropResponse =
+//                        bundle.getParcelable<ProductData>(Constants.SHOP_BY_CROP) as CropResponse
+//                    getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.shop_by_crops)!!)
+//                    getNavigator()?.setShopByCropAdapter(ShopByCropsAdapter(cropResponse.gpApiResponseData?.cropsList) {
+//                        getNavigator()?.openCropStageActivity(it)
+//                    }) {
+//                        getNavigator()?.openCropStageActivity(it)
+//                    }
                 }
                 Constants.SHOP_BY_STORE -> {
                     showWeatherView.value = true

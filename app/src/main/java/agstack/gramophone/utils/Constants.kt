@@ -299,6 +299,7 @@ object Constants {
     const val DEEP_LINK_SOCIAL = "social"
     const val DEEP_LINK_WEATHER_INFO = "weatherInfo"
     const val DEEP_LINK_REFERRAL = "referral"
+    const val DEEP_LINK_GRAM_CASH = "gramCashDetail"
     const val DEEP_LINK_PRODUCT_LIST = "productList"
     const val DEEP_LINK_PRODUCT_DETAIL = "productDetail"
     const val DEEP_LINK_CROP_PRODUCT = "cropProduct"

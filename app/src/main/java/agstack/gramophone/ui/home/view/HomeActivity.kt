@@ -5,6 +5,7 @@ import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityHomeBinding
+import agstack.gramophone.databinding.AllowNotificationBinding
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.ui.home.view.fragments.community.CommunityFragment
@@ -22,20 +23,29 @@ import agstack.gramophone.utils.GramAppApplication
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
+import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.forEach
 import androidx.drawerlayout.widget.DrawerLayout
@@ -85,8 +95,50 @@ class HomeActivity :
         registerWithFCM()
         processDeepLink()
 
+
+        when {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                    PackageManager.PERMISSION_GRANTED -> {
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+
+                val mDialogView =
+                    LayoutInflater.from(this).inflate(R.layout.allow_notification_home, null)
+                val dialogBinding = AllowNotificationBinding.bind(mDialogView)
+                dialogBinding.setVariable(BR.viewModel, homeViewModel)
+
+                //AlertDialogBuilder
+                val mBuilder = AlertDialog.Builder(this)
+                    .setView(dialogBinding.root)
+                //show dialog
+                val mAlertDialog = mBuilder.show()
+                homeViewModel.setDialog(mAlertDialog)
+                mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background);
+
+
+            }
+            else -> {
+                requestForLocation()
+            }
+        }
     }
 
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun requestForLocation() {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS),1)
+    }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Log.d("permission","Granted")
+        }else{
+
+        }
+
+
+    }
     private fun registerWithFCM() {
         if (!TextUtils.isEmpty(
                 SharedPreferencesHelper.instance!!.getString(SharedPreferencesKeys.FirebaseTokenKey)
@@ -158,6 +210,21 @@ class HomeActivity :
                 .skipMemoryCache(true)
                 .fitCenter()
                 .into(viewDataBinding.navigationlayout.ivProfile)
+    }
+
+    override fun openNotificationSetting() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            val i = Intent(
+                Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse(
+                    "package:$packageName"
+                )
+            )
+            startActivity(i)
+        }
     }
 
     private fun setupUi() {

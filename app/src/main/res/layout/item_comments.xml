@@ -149,7 +149,8 @@
                    android:fontFamily="@font/manrope_light"
                    android:padding="@dimen/_5sdp"
                    android:text="@{model.text}"
-
+                   android:autoLink="web"
+                   android:linksClickable="true"
                    android:textSize="@dimen/_14sdp" />
 
 

@@ -25,6 +25,7 @@ import agstack.gramophone.ui.userprofile.UserProfileActivity
 import agstack.gramophone.ui.weather.WeatherActivity
 import agstack.gramophone.utils.*
 import agstack.gramophone.view.activity.CreatePostActivity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -48,6 +49,7 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModel<HomeActivityNavigator>() {
 
     var progressBar = ObservableField<Boolean>()
+    lateinit var mAlertDialog: AlertDialog
 
     fun logout(v: View) {
         logoutUser()
@@ -321,6 +323,19 @@ class HomeViewModel @Inject constructor(
                 else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
             }
         }
+    }
+
+    fun openSetting(){
+        getNavigator()?.openNotificationSetting()
+    }
+
+    fun cancel(){
+        mAlertDialog?.dismiss()
+    }
+
+    fun setDialog(mAlertDialog: AlertDialog?) {
+        this.mAlertDialog = mAlertDialog!!
+
     }
 
 

@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class ShopByCropsAdapter(private val cropList: List<CropData>?,
-                         private val listener: (String) -> Unit) :
+                         private val listener: (CropData) -> Unit) :
     RecyclerView.Adapter<ShopByCropsAdapter.CustomViewHolder>() {
-    var onItemClicked: ((id: String) -> Unit)? = null
+    var onItemClicked: ((id: CropData) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CustomViewHolder {
         return CustomViewHolder(
@@ -23,7 +23,7 @@ class ShopByCropsAdapter(private val cropList: List<CropData>?,
         holder.binding.model = cropList?.get(i)
         holder.binding.itemView.setOnClickListener {
             /*onItemClicked?.invoke(cropList?.get(i)?.cropId.toString())*/
-            listener.invoke(cropList?.get(i)?.cropId.toString())
+            cropList?.get(i)?.let { it1 -> listener.invoke(it1) }
         }
     }
 

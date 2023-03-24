@@ -11,6 +11,7 @@ import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
 import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
 import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
+import agstack.gramophone.ui.home.view.fragments.market.model.CropData
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
@@ -89,7 +90,7 @@ class ShopByActivity :
 
     override fun setShopByCropAdapter(
         shopByCropsAdapter: ShopByCropsAdapter,
-        id: (String) -> Unit,
+        id: (CropData) -> Unit,
     ) {
         shopByCropsAdapter.onItemClicked = id
         viewDataBinding.rvShopBy.layoutManager = GridLayoutManager(this, 3)

@@ -5,6 +5,8 @@ import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityLanguageBinding
+import agstack.gramophone.databinding.AllowNotificationBinding
+import agstack.gramophone.databinding.DeletePostDailogueBinding
 import agstack.gramophone.ui.apptour.view.AppTourActivity
 import agstack.gramophone.ui.language.LanguageActivityNavigator
 import agstack.gramophone.ui.language.adapter.LanguageAdapter
@@ -15,13 +17,22 @@ import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
 import agstack.gramophone.utils.LocaleManagerClass
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import android.Manifest
+import android.app.AlertDialog
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Resources
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.text.TextUtils
+import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,7 +56,10 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
                 Build.MODEL,
                 Build.VERSION.SDK_INT.toString()
             )
-            var registerDeviceRequestModel = InitiateAppDataRequestModel(deviceDetails,getLanguage(),)
+            var registerDeviceRequestModel = InitiateAppDataRequestModel(
+                deviceDetails,
+                getLanguage()
+            )
 
 
 
@@ -54,12 +68,59 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
         }
 
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
         getLanguageList()
         getSecretKeys()
+
+
+        when {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                    PackageManager.PERMISSION_GRANTED -> {
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+
+                val mDialogView =
+                    LayoutInflater.from(this).inflate(R.layout.allow_notification, null)
+                val dialogBinding = AllowNotificationBinding.bind(mDialogView)
+                dialogBinding.setVariable(BR.viewModel, languageViewModel)
+
+                //AlertDialogBuilder
+                val mBuilder = AlertDialog.Builder(this)
+                    .setView(dialogBinding.root)
+                //show dialog
+                val mAlertDialog = mBuilder.show()
+                languageViewModel.setDialog(mAlertDialog)
+                mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background);
+
+
+            }
+            else -> {
+                requestForLocation()
+            }
+        }
+
     }
+
+
+     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+     fun requestForLocation() {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS),1)
+    }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Log.d("permission","Granted")
+        }else{
+
+        }
+
+
+    }
+
 
     private fun getLanguageList() {
         languageViewModel.getLanguageList()
@@ -98,6 +159,22 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     }
 
     override fun getLanguageCode(): String? = LocaleManagerClass.getLangCodeAsPerAppLocale(this)
+    override fun openNotificationSetting() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            val i = Intent(
+                Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse(
+                    "package:$packageName"
+                )
+            )
+            startActivity(i)
+        }
+    }
+
+
 
     override fun onError(message: String?) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

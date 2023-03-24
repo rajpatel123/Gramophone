@@ -7,6 +7,7 @@ import agstack.gramophone.databinding.ActivityUrlhandlerBinding
 import agstack.gramophone.ui.advisory.view.AllCropProblemsActivity
 import agstack.gramophone.ui.articles.ArticlesWebViewActivity
 import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
+import agstack.gramophone.ui.gramcash.GramCashActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.notification.NotificationNavigator
@@ -26,6 +27,7 @@ import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_PRODUCT
 import agstack.gramophone.utils.Constants.DEEP_LINK_DISEASE_DETAILS
 import agstack.gramophone.utils.Constants.DEEP_LINK_EDIT_LANGUAGE
 import agstack.gramophone.utils.Constants.DEEP_LINK_EDIT_PHONE_NO
+import agstack.gramophone.utils.Constants.DEEP_LINK_GRAM_CASH
 import agstack.gramophone.utils.Constants.DEEP_LINK_HOME
 import agstack.gramophone.utils.Constants.DEEP_LINK_MARKET
 import agstack.gramophone.utils.Constants.DEEP_LINK_MY_FARM
@@ -179,6 +181,11 @@ class URLHandlerActivity :
 
                 DEEP_LINK_REFERRAL -> {
                     openAndFinishActivity(ReferAndEarnActivity::class.java, null)
+                }
+
+
+                DEEP_LINK_GRAM_CASH -> {
+                    openAndFinishActivity(GramCashActivity::class.java, null)
                 }
 
                 DEEP_LINK_EDIT_PHONE_NO -> {

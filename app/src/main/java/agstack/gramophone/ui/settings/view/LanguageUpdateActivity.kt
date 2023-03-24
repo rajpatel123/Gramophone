@@ -74,5 +74,7 @@ class LanguageUpdateActivity :
     }
 
     override fun getLanguageCode(): String? = LocaleManagerClass.getLangCodeAsPerAppLocale(this)
+    override fun openNotificationSetting() {
+    }
 
 }

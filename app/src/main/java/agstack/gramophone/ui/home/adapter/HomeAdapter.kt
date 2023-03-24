@@ -11,7 +11,6 @@ import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.farm.adapter.FarmAdapter
 import agstack.gramophone.ui.farm.model.FarmResponse
 import agstack.gramophone.ui.farm.view.*
-import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.shop.ShopByActivity
@@ -269,11 +268,34 @@ class HomeAdapter(
                         cropList.subList(0, 9)
                     else cropList
                     val cropAdapter = ShopByCropsAdapter(tempCropList) {
-                        openActivity(holder.itemView.context,
-                            CropDetailActivity::class.java,
+                        openActivity(context = holder.binding.root.context,
+                            AdvisoryActivity::class.java,
                             Bundle().apply {
-                                putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
+                                putInt(
+                                    Constants.FARM_ID,
+                                    121233
+                                )
+
+                                putString(Constants.FARM_TYPE, "model_farm")
+                                putString(Constants.CROP_NAME, it.cropName)
+                                putString(Constants.CROP_IMAGE, it.cropImage)
+                                putString(Constants.CROP_REF_ID, "ryeuryu")
+                                it.cropId?.let { it1 -> putInt(Constants.CROP_ID, it1) }
+                                putString(Constants.CROP_DURATION, "Test")
+                                putString(
+                                    Constants.CROP_END_DATE,
+                                    "TestDate"
+                                )
+                                putString(Constants.CROP_STAGE, "TestStage")
+                                putString(Constants.CROP_DAYS, "000000")
                             })
+
+
+//                        openActivity(holder.itemView.context,
+//                            CropDetailActivity::class.java,
+//                            Bundle().apply {
+//                                putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
+//                            })
                     }
                     holder.binding.rvShopByCrops.adapter = cropAdapter
                     holder.binding.viewAllCrops.setOnClickListener {
@@ -748,7 +770,7 @@ class HomeAdapter(
                 return Constants.HOME_GRAMOPHONE_TV_VIEW_TYPE
             }
         }
-        return Constants.HOME_EMPTY_VIEW_TYPE
+        return Constants.HOME_SHOP_BY_CROP_VIEW_TYPE
     }
 
     override fun getItemId(position: Int): Long {

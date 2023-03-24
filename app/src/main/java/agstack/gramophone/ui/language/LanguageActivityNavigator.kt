@@ -14,5 +14,6 @@ interface LanguageActivityNavigator :BaseNavigator {
     fun initiateApp()
     fun closeLanguageList()
     fun getLanguageCode(): String?
+    fun openNotificationSetting()
 
 }

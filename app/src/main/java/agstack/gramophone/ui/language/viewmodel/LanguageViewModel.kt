@@ -16,6 +16,7 @@ import agstack.gramophone.ui.language.model.languagelist.Language
 import agstack.gramophone.ui.language.model.languagelist.LanguageListResponse
 import agstack.gramophone.utils.*
 import agstack.gramophone.utils.Constants.GP_API_STATUS
+import android.app.AlertDialog
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -31,7 +32,7 @@ class LanguageViewModel @Inject constructor(
 ) : BaseViewModel<LanguageActivityNavigator>() {
     var language: Language? = null
     var isLanguageSelected = ObservableField<Boolean>()
-
+lateinit var mAlertDialog: AlertDialog
     fun getLanguageList() = viewModelScope.launch {
         isLanguageSelected.set(false)
         getNavigator()?.initiateApp()
@@ -296,6 +297,19 @@ class LanguageViewModel @Inject constructor(
                  }
              }
          }
+
+    }
+
+    fun openSetting(){
+        getNavigator()?.openNotificationSetting()
+    }
+
+    fun cancel(){
+        mAlertDialog?.dismiss()
+    }
+
+    fun setDialog(mAlertDialog: AlertDialog?) {
+        this.mAlertDialog = mAlertDialog!!
 
     }
 

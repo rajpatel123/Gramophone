@@ -154,6 +154,8 @@
                                 android:fontFamily="@font/manrope_bold"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_14ssp"
+                                android:autoLink="web"
+                                android:linksClickable="true"
                                 android:visibility="@{viewModel.postDesc!=null?View.VISIBLE:View.GONE}" />
 
                             <androidx.cardview.widget.CardView
@@ -389,6 +391,8 @@
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="@dimen/_2sdp"
                                     android:layout_toEndOf="@+id/ivComment"
+                                    android:autoLink="web"
+                                    android:linksClickable="true"
                                     android:text="@{viewModel.commentCount}" />
                             </RelativeLayout>
 

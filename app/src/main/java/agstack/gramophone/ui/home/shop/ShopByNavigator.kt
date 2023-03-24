@@ -4,6 +4,7 @@ import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.ui.home.adapter.ShopByCompanyAdapter
 import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
 import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
+import agstack.gramophone.ui.home.view.fragments.market.model.CropData
 import android.os.Bundle
 
 interface ShopByNavigator : BaseNavigator {
@@ -11,7 +12,7 @@ interface ShopByNavigator : BaseNavigator {
 
     fun setToolbarTitle(title: String)
 
-    fun setShopByCropAdapter(shopByCropsAdapter: ShopByCropsAdapter, id: (String) -> Unit)
+    fun setShopByCropAdapter(shopByCropsAdapter: ShopByCropsAdapter, id: (CropData) -> Unit)
 
     fun setShopByStoresAdapter(shopByStoresAdapter: ShopByStoresAdapter)
 

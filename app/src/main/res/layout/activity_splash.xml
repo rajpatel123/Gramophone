@@ -7,16 +7,17 @@
             type="agstack.gramophone.ui.splash.viewmodel.SplashViewModel" />
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/splashLL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:background="@drawable/splash_bg"
         android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.7"
+            android:visibility="gone"
             >
 
             <ImageView

@@ -263,6 +263,8 @@
                     android:layout_marginEnd="@dimen/_12sdp"
                     android:fontFamily="@font/manrope_bold"
                     android:textColor="@color/black"
+                    android:autoLink="web"
+                    android:linksClickable="true"
                     android:textSize="@dimen/_14ssp" />
 
                 <androidx.cardview.widget.CardView
@@ -481,6 +483,8 @@
                     android:layout_below="@+id/tvName1"
                     android:fontFamily="@font/manrope_light"
                     android:padding="@dimen/_5sdp"
+                    android:autoLink="web"
+                    android:linksClickable="true"
                     android:text="@{model.lastComment.text}"
                     android:textSize="@dimen/_14ssp" />
 

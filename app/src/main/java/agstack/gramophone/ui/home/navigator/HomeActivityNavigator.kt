@@ -10,4 +10,5 @@ interface HomeActivityNavigator :BaseNavigator {
     fun closeDrawer()
 
     fun setImageNameMobile(name: String, mobile: String, profileImage:String,gramCash:String?)
+    fun openNotificationSetting()
 }
