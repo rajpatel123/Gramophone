@@ -7,6 +7,7 @@ import android.content.Context
 
 object Constants {
 
+    val CATEGORY_EVENT: String="cat_event"
     val PUSH_ASKED: String ="push_permission"
     val AFTER_KEY: String="after_key"
     val REFERRAL_CODE_VALUE: String="referralValue"

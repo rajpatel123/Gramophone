@@ -1,7 +1,9 @@
 package agstack.gramophone.ui.home.product.activity
 
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.data.model.SubCatEvent
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.cart.model.CartItem
@@ -17,13 +19,16 @@ import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.model.DataItem
 import agstack.gramophone.utils.*
+import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.amnix.xtension.extensions.isNull
+import com.moengage.core.Properties
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -157,6 +162,7 @@ class ProductDetailsViewModel @Inject constructor(
                 //stop loader
                 progressLoader.set(false)
                 if (productAPIResponse.body()?.gpApiStatus.equals(Constants.GP_API_STATUS)) {
+
                     productData.set(productAPIResponse.body()?.gpApiResponseData!!)
                     productData.let {
                         val productResponseData = productData.get()
@@ -294,6 +300,7 @@ class ProductDetailsViewModel @Inject constructor(
                     loadOffersData(productDetailstoBeFetched, qtySelected.get())
                     loadRelatedProductData(productDetailstoBeFetched)
 
+                    sendSubCateEvent()
                 } else {
                     getNavigator()?.showToast("" + productAPIResponse.body()?.gpApiMessage)
                 }
@@ -827,6 +834,8 @@ class ProductDetailsViewModel @Inject constructor(
                     }
                 }
             }
+
+            sendSubCatWithQtyEvent(qtySelected.get())
         } else {
             getNavigator()?.openActivity(CartActivity::class.java, Bundle().apply {
                 putString(Constants.REDIRECTION_SOURCE, "Product Details")
@@ -919,7 +928,48 @@ class ProductDetailsViewModel @Inject constructor(
             }
         }
     }
+    private fun sendSubCateEvent() {
+        if (SharedPreferencesHelper.instance?.getParcelable(Constants.CATEGORY_EVENT, SubCatEvent::class.java)!=null){
+            val subCatEvent = SharedPreferencesHelper.instance?.getParcelable(Constants.CATEGORY_EVENT,
+                SubCatEvent::class.java) as SubCatEvent?
+            if (!TextUtils.isEmpty(subCatEvent?.category_event)){
+                val properties = Properties()
+                properties.addAttribute("Product Id", productId)
+                    .addAttribute("Product Name",
+                        productData.get()?.productBaseName)
+                    .addAttribute("Sub Category",
+                        subCatEvent?.sub_category)
 
+                    .addAttribute("App Version", BuildConfig.VERSION_NAME)
+                    .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+                    .setNonInteractive()
+                getNavigator()?.sendMoEngageEvent(subCatEvent?.category_event!!,properties)
+            }
+
+        }
+    }
+
+    private fun sendSubCatWithQtyEvent(qty: Int?) {
+        if (SharedPreferencesHelper.instance?.getParcelable(Constants.CATEGORY_EVENT, SubCatEvent::class.java)!=null){
+            val subCatEvent = SharedPreferencesHelper.instance?.getParcelable(Constants.CATEGORY_EVENT,
+                SubCatEvent::class.java) as SubCatEvent?
+            if (!TextUtils.isEmpty(subCatEvent?.category_event)){
+                val properties = Properties()
+                properties.addAttribute("Product Id", productId)
+                    .addAttribute("Product Name",
+                        productData.get()?.productBaseName)
+                    .addAttribute("Sub Category",
+                        subCatEvent?.sub_category)
+                    .addAttribute("Quantity", qty)
+
+                    .addAttribute("App Version", BuildConfig.VERSION_NAME)
+                    .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+                    .setNonInteractive()
+                getNavigator()?.sendMoEngageEvent(subCatEvent?.category_event!!,properties)
+            }
+
+        }
+    }
 
 }
 

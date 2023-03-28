@@ -1,5 +1,6 @@
 package agstack.gramophone.ui.userprofile
 
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
@@ -8,11 +9,13 @@ import agstack.gramophone.ui.userprofile.model.UpdateProfileModel
 import agstack.gramophone.ui.userprofile.verifyotp.model.VerifyOTPRequestModel
 import agstack.gramophone.ui.verifyotp.model.ValidateOtpResponseModel
 import agstack.gramophone.utils.Constants
+import android.os.Build
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.moengage.core.Properties
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -84,6 +87,18 @@ class EditProfileViewModel @Inject constructor(
                     otp_reference_id = body?.gp_api_response_data?.otp_reference_id
 
                     getNavigator()?.showVerifyOTPFragment(otp_reference_id!!) {
+
+                        try {
+                            val properties = Properties()
+                            properties.addAttribute("Source_Screen", "Edit Phone")
+                                .addAttribute("App Version", BuildConfig.VERSION_NAME)
+                                .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+                                .setNonInteractive()
+                            getNavigator()?.sendMoEngageEvent("KA_Edit_OTP_Generated",properties)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+
 
                         //Success CallBack
                     /*    Log.d("SuccessHoGAyi", it)*/

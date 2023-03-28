@@ -65,7 +65,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:ellipsize="end"
@@ -73,6 +73,7 @@
                     android:lineSpacingExtra="1sp"
                     android:maxLines="1"
                     android:paddingStart="12dp"
+                    android:gravity="center"
                     android:paddingEnd="4dp"
                     android:text='@{model.storeName ?? ""}'
                     android:textColor="@color/blakish"
@@ -80,11 +81,12 @@
                     tools:text="Pesticides" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/manrope_bold"
                     android:lineSpacingExtra="-2sp"
                     android:maxLines="1"
+                    android:gravity="center"
                     android:paddingStart="12dp"
                     android:paddingEnd="4dp"
                     android:paddingBottom="12dp"

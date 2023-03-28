@@ -366,6 +366,8 @@ class HomeAdapter(
                     }
                     holder.binding.rvShopByCompany.adapter = companyAdapter
                     holder.binding.viewAllCompanies.setOnClickListener {
+
+
                         openActivity(holder.itemView.context,
                             ShopByActivity::class.java,
                             Bundle().apply {

@@ -1,5 +1,6 @@
 package agstack.gramophone.ui.login.viewmodel
 
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.model.UpdateLanguageRequestModel
@@ -13,12 +14,15 @@ import agstack.gramophone.ui.login.view.LoginActivity
 import agstack.gramophone.utils.*
 import android.Manifest
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
 import com.google.zxing.integration.android.IntentResult
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -75,6 +79,17 @@ class LoginViewModel @Inject constructor(
                             loginData.data?.gp_api_response_data?.otp_reference_id!!
                         )
                     })
+
+                    try {
+                        val properties = Properties()
+                        properties.addAttribute("Source_Screen", "Login")
+                            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+                            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+                            .setNonInteractive()
+                        getNavigator()?.sendMoEngageEvent("KA_Edit_OTP_Generated",properties)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 } else {
                     getNavigator()?.onError(Utility.getErrorMessage(response.errorBody()))
 

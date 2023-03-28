@@ -1,7 +1,9 @@
 package agstack.gramophone.ui.home.subcategory
 
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
+import agstack.gramophone.data.model.SubCatEvent
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.advisory.adapter.ActivityListAdapter
@@ -28,6 +30,7 @@ import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.Utility
+import android.os.Build
 import android.os.Bundle
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -35,6 +38,7 @@ import androidx.lifecycle.viewModelScope
 import com.amnix.xtension.extensions.isNotNull
 import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.amnix.xtension.extensions.isNull
+import com.moengage.core.Properties
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -69,7 +73,7 @@ class SubCategoryViewModel @Inject constructor(
     var categoryId: String? = null
     var storeId: String? = null
     private var checkOfferApplicableJob: Job? = null
-
+    private var catNameEvent:String=""
     //advisory fields
     val cropRefID = ObservableField<String>()
     val cropId = ObservableField<Int>()
@@ -114,10 +118,32 @@ class SubCategoryViewModel @Inject constructor(
                 getStoresFilterData()
                 getShopByStoreBanner()
             } else if (bundle.containsKey(Constants.CATEGORY_ID) && bundle.getString(Constants.CATEGORY_ID) != null) {
+                catNameEvent ="KA_"+bundle.get(Constants.CATEGORY_NAME) as String+"_Category"
                 categoryId = bundle.get(Constants.CATEGORY_ID) as String
                 toolbarTitle.value = bundle.get(Constants.CATEGORY_NAME) as String
                 toolbarImage.value = bundle.get(Constants.CATEGORY_IMAGE) as String
                 getSubCategoryData()
+
+                val properties = Properties()
+                properties.addAttribute("Source_Screen", "Home")
+                    .addAttribute("App Version", BuildConfig.VERSION_NAME)
+                    .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+                    .setNonInteractive()
+                var subCatEvent: SubCatEvent? =null
+                if (SharedPreferencesHelper.instance?.getParcelable(Constants.CATEGORY_EVENT,SubCatEvent::class.java)!=null){
+                    subCatEvent = SharedPreferencesHelper.instance?.getParcelable(Constants.CATEGORY_EVENT,SubCatEvent::class.java) as SubCatEvent?
+                    subCatEvent?.category_event=catNameEvent
+                }else{
+                     subCatEvent = SubCatEvent(catNameEvent)
+                }
+
+                if (subCatEvent != null) {
+                    SharedPreferencesHelper.instance?.putParcelable(Constants.CATEGORY_EVENT,subCatEvent)
+                    sendEvent(catNameEvent, properties)
+
+                }
+
+
             } else if (bundle.containsKey(Constants.SUB_CATEGORY_ID) && bundle.getString(Constants.SUB_CATEGORY_ID) != null) {
                 showSortFilterView.value = true
                 categoryId = bundle.getString(Constants.SHOP_BY_SUB_CATEGORY)
@@ -125,6 +151,28 @@ class SubCategoryViewModel @Inject constructor(
                 toolbarTitle.value = bundle.getString(Constants.SUB_CATEGORY_NAME)
                 toolbarImage.value = bundle.getString(Constants.SUB_CATEGORY_IMAGE)
                 getSubCategoryData()
+                val properties = Properties()
+                properties.addAttribute("Source_Screen", "Home")
+                    .addAttribute("App Version", BuildConfig.VERSION_NAME)
+                    .addAttribute("Sub Category", bundle.get(Constants.SUB_CATEGORY_NAME) as String)
+                    .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+                    .setNonInteractive()
+
+                var subCatEvent: SubCatEvent? =null
+                if (SharedPreferencesHelper.instance?.getParcelable(Constants.CATEGORY_EVENT,SubCatEvent::class.java)!=null){
+                    subCatEvent = SharedPreferencesHelper.instance?.getParcelable(Constants.CATEGORY_EVENT,SubCatEvent::class.java) as SubCatEvent?
+                    subCatEvent?.sub_category=bundle.get(Constants.SUB_CATEGORY_NAME) as String
+                    catNameEvent = subCatEvent?.category_event!!
+                }
+
+                if (subCatEvent != null) {
+                    SharedPreferencesHelper.instance?.putParcelable(Constants.CATEGORY_EVENT,subCatEvent)
+                    sendEvent(catNameEvent,properties)
+
+                }
+
+
+
             } else if (bundle.containsKey(Constants.COMPANY_ID) && bundle.getString(Constants.COMPANY_ID) != null) {
                 showSortFilterView.value = false
                 showSortFilterInToolbar.value = true
@@ -164,6 +212,14 @@ class SubCategoryViewModel @Inject constructor(
 //                    }
 //                }
             }
+        }
+    }
+
+    private fun sendEvent(catNameEvent: String, properties: Properties) {
+        try {
+            getNavigator()?.sendMoEngageEvent(this.catNameEvent.replace(" ","_"),properties)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

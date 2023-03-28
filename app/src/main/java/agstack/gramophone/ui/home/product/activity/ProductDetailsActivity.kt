@@ -4,6 +4,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
+import agstack.gramophone.data.model.SubCatEvent
 import agstack.gramophone.databinding.ProductDetailBinding
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
@@ -20,6 +21,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.view.View.VISIBLE
@@ -680,7 +682,10 @@ class ProductDetailsActivity :
             .addAttribute("SDK Version", Build.VERSION.SDK_INT)
             .setNonInteractive()
         MoEAnalyticsHelper.trackEvent(this, "KA_Write_Product_Review_Open", properties)
+
+
     }
+
 
     private fun sendViewAllReviewMoEngageEvent() {
         val properties = Properties()
@@ -696,6 +701,7 @@ class ProductDetailsActivity :
     private fun sendExpertAdviceMoEngageEvent() {
         val properties = Properties()
         properties.addAttribute("Product_Id", productDetailsViewModel.productId)
+        properties.addAttribute("Source screen", "Product Detail")
             .addAttribute("Product_Base_Name",
                 productDetailsViewModel.productData.get()?.productBaseName)
             .addAttribute("Customer_Id",

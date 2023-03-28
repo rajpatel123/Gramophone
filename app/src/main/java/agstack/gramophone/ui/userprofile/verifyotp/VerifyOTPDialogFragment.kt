@@ -129,10 +129,12 @@ class VerifyOTPDialogFragment :
             .addAttribute("SDK Version", Build.VERSION.SDK_INT)
             .setNonInteractive()
         if (isOTPVerified) {
-            MoEAnalyticsHelper.trackEvent(requireContext(), "KA_OTP_Verified_Successfully", properties)
+            MoEAnalyticsHelper.trackEvent(requireContext(), "KA_Edit_OTP_Verified", properties)
             MoEAnalyticsHelper.trackEvent(requireContext(), "KA_update", properties)
         } else {
             MoEAnalyticsHelper.trackEvent(requireContext(), "KA_OTP_Verification_Failed", properties)
         }
     }
+
+
 }

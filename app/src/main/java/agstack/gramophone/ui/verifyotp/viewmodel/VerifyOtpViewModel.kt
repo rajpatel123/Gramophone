@@ -1,5 +1,6 @@
 package agstack.gramophone.ui.verifyotp.viewmodel
 
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.model.UpdateLanguageRequestModel
@@ -18,6 +19,7 @@ import agstack.gramophone.ui.verifyotp.view.VerifyOtpActivity
 import agstack.gramophone.utils.*
 import agstack.gramophone.utils.Constants.REMAINING_TIME
 import agstack.gramophone.utils.Constants.UNAUTHORIZED
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -26,6 +28,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -140,6 +143,18 @@ class VerifyOtpViewModel @Inject constructor(
                         getNavigator()?.showToast(errorResponse.gp_api_message)
 
                     }
+                    try {
+                        val properties = Properties()
+                        properties.addAttribute("Source_Screen", "Verify OTP")
+                            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+                            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+                            .setNonInteractive()
+                        getNavigator()?.sendMoEngageEvent("KA_Login_OTP_Verified",properties)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+
                 } else if (response.code() == UNAUTHORIZED) {
                     getNavigator()?.getInitModel()?.let { refreshToken(it, isValidate = true) }
                 } else {

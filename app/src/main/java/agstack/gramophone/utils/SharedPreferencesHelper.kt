@@ -85,6 +85,8 @@ class SharedPreferencesHelper(context: Context) {
          sharedPreferences.edit().clear().apply()
     }
 
+
+
     companion object {
         private const val PREF_NAME = "sharedPreferences"
         private var sInstance: SharedPreferencesHelper? = null

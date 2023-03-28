@@ -85,10 +85,23 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
         when (view?.id) {
             R.id.itemCart -> {
                 cartViewModel.onHelpClicked()
+                sendMoEngageEvents()
             }
         }
     }
 
+    private fun sendMoEngageEvents() {
+        try {
+            val properties = Properties()
+            properties.addAttribute("Source_Screen", "Cart")
+                .addAttribute("App Version", BuildConfig.VERSION_NAME)
+                .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+                .setNonInteractive()
+            MoEAnalyticsHelper.trackEvent(this, "KA_Help_Call_Now", properties)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
     override fun setCartAdapter(
         cartAdapter: CartAdapter,
         onItemDetailClicked: (productId: String) -> Unit,
