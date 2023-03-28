@@ -330,6 +330,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun cancel(){
+        SharedPreferencesHelper.instance?.putBoolean(Constants.PUSH_ASKED,true)
         mAlertDialog?.dismiss()
     }
 

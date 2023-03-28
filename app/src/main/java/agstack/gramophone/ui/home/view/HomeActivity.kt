@@ -5,7 +5,7 @@ import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityHomeBinding
-import agstack.gramophone.databinding.AllowNotificationBinding
+import agstack.gramophone.databinding.AllowNotificationHomeBinding
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.ui.home.view.fragments.community.CommunityFragment
@@ -95,30 +95,32 @@ class HomeActivity :
         registerWithFCM()
         processDeepLink()
 
+        if (SharedPreferencesHelper.instance?.getBoolean(Constants.PUSH_ASKED) != true) {
+            when {
+                ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                        PackageManager.PERMISSION_GRANTED -> {
+                }
+                shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+                    val mDialogView =
+                        LayoutInflater.from(this).inflate(R.layout.allow_notification_home, null)
+                    val dialogBinding = AllowNotificationHomeBinding.bind(mDialogView)
+                    dialogBinding.setVariable(BR.viewModel, homeViewModel)
 
-        when {
-            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
-                    PackageManager.PERMISSION_GRANTED -> {
-            }
-            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
-
-                val mDialogView =
-                    LayoutInflater.from(this).inflate(R.layout.allow_notification_home, null)
-                val dialogBinding = AllowNotificationBinding.bind(mDialogView)
-                dialogBinding.setVariable(BR.viewModel, homeViewModel)
-
-                //AlertDialogBuilder
-                val mBuilder = AlertDialog.Builder(this)
-                    .setView(dialogBinding.root)
-                //show dialog
-                val mAlertDialog = mBuilder.show()
-                homeViewModel.setDialog(mAlertDialog)
-                mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background);
+                    //AlertDialogBuilder
+                    val mBuilder = AlertDialog.Builder(this)
+                        .setView(dialogBinding.root)
+                    //show dialog
+                    val mAlertDialog = mBuilder.show()
+                    mAlertDialog.setCancelable(false)
+                    homeViewModel.setDialog(mAlertDialog)
+                    mAlertDialog.getWindow()
+                        ?.setBackgroundDrawableResource(R.drawable.transparent_background);
 
 
-            }
-            else -> {
-                requestForLocation()
+                }
+                else -> {
+                    requestForLocation()
+                }
             }
         }
     }
@@ -223,6 +225,7 @@ class HomeActivity :
                     "package:$packageName"
                 )
             )
+            SharedPreferencesHelper.instance?.putBoolean(Constants.PUSH_ASKED, true)
             startActivity(i)
         }
     }

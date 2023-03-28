@@ -50,8 +50,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             debuggable true
             resValue "string", "app_name_different", "Gramophone"
             buildConfigField "String", "ADDRESS", "\"\""

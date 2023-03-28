@@ -31,7 +31,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_156sdp">
+                android:layout_height="@dimen/_156sdp"
+                >
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="match_parent"
@@ -52,7 +53,7 @@
                     android:layout_marginBottom="1dp"
                     app:product_image='@{model.storeImage ?? ""}'
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerTopOnly20"
-                    tools:src="@drawable/dummy_shop_by_store" />
+                    tools:src="@drawable/dummy_profile" />
 
             </RelativeLayout>
 

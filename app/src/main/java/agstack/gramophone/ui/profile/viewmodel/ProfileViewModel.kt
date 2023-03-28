@@ -43,6 +43,8 @@ class ProfileViewModel @Inject constructor(
                         progressBar.set(false)
 
                         if (Constants.GP_API_STATUS.equals(logoutResponseModel?.gp_api_status)) {
+                            SharedPreferencesHelper.instance?.putBoolean(Constants.PUSH_ASKED, false)
+
                             SharedPreferencesHelper.instance?.putBoolean(
                                 SharedPreferencesKeys.logged_in,
                                 false

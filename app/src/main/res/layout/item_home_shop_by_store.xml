@@ -57,7 +57,8 @@
                 android:textColor="@color/orange"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="normal"
-                app:drawableEndCompat="@drawable/ic_arrow_right" />
+                app:drawableEndCompat="@drawable/ic_arrow_right"
+                tools:ignore="TextContrastCheck" />
 
         </FrameLayout>
 

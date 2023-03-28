@@ -7,7 +7,7 @@ import android.content.Context
 
 object Constants {
 
-
+    val PUSH_ASKED: String ="push_permission"
     val AFTER_KEY: String="after_key"
     val REFERRAL_CODE_VALUE: String="referralValue"
     val LATITUDE: String="lat"

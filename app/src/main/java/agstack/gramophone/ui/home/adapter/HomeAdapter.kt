@@ -268,27 +268,27 @@ class HomeAdapter(
                         cropList.subList(0, 9)
                     else cropList
                     val cropAdapter = ShopByCropsAdapter(tempCropList) {
-                        openActivity(context = holder.binding.root.context,
-                            AdvisoryActivity::class.java,
-                            Bundle().apply {
-                                putInt(
-                                    Constants.FARM_ID,
-                                    121233
-                                )
-
-                                putString(Constants.FARM_TYPE, "model_farm")
-                                putString(Constants.CROP_NAME, it.cropName)
-                                putString(Constants.CROP_IMAGE, it.cropImage)
-                                putString(Constants.CROP_REF_ID, "ryeuryu")
-                                it.cropId?.let { it1 -> putInt(Constants.CROP_ID, it1) }
-                                putString(Constants.CROP_DURATION, "Test")
-                                putString(
-                                    Constants.CROP_END_DATE,
-                                    "TestDate"
-                                )
-                                putString(Constants.CROP_STAGE, "TestStage")
-                                putString(Constants.CROP_DAYS, "000000")
-                            })
+//                        openActivity(context = holder.binding.root.context,
+//                            AdvisoryActivity::class.java,
+//                            Bundle().apply {
+//                                putInt(
+//                                    Constants.FARM_ID,
+//                                    121233
+//                                )
+//
+//                                putString(Constants.FARM_TYPE, "model_farm")
+//                                putString(Constants.CROP_NAME, it.cropName)
+//                                putString(Constants.CROP_IMAGE, it.cropImage)
+//                                putString(Constants.CROP_REF_ID, "ryeuryu")
+//                                it.cropId?.let { it1 -> putInt(Constants.CROP_ID, it1) }
+//                                putString(Constants.CROP_DURATION, "Test")
+//                                putString(
+//                                    Constants.CROP_END_DATE,
+//                                    "TestDate"
+//                                )
+//                                putString(Constants.CROP_STAGE, "TestStage")
+//                                putString(Constants.CROP_DAYS, "000000")
+//                            })
 
 
 //                        openActivity(holder.itemView.context,
