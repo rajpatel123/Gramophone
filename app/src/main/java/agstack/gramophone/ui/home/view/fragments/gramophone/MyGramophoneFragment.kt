@@ -819,14 +819,19 @@ class MyGramophoneFragment :
             if (myGramophoneResponseModel.gp_api_response_data.my_gramophone_stats.gramophone_tv > 0) {
                 openActivity(BookmarkedVideosActivity::class.java, null)
                 val properties = Properties()
+
                 properties.addAttribute(
                     "Customer_Id",
                     SharedPreferencesHelper.instance?.getString(
                         SharedPreferencesKeys.CUSTOMER_ID
                     )!!
-                ).addAttribute(
-                    "Redirection_Source", "My Gramophone"
                 )
+                properties.addAttribute(
+                    "Video Seen", "True"
+                )
+                    .addAttribute(
+                        "Redirection_Source", "My Gramophone"
+                    )
                     .setNonInteractive()
                 sendMoEngageEvent("KA_View_FavouriteGramophoneTV", properties)
                 sendMoEngageEvent("KA_Click_FavouriteGramphoneTV", properties)

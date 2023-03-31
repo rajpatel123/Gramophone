@@ -117,6 +117,26 @@ class SubCategoryViewModel @Inject constructor(
                 toolbarImage.value = bundle.getString(Constants.STORE_IMAGE)!!
                 getStoresFilterData()
                 getShopByStoreBanner()
+                catNameEvent ="KA_Shop_By_Store"
+                val properties = Properties()
+                properties.addAttribute("Source_Screen", "Home")
+                    .addAttribute("App Version", BuildConfig.VERSION_NAME)
+                    .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+                    .setNonInteractive()
+                var subCatEvent: SubCatEvent? =null
+                if (SharedPreferencesHelper.instance?.getParcelable(Constants.CATEGORY_EVENT,SubCatEvent::class.java)!=null){
+                    subCatEvent = SharedPreferencesHelper.instance?.getParcelable(Constants.CATEGORY_EVENT,SubCatEvent::class.java) as SubCatEvent?
+                    subCatEvent?.category_event=catNameEvent
+                }else{
+                    subCatEvent = SubCatEvent(catNameEvent)
+                }
+
+                if (subCatEvent != null) {
+                    SharedPreferencesHelper.instance?.putParcelable(Constants.CATEGORY_EVENT,subCatEvent)
+                    sendEvent(catNameEvent, properties)
+
+                }
+
             } else if (bundle.containsKey(Constants.CATEGORY_ID) && bundle.getString(Constants.CATEGORY_ID) != null) {
                 catNameEvent ="KA_"+bundle.get(Constants.CATEGORY_NAME) as String+"_Category"
                 categoryId = bundle.get(Constants.CATEGORY_ID) as String
@@ -179,6 +199,8 @@ class SubCategoryViewModel @Inject constructor(
                 companyIds.add(bundle.getString(Constants.COMPANY_ID)!!)
                 toolbarTitle.value = bundle.getString(Constants.COMPANY_NAME)!!
                 toolbarImage.value = bundle.getString(Constants.COMPANY_IMAGE)!!
+
+
                 getAllProducts(Constants.RELAVENT_CODE,
                     ArrayList(),
                     ArrayList(),
@@ -186,6 +208,26 @@ class SubCategoryViewModel @Inject constructor(
                     ArrayList(),
                     Constants.API_DATA_LIMITS_IN_ONE_TIME,
                     "1")
+
+                catNameEvent ="KA_Shop_By_Store"
+                val properties = Properties()
+                properties.addAttribute("Source_Screen", "Home")
+                    .addAttribute("App Version", BuildConfig.VERSION_NAME)
+                    .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+                    .setNonInteractive()
+                var subCatEvent: SubCatEvent? =null
+                if (SharedPreferencesHelper.instance?.getParcelable(Constants.CATEGORY_EVENT,SubCatEvent::class.java)!=null){
+                    subCatEvent = SharedPreferencesHelper.instance?.getParcelable(Constants.CATEGORY_EVENT,SubCatEvent::class.java) as SubCatEvent?
+                    subCatEvent?.category_event=catNameEvent
+                }else{
+                    subCatEvent = SubCatEvent(catNameEvent)
+                }
+
+                if (subCatEvent != null) {
+                    SharedPreferencesHelper.instance?.putParcelable(Constants.CATEGORY_EVENT,subCatEvent)
+                    sendEvent(catNameEvent, properties)
+
+                }
             } else if (bundle.containsKey(Constants.PAGE_URL) || bundle.containsKey(Constants.PAGE_SOURCE)) {
                 var webUrl = ""
                 if (bundle.containsKey(Constants.PAGE_URL) && bundle.getString(Constants.PAGE_URL) != null) {

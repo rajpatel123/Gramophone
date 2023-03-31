@@ -15,5 +15,6 @@ interface LanguageActivityNavigator :BaseNavigator {
     fun closeLanguageList()
     fun getLanguageCode(): String?
     fun openNotificationSetting()
+    fun showPushPermissionDialog()
 
 }

@@ -383,6 +383,8 @@ class ArticlesWebViewActivity :
 
     private fun sendShareProductFromArticleMoEngageEvent(productId: Int) {
         val properties = Properties()
+            .addAttribute("Source screen", "Article")
+
             .addAttribute("Product_Id", productId)
             .addAttribute("Redirection_Source", "ArticleWebView")
             .addAttribute("Customer_Id",

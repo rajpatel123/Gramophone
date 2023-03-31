@@ -651,6 +651,8 @@ class ProductDetailsActivity :
 
     private fun sendShareMoEngageEvent() {
         val properties = Properties()
+            .addAttribute("Source screen", "Product Detail")
+
         properties.addAttribute("Product_Id", productDetailsViewModel.productId)
             .addAttribute("Product_Base_Name",
                 productDetailsViewModel.productData.get()?.productBaseName)
@@ -717,6 +719,7 @@ class ProductDetailsActivity :
 
 
         properties.addAttribute("Product_Id", productDetailsViewModel.productId)
+            .addAttribute("Source screen", "Product Detail")
             .addAttribute("Product_Category_Id", productCatId.toString())
             .addAttribute("Product_Category_Name", productCatName.toString())
             .addAttribute("Product_Sub_Category_Id", subCatId.toString())

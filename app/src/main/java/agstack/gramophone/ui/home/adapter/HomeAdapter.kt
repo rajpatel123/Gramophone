@@ -3,6 +3,7 @@ package agstack.gramophone.ui.home.adapter
 
 import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
+import agstack.gramophone.data.model.SubCatEvent
 import agstack.gramophone.databinding.*
 import agstack.gramophone.ui.advisory.AdvisoryActivity
 import agstack.gramophone.ui.articles.ArticlesWebViewActivity
@@ -58,6 +59,7 @@ class HomeAdapter(
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onItemClicked: ((String) -> Unit)? = null
     var fragmentManager: FragmentManager? = null
+
 
     fun updateFragmentManager(fragmentManager: FragmentManager) {
         this.fragmentManager = fragmentManager
@@ -251,6 +253,9 @@ class HomeAdapter(
                                 putString(Constants.HOME_FEATURED_PRODUCTS,
                                     Constants.HOME_FEATURED_PRODUCTS)
                             })
+
+
+                        sendViewAllFeaturedProductView(holder.itemView.context)
                     }
                 } else {
                     holder.binding.itemView.visibility = View.GONE
@@ -385,6 +390,10 @@ class HomeAdapter(
                     && allBannerResponse!!.gpApiResponseData?.homeGramophoneExclusive?.isNotEmpty() == true
                 ) {
                     holder.binding.itemView.visibility = View.VISIBLE
+
+                    holder.binding.itemView.setOnClickListener {
+                        sendExclusiveBannerEvent(context = holder.binding.itemView.context)
+                    }
                     val exclusiveBanner =
                         allBannerResponse!!.gpApiResponseData?.homeGramophoneExclusive
                     val tempBanner: List<Banner>
@@ -724,6 +733,8 @@ class HomeAdapter(
         }
     }
 
+
+
     override fun getItemViewType(position: Int): Int {
         when (homeScreenSequenceList[position]) {
             Constants.HOME_BANNER_1 -> {
@@ -893,6 +904,37 @@ private fun sendFarmMoEngageEvents(context: Context, eventName: String, cropName
     MoEAnalyticsHelper.trackEvent(context, eventName, properties)
 }
 
+private fun sendExclusiveBannerEvent(context: Context) {
+     var catNameEvent = "KA_Feature_Product"
+    var subCatEvent: SubCatEvent? =null
+    if (SharedPreferencesHelper.instance?.getParcelable(Constants.CATEGORY_EVENT, SubCatEvent::class.java)!=null){
+        subCatEvent = SharedPreferencesHelper.instance?.getParcelable(Constants.CATEGORY_EVENT,
+            SubCatEvent::class.java) as SubCatEvent?
+        subCatEvent?.category_event=catNameEvent
+    }else{
+        subCatEvent = SubCatEvent(catNameEvent)
+    }
+    val properties = Properties()
+        .addAttribute("Customer_Id", SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+        .addAttribute("App Version", BuildConfig.VERSION_NAME)
+        .addAttribute("App Version", BuildConfig.VERSION_NAME)
+    properties.setNonInteractive()
+    if (subCatEvent != null) {
+        SharedPreferencesHelper.instance?.putParcelable(Constants.CATEGORY_EVENT,subCatEvent)
+        MoEAnalyticsHelper.trackEvent(context, "KA_ Exclusive_Banner", properties)
+
+    }
+}
+
+
+private fun sendViewAllFeaturedProductView(context: Context) {
+    val properties = Properties()
+        .addAttribute("Customer_Id", SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+        .addAttribute("App Version", BuildConfig.VERSION_NAME)
+        .addAttribute("App Version", BuildConfig.VERSION_NAME)
+    properties.setNonInteractive()
+    MoEAnalyticsHelper.trackEvent(context, "KA_Feature_Product", properties)
+}
 private fun sendFarmDetailMoEngageEvents(
     context: Context,
     data: agstack.gramophone.ui.farm.model.Data,

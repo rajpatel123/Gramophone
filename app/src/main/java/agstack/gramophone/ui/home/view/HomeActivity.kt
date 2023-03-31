@@ -14,15 +14,13 @@ import agstack.gramophone.ui.home.view.fragments.market.MarketFragment
 import agstack.gramophone.ui.home.view.fragments.market.model.BannerResponse
 import agstack.gramophone.ui.home.view.model.FCMRegistrationModel
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
+import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.ui.notification.view.NotificationActivity
 import agstack.gramophone.ui.notification.view.URLHandlerActivity
 import agstack.gramophone.ui.search.view.GlobalSearchActivity
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.GramAppApplication
-import agstack.gramophone.utils.SharedPreferencesHelper
+import agstack.gramophone.utils.*
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
-import agstack.gramophone.utils.SharedPreferencesKeys
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
@@ -33,6 +31,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.TextUtils
+import android.text.format.DateUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -57,6 +56,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.moengage.core.Properties
+import com.moengage.firebase.MoEFireBaseHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.item_menu_cart_with_counter.*
 import kotlinx.android.synthetic.main.navigation_layout.*
@@ -95,7 +95,21 @@ class HomeActivity :
         registerWithFCM()
         processDeepLink()
 
-        if (SharedPreferencesHelper.instance?.getBoolean(Constants.PUSH_ASKED) != true) {
+        val initiateAppDataResponseModel = SharedPreferencesHelper.instance?.getParcelable(
+            SharedPreferencesKeys.app_data, InitiateAppDataResponseModel::class.java
+        )
+
+        var askedCount =  SharedPreferencesHelper.instance?.getInteger(Constants.PUSH_ASKED_COUNT)
+        Log.d("Raj",askedCount.toString()+" == "+getLastShownDayCount())
+        if (!SharedPreferencesHelper.instance?.getBoolean(Constants.IS_PUSH_SHOWN_TODAY)!! && getLastShownDayCount() > initiateAppDataResponseModel?.gp_api_response_data?.notifi_perm_ask_days!!
+            && askedCount!! < initiateAppDataResponseModel?.gp_api_response_data?.notifi_max_attempts!!
+        ) {
+            SharedPreferencesHelper.instance?.putLong(Constants.PUSH_ASKED_DATE,System.currentTimeMillis())
+            askedCount++
+            SharedPreferencesHelper.instance?.putInteger(Constants.PUSH_ASKED_COUNT,
+                askedCount
+            )
+            SharedPreferencesHelper.instance?.putBoolean(Constants.IS_PUSH_SHOWN_TODAY,true)
             when {
                 ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
                         PackageManager.PERMISSION_GRANTED -> {
@@ -105,7 +119,8 @@ class HomeActivity :
                         LayoutInflater.from(this).inflate(R.layout.allow_notification_home, null)
                     val dialogBinding = AllowNotificationHomeBinding.bind(mDialogView)
                     dialogBinding.setVariable(BR.viewModel, homeViewModel)
-
+                    dialogBinding.tvDailogueBox.text =
+                        initiateAppDataResponseModel?.gp_api_response_data?.notifi_messages
                     //AlertDialogBuilder
                     val mBuilder = AlertDialog.Builder(this)
                         .setView(dialogBinding.root)
@@ -125,12 +140,27 @@ class HomeActivity :
         }
     }
 
+    private fun getLastShownDayCount(): Long {
+        if (SharedPreferencesHelper.instance?.getLong(Constants.PUSH_ASKED_DATE)!!>0){
+            val milliseconds =System.currentTimeMillis() - SharedPreferencesHelper.instance?.getLong(Constants.PUSH_ASKED_DATE)!!
+            return (milliseconds / (1000 * 60 * 60 * 24))
+        }else{
+            return 0
+        }
+
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun requestForLocation() {
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS),1)
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
     }
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -154,7 +184,14 @@ class HomeActivity :
                 BuildConfig.VERSION_CODE.toString()
             )
             homeViewModel.sendFCMToServer(fcmRegistrationModel)
+            MoEFireBaseHelper.getInstance()
+                .passPushToken(GramAppApplication.getAppContext(), fcmRegistrationModel.token_value)
 
+            Log.d(
+                "Raj",
+                SharedPreferencesHelper.instance!!.getString(SharedPreferencesKeys.FirebaseTokenKey)
+                    .toString()
+            )
         }
 
     }

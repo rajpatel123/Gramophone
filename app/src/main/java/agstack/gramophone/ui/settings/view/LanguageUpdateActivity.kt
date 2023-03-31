@@ -77,4 +77,7 @@ class LanguageUpdateActivity :
     override fun openNotificationSetting() {
     }
 
+    override fun showPushPermissionDialog() {
+    }
+
 }

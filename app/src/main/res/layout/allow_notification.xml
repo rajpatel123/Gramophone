@@ -45,7 +45,7 @@
                 android:layout_marginRight="@dimen/_32sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/manrope_regular"
-                android:text="@string/allow_message"
+                android:text="@{viewModel.push_message}"
                 android:textColor="#10203E"
                 android:textSize="@dimen/_12ssp" />
 

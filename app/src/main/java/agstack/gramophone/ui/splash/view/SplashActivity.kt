@@ -1,6 +1,7 @@
 package agstack.gramophone.ui.splash.view
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivitySplashBinding
@@ -13,6 +14,7 @@ import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -20,6 +22,8 @@ import androidx.activity.viewModels
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
 import com.android.installreferrer.api.ReferrerDetails
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @SuppressLint("CustomSplashScreen")
@@ -57,6 +61,21 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
             instance?.putString(Constants.URI, intent.data.toString())
 
 
+        if (SharedPreferencesHelper.instance?.getBoolean(Constants.FIRST_OPEN) != true) {
+            val properties = Properties()
+                .addAttribute("App Version", BuildConfig.VERSION_NAME)
+                .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+                .setNonInteractive()
+            MoEAnalyticsHelper.trackEvent(this, "KA_FIRST_APP_OPEN", properties)
+            SharedPreferencesHelper.instance?.putBoolean(Constants.FIRST_OPEN, true)
+        } else {
+            val properties = Properties()
+                .addAttribute("App Version", BuildConfig.VERSION_NAME)
+                .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+                .setNonInteractive()
+            MoEAnalyticsHelper.trackEvent(this, "KA_APP_OPEN", properties)
+
+        }
     }
 
     private fun startApp() {

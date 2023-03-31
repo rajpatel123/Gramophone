@@ -76,31 +76,6 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
         getSecretKeys()
 
 
-        when {
-            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
-                    PackageManager.PERMISSION_GRANTED -> {
-            }
-            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
-
-                val mDialogView =
-                    LayoutInflater.from(this).inflate(R.layout.allow_notification, null)
-                val dialogBinding = AllowNotificationBinding.bind(mDialogView)
-                dialogBinding.setVariable(BR.viewModel, languageViewModel)
-
-                //AlertDialogBuilder
-                val mBuilder = AlertDialog.Builder(this)
-                    .setView(dialogBinding.root)
-                //show dialog
-                val mAlertDialog = mBuilder.show()
-                languageViewModel.setDialog(mAlertDialog)
-                mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background);
-
-
-            }
-            else -> {
-                requestForLocation()
-            }
-        }
 
     }
 
@@ -174,6 +149,34 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
         }
     }
 
+    override fun showPushPermissionDialog() {
+        when {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                    PackageManager.PERMISSION_GRANTED -> {
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+
+                val mDialogView =
+                    LayoutInflater.from(this).inflate(R.layout.allow_notification, null)
+                val dialogBinding = AllowNotificationBinding.bind(mDialogView)
+                dialogBinding.setVariable(BR.viewModel, languageViewModel)
+
+                //AlertDialogBuilder
+                val mBuilder = AlertDialog.Builder(this)
+                    .setView(dialogBinding.root)
+                //show dialog
+                val mAlertDialog = mBuilder.show()
+                languageViewModel.setDialog(mAlertDialog)
+                mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background);
+
+
+            }
+            else -> {
+                requestForLocation()
+            }
+        }
+
+    }
 
 
     override fun onError(message: String?) {

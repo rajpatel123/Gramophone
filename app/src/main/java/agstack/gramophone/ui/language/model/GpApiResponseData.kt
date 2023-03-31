@@ -28,5 +28,15 @@ data class GpApiResponseData(
     val temp_token: String,
 
     @SerializedName("update_message")
-    val update_message: String
+    val update_message: String,
+
+    @SerializedName("notifi_perm_ask_days")
+    val notifi_perm_ask_days: Int,
+
+    @SerializedName("notifi_max_attempts")
+    val notifi_max_attempts: Int,
+
+    @SerializedName("notifi_messages")
+    val notifi_messages: String,
+
 ):Parcelable

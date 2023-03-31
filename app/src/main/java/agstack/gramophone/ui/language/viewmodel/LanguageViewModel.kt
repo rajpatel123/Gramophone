@@ -32,6 +32,7 @@ class LanguageViewModel @Inject constructor(
 ) : BaseViewModel<LanguageActivityNavigator>() {
     var language: Language? = null
     var isLanguageSelected = ObservableField<Boolean>()
+    var push_message = ObservableField<String>()
 lateinit var mAlertDialog: AlertDialog
     fun getLanguageList() = viewModelScope.launch {
         isLanguageSelected.set(false)
@@ -97,6 +98,9 @@ lateinit var mAlertDialog: AlertDialog
                         SharedPreferencesKeys.app_data,
                         initiateAppDataResponseModel!!
                     )
+
+                    push_message.set(initiateAppDataResponseModel?.gp_api_response_data?.notifi_messages)
+                    getNavigator()?.showPushPermissionDialog()
                 }else{
                     getNavigator()?.onError(initiateAppDataResponseModel?.gp_api_message)
 

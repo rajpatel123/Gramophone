@@ -7,8 +7,12 @@ import android.content.Context
 
 object Constants {
 
+    val IS_PUSH_SHOWN_TODAY: String = "isPushShownToday"
+    val FIRST_OPEN: String="first"
     val CATEGORY_EVENT: String="cat_event"
     val PUSH_ASKED: String ="push_permission"
+    val PUSH_ASKED_COUNT: String ="AskedCount"
+    val PUSH_ASKED_DATE: String ="AskedDate"
     val AFTER_KEY: String="after_key"
     val REFERRAL_CODE_VALUE: String="referralValue"
     val LATITUDE: String="lat"
@@ -205,7 +209,7 @@ object Constants {
     const val HindiISOCode = "hi"
     const val MarathiISOCode = "mr"
     const val EnglishISOCode = "en"
-    const val DefaultLangISOCode = "hi"
+    const val DefaultLangISOCode = "en"
     const val Hindi = "Hindi"
     const val English = "English"
 

@@ -35,6 +35,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.moengage.firebase.MoEFireBaseHelper;
+import com.moengage.pushbase.MoEPushHelper;
 
 import java.util.HashMap;
 
@@ -42,6 +44,7 @@ import agstack.gramophone.R;
 import agstack.gramophone.ui.home.view.HomeActivity;
 import agstack.gramophone.ui.splash.view.SplashActivity;
 import agstack.gramophone.utils.Constants;
+import agstack.gramophone.utils.GramAppApplication;
 import agstack.gramophone.utils.IntentKeys;
 import agstack.gramophone.utils.SharedPreferencesHelper;
 import agstack.gramophone.utils.SharedPreferencesKeys;
@@ -74,8 +77,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
-        handleRemoteMessage(remoteMessage);
+        if (MoEPushHelper.getInstance().isFromMoEngagePlatform(remoteMessage.getData())) {
+            MoEFireBaseHelper.Companion.getInstance().passPushPayload(getApplicationContext(), remoteMessage.getData());
+        }else{
+            handleRemoteMessage(remoteMessage);
+        }
     }
 
 
@@ -270,7 +276,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onNewToken(String token) {
         Log.d("Token----", token);
-
         SharedPreferencesHelper.initializeInstance(this);
         SharedPreferencesHelper.getInstance().putString(SharedPreferencesKeys.FirebaseTokenKey, token);
         SharedPreferencesHelper.getInstance().putBoolean(SharedPreferencesKeys.IsFirebaseTokenUpdatedKey, true);

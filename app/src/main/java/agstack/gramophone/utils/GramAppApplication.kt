@@ -15,6 +15,7 @@ import com.moengage.core.MoECoreHelper
 import com.moengage.core.MoEngage
 import com.moengage.core.analytics.MoEAnalyticsHelper
 import com.moengage.core.config.*
+import com.moengage.firebase.MoEFireBaseHelper
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -26,6 +27,8 @@ class GramAppApplication : Application() {
         fun getAppContext(): GramAppApplication{
             return GramAppApplication()
         }
+
+
 
         fun userInfoMoEngage(context: Context) {
            try {
@@ -101,7 +104,7 @@ class GramAppApplication : Application() {
                 isMultipleNotificationInDrawerEnabled = true,
                 isBuildingBackStackEnabled = true,
                 isLargeIconDisplayEnabled = true))
-            .configureFcm(FcmConfig(false))
+            .configureFcm(FcmConfig(true))
             .configureInApps(InAppConfig(null))
             .configureGeofence(GeofenceConfig(true))
             .configureLogs(LogConfig(LogLevel.VERBOSE, false))

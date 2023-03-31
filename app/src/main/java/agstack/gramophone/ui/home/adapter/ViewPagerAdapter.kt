@@ -1,5 +1,6 @@
 package agstack.gramophone.ui.home.adapter
 
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.notification.view.URLHandlerActivity
@@ -8,6 +9,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +20,8 @@ import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
 import java.util.*
 
 class ViewPagerAdapter(private val imageList: List<Banner>, private val activity: Activity?) :
@@ -51,7 +55,6 @@ class ViewPagerAdapter(private val imageList: List<Banner>, private val activity
 
 
         imageView.setOnClickListener {
-            Log.d("Banner", "" + imageList[position].bannerLink)
             val uri = Uri.parse(imageList[position].bannerLink)
             try {
                 val pageName = uri.getQueryParameter("category")
@@ -68,7 +71,7 @@ class ViewPagerAdapter(private val imageList: List<Banner>, private val activity
                 return@setOnClickListener
             }
 
-
+        sendBannerClickEvent(container.context)
         }
         // on below line we are setting
         // image resource for image view.
@@ -85,6 +88,15 @@ class ViewPagerAdapter(private val imageList: List<Banner>, private val activity
         // on below line we are simply
         // returning our item view.
         return itemView
+    }
+
+    private fun sendBannerClickEvent(context: Context) {
+        val properties = Properties()
+            .addAttribute("App Version", BuildConfig.VERSION_NAME)
+            .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+            .setNonInteractive()
+        MoEAnalyticsHelper.trackEvent(context, "KA_Home_Banner_click", properties)
+
     }
 
     // on below line we are creating a destroy item method.

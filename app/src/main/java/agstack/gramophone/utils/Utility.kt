@@ -288,4 +288,6 @@ object Utility {
         val formatter = SimpleDateFormat(COMMUNITY_DATE_FORMAT)
         return formatter.format(cal.time).plus("Z")
     }
+
+
 }

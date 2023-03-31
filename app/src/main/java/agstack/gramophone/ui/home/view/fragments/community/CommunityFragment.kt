@@ -171,6 +171,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
             )!!
         )
             .addAttribute("SharedEntity", "POST")
+            .addAttribute("Source screen", "HOME")
         sendMoEngageEvent("KA_Share", properties)
 
     }

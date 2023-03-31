@@ -391,6 +391,7 @@ class CommunityViewModel @Inject constructor(
                                     SharedPreferencesKeys.CUSTOMER_ID
                                 )!!
                             )
+                                .addAttribute("Source screen", "HOME")
                                 .addAttribute("SharedEntity", it)
                             getNavigator()?.sendMoEngageEvent("KA_Share", properties)
                             getNavigator()?.sharePost(it)
