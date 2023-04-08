@@ -2,7 +2,6 @@ package agstack.gramophone.base
 
 import agstack.gramophone.R
 import agstack.gramophone.ui.dialog.BottomSheetDialog
-import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.LocaleManagerClass
 import agstack.gramophone.utils.hasInternetConnection
@@ -35,9 +34,10 @@ import com.moengage.core.Properties
 import java.util.*
 
 abstract class BaseDialogFragment<B : ViewDataBinding, N : BaseNavigator, V : BaseViewModel<N>> :
-    DialogFragment(), BaseNavigator {
+    DialogFragment(),BaseNavigator
+{
     protected lateinit var binding: B
-    private var mActivity: Activity? = null
+    private var mActivity :Activity ?=null
     protected var mViewModel: V? = null
     private var mContext: Context? = null
 
@@ -50,7 +50,6 @@ abstract class BaseDialogFragment<B : ViewDataBinding, N : BaseNavigator, V : Ba
         super.onAttach(activity)
         this.mActivity = activity
     }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setWidthPercent(95)
@@ -79,7 +78,7 @@ abstract class BaseDialogFragment<B : ViewDataBinding, N : BaseNavigator, V : Ba
         savedInstanceState: Bundle?
     ): View? {
         this.binding = DataBindingUtil.inflate<B>(
-            inflater,
+           inflater,
             getLayoutID(),
             container,
             false
@@ -103,59 +102,41 @@ abstract class BaseDialogFragment<B : ViewDataBinding, N : BaseNavigator, V : Ba
     }
 
 
+
     override fun isNetworkAvailable(): Boolean {
         return hasInternetConnection(requireContext())
     }
 
     override fun <T> openActivity(cls: Class<T>, extras: Bundle?) {
-        if (isNetworkAvailable()) {
-            Intent(context, cls).apply {
-                if (extras != null)
-                    putExtras(extras)
-                startActivity(this)
-            }
-        } else {
-            val intent = Intent(activity, LostConnectionActivity::class.java)
-            activity?.startActivity(intent)
+        Intent(context, cls).apply {
+            if (extras != null)
+                putExtras(extras)
+            startActivity(this)
         }
     }
 
     override fun <T> openAndFinishActivity(cls: Class<T>, extras: Bundle?) {
-        if (isNetworkAvailable()) {
-            Intent(context, cls).apply {
-                if (extras != null)
-                    putExtras(extras)
-                startActivity(this)
+        Intent(context, cls).apply {
 
-            }
-        } else {
-            val intent = Intent(activity, LostConnectionActivity::class.java)
-            activity?.startActivity(intent)
+            if (extras != null)
+                putExtras(extras)
+            startActivity(this)
+
         }
     }
-
 
     override fun <T : Activity> openActivityWithBottomToTopAnimation(
         cls: Class<T>,
         extras: Bundle?
     ) {
-        if (isNetworkAvailable()) {
-            Intent(context, cls).apply {
+        Intent(context, cls).apply {
 
-                if (extras != null)
-                    putExtras(extras)
-                startActivity(this)
-                requireActivity().overridePendingTransition(
-                    R.anim.slide_in_up,
-                    R.anim.slide_out_up
-                );
+            if (extras != null)
+                putExtras(extras)
+            startActivity(this)
+            requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
-            }
-        } else {
-            val intent = Intent(activity, LostConnectionActivity::class.java)
-            activity?.startActivity(intent)
         }
-
     }
 
 
@@ -163,20 +144,14 @@ abstract class BaseDialogFragment<B : ViewDataBinding, N : BaseNavigator, V : Ba
         cls: Class<T>,
         extras: Bundle?
     ) {
-        if (isNetworkAvailable()) {
-            Intent(context, cls).apply {
+        Intent(context, cls).apply {
 
-                if (extras != null)
-                    putExtras(extras)
-                this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                startActivity(this)
+            if (extras != null)
+                putExtras(extras)
+            this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(this)
 
-            }
-        } else {
-            val intent = Intent(activity, LostConnectionActivity::class.java)
-            activity?.startActivity(intent)
         }
-
     }
 
     override fun requestPermission(permission: String): Boolean {
@@ -192,13 +167,13 @@ abstract class BaseDialogFragment<B : ViewDataBinding, N : BaseNavigator, V : Ba
     }
 
     override fun showToast(stringResourceId: Int) {
-        if (mContext != null)
-            Toast.makeText(mContext, stringResourceId, Toast.LENGTH_LONG).show()
+        if (mContext!=null)
+        Toast.makeText(mContext, stringResourceId, Toast.LENGTH_LONG).show()
     }
 
     override fun showToast(message: String?) {
-        if (mContext != null)
-            Toast.makeText(mContext, message, Toast.LENGTH_LONG).show()
+        if (mContext!=null)
+        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show()
 
 
     }
