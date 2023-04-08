@@ -21,10 +21,7 @@ import agstack.gramophone.ui.tv.GramophoneTVActivity
 import agstack.gramophone.ui.tv.fragment.HomeTvFragment
 import agstack.gramophone.ui.weather.WeatherActivity
 import agstack.gramophone.ui.weather.model.WeatherResponse
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
-import agstack.gramophone.utils.Utility
+import agstack.gramophone.utils.*
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -40,6 +37,7 @@ import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.bumptech.glide.Glide
 import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
+import com.moengage.core.internal.utils.showToast
 
 
 class HomeAdapter(
@@ -244,6 +242,8 @@ class HomeAdapter(
                                 putParcelable(Constants.PRODUCT,
                                     productData)
                             })
+                        sendViewAllFeaturedProductView(holder.itemView.context)
+
                     }
                     holder.binding.rvFeatureProduct.adapter = featuredAdapter
                     holder.binding.viewAllFeaturedProduct.setOnClickListener {
@@ -327,7 +327,14 @@ class HomeAdapter(
                     val tempStoreList: List<StoreData> = if (storeList.size >= 4)
                         storeList.subList(0, 4)
                     else storeList
+
+//                    tempStoreList[0].storeImage="https://kb.gramophone.in/wp-content/uploads/2023/04/Asset-1.png"
+//                    tempStoreList[1].storeImage="https://kb.gramophone.in/wp-content/uploads/2023/04/Asset-1.png"
+//                    tempStoreList[2].storeImage="https://kb.gramophone.in/wp-content/uploads/2023/04/Asset-1.png"
+//                    tempStoreList[3].storeImage="https://kb.gramophone.in/wp-content/uploads/2023/04/Asset-1.png"
+
                     val storeAdapter = ShopByStoresAdapter(tempStoreList) { id, name, image ->
+
                         openActivity(holder.itemView.context,
                             FeaturedProductActivity::class.java,
                             Bundle().apply {
@@ -410,6 +417,7 @@ class HomeAdapter(
                         }
                         val exclusiveBannerAdapter = ExclusiveBannerAdapter(tempBanner) {
                             /* Do anything on banner click */
+                            sendExclusiveBannerEvent(context = holder.binding.itemView.context)
                         }
                         holder.binding.rvExclusive.adapter = exclusiveBannerAdapter
                     }
@@ -795,11 +803,16 @@ class HomeAdapter(
     }
 
     fun <T> openActivity(context: Context, cls: Class<T>, extras: Bundle?) {
-        Intent(context, cls).apply {
-            if (extras != null)
-                putExtras(extras)
-            context.startActivity(this)
+        if (hasInternetConnection(context)){
+            Intent(context, cls).apply {
+                if (extras != null)
+                    putExtras(extras)
+                context.startActivity(this)
+            }
+        }else{
+            showToast(context,context.getString(R.string.no_connection))
         }
+
     }
 
     inner class EmptyViewHolder(var binding: ItemHomeEmptyBinding) :
@@ -905,7 +918,7 @@ private fun sendFarmMoEngageEvents(context: Context, eventName: String, cropName
 }
 
 private fun sendExclusiveBannerEvent(context: Context) {
-     var catNameEvent = "KA_Feature_Product"
+     var catNameEvent = "KA_Exclusive_Banner"
     var subCatEvent: SubCatEvent? =null
     if (SharedPreferencesHelper.instance?.getParcelable(Constants.CATEGORY_EVENT, SubCatEvent::class.java)!=null){
         subCatEvent = SharedPreferencesHelper.instance?.getParcelable(Constants.CATEGORY_EVENT,
@@ -921,7 +934,7 @@ private fun sendExclusiveBannerEvent(context: Context) {
     properties.setNonInteractive()
     if (subCatEvent != null) {
         SharedPreferencesHelper.instance?.putParcelable(Constants.CATEGORY_EVENT,subCatEvent)
-        MoEAnalyticsHelper.trackEvent(context, "KA_ Exclusive_Banner", properties)
+        MoEAnalyticsHelper.trackEvent(context, "KA_Exclusive_Banner", properties)
 
     }
 }

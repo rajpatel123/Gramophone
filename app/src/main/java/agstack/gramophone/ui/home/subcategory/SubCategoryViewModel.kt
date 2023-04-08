@@ -209,7 +209,7 @@ class SubCategoryViewModel @Inject constructor(
                     Constants.API_DATA_LIMITS_IN_ONE_TIME,
                     "1")
 
-                catNameEvent ="KA_Shop_By_Store"
+                catNameEvent ="KA_Shop_By_Company"
                 val properties = Properties()
                 properties.addAttribute("Source_Screen", "Home")
                     .addAttribute("App Version", BuildConfig.VERSION_NAME)

@@ -141,7 +141,7 @@
     <string name="onlyGenuineBuyerCanRate">केवळ खरा खरेदीदार या उत्पादनाला रेट करू शकतो</string>
     <string name="gramophone_allows_disclaimer">ग्रामोफोन केवळ प्रमाणित खरेदीदारांना तुमच्या उत्तम खरेदी अनुभवासाठी उत्पादनाला रेट करण्याची परवानगी देतो.</string>
 
-    <string name="no_internet">"इंटरनेट कनेक्शन नाही "</string>
+    <string name="no_internet">इंटरनेट कनेक्शन नाही</string>
     <string name="sku">एसकेयू:&#160;</string>
     <string name="offers_applied">&#160;ऑफर लागू</string>
     <string name="rupee_symbol_with_space">\u20B9&#160;</string>
@@ -694,6 +694,8 @@
     <string name="allow_notification">सूचनांना अनुमती द्या</string>
     <string name="allow">अनुमती द्या</string>
     <string name="allow_message">ग्रामोफोनला तुम्हाला सूचना पाठवण्याची परवानगी द्या?</string>
+    <string name="no_internet_msg">इंटरनेट कनेक्शन नसल्याचे दिसते. गोष्टी तपासण्याचा प्रयत्न करा</string>
+    <string name="retry">पुन्हा प्रयत्न करा</string>
 
 
 </resources>

@@ -5,8 +5,10 @@ import agstack.gramophone.ui.dialog.BottomSheetDialog
 import agstack.gramophone.utils.*
 import android.Manifest
 import android.app.Activity
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
@@ -27,6 +29,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
+import com.moengage.core.internal.utils.showToast
 import java.util.*
 
 abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : BaseViewModel<N>> :
@@ -51,6 +54,11 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         }
 
 
+
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewDataBinding = DataBindingUtil.inflate<B>(
@@ -61,6 +69,9 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         )
 
 
+
+
+
         this.mViewModel = getViewModel()
         viewDataBinding.setVariable(getBindingVariable(), mViewModel)
         setContentView(viewDataBinding.root)
@@ -69,47 +80,73 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     }
 
 
+
+
     override fun <T> openActivity(cls: Class<T>, extras: Bundle?) {
-        Intent(this, cls).apply {
+        if (hasInternetConnection(this)){
+            Intent(this, cls).apply {
 
-            if (extras != null)
-                putExtras(extras)
-            startActivity(this)
+                if (extras != null)
+                    putExtras(extras)
+                startActivity(this)
 
+            }
+
+        }else{
+           showToast(getString(R.string.no_connection))
         }
     }
     override fun <T:Activity> openActivityWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?) {
-        Intent(this, cls).apply {
 
-            if (extras != null)
-                putExtras(extras)
-            startActivity(this)
-            overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+        if (hasInternetConnection(this)){
+            Intent(this, cls).apply {
 
+                if (extras != null)
+                    putExtras(extras)
+                startActivity(this)
+                overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+
+            }
+
+        }else{
+            showToast(getString(R.string.no_connection))
         }
+
     }
 
 
     override fun <T> openAndFinishActivity(cls: Class<T>, extras: Bundle?) {
-        Intent(this, cls).apply {
 
-            if (extras != null)
-                putExtras(extras)
-            finish()
-            startActivity(this)
+        if (hasInternetConnection(this)){
+            Intent(this, cls).apply {
+
+                if (extras != null)
+                    putExtras(extras)
+                finish()
+                startActivity(this)
 
 
+            }
+
+        }else{
+            showToast(getString(R.string.no_connection))
         }
     }
 
     override fun <T> openAndFinishActivityWithClearTopNewTaskClearTaskFlags(cls: Class<T>, extras: Bundle?) {
-        Intent(this, cls).apply {
 
-            if (extras != null)
-                putExtras(extras)
-            this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(this)
+        if (hasInternetConnection(this)){
+            Intent(this, cls).apply {
 
+                if (extras != null)
+                    putExtras(extras)
+                this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(this)
+
+            }
+
+        }else{
+            showToast(getString(R.string.no_connection))
         }
     }
    /* fun <T:Activity> openActivityforResultWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?,requestCode:Int) {
@@ -249,6 +286,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     override fun onDestroy() {
         super.onDestroy()
         viewDataBinding.unbind()
+
     }
 
     override fun onRequestPermissionsResult(
@@ -297,4 +335,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         MoEAnalyticsHelper.trackEvent(this, event, properties)
 
     }
+
+
+
 }

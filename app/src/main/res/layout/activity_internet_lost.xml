@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center"
+            android:text="@string/no_internet"
+            android:textColor="@color/brand_color"
+            android:textSize="@dimen/_14ssp" />
+
+        <TextView
+            android:id="@+id/subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/head"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/manrope_regular"
+            android:gravity="center"
+            android:text="@string/no_internet_msg"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
+
+
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="48dp"
+            android:layout_below="@+id/subhead"
+            android:background="@drawable/rounded_corner_12_solid_orange"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center"
+            android:text="@string/retry"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="normal" />
+
+    </RelativeLayout>
+</layout>

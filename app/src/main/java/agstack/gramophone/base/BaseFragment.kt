@@ -92,43 +92,63 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     }
 
     override fun <T> openActivity(cls: Class<T>, extras: Bundle?) {
-        Intent(context, cls).apply {
-            if (extras != null)
-                putExtras(extras)
-            startActivity(this)
+        if (isNetworkAvailable()){
+            Intent(context, cls).apply {
+                if (extras != null)
+                    putExtras(extras)
+                startActivity(this)
+            }
+
+        }else{
+            showToast(getString(R.string.no_connection))
         }
     }
 
     override fun <T> openAndFinishActivity(cls :Class<T>,extras:Bundle?){
-        Intent(context,cls).apply {
+        if (isNetworkAvailable()){
+            Intent(context,cls).apply {
 
-            if(extras!=null)
-                putExtras(extras)
-            startActivity(this)
+                if(extras!=null)
+                    putExtras(extras)
+                startActivity(this)
 
+            }
+
+        }else{
+            showToast(getString(R.string.no_connection))
         }
     }
 
     override fun <T:Activity> openActivityWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?) {
-        Intent(context, cls).apply {
+        if (isNetworkAvailable()){
+            Intent(context, cls).apply {
 
-            if (extras != null)
-                putExtras(extras)
-            startActivity(this)
-            requireActivity().overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+                if (extras != null)
+                    putExtras(extras)
+                startActivity(this)
+                requireActivity().overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
 
+            }
+
+        }else{
+            showToast(getString(R.string.no_connection))
         }
     }
 
 
     override fun <T> openAndFinishActivityWithClearTopNewTaskClearTaskFlags(cls: Class<T>, extras: Bundle?) {
-        Intent(context, cls).apply {
+        if (isNetworkAvailable()){
+            Intent(context, cls).apply {
 
-            if (extras != null)
-                putExtras(extras)
-            this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(this)
+                if (extras != null)
+                    putExtras(extras)
+                this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(this)
 
+            }
+
+        }else{
+            showToast(getString(R.string.no_connection))
         }
     }
 
