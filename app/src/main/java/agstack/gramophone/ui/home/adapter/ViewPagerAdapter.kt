@@ -2,9 +2,11 @@ package agstack.gramophone.ui.home.adapter
 
 import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
+import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.Banner
 import agstack.gramophone.ui.notification.view.URLHandlerActivity
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.hasInternetConnection
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -58,14 +60,20 @@ class ViewPagerAdapter(private val imageList: List<Banner>, private val activity
             val uri = Uri.parse(imageList[position].bannerLink)
             try {
                 val pageName = uri.getQueryParameter("category")
-
-                if (pageName!=null){
-                    val intent = Intent(activity, URLHandlerActivity::class.java)
-                    intent.putExtra(
-                        Constants.URI, imageList[position].bannerLink
-                    )
+                if (hasInternetConnection(activity!!)){
+                    if (pageName!=null){
+                        val intent = Intent(activity, URLHandlerActivity::class.java)
+                        intent.putExtra(
+                            Constants.URI, imageList[position].bannerLink
+                        )
+                        activity?.startActivity(intent)
+                    }
+                }else{
+                    val intent = Intent(activity, LostConnectionActivity::class.java)
                     activity?.startActivity(intent)
+
                 }
+
 
             } catch (ex: Exception) {
                 return@setOnClickListener

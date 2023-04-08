@@ -2,6 +2,7 @@ package agstack.gramophone.base
 
 import agstack.gramophone.R
 import agstack.gramophone.ui.dialog.BottomSheetDialog
+import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.utils.*
 import android.Manifest
 import android.app.Activity
@@ -54,11 +55,6 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         }
 
 
-
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewDataBinding = DataBindingUtil.inflate<B>(
@@ -80,10 +76,8 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     }
 
 
-
-
     override fun <T> openActivity(cls: Class<T>, extras: Bundle?) {
-        if (hasInternetConnection(this)){
+        if (hasInternetConnection(this)) {
             Intent(this, cls).apply {
 
                 if (extras != null)
@@ -92,24 +86,36 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
             }
 
-        }else{
-           showToast(getString(R.string.no_connection))
+        } else {
+            Intent(this, LostConnectionActivity::class.java).apply {
+                if (extras != null)
+                    putExtras(extras)
+                startActivity(this)
+            }
         }
     }
-    override fun <T:Activity> openActivityWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?) {
 
-        if (hasInternetConnection(this)){
+    override fun <T : Activity> openActivityWithBottomToTopAnimation(
+        cls: Class<T>,
+        extras: Bundle?
+    ) {
+
+        if (hasInternetConnection(this)) {
             Intent(this, cls).apply {
 
                 if (extras != null)
                     putExtras(extras)
                 startActivity(this)
-                overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
             }
 
-        }else{
-            showToast(getString(R.string.no_connection))
+        } else {
+            Intent(this, LostConnectionActivity::class.java).apply {
+                if (extras != null)
+                    putExtras(extras)
+                startActivity(this)
+            }
         }
 
     }
@@ -117,7 +123,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
     override fun <T> openAndFinishActivity(cls: Class<T>, extras: Bundle?) {
 
-        if (hasInternetConnection(this)){
+        if (hasInternetConnection(this)) {
             Intent(this, cls).apply {
 
                 if (extras != null)
@@ -128,14 +134,21 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
             }
 
-        }else{
-            showToast(getString(R.string.no_connection))
+        } else {
+            Intent(this, LostConnectionActivity::class.java).apply {
+                if (extras != null)
+                    putExtras(extras)
+                startActivity(this)
+            }
         }
     }
 
-    override fun <T> openAndFinishActivityWithClearTopNewTaskClearTaskFlags(cls: Class<T>, extras: Bundle?) {
+    override fun <T> openAndFinishActivityWithClearTopNewTaskClearTaskFlags(
+        cls: Class<T>,
+        extras: Bundle?
+    ) {
 
-        if (hasInternetConnection(this)){
+        if (hasInternetConnection(this)) {
             Intent(this, cls).apply {
 
                 if (extras != null)
@@ -145,24 +158,28 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
 
             }
 
-        }else{
-            showToast(getString(R.string.no_connection))
+        } else {
+            Intent(this, LostConnectionActivity::class.java).apply {
+                if (extras != null)
+                    putExtras(extras)
+                startActivity(this)
+            }
         }
     }
-   /* fun <T:Activity> openActivityforResultWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?,requestCode:Int) {
-       var intent= Intent(this, cls).apply {
-            if (extras != null)
-                putExtras(extras)
+    /* fun <T:Activity> openActivityforResultWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?,requestCode:Int) {
+        var intent= Intent(this, cls).apply {
+             if (extras != null)
+                 putExtras(extras)
 
-        }
-        registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                val value = it.data?.getStringExtra("input")
-            }
-        }.launch(intent)
-    }*/
+         }
+         registerForActivityResult(
+             ActivityResultContracts.StartActivityForResult()
+         ) {
+             if (it.resultCode == Activity.RESULT_OK) {
+                 val value = it.data?.getStringExtra("input")
+             }
+         }.launch(intent)
+     }*/
 
 
     override fun isNetworkAvailable(): Boolean {
@@ -177,11 +194,9 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     }
 
 
-
-
-   /* override fun checkSelfPermissions(permission: String, response: (Boolean) -> Unit): Boolean {
-        return checkPermissionNew(permission,response)
-    }*/
+    /* override fun checkSelfPermissions(permission: String, response: (Boolean) -> Unit): Boolean {
+         return checkPermissionNew(permission,response)
+     }*/
     open fun replaceFragment(fragment: Fragment, TAG: String?) {
         try {
             val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -193,7 +208,12 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         }
     }
 
-    fun setUpToolBar(enableBackButton: Boolean, title: String, @DrawableRes drawable: Int? = null, elevation : Boolean = false) {
+    fun setUpToolBar(
+        enableBackButton: Boolean,
+        title: String,
+        @DrawableRes drawable: Int? = null,
+        elevation: Boolean = false
+    ) {
         val toolbar = findViewById<Toolbar>(R.id.myToolbar)
         if (toolbar != null) {
             setSupportActionBar(toolbar)
@@ -216,15 +236,15 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
     }
 
     override fun getMessage(stringResourceId: Int): String {
-        return ""+getString(stringResourceId)
+        return "" + getString(stringResourceId)
     }
 
     override fun showToast(stringResourceId: Int) {
-        Toast.makeText(this, ""+getString(stringResourceId), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "" + getString(stringResourceId), Toast.LENGTH_LONG).show()
     }
 
     override fun showToast(message: String?) {
-        Toast.makeText(this, ""+message, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "" + message, Toast.LENGTH_LONG).show()
     }
 
     override fun onError(message: String?) {
@@ -315,7 +335,7 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         finish()
     }
 
-    override fun hideSoftKeyboard(view : View) {
+    override fun hideSoftKeyboard(view: View) {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
@@ -335,7 +355,6 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         MoEAnalyticsHelper.trackEvent(this, event, properties)
 
     }
-
 
 
 }

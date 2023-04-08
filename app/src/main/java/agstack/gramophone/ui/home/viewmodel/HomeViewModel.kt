@@ -11,6 +11,8 @@ import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
 import agstack.gramophone.ui.feedback.FeedbackActivity
 import agstack.gramophone.ui.gramcash.GramCashActivity
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
+import agstack.gramophone.ui.home.view.HomeActivity
+import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.model.FCMRegistrationModel
 import agstack.gramophone.ui.offerslist.OffersListActivity
@@ -86,7 +88,8 @@ class HomeViewModel @Inject constructor(
 
                                 SharedPreferencesHelper.instance?.putParcelable(
                                     SharedPreferencesKeys.PROFILE_DATA,
-                                    gpApiResponseData)
+                                    gpApiResponseData
+                                )
 
                                 SharedPreferencesHelper.instance?.putString(
                                     SharedPreferencesKeys.USERNAME,
@@ -111,7 +114,10 @@ class HomeViewModel @Inject constructor(
                                     customerAddress
                                 )
 
-                                SharedPreferencesHelper.instance?.putParcelable(SharedPreferencesKeys.CUSTOMER_DATA, gpApiResponseData)
+                                SharedPreferencesHelper.instance?.putParcelable(
+                                    SharedPreferencesKeys.CUSTOMER_DATA,
+                                    gpApiResponseData
+                                )
 
                                 getNavigator()?.setImageNameMobile(
                                     name,
@@ -130,7 +136,7 @@ class HomeViewModel @Inject constructor(
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
             } catch (ex: Exception) {
                 when (ex) {
-                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
                     else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
@@ -167,7 +173,7 @@ class HomeViewModel @Inject constructor(
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
             } catch (ex: Exception) {
                 when (ex) {
-                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
                     else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
@@ -182,7 +188,8 @@ class HomeViewModel @Inject constructor(
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     val response = productRepository.getCrops()
                     if (response.isSuccessful) {
-                        SharedPreferencesHelper.instance?.putParcelable(SharedPreferencesKeys.CROPS,
+                        SharedPreferencesHelper.instance?.putParcelable(
+                            SharedPreferencesKeys.CROPS,
                             response.body()!!
                         )
                     } else {
@@ -192,7 +199,7 @@ class HomeViewModel @Inject constructor(
             }
         } catch (ex: Exception) {
             when (ex) {
-                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
                 else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
             }
         }
@@ -284,25 +291,25 @@ class HomeViewModel @Inject constructor(
             SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!
         ).addAttribute("Redirection_Source", "Home Page").setNonInteractive()
 
-        getNavigator()?.sendMoEngageEvent("KA_Open_CreatePost",properties)
+        getNavigator()?.sendMoEngageEvent("KA_Open_CreatePost", properties)
 
         getNavigator()?.openActivity(CreatePostActivity::class.java, null)
     }
 
     fun onCallClicked() {
-       viewModelScope.launch {
-           var producttoBeAdded = ProductData()
-           producttoBeAdded.product_id=null
+        viewModelScope.launch {
+            var producttoBeAdded = ProductData()
+            producttoBeAdded.product_id = null
 
-           val expertAdviceResponse =
-               productRepository.getHelp(Constants.HELP, producttoBeAdded)
+            val expertAdviceResponse =
+                productRepository.getHelp(Constants.HELP, producttoBeAdded)
 
-           if (expertAdviceResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
-               getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
-           } else {
-               getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
-           }
-       }
+            if (expertAdviceResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+                getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
+            } else {
+                getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
+            }
+        }
     }
 
     fun sendFCMToServer(fcmRegistrationModel: FCMRegistrationModel) {
@@ -319,18 +326,18 @@ class HomeViewModel @Inject constructor(
             }
         } catch (ex: Exception) {
             when (ex) {
-                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
                 else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
             }
         }
     }
 
-    fun openSetting(){
+    fun openSetting() {
         getNavigator()?.openNotificationSetting()
     }
 
-    fun cancel(){
-        SharedPreferencesHelper.instance?.putBoolean(Constants.PUSH_ASKED,true)
+    fun cancel() {
+        SharedPreferencesHelper.instance?.putBoolean(Constants.PUSH_ASKED, true)
         mAlertDialog?.dismiss()
     }
 
@@ -339,5 +346,8 @@ class HomeViewModel @Inject constructor(
 
     }
 
+    fun retryBtn() {
+        getNavigator()?.finishActivity()
+    }
 
 }

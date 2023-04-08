@@ -2,6 +2,7 @@ package agstack.gramophone.base
 
 import agstack.gramophone.R
 import agstack.gramophone.ui.dialog.BottomSheetDialog
+import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.LocaleManagerClass
 import agstack.gramophone.utils.hasInternetConnection
@@ -31,9 +32,9 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     BaseNavigator {
     protected var binding: B? = null
 
-    protected var mViewModel :V?=null
-    private var mContext :Context?=null
-    private var mActivity :Activity ?=null
+    protected var mViewModel: V? = null
+    private var mContext: Context? = null
+    private var mActivity: Activity? = null
 
 
     abstract fun getLayoutID(): Int
@@ -92,52 +93,64 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     }
 
     override fun <T> openActivity(cls: Class<T>, extras: Bundle?) {
-        if (isNetworkAvailable()){
+        if (isNetworkAvailable()) {
             Intent(context, cls).apply {
                 if (extras != null)
                     putExtras(extras)
                 startActivity(this)
             }
 
-        }else{
-            showToast(getString(R.string.no_connection))
+        } else {
+            val intent = Intent(activity, LostConnectionActivity::class.java)
+            activity?.startActivity(intent)
         }
     }
 
-    override fun <T> openAndFinishActivity(cls :Class<T>,extras:Bundle?){
-        if (isNetworkAvailable()){
-            Intent(context,cls).apply {
-
-                if(extras!=null)
-                    putExtras(extras)
-                startActivity(this)
-
-            }
-
-        }else{
-            showToast(getString(R.string.no_connection))
-        }
-    }
-
-    override fun <T:Activity> openActivityWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?) {
-        if (isNetworkAvailable()){
+    override fun <T> openAndFinishActivity(cls: Class<T>, extras: Bundle?) {
+        if (isNetworkAvailable()) {
             Intent(context, cls).apply {
 
                 if (extras != null)
                     putExtras(extras)
                 startActivity(this)
-                requireActivity().overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
 
             }
 
-        }else{
-            showToast(getString(R.string.no_connection))
+        } else {
+            val intent = Intent(activity, LostConnectionActivity::class.java)
+            activity?.startActivity(intent)
+        }
+    }
+
+    override fun <T : Activity> openActivityWithBottomToTopAnimation(
+        cls: Class<T>,
+        extras: Bundle?
+    ) {
+        if (isNetworkAvailable()) {
+            Intent(context, cls).apply {
+
+                if (extras != null)
+                    putExtras(extras)
+                startActivity(this)
+                requireActivity().overridePendingTransition(
+                    R.anim.slide_in_up,
+                    R.anim.slide_out_up
+                );
+
+            }
+
+        } else {
+            val intent = Intent(activity, LostConnectionActivity::class.java)
+            activity?.startActivity(intent)
         }
     }
 
 
-    override fun <T> openAndFinishActivityWithClearTopNewTaskClearTaskFlags(cls: Class<T>, extras: Bundle?) {
-        if (isNetworkAvailable()){
+    override fun <T> openAndFinishActivityWithClearTopNewTaskClearTaskFlags(
+        cls: Class<T>,
+        extras: Bundle?
+    ) {
+        if (isNetworkAvailable()) {
             Intent(context, cls).apply {
 
                 if (extras != null)
@@ -147,18 +160,19 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
 
             }
 
-        }else{
-            showToast(getString(R.string.no_connection))
+        } else {
+            val intent = Intent(activity, LostConnectionActivity::class.java)
+            activity?.startActivity(intent)
         }
     }
 
-    override fun requestPermission(permission: String) :Boolean{
+    override fun requestPermission(permission: String): Boolean {
         TODO("Not yet implemented")
     }
 
     override fun getLanguage(): String {
-        if (activity!=null)
-        return LocaleManagerClass.getLangCodeFromPreferences(activity)
+        if (activity != null)
+            return LocaleManagerClass.getLangCodeFromPreferences(activity)
         else
             return "hi"
     }
@@ -172,8 +186,8 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     }
 
     override fun showToast(message: String?) {
-        if (activity!=null)
-        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
+        if (activity != null)
+            Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }
 
     override fun onError(message: String?) {
@@ -188,7 +202,6 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
     override fun hideProgressBar() {
 
     }
-
 
 
     override fun proceedCall(helpLineNo: String, screenName: String) {
