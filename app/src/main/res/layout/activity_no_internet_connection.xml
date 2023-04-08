@@ -70,7 +70,7 @@
                     android:layout_marginStart="@dimen/_30sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:padding="@dimen/_5sdp"
-                    android:text="@string/retry_btn"
+                    android:text="@string/retry"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_18sdp"
                     android:textStyle="bold" />

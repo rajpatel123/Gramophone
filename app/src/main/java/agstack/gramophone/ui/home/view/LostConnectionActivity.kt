@@ -3,11 +3,9 @@ package agstack.gramophone.ui.home.view
 import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
-import agstack.gramophone.databinding.ActivityHomeBinding
 import agstack.gramophone.databinding.ActivityNoInternetConnectionBinding
 import agstack.gramophone.ui.home.navigator.HomeActivityNavigator
 import agstack.gramophone.ui.home.viewmodel.HomeViewModel
-import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -15,7 +13,7 @@ import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LostConnection :
+class LostConnectionActivity :
     BaseActivityWrapper<ActivityNoInternetConnectionBinding, HomeActivityNavigator, HomeViewModel>(),
     HomeActivityNavigator, View.OnClickListener {
     private val homeViewModel: HomeViewModel by viewModels()
