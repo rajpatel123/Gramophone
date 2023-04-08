@@ -130,7 +130,7 @@ class HomeViewModel @Inject constructor(
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
             } catch (ex: Exception) {
                 when (ex) {
-                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
                     else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
@@ -167,7 +167,7 @@ class HomeViewModel @Inject constructor(
                     getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
             } catch (ex: Exception) {
                 when (ex) {
-                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                    is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
                     else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
@@ -192,7 +192,7 @@ class HomeViewModel @Inject constructor(
             }
         } catch (ex: Exception) {
             when (ex) {
-                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
                 else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
             }
         }
@@ -319,7 +319,7 @@ class HomeViewModel @Inject constructor(
             }
         } catch (ex: Exception) {
             when (ex) {
-                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
+                is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
                 else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
             }
         }

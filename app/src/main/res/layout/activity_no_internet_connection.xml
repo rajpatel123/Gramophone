@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-<data>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-<import type="android.view.View" />
+    <data>
 
-<variable
-    name="viewModel"
-    type="agstack.gramophone.ui.home.viewmodel.HomeViewModel" />
-</data>
+        <import type="android.view.View" />
 
-
-
-
+        <variable
+            name="viewModel"
+            type="agstack.gramophone.ui.home.viewmodel.HomeViewModel" />
+    </data>
 
 
     <LinearLayout
@@ -20,11 +16,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
-            android:src="@drawable/ic_logo_vector"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,20 +28,23 @@
             android:layout_height="wrap_content"
             android:text="@string/no_connection"
             android:textColor="@color/black"
+            android:fontFamily="@font/manrope_bold"
             android:gravity="center"
             android:textSize="@dimen/_20sdp"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:text="@string/connection_text"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_15sdp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:fontFamily="@font/manrope_regular"
+                android:gravity="center"
+
+                android:text="@string/no_internet_msg"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp" />
 
 
             <RelativeLayout
@@ -69,6 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_30sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
+                    android:fontFamily="@font/manrope_bold"
                     android:padding="@dimen/_5sdp"
                     android:text="@string/retry"
                     android:textColor="@color/white"

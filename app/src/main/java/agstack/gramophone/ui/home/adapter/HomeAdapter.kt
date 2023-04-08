@@ -16,6 +16,7 @@ import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.shop.ShopByActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
+import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.tv.GramophoneTVActivity
 import agstack.gramophone.ui.tv.fragment.HomeTvFragment
@@ -810,7 +811,11 @@ class HomeAdapter(
                 context.startActivity(this)
             }
         }else{
-            showToast(context,context.getString(R.string.no_connection))
+            Intent(context, LostConnectionActivity::class.java).apply {
+                if (extras != null)
+                    putExtras(extras)
+                context.startActivity(this)
+            }
         }
 
     }
