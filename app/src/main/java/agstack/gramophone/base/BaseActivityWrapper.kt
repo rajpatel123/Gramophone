@@ -55,11 +55,6 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
         }
 
 
-
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewDataBinding = DataBindingUtil.inflate<B>(
@@ -69,19 +64,12 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
             false
         )
 
-
-
-
-
         this.mViewModel = getViewModel()
         viewDataBinding.setVariable(getBindingVariable(), mViewModel)
         setContentView(viewDataBinding.root)
         viewDataBinding.lifecycleOwner = this
         mViewModel?.setNavigator(this as? N)
     }
-
-
-
 
     override fun <T> openActivity(cls: Class<T>, extras: Bundle?) {
         if (hasInternetConnection(this)){
