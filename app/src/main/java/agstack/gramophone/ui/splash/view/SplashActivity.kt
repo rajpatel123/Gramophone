@@ -13,6 +13,7 @@ import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.hasInternetConnection
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
@@ -56,7 +57,7 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
 
         }
 
-        startApp()
+
         if (intent.data != null)
             instance?.putString(Constants.URI, intent.data.toString())
 
@@ -78,6 +79,12 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (hasInternetConnection(this)){
+            startApp()
+        }
+    }
     private fun startApp() {
 
         Log.d("Token----","".plus(instance!!.getString(SharedPreferencesKeys.FirebaseTokenKey)))

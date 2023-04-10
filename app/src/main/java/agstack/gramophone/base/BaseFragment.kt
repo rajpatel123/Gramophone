@@ -2,6 +2,7 @@ package agstack.gramophone.base
 
 import agstack.gramophone.R
 import agstack.gramophone.ui.dialog.BottomSheetDialog
+import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.LocaleManagerClass
 import agstack.gramophone.utils.hasInternetConnection
@@ -100,7 +101,8 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
             }
 
         }else{
-            showToast(getString(R.string.no_connection))
+            val intent = Intent(activity, LostConnectionActivity::class.java)
+            activity?.startActivity(intent)
         }
     }
 
@@ -115,7 +117,8 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
             }
 
         }else{
-            showToast(getString(R.string.no_connection))
+            val intent = Intent(activity, LostConnectionActivity::class.java)
+            activity?.startActivity(intent)
         }
     }
 
@@ -131,7 +134,8 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
             }
 
         }else{
-            showToast(getString(R.string.no_connection))
+            val intent = Intent(activity, LostConnectionActivity::class.java)
+            activity?.startActivity(intent)
         }
     }
 
@@ -148,7 +152,8 @@ abstract class BaseFragment<B : ViewBinding, N : BaseNavigator, V : BaseViewMode
             }
 
         }else{
-            showToast(getString(R.string.no_connection))
+            val intent = Intent(activity, LostConnectionActivity::class.java)
+            activity?.startActivity(intent)
         }
     }
 

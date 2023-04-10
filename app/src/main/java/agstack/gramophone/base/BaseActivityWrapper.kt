@@ -2,6 +2,7 @@ package agstack.gramophone.base
 
 import agstack.gramophone.R
 import agstack.gramophone.ui.dialog.BottomSheetDialog
+import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.utils.*
 import android.Manifest
 import android.app.Activity
@@ -81,7 +82,11 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
             }
 
         }else{
-           showToast(getString(R.string.no_connection))
+            Intent(this, LostConnectionActivity::class.java).apply {
+                if (extras != null)
+                    putExtras(extras)
+                startActivity(this)
+            }
         }
     }
     override fun <T:Activity> openActivityWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?) {
@@ -97,7 +102,11 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
             }
 
         }else{
-            showToast(getString(R.string.no_connection))
+            Intent(this, LostConnectionActivity::class.java).apply {
+                if (extras != null)
+                    putExtras(extras)
+                startActivity(this)
+            }
         }
 
     }
@@ -117,7 +126,11 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
             }
 
         }else{
-            showToast(getString(R.string.no_connection))
+            Intent(this, LostConnectionActivity::class.java).apply {
+                if (extras != null)
+                    putExtras(extras)
+                startActivity(this)
+            }
         }
     }
 
@@ -134,7 +147,11 @@ abstract class BaseActivityWrapper<B : ViewDataBinding, N : BaseNavigator, V : B
             }
 
         }else{
-            showToast(getString(R.string.no_connection))
+            Intent(this, LostConnectionActivity::class.java).apply {
+                if (extras != null)
+                    putExtras(extras)
+                startActivity(this)
+            }
         }
     }
    /* fun <T:Activity> openActivityforResultWithBottomToTopAnimation(cls: Class<T>, extras: Bundle?,requestCode:Int) {

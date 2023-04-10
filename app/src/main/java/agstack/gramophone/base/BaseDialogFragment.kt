@@ -2,6 +2,7 @@ package agstack.gramophone.base
 
 import agstack.gramophone.R
 import agstack.gramophone.ui.dialog.BottomSheetDialog
+import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.LocaleManagerClass
 import agstack.gramophone.utils.hasInternetConnection
@@ -108,20 +109,32 @@ abstract class BaseDialogFragment<B : ViewDataBinding, N : BaseNavigator, V : Ba
     }
 
     override fun <T> openActivity(cls: Class<T>, extras: Bundle?) {
-        Intent(context, cls).apply {
-            if (extras != null)
-                putExtras(extras)
-            startActivity(this)
+        if (context?.let { hasInternetConnection(it) } == true){
+            Intent(context, cls).apply {
+                if (extras != null)
+                    putExtras(extras)
+                startActivity(this)
+            }
+
+        }else{
+            val intent = Intent(activity, LostConnectionActivity::class.java)
+            activity?.startActivity(intent)
         }
     }
 
     override fun <T> openAndFinishActivity(cls: Class<T>, extras: Bundle?) {
-        Intent(context, cls).apply {
+        if (context?.let { hasInternetConnection(it) } == true){
+            Intent(context, cls).apply {
 
-            if (extras != null)
-                putExtras(extras)
-            startActivity(this)
+                if (extras != null)
+                    putExtras(extras)
+                startActivity(this)
 
+            }
+
+        }else{
+            val intent = Intent(activity, LostConnectionActivity::class.java)
+            activity?.startActivity(intent)
         }
     }
 
@@ -129,13 +142,20 @@ abstract class BaseDialogFragment<B : ViewDataBinding, N : BaseNavigator, V : Ba
         cls: Class<T>,
         extras: Bundle?
     ) {
-        Intent(context, cls).apply {
 
-            if (extras != null)
-                putExtras(extras)
-            startActivity(this)
-            requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+        if (context?.let { hasInternetConnection(it) } == true){
+            Intent(context, cls).apply {
 
+                if (extras != null)
+                    putExtras(extras)
+                startActivity(this)
+                requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+
+            }
+
+        }else{
+            val intent = Intent(activity, LostConnectionActivity::class.java)
+            activity?.startActivity(intent)
         }
     }
 
@@ -144,13 +164,19 @@ abstract class BaseDialogFragment<B : ViewDataBinding, N : BaseNavigator, V : Ba
         cls: Class<T>,
         extras: Bundle?
     ) {
-        Intent(context, cls).apply {
+        if (context?.let { hasInternetConnection(it) } == true){
+            Intent(context, cls).apply {
 
-            if (extras != null)
-                putExtras(extras)
-            this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(this)
+                if (extras != null)
+                    putExtras(extras)
+                this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(this)
 
+            }
+
+        }else{
+            val intent = Intent(activity, LostConnectionActivity::class.java)
+            activity?.startActivity(intent)
         }
     }
 
