@@ -263,6 +263,9 @@ object Utility {
     }
 
     fun getShowingFromStringDate(date: String): String? {
+        if (TextUtils.isEmpty(date)){
+            return ""
+        }
         val dateObj = Date(date)
         val formatter = SimpleDateFormat(COMMUNITY_DATE_FORMAT)
         return formatter.format(dateObj).plus("Z")

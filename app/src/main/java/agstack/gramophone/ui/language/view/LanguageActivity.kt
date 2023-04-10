@@ -8,6 +8,7 @@ import agstack.gramophone.databinding.ActivityLanguageBinding
 import agstack.gramophone.databinding.AllowNotificationBinding
 import agstack.gramophone.databinding.DeletePostDailogueBinding
 import agstack.gramophone.ui.apptour.view.AppTourActivity
+import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.ui.language.LanguageActivityNavigator
 import agstack.gramophone.ui.language.adapter.LanguageAdapter
 import agstack.gramophone.ui.language.model.DeviceDetails
@@ -17,6 +18,7 @@ import agstack.gramophone.ui.language.viewmodel.LanguageViewModel
 import agstack.gramophone.utils.LocaleManagerClass
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.hasInternetConnection
 import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
@@ -72,8 +74,7 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
-        getLanguageList()
-        getSecretKeys()
+
 
 
 
@@ -96,7 +97,17 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (hasInternetConnection(this)){
+            getLanguageList()
+            getSecretKeys()
+        }else{
+            val intent = Intent(this, LostConnectionActivity::class.java)
+            startActivity(intent)
+        }
 
+    }
     private fun getLanguageList() {
         languageViewModel.getLanguageList()
     }
@@ -109,6 +120,7 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
                 languageViewModel.getSecretKeys()
             }
     }
+
 
     private fun setupUi() {
         rvLanguage?.setHasFixedSize(true)
@@ -150,29 +162,31 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     }
 
     override fun showPushPermissionDialog() {
-        when {
-            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
-                    PackageManager.PERMISSION_GRANTED -> {
-            }
-            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            when {
+                ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                        PackageManager.PERMISSION_GRANTED -> {
+                }
+                shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
 
-                val mDialogView =
-                    LayoutInflater.from(this).inflate(R.layout.allow_notification, null)
-                val dialogBinding = AllowNotificationBinding.bind(mDialogView)
-                dialogBinding.setVariable(BR.viewModel, languageViewModel)
+                    val mDialogView =
+                        LayoutInflater.from(this).inflate(R.layout.allow_notification, null)
+                    val dialogBinding = AllowNotificationBinding.bind(mDialogView)
+                    dialogBinding.setVariable(BR.viewModel, languageViewModel)
 
-                //AlertDialogBuilder
-                val mBuilder = AlertDialog.Builder(this)
-                    .setView(dialogBinding.root)
-                //show dialog
-                val mAlertDialog = mBuilder.show()
-                languageViewModel.setDialog(mAlertDialog)
-                mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background);
+                    //AlertDialogBuilder
+                    val mBuilder = AlertDialog.Builder(this)
+                        .setView(dialogBinding.root)
+                    //show dialog
+                    val mAlertDialog = mBuilder.show()
+                    languageViewModel.setDialog(mAlertDialog)
+                    mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background);
 
 
-            }
-            else -> {
-                requestForLocation()
+                }
+                else -> {
+                    requestForLocation()
+                }
             }
         }
 

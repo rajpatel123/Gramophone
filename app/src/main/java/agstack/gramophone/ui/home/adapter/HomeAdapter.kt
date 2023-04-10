@@ -12,6 +12,7 @@ import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.farm.adapter.FarmAdapter
 import agstack.gramophone.ui.farm.model.FarmResponse
 import agstack.gramophone.ui.farm.view.*
+import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.shop.ShopByActivity
@@ -274,27 +275,29 @@ class HomeAdapter(
                         cropList.subList(0, 9)
                     else cropList
                     val cropAdapter = ShopByCropsAdapter(tempCropList) {
-//                        openActivity(context = holder.binding.root.context,
-//                            AdvisoryActivity::class.java,
-//                            Bundle().apply {
-//                                putInt(
-//                                    Constants.FARM_ID,
-//                                    121233
-//                                )
-//
-//                                putString(Constants.FARM_TYPE, "model_farm")
-//                                putString(Constants.CROP_NAME, it.cropName)
-//                                putString(Constants.CROP_IMAGE, it.cropImage)
-//                                putString(Constants.CROP_REF_ID, "ryeuryu")
-//                                it.cropId?.let { it1 -> putInt(Constants.CROP_ID, it1) }
-//                                putString(Constants.CROP_DURATION, "Test")
-//                                putString(
-//                                    Constants.CROP_END_DATE,
-//                                    "TestDate"
-//                                )
-//                                putString(Constants.CROP_STAGE, "TestStage")
-//                                putString(Constants.CROP_DAYS, "000000")
-//                            })
+                        openActivity(context = holder.binding.root.context,
+                            AdvisoryActivity::class.java,
+                            Bundle().apply {
+                                it.cropId?.let { it1 ->
+                                    putInt(
+                                        Constants.FARM_ID,
+                                        it1
+                                    )
+                                }
+
+                                putString(Constants.FARM_TYPE, "home_page")
+                                putString(Constants.CROP_NAME, it.cropName)
+                                putString(Constants.CROP_IMAGE, it.cropImage)
+                                putString(Constants.CROP_REF_ID, "ryeuryu")
+                                it.cropId?.let { it1 -> putInt(Constants.CROP_ID, it1) }
+                                putString(Constants.CROP_DURATION, "Test")
+                                putString(
+                                    Constants.CROP_END_DATE,
+                                    "TestDate"
+                                )
+                                putString(Constants.CROP_STAGE, "TestStage")
+                                putString(Constants.CROP_DAYS, "000000")
+                            })
 
 
 //                        openActivity(holder.itemView.context,
@@ -958,6 +961,7 @@ private fun sendFarmDetailMoEngageEvents(
     data: agstack.gramophone.ui.farm.model.Data,
 ) {
 
+    return
     val geo = ArrayList<String>()
     SharedPreferencesHelper.instance?.getString(Constants.LATITUDE)?.let { geo.add(""+it) }
     SharedPreferencesHelper.instance?.getString(Constants.LONGITUDE)?.let { geo.add(""+it) }
@@ -966,7 +970,7 @@ private fun sendFarmDetailMoEngageEvents(
             SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
         .addAttribute("Crop", data.crop_name)
         .addAttribute("Farm_ID", data.farm_id)
-        .addAttribute("Sowing_Date", Utility.getShowingFromStringDate(data?.crop_sowing_date!!))
+        .addAttribute("Sowing_Date", Utility.getShowingFromStringDate(""+data?.crop_sowing_date))
         .addAttribute("Area", data.farm_area)
         .addAttribute("GeoLocationcoordinates", geo.toString())
         .addAttribute("App Version", BuildConfig.VERSION_NAME)

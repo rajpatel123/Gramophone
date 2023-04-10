@@ -308,26 +308,29 @@ class HomeActivity :
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_community -> {
-                    viewDataBinding.llCreateAPost.visibility = VISIBLE
-                    viewDataBinding.llCallPost.visibility = GONE
-                    viewDataBinding.toolbar.myToolbar.title =
-                        "  " + resources.getString(R.string.community)
-                    updateMenuItemVisibility(showHomeItems = false, showCommunityItems = true)
+                    if (hasInternetConnection(this)){
+                        viewDataBinding.llCreateAPost.visibility = VISIBLE
+                        viewDataBinding.llCallPost.visibility = GONE
+                        viewDataBinding.toolbar.myToolbar.title =
+                            "  " + resources.getString(R.string.community)
+                        updateMenuItemVisibility(showHomeItems = false, showCommunityItems = true)
 
-                    supportFragmentManager.beginTransaction().hide(activeFragment)
-                        .show(communityFragment).commit()
-                    activeFragment = communityFragment
+                        supportFragmentManager.beginTransaction().hide(activeFragment)
+                            .show(communityFragment).commit()
+                        activeFragment = communityFragment
 
-                    val properties = Properties()
-                    properties.addAttribute(
-                        "Customer_Id",
-                        SharedPreferencesHelper.instance?.getString(
-                            SharedPreferencesKeys.CUSTOMER_ID
-                        )!!
-                    )
-                        .addAttribute("Redirection_Source", "Home Tab")
-                        .addAttribute("User ID", SharedPreferencesHelper.instance?.getString( SharedPreferencesKeys.UUIdKey)!!)
-                    sendMoEngageEvent("KA_View_Community_Wall", properties)
+                        val properties = Properties()
+                        properties.addAttribute(
+                            "Customer_Id",
+                            SharedPreferencesHelper.instance?.getString(
+                                SharedPreferencesKeys.CUSTOMER_ID
+                            )!!
+                        )
+                            .addAttribute("Redirection_Source", "Home Tab")
+                            .addAttribute("User ID", SharedPreferencesHelper.instance?.getString( SharedPreferencesKeys.UUIdKey)!!)
+                        sendMoEngageEvent("KA_View_Community_Wall", properties)
+                    }
+
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_profile -> {
@@ -491,6 +494,10 @@ class HomeActivity :
         marketFragment.marketFragmentViewModel.getFarms()
         profileFragment.refreshProfile()
 
+        if (!hasInternetConnection(this)){
+            val intent = Intent(this, LostConnectionActivity::class.java)
+            startActivity(intent)
+        }
         if (!TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(Constants.TARGET_PAGE))) {
             when(SharedPreferencesHelper.instance?.getString(Constants.TARGET_PAGE)){
                 "social"->{

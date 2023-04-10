@@ -297,18 +297,22 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onCallClicked() {
-        viewModelScope.launch {
-            var producttoBeAdded = ProductData()
-            producttoBeAdded.product_id = null
+        if (getNavigator()?.isNetworkAvailable() == true){
+            viewModelScope.launch {
+                var producttoBeAdded = ProductData()
+                producttoBeAdded.product_id = null
 
-            val expertAdviceResponse =
-                productRepository.getHelp(Constants.HELP, producttoBeAdded)
+                val expertAdviceResponse =
+                    productRepository.getHelp(Constants.HELP, producttoBeAdded)
 
-            if (expertAdviceResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
-                getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
-            } else {
-                getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
+                if (expertAdviceResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+                    getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
+                } else {
+                    getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)
+                }
             }
+        }else{
+            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_connection))
         }
     }
 
@@ -347,7 +351,11 @@ class HomeViewModel @Inject constructor(
     }
 
     fun retryBtn() {
-        getNavigator()?.finishActivity()
+        if (getNavigator()?.isNetworkAvailable() == true){
+            getNavigator()?.finishActivity()
+        }else{
+            getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_connection))
+        }
     }
 
 }

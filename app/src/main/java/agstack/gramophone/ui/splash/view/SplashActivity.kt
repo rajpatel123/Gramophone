@@ -6,6 +6,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivitySplashBinding
 import agstack.gramophone.ui.home.view.HomeActivity
+import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.ui.splash.SplashNavigator
 import agstack.gramophone.ui.splash.viewmodel.SplashViewModel
@@ -15,6 +16,7 @@ import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.hasInternetConnection
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -83,6 +85,9 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
         super.onResume()
         if (hasInternetConnection(this)){
             startApp()
+        }else{
+            val intent = Intent(this, LostConnectionActivity::class.java)
+            startActivity(intent)
         }
     }
     private fun startApp() {

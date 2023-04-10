@@ -10,79 +10,69 @@
     type="agstack.gramophone.ui.home.viewmodel.HomeViewModel" />
 </data>
 
-
-
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
-           />
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="vertical"
-           android:gravity="center">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/no_connection"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:textSize="@dimen/_20sdp"
-            android:textStyle="bold" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:text="@string/no_internet_msg"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_15sdp" />
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/iv_giffy"
+                android:layout_width="@dimen/_122sdp"
+                android:layout_height="@dimen/_122sdp"
+                android:layout_marginTop="@dimen/_minus60sdp"
+                android:src="@drawable/ic_no_connection"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/tv_no_connection"
+                style="@style/TextSize18Sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-               android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginLeft="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_32sdp"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/manrope_medium"
+                android:gravity="center"
+                android:text="@string/no_connection"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_giffy" />
+
+            <TextView
+                android:id="@+id/tv_no_connectionsub"
+                style="@style/TextSize14Sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_55sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:fontFamily="@font/manrope_medium"
+                android:gravity="center"
+                android:text="@string/no_internet_message"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_no_connection" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_retry"
                 android:onClick="@{()->viewModel.retryBtn()}"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/rounded_corner_retry">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_10sdp"
-                    android:src="@drawable/ic_retry" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_30sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:padding="@dimen/_5sdp"
-                    android:text="@string/retry"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_18sdp"
-                    android:textStyle="bold" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="@drawable/ic_btn_retry"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_no_connectionsub" />
 
 
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
