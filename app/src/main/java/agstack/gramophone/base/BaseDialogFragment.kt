@@ -117,6 +117,7 @@ abstract class BaseDialogFragment<B : ViewDataBinding, N : BaseNavigator, V : Ba
 
     override fun <T> openAndFinishActivity(cls: Class<T>, extras: Bundle?) {
         Intent(context, cls).apply {
+
             if (extras != null)
                 putExtras(extras)
             startActivity(this)
