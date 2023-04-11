@@ -169,8 +169,10 @@ class HomeViewModel @Inject constructor(
                     }
 
 
-                } else
-                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
+                } else{
+                    progressBar.set(false)
+                    getNavigator()?.openActivity(LostConnectionActivity::class.java)
+                }
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.no_internet)!!)
