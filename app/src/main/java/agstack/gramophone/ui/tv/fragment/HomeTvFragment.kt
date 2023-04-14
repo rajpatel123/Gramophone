@@ -4,6 +4,7 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseFragment
 import agstack.gramophone.databinding.FragmentHomeTvBinding
+import agstack.gramophone.utils.hasInternetConnection
 import android.app.FragmentTransaction
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -60,7 +61,9 @@ class HomeTvFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeYoutube("eboDbvsoMFU")
+        if (hasInternetConnection(requireActivity())){
+            initializeYoutube("eboDbvsoMFU")
+        }
     }
 
     private fun initializeYoutube(videoId: String?) {

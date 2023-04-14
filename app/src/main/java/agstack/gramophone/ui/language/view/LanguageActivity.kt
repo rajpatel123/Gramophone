@@ -74,10 +74,6 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
-
-
-
-
     }
 
 
@@ -185,7 +181,9 @@ class LanguageActivity : BaseActivityWrapper<ActivityLanguageBinding, LanguageAc
 
                 }
                 else -> {
-                    requestForLocation()
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        requestForLocation()
+                    }
                 }
             }
         }

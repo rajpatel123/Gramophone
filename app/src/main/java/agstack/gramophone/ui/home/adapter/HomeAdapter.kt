@@ -12,7 +12,6 @@ import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.farm.adapter.FarmAdapter
 import agstack.gramophone.ui.farm.model.FarmResponse
 import agstack.gramophone.ui.farm.view.*
-import agstack.gramophone.ui.home.cropdetail.CropDetailActivity
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.shop.ShopByActivity
@@ -39,7 +38,6 @@ import com.amnix.xtension.extensions.isNotNullOrEmpty
 import com.bumptech.glide.Glide
 import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
-import com.moengage.core.internal.utils.showToast
 
 
 class HomeAdapter(
@@ -308,13 +306,10 @@ class HomeAdapter(
                     }
                     holder.binding.rvShopByCrops.adapter = cropAdapter
                     holder.binding.viewAllCrops.setOnClickListener {
-                        openActivity(holder.itemView.context,
-                            ShopByActivity::class.java,
-                            Bundle().apply {
-                                putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
-                                putParcelable(Constants.SHOP_BY_CROP,
-                                    cropResponse)
-                            })
+                        openActivity(holder.itemView.context, SelectCropActivity::class.java, Bundle().apply {
+                            putBoolean(Constants.CROP_ADVISORY,true)
+                        })
+
                     }
                 } else {
                     holder.binding.itemView.visibility = View.GONE
@@ -960,17 +955,21 @@ private fun sendFarmDetailMoEngageEvents(
     context: Context,
     data: agstack.gramophone.ui.farm.model.Data,
 ) {
-
-    return
     val geo = ArrayList<String>()
-    SharedPreferencesHelper.instance?.getString(Constants.LATITUDE)?.let { geo.add(""+it) }
-    SharedPreferencesHelper.instance?.getString(Constants.LONGITUDE)?.let { geo.add(""+it) }
+    try {
+        SharedPreferencesHelper.instance?.getString(Constants.LATITUDE)?.let { geo.add("" + it) }
+        SharedPreferencesHelper.instance?.getString(Constants.LONGITUDE)?.let { geo.add("" + it) }
+    } catch (ex: Exception) {
+    }
+
     val properties = Properties()
-        .addAttribute("Customer_Id",
-            SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+        .addAttribute(
+            "Customer_Id",
+            SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!
+        )
         .addAttribute("Crop", data.crop_name)
         .addAttribute("Farm_ID", data.farm_id)
-        .addAttribute("Sowing_Date", Utility.getShowingFromStringDate(""+data?.crop_sowing_date))
+        .addAttribute("Sowing_Date", Utility.getShowingFromStringDate("" + data?.crop_sowing_date))
         .addAttribute("Area", data.farm_area)
         .addAttribute("GeoLocationcoordinates", geo.toString())
         .addAttribute("App Version", BuildConfig.VERSION_NAME)

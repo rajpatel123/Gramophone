@@ -64,6 +64,9 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
             instance?.putString(Constants.URI, intent.data.toString())
 
 
+        SharedPreferencesHelper.instance?.putString(Constants.UTM_SOURCE,"")
+        SharedPreferencesHelper.instance?.putString(Constants.UTM_URL,"")
+
         if (SharedPreferencesHelper.instance?.getBoolean(Constants.FIRST_OPEN) != true) {
             val properties = Properties()
                 .addAttribute("App Version", BuildConfig.VERSION_NAME)

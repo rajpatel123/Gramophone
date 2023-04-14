@@ -41,17 +41,21 @@ class WeatherActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupUi()
-        if (TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(Constants.LATITUDE)
-            )){
-            if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                weatherViewModel.getLatitudeLongitude()
-            } else {
-                ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    1)
+        try {
+            if (TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(Constants.LATITUDE)
+                )){
+                if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    weatherViewModel.getLatitudeLongitude()
+                } else {
+                    ActivityCompat.requestPermissions(this,
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        1)
+                }
+            }else{
+                weatherViewModel.getWeatherData()
             }
-        }else{
-          weatherViewModel.getWeatherData()
+        }catch (ex:Exception){
+
         }
 
 

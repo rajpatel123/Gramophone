@@ -4,12 +4,12 @@ import agstack.gramophone.BR
 import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
-import agstack.gramophone.data.model.SubCatEvent
 import agstack.gramophone.databinding.ProductDetailBinding
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
 import agstack.gramophone.ui.home.product.fragment.*
 import agstack.gramophone.ui.home.subcategory.AvailableProductOffersAdapter
+import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.GpApiResponseData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
@@ -21,7 +21,6 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.view.View.VISIBLE
@@ -66,6 +65,9 @@ class ProductDetailsActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (!hasInternetConnection(this)) {
+            finish()
+        }
 
     }
 
@@ -558,26 +560,38 @@ class ProductDetailsActivity :
         }
     }
 
+
     override fun onResume() {
         super.onResume()
-        updateAddToCartButtonText(getMessage(
-            R.string.add_to_cart)!!)
-        initProductDetailView()
+        if (hasInternetConnection(this)) {
+            updateAddToCartButtonText(
+                getMessage(
+                    R.string.add_to_cart
+                )!!
+            )
+            initProductDetailView()
 
-        try {
-            if (youTubePlayer != null)
-                youTubePlayer?.play()
-        }catch (ex:Exception){
-            initYoutubePlayer()
+            try {
+                if (youTubePlayer != null)
+                    youTubePlayer?.play()
+            } catch (ex: Exception) {
+                initYoutubePlayer()
+            }
+
+            if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.IS_GENUENE) == true) {
+                productDetailsViewModel.notAGenuineBuyer()
+                SharedPreferencesHelper.instance?.putBoolean(
+                    SharedPreferencesKeys.IS_GENUENE,
+                    false
+                )
+
+            }
+
+            productDetailsViewModel.getBundleData()
+        } else {
+            openActivity(LostConnectionActivity::class.java)
         }
 
-        if (SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.IS_GENUENE) == true) {
-            productDetailsViewModel.notAGenuineBuyer()
-            SharedPreferencesHelper.instance?.putBoolean(SharedPreferencesKeys.IS_GENUENE, false)
-
-        }
-
-        productDetailsViewModel.getBundleData()
     }
 
     override fun sendProductViewMoEngageEvent(

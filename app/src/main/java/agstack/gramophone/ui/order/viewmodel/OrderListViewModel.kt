@@ -8,6 +8,7 @@ import agstack.gramophone.ui.order.OrderListNavigator
 import agstack.gramophone.ui.order.adapter.OrderListAdapter
 import agstack.gramophone.ui.order.model.Data
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.Utility
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
@@ -175,7 +176,9 @@ class OrderListViewModel @Inject constructor(
                     producttoBeAdded.product_id = null
                     producttoBeAdded.comments = ""
 
-                    val helpResponse = productRepository.getHelp(Constants.HELP, producttoBeAdded)
+                    val helpResponse = productRepository.getHelp(Constants.HELP, producttoBeAdded,
+                        SharedPreferencesHelper.instance?.getString(Constants.UTM_SOURCE),
+                        SharedPreferencesHelper.instance?.getString(Constants.UTM_URL))
 
                     progress.value = false
 

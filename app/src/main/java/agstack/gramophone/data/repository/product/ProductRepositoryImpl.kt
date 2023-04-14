@@ -27,6 +27,8 @@ import agstack.gramophone.ui.search.model.SuggestionsRequest
 import agstack.gramophone.ui.search.model.SuggestionsResponse
 import agstack.gramophone.ui.tv.model.BookmarkedListResponse
 import agstack.gramophone.ui.tv.model.VideoBookMarkedRequest
+import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -155,7 +157,9 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun placeOrder(placeOrderRequest: PlaceOrderRequest): Response<PlaceOrderResponse> = withContext(
         Dispatchers.IO
     ) {
-        val placeOrderResponse = gramoAppService.placeOrder(placeOrderRequest)
+        val placeOrderResponse = gramoAppService.placeOrder(placeOrderRequest,
+            SharedPreferencesHelper.instance?.getString(Constants.UTM_SOURCE),
+            SharedPreferencesHelper.instance?.getString(Constants.UTM_URL))
         placeOrderResponse
     }
 
@@ -211,11 +215,11 @@ class ProductRepositoryImpl @Inject constructor(
 
     override suspend fun getHelp(
         type: String,
-        productData: ProductData,
+        productData: ProductData,utmSource:String?, utmUrl:String?
     ): Response<SuccessStatusResponse> = withContext(
         Dispatchers.IO
     ) {
-        val response = gramoAppService.getHelp(type, productData)
+        val response = gramoAppService.getHelp(type, productData,utmSource,utmUrl)
         response
     }
 

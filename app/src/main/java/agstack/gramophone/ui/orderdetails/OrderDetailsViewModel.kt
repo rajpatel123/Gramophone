@@ -12,6 +12,7 @@ import agstack.gramophone.ui.orderdetails.model.GpApiResponseData
 import agstack.gramophone.ui.orderdetails.model.OrderDetailRequest
 import agstack.gramophone.ui.orderdetails.model.OrderInvoiceRequest
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.Utility
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
@@ -195,7 +196,9 @@ class OrderDetailsViewModel @Inject constructor(
                     producttoBeAdded.product_id = null
                     producttoBeAdded.comments = ""
 
-                    val helpResponse = productRepository.getHelp(Constants.HELP, producttoBeAdded)
+                    val helpResponse = productRepository.getHelp(Constants.HELP, producttoBeAdded,
+                        SharedPreferencesHelper.instance?.getString(Constants.UTM_SOURCE),
+                        SharedPreferencesHelper.instance?.getString(Constants.UTM_URL))
                     progress.value = false
 
                     if (helpResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {

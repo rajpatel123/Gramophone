@@ -3,8 +3,10 @@ package agstack.gramophone.ui.feedback
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -33,7 +35,9 @@ var feedbackText = ObservableField<String>("")
                 producttoBeAdded.comments = feedbackText.get()
 
                 val expertAdviceResponse =
-                    repository.getHelp(Constants.FEEDBACK, producttoBeAdded)
+                    repository.getHelp(Constants.FEEDBACK, producttoBeAdded,
+                        SharedPreferencesHelper.instance?.getString(Constants.UTM_SOURCE),
+                        SharedPreferencesHelper.instance?.getString(Constants.UTM_URL))
                 progressLoader.set(false)
 
                 if (expertAdviceResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {

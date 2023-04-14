@@ -31,7 +31,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.TextUtils
-import android.text.format.DateUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -61,6 +60,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.item_menu_cart_with_counter.*
 import kotlinx.android.synthetic.main.navigation_layout.*
 import kotlinx.android.synthetic.main.navigation_layout.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeActivity :
@@ -90,6 +93,7 @@ class HomeActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setupUi()
 
         registerWithFCM()
@@ -138,6 +142,10 @@ class HomeActivity :
                 }
             }
         }
+        if (!hasInternetConnection(this)) {
+            val intent = Intent(this, LostConnectionActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun getLastShownDayCount(): Long {
@@ -168,7 +176,6 @@ class HomeActivity :
         }else{
 
         }
-
 
     }
     private fun registerWithFCM() {
@@ -378,7 +385,9 @@ class HomeActivity :
     fun showCommunityFragment(from: String) {
         this.from = from
         viewDataBinding.navView.selectedItemId = R.id.navigation_community
-        communityFragment.selectTab(from)
+        if (SharedPreferencesHelper.instance?.getBoolean(Constants.TARGET_PAGE_FROM_DEEP_LINK) != true) {
+            communityFragment.selectTab(from)
+        }
     }
 
     fun showHomeFragment() {
@@ -494,14 +503,17 @@ class HomeActivity :
         marketFragment.marketFragmentViewModel.getFarms()
         profileFragment.refreshProfile()
 
-        if (!hasInternetConnection(this)){
-            val intent = Intent(this, LostConnectionActivity::class.java)
-            startActivity(intent)
-        }
+
         if (!TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(Constants.TARGET_PAGE))) {
             when(SharedPreferencesHelper.instance?.getString(Constants.TARGET_PAGE)){
-                "social"->{
+                "social"-> {
                     showCommunityFragment("social")
+                    val tab =
+                        SharedPreferencesHelper.instance?.getInteger(Constants.TARGET_PAGE_TAB)
+                    CoroutineScope(Dispatchers.Main).launch {
+//                        delay(1000)
+                        communityFragment.selectTabFromDeeplink(tab)
+                    }
                 }
                 "market"->{
                     showHomeFragment()
@@ -586,6 +598,22 @@ class HomeActivity :
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+        SharedPreferencesHelper.instance?.putBoolean(
+           Constants.TARGET_PAGE_FROM_DEEP_LINK,
+            false
+        )
+        SharedPreferencesHelper.instance?.putInteger(
+           Constants.TARGET_PAGE_TAB,
+            0
+        )
+        SharedPreferencesHelper.instance?.putString(Constants.TARGET_PAGE, "")
+
         super.onDestroy()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
     }
 }

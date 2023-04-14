@@ -305,7 +305,7 @@ class HomeViewModel @Inject constructor(
                 producttoBeAdded.product_id = null
 
                 val expertAdviceResponse =
-                    productRepository.getHelp(Constants.HELP, producttoBeAdded)
+                    productRepository.getHelp(Constants.HELP, producttoBeAdded,SharedPreferencesHelper.instance?.getString(Constants.UTM_SOURCE),SharedPreferencesHelper.instance?.getString(Constants.UTM_URL))
 
                 if (expertAdviceResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
                     getNavigator()?.showToast(expertAdviceResponse.body()?.gp_api_message)

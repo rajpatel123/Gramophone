@@ -1,40 +1,62 @@
 package agstack.gramophone.ui.notification.view
 
 import agstack.gramophone.BR
+import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivityUrlhandlerBinding
 import agstack.gramophone.ui.advisory.view.AllCropProblemsActivity
 import agstack.gramophone.ui.articles.ArticlesWebViewActivity
+import agstack.gramophone.ui.bookmarked.BookmarkedVideosActivity
+import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.farm.view.ViewAllFarmsActivity
+import agstack.gramophone.ui.favourite.view.FavouriteProductActivity
 import agstack.gramophone.ui.gramcash.GramCashActivity
+import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.notification.NotificationNavigator
 import agstack.gramophone.ui.notification.NotificationsAdapter
 import agstack.gramophone.ui.notification.model.Data
 import agstack.gramophone.ui.notification.viewmodel.NotificationViewModel
+import agstack.gramophone.ui.offerslist.OffersListActivity
+import agstack.gramophone.ui.order.view.OrderListActivity
 import agstack.gramophone.ui.referandearn.ReferAndEarnActivity
 import agstack.gramophone.ui.settings.view.LanguageUpdateActivity
 import agstack.gramophone.ui.userprofile.EditProfileActivity
+import agstack.gramophone.ui.userprofile.UserProfileActivity
 import agstack.gramophone.ui.weather.WeatherActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Constants.DEEP_LINK_ADVISORY
+import agstack.gramophone.utils.Constants.DEEP_LINK_ARTICLE_CATEGORY
+import agstack.gramophone.utils.Constants.DEEP_LINK_ARTICLE_CROPS
 import agstack.gramophone.utils.Constants.DEEP_LINK_ARTICLE_DETAILS
+import agstack.gramophone.utils.Constants.DEEP_LINK_ARTICLE_SUGGESTED
+import agstack.gramophone.utils.Constants.DEEP_LINK_ARTICLE_TRENDING
+import agstack.gramophone.utils.Constants.DEEP_LINK_CART
 import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_LIST
 import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_PROBLEM
 import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_PRODUCT
 import agstack.gramophone.utils.Constants.DEEP_LINK_DISEASE_DETAILS
 import agstack.gramophone.utils.Constants.DEEP_LINK_EDIT_LANGUAGE
+import agstack.gramophone.utils.Constants.DEEP_LINK_EDIT_LOCATION
 import agstack.gramophone.utils.Constants.DEEP_LINK_EDIT_PHONE_NO
+import agstack.gramophone.utils.Constants.DEEP_LINK_FAV_ARTICLE
+import agstack.gramophone.utils.Constants.DEEP_LINK_FAV_POSTS
+import agstack.gramophone.utils.Constants.DEEP_LINK_FAV_PRODUCTS
+import agstack.gramophone.utils.Constants.DEEP_LINK_FAV_TV
 import agstack.gramophone.utils.Constants.DEEP_LINK_GRAM_CASH
 import agstack.gramophone.utils.Constants.DEEP_LINK_HOME
 import agstack.gramophone.utils.Constants.DEEP_LINK_MARKET
 import agstack.gramophone.utils.Constants.DEEP_LINK_MY_FARM
+import agstack.gramophone.utils.Constants.DEEP_LINK_MY_ORDERS
+import agstack.gramophone.utils.Constants.DEEP_LINK_NOTIFICATION
+import agstack.gramophone.utils.Constants.DEEP_LINK_OFFERS
 import agstack.gramophone.utils.Constants.DEEP_LINK_PRODUCT_DETAIL
 import agstack.gramophone.utils.Constants.DEEP_LINK_PRODUCT_LIST
 import agstack.gramophone.utils.Constants.DEEP_LINK_REFERRAL
 import agstack.gramophone.utils.Constants.DEEP_LINK_SHOP_BY_CATEGORY
+import agstack.gramophone.utils.Constants.DEEP_LINK_SHOP_BY_COMPANY
 import agstack.gramophone.utils.Constants.DEEP_LINK_SHOP_BY_STORE
 import agstack.gramophone.utils.Constants.DEEP_LINK_SOCIAL
 import agstack.gramophone.utils.Constants.DEEP_LINK_WEATHER_INFO
@@ -44,6 +66,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import com.amnix.xtension.extensions.isNotNullOrBlank
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.moengage.core.Properties
 import dagger.hilt.android.AndroidEntryPoint
@@ -101,6 +124,14 @@ class URLHandlerActivity :
     private fun openDeepLinkForIntent(uri: Uri) {
         try {
             val pageName = uri.getQueryParameter("category")
+            val utm_source = uri.getQueryParameter("utm_source")
+            val utm_url = uri.getQueryParameter("utm_url")
+
+            if (utm_source.isNotNullOrBlank()) {
+                SharedPreferencesHelper.instance?.putString(Constants.UTM_SOURCE, utm_source)
+                SharedPreferencesHelper.instance?.putString(Constants.UTM_URL, utm_url)
+            }
+
 
             val params = uri.queryParameterNames
             when (pageName) {
@@ -135,11 +166,32 @@ class URLHandlerActivity :
                 }
 
                 DEEP_LINK_PRODUCT_LIST -> {
-                    val categoryId = uri.getQueryParameter("categoryId")
-                    val categoryName = uri.getQueryParameter("categoryName")
-                    if (categoryId != null) {
-                        notificationViewModel.getCategoryDetails(categoryId,categoryName)
+                    if (uri.toString().contains("subCategoryId")) {
+                        val categoryId = uri.getQueryParameter("categoryId")
+                        val subCategoryId = uri.getQueryParameter("subCategoryId")
+                        val categoryName = uri.getQueryParameter("subCategoryName")
+
+                        if (categoryId != null) {
+                            notificationViewModel.getCategoryDetails(
+                                categoryId,
+                                categoryName,
+                                "subcat"
+                            )
+                        } else {
+                            val categoryId = uri.getQueryParameter("categoryId")
+                            val categoryName = uri.getQueryParameter("categoryName")
+
+                            if (categoryId != null) {
+                                notificationViewModel.getCategoryDetails(
+                                    categoryId,
+                                    categoryName,
+                                    ""
+                                )
+                            }
+                        }
+
                     }
+
                 }
 
                 DEEP_LINK_CROP_PRODUCT -> {
@@ -171,12 +223,45 @@ class URLHandlerActivity :
                 }
 
                 DEEP_LINK_SOCIAL -> {
-                    SharedPreferencesHelper.instance?.putString(Constants.TARGET_PAGE,"social")
+                    val tabId = uri.getQueryParameter("tab")
+                    val tab = when (tabId) {
+                        "Latest" -> {
+                            0
+                        }
+                        "Following" -> {
+
+                            2
+                        }
+                        "Trending" -> {
+                            1
+                        }
+                        "Expert" -> {
+                            3
+                        }
+                        else -> {
+                            0
+                        }
+                    }
+
+                    SharedPreferencesHelper.instance?.putBoolean(
+                        Constants.TARGET_PAGE_FROM_DEEP_LINK,
+                        true
+                    )
+                    SharedPreferencesHelper.instance?.putString(Constants.TARGET_PAGE, "social")
+                    SharedPreferencesHelper.instance?.putInteger(Constants.TARGET_PAGE_TAB, tab)
                     finishActivity()
                 }
 
                 DEEP_LINK_WEATHER_INFO -> {
                     openAndFinishActivity(WeatherActivity::class.java, null)
+                }
+
+                DEEP_LINK_NOTIFICATION -> {
+                    openAndFinishActivity(NotificationActivity::class.java, null)
+                }
+
+                DEEP_LINK_MY_ORDERS -> {
+                    openAndFinishActivity(OrderListActivity::class.java, null)
                 }
 
                 DEEP_LINK_REFERRAL -> {
@@ -187,6 +272,119 @@ class URLHandlerActivity :
                 DEEP_LINK_GRAM_CASH -> {
                     openAndFinishActivity(GramCashActivity::class.java, null)
                 }
+
+                DEEP_LINK_FAV_ARTICLE -> {
+                    openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
+                        putString(
+                            Constants.PAGE_URL,
+                            BuildConfig.BASE_URL_ARTICLES + Constants.FAVOURITE_ARTICLES
+                        )
+
+                        putString(
+                            Constants.PAGE_SOURCE, "DeepLink"
+                        )
+                    })
+                }
+
+                DEEP_LINK_ARTICLE_TRENDING -> {
+                    openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
+                        putString(
+                            Constants.PAGE_URL,
+                            BuildConfig.BASE_URL_ARTICLES + Constants.TRENDING_ARTICLES
+                        )
+
+                        putString(
+                            Constants.PAGE_SOURCE, "DeepLink"
+                        )
+                    })
+                }
+
+                DEEP_LINK_ARTICLE_SUGGESTED -> {
+                    openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
+                        putString(
+                            Constants.PAGE_URL,
+                            BuildConfig.BASE_URL_ARTICLES + Constants.SUGGESTED_ARTICLES
+                        )
+
+                        putString(
+                            Constants.PAGE_SOURCE, "DeepLink"
+                        )
+                    })
+                }
+
+                DEEP_LINK_ARTICLE_CROPS -> {
+                    openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
+                        putString(
+                            Constants.PAGE_URL,
+                            BuildConfig.BASE_URL_ARTICLES + "/crops/"+uri.getQueryParameter("cropName")
+
+                        )
+
+                        putString(
+                            Constants.PAGE_SOURCE, "DeepLink"
+                        )
+                    })
+                }
+
+                DEEP_LINK_ARTICLE_CATEGORY -> {
+                    openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
+                        putString(
+                            Constants.PAGE_URL,
+                            BuildConfig.BASE_URL_ARTICLES + "/categories/"+uri.getQueryParameter("categoryName")
+
+                        )
+
+                        putString(
+                            Constants.PAGE_SOURCE, "DeepLink"
+                        )
+                    })
+                }
+
+
+                DEEP_LINK_FAV_POSTS -> {
+                    SharedPreferencesHelper.instance?.putBoolean(
+                        Constants.TARGET_PAGE_FROM_DEEP_LINK,
+                        true
+                    )
+                    SharedPreferencesHelper.instance?.putString(Constants.TARGET_PAGE, "social")
+                    SharedPreferencesHelper.instance?.putInteger(Constants.TARGET_PAGE_TAB, 5)
+                    finishActivity()
+                }
+
+                DEEP_LINK_FAV_PRODUCTS -> {
+                    openActivity(FavouriteProductActivity::class.java)
+
+                }
+
+                DEEP_LINK_EDIT_LOCATION -> {
+                    openActivity(UserProfileActivity::class.java)
+                }
+
+
+                DEEP_LINK_FAV_TV -> {
+                    openActivity(BookmarkedVideosActivity::class.java, null)
+
+                }
+                DEEP_LINK_CART -> {
+                    openAndFinishActivity(CartActivity::class.java, null)
+                }
+
+                DEEP_LINK_OFFERS -> {
+                    openAndFinishActivity(OffersListActivity::class.java, null)
+                }
+
+                DEEP_LINK_SHOP_BY_COMPANY -> {
+                    val companyId = uri.getQueryParameter("companyId")
+                    val companyName = uri.getQueryParameter("companyName")
+
+                    openAndFinishActivity(FeaturedProductActivity::class.java,
+                        Bundle().apply {
+                            putString(Constants.COMPANY_ID, companyId)
+                            putString(Constants.COMPANY_NAME, companyName)
+                            putString(Constants.COMPANY_IMAGE, "")
+                        })
+                }
+
 
                 DEEP_LINK_EDIT_PHONE_NO -> {
                     openAndFinishActivity(EditProfileActivity::class.java, null)

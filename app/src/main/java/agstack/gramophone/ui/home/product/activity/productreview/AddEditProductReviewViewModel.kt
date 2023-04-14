@@ -3,6 +3,7 @@ package agstack.gramophone.ui.home.product.activity.productreview
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.SelfRating
 import agstack.gramophone.utils.Constants

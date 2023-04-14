@@ -109,6 +109,7 @@ object ApiModule {
     }
 
     private fun getHeaderInterceptor(): Interceptor {
+
         return Interceptor { chain ->
             val request =
                 chain.request().newBuilder()

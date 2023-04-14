@@ -7,6 +7,11 @@ import android.content.Context
 
 object Constants {
 
+    val TARGET_PAGE_FROM_DEEP_LINK: String= "from_deeplink"
+    val TARGET_PAGE_TAB: String="tabId"
+    val CROP_ADVISORY: String="crop_advisory"
+    val UTM_SOURCE: String="utm_source"
+    val UTM_URL: String="utm_url"
     val IS_PUSH_SHOWN_TODAY: String = "isPushShownToday"
     val FIRST_OPEN: String="first"
     val CATEGORY_EVENT: String="cat_event"
@@ -182,8 +187,8 @@ object Constants {
     const val PAGE_TITLE: String = "title"
     const val ARTICLES = "/articles"
     const val FEATURED_ARTICLES = "featured_articles"
-    const val TRENDING_ARTICLES = "trending_articles"
-    const val SUGGESTED_ARTICLES = "suggested_articles"
+    const val TRENDING_ARTICLES = "/trending_articles"
+    const val SUGGESTED_ARTICLES = "/suggested_articles"
     const val FAVOURITE_ARTICLES = "/favourite-articles"
 
     val SHAREIMAGEURIStRING = "imageuriString"
@@ -301,6 +306,7 @@ object Constants {
     const val DEEP_LINK_HOME = "home"
     const val DEEP_LINK_MARKET = "market"
     const val DEEP_LINK_MY_FARM = "myFarm"
+    const val DEEP_LINK_MY_ORDERS = "orders"
     const val DEEP_LINK_SOCIAL = "social"
     const val DEEP_LINK_WEATHER_INFO = "weatherInfo"
     const val DEEP_LINK_REFERRAL = "referral"
@@ -314,8 +320,21 @@ object Constants {
     const val DEEP_LINK_EDIT_PHONE_NO = "editPhoneNo"
     const val DEEP_LINK_DISEASE_DETAILS = "diseaseDetails"
     const val DEEP_LINK_ARTICLE_DETAILS = "articles"
+    const val DEEP_LINK_ARTICLE_TRENDING = "trendingArticles"
+    const val DEEP_LINK_ARTICLE_SUGGESTED = "suggestedArticles"
+    const val DEEP_LINK_ARTICLE_CROPS = "cropArticles"
+    const val DEEP_LINK_ARTICLE_CATEGORY = "categoryArticles"
     const val DEEP_LINK_SHOP_BY_STORE = "shop_by_store"
     const val DEEP_LINK_SHOP_BY_CATEGORY = "shop_by_category"
+    const val DEEP_LINK_CART = "cart"
+    const val DEEP_LINK_FAV_ARTICLE = "favoriteArticles"
+    const val DEEP_LINK_FAV_POSTS = "favoritePosts"
+    const val DEEP_LINK_FAV_PRODUCTS = "favoriteProducts"
+        const val DEEP_LINK_FAV_TV = "favoriteTV"
+    const val DEEP_LINK_OFFERS = "allOffers"
+    const val DEEP_LINK_NOTIFICATION = "notification"
+    const val DEEP_LINK_EDIT_LOCATION = "editLocation"
+    const val DEEP_LINK_SHOP_BY_COMPANY= "shopByCompany"
 
     /**
      * For Broadcast

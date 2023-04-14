@@ -6,6 +6,7 @@ import agstack.gramophone.data.repository.settings.SettingsRepository
 import agstack.gramophone.ui.faq.FAQAdapter
 import agstack.gramophone.ui.gramcash.expiringsoon.GCExpiringSoonActivity
 import agstack.gramophone.ui.home.view.HomeActivity
+import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.ui.referandearn.ReferAndEarnActivity
 import agstack.gramophone.ui.referandearn.model.GpApiResponseData
 import agstack.gramophone.ui.referandearn.model.GramcashFaqItem
@@ -64,6 +65,7 @@ class GramCashViewModel @Inject constructor(
                     runCode.invoke()
                 } else {
                     getNavigator()?.showToast(R.string.nointernet)
+
                 }
             } catch (e: Exception) {
                 Log.d("Exception", e.toString())

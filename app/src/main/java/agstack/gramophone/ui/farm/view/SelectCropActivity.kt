@@ -4,11 +4,13 @@ import agstack.gramophone.BR
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ActivitySelectCropBinding
+import agstack.gramophone.ui.advisory.AdvisoryActivity
 import agstack.gramophone.ui.farm.adapter.SelectCropAdapter
 import agstack.gramophone.ui.farm.model.FarmEvent
 import agstack.gramophone.ui.farm.navigator.SelectCropNavigator
 import agstack.gramophone.ui.farm.viewmodel.SelectCropViewModel
 import agstack.gramophone.ui.home.view.fragments.market.model.CropData
+import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.EventBus
 import agstack.gramophone.utils.RxSearchObservable
 import android.annotation.SuppressLint
@@ -18,6 +20,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View.GONE
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -50,7 +53,9 @@ class SelectCropActivity :
         super.onCreate(savedInstanceState)
         setToolbarTitle(getMessage(R.string.add_tag_title))
         getViewModel().getCrops()
-
+        if (intent.extras?.getBoolean(Constants.CROP_ADVISORY) == true) {
+            viewDataBinding.btnSaveContinue.visibility=GONE
+        }
         searchInit()
         setSelectCropAdapter()
 
@@ -108,17 +113,47 @@ class SelectCropActivity :
 
     private fun setSelectCropAdapter() {
         val adapter = SelectCropAdapter(filterList) { cropData ->
-            filterList.forEach {
-                it.isSelected = false
+            if (intent.extras?.getBoolean(Constants.CROP_ADVISORY) == true){
+                openAndFinishActivity(AdvisoryActivity::class.java,
+                    Bundle().apply {
+                        cropData?.cropId?.let { it1 ->
+                            putInt(
+                                Constants.FARM_ID,
+                                it1
+                            )
+                        }
+
+                        putString(Constants.FARM_TYPE, "home_page")
+                        putString(Constants.CROP_NAME, cropData?.cropName)
+                        putString(Constants.CROP_IMAGE, cropData?.cropImage)
+                        putString(Constants.CROP_REF_ID, "ryeuryu")
+                        cropData?.cropId?.let { it1 -> putInt(Constants.CROP_ID, it1) }
+                        putString(Constants.CROP_DURATION, "Test")
+                        putString(
+                            Constants.CROP_END_DATE,
+                            "TestDate"
+                        )
+                        putString(Constants.CROP_STAGE, "TestStage")
+                        putString(Constants.CROP_DAYS, "000000")
+                    })
+
+            }else{
+                filterList.forEach {
+                    it.isSelected = false
+                }
+
+
+                getViewModel().selectedCrop = cropData;
+                getViewModel().selectedCrop?.isSelected = true
+
+                val copyOfLastCheckedPosition = lastCheckedPosition
+                lastCheckedPosition = filterList.indexOf(cropData)
+
+                notifyAdapter(copyOfLastCheckedPosition)
+                notifyAdapter(lastCheckedPosition)
             }
-            getViewModel().selectedCrop = cropData;
-            getViewModel().selectedCrop?.isSelected = true
 
-            val copyOfLastCheckedPosition = lastCheckedPosition
-            lastCheckedPosition = filterList.indexOf(cropData)
 
-            notifyAdapter(copyOfLastCheckedPosition)
-            notifyAdapter(lastCheckedPosition)
         }
 
         val layoutManager = GridLayoutManager(this, 3)

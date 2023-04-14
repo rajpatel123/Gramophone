@@ -801,6 +801,7 @@ class ProductDetailsViewModel @Inject constructor(
 
     fun onAddToCartClicked() {
 
+
         if (getNavigator()?.updateAddToCartButtonText() == getNavigator()?.getMessage(R.string.add_to_cart)) {
             //because it is called multiple times , hence manually setting text as add to cart until the response is successful.
             getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(R.string.add_to_cart)!!)
@@ -860,7 +861,7 @@ class ProductDetailsViewModel @Inject constructor(
                 producttoBeAdded.product_id = productId
 
                 val expertAdviceResponse =
-                    productRepository.getHelp(Constants.EXPERT_ADVICE, producttoBeAdded)
+                    productRepository.getHelp(Constants.EXPERT_ADVICE, producttoBeAdded,SharedPreferencesHelper.instance?.getString(Constants.UTM_SOURCE),SharedPreferencesHelper.instance?.getString(Constants.UTM_URL))
 
                 getNavigator()?.dismissExpertBottomSheet()
                 progressLoader.set(false)
@@ -887,7 +888,7 @@ class ProductDetailsViewModel @Inject constructor(
             producttoBeAdded.product_id = productId
 
             val expertAdviceResponse =
-                productRepository.getHelp(Constants.CONTACTFORPRICE, producttoBeAdded)
+                productRepository.getHelp(Constants.CONTACTFORPRICE, producttoBeAdded,SharedPreferencesHelper.instance?.getString(Constants.UTM_SOURCE),SharedPreferencesHelper.instance?.getString(Constants.UTM_URL))
 
             progressLoader.set(false)
 

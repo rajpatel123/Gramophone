@@ -191,8 +191,11 @@ interface GramAppService {
 
     @POST("api/v5/general/help/{type}")
     suspend fun getHelp(
-        @Path("type") type: String,
-        @Body productData: ProductData,
+     @Path("type") type: String,
+     @Body productData: ProductData,
+     @Query("utm_source") utm_source: String?="",
+     @Query("utm_url") utm_url: String?=""
+
     ): Response<SuccessStatusResponse>
 
     @PUT("api/v5/product/update-product-favourite")
@@ -215,7 +218,11 @@ interface GramAppService {
     suspend fun getOrderDetails(@Body orderDetailRequest: OrderDetailRequest): Response<OrderDetailResponse>
 
     @POST("api/v5/cart/place-order")
-    suspend fun placeOrder(@Body placeOrderRequest: PlaceOrderRequest): Response<PlaceOrderResponse>
+    suspend fun placeOrder(
+     @Body placeOrderRequest: PlaceOrderRequest,
+     @Query("utm_source") utm_source: String?,
+     @Query("utm_url")utm_url: String?
+    ): Response<PlaceOrderResponse>
 
 
     @PUT("api/v5/setting/whatsapp/{opt-in}")

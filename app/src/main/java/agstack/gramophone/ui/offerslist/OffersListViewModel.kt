@@ -3,6 +3,7 @@ package agstack.gramophone.ui.offerslist
 import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.promotions.PromotionsRepository
+import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.ui.offer.OfferDetailActivity
 import agstack.gramophone.ui.offerslist.adapter.OffersListAdapter
 import agstack.gramophone.ui.offerslist.model.DataItem
@@ -192,7 +193,6 @@ class OffersListViewModel @Inject constructor(
                     runCode.invoke()
                 } else {
                     getNavigator()?.showToast(R.string.nointernet)
-                    noInternetFound.set(true)
                 }
             } catch (e: Exception) {
                 Log.d("Exception", e.toString())

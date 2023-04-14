@@ -50,9 +50,12 @@ class WeatherViewModel @Inject constructor(
     }
 
     fun getWeatherData() {
-        getWeatherDetail()
-        getWeatherDetailHourly()
-        getWeatherDetailDayWise()
+        try {
+            getWeatherDetail()
+            getWeatherDetailHourly()
+            getWeatherDetailDayWise()
+        }catch (_:Exception){}
+
     }
 
     fun weatherChange() {

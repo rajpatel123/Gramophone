@@ -13,16 +13,13 @@ import agstack.gramophone.ui.home.view.fragments.CommunityFragmentNavigator
 import agstack.gramophone.ui.home.view.fragments.community.model.quiz.Option
 import agstack.gramophone.ui.home.view.fragments.community.model.socialhomemodels.Data
 import agstack.gramophone.ui.home.view.fragments.community.viewmodel.CommunityViewModel
-import agstack.gramophone.utils.GramAppApplication
-import agstack.gramophone.utils.ShareSheetPresenter
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.*
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -61,6 +58,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
             communityViewModel.loadData(communityViewModel.sorting.get().toString())
         }
 
+        binding?.progress?.visibility = VISIBLE
     }
 
 
@@ -80,9 +78,15 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     override fun onResume() {
         super.onResume()
         shareSheetPresenter = this?.let { ShareSheetPresenter(requireActivity()) }
-        communityViewModel.sorting.set("latest")
-        communityViewModel.loadData(communityViewModel.sorting.get()!!)
-        communityViewModel.getQuiz()
+
+
+        Log.d("Raj","OnResume Community"+SharedPreferencesHelper.instance?.getBoolean(Constants.TARGET_PAGE_FROM_DEEP_LINK))
+        if (SharedPreferencesHelper.instance?.getBoolean(Constants.TARGET_PAGE_FROM_DEEP_LINK) != true) {
+            communityViewModel.sorting.set("latest")
+            communityViewModel.loadData(communityViewModel.sorting.get()!!)
+            //communityViewModel.getQuiz()
+        }
+
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -137,14 +141,19 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
                 communityViewModel.loadData(communityViewModel.sorting.get().toString())
             }
         }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       // communityViewModel.loadData(communityViewModel.sorting.get().toString())
+        communityViewModel.showProgress.set(true)
+
+        // communityViewModel.loadData(communityViewModel.sorting.get().toString())
         tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                progress.visibility= VISIBLE
+                Log.d("Raj"," Tab select"+SharedPreferencesHelper.instance?.getBoolean(Constants.TARGET_PAGE_FROM_DEEP_LINK))
+
+                progress.visibility = VISIBLE
                 communityViewModel.filterPost(tab)
             }
 
@@ -310,5 +319,38 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     override fun sendEditFollowStatusMoEngageEvent() {
         //no need to send event from here
         // because event has already been sent from OtherUserProfileActivity
+    }
+
+    fun selectTabFromDeeplink(tab: Int?) {
+        when (tab) {
+            0 -> {
+                communityViewModel.sorting.set("latest")
+            }
+            1 -> {
+                communityViewModel.sorting.set("trending")
+
+            }
+
+            2 -> {
+                communityViewModel.sorting.set("following")
+
+            }
+            3 -> {
+                communityViewModel.sorting.set("expert")
+
+            }
+            4 -> {
+                communityViewModel.sorting.set("self")
+
+            }
+
+            5 -> {
+                communityViewModel.sorting.set("bookmark")
+
+            }
+        }
+        val tab = tab?.let { binding?.tabLayout?.getTabAt(it) }
+        tab!!.select()
+
     }
 }

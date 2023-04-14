@@ -12,10 +12,8 @@ import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.notification.NotificationNavigator
 import agstack.gramophone.ui.notification.NotificationsAdapter
 import agstack.gramophone.ui.notification.model.NotificationRequestModel
-import agstack.gramophone.ui.notification.view.URLHandlerActivity
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Utility
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ObservableField
@@ -77,7 +75,7 @@ class NotificationViewModel @Inject constructor(
             }
         }
     }
-    fun getCategoryDetails(categoryId: String, categoryName: String?){
+    fun getCategoryDetails(categoryId: String, categoryName: String?, s: String){
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -91,13 +89,24 @@ class NotificationViewModel @Inject constructor(
                     if (catResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
 
                         Log.d("Image",""+catResponse.body()?.gp_api_response_data?.product_app_category_image)
-                        getNavigator()?.openAndFinishActivity(
-                            SubCategoryActivity::class.java,
-                            Bundle().apply {
-                                putString(Constants.CATEGORY_ID, categoryId)
-                                putString(Constants.CATEGORY_NAME, categoryName)
-                                putString(Constants.CATEGORY_IMAGE, catResponse.body()?.gp_api_response_data?.product_app_category_image)
+                        if (s.equals("subcat")) {
+                            getNavigator()?.openAndFinishActivity(FeaturedProductActivity::class.java, Bundle().apply {
+                                putString(Constants.SHOP_BY_SUB_CATEGORY, categoryId)
+                                putString(Constants.SUB_CATEGORY_ID, categoryId)
+                                putString(Constants.SUB_CATEGORY_NAME, categoryName)
+                                putString(Constants.SUB_CATEGORY_IMAGE, catResponse.body()?.gp_api_response_data?.product_app_category_image)
                             })
+                        }else{
+                            getNavigator()?.openAndFinishActivity(
+                                SubCategoryActivity::class.java,
+                                Bundle().apply {
+                                        putString(Constants.CATEGORY_ID, categoryId)
+                                        putString(Constants.CATEGORY_NAME, categoryName)
+                                        putString(Constants.CATEGORY_IMAGE, catResponse.body()?.gp_api_response_data?.product_app_category_image)
+                                })
+
+                        }
+
 
                     } else {
                         getNavigator()?.showToast(Utility.getErrorMessage(catResponse.errorBody()))
@@ -248,6 +257,44 @@ class NotificationViewModel @Inject constructor(
 
 
     fun getStoreDetails(storeId: String ){
+        viewModelScope.launch {
+            try {
+                if (getNavigator()?.isNetworkAvailable() == true) {
+                    progress.set(true)
+                    val catResponse = onBoardingRepository.getStoreDetails(storeId)
+                    progress.set(false)
+                    if (catResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+
+                        val data = catResponse?.body()?.gp_api_response_data
+                        getNavigator()?.openAndFinishActivity(FeaturedProductActivity::class.java,
+                            Bundle().apply {
+                                putString(Constants.STORE_ID, "".plus(data?.id))
+                                putString(Constants.STORE_NAME, data?.store_name)
+                                putString(Constants.STORE_IMAGE, data?.store_image)
+                            })
+
+                    } else {
+                        getNavigator()?.showToast(Utility.getErrorMessage(catResponse.errorBody()))
+                        getNavigator()?.finishActivity()
+                    }
+                } else {
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
+                    getNavigator()?.finishActivity()
+                }
+            } catch (ex: Exception) {
+                progress.set(false)
+                when (ex) {
+//                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+//                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                }
+                getNavigator()?.finishActivity()
+
+            }
+        }
+    }
+
+
+    fun getOfferDetails(storeId: String ){
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {

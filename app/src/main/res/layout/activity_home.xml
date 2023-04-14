@@ -34,7 +34,6 @@
                         android:id="@+id/toolbar"
                         layout="@layout/layout_toolbar"
                         app:layout_constraintTop_toBottomOf="parent" />
-
                     <FrameLayout
                         android:id="@+id/fragment_container"
                         android:layout_width="match_parent"

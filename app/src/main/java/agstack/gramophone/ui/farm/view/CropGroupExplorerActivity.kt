@@ -217,8 +217,12 @@ class CropGroupExplorerActivity :
 
 
         val geo = ArrayList<String>()
-        SharedPreferencesHelper.instance?.getString(Constants.LATITUDE)?.let { geo.add(""+it) }
-        SharedPreferencesHelper.instance?.getString(Constants.LONGITUDE)?.let { geo.add(""+it) }
+        try {
+            SharedPreferencesHelper.instance?.getString(Constants.LATITUDE)?.let { geo.add(""+it) }
+            SharedPreferencesHelper.instance?.getString(Constants.LONGITUDE)?.let { geo.add(""+it) }
+        }catch (ex:Exception){
+        }
+
         properties.addAttribute(
             "Customer_Id",
             SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!
