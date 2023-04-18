@@ -52,6 +52,7 @@ class AdvisoryActivity :
     BaseActivityWrapper<ActivityAdvisoryBinding, SubCategoryNavigator, SubCategoryViewModel>(),
     SubCategoryNavigator {
 
+    private var isOpened: Boolean=false
     private lateinit var activityListAdapter: ActivityListAdapter
     private val subCategoryViewModel: SubCategoryViewModel by viewModels()
     var bottomSheet: AddToCartBottomSheetDialog? = null
@@ -101,6 +102,9 @@ class AdvisoryActivity :
         mSkuOfferList: ArrayList<PromotionListItem?>,
         productData: ProductData
     ) {
+        if (bottomSheet!=null && bottomSheet?.isVisible == true){
+            return
+        }
         bottomSheet = AddToCartBottomSheetDialog({
             //Offer detail activity from here
             openActivity(OfferDetailActivity::class.java, Bundle().apply {
@@ -118,15 +122,23 @@ class AdvisoryActivity :
             subCategoryViewModel.checkOfferApplicability(it)
         }, {
             subCategoryViewModel.onAddToCartClicked(it)
+            isOpened=false
         }, { productId, quantity ->
+
             subCategoryViewModel.loadOffersData(productId, quantity, true)
         })
         bottomSheet?.mSKUList = mSKUList
         bottomSheet?.productData = productData
         bottomSheet?.mSkuOfferList = mSkuOfferList
-        bottomSheet?.show(
-            supportFragmentManager, Constants.BOTTOM_SHEET
-        )
+        isOpened=true
+
+            bottomSheet?.show(
+                supportFragmentManager, Constants.BOTTOM_SHEET
+            )
+
+
+
+
     }
 
     override fun openProductDetailsActivity(productData: ProductData) {

@@ -99,7 +99,7 @@ class AddFarmViewModel @Inject constructor(
 
 
                 }else{
-                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+//                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
                 progress.value = false
                 enableSaveButton.value = true
@@ -108,7 +108,7 @@ class AddFarmViewModel @Inject constructor(
                 enableSaveButton.value = true
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+//                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
             }
         }
@@ -127,13 +127,13 @@ class AddFarmViewModel @Inject constructor(
                     getNavigator()?.setFarmUnitsAdapter(farmUnitsResponse?.gp_api_response_data!!)
                 }else{
                     progress.value = false
-                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+//                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
             } catch (ex: Exception) {
                 progress.value = false
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+//                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
             }
         }

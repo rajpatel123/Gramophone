@@ -43,14 +43,14 @@ class CropGroupExplorerViewModel @Inject constructor(
                     val res = response.body()
                     getNavigator()?.onAddHarvestQues()
                 }else{
-                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+//                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
                 progress.value = false
             } catch (ex: Exception) {
                 progress.value = false
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+//                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
             }
         }
@@ -69,13 +69,13 @@ class CropGroupExplorerViewModel @Inject constructor(
                     getNavigator()?.setFarmUnits(farmUnitsResponse?.gp_api_response_data!!)
                 }else{
                     progress.value = false
-                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+//                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
             } catch (ex: Exception) {
                 progress.value = false
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+//                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
             }
         }
@@ -100,7 +100,7 @@ class CropGroupExplorerViewModel @Inject constructor(
                 progress.value = false
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+//                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
             }
         }

@@ -18,10 +18,10 @@ import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.EventBus
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
 import androidx.activity.viewModels
 import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
@@ -83,8 +83,11 @@ class ViewAllFarmsActivity :
         if (viewDataBinding.addFarmWrapper.viewOldFarmsLayout.visibility == View.GONE) {
             viewDataBinding.addFarmWrapper.viewOldFarmsLayout.visibility = View.VISIBLE
             viewDataBinding.addFarmWrapper.buttonWrapperLayout.visibility = View.VISIBLE
+            viewDataBinding.rvFarmsOld.visibility = GONE
+
             setToolbarTitle(getMessage(R.string.message_buy_your_crop))
             getViewModel().getFarms()
+
         } else {
             super.onBackPressed()
         }
@@ -253,6 +256,122 @@ class ViewAllFarmsActivity :
         dialog.show(this@ViewAllFarmsActivity.supportFragmentManager, "custom_sheet")
     }
 
+    override fun setViewAllOldFarmsAdapter(
+        farmsList: ArrayList<List<Data>>,
+        isCustomerFarms: Boolean,
+        isOldFarms: Boolean
+    ) {
+
+        if (farmsList.isEmpty()) {
+            viewDataBinding.emptyView.visibility = View.VISIBLE
+            viewDataBinding.rvFarmsOld.visibility = View.GONE
+        } else {
+            viewDataBinding.emptyView.visibility = View.GONE
+            viewDataBinding.rvFarmsOld.visibility = View.VISIBLE
+            viewDataBinding.rvFarms.visibility = GONE
+
+        }
+
+        viewDataBinding.rvFarmsOld.adapter = ViewAllFarmsAdapter(
+            farmsList,
+            headerListener = {
+                if (it.size < 2) {
+                    openActivity(AdvisoryActivity::class.java, Bundle().apply {
+                        putInt(
+                            Constants.FARM_ID,
+                            it[0].farm_id?.toInt()!!
+                        )
+                        if (isCustomerFarms) {
+                            putString(Constants.FARM_TYPE, "customer_farm")
+                        } else {
+                            putString(Constants.FARM_TYPE, "model_farm")
+                        }
+                        putString(Constants.CROP_NAME, it[0].crop_name)
+                        putString(Constants.CROP_IMAGE, it[0].crop_image)
+                        putString(Constants.CROP_REF_ID, it[0].farm_ref_id)
+                        putInt(Constants.CROP_ID, it[0].crop_id)
+                        putString(Constants.CROP_DURATION, it[0].crop_sowing_date)
+                        putString(Constants.CROP_END_DATE, it[0].crop_anticipated_completed_date)
+                        putString(Constants.CROP_STAGE, it[0].stage_name)
+                        putString(Constants.CROP_DAYS, it[0].days)
+                    })
+
+                } else {
+                    if (isCustomerFarms) {
+                        openActivity(CropGroupExplorerActivity::class.java, Bundle().apply {
+                            putParcelableArrayList(
+                                "cropList", it as ArrayList<Data>
+                            )
+                            putBoolean("isOldFarms", isOldFarms)
+                            putBoolean("isCustomerFarms", isCustomerFarms)
+                            putParcelableArrayList("unitsList", units as ArrayList)
+                            putString("farm_ref_id", it[0].farm_ref_id)
+                            putString(Constants.REDIRECTION_SOURCE, "My Farms")
+                        })
+                    }
+                }
+            },
+            contentListener = {
+                if (isCustomerFarms) {
+                    openActivity(CropGroupExplorerActivity::class.java, Bundle().apply {
+                        putParcelableArrayList(
+                            "cropList", it as ArrayList<Data>
+                        )
+                        putBoolean("isOldFarms", isOldFarms)
+                        putBoolean("isCustomerFarms", isCustomerFarms)
+                        putParcelableArrayList("unitsList", units as ArrayList)
+                        putString("farm_ref_id", it[0].farm_ref_id)
+                        putString(Constants.REDIRECTION_SOURCE, "My Farms")
+                    })
+                }
+            },
+            footerListener = {
+                selectedCrop = CropData(
+                    cropId = it[0].crop_id,
+                    cropName = it[0].crop_name,
+                    cropImage = it[0].crop_image,
+                )
+
+                if (it.size == 1 /*&& isOldFarms*/ && isCustomerFarms && it[0].is_crop_cycle_completed!!) {
+                    if (it[0].harvested_quantity.isNullOrEmpty()) {
+                        bottomSheet =
+                            BottomSheetFarmInformation { farm_reference_id, output_qty, output_unit_id ->
+                                getViewModel().addHarvestQues(
+                                    AddHarvestRequest(
+                                        farm_reference_id,
+                                        output_qty,
+                                        output_unit_id
+                                    )
+                                )
+                            }
+                        val bundle = Bundle()
+                        bundle.putParcelableArrayList("unitsList", units as ArrayList)
+                        bundle.putString("farm_ref_id", it[0].farm_ref_id)
+                        bottomSheet?.arguments = bundle
+                        bottomSheet?.show(
+                            this@ViewAllFarmsActivity.supportFragmentManager,
+                            "bottom_sheet"
+                        )
+                    } else {
+                        // do nothing
+                    }
+                } else {
+                    if (isOldFarms) {
+                        // do nothing
+                    } else {
+                        openActivity(
+                            AddFarmActivity::class.java,
+                            Bundle().apply {
+                                putParcelable("selectedCrop", selectedCrop)
+                            })
+                    }
+                }
+            },
+            isOldFarms = isOldFarms,
+            isCustomerFarms = isCustomerFarms,
+        )
+    }
+
     override fun onResume() {
         super.onResume()
         refresh()
@@ -260,8 +379,10 @@ class ViewAllFarmsActivity :
 
     private fun sendViewFormMoEngageEvents() {
         val properties = Properties()
-            .addAttribute("Customer_Id",
-                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!)
+            .addAttribute(
+                "Customer_Id",
+                SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.CUSTOMER_ID)!!
+            )
             .addAttribute("Redirection_Source", getViewModel().redirectionScreen)
             .addAttribute("App Version", BuildConfig.VERSION_NAME)
             .addAttribute("SDK Version", Build.VERSION.SDK_INT)

@@ -81,7 +81,7 @@ class AppTourViewModel @Inject constructor(
         } catch (ex: Exception) {
             when (ex) {
                 is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure)!!)
-                else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+               // else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
             }
         }
     }

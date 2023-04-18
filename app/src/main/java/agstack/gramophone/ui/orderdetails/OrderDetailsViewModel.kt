@@ -51,8 +51,8 @@ class OrderDetailsViewModel @Inject constructor(
         orderId.value = ""
         orderDate.value = ""
         quantity.value = ""
-        subTotalPrice.value = 0f
-        totalPrice.value = 0f
+        subTotalPrice.value = 12f
+        totalPrice.value = 12f
         orderStatus.value = ""
         orderStatusMessage.value = ""
         paymentMethod.value = ""

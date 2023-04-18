@@ -32,6 +32,7 @@ import agstack.gramophone.utils.SharedPreferencesKeys
 import agstack.gramophone.utils.Utility
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -83,7 +84,7 @@ class SubCategoryViewModel @Inject constructor(
     val isCustomerFarm = ObservableField<Boolean>()
 
     val issueName = ObservableField<String>()
-    val issueImage = ObservableField<String>()
+    val issueImage = ObservableField<String>("")
     val issueDescription = ObservableField<String>()
     val issueType = ObservableField<String>()
     val productCount = ObservableField<String>()
@@ -805,7 +806,9 @@ class SubCategoryViewModel @Inject constructor(
     fun setDiseaseDetails() {
         val bundle = getNavigator()?.getBundle()
         issueName.set(bundle?.getString(Constants.DESEASE_NAME))
-        issueImage.set(bundle?.getString(Constants.DESEASE_IMAGE))
+        if (!TextUtils.isEmpty(bundle?.getString(Constants.DESEASE_IMAGE))){
+            issueImage.set(bundle?.getString(Constants.DESEASE_IMAGE))
+        }
         issueDescription.set(bundle?.getString(Constants.DESEASE_DESC))
         issueType.set(bundle?.getString(Constants.DESEASE_TYPE))
     }
@@ -855,7 +858,7 @@ class SubCategoryViewModel @Inject constructor(
                 progress.value = false
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+//                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
             }
         }

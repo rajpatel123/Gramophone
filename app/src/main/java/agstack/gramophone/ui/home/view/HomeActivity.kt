@@ -37,6 +37,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -54,6 +55,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.FirebaseApp
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import com.google.gson.Gson
 import com.moengage.core.Properties
 import com.moengage.firebase.MoEFireBaseHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -188,9 +190,11 @@ class HomeActivity :
                 "fcm_token",
                 SharedPreferencesHelper.instance!!.getString(SharedPreferencesKeys.FirebaseTokenKey)
                     .toString(),
-                BuildConfig.VERSION_CODE.toString()
+                BuildConfig.VERSION_CODE
             )
+
             homeViewModel.sendFCMToServer(fcmRegistrationModel)
+
             MoEFireBaseHelper.getInstance()
                 .passPushToken(GramAppApplication.getAppContext(), fcmRegistrationModel.token_value)
 

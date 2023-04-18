@@ -14,4 +14,5 @@ interface ViewAllFarmsNavigator : BaseNavigator {
     fun setViewAllFarmsAdapter(farmsList: List<List<Data>>, isCustomerFarms: Boolean, isOldFarms: Boolean)
     fun setFarmUnits(units: List<GpApiResponseData>)
     fun onAddHarvestQues()
+    fun setViewAllOldFarmsAdapter(farmsList: ArrayList<List<Data>>, customerFarms: Boolean, oldFarms: Boolean)
 }

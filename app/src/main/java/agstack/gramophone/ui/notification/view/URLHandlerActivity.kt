@@ -175,7 +175,7 @@ class URLHandlerActivity :
                             notificationViewModel.getCategoryDetails(
                                 categoryId,
                                 categoryName,
-                                "subcat"
+                                subCategoryId!!
                             )
                         } else {
                             val categoryId = uri.getQueryParameter("categoryId")

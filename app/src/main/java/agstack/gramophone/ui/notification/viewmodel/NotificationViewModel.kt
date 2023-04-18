@@ -15,6 +15,7 @@ import agstack.gramophone.ui.notification.model.NotificationRequestModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Utility
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -70,12 +71,12 @@ class NotificationViewModel @Inject constructor(
                 progress.set(false)
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                    //else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
             }
         }
     }
-    fun getCategoryDetails(categoryId: String, categoryName: String?, s: String){
+    fun getCategoryDetails(categoryId: String, categoryName: String?, subCatId: String){
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
@@ -89,10 +90,10 @@ class NotificationViewModel @Inject constructor(
                     if (catResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
 
                         Log.d("Image",""+catResponse.body()?.gp_api_response_data?.product_app_category_image)
-                        if (s.equals("subcat")) {
+                        if (!TextUtils.isEmpty(subCatId)) {
                             getNavigator()?.openAndFinishActivity(FeaturedProductActivity::class.java, Bundle().apply {
                                 putString(Constants.SHOP_BY_SUB_CATEGORY, categoryId)
-                                putString(Constants.SUB_CATEGORY_ID, categoryId)
+                                putString(Constants.SUB_CATEGORY_ID, subCatId)
                                 putString(Constants.SUB_CATEGORY_NAME, categoryName)
                                 putString(Constants.SUB_CATEGORY_IMAGE, catResponse.body()?.gp_api_response_data?.product_app_category_image)
                             })
@@ -119,7 +120,7 @@ class NotificationViewModel @Inject constructor(
                 getNavigator()?.finishActivity()
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                    //else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
             }
         }
@@ -167,7 +168,7 @@ class NotificationViewModel @Inject constructor(
                 progress.set(false)
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                    //else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
                 getNavigator()?.finishActivity()
 
@@ -209,7 +210,7 @@ class NotificationViewModel @Inject constructor(
                 progress.set(false)
                 when (ex) {
                     is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                   // else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
                 }
                 getNavigator()?.finishActivity()
 

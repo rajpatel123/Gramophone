@@ -85,24 +85,24 @@ class CommunityViewModel @Inject constructor(
     fun filterPost(v: TabLayout.Tab) {
         showProgress.set(true)
         getNavigator()?.hideViews()
-        when (v.text) {
-            Constants.POST_LATEST -> {
+        when (v.position) {
+            0 -> {
                 sorting.set("latest")
             }
-            Constants.POST_TRENDING -> {
+            1 -> {
                 sorting.set("trending")
             }
-            Constants.POST_FOLLOWING -> {
+            2 -> {
                 sorting.set("following")
             }
-            Constants.POST_EXPERT -> {
+            3 -> {
                 sorting.set("expert")
             }
-            Constants.POST_SELF -> {
+            4 -> {
                 sorting.set("self")
 
             }
-            Constants.POST_BOOKMARK -> {
+            5 -> {
                 sorting.set("bookmark")
             }
         }
@@ -172,7 +172,7 @@ class CommunityViewModel @Inject constructor(
                 showProgress.set(false)
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+//                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
 
@@ -234,7 +234,7 @@ class CommunityViewModel @Inject constructor(
                 showProgress.set(false)
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+//                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
 
@@ -296,7 +296,7 @@ class CommunityViewModel @Inject constructor(
                 showProgress.set(false)
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+//                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
 
@@ -351,7 +351,7 @@ class CommunityViewModel @Inject constructor(
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+//                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
 
@@ -519,7 +519,7 @@ class CommunityViewModel @Inject constructor(
             showProgress.set(false)
             when (ex) {
                 is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+//                else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
             }
         }
     }
@@ -665,7 +665,7 @@ class CommunityViewModel @Inject constructor(
                 showProgress.set(false)
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+//                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
         }
@@ -704,7 +704,7 @@ class CommunityViewModel @Inject constructor(
                 showProgress.set(false)
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+//                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
 
@@ -757,7 +757,7 @@ class CommunityViewModel @Inject constructor(
                 showProgress.set(false)
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+//                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
 
@@ -803,7 +803,7 @@ class CommunityViewModel @Inject constructor(
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+//                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
 
@@ -838,7 +838,7 @@ class CommunityViewModel @Inject constructor(
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+//                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
 
@@ -894,7 +894,7 @@ class CommunityViewModel @Inject constructor(
 
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+//                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
 
@@ -985,7 +985,7 @@ class CommunityViewModel @Inject constructor(
             } catch (ex: Exception) {
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+//                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
 
@@ -1028,7 +1028,7 @@ class CommunityViewModel @Inject constructor(
                 showProgress.set(false)
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+//                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
 
@@ -1061,7 +1061,7 @@ class CommunityViewModel @Inject constructor(
                 showProgress.set(false)
                 when (ex) {
                     is IOException -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.network_failure)!!)
-                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
+//                    else -> getNavigator()?.onError(getNavigator()?.getMessage(R.string.some_thing_went_wrong)!!)
                 }
             }
 
