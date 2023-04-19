@@ -60,10 +60,6 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
         }
 
 
-        if (intent.data != null)
-            instance?.putString(Constants.URI, intent.data.toString())
-
-
         SharedPreferencesHelper.instance?.putString(Constants.UTM_SOURCE,"")
         SharedPreferencesHelper.instance?.putString(Constants.UTM_URL,"")
 
@@ -87,7 +83,16 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
     override fun onResume() {
         super.onResume()
         if (hasInternetConnection(this)){
-            startApp()
+            if (intent.data != null && SharedPreferencesHelper.instance?.getBoolean(
+                    SharedPreferencesKeys.logged_in
+                ) == true
+            ) {
+                instance?.putString(Constants.URI, intent.data.toString())
+                openAndFinishActivity(HomeActivity::class.java)
+            } else {
+                startApp()
+            }
+
         }else{
             val intent = Intent(this, LostConnectionActivity::class.java)
             startActivity(intent)

@@ -35,44 +35,80 @@
             android:layout_marginTop="@dimen/_16sdp"
             android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/manrope_bold"
-                android:gravity="center"
-                android:text="@string/_100_genuine_nproducts"
-                android:textColor="@color/blakish"
-                android:textSize="10sp"
-                android:textStyle="normal"
-                app:drawableTopCompat="@drawable/ic_promise_genuine_products"
-                tools:ignore="SmallSp" />
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/manrope_bold"
-                android:gravity="center"
-                android:text="@string/free_shipping_nat_doorstep"
-                android:textColor="@color/blakish"
-                android:textSize="10sp"
-                android:textStyle="normal"
-                app:drawableTopCompat="@drawable/ic_promise_free_shipping"
-                tools:ignore="SmallSp" />
+                <ImageView
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    app:srcCompat="@drawable/ic_genuine_product" />
 
-            <TextView
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_bold"
+                    android:gravity="center"
+                    android:text="@string/_100_genuine_nproducts"
+                    android:textColor="@color/blakish"
+                    android:textSize="10sp"
+                    android:textStyle="normal"
+                    tools:ignore="SmallSp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/manrope_bold"
-                android:gravity="center"
-                android:text="@string/best_price_nguaranteed"
-                android:textColor="@color/blakish"
-                android:textSize="10sp"
-                android:textStyle="normal"
-                app:drawableTopCompat="@drawable/ic_promise_best_price"
-                tools:ignore="SmallSp" />
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    app:srcCompat="@drawable/free_delivery_at_home" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/manrope_bold"
+                    android:gravity="center"
+                    android:text="@string/free_shipping_nat_doorstep"
+                    android:textColor="@color/blakish"
+                    android:textSize="10sp"
+                    android:textStyle="normal"
+                    tools:ignore="SmallSp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    app:srcCompat="@drawable/best_price" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_bold"
+                    android:gravity="center"
+                    android:text="@string/best_price_nguaranteed"
+                    android:textColor="@color/blakish"
+                    android:textSize="10sp"
+                    android:textStyle="normal"
+                    tools:ignore="SmallSp" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
@@ -82,44 +118,85 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/manrope_bold"
-                android:gravity="center"
-                android:text="@string/genuine_ngst_bill"
-                android:textColor="@color/blakish"
-                android:textSize="10sp"
-                android:textStyle="normal"
-                app:drawableTopCompat="@drawable/ic_promise_gst"
-                tools:ignore="SmallSp" />
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/manrope_bold"
-                android:gravity="center"
-                android:text="@string/easy_return"
-                android:textColor="@color/blakish"
-                android:textSize="10sp"
-                android:textStyle="normal"
-                app:drawableTopCompat="@drawable/ic_promise_easy_return"
-                tools:ignore="SmallSp" />
+                <ImageView
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    app:srcCompat="@drawable/gst_bill" />
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_bold"
+                    android:gravity="center"
+                    android:text="@string/genuine_ngst_bill"
+                    android:textColor="@color/blakish"
+                    android:textSize="10sp"
+                    android:textStyle="normal"
+                    tools:ignore="SmallSp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/manrope_bold"
-                android:gravity="center"
-                android:text="@string/free_expert_nadvice"
-                android:textColor="@color/blakish"
-                android:textSize="10sp"
-                android:textStyle="normal"
-                app:drawableTopCompat="@drawable/ic_promise_expert_advice"
-                tools:ignore="SmallSp" />
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    app:srcCompat="@drawable/payment_after_delivery_product" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_bold"
+                    android:gravity="center"
+                    android:text="@string/easy_return"
+                    android:textColor="@color/blakish"
+                    android:textSize="10sp"
+                    android:textStyle="normal"
+                    tools:ignore="SmallSp" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    app:srcCompat="@drawable/free_expert_advice" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_bold"
+                    android:gravity="center"
+                    android:text="@string/free_expert_nadvice"
+                    android:textColor="@color/blakish"
+                    android:textSize="10sp"
+                    android:textStyle="normal"
+                    tools:ignore="SmallSp" />
+
+
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
 

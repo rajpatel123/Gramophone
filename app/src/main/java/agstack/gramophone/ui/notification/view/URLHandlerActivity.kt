@@ -14,6 +14,7 @@ import agstack.gramophone.ui.favourite.view.FavouriteProductActivity
 import agstack.gramophone.ui.gramcash.GramCashActivity
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
 import agstack.gramophone.ui.home.product.activity.ProductDetailsActivity
+import agstack.gramophone.ui.home.shop.ShopByActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.notification.NotificationNavigator
 import agstack.gramophone.ui.notification.NotificationsAdapter
@@ -57,6 +58,7 @@ import agstack.gramophone.utils.Constants.DEEP_LINK_PRODUCT_LIST
 import agstack.gramophone.utils.Constants.DEEP_LINK_REFERRAL
 import agstack.gramophone.utils.Constants.DEEP_LINK_SHOP_BY_CATEGORY
 import agstack.gramophone.utils.Constants.DEEP_LINK_SHOP_BY_COMPANY
+import agstack.gramophone.utils.Constants.DEEP_LINK_SHOP_BY_COMPANY_NAME
 import agstack.gramophone.utils.Constants.DEEP_LINK_SHOP_BY_STORE
 import agstack.gramophone.utils.Constants.DEEP_LINK_SOCIAL
 import agstack.gramophone.utils.Constants.DEEP_LINK_WEATHER_INFO
@@ -373,7 +375,7 @@ class URLHandlerActivity :
                     openAndFinishActivity(OffersListActivity::class.java, null)
                 }
 
-                DEEP_LINK_SHOP_BY_COMPANY -> {
+                DEEP_LINK_SHOP_BY_COMPANY_NAME -> {
                     val companyId = uri.getQueryParameter("companyId")
                     val companyName = uri.getQueryParameter("companyName")
 
@@ -383,6 +385,18 @@ class URLHandlerActivity :
                             putString(Constants.COMPANY_NAME, companyName)
                             putString(Constants.COMPANY_IMAGE, "")
                         })
+                }
+
+                DEEP_LINK_SHOP_BY_COMPANY-> {
+
+                    openAndFinishActivity(ShopByActivity::class.java,
+                        Bundle().apply {
+                            putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_COMPANY)
+                            putString("deeplink", "")
+                            putParcelable(Constants.SHOP_BY_COMPANY,
+                                null)
+                        })
+
                 }
 
 

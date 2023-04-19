@@ -56,7 +56,10 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.google.gson.Gson
+import com.moe.pushlibrary.MoEHelper
 import com.moengage.core.Properties
+import com.moengage.core.analytics.MoEAnalyticsHelper
+import com.moengage.core.model.AppStatus
 import com.moengage.firebase.MoEFireBaseHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.item_menu_cart_with_counter.*
@@ -147,6 +150,14 @@ class HomeActivity :
         if (!hasInternetConnection(this)) {
             val intent = Intent(this, LostConnectionActivity::class.java)
             startActivity(intent)
+        }
+
+        if(!SharedPreferencesHelper.instance?.getBoolean(SharedPreferencesKeys.IsAlreadyInstallKey)!!) {
+            MoEAnalyticsHelper.setAppStatus(this,AppStatus.UPDATE)
+        }
+        else {
+            MoEAnalyticsHelper.setAppStatus(this,AppStatus.INSTALL)
+            SharedPreferencesHelper.instance?.putBoolean(SharedPreferencesKeys.IsAlreadyInstallKey, true)
         }
     }
 

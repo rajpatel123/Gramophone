@@ -40,6 +40,8 @@ class ShopByActivity :
 
     private fun setupUi() {
         shopByViewModel.getBundleData()
+        shopByViewModel.getStores()
+
         updateCartCount(SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!)
         viewDataBinding.swipeRefresh.setColorSchemeResources(R.color.blue)
         viewDataBinding.swipeRefresh.setOnRefreshListener {

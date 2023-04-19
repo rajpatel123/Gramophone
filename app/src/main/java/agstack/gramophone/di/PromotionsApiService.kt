@@ -11,4 +11,7 @@ interface PromotionsApiService {
     @POST("api/v1/all-offer-list")
     suspend fun getAllOffersList(@Body offerListRequestModel: OfferListRequestModel): Response<PromotionsAllOfferResponse>
 
+    @POST("api/v1/offer-details")
+    suspend fun getOfferDetails(@Body offerListRequestModel: OfferListRequestModel): Response<PromotionsAllOfferResponse>
+
 }

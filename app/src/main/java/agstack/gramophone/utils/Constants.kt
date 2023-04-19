@@ -335,6 +335,7 @@ object Constants {
     const val DEEP_LINK_NOTIFICATION = "notification"
     const val DEEP_LINK_EDIT_LOCATION = "editLocation"
     const val DEEP_LINK_SHOP_BY_COMPANY= "shopByCompany"
+    const val DEEP_LINK_SHOP_BY_COMPANY_NAME= "shopByCompanyName"
 
     /**
      * For Broadcast

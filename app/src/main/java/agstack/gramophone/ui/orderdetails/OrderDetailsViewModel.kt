@@ -60,7 +60,7 @@ class OrderDetailsViewModel @Inject constructor(
         username.value = ""
         address.value = ""
         mobile.value = ""
-        discount.value = 0f
+        discount.value = 12f
         gramCash.value = 0
     }
 
