@@ -58,10 +58,14 @@ class ShopByViewModel @Inject constructor(
                     })
                 }
                 Constants.SHOP_BY_COMPANY -> {
+                    getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.shop_by_company)!!)
+
+                    if (bundle.containsKey("deeplink")){
+                        return
+                    }
                     showWeatherView.value = true
                     val companyResponse: CompanyResponse =
                         bundle.getParcelable<CompanyResponse>(Constants.SHOP_BY_COMPANY) as CompanyResponse
-                    getNavigator()?.setToolbarTitle(getNavigator()?.getMessage(R.string.shop_by_company)!!)
                     getNavigator()?.setShopByCompanyAdapter(ShopByCompanyAdapter(companyResponse.gpApiResponseData?.companiesList) { id, name, image ->
                         getNavigator()?.openFeaturedActivityForShopByCompany(id, name, image)
                     })

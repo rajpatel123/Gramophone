@@ -109,6 +109,8 @@ class MarketFragment :
         binding?.swipeRefresh?.setColorSchemeResources(R.color.blue)
         binding?.swipeRefresh?.setOnRefreshListener {
             marketFragmentViewModel.getBanners(true)
+            marketFragmentViewModel.getFarms()
+
             callApi()
             binding?.swipeRefresh?.isRefreshing = false
         }

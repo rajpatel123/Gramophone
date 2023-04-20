@@ -329,10 +329,11 @@ class URLHandlerActivity :
                 }
 
                 DEEP_LINK_ARTICLE_CATEGORY -> {
-                    openActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
+                    openAndFinishActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
                         putString(
                             Constants.PAGE_URL,
-                            BuildConfig.BASE_URL_ARTICLES + "/categories/"+uri.getQueryParameter("categoryName")
+                            BuildConfig.BASE_URL_ARTICLES + "/categories/"+ uri.getQueryParameter("categoryName")!!
+                                .replace(" ","%20")
 
                         )
 
@@ -439,12 +440,24 @@ class URLHandlerActivity :
                                 Constants.PAGE_SOURCE, "gramo"
                             )
                         })
-                    }else{
+                    }else if(uri.toString().contains("articlesContentUrl")){
                         val url = uri.getQueryParameter("webContentUrl")
                         openAndFinishActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
                             putString(
                                 Constants.PAGE_URL, url
                             )
+
+                            putString(
+                                Constants.PAGE_SOURCE, "gramo"
+                            )
+                        })
+                    }else{
+                        openAndFinishActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
+                            putString(
+                                Constants.PAGE_URL,
+                                BuildConfig.BASE_URL_ARTICLES
+                            )
+
 
                             putString(
                                 Constants.PAGE_SOURCE, "gramo"
