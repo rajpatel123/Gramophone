@@ -4,6 +4,7 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.onboarding.OnBoardingRepository
 import agstack.gramophone.data.repository.product.ProductRepository
+import agstack.gramophone.data.repository.promotions.PromotionsRepository
 import agstack.gramophone.ui.advisory.AdvisoryActivity
 import agstack.gramophone.ui.advisory.view.CropProblemDetailActivity
 import agstack.gramophone.ui.home.featured.FeaturedProductActivity
@@ -12,6 +13,7 @@ import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.notification.NotificationNavigator
 import agstack.gramophone.ui.notification.NotificationsAdapter
 import agstack.gramophone.ui.notification.model.NotificationRequestModel
+import agstack.gramophone.ui.offerslist.model.OfferDetailRequestModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.Utility
 import android.os.Bundle
@@ -27,7 +29,8 @@ import javax.inject.Inject
 @HiltViewModel
 class NotificationViewModel @Inject constructor(
     private val onBoardingRepository: OnBoardingRepository,
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
+    private val promotionsRepository: PromotionsRepository
 ):BaseViewModel<NotificationNavigator>(){
     val limit =10
     val page = 1
@@ -295,27 +298,34 @@ class NotificationViewModel @Inject constructor(
     }
 
 
-    fun getOfferDetails(storeId: String ){
+    fun getOfferDetails(pramotionId: Int){
         viewModelScope.launch {
             try {
                 if (getNavigator()?.isNetworkAvailable() == true) {
                     progress.set(true)
-                    val catResponse = onBoardingRepository.getStoreDetails(storeId)
-                    progress.set(false)
-                    if (catResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
 
-                        val data = catResponse?.body()?.gp_api_response_data
-                        getNavigator()?.openAndFinishActivity(FeaturedProductActivity::class.java,
-                            Bundle().apply {
-                                putString(Constants.STORE_ID, "".plus(data?.id))
-                                putString(Constants.STORE_NAME, data?.store_name)
-                                putString(Constants.STORE_IMAGE, data?.store_image)
-                            })
-
-                    } else {
-                        getNavigator()?.showToast(Utility.getErrorMessage(catResponse.errorBody()))
-                        getNavigator()?.finishActivity()
+                    val offerDetailRequestModel = getNavigator()?.getLanguage()
+                        ?.let { OfferDetailRequestModel(it,pramotionId,"customer") }
+                    val catResponse = offerDetailRequestModel?.let {
+                        promotionsRepository.getOfferDetails(
+                            it
+                        )
                     }
+//                    progress.set(false)
+//                    if (catResponse.body()?.gp_api_status!!.equals(Constants.GP_API_STATUS)) {
+//
+//                        val data = catResponse?.body()?.gp_api_response_data
+//                        getNavigator()?.openAndFinishActivity(FeaturedProductActivity::class.java,
+//                            Bundle().apply {
+//                                putString(Constants.STORE_ID, "".plus(data?.id))
+//                                putString(Constants.STORE_NAME, data?.store_name)
+//                                putString(Constants.STORE_IMAGE, data?.store_image)
+//                            })
+//
+//                    } else {
+//                        getNavigator()?.showToast(Utility.getErrorMessage(catResponse.errorBody()))
+//                        getNavigator()?.finishActivity()
+//                    }
                 } else {
                     getNavigator()?.showToast(getNavigator()?.getMessage(R.string.no_internet))
                     getNavigator()?.finishActivity()

@@ -19,6 +19,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -81,7 +82,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
 
 
         Log.d("Raj","OnResume Community"+SharedPreferencesHelper.instance?.getBoolean(Constants.TARGET_PAGE_FROM_DEEP_LINK))
-        if (SharedPreferencesHelper.instance?.getBoolean(Constants.TARGET_PAGE_FROM_DEEP_LINK) != true) {
+        if (TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(Constants.URI))) {
             communityViewModel.sorting.set("latest")
             communityViewModel.loadData(communityViewModel.sorting.get()!!)
             //communityViewModel.getQuiz()

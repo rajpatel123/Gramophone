@@ -50,8 +50,10 @@ import agstack.gramophone.utils.Constants.DEEP_LINK_GRAM_CASH
 import agstack.gramophone.utils.Constants.DEEP_LINK_HOME
 import agstack.gramophone.utils.Constants.DEEP_LINK_MARKET
 import agstack.gramophone.utils.Constants.DEEP_LINK_MY_FARM
+import agstack.gramophone.utils.Constants.DEEP_LINK_MY_FAVORITES
 import agstack.gramophone.utils.Constants.DEEP_LINK_MY_ORDERS
 import agstack.gramophone.utils.Constants.DEEP_LINK_NOTIFICATION
+import agstack.gramophone.utils.Constants.DEEP_LINK_OFFER
 import agstack.gramophone.utils.Constants.DEEP_LINK_OFFERS
 import agstack.gramophone.utils.Constants.DEEP_LINK_PRODUCT_DETAIL
 import agstack.gramophone.utils.Constants.DEEP_LINK_PRODUCT_LIST
@@ -366,6 +368,24 @@ class URLHandlerActivity :
 
                 DEEP_LINK_FAV_TV -> {
                     openActivity(BookmarkedVideosActivity::class.java, null)
+
+                }
+
+
+                DEEP_LINK_OFFER -> {
+//                    val promotionId = uri.getQueryParameter("promotionId")
+//
+//                    promotionId?.toInt()?.let { notificationViewModel.getOfferDetails(it) }
+//
+//                   // openActivity(BookmarkedVideosActivity::class.java, null)
+
+                    finishActivity()
+
+                }
+                DEEP_LINK_MY_FAVORITES -> {
+                    SharedPreferencesHelper.instance?.putString(Constants.TARGET_PAGE, "fav")
+                    finishActivity()
+
 
                 }
                 DEEP_LINK_CART -> {

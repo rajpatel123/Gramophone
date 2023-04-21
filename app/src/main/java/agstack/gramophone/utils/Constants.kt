@@ -330,12 +330,14 @@ object Constants {
     const val DEEP_LINK_FAV_ARTICLE = "favoriteArticles"
     const val DEEP_LINK_FAV_POSTS = "favoritePosts"
     const val DEEP_LINK_FAV_PRODUCTS = "favoriteProducts"
-        const val DEEP_LINK_FAV_TV = "favoriteTV"
+    const val DEEP_LINK_FAV_TV = "favoriteTV"
     const val DEEP_LINK_OFFERS = "allOffers"
+    const val DEEP_LINK_OFFER = "offer"
     const val DEEP_LINK_NOTIFICATION = "notification"
     const val DEEP_LINK_EDIT_LOCATION = "editLocation"
     const val DEEP_LINK_SHOP_BY_COMPANY= "shopByCompany"
     const val DEEP_LINK_SHOP_BY_COMPANY_NAME= "shopByCompanyName"
+    const val DEEP_LINK_MY_FAVORITES= "myFavorites"
 
     /**
      * For Broadcast

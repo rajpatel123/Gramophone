@@ -522,20 +522,31 @@ class HomeActivity :
         if (!TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(Constants.TARGET_PAGE))) {
             when(SharedPreferencesHelper.instance?.getString(Constants.TARGET_PAGE)){
                 "social"-> {
-                    showCommunityFragment("social")
-                    val tab =
-                        SharedPreferencesHelper.instance?.getInteger(Constants.TARGET_PAGE_TAB)
-                    CoroutineScope(Dispatchers.Main).launch {
+                    if (SharedPreferencesHelper.instance?.getBoolean(Constants.TARGET_PAGE_FROM_DEEP_LINK) == true){
+                        viewDataBinding.navView.selectedItemId = R.id.navigation_community
+
+                        val tab =
+                            SharedPreferencesHelper.instance?.getInteger(Constants.TARGET_PAGE_TAB)
+                        CoroutineScope(Dispatchers.Main).launch {
 //                        delay(1000)
-                        communityFragment.selectTabFromDeeplink(tab)
+                            communityFragment.selectTabFromDeeplink(tab)
+                        }
+                    }else{
+                        showCommunityFragment("social")
+
                     }
+
                 }
                 "market"->{
                     showHomeFragment()
                 }
+
+                "fav"->{
+                    viewDataBinding.navView.selectedItemId = R.id.navigation_profile
+
+                }
             }
 
-            SharedPreferencesHelper.instance?.putString(Constants.TARGET_PAGE,"")
         }
 
 
@@ -562,7 +573,6 @@ class HomeActivity :
             val intent = Intent(this, URLHandlerActivity::class.java)
             intent.putExtra(Constants.URI, SharedPreferencesHelper.instance?.getString(Constants.URI))
             startActivity(intent)
-            SharedPreferencesHelper.instance?.putString(Constants.URI,"")
         }
     }
 
@@ -610,6 +620,8 @@ class HomeActivity :
             )
 
             SharedPreferencesHelper.instance?.putString(SharedPreferencesKeys.SUGGESTED_CROPS, "")
+
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -623,7 +635,7 @@ class HomeActivity :
             0
         )
         SharedPreferencesHelper.instance?.putString(Constants.TARGET_PAGE, "")
-
+        SharedPreferencesHelper.instance?.putString(Constants.URI,"")
         super.onDestroy()
     }
 

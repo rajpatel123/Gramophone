@@ -1,5 +1,6 @@
 package agstack.gramophone.di
 
+import agstack.gramophone.ui.offerslist.model.OfferDetailRequestModel
 import agstack.gramophone.ui.offerslist.model.OfferListRequestModel
 import agstack.gramophone.ui.offerslist.model.PromotionsAllOfferResponse
 import retrofit2.Response
@@ -12,6 +13,6 @@ interface PromotionsApiService {
     suspend fun getAllOffersList(@Body offerListRequestModel: OfferListRequestModel): Response<PromotionsAllOfferResponse>
 
     @POST("api/v1/offer-details")
-    suspend fun getOfferDetails(@Body offerListRequestModel: OfferListRequestModel): Response<PromotionsAllOfferResponse>
+    suspend fun getOfferDetails(@Body offerDetailRequestModel: OfferDetailRequestModel): Response<PromotionsAllOfferResponse>
 
 }
