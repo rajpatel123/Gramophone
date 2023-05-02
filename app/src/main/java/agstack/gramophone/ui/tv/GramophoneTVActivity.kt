@@ -16,6 +16,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -102,7 +103,7 @@ class GramophoneTVActivity :
                         val title: String = playListItemModels.snippet.title
                         val imageUrl: String =
                             playListItemModels.snippet.thumbnails.default.url
-                        share(title, imageUrl, currentPlayingVideoId!!)
+                        share(title, "https://www.gramophone.in/app?category=youtubeVideo&videoId="+playListItemModels.contentDetails.videoId, currentPlayingVideoId!!)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -455,92 +456,98 @@ class GramophoneTVActivity :
         youTubePlayer: YouTubePlayer?,
         b: Boolean,
     ) {
-        this@GramophoneTVActivity.youTubePlayer = youTubePlayer
-        youTubePlayer!!.setPlayerStateChangeListener(object :
-            YouTubePlayer.PlayerStateChangeListener {
-            override fun onLoading() {
-
-            }
-
-            override fun onLoaded(arg0: String?) {
-                currentPlayingVideoId = arg0
-                isVideoBookmarked()
-                setCurrentPositionInVideoAdapter(currentPlayingVideoId!!)
-                if (videosTitleHashMap.isNotNullOrEmpty() && videosTitleHashMap.containsKey(
-                        currentPlayingVideoId)
-                ) {
-                    val playListItemModels = videosTitleHashMap[currentPlayingVideoId]
-                    try {
-                        if (playListItemModels.isNotNull()) {
-                            val title: String = playListItemModels!!.snippet.title
-                            currentPlayingVideoDescriptionUrl = playListItemModels.snippet.thumbnails.default.url
-                            currentPlayingVideoName = title
-                            viewDataBinding.playListTitleTextView.text = title
-                            viewDataBinding.shareContainer.visibility = View.VISIBLE
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-            }
-
-            override fun onAdStarted() {
-
-            }
-
-            override fun onVideoStarted() {
-
-            }
-
-            override fun onVideoEnded() {
-
-            }
-
-            override fun onError(p0: YouTubePlayer.ErrorReason?) {
-
-            }
-
-        })
-        youTubePlayer.setPlaybackEventListener(object : YouTubePlayer.PlaybackEventListener {
-            override fun onPlaying() {
-
-            }
-
-            override fun onPaused() {
-
-            }
-
-            override fun onStopped() {
-
-            }
-
-            override fun onBuffering(p0: Boolean) {
-
-            }
-
-            override fun onSeekTo(p0: Int) {
-
-            }
-
-        })
         try {
-            if (!b) {
-                if (videoIdsList.isNotNullOrEmpty()) {
-                    try {
-                        youTubePlayer.cuePlaylist(currentPlayingPlayListId)
-                        Timer().schedule(object : TimerTask() {
-                            override fun run() {
-                                youTubePlayer.play()
+            this@GramophoneTVActivity.youTubePlayer = youTubePlayer
+            youTubePlayer!!.setPlayerStateChangeListener(object :
+                YouTubePlayer.PlayerStateChangeListener {
+                override fun onLoading() {
+
+                }
+
+                override fun onLoaded(arg0: String?) {
+                    currentPlayingVideoId = arg0
+                    isVideoBookmarked()
+                    setCurrentPositionInVideoAdapter(currentPlayingVideoId!!)
+                    if (videosTitleHashMap.isNotNullOrEmpty() && videosTitleHashMap.containsKey(
+                            currentPlayingVideoId)
+                    ) {
+                        val playListItemModels = videosTitleHashMap[currentPlayingVideoId]
+                        try {
+                            if (playListItemModels.isNotNull()) {
+                                val title: String = playListItemModels!!.snippet.title
+                                currentPlayingVideoDescriptionUrl = playListItemModels.snippet.thumbnails.default.url
+                                currentPlayingVideoName = title
+                                viewDataBinding.playListTitleTextView.text = title
+                                viewDataBinding.shareContainer.visibility = View.VISIBLE
                             }
-                        }, 1000)
-                    } catch (e: IllegalStateException) {
-                        e.printStackTrace()
-                        initYoutubePlayer()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
                 }
+
+                override fun onAdStarted() {
+
+                }
+
+                override fun onVideoStarted() {
+
+                }
+
+                override fun onVideoEnded() {
+
+                }
+
+                override fun onError(p0: YouTubePlayer.ErrorReason?) {
+
+                }
+
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
+
+            )
+            youTubePlayer.setPlaybackEventListener(object : YouTubePlayer.PlaybackEventListener {
+                override fun onPlaying() {
+
+                }
+
+                override fun onPaused() {
+
+                }
+
+                override fun onStopped() {
+
+                }
+
+                override fun onBuffering(p0: Boolean) {
+
+                }
+
+                override fun onSeekTo(p0: Int) {
+
+                }
+
+            })
+            try {
+                if (!b) {
+                    if (videoIdsList.isNotNullOrEmpty()) {
+                        try {
+                            youTubePlayer.cuePlaylist(currentPlayingPlayListId)
+                            Timer().schedule(object : TimerTask() {
+                                override fun run() {
+                                    youTubePlayer.play()
+                                }
+                            }, 1000)
+                        } catch (e: IllegalStateException) {
+                            e.printStackTrace()
+                            initYoutubePlayer()
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }catch (ex:Exception){
+
         }
     }
 
@@ -548,7 +555,7 @@ class GramophoneTVActivity :
         p0: YouTubePlayer.Provider?,
         p1: YouTubeInitializationResult?,
     ) {
-        TODO("Not yet implemented")
+        Log.d("TV","no need to implement")
     }
 
     override fun setToolbarTitle(title: String) {

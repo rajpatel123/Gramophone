@@ -109,25 +109,26 @@ class CartActivity : BaseActivityWrapper<ActivityCartBinding, CartNavigator, Car
         onOfferClicked: (offerAppliedList: OfferApplied, productName: String, productSku: String) -> Unit,
         onQuantityClicked: (cartItem: CartItem) -> Unit,
     ) {
-        cartAdapter.onItemDetailClicked = onItemDetailClicked
-        cartAdapter.onItemDeleteClicked = onCartItemDeleteClicked
-        cartAdapter.onOfferClicked = onOfferClicked
-        cartAdapter.onQuantityClicked = onQuantityClicked
-        viewDataBinding.rvCart.adapter = cartAdapter
 
-        cartAdapter.cartList.forEach {
-            product_Id.add(it.product_id)
-            product_Base_Name.add(it.product_name)
-            product_MRP.add("".plus(" ").plus(it.cost_price))
-            krishi_App_Selling_Price.add(it.selling_price)
-            product_SKU.add(it.product_sku)
-            product_Quantity.add("".plus("").plus(it.quantity))
-            selling_Price_After_Discount.add(it.item_product_discount)
+            cartAdapter.onItemDetailClicked = onItemDetailClicked
+            cartAdapter.onItemDeleteClicked = onCartItemDeleteClicked
+            cartAdapter.onOfferClicked = onOfferClicked
+            cartAdapter.onQuantityClicked = onQuantityClicked
+            viewDataBinding.rvCart.adapter = cartAdapter
+
+            cartAdapter.cartList.forEach {
+                product_Id.add(it.product_id)
+                product_Base_Name.add(it.product_name)
+                product_MRP.add("".plus(" ").plus(it.cost_price))
+                krishi_App_Selling_Price.add(it.selling_price)
+                product_SKU.add(it.product_sku)
+                product_Quantity.add("".plus("").plus(it.quantity))
+                selling_Price_After_Discount.add(it.item_product_discount)
+            }
+
+        if (cartAdapter.cartList.size<2 && chkPayUsingGramCash.isChecked ){
+           cartViewModel.onCheckedChange(chkPayUsingGramCash,chkPayUsingGramCash.isChecked)
         }
-
-
-
-
 
 
     }

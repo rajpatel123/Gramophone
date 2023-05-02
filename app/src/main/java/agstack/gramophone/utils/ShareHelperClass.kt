@@ -120,21 +120,24 @@ class ShareHelperClass(
 
 
     fun shareDeepLinkWithExtraText(extraText: String, extraSubject: String) {
-
-        if (imageUri != null) {
-            shareDeepLinkWithExtraImageAndText(
-                extraText,
-                imageUri!!,
-                extraSubject,
-                IntentKeys.OtherShareKey
-            );
-        } else {
-            val intent = Intent(Intent.ACTION_SEND)
-            intent.type = "text/plain"
-            intent.putExtra(Intent.EXTRA_SUBJECT, extraSubject)
-            intent.putExtra(Intent.EXTRA_TEXT, extraText)
-            presentingActivity.startActivityForResult(intent, RESULT_CODE)
+        try {
+            if (imageUri != null) {
+                shareDeepLinkWithExtraImageAndText(
+                    extraText,
+                    imageUri!!,
+                    extraSubject,
+                    IntentKeys.OtherShareKey
+                )
+            } else {
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "text/plain"
+                intent.putExtra(Intent.EXTRA_SUBJECT, extraSubject)
+                intent.putExtra(Intent.EXTRA_TEXT, extraText)
+                presentingActivity.startActivityForResult(intent, RESULT_CODE)
+            }
+        } catch (e: Exception) {
         }
+
     }
 
     fun shareDeepLinkWithExtraYouTubeUrl(

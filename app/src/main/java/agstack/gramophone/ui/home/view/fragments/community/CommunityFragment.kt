@@ -17,6 +17,7 @@ import agstack.gramophone.utils.*
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
@@ -49,13 +50,13 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     private val communityViewModel: CommunityViewModel by viewModels()
     private var recyclerView: RecyclerView? = null
 
-    private lateinit var mContext : HomeActivity
+    private lateinit var mContext: HomeActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mContext = activity as HomeActivity
 
         binding?.swipeRefresh?.setOnRefreshListener {
-            binding?.swipeRefresh?.isRefreshing=true
+            binding?.swipeRefresh?.isRefreshing = true
             communityViewModel.loadData(communityViewModel.sorting.get().toString())
         }
 
@@ -80,15 +81,23 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         super.onResume()
         shareSheetPresenter = this?.let { ShareSheetPresenter(requireActivity()) }
 
+        if (activity?.let { hasInternetConnection(it) } == true) {
+            if (TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(Constants.URI))) {
+                communityViewModel.sorting.set("latest")
+                communityViewModel.loadData(communityViewModel.sorting.get()!!)
+                //communityViewModel.getQuiz()
+            } else if (!TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(Constants.URI))) {
+                val uri = Uri.parse(SharedPreferencesHelper.instance?.getString(Constants.URI))
+                val pageName = uri.getQueryParameter("tab")
+                if (pageName.equals("Latest")) {
+                    communityViewModel.sorting.set("latest")
+                    communityViewModel.loadData(communityViewModel.sorting.get()!!)
+                }
 
-        Log.d("Raj","OnResume Community"+SharedPreferencesHelper.instance?.getBoolean(Constants.TARGET_PAGE_FROM_DEEP_LINK))
-        if (TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(Constants.URI))) {
-            communityViewModel.sorting.set("latest")
-            communityViewModel.loadData(communityViewModel.sorting.get()!!)
-            //communityViewModel.getQuiz()
+            }
         }
-
     }
+
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
@@ -197,7 +206,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         //show dialog
         val mAlertDialog = mBuilder.show()
         communityViewModel.setDialog(mAlertDialog)
-        mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background);
+        mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background)
 
     }
 
@@ -224,7 +233,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         //show dialog
         val mAlertDialog = mBuilder.show()
         communityViewModel.setDialog(mAlertDialog)
-        mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background);
+        mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background)
 
     }
 
@@ -239,7 +248,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
         //show dialog
         val mAlertDialog = mBuilder.show()
         communityViewModel.setDialog(mAlertDialog)
-        mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background);
+        mAlertDialog.getWindow()?.setBackgroundDrawableResource(R.drawable.transparent_background)
 
 
     }
@@ -271,45 +280,47 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityFragme
     }
 
     fun selectTab(from: String) {
-        var source = ""
-        if (from.equals("gramophone")) {
-            communityViewModel.loadData("bookmark")
-            Handler().postDelayed(Runnable {
-                if (communityViewModel.myFavoriteCount!! > 0) {
-                    val tab = binding?.tabLayout?.getTabAt(5)
-                    tab!!.select()
-                } else {
-                    communityViewModel.loadData("latest")
-                    val tab = binding?.tabLayout?.getTabAt(0)
-                    tab!!.select()
-                }
-            }, 300)
+       try {
+           var source = ""
+           if (from.equals("gramophone")) {
+               communityViewModel.loadData("bookmark")
+               Handler().postDelayed(Runnable {
+                   if (communityViewModel.myFavoriteCount!! > 0) {
+                       val tab = binding?.tabLayout?.getTabAt(5)
+                       tab!!.select()
+                   } else {
+                       communityViewModel.loadData("latest")
+                       val tab = binding?.tabLayout?.getTabAt(0)
+                       tab!!.select()
+                   }
+               }, 300)
 
-            source = "My Gramophone"
-        } else if (from.equals("gramophone_my_post")) {
-            source = "My Gramophone My Post"
+               source = "My Gramophone"
+           } else if (from.equals("gramophone_my_post")) {
+               source = "My Gramophone My Post"
 
-            Handler().postDelayed(Runnable {
-                val tab = binding?.tabLayout?.getTabAt(4)
-                tab!!.select()
-            }, 300)
-        } else if (from.equals("social")) {
-            source = "Deeplink"
+               Handler().postDelayed(Runnable {
+                   val tab = binding?.tabLayout?.getTabAt(4)
+                   tab!!.select()
+               }, 300)
+           } else if (from.equals("social")) {
+               source = "Deeplink"
 
-            val tab = binding?.tabLayout?.getTabAt(1)
-            tab!!.select()
-        }
+               val tab = binding?.tabLayout?.getTabAt(1)
+               tab!!.select()
+           }
 
-        val properties = Properties()
-        properties.addAttribute(
-            "Customer_Id",
-            SharedPreferencesHelper.instance?.getString(
-                SharedPreferencesKeys.CUSTOMER_ID
-            )!!
-        )
-            .addAttribute("Redirection_Source", source)
-        sendMoEngageEvent("KA_View_Community_Wall", properties)
+           val properties = Properties()
+           properties.addAttribute(
+               "Customer_Id",
+               SharedPreferencesHelper.instance?.getString(
+                   SharedPreferencesKeys.CUSTOMER_ID
+               )!!
+           )
+               .addAttribute("Redirection_Source", source)
+           sendMoEngageEvent("KA_View_Community_Wall", properties)
 
+       }catch (ex:Exception){}
     }
 
     override fun sendBlockUserMoEngageEvent() {

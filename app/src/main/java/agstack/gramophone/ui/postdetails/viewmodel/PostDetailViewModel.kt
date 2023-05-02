@@ -269,7 +269,7 @@ class PostDetailViewModel @Inject constructor(
  }
 
  fun shareOnWhatsApp() {
-  getNavigator()?.sharePost(data?.linkUrl!!)
+  getNavigator()?.sharePost("https://www.gramophone.in/app?category=postDetails&postId="+data?._id)
  }
 
  fun onCloseClick() {

@@ -469,7 +469,7 @@ class CommunityPostAdapter(
             onItemCommentsClicked?.invoke(data?._id!!)
             }
             holder.itemPostBinding.ivWhatsapp.setOnClickListener {
-                onShareClicked?.invoke(data.linkUrl)
+                onShareClicked?.invoke("https://www.gramophone.in/app?category=postDetails&postId="+data._id)
         }
 
 

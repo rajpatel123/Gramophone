@@ -157,17 +157,20 @@ class AddToCartBottomSheetDialog(
     }
 
     private fun setSelectedSkuPrice() {
-        if (selectedSkuListItem.get().isNotNull()) {
-            val it: ProductSkuListItem = selectedSkuListItem.get()!!
-            val mrpPrice = if (it.mrpPrice.isNull()) 0f else it.mrpPrice!!.toFloat()
-            val salesPrice = if (it.salesPrice.isNullOrEmpty()) 0f else it.salesPrice.toFloat()
+        try {
+            if (selectedSkuListItem.get().isNotNull()) {
+                val it: ProductSkuListItem = selectedSkuListItem.get()!!
+                val mrpPrice = if (it.mrpPrice.isNull()) 0f else it.mrpPrice!!.toFloat()
+                val salesPrice = if (it.salesPrice.isNullOrEmpty()) 0f else it.salesPrice.toFloat()
 
-            selectedSkuPrice = if (salesPrice == 0f) {
-                mrpPrice * quantity
-            } else {
-                salesPrice * quantity
+                selectedSkuPrice = if (salesPrice == 0f) {
+                    mrpPrice * quantity
+                } else {
+                    salesPrice * quantity
+                }
             }
-        }
+        }catch (ex:Exception){}
+
     }
 
     private fun calculateDiscountAndPromotion(

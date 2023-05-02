@@ -6,10 +6,11 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseActivityWrapper
 import agstack.gramophone.databinding.ProductDetailBinding
 import agstack.gramophone.ui.cart.view.CartActivity
+import agstack.gramophone.ui.home.adapter.ViewPagerAdapter
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
+import agstack.gramophone.ui.home.product.adapter.ProductViewPagerAdapter
 import agstack.gramophone.ui.home.product.fragment.*
 import agstack.gramophone.ui.home.subcategory.AvailableProductOffersAdapter
-import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.GpApiResponseData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductData
 import agstack.gramophone.ui.home.view.fragments.market.model.ProductSkuListItem
@@ -42,7 +43,7 @@ import kotlin.math.roundToInt
 @AndroidEntryPoint
 class ProductDetailsActivity :
     BaseActivityWrapper<ProductDetailBinding, ProductDetailsNavigator, ProductDetailsViewModel>(),
-    ProductDetailsNavigator, ProductImagesFragment.ProductImagesFragmentInterface,
+    ProductDetailsNavigator, ProductViewPagerAdapter.ProductImagesFragmentInterface,
     YouTubePlayer.OnInitializedListener {
     private var productCatId: ArrayList<Int> = ArrayList()
     private var subCatId: ArrayList<Int> = ArrayList()
@@ -497,21 +498,29 @@ class ProductDetailsActivity :
         relatedProductFragmentAdapter.selectedProduct = relatedProductItemClicked
     }
 
-    override fun onItemClick(position: Int) {
-        Log.d("Position of item", position.toString())
-        val allProductImages = mViewModel?.productData?.get()?.productImages!! as ArrayList
+    override fun onItemClick(allProductImages: List<String?>?) {
+//        Log.d("Position of item", position.toString())
+//        val allProductImages = mViewModel?.productData?.get()?.productImages!! as ArrayList
 
-        multipleImageDetailDialog = MultipleImageDetailDialog.newInstance(allProductImages)
+        multipleImageDetailDialog = MultipleImageDetailDialog.newInstance(allProductImages as java.util.ArrayList<String?>)
         multipleImageDetailDialog?.show(supportFragmentManager, TAG)
     }
 
-    override fun getFragmentManagerPager(): FragmentManager {
-        return supportFragmentManager
+    override fun getFragmentManagerPager(): ProductViewPagerAdapter.ProductImagesFragmentInterface {
+        return this
     }
 
-    override fun setProductImagesViewPagerAdapter(productImagesAdapter: ProductImagesAdapter) {
-        viewDataBinding.productImagesViewPager.adapter = productImagesAdapter
+    override fun setProductImagesViewPagerAdapter(productImagesAdapter: ProductViewPagerAdapter) {
+
+        Log.d("XXX", ""+productImagesAdapter)
+        viewDataBinding.productImagesViewPager.adapter =productImagesAdapter
         viewDataBinding.dotsIndicator.attachTo(viewDataBinding.productImagesViewPager)
+
+//        viewDataBinding.productImagesViewPager.adapter=null
+//        viewDataBinding.dotsIndicator.removeAllViews()
+//        viewDataBinding.productImagesViewPager.adapter = productImagesAdapter
+//        productImagesAdapter.notifyDataSetChanged()
+//        viewDataBinding.dotsIndicator.attachTo(viewDataBinding.productImagesViewPager)
     }
 
     override fun setProductDetailsAdapter(productDetailsAdapter: ProductDetailsAdapter) {
@@ -589,7 +598,7 @@ class ProductDetailsActivity :
 
             productDetailsViewModel.getBundleData()
         } else {
-            openActivity(LostConnectionActivity::class.java)
+            //openActivity(LostConnectionActivity::class.java)
         }
 
     }

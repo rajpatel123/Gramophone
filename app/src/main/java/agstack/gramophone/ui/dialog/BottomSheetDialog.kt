@@ -40,10 +40,13 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
         }
 
         binding?.callMeNow?.setOnClickListener {
-            sendMoEngageEvents()
-            val intent = Intent(Intent.ACTION_CALL);
-            intent.data = Uri.parse("tel:$customerSupportNumber")
-            startActivity(intent)
+         try {
+             sendMoEngageEvents()
+             val intent = Intent(Intent.ACTION_CALL);
+             intent.data = Uri.parse("tel:$customerSupportNumber")
+             startActivity(intent)
+             dismiss()
+         }catch (ex:Exception){}
             dismiss()
         }
     }

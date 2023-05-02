@@ -1,16 +1,9 @@
-package agstack.gramophone.ui.home.adapter
+package agstack.gramophone.ui.home.product.adapter
 
 import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
-import agstack.gramophone.ui.home.view.LostConnectionActivity
-import agstack.gramophone.ui.home.view.fragments.market.model.Banner
-import agstack.gramophone.ui.notification.view.URLHandlerActivity
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.hasInternetConnection
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,18 +13,18 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
 import java.util.*
 
-class ViewPagerAdapter(private val imageList: List<Banner>, private val activity: Activity?) :
-    PagerAdapter() {
+class ProductViewPagerAdapter(private val imageList: List<String?>?,
+private val  prodImagesFragmentListener: ProductImagesFragmentInterface
+) : PagerAdapter() {
     // on below line we are creating a method
     // as get count to return the size of the list.
     override fun getCount(): Int {
-        return imageList.size
+        return imageList?.size!!
     }
 
     // on below line we are returning the object
@@ -41,6 +34,7 @@ class ViewPagerAdapter(private val imageList: List<Banner>, private val activity
 
     // on below line we are initializing
     // our item and inflating our layout file
+    @SuppressLint("MissingInflatedId")
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         // on below line we are initializing
         // our layout inflater.
@@ -49,44 +43,23 @@ class ViewPagerAdapter(private val imageList: List<Banner>, private val activity
 
         // on below line we are inflating our custom
         // layout file which we have created.
-        val itemView: View = mLayoutInflater.inflate(R.layout.item_header_banner, container, false)
+        val itemView: View = mLayoutInflater.inflate(R.layout.item_product_image, container, false)
 
         // on below line we are initializing
         // our image view with the id.
-        val imageView: ImageView = itemView.findViewById<View>(R.id.iv_banner) as ImageView
+        val imageView: ImageView = itemView.findViewById<View>(R.id.product_image_view) as ImageView
 
 
         imageView.setOnClickListener {
-            val uri = Uri.parse(imageList[position].bannerLink)
-            try {
-                val pageName = uri.getQueryParameter("category")
-                if (activity?.let { it1 -> hasInternetConnection(it1) } == true){
-                    if (pageName!=null){
-                        val intent = Intent(activity, URLHandlerActivity::class.java)
-                        intent.putExtra(
-                            Constants.URI, imageList[position].bannerLink
-                        )
-                        activity?.startActivity(intent)
-                    }
-                }else{
-                    val intent = Intent(activity, LostConnectionActivity::class.java)
-                    activity?.startActivity(intent)
-
-                }
-
-
-            } catch (ex: Exception) {
-                return@setOnClickListener
-            }
-
-        sendBannerClickEvent(container.context)
+            prodImagesFragmentListener.onItemClick(imageList)
         }
         // on below line we are setting
         // image resource for image view.
         //imageView.setImageResource(imageList[position].id)
+        Log.d("Raj==",""+imageList?.get(position))
         Glide.with(container.context)
-            .load(imageList[position].bannerImage)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+            .load(imageList?.get(position))
+           // .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(imageView)
         // on the below line we are adding this
@@ -112,4 +85,9 @@ class ViewPagerAdapter(private val imageList: List<Banner>, private val activity
         // on below line we are removing view
         container.removeView(`object` as RelativeLayout)
     }
+
+    interface ProductImagesFragmentInterface {
+        fun onItemClick(position: List<String?>?)
+    }
+
 }

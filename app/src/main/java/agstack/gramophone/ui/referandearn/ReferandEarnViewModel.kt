@@ -64,8 +64,13 @@ class ReferandEarnViewModel @Inject constructor(
             contentText = gramCashResponseData.get()?.referral_code!!
         }
 
-        QR_BitmapfromURL = generateQR(contentText, 512)
-        getNavigator()?.setQRCodeImage(QR_BitmapfromURL)
+        try {
+            QR_BitmapfromURL = generateQR(contentText, 512)
+            getNavigator()?.setQRCodeImage(QR_BitmapfromURL)
+        }catch (ex:Exception){
+
+        }
+
 
 
     }

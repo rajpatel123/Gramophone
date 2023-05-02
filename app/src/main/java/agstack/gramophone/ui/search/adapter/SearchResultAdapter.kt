@@ -12,6 +12,7 @@ import agstack.gramophone.ui.search.model.Data
 import agstack.gramophone.ui.search.view.*
 import agstack.gramophone.ui.search.viewmodel.GlobalSearchViewModel
 import agstack.gramophone.utils.Constants
+import agstack.gramophone.utils.SharedPreferencesHelper
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -53,268 +54,272 @@ class SearchResultAdapter(val viewModel : GlobalSearchViewModel,
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is ProductsViewHolder -> {
-                holder.binding.txtTile.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
-                var productList = list[position].items
-                if(productList.size > 3){
-                    productList = productList.subList(0, 3)
-                }
-                holder.binding.recyclerViewProducts.adapter = ProductsAdapter(productList) {
-                    openActivity(holder.itemView.context,
-                        ProductDetailsActivity::class.java,
-                        Bundle().apply {
-                            putParcelable(
-                                Constants.PRODUCT,
-                                ProductData(it)
-                            )
-                        })
-                }
-                holder.binding.viewAllProducts.setOnClickListener {
-                    openActivity(
-                        holder.itemView.context,
-                        ViewAllProductsActivity::class.java,
-                        Bundle().apply {
-                            putParcelable("dataList", list[position])
-                            putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
-                            putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
-                        })
-                }
+       try {
+           when (holder) {
+               is ProductsViewHolder -> {
+                   holder.binding.txtTile.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
+                   var productList = list[position].items
+                   if(productList.size > 3){
+                       productList = productList.subList(0, 3)
+                   }
+                   holder.binding.recyclerViewProducts.adapter = ProductsAdapter(productList) {
+                       SharedPreferencesHelper.instance?.putString(Constants.PID_FROM_SEARCH,it.toString())
+                       openActivity(holder.itemView.context,
+                           ProductDetailsActivity::class.java,
+                           Bundle().apply {
+                               putParcelable(
+                                   Constants.PRODUCT,
+                                   ProductData(it)
+                               )
+                           })
+                   }
+                   holder.binding.viewAllProducts.setOnClickListener {
+                       openActivity(
+                           holder.itemView.context,
+                           ViewAllProductsActivity::class.java,
+                           Bundle().apply {
+                               putParcelable("dataList", list[position])
+                               putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
+                               putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
+                           })
+                   }
 
-                if(list[position].items.size > 3){
-                    holder.binding.viewAllProducts.visibility = View.VISIBLE
-                }else{
-                    holder.binding.viewAllProducts.visibility = View.GONE
-                }
-            }
-            is CropsViewHolder ->{
-                holder.binding.txtTile.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
-                var dataList = list[position].items
-                if(dataList.size > 3){
-                    dataList = dataList.subList(0, 3)
-                }
-                holder.binding.rvCrops.adapter = CropsAdapter(dataList){
-                    openActivity(holder.itemView.context,
-                        CropDetailActivity::class.java,
-                        Bundle().apply {
-                            putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
-                        })
-                }
-                holder.binding.viewAllCrops.setOnClickListener {
-                    openActivity(
-                        holder.itemView.context,
-                        ViewAllCropsActivity::class.java,
-                        Bundle().apply {
-                            putParcelable("dataList", list[position])
-                            putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
-                            putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
-                        })
-                }
-                if(list[position].items.size > 3){
-                    holder.binding.viewAllCrops.visibility = View.VISIBLE
-                }else{
-                    holder.binding.viewAllCrops.visibility = View.GONE
-                }
-            }
-            is ProfilesViewHolder -> {
-                holder.binding.txtHeaderProfile.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
-                var profileList = list[position].items
-                if(profileList.size > 3){
-                    profileList = profileList.subList(0, 3)
-                }
-                holder.binding.recyclerViewProfiles.adapter = ProfilesAdapter(profileList){id  ->
-                    openActivity(holder.itemView.context,
-                        OtherUserProfileActivity::class.java,
-                        Bundle().apply {
-                            putString(Constants.AUTHER_ID, id)
-                            putString(Constants.AUTHER_UUID, id)
-                            putInt(Constants.BLOCKED_STATUS, 0)
-                            putString(Constants.REDIRECTION_SOURCE, "Search Screen")
-                        })
-                }
-                holder.binding.viewAllProfiles.setOnClickListener {
-                    openActivity(
-                        holder.itemView.context,
-                        ViewAllProfilesActivity::class.java,
-                        Bundle().apply {
-                            putParcelable("dataList", list[position])
-                            putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
-                            putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
-                        })
-                }
-                if(list[position].items.size > 3){
-                    holder.binding.viewAllProfiles.visibility = View.VISIBLE
-                }else{
-                    holder.binding.viewAllProfiles.visibility = View.GONE
-                }
-            }
-            is CropProblemsViewHolder ->{
-                holder.binding.txtTitle.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
-                var dataList = list[position].items
-                if(dataList.size > 3){
-                    dataList = dataList.subList(0, 3)
-                }
-                holder.binding.rvCropProblems.adapter = CropProblemsAdapter(dataList){ id, name, image ,desc,type->
-                    openActivity(holder.binding.root.context,
-                        CropProblemDetailActivity::class.java,
-                        Bundle().apply {
-                            putInt(Constants.DESEASE_ID,id.toInt())
-                            putString(Constants.DESEASE_NAME,name)
-                            putString(Constants.DESEASE_DESC,desc)
-                            putString(Constants.DESEASE_IMAGE,image)
-                            putString(Constants.DESEASE_TYPE,type)
-                        }
-                    )
-                }
-                holder.binding.viewAll.setOnClickListener {
-                    openActivity(
-                        holder.itemView.context,
-                        ViewAllCropProblemsActivity::class.java,
-                        Bundle().apply {
-                            putParcelable("dataList", list[position])
-                            putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
-                            putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
-                        })
-                }
-                if(list[position].items.size > 3){
-                    holder.binding.viewAll.visibility = View.VISIBLE
-                }else{
-                    holder.binding.viewAll.visibility = View.GONE
-                }
-            }
-            is CompaniesViewHolder-> {
-                holder.binding.txtTitle.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
-                var dataList = list[position].items
-                if(dataList.size > 3){
-                    dataList = dataList.subList(0, 3)
-                }
-                holder.binding.rvCompanies.adapter = CompaniesAdapter(dataList){ id, name, image ->
-                    openActivity(holder.itemView.context,
-                        FeaturedProductActivity::class.java,
-                        Bundle().apply {
-                            putString(Constants.COMPANY_ID, id)
-                            putString(Constants.COMPANY_NAME, name)
-                            putString(Constants.COMPANY_IMAGE, image)
-                        })
-                }
-                holder.binding.viewAll.setOnClickListener {
-                    openActivity(
-                        holder.itemView.context,
-                        ViewAllCompaniesActivity::class.java,
-                        Bundle().apply {
-                            putParcelable("dataList", list[position])
-                            putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
-                            putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
-                        })
-                }
-                if(list[position].items.size > 3){
-                    holder.binding.viewAll.visibility = View.VISIBLE
-                }else{
-                    holder.binding.viewAll.visibility = View.GONE
-                }
-            }
-            is ProductCategoryViewHolder ->{
-                holder.binding.tvTitleProductCategory.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
-                var dataList = list[position].items
-                if(dataList.size > 3){
-                    dataList = dataList.subList(0, 3)
-                }
-                holder.binding.rvProductCategory.adapter = ProductCategoryAdapter(dataList){ id, subId, name, image ->
-                    openActivity(holder.itemView.context,
-                        FeaturedProductActivity::class.java,
-                        Bundle().apply {
-                        putString(Constants.SHOP_BY_SUB_CATEGORY, id)
-                        putString(Constants.SUB_CATEGORY_ID, subId)
-                        putString(Constants.SUB_CATEGORY_NAME, name)
-                        putString(Constants.SUB_CATEGORY_IMAGE, image)
-                    })
-                }
+                   if(list[position].items.size > 3){
+                       holder.binding.viewAllProducts.visibility = View.VISIBLE
+                   }else{
+                       holder.binding.viewAllProducts.visibility = View.GONE
+                   }
+               }
+               is CropsViewHolder ->{
+                   holder.binding.txtTile.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
+                   var dataList = list[position].items
+                   if(dataList.size > 3){
+                       dataList = dataList.subList(0, 3)
+                   }
+                   holder.binding.rvCrops.adapter = CropsAdapter(dataList){
+                       openActivity(holder.itemView.context,
+                           CropDetailActivity::class.java,
+                           Bundle().apply {
+                               putString(Constants.SHOP_BY_TYPE, Constants.SHOP_BY_CROP)
+                           })
+                   }
+                   holder.binding.viewAllCrops.setOnClickListener {
+                       openActivity(
+                           holder.itemView.context,
+                           ViewAllCropsActivity::class.java,
+                           Bundle().apply {
+                               putParcelable("dataList", list[position])
+                               putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
+                               putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
+                           })
+                   }
+                   if(list[position].items.size > 3){
+                       holder.binding.viewAllCrops.visibility = View.VISIBLE
+                   }else{
+                       holder.binding.viewAllCrops.visibility = View.GONE
+                   }
+               }
+               is ProfilesViewHolder -> {
+                   holder.binding.txtHeaderProfile.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
+                   var profileList = list[position].items
+                   if(profileList.size > 3){
+                       profileList = profileList.subList(0, 3)
+                   }
+                   holder.binding.recyclerViewProfiles.adapter = ProfilesAdapter(profileList){id  ->
+                       openActivity(holder.itemView.context,
+                           OtherUserProfileActivity::class.java,
+                           Bundle().apply {
+                               putString(Constants.AUTHER_ID, id)
+                               putString(Constants.AUTHER_UUID, id)
+                               putInt(Constants.BLOCKED_STATUS, 0)
+                               putString(Constants.REDIRECTION_SOURCE, "Search Screen")
+                           })
+                   }
+                   holder.binding.viewAllProfiles.setOnClickListener {
+                       openActivity(
+                           holder.itemView.context,
+                           ViewAllProfilesActivity::class.java,
+                           Bundle().apply {
+                               putParcelable("dataList", list[position])
+                               putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
+                               putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
+                           })
+                   }
+                   if(list[position].items.size > 3){
+                       holder.binding.viewAllProfiles.visibility = View.VISIBLE
+                   }else{
+                       holder.binding.viewAllProfiles.visibility = View.GONE
+                   }
+               }
+               is CropProblemsViewHolder ->{
+                   holder.binding.txtTitle.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
+                   var dataList = list[position].items
+                   if(dataList.size > 3){
+                       dataList = dataList.subList(0, 3)
+                   }
+                   holder.binding.rvCropProblems.adapter = CropProblemsAdapter(dataList){ id, name, image ,desc,type->
+                       openActivity(holder.binding.root.context,
+                           CropProblemDetailActivity::class.java,
+                           Bundle().apply {
+                               putInt(Constants.DESEASE_ID,id.toInt())
+                               putString(Constants.DESEASE_NAME,name)
+                               putString(Constants.DESEASE_DESC,desc)
+                               putString(Constants.DESEASE_IMAGE,image)
+                               putString(Constants.DESEASE_TYPE,type)
+                           }
+                       )
+                   }
+                   holder.binding.viewAll.setOnClickListener {
+                       openActivity(
+                           holder.itemView.context,
+                           ViewAllCropProblemsActivity::class.java,
+                           Bundle().apply {
+                               putParcelable("dataList", list[position])
+                               putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
+                               putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
+                           })
+                   }
+                   if(list[position].items.size > 3){
+                       holder.binding.viewAll.visibility = View.VISIBLE
+                   }else{
+                       holder.binding.viewAll.visibility = View.GONE
+                   }
+               }
+               is CompaniesViewHolder-> {
+                   holder.binding.txtTitle.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
+                   var dataList = list[position].items
+                   if(dataList.size > 3){
+                       dataList = dataList.subList(0, 3)
+                   }
+                   holder.binding.rvCompanies.adapter = CompaniesAdapter(dataList){ id, name, image ->
+                       openActivity(holder.itemView.context,
+                           FeaturedProductActivity::class.java,
+                           Bundle().apply {
+                               putString(Constants.COMPANY_ID, id)
+                               putString(Constants.COMPANY_NAME, name)
+                               putString(Constants.COMPANY_IMAGE, image)
+                           })
+                   }
+                   holder.binding.viewAll.setOnClickListener {
+                       openActivity(
+                           holder.itemView.context,
+                           ViewAllCompaniesActivity::class.java,
+                           Bundle().apply {
+                               putParcelable("dataList", list[position])
+                               putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
+                               putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
+                           })
+                   }
+                   if(list[position].items.size > 3){
+                       holder.binding.viewAll.visibility = View.VISIBLE
+                   }else{
+                       holder.binding.viewAll.visibility = View.GONE
+                   }
+               }
+               is ProductCategoryViewHolder ->{
+                   holder.binding.tvTitleProductCategory.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
+                   var dataList = list[position].items
+                   if(dataList.size > 3){
+                       dataList = dataList.subList(0, 3)
+                   }
+                   holder.binding.rvProductCategory.adapter = ProductCategoryAdapter(dataList){ id, subId, name, image ->
+                       openActivity(holder.itemView.context,
+                           FeaturedProductActivity::class.java,
+                           Bundle().apply {
+                               putString(Constants.SHOP_BY_SUB_CATEGORY, id)
+                               putString(Constants.SUB_CATEGORY_ID, subId)
+                               putString(Constants.SUB_CATEGORY_NAME, name)
+                               putString(Constants.SUB_CATEGORY_IMAGE, image)
+                           })
+                   }
 
-                holder.binding.viewAll.setOnClickListener {
-                    openActivity(
-                        holder.itemView.context,
-                        ViewAllProductCategoriesActivity::class.java,
-                        Bundle().apply {
-                            putParcelable("dataList", list[position])
-                            putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
-                            putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
-                        })
-                }
-                if(list[position].items.size > 3){
-                    holder.binding.viewAll.visibility = View.VISIBLE
-                }else{
-                    holder.binding.viewAll.visibility = View.GONE
-                }
-            }
-            is CropCategoryViewHolder-> {
-                holder.binding.tvTitle.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
-                var dataList = list[position].items
-                if(dataList.size > 3){
-                    dataList = dataList.subList(0, 3)
-                }
-                holder.binding.rvCropCategory.adapter = CropsCategoriesAdapter(dataList){ id, subId, name, image ->
-                    openActivity(holder.itemView.context,
-                        FeaturedProductActivity::class.java,
-                        Bundle().apply {
-                            putString(Constants.SHOP_BY_SUB_CATEGORY, id)
-                            putString(Constants.SUB_CATEGORY_ID, subId)
-                            putString(Constants.SUB_CATEGORY_NAME, name)
-                            putString(Constants.SUB_CATEGORY_IMAGE, image)
-                        })
-                }
-                holder.binding.viewAll.setOnClickListener {
-                    openActivity(
-                        holder.itemView.context,
-                        ViewAllCropCategoriesActivity::class.java,
-                        Bundle().apply {
-                            putParcelable("dataList", list[position])
-                            putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
-                            putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
-                        })
-                }
-                if(list[position].items.size > 3){
-                    holder.binding.viewAll.visibility = View.VISIBLE
-                }else{
-                    holder.binding.viewAll.visibility = View.GONE
-                }
-            }
-            is PostsViewHolder -> {
-                holder.binding.txtTile.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
-                var postList = list[position].items
-                if(postList.size > 3){
-                    postList = postList.subList(0, 3)
-                }
-                holder.binding.recyclerViewPosts.adapter = PostsAdapter(
-                    postList,
-                    listener = {
-                        openActivity(
-                            holder.itemView.context,
-                            PostDetailsActivity::class.java,
-                            Bundle().apply {
-                                putString(Constants.POST_ID, it)
-                            })
-                    },
-                    listener2 = {
-                        listener.invoke(it)
-                    },
-                )
-                holder.binding.viewAllPosts.setOnClickListener {
-                    openActivity(
-                        holder.itemView.context,
-                        ViewAllPostsActivity::class.java,
-                        Bundle().apply {
-                            putParcelable("dataList", list[position])
-                            putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
-                            putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
-                        })
-                }
-                if(list[position].items.size > 3){
-                    holder.binding.viewAllPosts.visibility = View.VISIBLE
-                }else{
-                    holder.binding.viewAllPosts.visibility = View.GONE
-                }
-            }
-        }
+                   holder.binding.viewAll.setOnClickListener {
+                       openActivity(
+                           holder.itemView.context,
+                           ViewAllProductCategoriesActivity::class.java,
+                           Bundle().apply {
+                               putParcelable("dataList", list[position])
+                               putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
+                               putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
+                           })
+                   }
+                   if(list[position].items.size > 3){
+                       holder.binding.viewAll.visibility = View.VISIBLE
+                   }else{
+                       holder.binding.viewAll.visibility = View.GONE
+                   }
+               }
+               is CropCategoryViewHolder-> {
+                   holder.binding.tvTitle.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
+                   var dataList = list[position].items
+                   if(dataList.size > 3){
+                       dataList = dataList.subList(0, 3)
+                   }
+                   holder.binding.rvCropCategory.adapter = CropsCategoriesAdapter(dataList){ id, subId, name, image ->
+                       openActivity(holder.itemView.context,
+                           FeaturedProductActivity::class.java,
+                           Bundle().apply {
+                               putString(Constants.SHOP_BY_SUB_CATEGORY, id)
+                               putString(Constants.SUB_CATEGORY_ID, subId)
+                               putString(Constants.SUB_CATEGORY_NAME, name)
+                               putString(Constants.SUB_CATEGORY_IMAGE, image)
+                           })
+                   }
+                   holder.binding.viewAll.setOnClickListener {
+                       openActivity(
+                           holder.itemView.context,
+                           ViewAllCropCategoriesActivity::class.java,
+                           Bundle().apply {
+                               putParcelable("dataList", list[position])
+                               putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
+                               putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
+                           })
+                   }
+                   if(list[position].items.size > 3){
+                       holder.binding.viewAll.visibility = View.VISIBLE
+                   }else{
+                       holder.binding.viewAll.visibility = View.GONE
+                   }
+               }
+               is PostsViewHolder -> {
+                   holder.binding.txtTile.text = list[position].type?.replace('_', ' ')?.toCamelCase()?.trim()
+                   var postList = list[position].items
+                   if(postList.size > 3){
+                       postList = postList.subList(0, 3)
+                   }
+                   holder.binding.recyclerViewPosts.adapter = PostsAdapter(
+                       postList,
+                       listener = {
+                           openActivity(
+                               holder.itemView.context,
+                               PostDetailsActivity::class.java,
+                               Bundle().apply {
+                                   putString(Constants.POST_ID, it)
+                               })
+                       },
+                       listener2 = {
+                           listener.invoke(it)
+                       },
+                   )
+                   holder.binding.viewAllPosts.setOnClickListener {
+                       openActivity(
+                           holder.itemView.context,
+                           ViewAllPostsActivity::class.java,
+                           Bundle().apply {
+                               putParcelable("dataList", list[position])
+                               putParcelable("lastSearchRequest", viewModel.lastSearchRequest)
+                               putBoolean("isSearchInCommunity", viewModel.isSearchInCommunity)
+                           })
+                   }
+                   if(list[position].items.size > 3){
+                       holder.binding.viewAllPosts.visibility = View.VISIBLE
+                   }else{
+                       holder.binding.viewAllPosts.visibility = View.GONE
+                   }
+               }
+           }
+
+       }catch (ex:Exception){}
     }
 
     override fun getItemCount(): Int {

@@ -18,11 +18,16 @@ class SuggestionAdapter(
     }
 
     override fun onBindViewHolder(holder: SuggestionAdapter.SuggestionViewHolder, position: Int) {
-        holder.binding.item = list[position]
-
-        holder.binding.txtSuggestionWrapper.setOnClickListener {
-            listener.invoke(list[position])
+        try {
+            if (position < list.size) {
+                holder.binding.item = list[position]
+                holder.binding.txtSuggestionWrapper.setOnClickListener {
+                    listener.invoke(list[position])
+                }
+            }
+        } catch (ex: Exception) {
         }
+
     }
 
     override fun getItemCount(): Int {

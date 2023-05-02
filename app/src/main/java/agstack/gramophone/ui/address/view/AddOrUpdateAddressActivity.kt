@@ -103,121 +103,123 @@ class AddOrUpdateAddressActivity :
 
 
     fun watchSpinners() {
-        districtSpinner.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                s: CharSequence,
-                start: Int,
-                count: Int,
-                after: Int,
-            ) {
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable) {
-                districtSpinner.threshold = 1
-                addOrUpdateAddressViewModel.tehsilName.set("")
-                addOrUpdateAddressViewModel.villageName.set("")
-                addOrUpdateAddressViewModel.pinCode.set("")
-                tehsilSpinner.setAdapter(null)
-                villageNameSpinner.setAdapter(null)
-                pincodeSpinner.setAdapter(null)
-
-                if (TextUtils.isEmpty(s) && !TextUtils.isEmpty(addOrUpdateAddressViewModel.stateNameStr.get())) {
-                    addOrUpdateAddressViewModel.getDistrict(
-                        "district",
-                        addOrUpdateAddressViewModel.stateNameStr.get()!!,
-                        "",
-                        ""
-                    )
-                }
-            }
-        })
-
-        tehsilSpinner.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                s: CharSequence,
-                start: Int,
-                count: Int,
-                after: Int,
-            ) {
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable) {
-                tehsilSpinner.threshold = 1
-                addOrUpdateAddressViewModel.villageName.set("")
-                addOrUpdateAddressViewModel.pinCode.set("")
-                villageNameSpinner.setAdapter(null)
-                pincodeSpinner.setAdapter(null)
-
-                if (TextUtils.isEmpty(s)
-                    && !TextUtils.isEmpty(addOrUpdateAddressViewModel.stateNameStr.get())
-                    && !TextUtils.isEmpty(addOrUpdateAddressViewModel.districtName.get())
-
+        try {
+            districtSpinner.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int,
                 ) {
-                    addOrUpdateAddressViewModel.getTehsil(
-                        "tehsil",
-                        addOrUpdateAddressViewModel.stateNameStr.get()!!,
-                        addOrUpdateAddressViewModel.districtName.get()!!,
-                        ""
-                    )
                 }
-            }
-        })
-        villageNameSpinner.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                s: CharSequence,
-                start: Int,
-                count: Int,
-                after: Int,
-            ) {
-            }
 
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            }
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                }
 
-            override fun afterTextChanged(s: Editable) {
-                villageNameSpinner.threshold = 1
-                addOrUpdateAddressViewModel.pinCode.set("")
-                pincodeSpinner.setAdapter(null)
+                override fun afterTextChanged(s: Editable) {
+                    districtSpinner.threshold = 1
+                    addOrUpdateAddressViewModel.tehsilName.set("")
+                    addOrUpdateAddressViewModel.villageName.set("")
+                    addOrUpdateAddressViewModel.pinCode.set("")
+                    tehsilSpinner.setAdapter(null)
+                    villageNameSpinner.setAdapter(null)
+                    pincodeSpinner.setAdapter(null)
 
-                if (TextUtils.isEmpty(s)) {
-                    addOrUpdateAddressViewModel.stateNameStr.get()?.let {
-                        addOrUpdateAddressViewModel.districtName.get()?.let { it1 ->
-                            addOrUpdateAddressViewModel.tehsilName.get()?.let { it2 ->
-                                addOrUpdateAddressViewModel.getVillage(
-                                    "village",
-                                    it,
-                                    it1,
-                                    it2,
-                                    ""
-                                )
+                    if (TextUtils.isEmpty(s) && !TextUtils.isEmpty(addOrUpdateAddressViewModel.stateNameStr.get())) {
+                        addOrUpdateAddressViewModel.getDistrict(
+                            "district",
+                            addOrUpdateAddressViewModel.stateNameStr.get()!!,
+                            "",
+                            ""
+                        )
+                    }
+                }
+            })
+            tehsilSpinner.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int,
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                }
+
+                override fun afterTextChanged(s: Editable) {
+                    tehsilSpinner.threshold = 1
+                    addOrUpdateAddressViewModel.villageName.set("")
+                    addOrUpdateAddressViewModel.pinCode.set("")
+                    villageNameSpinner.setAdapter(null)
+                    pincodeSpinner.setAdapter(null)
+
+                    if (TextUtils.isEmpty(s)
+                        && !TextUtils.isEmpty(addOrUpdateAddressViewModel.stateNameStr.get())
+                        && !TextUtils.isEmpty(addOrUpdateAddressViewModel.districtName.get())
+
+                    ) {
+                        addOrUpdateAddressViewModel.getTehsil(
+                            "tehsil",
+                            addOrUpdateAddressViewModel.stateNameStr.get()!!,
+                            addOrUpdateAddressViewModel.districtName.get()!!,
+                            ""
+                        )
+                    }
+                }
+            })
+            villageNameSpinner.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int,
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                }
+
+                override fun afterTextChanged(s: Editable) {
+                    villageNameSpinner.threshold = 1
+                    addOrUpdateAddressViewModel.pinCode.set("")
+                    pincodeSpinner.setAdapter(null)
+
+                    if (TextUtils.isEmpty(s)) {
+                        addOrUpdateAddressViewModel.stateNameStr.get()?.let {
+                            addOrUpdateAddressViewModel.districtName.get()?.let { it1 ->
+                                addOrUpdateAddressViewModel.tehsilName.get()?.let { it2 ->
+                                    addOrUpdateAddressViewModel.getVillage(
+                                        "village",
+                                        it,
+                                        it1,
+                                        it2,
+                                        ""
+                                    )
+                                }
                             }
                         }
                     }
                 }
-            }
-        })
-        pincodeSpinner.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                s: CharSequence,
-                start: Int,
-                count: Int,
-                after: Int,
-            ) {
-            }
+            })
+            pincodeSpinner.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int,
+                ) {
+                }
 
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            }
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                }
 
-            override fun afterTextChanged(s: Editable) {
-                pincodeSpinner.threshold = 1
-            }
-        })
+                override fun afterTextChanged(s: Editable) {
+                    pincodeSpinner.threshold = 1
+                }
+            })
+
+        }catch (ex:Exception){}
 
     }
 

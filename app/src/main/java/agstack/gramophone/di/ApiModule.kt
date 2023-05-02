@@ -108,7 +108,8 @@ object ApiModule {
         return retrofit.create(ArticlesApiService::class.java)
     }
 
-    private fun getHeaderInterceptor(): Interceptor {
+    @Throws(Exception::class)
+    private fun getHeaderInterceptor(): Interceptor{
 
         return Interceptor { chain ->
             val request =

@@ -18,6 +18,7 @@ import agstack.gramophone.ui.home.shop.ShopByActivity
 import agstack.gramophone.ui.home.subcategory.SubCategoryActivity
 import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.*
+import agstack.gramophone.ui.notification.view.URLHandlerActivity
 import agstack.gramophone.ui.tv.GramophoneTVActivity
 import agstack.gramophone.ui.tv.fragment.HomeTvFragment
 import agstack.gramophone.ui.weather.WeatherActivity
@@ -31,6 +32,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amnix.xtension.extensions.isNotNull
@@ -397,11 +399,15 @@ class HomeAdapter(
                 ) {
                     holder.binding.itemView.visibility = View.VISIBLE
 
-                    holder.binding.itemView.setOnClickListener {
-                        sendExclusiveBannerEvent(context = holder.binding.itemView.context)
-                    }
                     val exclusiveBanner =
                         allBannerResponse!!.gpApiResponseData?.homeGramophoneExclusive
+
+                    holder.binding.itemView.setOnClickListener {
+                        val intent = Intent(holder.binding.itemView.context, URLHandlerActivity::class.java)
+                        intent.putExtra(Constants.URI, exclusiveBanner?.get(0)?.bannerLink)
+                        holder.binding.itemView.context.startActivity(intent)
+                        sendExclusiveBannerEvent(context = holder.binding.itemView.context)
+                    }
                     val tempBanner: List<Banner>
                     if (exclusiveBanner?.size!! > 0) {
                         if (exclusiveBanner.size % 2 == 0) {
@@ -684,7 +690,10 @@ class HomeAdapter(
             }
             is CommunityViewHolder -> {
                 holder.binding.rlGoToCommunity.setOnClickListener {
-                    onItemClicked?.invoke("")
+                    try {
+                        onItemClicked?.invoke("")
+
+                    }catch (ex:Exception){}
                 }
             }
             is WeatherViewHolder -> {

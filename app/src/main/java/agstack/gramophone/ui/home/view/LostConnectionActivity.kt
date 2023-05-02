@@ -51,14 +51,11 @@ class LostConnectionActivity :
         profileImage: String,
         gramCash: String?
     ) {
-        TODO("Not yet implemented")
     }
 
     override fun openNotificationSetting() {
-        TODO("Not yet implemented")
     }
 
     override fun onClick(v: View?) {
-        TODO("Not yet implemented")
     }
 }

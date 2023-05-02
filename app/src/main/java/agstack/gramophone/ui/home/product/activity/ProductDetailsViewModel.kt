@@ -10,6 +10,7 @@ import agstack.gramophone.ui.cart.model.CartItem
 import agstack.gramophone.ui.cart.view.CartActivity
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
 import agstack.gramophone.ui.home.product.activity.productreview.AddEditProductReviewActivity
+import agstack.gramophone.ui.home.product.adapter.ProductViewPagerAdapter
 import agstack.gramophone.ui.home.product.fragment.ContactForPriceBottomSheetDialog
 import agstack.gramophone.ui.home.product.fragment.ExpertAdviceBottomSheetFragment
 import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
@@ -99,12 +100,16 @@ class ProductDetailsViewModel @Inject constructor(
     }
 
     fun onAddQtyClicked() {
-        qtySelected.set(qtySelected.get()!! + 1)
-        loadOffersData(productDetailstoBeFetched, qtySelected.get())
-        calculateDiscountAndPromotion(
-            selectedSkuListItem.get()!!,
-            null
-        )
+        try {
+            qtySelected.set(qtySelected.get()!! + 1)
+            loadOffersData(productDetailstoBeFetched, qtySelected.get())
+            calculateDiscountAndPromotion(
+                selectedSkuListItem.get()!!,
+                null
+            )
+        } catch (ex: Exception) {
+
+        }
 
     }
 
@@ -175,12 +180,44 @@ class ProductDetailsViewModel @Inject constructor(
                         }
                         isHeartSelected.set(productResponseData?.isUserFavourite!!)
                         productResponseData.productImages?.let {
-                            getNavigator()?.setProductImagesViewPagerAdapter(
-                                ProductImagesAdapter(
-                                    getNavigator()?.getFragmentManagerPager()!!,
-                                    productResponseData.productSkuList!![0]!!.productImages
+
+                            var productImagesAdapter: ProductViewPagerAdapter? = null
+                            if (!TextUtils.isEmpty(
+                                    SharedPreferencesHelper.instance?.getString(
+                                        Constants.PID_FROM_SEARCH
+                                    )
                                 )
-                            )
+                            ) {
+                                for (item in productResponseData.productSkuList!!) {
+                                    if (item?.productId.equals(
+                                            SharedPreferencesHelper.instance?.getString(
+                                                Constants.PID_FROM_SEARCH
+                                            )
+                                        )
+                                    ) {
+                                        productImagesAdapter = ProductViewPagerAdapter(
+                                            item?.productImages,
+                                            getNavigator()?.getFragmentManagerPager()!!
+                                        )
+                                    }
+                                }
+
+                            } else {
+                                productImagesAdapter = ProductViewPagerAdapter(
+                                    productResponseData.productSkuList!![productResponseData.productSkuList.size - 1]!!.productImages,
+                                    getNavigator()?.getFragmentManagerPager()!!
+                                )
+                            }
+                            if (productImagesAdapter != null) {
+                                getNavigator()?.setProductImagesViewPagerAdapter(
+                                    productImagesAdapter
+
+                        //                                ProductImagesAdapter(
+                        //                                    getNavigator()?.getFragmentManagerPager()!!,
+                        //                                    productResponseData.productSkuList!![productResponseData.productSkuList.size-1]!!.productImages
+                        //                                )
+                                )
+                            }
                         }
 
                         //                                    productResponseData.productSkuList[0].productImages
@@ -235,7 +272,13 @@ class ProductDetailsViewModel @Inject constructor(
                                 ProductSKUAdapter(
                                     mSKUList
                                 ) {
-
+                                    getNavigator()?.setProductImagesViewPagerAdapter(
+                                        ProductViewPagerAdapter(
+                                            it.productImages,
+                                            getNavigator()?.getFragmentManagerPager()!!
+                                        )
+                                    )
+                                    Log.d("Kamal", "" + it.productImages)
                                 }
                             ) {
                                 Log.d("productSKUItemSelected", it.productId.toString())
@@ -246,13 +289,9 @@ class ProductDetailsViewModel @Inject constructor(
                                         R.string.add_to_cart
                                     )!!
                                 )
+                                Log.d("Raj", "" + it.productImages)
 
-                                getNavigator()?.setProductImagesViewPagerAdapter(
-                                    ProductImagesAdapter(
-                                        getNavigator()?.getFragmentManagerPager()!!,
-                                        it.productImages
-                                    )
-                                )
+
                                 checkIfSelectedSKUPresentInCart_UpdateQty(selectedSkuListItem)
                                 productDetailstoBeFetched.product_id =
                                     selectedSkuListItem.get()?.productId!!.toInt()
@@ -274,7 +313,19 @@ class ProductDetailsViewModel @Inject constructor(
 
                             val productIdDefault = productResponseData?.productIdDefault
                             for (item in mSKUList) {
-                                item?.selected = item?.productId!!.equals(productIdDefault)
+
+                                if (!TextUtils.isEmpty(
+                                        SharedPreferencesHelper.instance?.getString(
+                                            Constants.PID_FROM_SEARCH
+                                        )
+                                    )
+                                ) {
+                                    item?.selected = item?.productId!!.equals(
+                                        SharedPreferencesHelper.instance?.getString(Constants.PID_FROM_SEARCH)
+                                    )
+                                } else {
+                                    item?.selected = item?.productId!!.equals(productIdDefault)
+                                }
                                 if (item?.selected == true) {
                                     selectedSkuListItem.set(item)
 
@@ -301,6 +352,10 @@ class ProductDetailsViewModel @Inject constructor(
                     loadRelatedProductData(productDetailstoBeFetched)
 
                     sendSubCateEvent()
+
+                    SharedPreferencesHelper.instance?.putString(
+                        Constants.PID_FROM_SEARCH,""
+                    )
                 } else {
                     getNavigator()?.showToast("" + productAPIResponse.body()?.gpApiMessage)
                 }
@@ -777,7 +832,9 @@ class ProductDetailsViewModel @Inject constructor(
         ) {
             //callback comes here when on add to cart is clicked
             Log.d("Click", "Add to cart Clicked")
-            addToCartJob.cancelIfActive()
+            if (addToCartJob != null)
+                addToCartJob.cancelIfActive()
+
             addToCartJob = checkNetworkThenRun {
                 progressLoader.set(true)
                 var producttoBeAdded = ProductData()
@@ -805,7 +862,10 @@ class ProductDetailsViewModel @Inject constructor(
         if (getNavigator()?.updateAddToCartButtonText() == getNavigator()?.getMessage(R.string.add_to_cart)) {
             //because it is called multiple times , hence manually setting text as add to cart until the response is successful.
             getNavigator()?.updateAddToCartButtonText(getNavigator()?.getMessage(R.string.add_to_cart)!!)
-            addToCartJob.cancelIfActive()
+
+            if (addToCartJob != null)
+                addToCartJob.cancelIfActive()
+
             addToCartJob = checkNetworkThenRun {
                 progressLoader.set(true)
                 var producttoBeAdded = ProductData()

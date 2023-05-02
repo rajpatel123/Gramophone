@@ -273,6 +273,10 @@ class SubCategoryActivity :
         mSkuOfferList: ArrayList<PromotionListItem?>,
         productData: ProductData,
     ) {
+
+        if (bottomSheet!=null && bottomSheet?.isVisible == true){
+            return
+        }
         bottomSheet = AddToCartBottomSheetDialog({
             //Offer detail activity from here
             openActivity(

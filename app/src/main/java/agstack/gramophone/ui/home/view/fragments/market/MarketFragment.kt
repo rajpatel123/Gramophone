@@ -9,10 +9,11 @@ import agstack.gramophone.ui.dialog.AppTourDialog
 import agstack.gramophone.ui.farm.model.FarmResponse
 import agstack.gramophone.ui.home.adapter.HomeAdapter
 import agstack.gramophone.ui.home.view.HomeActivity
+import agstack.gramophone.ui.home.view.LostConnectionActivity
 import agstack.gramophone.ui.home.view.fragments.market.model.*
 import agstack.gramophone.ui.weather.model.WeatherResponse
+import agstack.gramophone.utils.hasInternetConnection
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -93,26 +94,36 @@ class MarketFragment :
     }
 
     private fun callApi() {
-        marketFragmentViewModel.getHomeData()
-        marketFragmentViewModel.getFeaturedProducts()
-        marketFragmentViewModel.getCategories()
-        marketFragmentViewModel.getCrops()
-        marketFragmentViewModel.getStores()
-        marketFragmentViewModel.getWeatherDetail()
-        marketFragmentViewModel.getCompanies()
-        marketFragmentViewModel.getCartProducts()
-        marketFragmentViewModel.getFarms()
-        marketFragmentViewModel.getFeaturedArticles()
+        if (activity?.let { hasInternetConnection(it) } == true) {
+
+            marketFragmentViewModel.getHomeData()
+            marketFragmentViewModel.getFeaturedProducts()
+            marketFragmentViewModel.getCategories()
+            marketFragmentViewModel.getCrops()
+            marketFragmentViewModel.getStores()
+            marketFragmentViewModel.getWeatherDetail()
+            marketFragmentViewModel.getCompanies()
+            marketFragmentViewModel.getCartProducts()
+            marketFragmentViewModel.getFarms()
+            marketFragmentViewModel.getFeaturedArticles()
+        } else {
+            openActivity(LostConnectionActivity::class.java)
+        }
     }
 
     private fun setUpUI() {
         binding?.swipeRefresh?.setColorSchemeResources(R.color.blue)
         binding?.swipeRefresh?.setOnRefreshListener {
-            marketFragmentViewModel.getBanners(true)
-            marketFragmentViewModel.getFarms()
+            if (activity?.let { hasInternetConnection(it) } == true) {
+                marketFragmentViewModel.getBanners(true)
+                marketFragmentViewModel.getFarms()
+                callApi()
+                binding?.swipeRefresh?.isRefreshing = false
+            } else {
+                binding?.swipeRefresh?.isRefreshing=false
+                openActivity(LostConnectionActivity::class.java)
+            }
 
-            callApi()
-            binding?.swipeRefresh?.isRefreshing = false
         }
     }
 
@@ -187,7 +198,8 @@ class MarketFragment :
 
     override fun onResume() {
         super.onResume()
-        marketFragmentViewModel.getBanners(false)
+        if (activity?.let { hasInternetConnection(it) } == true)
+            marketFragmentViewModel.getBanners(false)
     }
 
     override fun getLayoutID(): Int {

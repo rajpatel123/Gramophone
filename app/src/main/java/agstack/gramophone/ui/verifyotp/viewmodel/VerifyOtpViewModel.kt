@@ -148,6 +148,7 @@ class VerifyOtpViewModel @Inject constructor(
                         properties.addAttribute("Source_Screen", "Verify OTP")
                             .addAttribute("App Version", BuildConfig.VERSION_NAME)
                             .addAttribute("SDK Version", Build.VERSION.SDK_INT)
+                            .addAttribute("u_mb", mobileNo.get())
                             .setNonInteractive()
                         getNavigator()?.sendMoEngageEvent("KA_Login_OTP_Verified",properties)
                     } catch (e: Exception) {

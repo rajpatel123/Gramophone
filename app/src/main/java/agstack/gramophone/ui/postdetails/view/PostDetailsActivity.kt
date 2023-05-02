@@ -56,6 +56,8 @@ class PostDetailsActivity : BaseActivityWrapper<ActivityPostDetailsBinding,PostD
     private var bitmapData: ByteArray? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        SharedPreferencesHelper.instance?.putString(Constants.URI,"")
         intent.extras?.getString(Constants.POST_ID)?.let { postDetailViewModel.getPostDetails(it) }
         intent.extras?.getString(Constants.POST_ID)?.let { postDetailViewModel.getPostComments(it) }
         setUpToolBar(

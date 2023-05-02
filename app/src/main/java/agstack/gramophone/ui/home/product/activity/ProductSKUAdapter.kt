@@ -45,9 +45,10 @@ class ProductSKUAdapter(
             mSKUList[lastSelectPosition]?.selected = false
             lastSelectPosition = position
             model.selected = true
-            notifyDataSetChanged()
+
             selectedProduct?.invoke(model)
             selectedSKUProduct?.invoke(model)
+            notifyDataSetChanged()
         }
 
         mBinding.radioBtn.setOnClickListener {
@@ -59,9 +60,10 @@ class ProductSKUAdapter(
             mSKUList[lastSelectPosition]?.selected = false
             lastSelectPosition = position
             model.selected = true
-            notifyDataSetChanged()
+
             selectedProduct?.invoke(model)
             selectedSKUProduct?.invoke(model)
+            notifyDataSetChanged()
         }
 
 

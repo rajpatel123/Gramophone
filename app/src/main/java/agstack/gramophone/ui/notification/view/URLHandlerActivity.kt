@@ -22,8 +22,10 @@ import agstack.gramophone.ui.notification.model.Data
 import agstack.gramophone.ui.notification.viewmodel.NotificationViewModel
 import agstack.gramophone.ui.offerslist.OffersListActivity
 import agstack.gramophone.ui.order.view.OrderListActivity
+import agstack.gramophone.ui.postdetails.view.PostDetailsActivity
 import agstack.gramophone.ui.referandearn.ReferAndEarnActivity
 import agstack.gramophone.ui.settings.view.LanguageUpdateActivity
+import agstack.gramophone.ui.tv.SingleVideoActivity
 import agstack.gramophone.ui.userprofile.EditProfileActivity
 import agstack.gramophone.ui.userprofile.UserProfileActivity
 import agstack.gramophone.ui.weather.WeatherActivity
@@ -55,6 +57,7 @@ import agstack.gramophone.utils.Constants.DEEP_LINK_MY_ORDERS
 import agstack.gramophone.utils.Constants.DEEP_LINK_NOTIFICATION
 import agstack.gramophone.utils.Constants.DEEP_LINK_OFFER
 import agstack.gramophone.utils.Constants.DEEP_LINK_OFFERS
+import agstack.gramophone.utils.Constants.DEEP_LINK_POST_DETAIL
 import agstack.gramophone.utils.Constants.DEEP_LINK_PRODUCT_DETAIL
 import agstack.gramophone.utils.Constants.DEEP_LINK_PRODUCT_LIST
 import agstack.gramophone.utils.Constants.DEEP_LINK_REFERRAL
@@ -64,10 +67,13 @@ import agstack.gramophone.utils.Constants.DEEP_LINK_SHOP_BY_COMPANY_NAME
 import agstack.gramophone.utils.Constants.DEEP_LINK_SHOP_BY_STORE
 import agstack.gramophone.utils.Constants.DEEP_LINK_SOCIAL
 import agstack.gramophone.utils.Constants.DEEP_LINK_WEATHER_INFO
+import agstack.gramophone.utils.Constants.DEEP_LINK_YOUTUBE
 import agstack.gramophone.utils.SharedPreferencesHelper
 import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.hasInternetConnection
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import androidx.activity.viewModels
 import com.amnix.xtension.extensions.isNotNullOrBlank
@@ -85,6 +91,15 @@ class URLHandlerActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (!hasInternetConnection(this)){
+            finishActivity()
+        }
+        try {
+            val uri = Uri.parse(intent?.getStringExtra(Constants.URI))
+        }catch (e:Exception){
+            finishActivity()
+            return
+        }
         val uri = Uri.parse(intent?.getStringExtra(Constants.URI))
 //        val uri =
 //            Uri.parse("https://www.gramophone.in/app?category=cropProblem&problemId=338001&cropId=100029")
@@ -148,6 +163,16 @@ class URLHandlerActivity :
                     notificationViewModel.getSubCatDetails(category_id!!)
                 }
 
+
+                DEEP_LINK_POST_DETAIL -> {
+                    val postId = uri.getQueryParameter("postId")
+                    openAndFinishActivity(
+                        PostDetailsActivity::class.java,
+                        Bundle().apply {
+                            putString(Constants.POST_ID, postId)
+                        })
+                }
+
                 DEEP_LINK_SHOP_BY_STORE -> {
                     val store_id = uri.getQueryParameter("store_id")
                     notificationViewModel.getStoreDetails(store_id!!)
@@ -155,6 +180,16 @@ class URLHandlerActivity :
 
                 DEEP_LINK_HOME -> {
                     finishActivity()
+                }
+
+                DEEP_LINK_YOUTUBE -> {
+                    val videoID = uri.getQueryParameter("videoId")
+                    if (!TextUtils.isEmpty(videoID))
+                    openAndFinishActivity(
+                        SingleVideoActivity::class.java,
+                        Bundle().apply {
+                            putString(Constants.VideoId, videoID)
+                        })
                 }
 
                 DEEP_LINK_MARKET -> {
@@ -181,19 +216,19 @@ class URLHandlerActivity :
                                 categoryName,
                                 subCategoryId!!
                             )
-                        } else {
-                            val categoryId = uri.getQueryParameter("categoryId")
-                            val categoryName = uri.getQueryParameter("categoryName")
-
-                            if (categoryId != null) {
-                                notificationViewModel.getCategoryDetails(
-                                    categoryId,
-                                    categoryName,
-                                    ""
-                                )
-                            }
                         }
 
+                    }else{
+                        val categoryId = uri.getQueryParameter("categoryId")
+                        val categoryName = uri.getQueryParameter("categoryName")
+
+                        if (categoryId != null) {
+                            notificationViewModel.getCategoryDetails(
+                                categoryId,
+                                categoryName,
+                                ""
+                            )
+                        }
                     }
 
                 }

@@ -161,6 +161,7 @@ class HomeViewModel @Inject constructor(
                             SharedPreferencesKeys.logged_in,
                             false
                         )
+
                         SharedPreferencesHelper.instance?.clear()
                         getNavigator()?.logout()
 

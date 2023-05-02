@@ -7,6 +7,7 @@ import android.content.Context
 
 object Constants {
 
+    val PID_FROM_SEARCH: String="product_id_from_search"
     val TARGET_PAGE_FROM_DEEP_LINK: String= "from_deeplink"
     val TARGET_PAGE_TAB: String="tabId"
     val CROP_ADVISORY: String="crop_advisory"
@@ -304,6 +305,7 @@ object Constants {
 
     const val DEEP_LINK_CROP_LIST = "cropList"
     const val DEEP_LINK_HOME = "home"
+    const val DEEP_LINK_YOUTUBE = "youtubeVideo"
     const val DEEP_LINK_MARKET = "market"
     const val DEEP_LINK_MY_FARM = "myFarm"
     const val DEEP_LINK_MY_ORDERS = "orders"
@@ -338,6 +340,7 @@ object Constants {
     const val DEEP_LINK_SHOP_BY_COMPANY= "shopByCompany"
     const val DEEP_LINK_SHOP_BY_COMPANY_NAME= "shopByCompanyName"
     const val DEEP_LINK_MY_FAVORITES= "myFavorites"
+    const val DEEP_LINK_POST_DETAIL= "postDetails"
 
     /**
      * For Broadcast

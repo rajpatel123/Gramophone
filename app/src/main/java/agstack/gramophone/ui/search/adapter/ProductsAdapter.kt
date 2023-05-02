@@ -17,12 +17,16 @@ class ProductsAdapter (
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val product = list[position].product_sku_list?.get(0)
-        holder.binding.item = product
+        try {
+            val product = list[position].product_sku_list?.get(list[position].product_sku_list?.size!! -1)
+            holder.binding.item = product
 
-        holder.binding.productDetailsContainer.setOnClickListener {
-            listener.invoke(product?.product_id!!)
+            holder.binding.productDetailsContainer.setOnClickListener {
+                listener.invoke(product?.product_id!!)
+            }
+        }catch (ex:Exception){
         }
+
     }
 
     override fun getItemCount(): Int {

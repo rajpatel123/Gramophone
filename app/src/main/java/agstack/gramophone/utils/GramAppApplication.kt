@@ -4,18 +4,20 @@ import agstack.gramophone.BuildConfig
 import agstack.gramophone.R
 import agstack.gramophone.ui.profile.model.GpApiResponseProfileData
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.initializeInstance
+import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance
 import android.app.Application
 import android.content.Context
 import android.text.TextUtils
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import com.amnix.xtension.extensions.isNotNull
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.moe.pushlibrary.MoEHelper
 import com.moengage.core.LogLevel
 import com.moengage.core.MoECoreHelper
 import com.moengage.core.MoEngage
 import com.moengage.core.analytics.MoEAnalyticsHelper
 import com.moengage.core.config.*
-import com.moengage.firebase.MoEFireBaseHelper
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -28,30 +30,47 @@ class GramAppApplication : Application() {
             return GramAppApplication()
         }
 
+        fun userLogoutMoEngage(context: Context) {
+            MoECoreHelper.logoutUser(context)
+        }
 
+        fun userLoginMoEngage(context: Context) {
+            val gpUserId = instance?.getString(SharedPreferencesKeys.UUIdKey)
+            if (gpUserId != null) {
+                MoEAnalyticsHelper.setUniqueId(context,gpUserId)
+                Log.d("Raj",""+gpUserId)
+            }
+        }
 
         fun userInfoMoEngage(context: Context) {
            try {
                if (TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.PROFILE_DATA))) {
                    return
                }
+
                val profileData =
                    SharedPreferencesHelper.instance?.getParcelable(
                        SharedPreferencesKeys.PROFILE_DATA,
                        GpApiResponseProfileData::class.java
                    )
                if (profileData.isNotNull()) {
-                   MoEAnalyticsHelper.setFirstName(context, profileData?.first_name!!)
-                   if (!TextUtils.isEmpty(profileData.last_name)) {
-                       MoEAnalyticsHelper.setLastName(context, profileData.last_name!!)
+                   MoEAnalyticsHelper.setMobileNumber(context, profileData?.mobile_no!!)
+
+                   if (!TextUtils.isEmpty(profileData?.first_name)) {
+                       MoEAnalyticsHelper.setFirstName(context, profileData?.first_name!!)
                    }
-                   MoEAnalyticsHelper.setUniqueId(context, profileData.mobile_no!!)
-                   MoEAnalyticsHelper.setUserName(
-                       context,
-                       SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.USERNAME)!!
-                   )
+                   if (!TextUtils.isEmpty(profileData?.last_name)) {
+                       MoEAnalyticsHelper.setLastName(context, profileData?.last_name!!)
+                   }
+
+                   if (TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.USERNAME))){
+                       MoEAnalyticsHelper.setUserName(
+                           context,
+                           SharedPreferencesHelper.instance?.getString(SharedPreferencesKeys.USERNAME)!!
+                       )
+                   }
+
                    MoEAnalyticsHelper.setLocation(context, 0.0, 0.0)
-                   MoEAnalyticsHelper.setMobileNumber(context, profileData.mobile_no!!)
                }
            }catch (ex:Exception){
              ex.printStackTrace()
@@ -118,8 +137,6 @@ class GramAppApplication : Application() {
     }
 
 
-    fun userLogoutMoEngage() {
-        MoECoreHelper.logoutUser(this)
-    }
+
 
 }

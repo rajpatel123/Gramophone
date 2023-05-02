@@ -21,8 +21,6 @@ public  class ProductImagesAdapter(
          */
     override fun getItem(position: Int): Fragment {
         return ProductImagesFragment.newInstance(productImages!![position]!!, position){
-
-
         }
     }
 

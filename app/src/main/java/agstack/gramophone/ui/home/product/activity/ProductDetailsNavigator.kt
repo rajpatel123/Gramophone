@@ -2,6 +2,7 @@ package agstack.gramophone.ui.home.product.activity
 
 import agstack.gramophone.base.BaseNavigator
 import agstack.gramophone.ui.home.product.ProductDetailsAdapter
+import agstack.gramophone.ui.home.product.adapter.ProductViewPagerAdapter
 import agstack.gramophone.ui.home.product.fragment.ContactForPriceBottomSheetDialog
 import agstack.gramophone.ui.home.product.fragment.ExpertAdviceBottomSheetFragment
 import agstack.gramophone.ui.home.product.fragment.GenuineCustomerRatingAlertFragment
@@ -26,8 +27,8 @@ interface ProductDetailsNavigator : BaseNavigator {
         offerListSize: Int,
     )
 
-    fun getFragmentManagerPager(): FragmentManager
-    fun setProductImagesViewPagerAdapter(productImagesAdapter: ProductImagesAdapter)
+    fun getFragmentManagerPager(): ProductViewPagerAdapter.ProductImagesFragmentInterface
+    fun setProductImagesViewPagerAdapter(productImagesAdapter: ProductViewPagerAdapter)
     fun setRelatedProductsAdapter(
         relatedProductFragmentAdapter: RelatedProductFragmentAdapter,
         relatedProductItemClicked: (RelatedProductItem) -> Unit,

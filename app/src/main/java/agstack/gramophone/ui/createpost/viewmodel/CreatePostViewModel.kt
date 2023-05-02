@@ -94,20 +94,24 @@ class CreatePostViewModel @Inject constructor(
         when (v.id) {
             R.id.ivDeletBig -> {
                 imageNo = Constants.IV_ONE
-                if (listOfImages.containsKey("1")) {
-                    listOfImages.remove("1")
-                } else {
-                    removedImages.add(JSONObject().apply {
-                        put("id", imageUrls[0].id)
-                    })
+                if (listOfImages!=null){
+                    if (listOfImages.containsKey("1")) {
+                        listOfImages.remove("1")
+                    } else {
+                        removedImages.add(JSONObject().apply {
+                            put("id", imageUrls[0].id)
+                        })
+                    }
                 }
+
             }
 
             R.id.ivDeleteSmall1 -> {
                 imageNo = Constants.IV_TWO
-                if (listOfImages.containsKey("2")) {
+                if (listOfImages!=null && listOfImages.containsKey("2")) {
                     listOfImages.remove("2")
                 } else {
+                    if (listOfImages!=null)
                     removedImages.add(JSONObject().apply {
                         put("id", imageUrls[1].id)
                     })
@@ -116,7 +120,7 @@ class CreatePostViewModel @Inject constructor(
 
             R.id.ivDeleteSmall2 -> {
                 imageNo = Constants.IV_THREE
-                if (listOfImages.containsKey("3")) {
+                if (listOfImages!=null && listOfImages.containsKey("3")) {
                     listOfImages.remove("3")
                 } else {
                     removedImages.add(JSONObject().apply {

@@ -264,6 +264,7 @@ class HomeActivity :
         profileFragment.refreshProfile()
 
         GramAppApplication.userInfoMoEngage(this)
+        GramAppApplication.userLoginMoEngage(this)
         if (profileImage.isNotNullOrEmpty())
             Glide.with(this)
                 .load(profileImage)
@@ -351,30 +352,37 @@ class HomeActivity :
                             .addAttribute("Redirection_Source", "Home Tab")
                             .addAttribute("User ID", SharedPreferencesHelper.instance?.getString( SharedPreferencesKeys.UUIdKey)!!)
                         sendMoEngageEvent("KA_View_Community_Wall", properties)
+                    }else{
+                        openActivity(LostConnectionActivity::class.java)
                     }
 
                     return@setOnItemSelectedListener true
                 }
                 R.id.navigation_profile -> {
-                    viewDataBinding.toolbar.myToolbar.title =
-                        "  " + resources.getString(R.string.my_profile)
+                    if (hasInternetConnection(this)) {
+                        viewDataBinding.toolbar.myToolbar.title =
+                            "  " + resources.getString(R.string.my_profile)
 
-                    updateMenuItemVisibility(false, true)
-                    supportFragmentManager.beginTransaction().hide(activeFragment)
-                        .show(profileFragment).commit()
-                    activeFragment = profileFragment
-                    viewDataBinding.llCreateAPost.visibility = GONE
-                    viewDataBinding.llCallPost.visibility = GONE
+                        updateMenuItemVisibility(false, true)
+                        supportFragmentManager.beginTransaction().hide(activeFragment)
+                            .show(profileFragment).commit()
+                        activeFragment = profileFragment
+                        viewDataBinding.llCreateAPost.visibility = GONE
+                        viewDataBinding.llCallPost.visibility = GONE
 
-                    val properties = Properties()
-                    properties.addAttribute(
-                        "Customer_Id",
-                        SharedPreferencesHelper.instance?.getString(
-                            SharedPreferencesKeys.CUSTOMER_ID
-                        )!!)
-                        .addAttribute("Redirection_Source","Main Navigation")
-                        .setNonInteractive()
+                        val properties = Properties()
+                        properties.addAttribute(
+                            "Customer_Id",
+                            SharedPreferencesHelper.instance?.getString(
+                                SharedPreferencesKeys.CUSTOMER_ID
+                            )!!)
+                            .addAttribute("Redirection_Source","Main Navigation")
+                            .setNonInteractive()
                         sendMoEngageEvent("KA_View_MyGramophone", properties)
+
+                    }else{
+                        openActivity(LostConnectionActivity::class.java)
+                    }
 
                     return@setOnItemSelectedListener true
                 }
@@ -512,39 +520,42 @@ class HomeActivity :
 
     override fun onResume() {
         super.onResume()
-        mViewModel?.getProfile()
-        mViewModel?.getCrops()
-        updateCartCount(SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!)
-        marketFragment.marketFragmentViewModel.getFarms()
-        profileFragment.refreshProfile()
+        if (hasInternetConnection(this)){
+            mViewModel?.getProfile()
+            mViewModel?.getCrops()
+            updateCartCount(SharedPreferencesHelper.instance?.getInteger(SharedPreferencesKeys.CART_ITEM_COUNT)!!)
+            marketFragment.marketFragmentViewModel.getFarms()
+            profileFragment.refreshProfile()
 
 
-        if (!TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(Constants.TARGET_PAGE))) {
-            when(SharedPreferencesHelper.instance?.getString(Constants.TARGET_PAGE)){
-                "social"-> {
-                    if (SharedPreferencesHelper.instance?.getBoolean(Constants.TARGET_PAGE_FROM_DEEP_LINK) == true){
-                        viewDataBinding.navView.selectedItemId = R.id.navigation_community
+            if (!TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(Constants.TARGET_PAGE))) {
+                when(SharedPreferencesHelper.instance?.getString(Constants.TARGET_PAGE)){
+                    "social"-> {
+                        if (SharedPreferencesHelper.instance?.getBoolean(Constants.TARGET_PAGE_FROM_DEEP_LINK) == true){
+                            viewDataBinding.navView.selectedItemId = R.id.navigation_community
 
-                        val tab =
-                            SharedPreferencesHelper.instance?.getInteger(Constants.TARGET_PAGE_TAB)
-                        CoroutineScope(Dispatchers.Main).launch {
+                            val tab =
+                                SharedPreferencesHelper.instance?.getInteger(Constants.TARGET_PAGE_TAB)
+                            CoroutineScope(Dispatchers.Main).launch {
 //                        delay(1000)
-                            communityFragment.selectTabFromDeeplink(tab)
+                                communityFragment.selectTabFromDeeplink(tab)
+                            }
+                        }else{
+                            showCommunityFragment("social")
+
                         }
-                    }else{
-                        showCommunityFragment("social")
 
                     }
+                    "market"->{
+                        showHomeFragment()
+                    }
 
-                }
-                "market"->{
-                    showHomeFragment()
+                    "fav"->{
+                        viewDataBinding.navView.selectedItemId = R.id.navigation_profile
+
+                    }
                 }
 
-                "fav"->{
-                    viewDataBinding.navView.selectedItemId = R.id.navigation_profile
-
-                }
             }
 
         }
@@ -569,11 +580,16 @@ class HomeActivity :
     }
 
     private fun processDeepLink() {
-        if (!TextUtils.isEmpty(SharedPreferencesHelper.instance?.getString(Constants.URI))) {
-            val intent = Intent(this, URLHandlerActivity::class.java)
-            intent.putExtra(Constants.URI, SharedPreferencesHelper.instance?.getString(Constants.URI))
-            startActivity(intent)
+        if (hasInternetConnection(this) && intent.extras!=null){
+            if (!TextUtils.isEmpty(intent.extras?.getString(Constants.URI))) {
+                SharedPreferencesHelper.instance?.putString(Constants.URI,intent.extras?.getString(Constants.URI))
+                val intent = Intent(this, URLHandlerActivity::class.java)
+
+                intent.putExtra(Constants.URI, SharedPreferencesHelper.instance?.getString(Constants.URI))
+                startActivity(intent)
+            }
         }
+
     }
 
     override fun getLayoutID(): Int {
@@ -589,6 +605,8 @@ class HomeActivity :
     }
 
     override fun logout() {
+        GramAppApplication.userLogoutMoEngage(this)
+
         ActivityCompat.finishAffinity(this);
         openAndFinishActivity(LanguageActivity::class.java, null)
     }
@@ -641,6 +659,6 @@ class HomeActivity :
 
     override fun onPause() {
         super.onPause()
-
+        SharedPreferencesHelper.instance?.putString(Constants.TARGET_PAGE,"")
     }
 }

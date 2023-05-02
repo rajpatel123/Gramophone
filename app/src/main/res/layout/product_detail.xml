@@ -596,12 +596,16 @@
                     android:layout_height="@dimen/_4sdp"
                     android:background="#F2F4F7" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                <include layout="@layout/item_home_promise_banner_product"
                     android:layout_below="@+id/viewaboverelatedprods"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_gramophone_promise" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+<!--                <androidx.appcompat.widget.AppCompatImageView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/viewaboverelatedprods"-->
+<!--                    android:scaleType="fitXY"-->
+<!--                    app:srcCompat="@drawable/ic_gramophone_promise" />-->
 
                 <RelativeLayout
                     android:id="@+id/rl_related_products"

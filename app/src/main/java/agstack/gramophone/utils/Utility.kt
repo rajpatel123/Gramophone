@@ -39,6 +39,10 @@ object Utility {
     public const val ORDER_PLACED_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"  /*2001-07-04T12:08:56*/
     public const val COMMUNITY_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"  /*2001-07-04T12:08:56*/
 
+
+
+
+
     fun List<String>.toBulletedList(): CharSequence {
         return SpannableString(this.joinToString("\n")).apply {
             this@toBulletedList.foldIndexed(0) { index, acc, span ->
@@ -241,12 +245,17 @@ object Utility {
     }
 
     fun getErrorMessage(data: ResponseBody?): String? {
-        val errorBody = data?.string()?.let { JSONObject(it) }
         var messgae: String = ""
-        messgae = errorBody?.optString(Constants.GP_API_MESSAGE).toString()
-        if (TextUtils.isEmpty(messgae)) {
-            messgae = errorBody?.optString(Constants.MESSAGE).toString()
+        try {
+            val errorBody = data?.string()?.let { JSONObject(it) }
+            messgae = errorBody?.optString(Constants.GP_API_MESSAGE).toString()
+            if (TextUtils.isEmpty(messgae)) {
+                messgae = errorBody?.optString(Constants.MESSAGE).toString()
+            }
+        }catch (e:Exception){
+          messgae= ""
         }
+
         return messgae
     }
 

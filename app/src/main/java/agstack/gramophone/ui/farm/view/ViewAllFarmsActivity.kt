@@ -265,6 +265,7 @@ class ViewAllFarmsActivity :
         if (farmsList.isEmpty()) {
             viewDataBinding.emptyView.visibility = View.VISIBLE
             viewDataBinding.rvFarmsOld.visibility = View.GONE
+            viewDataBinding.rvFarms.visibility = View.GONE
         } else {
             viewDataBinding.emptyView.visibility = View.GONE
             viewDataBinding.rvFarmsOld.visibility = View.VISIBLE
