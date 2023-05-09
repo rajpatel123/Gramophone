@@ -24,8 +24,8 @@ android {
         applicationId "agstack.gramophone"
         minSdk 21
         targetSdk 33
-        versionCode 206
-        versionName "4.1.53"
+        versionCode 207
+        versionName "4.1.54"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -52,7 +52,7 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            debuggable true
+            debuggable false
             resValue "string", "app_name_different", "Gramophone"
             buildConfigField "String", "ADDRESS", "\"\""
             buildConfigField "String", "CHANNEL_API", "\"UCmJ7oQCcKzf-IU2QXaMVykQ\""
@@ -85,6 +85,30 @@ android {
             buildConfigField "String" , "BASE_URL_SINGLE_ARTICLE","\"https://articles-qa.gramophone.in/single-article\""
             buildConfigField "String", "BASE_URL_YOUTUBE", "\"https://www.googleapis.com/youtube/v3/\""
             signingConfig signingConfigs.debug
+        }
+
+
+        // add the code from below line.
+        applicationVariants.all{
+                // this method is use to rename your all apk weather
+                // it may be signed or unsigned(debug apk)
+            variant ->
+                variant.outputs.each{
+                        // on below line we are setting a name to our apk
+                    output->
+                        // on below line we are specifying our app name.
+                        project.ext { appName = 'Krishi-App' }
+                        // on below line we are adding the formatted date to our apk file name.
+                        def formattedDate = new Date().format('yyyy-MM-dd')
+                        // on below line we are creating a new name for our apk.
+                        def newName = output.outputFile.name
+                        // on below line we are replacing our previous name with our app name.
+                        newName = newName.replace("app-", "$project.ext.appName-")
+                        // on below line we are replacing -debug with our formatted date.
+                        newName = newName.replace("-debug", "-debug-" + formattedDate)
+                        // at last we are setting our apk name to it.
+                        output.outputFileName  = newName
+                }
         }
 
     }
