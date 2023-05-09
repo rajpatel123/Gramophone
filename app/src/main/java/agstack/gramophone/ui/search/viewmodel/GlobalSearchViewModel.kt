@@ -43,24 +43,26 @@ open class GlobalSearchViewModel @Inject constructor(
     }
 
     fun getSuggestions(body: SuggestionsRequest) {
-        progress.value = true
-        viewModelScope.launch {
-            try {
-                val response = productRepository.getSuggestions(body)
-                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
-                    && response.body()?.gp_api_response_data != null
-                ) {
-                    val suggestionsResponse = response.body()
-                    getNavigator()?.notifySuggestionAdapter(suggestionsResponse?.gp_api_response_data!!)
-                } else {
-                    getNavigator()?.notifySuggestionAdapter(arrayListOf())
-                }
-                progress.value = false
-            } catch (ex: Exception) {
-                progress.value = false
-                when (ex) {
-                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+        if (getNavigator()?.isNetworkAvailable() == true) {
+            progress.value = true
+            viewModelScope.launch {
+                try {
+                    val response = productRepository.getSuggestions(body)
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                        && response.body()?.gp_api_response_data != null
+                    ) {
+                        val suggestionsResponse = response.body()
+                        getNavigator()?.notifySuggestionAdapter(suggestionsResponse?.gp_api_response_data!!)
+                    } else {
+                        getNavigator()?.notifySuggestionAdapter(arrayListOf())
+                    }
+                    progress.value = false
+                } catch (ex: Exception) {
+                    progress.value = false
+                    when (ex) {
+                        is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
 //                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                    }
                 }
             }
         }
@@ -72,33 +74,36 @@ open class GlobalSearchViewModel @Inject constructor(
         isSearchInCommunity = searchInCommunity
 
         progress.value = true
-        viewModelScope.launch {
-            try {
-                val response: Response<GlobalSearchResponse> = if (searchInCommunity) {
-                    productRepository.searchByKeywordInCommunity(body)
-                } else {
-                    productRepository.searchByKeyword(body)
-                }
+        if (getNavigator()?.isNetworkAvailable() == true) {
+            viewModelScope.launch {
+                try {
+                    val response: Response<GlobalSearchResponse> = if (searchInCommunity) {
+                        productRepository.searchByKeywordInCommunity(body)
+                    } else {
+                        productRepository.searchByKeyword(body)
+                    }
 
-                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
-                    && response.body()?.gp_api_response_data != null
-                ) {
-                    val searchResponse = response.body()
-                   SharedPreferencesHelper.instance?.putString(Constants.AFTER_KEY,
-                       searchResponse?.gp_api_response_data?.data!![0].afterKey.product_base_name)
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                        && response.body()?.gp_api_response_data != null
+                    ) {
+                        val searchResponse = response.body()
+                        SharedPreferencesHelper.instance?.putString(Constants.AFTER_KEY,
+                            searchResponse?.gp_api_response_data?.data!![0].afterKey.product_base_name)
 
-                    getNavigator()?.notifySearchResultAdapter(searchResponse?.gp_api_response_data!!.data)
-                } else {
-                    getNavigator()?.notifySearchResultAdapter(arrayListOf())
-                }
-                progress.value = false
-            } catch (ex: Exception) {
-                progress.value = false
-                when (ex) {
-                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                        getNavigator()?.notifySearchResultAdapter(searchResponse?.gp_api_response_data!!.data)
+                    } else {
+                        getNavigator()?.notifySearchResultAdapter(arrayListOf())
+                    }
+                    progress.value = false
+                } catch (ex: Exception) {
+                    progress.value = false
+                    when (ex) {
+                        is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
 //                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                    }
                 }
             }
+
         }
     }
 

@@ -87,6 +87,7 @@ class GramAppApplication : Application() {
             LocaleManagerClass.updateLocale(langIsoCode, resources)
         }
 
+        WifiService.instance.initializeWithApplicationContext(this)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         initializeMoEngage()

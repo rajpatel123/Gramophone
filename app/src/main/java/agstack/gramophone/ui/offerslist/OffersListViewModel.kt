@@ -38,9 +38,9 @@ class OffersListViewModel @Inject constructor(
     var noInternetFound = ObservableField<Boolean>(false)
 
     fun getAllOffersData() {
-
-
-        offersJob.cancelIfActive()
+        if (offersJob!=null){
+            offersJob.cancelIfActive()
+        }
         offersJob = checkNetworkThenRun {
             progressLoader.set(true)
             try {

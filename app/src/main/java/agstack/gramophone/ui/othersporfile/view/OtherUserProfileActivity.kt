@@ -22,8 +22,11 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.RadioGroup
 import androidx.activity.viewModels
@@ -45,15 +48,44 @@ class OtherUserProfileActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        SharedPreferencesHelper.instance?.putString(Constants.URI,"")
         otherProfileViewModel.uuid = intent.extras?.getString(Constants.AUTHER_UUID)!!
-        otherProfileViewModel.id = intent.extras?.getString(Constants.AUTHER_ID)!!
+
+        if (intent.extras?.containsKey(Constants.AUTHER_ID) == true) {
+            otherProfileViewModel.id = intent.extras?.getString(Constants.AUTHER_ID)!!
+            viewDataBinding.ivMenu.visibility = VISIBLE
+
+        } else {
+            viewDataBinding.ivMenu.visibility = GONE
+
+            otherProfileViewModel.isGeneral.set(false)
+        }
+
         otherProfileViewModel.redirectionSource =
             intent.extras?.getString(Constants.REDIRECTION_SOURCE)!!
-        if (intent.extras?.getString(Constants.POST_ID).isNotNullOrEmpty())
+        if (intent.extras?.containsKey(Constants.POST_ID) == true && intent.extras?.getString(
+                Constants.POST_ID
+            ).isNotNullOrEmpty()
+        )
             otherProfileViewModel.postId = intent.extras?.getString(Constants.POST_ID)!!
 
-        otherProfileViewModel.getProfile(intent.getIntExtra(BLOCKED_STATUS,0))
-        otherProfileViewModel.getPostByUUID(otherProfileViewModel.uuid,otherProfileViewModel.id)
+        otherProfileViewModel.getProfile(intent.getIntExtra(BLOCKED_STATUS, 0))
+
+        if (!TextUtils.isEmpty(otherProfileViewModel.id)) {
+            otherProfileViewModel.id?.let {
+                otherProfileViewModel.getPostByUUID(
+                    otherProfileViewModel.uuid,
+                    it
+                )
+            }
+        } else if (!TextUtils.isEmpty(otherProfileViewModel.uuid))
+            otherProfileViewModel.uuid?.let {
+                otherProfileViewModel.getPostByUUID(
+                    otherProfileViewModel.uuid,
+                    null
+                )
+
+            }
         sendOtherUserProfileViewMoEngageEvent()
     }
 

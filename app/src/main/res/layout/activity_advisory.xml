@@ -42,7 +42,7 @@
 
                 <agstack.gramophone.widget.CircularImageView
                     android:id="@+id/cropImage"
-                    product_image="@{viewModel.cropImage}"
+                    product_image='@{viewModel.cropImage  ?? ""}'
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_centerVertical="true"

@@ -32,7 +32,7 @@
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     app:srcCompat="@drawable/dummy_crop"
-                    product_image="@{model.issue_image}"/>
+                    product_image='@{model.issue_image  ?? ""}'/>
 
                 <TextView
                     android:id="@+id/tvIssue"

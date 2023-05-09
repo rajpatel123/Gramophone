@@ -18,6 +18,7 @@ import agstack.gramophone.ui.language.model.InitiateAppDataResponseModel
 import agstack.gramophone.ui.language.view.LanguageActivity
 import agstack.gramophone.ui.notification.view.NotificationActivity
 import agstack.gramophone.ui.notification.view.URLHandlerActivity
+import agstack.gramophone.ui.othersporfile.view.OtherUserProfileActivity
 import agstack.gramophone.ui.search.view.GlobalSearchActivity
 import agstack.gramophone.utils.*
 import agstack.gramophone.utils.SharedPreferencesHelper.Companion.instance

@@ -8,6 +8,7 @@ import agstack.gramophone.ui.referandearn.transaction.GramCashTransactionListAda
 import agstack.gramophone.ui.referandearn.transaction.TransactionRequestModel
 import agstack.gramophone.ui.referandearn.transaction.model.GramcashTxnItem
 import agstack.gramophone.utils.Constants
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -36,7 +37,10 @@ class GCExpiringSoonViewModel @Inject constructor(
 
     fun getGramCashTxnExpiringSoon(GC_Expiring_soon_amount :String?) {
         Gramcashexpiring_soon_amount.set(GC_Expiring_soon_amount)
-        getGramCashTxnJob.cancelIfActive()
+
+        if (getGramCashTxnJob!=null){
+            getGramCashTxnJob.cancelIfActive()
+        }
         getGramCashTxnJob = checkNetworkThenRun {
             progressLoader.set(true)
             try {
@@ -87,12 +91,14 @@ class GCExpiringSoonViewModel @Inject constructor(
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     fun loadMore(currentPage: Int) {
         var txnRequestBody = TransactionRequestModel()
         txnRequestBody.page = currentPage.toString()
 
-
-            getGramCashTxnJob.cancelIfActive()
+            if (getGramCashTxnJob!=null){
+                getGramCashTxnJob.cancelIfActive()
+            }
             getNavigator()?.showLoaderFooter()
             getGramCashTxnJob = viewModelScope.launch {
 

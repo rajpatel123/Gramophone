@@ -35,49 +35,52 @@ class SelectCropViewModel @Inject constructor(
     }
 
     fun getCrops() {
-        progress.value = true
-        viewModelScope.launch {
-            try {
-                val cropList = ArrayList<CropData>()
-                val response = productRepository.getCrops()
-                if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS
-                    && response.body()?.gpApiResponseData?.cropsList?.size!! > 0
-                ) {
-                    cropResponse = response.body()
-                    cropList.addAll(cropResponse?.gpApiResponseData?.cropsList!!)
-                }
-                progress.value = false
-                // add header item in the list
-                if (cropList.size > 0) {
-                    cropList.add(
-                        0,
-                        CropData(
-                            isSectionHeader = true,
-                            sectionTitle = "Popular in your area",
-                            sectionSubTitle = "With best practices and modal farm",
+        if (getNavigator()?.isNetworkAvailable()==true){
+            progress.value = true
+            viewModelScope.launch {
+                try {
+                    val cropList = ArrayList<CropData>()
+                    val response = productRepository.getCrops()
+                    if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS
+                        && response.body()?.gpApiResponseData?.cropsList?.size!! > 0
+                    ) {
+                        cropResponse = response.body()
+                        cropList.addAll(cropResponse?.gpApiResponseData?.cropsList!!)
+                    }
+                    progress.value = false
+                    // add header item in the list
+                    if (cropList.size > 0) {
+                        cropList.add(
+                            0,
+                            CropData(
+                                isSectionHeader = true,
+                                sectionTitle = "Popular in your area",
+                                sectionSubTitle = "With best practices and modal farm",
+                            )
                         )
-                    )
-                }
+                    }
 
-                if (cropList.size > 4) {
-                    cropList.add(
-                        4,
-                        CropData(
-                            isSectionHeader = true,
-                            sectionTitle = "More Crops",
+                    if (cropList.size > 4) {
+                        cropList.add(
+                            4,
+                            CropData(
+                                isSectionHeader = true,
+                                sectionTitle = "More Crops",
+                            )
                         )
-                    )
-                }
-                getNavigator()?.updateCropAdapter(cropList)
+                    }
+                    getNavigator()?.updateCropAdapter(cropList)
 
-            } catch (ex: Exception) {
-                progress.value = false
-                when (ex) {
-                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
-                   // else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                } catch (ex: Exception) {
+                    progress.value = false
+                    when (ex) {
+                        is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                        // else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                    }
                 }
             }
         }
+
     }
 
     fun onClickSaveAndContinue() {

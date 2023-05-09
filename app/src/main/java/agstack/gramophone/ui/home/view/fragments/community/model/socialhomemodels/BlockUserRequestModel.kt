@@ -2,6 +2,6 @@ package agstack.gramophone.ui.home.view.fragments.community.model.socialhomemode
 
 data class BlockUserRequestModel(
     val action: String,
-    val authorId: String,
+    val authorId: String?,
     val postId: String?
 )

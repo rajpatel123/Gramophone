@@ -87,11 +87,15 @@ class NotificationActivity : BaseActivityWrapper<ActivityNotificationBinding, No
 
                 if (pendingDynamicLinkData != null) {
                     deepLink = pendingDynamicLinkData.link
-                    val intent = Intent(this@NotificationActivity, URLHandlerActivity::class.java)
-                    intent.putExtra(
-                        Constants.URI, deepLink
+                   openActivity(URLHandlerActivity::class.java, Bundle().apply {
+
+                   })
+
+                    val intent1 = Intent(this@NotificationActivity, URLHandlerActivity::class.java)
+                    intent1.putExtra(
+                        Constants.URI, deepLink.toString()
                     )
-                    startActivity(intent)
+                    startActivity(intent1)
 
 
                 }

@@ -39,6 +39,8 @@ import android.text.Html
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
@@ -541,6 +543,14 @@ class CreatePostActivity :
         }
     }
 
+    override fun onLoading() {
+        viewDataBinding.progressBar.visibility=VISIBLE
+    }
+
+    override fun onSuccess(message: String?) {
+        viewDataBinding.progressBar.visibility= GONE
+
+    }
 
 
     override fun populateTagSuggestionList(tags: Array<Tag>) {

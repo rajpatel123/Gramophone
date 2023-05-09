@@ -1,9 +1,7 @@
 package agstack.gramophone.di
 
 import agstack.gramophone.BuildConfig
-import agstack.gramophone.utils.Constants
-import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
+import agstack.gramophone.utils.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,12 +28,24 @@ object ApiModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(logging: HttpLoggingInterceptor): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(getHeaderInterceptor())
-            .addInterceptor(logging)
-            .connectTimeout(60, TimeUnit.SECONDS) // connect timeout
-            .readTimeout(70, TimeUnit.SECONDS)
-            .build()
+        val intercepter = getHeaderInterceptor()
+
+        if (intercepter != null) {
+            return OkHttpClient.Builder()
+                .addInterceptor(intercepter)
+                .addInterceptor(logging)
+                .connectTimeout(60, TimeUnit.SECONDS) // connect timeout
+                .readTimeout(70, TimeUnit.SECONDS)
+                .build()
+        } else {
+            return OkHttpClient.Builder()
+                // .addInterceptor(intercepter)
+                .addInterceptor(logging)
+                .connectTimeout(60, TimeUnit.SECONDS) // connect timeout
+                .readTimeout(70, TimeUnit.SECONDS)
+                .build()
+        }
+
     }
 
     @Provides
@@ -109,19 +119,22 @@ object ApiModule {
     }
 
     @Throws(Exception::class)
-    private fun getHeaderInterceptor(): Interceptor{
-
-        return Interceptor { chain ->
-            val request =
-                chain.request().newBuilder()
-                    .header(
-                        Constants.AUTHORIZATION,
-                        "Bearer " + SharedPreferencesHelper.instance?.getString(
-                            SharedPreferencesKeys.session_token
-                        )!!
-                    )
-                    .build()
-            chain.proceed(request)
+    private fun getHeaderInterceptor(): Interceptor? {
+        if (WifiService.instance.isOnline()) {
+            return Interceptor { chain ->
+                val request =
+                    chain.request().newBuilder()
+                        .header(
+                            Constants.AUTHORIZATION,
+                            "Bearer " + SharedPreferencesHelper.instance?.getString(
+                                SharedPreferencesKeys.session_token
+                            )!!
+                        )
+                        .build()
+                chain.proceed(request)
+            }
+        } else {
+            return null
         }
     }
 }

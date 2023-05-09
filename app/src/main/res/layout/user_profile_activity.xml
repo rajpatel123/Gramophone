@@ -82,7 +82,7 @@
                     android:shadowRadius="10"
                     tools:visibility="gone"
                     android:visibility="@{viewModel.imageExist? View.VISIBLE:View.GONE}"
-                    app:product_image="@{viewModel.profileImage}"
+                    app:product_image='@{viewModel.profileImage  ?? ""}'
                     app:srcCompat="@drawable/ic_profile_default" />
             </LinearLayout>
             <ImageButton

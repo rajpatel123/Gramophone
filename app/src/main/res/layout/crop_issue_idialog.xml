@@ -46,7 +46,7 @@
                             android:layout_marginBottom="10dp"
                             android:maxHeight="@dimen/_100sdp"
                             android:scaleType="fitXY"
-                            app:product_image="@{model.issue_image}" />
+                            app:product_image='@{model.issue_image  ?? ""}' />
 
                         <LinearLayout
                             android:id="@+id/llCrossLinearLayout"

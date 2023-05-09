@@ -534,6 +534,7 @@ class GramophoneTVActivity :
                             youTubePlayer.cuePlaylist(currentPlayingPlayListId)
                             Timer().schedule(object : TimerTask() {
                                 override fun run() {
+                                    if (!isFinishing)
                                     youTubePlayer.play()
                                 }
                             }, 1000)

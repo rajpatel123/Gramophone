@@ -106,39 +106,54 @@ class SplashActivity : BaseActivityWrapper<ActivitySplashBinding,SplashNavigator
         }else{
             try {
                 referrerClient = InstallReferrerClient.newBuilder(this).build()
-                referrerClient.startConnection(object : InstallReferrerStateListener {
+                if (referrerClient.isReady ) {
+                    referrerClient.startConnection(object : InstallReferrerStateListener {
 
-                    override fun onInstallReferrerSetupFinished(responseCode: Int) {
-                        when (responseCode) {
-                            InstallReferrerClient.InstallReferrerResponse.OK -> {
-                                val response: ReferrerDetails = referrerClient.installReferrer
-                                val referrerUrl: String = response.installReferrer
-                                val referrerClickTime: Long = response.referrerClickTimestampSeconds
-                                val appInstallTime: Long = response.installBeginTimestampSeconds
-                                val instantExperienceLaunched: Boolean = response.googlePlayInstantParam
-                                instance?.putString(SharedPreferencesKeys.UTM_SOURCE,referrerUrl)
-                                referrerClient.endConnection()//end connection to avoid leaks and smooth transition in app
-                                instance?.putBoolean(Constants.UTM_SOURCE_UPDATED,true)
+                        override fun onInstallReferrerSetupFinished(responseCode: Int) {
+                            when (responseCode) {
+                                InstallReferrerClient.InstallReferrerResponse.OK -> {
+                                    val response: ReferrerDetails = referrerClient.installReferrer
+                                    val referrerUrl: String = response.installReferrer
+                                    val referrerClickTime: Long =
+                                        response.referrerClickTimestampSeconds
+                                    val appInstallTime: Long = response.installBeginTimestampSeconds
+                                    val instantExperienceLaunched: Boolean =
+                                        response.googlePlayInstantParam
+                                    instance?.putString(
+                                        SharedPreferencesKeys.UTM_SOURCE,
+                                        referrerUrl
+                                    )
+                                    referrerClient.endConnection()//end connection to avoid leaks and smooth transition in app
+                                    instance?.putBoolean(Constants.UTM_SOURCE_UPDATED, true)
 
-                                splashViewModel.initSplash(resources)
-                            }
-                            InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED -> {
-                                splashViewModel.initSplash(resources)
+                                    splashViewModel.initSplash(resources)
+                                }
+                                InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED -> {
+                                    splashViewModel.initSplash(resources)
 
-                                // API not available on the current Play Store app.
-                            }
-                            InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE -> {
-                                // Connection couldn't be established.
+                                    // API not available on the current Play Store app.
+                                }
+                                InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE -> {
+                                    // Connection couldn't be established.
+                                    splashViewModel.initSplash(resources)
+
+                                }
                             }
                         }
-                    }
 
-                    override fun onInstallReferrerServiceDisconnected() {
-                        // Try to restart the connection on the next request to
-                        // Google Play by calling the startConnection() method.
-                    }
-                })
-            }catch (ex:Exception){}
+                        override fun onInstallReferrerServiceDisconnected() {
+                            // Try to restart the connection on the next request to
+                            // Google Play by calling the startConnection() method.
+                            splashViewModel.initSplash(resources)
+
+                        }
+                    })
+                } else {
+                    splashViewModel.initSplash(resources)
+                }
+            } catch (ex: Exception) {
+                splashViewModel.initSplash(resources)
+            }
 
 
         }

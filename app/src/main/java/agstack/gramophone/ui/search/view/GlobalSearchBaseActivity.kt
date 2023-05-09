@@ -11,7 +11,6 @@ import agstack.gramophone.ui.search.navigator.GlobalSearchNavigator
 import agstack.gramophone.ui.search.viewmodel.GlobalSearchViewModel
 import agstack.gramophone.utils.Constants
 import agstack.gramophone.utils.SharedPreferencesHelper
-import agstack.gramophone.utils.SharedPreferencesKeys
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -44,23 +43,26 @@ abstract class GlobalSearchBaseActivity<B : ViewDataBinding, N : GlobalSearchNav
         items?.let { displayDataList.addAll(items as ArrayList<Item>) }
 
         skip = 0
+        try {
+            lastSearchRequest?.let {
+                it.skip = "" + skip.toString()
+                it.afterKey = "" + skip.toString()
+            }
 
-        lastSearchRequest?.let {
-            it.skip = skip.toString()
-            it.afterKey = skip.toString()
-        }
-
-        scrollChangeListener =
-            NestedScrollView.OnScrollChangeListener { v: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
-                if (!loadingComplete && scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                    skip += 10
-                    lastSearchRequest?.let {
-                        it.skip = skip.toString()
-                        it.afterKey = SharedPreferencesHelper.instance?.getString(Constants.AFTER_KEY)
-                        getViewModel().searchByKeyword(it, isSearchInCommunity == true)
+            scrollChangeListener =
+                NestedScrollView.OnScrollChangeListener { v: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
+                    if (!loadingComplete && scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
+                        skip += 10
+                        lastSearchRequest?.let {
+                            it.skip = skip.toString()
+                            it.afterKey =
+                                SharedPreferencesHelper.instance?.getString(Constants.AFTER_KEY)
+                            getViewModel().searchByKeyword(it, isSearchInCommunity == true)
+                        }
                     }
                 }
-            }
+        } catch (ex: Exception) {}
+
     }
 
     fun setToolbarTitle(title: String) {

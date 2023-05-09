@@ -114,14 +114,18 @@ class ProductDetailsViewModel @Inject constructor(
     }
 
     fun onMinusQtyClicked() {
-        if (qtySelected.get()!! > 1) {
-            qtySelected.set(qtySelected.get()!! - 1)
-            loadOffersData(productDetailstoBeFetched, qtySelected.get())
-            calculateDiscountAndPromotion(
-                selectedSkuListItem.get()!!,
-                null
-            )
+        try {
+            if (qtySelected.get()!! > 1) {
+                qtySelected.set(qtySelected.get()!! - 1)
+                loadOffersData(productDetailstoBeFetched, qtySelected.get())
+                calculateDiscountAndPromotion(
+                    selectedSkuListItem.get()!!,
+                    null
+                )
+            }
+        } catch (ex: Exception) {
         }
+
         //check if available in getCartAPI , if yes then call addtocart
         /*    var cartItemsList = getCartData()
             if (cartItemsList != null && cartItemsList.size>0) {
@@ -173,10 +177,12 @@ class ProductDetailsViewModel @Inject constructor(
                         val productResponseData = productData.get()
                         estimatedDelivery.set(productData.get()?.shippingDetails?.estimatedDelivery?.trim())
                         getNavigator()?.setToolbarTitle(productResponseData?.productBaseName!!)
-                        try{
+                        try {
+                            Log.d("Youtube", "" + productData.get()?.youtubeVideoId)
+
                             getNavigator()?.initializeYoutube(productData.get()?.youtubeVideoId)
                         }catch (ex: Exception){
-
+                            Log.d("Youtube", "" + ex.printStackTrace())
                         }
                         isHeartSelected.set(productResponseData?.isUserFavourite!!)
                         productResponseData.productImages?.let {
@@ -509,7 +515,10 @@ class ProductDetailsViewModel @Inject constructor(
     }
 
     private fun loadRelatedProductData(productDetailstoBeFetched: ProductData) {
-        loadRelatedProductDataJob.cancelIfActive()
+        if (loadRelatedProductDataJob != null) {
+            loadRelatedProductDataJob.cancelIfActive()
+        }
+
         loadRelatedProductDataJob = checkNetworkThenRun {
             try {
                 val relatedProductResponse =
@@ -708,7 +717,9 @@ class ProductDetailsViewModel @Inject constructor(
     private fun checkOfferApplicability(
         verifyPromotionsModel: VerifyPromotionRequestModel,
     ) {
-        checkPromotionApplicableJob.cancelIfActive()
+        if (checkPromotionApplicableJob != null) {
+            checkPromotionApplicableJob.cancelIfActive()
+        }
         checkPromotionApplicableJob = checkNetworkThenRun {
             try {
                 val response =
@@ -940,8 +951,10 @@ class ProductDetailsViewModel @Inject constructor(
     }
 
     fun ContactForPriceClicked() {
+        if (contactForPriceJob != null)
+            contactForPriceJob.cancelIfActive()
 
-        contactForPriceJob.cancelIfActive()
+
         contactForPriceJob = checkNetworkThenRun {
             progressLoader.set(true)
             var producttoBeAdded = ProductData()

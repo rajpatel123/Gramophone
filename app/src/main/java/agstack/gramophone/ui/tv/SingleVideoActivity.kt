@@ -24,7 +24,7 @@ class SingleVideoActivity : AppCompatActivity(), YouTubePlayer.OnInitializedList
         youTubePlayer?.setPlaybackEventListener(playbackEventListener)
         /* Start buffering **/
         try {
-            if (!p2) {
+            if (!p2 && !isFinishing) {
                 youTubePlayer?.loadVideo(videoId)
             }
         } catch (e: Exception) {

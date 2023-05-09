@@ -67,9 +67,7 @@ class ReferandEarnViewModel @Inject constructor(
         try {
             QR_BitmapfromURL = generateQR(contentText, 512)
             getNavigator()?.setQRCodeImage(QR_BitmapfromURL)
-        }catch (ex:Exception){
-
-        }
+        }catch (ex:Exception){}
 
 
 
@@ -105,7 +103,9 @@ class ReferandEarnViewModel @Inject constructor(
     }
 
     fun getGramCash() {
-        getGramCashJob.cancelIfActive()
+        if (getGramCashJob!=null){
+            getGramCashJob.cancelIfActive()
+        }
         getGramCashJob = checkNetworkThenRun {
             progressLoader.set(true)
             try {

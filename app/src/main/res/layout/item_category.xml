@@ -31,10 +31,11 @@
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
                 android:layout_gravity="center"
-                app:product_image='@{model.category_image ?? ""}'
                 android:contentDescription="@string/image"
-                tools:src="@drawable/dummy_shop_by_crop"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+                app:product_image='@{model.category_image ?? ""}'
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                tools:ignore="ImageContrastCheck"
+                 />
 
         </FrameLayout>
 

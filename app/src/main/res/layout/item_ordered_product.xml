@@ -25,7 +25,7 @@
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:contentDescription="@string/image"
-            app:product_image="@{model.product_image}" />
+            app:product_image='@{model.product_image  ?? ""}' />
 
         <TextView
             android:id="@+id/tvProductName"

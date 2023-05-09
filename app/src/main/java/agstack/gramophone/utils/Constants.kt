@@ -341,6 +341,8 @@ object Constants {
     const val DEEP_LINK_SHOP_BY_COMPANY_NAME= "shopByCompanyName"
     const val DEEP_LINK_MY_FAVORITES= "myFavorites"
     const val DEEP_LINK_POST_DETAIL= "postDetails"
+    const val DEEP_LINK_PROFILE= "profile"
+    const val DEEP_LINK_COMMUNITY= "communityPost"
 
     /**
      * For Broadcast

@@ -135,7 +135,8 @@
                             android:layout_marginLeft="@dimen/_11sdp"
                             android:layout_marginRight="@dimen/_19sdp"
                             android:onClick="@{()->viewModel.onHeartIconClicked()}"
-                            app:srcCompat="@drawable/ic_heart_blank" />
+                            app:srcCompat="@drawable/ic_heart_blank"
+                            tools:ignore="ImageContrastCheck" />
 
                     </LinearLayout>
 
@@ -296,7 +297,8 @@
                     android:fontFamily="@font/manrope_medium"
                     android:text="@string/inclusiveoftaxes"
                     android:textColor="@color/oldmrpcolor"
-                    android:textSize="@dimen/_9ssp">
+                    android:textSize="@dimen/_9ssp"
+                    tools:ignore="TextContrastCheck">
 
                 </TextView>
 

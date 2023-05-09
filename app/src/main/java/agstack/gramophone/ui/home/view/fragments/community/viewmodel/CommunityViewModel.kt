@@ -77,7 +77,7 @@ class CommunityViewModel @Inject constructor(
     var isGeneral = ObservableField<Boolean>()
     var limit = ObservableField<Int>()
     lateinit var uuid: String
-    lateinit var id: String
+    var id: String?=null
     lateinit var redirectionSource: String
     lateinit var communityPostAdapter: CommunityPostAdapter
     lateinit var reportReason: String
@@ -217,7 +217,7 @@ class CommunityViewModel @Inject constructor(
 
                         mandi.set(profileData.get()?.mandi)
                         phoneNo.set(profileData.get()?.phoneNo)
-                        if (profileData.get()?.communityUserType.equals("general")) {
+                        if (profileData.get()?.communityUserType.equals("general") && !TextUtils.isEmpty(id) ) {
                             isGeneral.set(true)
                         } else {
                             isGeneral.set(false)
@@ -524,7 +524,7 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
-    fun getPostByUUID(uuid: String, id: String) {
+    fun getPostByUUID(uuid: String, id: String?) {
         this.uuid = uuid
         this.id = id
         viewModelScope.launch {
@@ -950,7 +950,7 @@ class CommunityViewModel @Inject constructor(
     }
 
 
-    private fun block(postId: String?, id: String, action: String) {
+    private fun block(postId: String?, id: String?, action: String) {
         viewModelScope.launch {
 
             try {

@@ -22,6 +22,7 @@ import agstack.gramophone.ui.notification.model.Data
 import agstack.gramophone.ui.notification.viewmodel.NotificationViewModel
 import agstack.gramophone.ui.offerslist.OffersListActivity
 import agstack.gramophone.ui.order.view.OrderListActivity
+import agstack.gramophone.ui.othersporfile.view.OtherUserProfileActivity
 import agstack.gramophone.ui.postdetails.view.PostDetailsActivity
 import agstack.gramophone.ui.referandearn.ReferAndEarnActivity
 import agstack.gramophone.ui.settings.view.LanguageUpdateActivity
@@ -37,6 +38,7 @@ import agstack.gramophone.utils.Constants.DEEP_LINK_ARTICLE_DETAILS
 import agstack.gramophone.utils.Constants.DEEP_LINK_ARTICLE_SUGGESTED
 import agstack.gramophone.utils.Constants.DEEP_LINK_ARTICLE_TRENDING
 import agstack.gramophone.utils.Constants.DEEP_LINK_CART
+import agstack.gramophone.utils.Constants.DEEP_LINK_COMMUNITY
 import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_LIST
 import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_PROBLEM
 import agstack.gramophone.utils.Constants.DEEP_LINK_CROP_PRODUCT
@@ -60,6 +62,7 @@ import agstack.gramophone.utils.Constants.DEEP_LINK_OFFERS
 import agstack.gramophone.utils.Constants.DEEP_LINK_POST_DETAIL
 import agstack.gramophone.utils.Constants.DEEP_LINK_PRODUCT_DETAIL
 import agstack.gramophone.utils.Constants.DEEP_LINK_PRODUCT_LIST
+import agstack.gramophone.utils.Constants.DEEP_LINK_PROFILE
 import agstack.gramophone.utils.Constants.DEEP_LINK_REFERRAL
 import agstack.gramophone.utils.Constants.DEEP_LINK_SHOP_BY_CATEGORY
 import agstack.gramophone.utils.Constants.DEEP_LINK_SHOP_BY_COMPANY
@@ -91,6 +94,7 @@ class URLHandlerActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        intent?.getStringExtra(Constants.URI)?.let { Log.d("Raj",""+ it) }
         if (!hasInternetConnection(this)){
             finishActivity()
         }
@@ -163,8 +167,27 @@ class URLHandlerActivity :
                     notificationViewModel.getSubCatDetails(category_id!!)
                 }
 
+                DEEP_LINK_PROFILE -> {
+                    val uuid = uri.getQueryParameter("uuid")
+                    openAndFinishActivity(
+                        OtherUserProfileActivity::class.java,
+                        Bundle().apply {
+                            putString(Constants.AUTHER_UUID, uuid)
+                            putString(Constants.REDIRECTION_SOURCE, "Community Screen")
+                        })
+                }
+
 
                 DEEP_LINK_POST_DETAIL -> {
+                    val postId = uri.getQueryParameter("postId")
+                    openAndFinishActivity(
+                        PostDetailsActivity::class.java,
+                        Bundle().apply {
+                            putString(Constants.POST_ID, postId)
+                        })
+                }
+
+                DEEP_LINK_COMMUNITY -> {
                     val postId = uri.getQueryParameter("postId")
                     openAndFinishActivity(
                         PostDetailsActivity::class.java,
@@ -495,7 +518,7 @@ class URLHandlerActivity :
                                 Constants.PAGE_SOURCE, "gramo"
                             )
                         })
-                    }else if(uri.toString().contains("articlesContentUrl")){
+                    }else if(uri.toString().contains("webContentUrl")){
                         val url = uri.getQueryParameter("webContentUrl")
                         openAndFinishActivity(ArticlesWebViewActivity::class.java, Bundle().apply {
                             putString(

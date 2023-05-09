@@ -34,23 +34,25 @@ class CropGroupExplorerViewModel @Inject constructor(
     fun addHarvestQues(body: AddHarvestRequest) {
         progress.value = true
 
-        viewModelScope.launch {
-            try {
-                val response = productRepository.addHarvestQues(body)
-                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
-                    && response.body()?.gp_api_response_data != null
-                ) {
-                    val res = response.body()
-                    getNavigator()?.onAddHarvestQues()
-                }else{
+        if (getNavigator()?.isNetworkAvailable()==true){
+            viewModelScope.launch {
+                try {
+                    val response = productRepository.addHarvestQues(body)
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                        && response.body()?.gp_api_response_data != null
+                    ) {
+                        val res = response.body()
+                        getNavigator()?.onAddHarvestQues()
+                    }else{
 //                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
-                }
-                progress.value = false
-            } catch (ex: Exception) {
-                progress.value = false
-                when (ex) {
-                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    }
+                    progress.value = false
+                } catch (ex: Exception) {
+                    progress.value = false
+                    when (ex) {
+                        is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
 //                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                    }
                 }
             }
         }
@@ -58,49 +60,54 @@ class CropGroupExplorerViewModel @Inject constructor(
 
     fun getFarmUnits(type : String) {
         progress.value = true
-        viewModelScope.launch {
-            try {
-                val response = productRepository.getFarmUnits(type = type)
-                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
-                    && response.body()?.gp_api_response_data != null
-                ) {
-                    val farmUnitsResponse = response.body()
-                    progress.value = false
-                    getNavigator()?.setFarmUnits(farmUnitsResponse?.gp_api_response_data!!)
-                }else{
-                    progress.value = false
+        if (getNavigator()?.isNetworkAvailable()==true) {
+            viewModelScope.launch {
+                try {
+                    val response = productRepository.getFarmUnits(type = type)
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                        && response.body()?.gp_api_response_data != null
+                    ) {
+                        val farmUnitsResponse = response.body()
+                        progress.value = false
+                        getNavigator()?.setFarmUnits(farmUnitsResponse?.gp_api_response_data!!)
+                    }else{
+                        progress.value = false
 //                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
-                }
-            } catch (ex: Exception) {
-                progress.value = false
-                when (ex) {
-                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    }
+                } catch (ex: Exception) {
+                    progress.value = false
+                    when (ex) {
+                        is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
 //                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                    }
                 }
             }
+
         }
     }
 
     fun deleteFarm(it: Data) {
-        viewModelScope.launch {
-            try {
-                progress.value = true
+        if (getNavigator()?.isNetworkAvailable()==true) {
+            viewModelScope.launch {
+                try {
+                    progress.value = true
 
-                val response = onBoardingRepository.deleteFarm(DeletefarmReqquestModel(it.crop_id.toString(),it.farm_id.toString()))
-                if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
-                    && response.body()?.gp_api_response_data != null
-                ) {
+                    val response = onBoardingRepository.deleteFarm(DeletefarmReqquestModel(it.crop_id.toString(),it.farm_id.toString()))
+                    if (response.isSuccessful && response.body()?.gp_api_status == Constants.GP_API_STATUS
+                        && response.body()?.gp_api_response_data != null
+                    ) {
+                        progress.value = false
+                        getNavigator()?.refreshFarm(it)
+                    }else{
+                        progress.value = false
+                        getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
+                    }
+                } catch (ex: Exception) {
                     progress.value = false
-                    getNavigator()?.refreshFarm(it)
-                }else{
-                    progress.value = false
-                    getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
-                }
-            } catch (ex: Exception) {
-                progress.value = false
-                when (ex) {
-                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                    when (ex) {
+                        is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
 //                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                    }
                 }
             }
         }

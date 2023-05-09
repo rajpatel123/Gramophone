@@ -4,9 +4,9 @@ import agstack.gramophone.R
 import agstack.gramophone.base.BaseViewModel
 import agstack.gramophone.data.repository.product.ProductRepository
 import agstack.gramophone.ui.home.adapter.ShopByCompanyAdapter
-import agstack.gramophone.ui.home.adapter.ShopByCropsAdapter
 import agstack.gramophone.ui.home.adapter.ShopByStoresAdapter
-import agstack.gramophone.ui.home.view.fragments.market.model.*
+import agstack.gramophone.ui.home.view.fragments.market.model.CompanyResponse
+import agstack.gramophone.ui.home.view.fragments.market.model.StoreResponse
 import agstack.gramophone.utils.Constants
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -75,42 +75,43 @@ class ShopByViewModel @Inject constructor(
     }
 
     fun getStores() {
-        viewModelScope.launch {
-            try {
-                when (shopByType) {
-                    Constants.SHOP_BY_STORE -> {
-                        progress.value = true
-                        val response = productRepository.getStores()
-                        if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS
-                            && response.body()?.gpApiResponseData?.storeList?.size!! > 0
-                        ) {
-                            progress.value = false
-                            getNavigator()?.setShopByStoresAdapter(ShopByStoresAdapter(response.body()?.gpApiResponseData?.storeList) { id, name, image ->
-                                getNavigator()?.openFeaturedActivityForShopByStore(id, name, image)
-                            })
+        if (getNavigator()?.isNetworkAvailable() == true)
+            viewModelScope.launch {
+                try {
+                    when (shopByType) {
+                        Constants.SHOP_BY_STORE -> {
+                            progress.value = true
+                            val response = productRepository.getStores()
+                            if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS
+                                && response.body()?.gpApiResponseData?.storeList?.size!! > 0
+                            ) {
+                                progress.value = false
+                                getNavigator()?.setShopByStoresAdapter(ShopByStoresAdapter(response.body()?.gpApiResponseData?.storeList) { id, name, image ->
+                                    getNavigator()?.openFeaturedActivityForShopByStore(id, name, image)
+                                })
+                            }
+                        }
+                        Constants.SHOP_BY_COMPANY -> {
+                            progress.value = true
+                            val response = productRepository.getCompanies()
+                            if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS
+                                && response.body()?.gpApiResponseData?.companiesList?.size!! > 0
+                            ) {
+                                progress.value = false
+                                getNavigator()?.setShopByCompanyAdapter(ShopByCompanyAdapter(response.body()?.gpApiResponseData?.companiesList) { id, name, image ->
+                                    getNavigator()?.openFeaturedActivityForShopByCompany(id, name, image)
+                                })
+                            }
                         }
                     }
-                    Constants.SHOP_BY_COMPANY -> {
-                        progress.value = true
-                        val response = productRepository.getCompanies()
-                        if (response.isSuccessful && response.body()?.gpApiStatus == Constants.GP_API_STATUS
-                            && response.body()?.gpApiResponseData?.companiesList?.size!! > 0
-                        ) {
-                            progress.value = false
-                            getNavigator()?.setShopByCompanyAdapter(ShopByCompanyAdapter(response.body()?.gpApiResponseData?.companiesList) { id, name, image ->
-                                getNavigator()?.openFeaturedActivityForShopByCompany(id, name, image)
-                            })
-                        }
-                    }
-                }
-            } catch (ex: Exception) {
-                progress.value = false
-                when (ex) {
-                    is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
+                } catch (ex: Exception) {
+                    progress.value = false
+                    when (ex) {
+                        is IOException -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.network_failure))
 //                    else -> getNavigator()?.showToast(getNavigator()?.getMessage(R.string.some_thing_went_wrong))
+                    }
                 }
             }
-        }
     }
 
 }

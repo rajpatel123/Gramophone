@@ -138,10 +138,12 @@ class CreatePostViewModel @Inject constructor(
         var hasImage = "No"
         if (!creatingPost){
             creatingPost = true
+
             viewModelScope.launch {
                 if (getNavigator()?.getText().isNotNull() && getNavigator()?.getText()?.length!! >=20 ){
                     try {
                         if (getNavigator()?.isNetworkAvailable() == true) {
+                            getNavigator()?.onLoading()
                             val desc: RequestBody =
                                 getNavigator()?.getText()?.toRequestBody("text/plain".toMediaTypeOrNull()) ?: "".toRequestBody("text/plain".toMediaTypeOrNull())
                             val tagss: RequestBody = tags.toString().toRequestBody("text/plain".toMediaTypeOrNull())
@@ -223,8 +225,12 @@ class CreatePostViewModel @Inject constructor(
                                         putString(POST_ID, response.body()?.data?._id)
                                     }
                                 )
+
+                                getNavigator()?.onSuccess("")
+
                             } else {
                                 creatingPost=false
+                                getNavigator()?.onSuccess("")
                                 getNavigator()?.showToast(Utility.getErrorMessage(response.errorBody()))
                             }
 
@@ -242,7 +248,7 @@ class CreatePostViewModel @Inject constructor(
                     }
                 }else{
                     creatingPost=false
-                    getNavigator()?.onError(getNavigator()?.getMessage(R.string.enter_desc_validation)!!)
+                    getNavigator()?.showToast(getNavigator()?.getMessage(R.string.enter_desc_validation))
                 }
 
             }
